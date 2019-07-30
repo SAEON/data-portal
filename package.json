@@ -2,10 +2,10 @@
   "name": "saeon-map",
   "version": "0.0.1",
   "description": "Generalized openLayer wrapper for GIS data navigation",
-  "main": "dist/index.jsx",
+  "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development --env=dev",
-    "build": "rm -rf ./dist & webpack --mode production --env=dev",
+    "build": "rm -rf ./dist & webpack --mode production --env=prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
