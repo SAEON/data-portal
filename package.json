@@ -1,5 +1,5 @@
 {
-  "name": "saeon-map",
+  "name": "@saeon/ol-react",
   "version": "0.0.1",
   "description": "Generalized openLayer wrapper for GIS data navigation",
   "main": "dist/index.js",
@@ -32,5 +32,9 @@
     "ol-layerswitcher": "^3.3.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@192.168.115.102:saeon-react-components/saeon-openlayers-react.git"
   }
 }
