@@ -5,7 +5,7 @@
   "main": "dist/index.jsx",
   "scripts": {
     "start": "webpack-dev-server --open --mode development --env=dev",
-    "build": "webpack --mode production --env=dev",
+    "build": "rm -rf ./dist & webpack --mode production --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -28,6 +28,8 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "ol": "^5.3.3",
+    "ol-layerswitcher": "^3.3.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
