@@ -12,7 +12,9 @@ import { fromLonLat } from 'ol/proj.js'
 import { default as LayerSwitcher } from 'ol-layerswitcher'
 import { Tile, BingMaps } from 'ol/source';
 
-export class SaeonMap extends React.Component {
+
+
+class SaeonMap extends React.Component {
   constructor(props) {
     super(props)
     this.map = null
@@ -102,3 +104,5 @@ export class SaeonMap extends React.Component {
     )
   }
 }
+
+render(<SaeonMap />, document.getElementById('root'))
