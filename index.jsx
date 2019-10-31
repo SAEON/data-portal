@@ -3,9 +3,8 @@ import { render } from "react-dom"
 import { SaeonMap } from './src/index.jsx'
 
 const wrapperStyle = {
-  width: '50%',
-  height: '50%',
-  margin: '50px auto'
+  width: '100%',
+  height: '100%'
 }
 
 const Component = () =>
