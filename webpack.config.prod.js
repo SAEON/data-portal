@@ -14,12 +14,12 @@ module.exports = {
     }
   },
   externals: {
-    'react': 'React',
+    react: 'React',
     'react-dom': 'ReactDOM',
     'react-md': 'ReactMD'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -27,7 +27,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
@@ -36,16 +36,18 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            fallback: "file-loader",
-            name: "[name][md5:hash].[ext]",
-            outputPath: 'assets/',
-            publicPath: '/assets/'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              fallback: 'file-loader',
+              name: '[name][md5:hash].[ext]',
+              outputPath: 'assets/',
+              publicPath: '/assets/'
+            }
           }
-        }]
-      }            
+        ]
+      }
     ]
   }
 }

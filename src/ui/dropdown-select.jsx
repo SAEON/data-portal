@@ -1,6 +1,14 @@
 import React, { PureComponent } from 'react'
 import debounce from '../lib/debounce'
-import { TextField, FontIcon, DropdownMenu, ListItemControl, SelectionControl, List, ListItem } from 'react-md'
+import {
+  TextField,
+  FontIcon,
+  DropdownMenu,
+  ListItemControl,
+  SelectionControl,
+  List,
+  ListItem
+} from 'react-md'
 import sift from 'sift'
 
 const listItemStyle = {
@@ -19,7 +27,8 @@ export default class extends PureComponent {
     this.setState({
       filteredItems: (this.state.searchTerm
         ? [...this.props.items].filter(item =>
-            item.value.toUpperCase().indexOf(this.state.searchTerm) >= 0 || this.props.selectedItems.includes(item.id)
+            item.value.toUpperCase().indexOf(this.state.searchTerm) >= 0 ||
+            this.props.selectedItems.includes(item.id)
               ? true
               : false
           )
@@ -34,7 +43,10 @@ export default class extends PureComponent {
     })
 
   updateSearchTerm = searchTerm =>
-    this.setState({ searchTerm: searchTerm.toUpperCase(), visible: true }, debounce(() => this.updateItems()))
+    this.setState(
+      { searchTerm: searchTerm.toUpperCase(), visible: true },
+      debounce(() => this.updateItems())
+    )
 
   toggleItemSelect = item => {
     const { id, selectedItems, onItemToggle } = this.props

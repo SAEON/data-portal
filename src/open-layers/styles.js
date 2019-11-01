@@ -6,7 +6,19 @@ export const clusterStyle = feature => {
   return new Style({
     image: new CircleStyle({
       radius:
-        size > 300 ? 50 : size > 250 ? 45 : size > 200 ? 40 : size > 100 ? 30 : size > 50 ? 25 : size > 20 ? 20 : 15,
+        size > 300
+          ? 50
+          : size > 250
+          ? 45
+          : size > 200
+          ? 40
+          : size > 100
+          ? 30
+          : size > 50
+          ? 25
+          : size > 20
+          ? 20
+          : 15,
       stroke: new Stroke({
         color: `rgba(255, 255, 255, ${OPACITY_DEFAULT})`
       }),
@@ -29,7 +41,19 @@ export const clusterStyle2 = feature => {
   return new Style({
     image: new CircleStyle({
       radius:
-        size > 300 ? 50 : size > 250 ? 45 : size > 200 ? 40 : size > 100 ? 30 : size > 50 ? 25 : size > 20 ? 20 : 15,
+        size > 300
+          ? 50
+          : size > 250
+          ? 45
+          : size > 200
+          ? 40
+          : size > 100
+          ? 30
+          : size > 50
+          ? 25
+          : size > 20
+          ? 20
+          : 15,
       stroke: new Stroke({
         color: `rgba(255, 255, 255, ${OPACITY_2})`
       }),

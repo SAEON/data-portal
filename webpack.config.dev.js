@@ -1,4 +1,4 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin")
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -15,7 +15,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
@@ -24,28 +24,30 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            fallback: "file-loader",
-            name: "[name][md5:hash].[ext]",
-            outputPath: 'assets/',
-            publicPath: '/assets/'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              fallback: 'file-loader',
+              name: '[name][md5:hash].[ext]',
+              outputPath: 'assets/',
+              publicPath: '/assets/'
+            }
           }
-        }]
-      }            
+        ]
+      }
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./index.html",
-      filename: "./index.html"
+      template: './index.html',
+      filename: './index.html'
     })
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 9000,
-    historyApiFallback: true,    
+    historyApiFallback: true,
     compress: true,
     before: function(app, server) {
       console.log("'before' callback is here")
@@ -53,11 +55,9 @@ module.exports = {
     after: function(app, server) {
       console.log("'after' callback is here")
     },
-    allowedHosts: [
-      '.localhost'
-    ],
+    allowedHosts: ['.localhost'],
     headers: {
       'Access-Control-Allow-Headers': '*'
     }
-  }  
+  }
 }
