@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Map } from './src/index.jsx'
+import Map from './src-dev'
 
-const App = () => 'hi'
+const App = () => <Map />
 
 render(<App />, document.getElementById('root'))
