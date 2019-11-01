@@ -9,12 +9,17 @@ module.exports = {
   resolve: {
     alias: {
       react: path.resolve('./node_modules/react'),
-      'react-dom': path.resolve('./node_modules/react-dom')
+      'react-dom': path.resolve('./node_modules/react-dom'),
+      'react-md': path.resolve('./node_modules/react-md')
     }
   },
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
+    'react-dom': 'ReactDOM',
+    'react-md': 'ReactMD'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [

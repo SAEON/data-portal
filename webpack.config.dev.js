@@ -6,6 +6,9 @@ module.exports = {
   output: {
     filename: 'index.js'
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
