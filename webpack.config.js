@@ -46,7 +46,7 @@ const pluginsConfig = mode =>
 
 module.exports = ({ mode }) => ({
   mode,
-  entry: mode ? './src/index.jsx' : './index.jsx',
+  entry: mode === 'production' ? './src/index.jsx' : './index.jsx',
   output: outputConfig(mode),
   resolve: resolveConfig(mode),
   externals: externalsConfig(mode),
