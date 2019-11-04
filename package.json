@@ -68,6 +68,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@192.168.115.102:saeon-react-components/saeon-openlayers-react.git"
+    "url": "https://gitlab.com/saeon/ui-components/atlas"
   }
 }
