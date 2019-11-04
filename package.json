@@ -12,8 +12,8 @@
     "rm-dist": "rm -rf ./dist",
     "pack": "webpack --env.mode=production",
     "publish": "npm-run-all -s build scripts-publish-npm",
-    "increment-patch": "node ./scripts/increment-patch.js",
-    "scripts-publish-npm": "./scripts/publish-npm.sh"
+    "increment-patch": "./scripts/increment-patch.sh",
+    "publish-npm-patch": "./scripts/publish-npm.sh"
   },
   "keywords": [],
   "author": "zach@saeon.ac.za",
