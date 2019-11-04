@@ -7,7 +7,7 @@ npm install @saeon/atlas
 
 Render an Atlas component like this:
 
-```js
+```jsx
 import { Map, ahocevarBaseMap } from '@saeon/atlas'
 const MyAtlas = props => (
   <Map layers={[ahocevarBaseMap]}>
