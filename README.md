@@ -5,8 +5,23 @@ Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atla
 npm install @saeon/atlas
 ```
 
-## Documentation
-TODO: An example of how to use the Atlas API will go here!
+Render an Atlas component like this:
+
+```js
+import { Map, ahocevarBaseMap } from '@saeon/atlas'
+const MyAtlas = props => (
+  <Map layers={[ahocevarBaseMap]}>
+  {({map}) => (
+    <>
+      <Module1 />
+      <Module2 />
+      <Module3 />
+      etc.
+    </>
+  )}
+  </Map>
+)
+```
 
 ## Developers
 To contribute code to this component fork the source code, install dependencies, and start the development server (`webpack-dev-server`). Please work on a branch OTHER than the master branch!
