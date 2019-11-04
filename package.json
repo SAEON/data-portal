@@ -1,5 +1,5 @@
 {
-  "name": "@saeon/ol-react",
+  "name": "@saeon/atlas",
   "version": "0.0.8",
   "description": "Generalized openLayer wrapper for GIS data navigation",
   "main": "dist/index.js",
