@@ -1,6 +1,6 @@
 #!/bin/bash
 
 npm init --scope=@saeon
-npm publish --access public -y
+npm publish --access public
 
 echo "Complete! See your package at https://npmjs.com/package/@saeon/atlas"
