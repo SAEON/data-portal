@@ -28,9 +28,9 @@ const resolveConfig = mode =>
 const externalsConfig = mode =>
   mode === 'production'
     ? {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-        'react-md': 'ReactMD'
+        react: 'react',
+        'react-dom': 'react-dom',
+        'react-md': 'react-md'
       }
     : {}
 
