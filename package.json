@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Generalized openLayer wrapper for GIS data navigation",
   "main": "dist/index.js",
   "scripts": {
@@ -11,9 +11,13 @@
     "build": "npm-run-all rm-dist pack",
     "rm-dist": "rm -rf ./dist",
     "pack": "webpack --env.mode=production",
-    "publish": "npm-run-all -s build scripts-publish-npm",
+    "publish-patch": "npm-run-all -s build increment-patch push-to-npm",
+    "publish-minor": "npm-run-all -s build increment-minor push-to-npm",
+    "publish-major": "npm-run-all -s build increment-major push-to-npm",
     "increment-patch": "./scripts/increment-patch.sh",
-    "publish-npm-patch": "./scripts/publish-npm.sh"
+    "increment-minor": "./scripts/increment-minor.sh",
+    "increment-major": "./scripts/increment-major.sh",
+    "push-to-npm": "./scripts/publish-npm.sh"
   },
   "keywords": [],
   "author": "zach@saeon.ac.za",
