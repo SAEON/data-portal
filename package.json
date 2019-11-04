@@ -3,6 +3,7 @@
   "version": "0.7.1",
   "description": "Generalized openLayer wrapper for GIS data navigation",
   "main": "dist/index.js",
+  "files": ["dist"],
   "scripts": {
     "start": "npm-run-all -p onchange dev-server",
     "onchange": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
