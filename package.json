@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generalized openLayer wrapper for GIS data navigation",
   "main": "dist/index.js",
   "files": [
@@ -22,7 +22,12 @@
     "increment-major": "./scripts/increment-major.sh",
     "push-to-npm": "./scripts/push-to-npm.sh"
   },
-  "keywords": ["OpenLayers", "SAEON", "Atlas", "Map"],
+  "keywords": [
+    "OpenLayers",
+    "SAEON",
+    "Atlas",
+    "Map"
+  ],
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
