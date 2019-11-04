@@ -22,7 +22,7 @@
     "increment-major": "./scripts/increment-major.sh",
     "push-to-npm": "./scripts/push-to-npm.sh"
   },
-  "keywords": [],
+  "keywords": ["OpenLayers", "SAEON", "Atlas", "Map"],
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
