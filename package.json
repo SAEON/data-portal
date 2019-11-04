@@ -17,7 +17,7 @@
     "increment-patch": "./scripts/increment-patch.sh",
     "increment-minor": "./scripts/increment-minor.sh",
     "increment-major": "./scripts/increment-major.sh",
-    "push-to-npm": "./scripts/publish-npm.sh"
+    "push-to-npm": "./scripts/publish-to-npm.sh"
   },
   "keywords": [],
   "author": "zach@saeon.ac.za",
