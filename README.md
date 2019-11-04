@@ -30,6 +30,8 @@ npm link
 npm link @saeon/atlas
 ```
 
+**NOTE** - when using `npm link`, after making source code changes to the package you need to **rebuild** the pacakge (and NOT update the package on NPM). The command to do this is `npm run build`
+
 ## Publish to NPM
 This project uses [semantic versioning](https://docs.npmjs.com/about-semantic-versioning). This means that package versioning is controlled by 3 numbers: `major.minor.patch`, which in the case of this project means:
 
