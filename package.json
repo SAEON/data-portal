@@ -68,6 +68,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/saeon/ui-components/atlas"
-  }
+    "url": "git+https://gitlab.com/saeon/ui-components/atlas.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/saeon/ui-components/atlas/issues"
+  },
+  "homepage": "https://gitlab.com/saeon/ui-components/atlas#readme"
 }
