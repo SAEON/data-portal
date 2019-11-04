@@ -7,11 +7,13 @@
     "start": "npm-run-all -p onchange dev-server",
     "onchange": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "dev-server": "webpack-dev-server --env.mode=development --open",
-    "build": "npm-run-all prettier rm-dist pack",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|css|scss)\"",
+    "build": "npm-run-all rm-dist pack",
     "rm-dist": "rm -rf ./dist",
     "pack": "webpack --env.mode=production",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|css|scss)\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npm-run-all -s build scripts-publish-npm",
+    "increment-patch": "node ./scripts/increment-patch.js",
+    "scripts-publish-npm": "./scripts/publish-npm.sh"
   },
   "keywords": [],
   "author": "zach@saeon.ac.za",
