@@ -6,10 +6,10 @@
   "scripts": {
     "start": "npm-run-all -p onchange dev-server",
     "onchange": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "dev-server": "webpack-dev-server --open --mode development --env=dev",
+    "dev-server": "webpack-dev-server --env.mode=development --open",
     "build": "npm-run-all prettier rm-dist pack",
     "rm-dist": "rm -rf ./dist",
-    "pack": "webpack --mode production --env=prod",
+    "pack": "webpack --env.mode=production",
     "prettier": "prettier --write \"./**/*.@(js|jsx|css|scss)\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

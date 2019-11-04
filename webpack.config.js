@@ -1,1 +1,99 @@
-module.exports = env => require(`./webpack.config.${env}.js`)
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const path = require('path')
+
+const outputConfig = mode =>
+  mode === 'production'
+    ? {
+        filename: 'index.js',
+        libraryTarget: 'commonjs'
+      }
+    : {
+        filename: 'index.js'
+      }
+
+const resolveConfig = mode =>
+  mode === 'production'
+    ? {
+        extensions: ['.js', '.jsx'],
+        alias: {
+          react: path.resolve('./node_modules/react'),
+          'react-dom': path.resolve('./node_modules/react-dom'),
+          'react-md': path.resolve('./node_modules/react-md')
+        }
+      }
+    : {
+        extensions: ['.js', '.jsx']
+      }
+
+const externalsConfig = mode =>
+  mode === 'production'
+    ? {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        'react-md': 'ReactMD'
+      }
+    : {}
+
+const pluginsConfig = mode =>
+  mode === 'production'
+    ? []
+    : [
+        new HtmlWebPackPlugin({
+          template: './index.html',
+          filename: './index.html'
+        })
+      ]
+
+module.exports = ({ mode }) => ({
+  mode,
+  entry: mode ? './src/index.jsx' : './index.jsx',
+  output: outputConfig(mode),
+  resolve: resolveConfig(mode),
+  externals: externalsConfig(mode),
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.*css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              fallback: 'file-loader',
+              name: '[name][md5:hash].[ext]',
+              outputPath: 'assets/',
+              publicPath: '/assets/'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: pluginsConfig(mode),
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 9000,
+    historyApiFallback: true,
+    compress: true,
+    before: function(app, server) {
+      console.log("'before' callback is here")
+    },
+    after: function(app, server) {
+      console.log("'after' callback is here")
+    },
+    allowedHosts: ['.localhost'],
+    headers: {
+      'Access-Control-Allow-Headers': '*'
+    }
+  }
+})
