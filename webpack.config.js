@@ -85,12 +85,6 @@ module.exports = ({ mode }) => ({
     port: 9000,
     historyApiFallback: true,
     compress: true,
-    before: function(app, server) {
-      console.log("'before' callback is here")
-    },
-    after: function(app, server) {
-      console.log("'after' callback is here")
-    },
     allowedHosts: ['.localhost'],
     headers: {
       'Access-Control-Allow-Headers': '*'

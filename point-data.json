@@ -1,0 +1,57 @@
+[{
+  "id": 1,
+  "name": "A",
+  "location": "{\"type\":\"Point\",\"coordinates\":[15.3,37.7]}"
+}, {
+  "id": 2,
+  "name": "B",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-20.3503,-32.1]}"
+}, {
+  "id": 3,
+  "name": "C",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-12.1013,32.25]}"
+}, {
+  "id": 4,
+  "name": "D",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-6.7451,34.68]}"
+}, {
+  "id": 5,
+  "name": "E",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-18.131,-17.8]}"
+}, {
+  "id": 6,
+  "name": "F",
+  "location": "{\"type\":\"Point\",\"coordinates\":[2.8424,38.35]}"
+}, {
+  "id": 7,
+  "name": "G",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-0.656,35.91]}"
+}, {
+  "id": 8,
+  "name": "H",
+  "location": "{\"type\":\"Point\",\"coordinates\":[42.3,14.1]}"
+}, {
+  "id": 9,
+  "name": "I",
+  "location": "{\"type\":\"Point\",\"coordinates\":[0,0]}"
+}, {
+  "id": 10,
+  "name": "J",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-19.1,-35.2]}"
+}, {
+  "id": 11,
+  "name": "K",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-20.986,36.52]}"
+}, {
+  "id": 12,
+  "name": "L",
+  "location": "{\"type\":\"Point\",\"coordinates\":[0,0]}"
+}, {
+  "id": 13,
+  "name": "M",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-16.1,32.39]}"
+}, {
+  "id": 14,
+  "name": "N",
+  "location": "{\"type\":\"Point\",\"coordinates\":[-5.0525,-25.8]}"
+}]

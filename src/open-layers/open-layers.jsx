@@ -58,7 +58,7 @@ export default class extends Component {
     return (
       <div className={className} style={style}>
         {children ? children({ map }) : null}
-        <div ref={mapRef} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} />
+        <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
       </div>
     )
   }

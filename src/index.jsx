@@ -10,7 +10,7 @@ export { default as DropdownSelect } from './ui/dropdown-select'
 export { default as FeaturePanel } from './ui/feature-panel'
 
 // The Map API
-export { default as FeatureSelector } from './modules/feature-selector'
+export { default as SingleFeatureSelector } from './modules/single-feature-selector'
 
 export const Map = ({ layers, children, viewOptions, style, className }) => (
   <OpenLayers

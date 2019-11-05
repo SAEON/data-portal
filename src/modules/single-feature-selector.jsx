@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
+import { PureComponent } from 'react'
 import { clusterStyle, clusterStyle2 } from '../open-layers'
 
-export default class extends Component {
+export default class extends PureComponent {
   state = { selectedFeature: null }
 
   constructor(props) {
     super(props)
     this.map = this.props.map
-    this.popupRef = React.createRef()
-  }
-
-  closePanel = () => {
-    this.state.selectedFeature.setStyle(clusterStyle(this.state.selectedFeature))
-    this.setState({ selectedFeature: null })
   }
 
   componentDidMount() {
@@ -33,15 +27,19 @@ export default class extends Component {
           selectedFeature.setStyle(clusterStyle2(feature))
         })
       } else {
-        if (selectedFeature) selectedFeature.setStyle(clusterStyle(selectedFeature))
-        this.setState({ selectedFeature: null })
+        if (selectedFeature) this.unselectFeature()
       }
     })
   }
 
+  unselectFeature() {
+    this.state.selectedFeature.setStyle(clusterStyle(this.state.selectedFeature))
+    this.setState({ selectedFeature: null })
+  }
+
   render() {
     const { selectedFeature } = this.state
-    const { closePanel } = this
-    return this.props.children({ selectedFeature, closePanel })
+    const { unselectFeature } = this
+    return this.props.children({ selectedFeature, unselectFeature })
   }
 }
