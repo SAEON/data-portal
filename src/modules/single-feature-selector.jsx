@@ -32,7 +32,8 @@ export default class extends PureComponent {
     })
   }
 
-  unselectFeature() {
+  unselectFeature = () => {
+    console.log(this)
     this.state.selectedFeature.setStyle(clusterStyle(this.state.selectedFeature))
     this.setState({ selectedFeature: null })
   }
