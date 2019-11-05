@@ -5,22 +5,62 @@ Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atla
 npm install @saeon/atlas
 ```
 
-Render an Atlas component like this:
+## Example
 
 ```jsx
-import { Map, ahocevarBaseMap } from '@saeon/atlas'
-const MyAtlas = props => (
-  <Map layers={[ahocevarBaseMap]}>
-  {({map}) => (
-    <>
-      <Module1 />
-      <Module2 />
-      <Module3 />
-      etc.
-    </>
-  )}
-  </Map>
-)
+import {
+  Map,
+  ahocevarBaseMap,
+  clusterLayer,
+  clusterSource,
+  SingleFeatureSelector
+} from '@saeon/atlas'
+
+const mapStyle = { width: '100%', height: '100%' }
+const pointData = [{
+  "id": 1,
+  "name": "A",
+  "location": "{\"type\":\"Point\",\"coordinates\":[15.3,37.7]}"
+}]
+
+class App extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    // Create layers
+    this.clusteredSites = clusterSource({ data: pointData, locAttribute: 'location' })
+    this.clusteredSitesLayer = clusterLayer(this.clusteredSites, 'sites')
+
+    /**
+     * This array is passed to the OpenLayers Map constructor
+     * new Map({ ... layers: this.layers ...})
+     * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
+     */
+    this.layers = [ahocevarBaseMap, this.clusteredSitesLayer]
+
+    /**
+     * This object is passed to the OpenLayers View constructor
+     * new View(this.viewOptions)
+     * https://openlayers.org/en/latest/apidoc/module-ol_View-View.html
+     */
+    this.viewOptions = {}
+  }
+
+  render() {
+    return (
+      <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
+        {({ map }) => (
+          <>
+            {/* Then Add your modules here  */}
+            <SingleFeatureSelector map={map}>
+              {({ selectedFeature, unselectFeature }) => (selectedFeature ? <div>popup</div> : '')}
+            </SingleFeatureSelector>
+          </>
+        )}
+      </Map>
+    )
+  }
+}
 ```
 
 ## Modules

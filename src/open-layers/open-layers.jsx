@@ -23,15 +23,11 @@ export default class extends Component {
         // Specify controls externally to this component?
       ]),
       view: new View(
-        mergeLeft(
-          this.props.viewOptions || {},
-          // Some sensible/required defaults
-          {
-            center: [0, 0],
-            zoom: 2.5,
-            projection: 'EPSG:4326'
-          }
-        )
+        mergeLeft(this.props.viewOptions || {}, {
+          center: [0, 0],
+          zoom: 2.5,
+          projection: 'EPSG:4326'
+        })
       )
     })
   }
