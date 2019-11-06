@@ -8,53 +8,52 @@ export default class extends PureComponent {
   constructor(props) {
     super(props)
     this.map = props.map
+  }
+
+  componentDidMount() {
+    this.refreshProxyLayers()
+  }
+
+  refreshProxyLayers = () => {
+    const proxyLayers = []
     this.map.getLayers().forEach(layer => {
-      this.state.proxyLayers.push(Object.fromEntries(keys.map(key => [key, layer.get(key)])))
+      const proxyLayer = Object.fromEntries(keys.map(key => [key, layer.get(key)]))
+
+      Object.defineProperties(proxyLayer, {
+        toggleVisible: {
+          value: () => {
+            layer.setVisible(!layer.getVisible())
+            this.refreshProxyLayers()
+          }
+        },
+        updateOpacity: {
+          value: val => {
+            layer.setOpacity(val)
+            this.refreshProxyLayers()
+          }
+        },
+        remove: {
+          value: () => {
+            this.map.removeLayer(layer)
+            this.refreshProxyLayers()
+          }
+        }
+      })
+
+      proxyLayers.push(proxyLayer)
     })
-  }
-
-  getLayerById = id =>
-    this.map
-      .getLayers()
-      .getArray()
-      .find(layer => layer.get('id') === id)
-
-  updateOpacity = (proxyLayer, opacity) => {
-    const { id } = proxyLayer
-    const layer = this.getLayerById(id)
-    layer.setOpacity(opacity)
-    this.updateProxyLayerState()
-  }
-
-  toggleVisible = proxyLayer => {
-    const { id } = proxyLayer
-    const layer = this.getLayerById(id)
-    layer.setVisible(!layer.getVisible())
-    this.updateProxyLayerState()
-  }
-
-  removeLayer = proxyLayer => {
-    const { id } = proxyLayer
-    const layer = this.getLayerById(id)
-    this.map.removeLayer(layer)
-    this.updateProxyLayerState()
+    this.setState({ proxyLayers })
   }
 
   addLayer = layer => {
     this.map.addLayer(layer)
-    this.updateProxyLayerState()
+    this.refreshProxyLayers()
   }
 
-  updateProxyLayerState = () =>
-    this.setState({
-      proxyLayers: [...this.map.getLayers().getArray()].map(layer =>
-        Object.fromEntries(keys.map(key => [key, layer.get(key)]))
-      )
-    })
-
   render() {
-    const { proxyLayers: layers } = this.state
-    const { updateOpacity, toggleVisible, removeLayer, addLayer } = this
-    return this.props.children({ layers, updateOpacity, toggleVisible, removeLayer, addLayer })
+    const layers = this.map.getLayers()
+    const { proxyLayers } = this.state
+    const { addLayer } = this
+    return this.props.children({ proxyLayers, layers, addLayer })
   }
 }

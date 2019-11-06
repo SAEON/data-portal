@@ -48,37 +48,40 @@ class App extends PureComponent {
     return (
       <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
-          <>
-            <LayerManager map={map}>
-              {({ layers, updateOpacity, toggleVisible, removeLayer, addLayer }) => (
+          <LayerManager map={map}>
+            {({ proxyLayers, layers, addLayer }) => (
+              <>
+                {/* This can be, but doesn't have to be a child of LayerManager */}
+                {/* This way it has access to callbacks defined in LayerManager */}
+                <SingleFeatureSelector map={map}>
+                  {({ selectedFeature, unselectFeature }) =>
+                    selectedFeature ? <button onClick={unselectFeature}>Click to close</button> : ''
+                  }
+                </SingleFeatureSelector>
+
                 <ul>
                   <li>
                     <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
                   </li>
-                  {layers.map((layer, i) => (
+                  {proxyLayers.map((proxyLayer, i) => (
                     <li key={i}>
-                      {layer.id}
-                      <span>({JSON.stringify(layer.visible)})</span>
-                      <button onClick={() => toggleVisible(layer)}>Toggle visible</button>
+                      {proxyLayer.id}
+                      <span>({JSON.stringify(proxyLayer.visible)})</span>
+                      <button onClick={proxyLayer.toggleVisible}>Toggle visible</button>
                       <input
                         type="range"
                         min="0"
                         max="100"
-                        value={layer.opacity * 100}
-                        onChange={e => updateOpacity(layer, e.target.value / 100)}
+                        value={proxyLayer.opacity * 100}
+                        onChange={e => proxyLayer.updateOpacity(e.target.value / 100)}
                       />
-                      <button onClick={() => removeLayer(layer)}>Remove layer</button>
+                      <button onClick={proxyLayer.remove}>Remove layer</button>
                     </li>
                   ))}
                 </ul>
-              )}
-            </LayerManager>
-            <SingleFeatureSelector map={map}>
-              {({ selectedFeature, unselectFeature }) =>
-                selectedFeature ? <button onClick={unselectFeature}>Click to close</button> : ''
-              }
-            </SingleFeatureSelector>
-          </>
+              </>
+            )}
+          </LayerManager>
         )}
       </Map>
     )

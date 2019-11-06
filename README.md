@@ -55,6 +55,7 @@ class App extends PureComponent {
           <>
 
             {/* Module that handles selecting/deselecting features  */}
+            {/* You can also place this module in the LayerManager callback to access the proxyLayers object and other functions */}
             <SingleFeatureSelector map={map}>
               {({ selectedFeature, unselectFeature }) => (selectedFeature ? <div>popup</div> : '')}
             </SingleFeatureSelector>
@@ -62,29 +63,29 @@ class App extends PureComponent {
             {/* Module for adjusting layer settings */}
             {/* Editable settings: opacity, visibility, adding / removing */}
             <LayerManager map={map}>
-              {({ layers, updateOpacity, toggleVisible, removeLayer, addLayer }) => (
-                <ul>
-                  <li>
-                    <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
+            {({ proxyLayers, layers, addLayer }) => (
+              <ul>
+                <li>
+                  <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
+                </li>
+                {proxyLayers.map((proxyLayer, i) => (
+                  <li key={i}>
+                    {proxyLayer.id}
+                    <span>({JSON.stringify(proxyLayer.visible)})</span>
+                    <button onClick={proxyLayer.toggleVisible}>Toggle visible</button>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={proxyLayer.opacity * 100}
+                      onChange={e => proxyLayer.updateOpacity(e.target.value / 100)}
+                    />
+                    <button onClick={proxyLayer.remove}>Remove layer</button>
                   </li>
-                  {layers.map((layer, i) => (
-                    <li key={i}>
-                      {layer.id}
-                      <span>({JSON.stringify(layer.visible)})</span>
-                      <button onClick={() => toggleVisible(layer)}>Toggle visible</button>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={layer.opacity * 100}
-                        onChange={e => updateOpacity(layer, e.target.value / 100)}
-                      />
-                      <button onClick={() => removeLayer(layer)}>Remove layer</button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </LayerManager>
+                ))}
+              </ul>
+            )}
+          </LayerManager>
           </>
         )}
       </Map>
@@ -94,7 +95,65 @@ class App extends PureComponent {
 ```
 
 ## Modules
+The basis of the Atlas is that it comprises of many `Modules`. Please see the example component above for a working proof of concept that uses all the 'built-in' modules (i.e. modules that are included in the library), and also the documentation on each of thse modules below. It's easy to write your own modules - these examples show an example of how you might define modules signatures for composition.
+
+### Built in modules
+
+#### SingleFeatureSelector
 TODO
+
+#### LayerManager
+The OpenLayers library maintains it's own layer state. This is problematic when using React.js, since React will not update state automatically in response to changes to an OpenLayers `map` instance. This modules provides an array of 'proxy' layer objects, and helper functions to update these objects; these proxy layer objects are stored in React state. Essentially this module 'binds' react state to OpenLayers state, and makes working with layers easier.
+
+TODO example
+
+### Example 1
+```jsx
+class App extends PureComponent {
+  constructor(props) { ... }
+
+  render() {
+    return (
+      <Map>
+        {({ map }) => (
+          <>
+            {/* Add your modules here */}
+            <Module1 map={map} />
+            <Module2 map={map}/>
+            <Module3 map={map}/>
+          </>
+        )}
+      </Map>
+    )
+  }
+}
+```
+
+### Example 2
+Since you can define your own modules, you can define composition. Nested module composition might be useful if, for example, Module1 contained filtering logic that you want to make available to other modules.
+
+```jsx
+class App extends PureComponent {
+  constructor(props) { ... }
+
+  render() {
+    return (
+      <Map>
+        {({ map }) => (
+          <Module1 map={map}>
+          {({ someFn }) => (
+            <Module2 map={map}>
+            {({ ... }) => (
+              <Module3 map={map}></Module3>
+            )}</Module2>
+          )}
+          </Module1>
+        )}
+      </Map>
+    )
+  }
+}
+```
 
 # Developers
 To contribute code to this component fork the source code, install dependencies, and start the development server (`webpack-dev-server`). Please work on a branch OTHER than the master branch!
