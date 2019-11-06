@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import { mergeLeft } from 'ramda'
 import { defaults as defaultControls } from 'ol/control.js'
 
 export default class extends Component {
@@ -21,7 +20,7 @@ export default class extends Component {
         attribution: false
       }).extend([]),
       view: new View(
-        mergeLeft(this.props.viewOptions || {}, {
+        Object.assign(this.props.viewOptions || {}, {
           center: [0, 0],
           zoom: 2.5,
           projection: 'EPSG:4326'

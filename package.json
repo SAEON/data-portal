@@ -56,15 +56,11 @@
     "webpack-dev-server": "^3.9.0"
   },
   "peerDependencies": {
-    "react-md": "^1.12.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   },
   "dependencies": {
-    "ol": "^6.1.0",
-    "ol-layerswitcher": "^3.4.0",
-    "ramda": "^0.26.1",
-    "sift": "^8.5.1"
+    "ol": "^6.1.0"
   },
   "repository": {
     "type": "git",
