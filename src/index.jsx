@@ -6,6 +6,7 @@ export * from './open-layers'
 
 // The custom Modoles
 export { default as SingleFeatureSelector } from './modules/single-feature-selector'
+export { default as LayerSwitcher } from './modules/layer-switcher'
 
 // Export the Map object
 export const Map = ({ layers, children, viewOptions, style, className }) => (

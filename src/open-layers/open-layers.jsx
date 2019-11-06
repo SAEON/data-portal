@@ -19,9 +19,7 @@ export default class extends Component {
         rotateOptions: false,
         rotate: false,
         attribution: false
-      }).extend([
-        // Specify controls externally to this component?
-      ]),
+      }).extend([]),
       view: new View(
         mergeLeft(this.props.viewOptions || {}, {
           center: [0, 0],
@@ -35,14 +33,6 @@ export default class extends Component {
   componentDidMount() {
     this.map.setTarget(this.mapRef.current)
   }
-
-  shouldComponentUpdate = async () =>
-    await new Promise(res =>
-      setTimeout(() => {
-        this.map.updateSize()
-        res(false)
-      }, 350)
-    )
 
   componentWillUnmount() {
     this.map.dispose()
