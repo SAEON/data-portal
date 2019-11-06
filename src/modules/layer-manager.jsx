@@ -54,7 +54,7 @@ export default class extends PureComponent {
 
   render() {
     const { proxyLayers: layers } = this.state
-    const { updateOpacity, toggleVisible, removeLayer } = this
-    return this.props.children({ layers, updateOpacity, toggleVisible, removeLayer })
+    const { updateOpacity, toggleVisible, removeLayer, addLayer } = this
+    return this.props.children({ layers, updateOpacity, toggleVisible, removeLayer, addLayer })
   }
 }

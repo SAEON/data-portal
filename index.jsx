@@ -31,7 +31,6 @@ class App extends PureComponent {
      */
     this.layers = [
       ahocevarBaseMap(),
-      cdngiAerial(),
       beehStormflow(),
       beehStormflowCount(),
       this.clusteredSitesLayer
@@ -51,8 +50,11 @@ class App extends PureComponent {
         {({ map }) => (
           <>
             <LayerManager map={map}>
-              {({ layers, updateOpacity, toggleVisible, removeLayer }) => (
+              {({ layers, updateOpacity, toggleVisible, removeLayer, addLayer }) => (
                 <ul>
+                  <li>
+                    <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
+                  </li>
                   {layers.map((layer, i) => (
                     <li key={i}>
                       {layer.id}
