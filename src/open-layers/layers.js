@@ -18,6 +18,7 @@ export const ahocevarBaseMap = () =>
 
 export const beehStormflowCount = () =>
   new TileLayer({
+    id: 'stormflowCountofDays',
     title: 'Stormflow (count of days)',
     visible: true,
     source: new TileWMS({
@@ -36,6 +37,7 @@ export const beehStormflowCount = () =>
 
 export const beehStormflow = () =>
   new TileLayer({
+    id: 'stormflow',
     title: 'Stormflow',
     visible: true,
     source: new TileWMS({
@@ -54,6 +56,7 @@ export const beehStormflow = () =>
 
 export const cdngiAerial = () =>
   new TileLayer({
+    id: 'cdngiAerial',
     title: 'CDNGI-Aerial',
     visible: true,
     source: new TileWMS({
@@ -72,6 +75,7 @@ export const cdngiAerial = () =>
 
 export const openStreetLayers = () =>
   new TileLayer({
+    id: 'openStreetMap',
     title: 'Open Street Maps',
     visible: true,
     id: 'openStreetLayers',

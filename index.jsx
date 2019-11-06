@@ -9,7 +9,7 @@ import {
   clusterLayer,
   clusterSource,
   SingleFeatureSelector,
-  LayerSwitcher
+  LayerManager
 } from './src'
 import './index.scss'
 import pointData from './point-data.json'
@@ -50,7 +50,27 @@ class App extends PureComponent {
       <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
           <>
-            <LayerSwitcher>{({}) => 'hi'}</LayerSwitcher>
+            <LayerManager map={map}>
+              {({ layers, updateOpacity, toggleVisible, removeLayer }) => (
+                <ul>
+                  {layers.map((layer, i) => (
+                    <li key={i}>
+                      {layer.id}
+                      <span>({JSON.stringify(layer.visible)})</span>
+                      <button onClick={() => toggleVisible(layer)}>Toggle visible</button>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={layer.opacity * 100}
+                        onChange={e => updateOpacity(layer, e.target.value / 100)}
+                      />
+                      <button onClick={() => removeLayer(layer)}>Remove layer</button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </LayerManager>
             <SingleFeatureSelector map={map}>
               {({ selectedFeature, unselectFeature }) =>
                 selectedFeature ? <button onClick={unselectFeature}>Click to close</button> : ''
