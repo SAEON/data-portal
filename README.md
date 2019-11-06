@@ -16,7 +16,7 @@ import {
   SingleFeatureSelector
 } from '@saeon/atlas'
 
-const mapStyle = { width: '100%', height: '100%' }
+const mapStyle = { width: '300px', height: '300px' }
 const pointData = [{
   "id": 1,
   "name": "A",
