@@ -11,12 +11,14 @@ npm install @saeon/atlas
 import {
   Map,
   ahocevarBaseMap,
+  cdngiAerial,
   clusterLayer,
   clusterSource,
-  SingleFeatureSelector
+  SingleFeatureSelector,
+  LayerManager
 } from '@saeon/atlas'
 
-const mapStyle = { width: '300px', height: '300px' }
+const mapStyle = { width: '500px', height: '500px' }
 const pointData = [{
   "id": 1,
   "name": "A",
@@ -36,7 +38,7 @@ class App extends PureComponent {
      * new Map({ ... layers: this.layers ...})
      * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
      */
-    this.layers = [ahocevarBaseMap, this.clusteredSitesLayer]
+    this.layers = [ahocevarBaseMap(), this.clusteredSitesLayer]
 
     /**
      * This object is passed to the OpenLayers View constructor
@@ -51,10 +53,38 @@ class App extends PureComponent {
       <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
           <>
-            {/* Then Add your modules here  */}
+
+            {/* Module that handles selecting/deselecting features  */}
             <SingleFeatureSelector map={map}>
               {({ selectedFeature, unselectFeature }) => (selectedFeature ? <div>popup</div> : '')}
             </SingleFeatureSelector>
+
+            {/* Module for adjusting layer settings */}
+            {/* Editable settings: opacity, visibility, adding / removing */}
+            <LayerManager map={map}>
+              {({ layers, updateOpacity, toggleVisible, removeLayer, addLayer }) => (
+                <ul>
+                  <li>
+                    <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
+                  </li>
+                  {layers.map((layer, i) => (
+                    <li key={i}>
+                      {layer.id}
+                      <span>({JSON.stringify(layer.visible)})</span>
+                      <button onClick={() => toggleVisible(layer)}>Toggle visible</button>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={layer.opacity * 100}
+                        onChange={e => updateOpacity(layer, e.target.value / 100)}
+                      />
+                      <button onClick={() => removeLayer(layer)}>Remove layer</button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </LayerManager>
           </>
         )}
       </Map>
