@@ -49,7 +49,7 @@ class App extends PureComponent {
       <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
           <LayerManager map={map}>
-            {({ layerProxies, layers, addLayer }) => (
+            {({ layerProxies, refreshLayerProxies, layers, addLayer }) => (
               <>
                 {/* This can be, but doesn't have to be a child of LayerManager */}
                 {/* This way it has access to callbacks defined in LayerManager */}
