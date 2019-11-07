@@ -49,7 +49,7 @@ class App extends PureComponent {
       <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
           <LayerManager map={map}>
-            {({ proxyLayers, layers, addLayer }) => (
+            {({ layerProxies, layers, addLayer }) => (
               <>
                 {/* This can be, but doesn't have to be a child of LayerManager */}
                 {/* This way it has access to callbacks defined in LayerManager */}
@@ -63,19 +63,19 @@ class App extends PureComponent {
                   <li>
                     <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
                   </li>
-                  {proxyLayers.map((proxyLayer, i) => (
+                  {layerProxies.map((layerProxy, i) => (
                     <li key={i}>
-                      {proxyLayer.id}
-                      <span>({JSON.stringify(proxyLayer.visible)})</span>
-                      <button onClick={proxyLayer.toggleVisible}>Toggle visible</button>
+                      {layerProxy.id}
+                      <span>({JSON.stringify(layerProxy.visible)})</span>
+                      <button onClick={layerProxy.toggleVisible}>Toggle visible</button>
                       <input
                         type="range"
                         min="0"
                         max="100"
-                        value={proxyLayer.opacity * 100}
-                        onChange={e => proxyLayer.updateOpacity(e.target.value / 100)}
+                        value={layerProxy.opacity * 100}
+                        onChange={e => layerProxy.updateOpacity(e.target.value / 100)}
                       />
-                      <button onClick={proxyLayer.remove}>Remove layer</button>
+                      <button onClick={layerProxy.remove}>Remove layer</button>
                     </li>
                   ))}
                 </ul>

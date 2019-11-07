@@ -3,7 +3,7 @@ import { PureComponent } from 'react'
 const keys = ['id', 'title', 'visible', 'opacity']
 
 export default class extends PureComponent {
-  state = { proxyLayers: [] }
+  state = { layerProxies: [] }
 
   constructor(props) {
     super(props)
@@ -11,49 +11,49 @@ export default class extends PureComponent {
   }
 
   componentDidMount() {
-    this.refreshProxyLayers()
+    this.refreshLayerProxies()
   }
 
-  refreshProxyLayers = () => {
-    const proxyLayers = []
+  refreshLayerProxies = () => {
+    const layerProxies = []
     this.map.getLayers().forEach(layer => {
-      const proxyLayer = Object.fromEntries(keys.map(key => [key, layer.get(key)]))
+      const layerProxy = Object.fromEntries(keys.map(key => [key, layer.get(key)]))
 
-      Object.defineProperties(proxyLayer, {
+      Object.defineProperties(layerProxy, {
         toggleVisible: {
           value: () => {
             layer.setVisible(!layer.getVisible())
-            this.refreshProxyLayers()
+            this.refreshLayerProxies()
           }
         },
         updateOpacity: {
           value: val => {
             layer.setOpacity(val)
-            this.refreshProxyLayers()
+            this.refreshLayerProxies()
           }
         },
         remove: {
           value: () => {
             this.map.removeLayer(layer)
-            this.refreshProxyLayers()
+            this.refreshLayerProxies()
           }
         }
       })
 
-      proxyLayers.push(proxyLayer)
+      layerProxies.push(layerProxy)
     })
-    this.setState({ proxyLayers })
+    this.setState({ layerProxies })
   }
 
   addLayer = layer => {
     this.map.addLayer(layer)
-    this.refreshProxyLayers()
+    this.refreshLayerProxies()
   }
 
   render() {
     const layers = this.map.getLayers()
-    const { proxyLayers } = this.state
+    const { layerProxies } = this.state
     const { addLayer } = this
-    return this.props.children({ proxyLayers, layers, addLayer })
+    return this.props.children({ layerProxies, layers, addLayer })
   }
 }
