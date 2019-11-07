@@ -70,7 +70,7 @@ class App extends PureComponent {
             {/* Module for adjusting layer settings */}
             {/* Editable settings: opacity, visibility, adding / removing */}
             <LayerManager map={map}>
-            {({ proxyLayers, layers, addLayer }) => (
+            {({ proxyLayers, refreshLayerProxies, layers, addLayer }) => (
               <ul>
                 <li>
                   <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
