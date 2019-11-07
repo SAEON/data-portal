@@ -11,6 +11,8 @@ npm install @saeon/atlas
 import {
   Map,
   ahocevarBaseMap,
+  beehStormflow,
+  beehStormflowCount,
   cdngiAerial,
   clusterLayer,
   clusterSource,
