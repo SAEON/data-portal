@@ -38,7 +38,12 @@ class App extends PureComponent {
      * new Map({ ... layers: this.layers ...})
      * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
      */
-    this.layers = [ahocevarBaseMap(), this.clusteredSitesLayer]
+    this.layers = [
+      ahocevarBaseMap(),
+      beehStormflow(),
+      beehStormflowCount(),
+      this.clusteredSitesLayer
+    ]
 
     /**
      * This object is passed to the OpenLayers View constructor
