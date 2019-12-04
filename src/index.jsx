@@ -4,7 +4,7 @@ import { OpenLayers } from './open-layers'
 // Export the OpenLayers API
 export * from './open-layers'
 
-// The custom Modoles
+// The custom Modules
 export { default as SingleFeatureSelector } from './modules/single-feature-selector'
 export { default as LayerManager } from './modules/layer-manager'
 
