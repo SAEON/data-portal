@@ -91,6 +91,12 @@ npm link @saeon/atlas
 **NOTE** - when using `npm link`, after making source code changes to the package you need to **rebuild** the package (and NOT update the package on NPM). The command to do this is `npm run build`
 
 # Publish to NPM
+There are 4 scripts included in this repository for publishing - when you clone this repository you need to check that they are executable:
+
+```sh
+chmod +x ./scripts/*
+```
+
 If you don't already have an NPM account, [create one](https://www.npmjs.com/login)! Then login from the root of the source code
 
 ```sh
