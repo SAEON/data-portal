@@ -27,12 +27,12 @@ class App extends PureComponent {
     return (
       <Map>
         {({ map }) => (
-          <>
+          <div>
             {/* Add your modules here */}
             <Module1 map={map} />
             <Module2 map={map}/>
             <Module3 map={map}/>
-          </>
+          </div>
         )}
       </Map>
     )
