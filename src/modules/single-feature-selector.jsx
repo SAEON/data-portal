@@ -1,5 +1,4 @@
 import { PureComponent } from 'react'
-import { clusterStyle, clusterStyle2 } from '../open-layers'
 
 export default class extends PureComponent {
   state = { selectedFeature: null }
@@ -18,13 +17,14 @@ export default class extends PureComponent {
 
     // Add click handler
     this.map.on('click', e => {
+      const { unselectedStyle, selectedStyle } = this.props
       const { selectedFeature } = this.state
       const feature = this.map.forEachFeatureAtPixel(e.pixel, feature => feature)
-      if (selectedFeature) selectedFeature.setStyle(clusterStyle(selectedFeature))
+      if (selectedFeature) selectedFeature.setStyle(selectedStyle(selectedFeature))
       if (feature && feature !== selectedFeature) {
         this.setState({ selectedFeature: feature }, () => {
           const { selectedFeature } = this.state
-          selectedFeature.setStyle(clusterStyle2(feature))
+          selectedFeature.setStyle(unselectedStyle(feature))
         })
       } else {
         if (selectedFeature) this.unselectFeature()
@@ -33,7 +33,8 @@ export default class extends PureComponent {
   }
 
   unselectFeature = () => {
-    this.state.selectedFeature.setStyle(clusterStyle(this.state.selectedFeature))
+    const { unselectedStyle } = this.props
+    this.state.selectedFeature.setStyle(unselectedStyle(this.state.selectedFeature))
     this.setState({ selectedFeature: null })
   }
 
