@@ -20,11 +20,11 @@ export default class extends PureComponent {
       const { unselectedStyle, selectedStyle } = this.props
       const { selectedFeature } = this.state
       const feature = this.map.forEachFeatureAtPixel(e.pixel, feature => feature)
-      if (selectedFeature) selectedFeature.setStyle(selectedStyle(selectedFeature))
+      if (selectedFeature) selectedFeature.setStyle(unselectedStyle(selectedFeature))
       if (feature && feature !== selectedFeature) {
         this.setState({ selectedFeature: feature }, () => {
           const { selectedFeature } = this.state
-          selectedFeature.setStyle(unselectedStyle(feature))
+          selectedFeature.setStyle(selectedStyle(feature))
         })
       } else {
         if (selectedFeature) this.unselectFeature()
