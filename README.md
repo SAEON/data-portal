@@ -187,6 +187,15 @@ npm link @saeon/atlas
 **NOTE** - when using `npm link`, after making source code changes to the package you need to **rebuild** the package (and NOT update the package on NPM). The command to do this is `npm run build`
 
 # Publish to NPM
+If you don't already have an NPM account, [create one](https://www.npmjs.com/login)! Then login from the root of the source code
+
+```sh
+npm login
+# Enter your username
+# Enter your password
+# Enter your email address (probably best to use a work email address, since this is public)
+```
+
 This project uses [semantic versioning](https://docs.npmjs.com/about-semantic-versioning). This means that package versioning is controlled by 3 numbers: `major.minor.patch`, which in the case of this project means:
 
 - **major** - Users should expect breaking changes
