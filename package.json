@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Generalized openLayer wrapper for GIS data navigation",
   "main": "dist/index.js",
   "files": [
