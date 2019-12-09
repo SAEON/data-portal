@@ -4,6 +4,11 @@ import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control.js'
 
 export default class extends Component {
+
+  state = {
+    clientWidth: 0
+  }
+
   constructor(props) {
     super(props)
 
@@ -30,7 +35,16 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    this.map.setTarget(this.mapRef.current)
+    this.map.setTarget(this.mapRef.current) 
+  }
+
+  componentDidUpdate() {
+    setTimeout(() => {
+      const clientWidth = this.mapRef.current.clientWidth
+      if (clientWidth > this.state.clientWidth) {
+        this.setState({clientWidth}, () => this.map.updateSize())
+      }
+    }, 300)
   }
 
   componentWillUnmount() {
