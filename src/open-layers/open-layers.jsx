@@ -43,7 +43,7 @@ export default class extends Component {
     return (
       <div className={className} style={style}>
         {children ? children({ map }) : null}
-        <div ref={mapRef} style={{ width: '100%', height: '100%' }} />
+        <div className="ol" ref={mapRef} style={{ width: '100%', height: '100%' }} />
       </div>
     )
   }

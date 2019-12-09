@@ -18,8 +18,8 @@
     "increment-minor": "./scripts/increment-minor.sh",
     "increment-major": "./scripts/increment-major.sh",
     "push-to-npm": "./scripts/push-to-npm.sh",
+    "build": "npm-run-all pack",
     "rm-dist": "rm -rf ./dist",
-    "build": "npm-run-all rm-dist pack",
     "pack": "webpack --env.mode=production"
   },
   "keywords": [
