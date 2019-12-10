@@ -35,7 +35,7 @@ export default class extends Component {
   }
 
   componentWillUnmount() {
-    this.map.setTarget(undefined)
+    this.map.setTarget(null)
   }
   
   componentDidUpdate() {
