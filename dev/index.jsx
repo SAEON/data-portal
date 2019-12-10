@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { render } from 'react-dom'
-import { Map, SingleFeatureSelector, LayerManager } from '../src'
+import { OlReact, SingleFeatureSelector, LayerManager } from '../src'
 import { clusterSource } from './sources'
 import {
   beehStormflow,
@@ -49,7 +49,7 @@ class App extends PureComponent {
 
   render() {
     return (
-      <Map style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
+      <OlReact style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
           <LayerManager map={map}>
             {({ layerProxies, refreshLayerProxies, layers, addLayer }) => (
@@ -90,7 +90,7 @@ class App extends PureComponent {
             )}
           </LayerManager>
         )}
-      </Map>
+      </OlReact>
     )
   }
 }
