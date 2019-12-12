@@ -4,6 +4,7 @@ import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control.js'
 
 export default class extends Component {
+
   constructor(props) {
     super(props)
 
@@ -34,8 +35,13 @@ export default class extends Component {
   }
 
   componentWillUnmount() {
-    this.map.dispose()
+    this.map.setTarget(null)
   }
+  
+  componentDidUpdate() {
+    this.map.updateSize()
+  }
+
 
   render() {
     const { children, style, className } = this.props
