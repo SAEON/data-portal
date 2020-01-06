@@ -17,6 +17,7 @@ export default class extends PureComponent {
 
     // Add click handler
     this.map.on('click', e => {
+      if (this.props.ignoreClicks) return
       const { unselectedStyle, selectedStyle } = this.props
       const { selectedFeature } = this.state
       const feature = this.map.forEachFeatureAtPixel(e.pixel, feature => feature)
@@ -33,6 +34,7 @@ export default class extends PureComponent {
   }
 
   unselectFeature = () => {
+    if (this.props.ignoreClicks) return
     const { unselectedStyle } = this.props
     this.state.selectedFeature.setStyle(unselectedStyle(this.state.selectedFeature))
     this.setState({ selectedFeature: null })
