@@ -12,6 +12,7 @@ import {
 import { clusterStyle1, clusterStyle2 } from './styles'
 import './index.scss'
 import pointData from './point-data.json'
+var newPointData
 
 const mapStyle = { width: '100%', height: '100%' }
 
@@ -62,7 +63,40 @@ class App extends PureComponent {
                   map={map}
                 >
                   {({ selectedFeature, unselectFeature }) =>
-                    selectedFeature ? <button onClick={unselectFeature}>Click to close</button> : ''
+                    selectedFeature ? (
+                      <div>
+                        {/* Any OpenLayer Feature instance can be selected/deslected */}
+                        <button onClick={unselectFeature}>Unselect feature</button>
+
+                        {/* Deleting a feature is a little different - A Feature instance can be a group of features */}
+                        {/* So first unselect the feature, then reset the layer */}
+                        <button
+                          onClick={() =>
+                            unselectFeature(() => {
+                              // First reset the source data
+                              newPointData = (newPointData || pointData).filter(
+                                p =>
+                                  !(selectedFeature.get('features') || [selectedFeature])
+                                    .map(f => f.get('id'))
+                                    .includes(p.id)
+                              )
+
+                              // Then reset the layer
+                              this.clusteredSitesLayer.setSource(
+                                clusterSource({
+                                  data: newPointData,
+                                  locAttribute: 'location'
+                                })
+                              )
+                            })
+                          }
+                        >
+                          Delete feature
+                        </button>
+                      </div>
+                    ) : (
+                      ''
+                    )
                   }
                 </SingleFeatureSelector>
 
