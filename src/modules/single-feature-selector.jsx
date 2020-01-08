@@ -1,7 +1,7 @@
 import { PureComponent } from 'react'
 
 export default class extends PureComponent {
-  state = { selectedFeature: null }
+  state = { selectedFeature: null, selectedLayer: null }
 
   constructor(props) {
     super(props)
@@ -20,24 +20,38 @@ export default class extends PureComponent {
       if (this.props.ignoreClicks) return
       const { unselectedStyle, selectedStyle } = this.props
       const { selectedFeature } = this.state
-      const feature = this.map.forEachFeatureAtPixel(e.pixel, feature => feature)
+      const { feature, layer } =
+        this.map.forEachFeatureAtPixel(e.pixel, (feature, layer) => ({
+          feature,
+          layer
+        })) || {}
       if (selectedFeature) selectedFeature.setStyle(unselectedStyle(selectedFeature))
       if (feature && feature !== selectedFeature) {
-        this.setState({ selectedFeature: feature }, () => {
-          const { selectedFeature } = this.state
-          selectedFeature.setStyle(selectedStyle(feature))
-        })
+        this.setState(
+          {
+            selectedFeature: feature,
+            selectedLayer: layer
+          },
+          () => {
+            const { selectedFeature } = this.state
+            selectedFeature.setStyle(selectedStyle(feature))
+          }
+        )
       } else {
         if (selectedFeature) this.unselectFeature()
       }
     })
   }
 
+<<<<<<< HEAD
   unselectFeature = () => {
     if (this.props.ignoreClicks) return
+=======
+  unselectFeature = (cb = null) => {
+>>>>>>> 812e4fc294af5bcb97453b25f3a0b8dac5ade41e
     const { unselectedStyle } = this.props
     this.state.selectedFeature.setStyle(unselectedStyle(this.state.selectedFeature))
-    this.setState({ selectedFeature: null })
+    this.setState({ selectedFeature: null, selectedLayer: null }, cb)
   }
 
   render() {
