@@ -44,6 +44,9 @@ export default class extends PureComponent {
   }
 
   unselectFeature = (cb = null) => {
+    // This function is often called with an event object. which is not a function
+    if (typeof cb !== 'function') cb = null
+
     if (this.props.ignoreClicks) return
     const { unselectedStyle } = this.props
     this.state.selectedFeature.setStyle(unselectedStyle(this.state.selectedFeature))
