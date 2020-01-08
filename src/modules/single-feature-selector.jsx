@@ -43,12 +43,8 @@ export default class extends PureComponent {
     })
   }
 
-<<<<<<< HEAD
-  unselectFeature = () => {
-    if (this.props.ignoreClicks) return
-=======
   unselectFeature = (cb = null) => {
->>>>>>> 812e4fc294af5bcb97453b25f3a0b8dac5ade41e
+    if (this.props.ignoreClicks) return
     const { unselectedStyle } = this.props
     this.state.selectedFeature.setStyle(unselectedStyle(this.state.selectedFeature))
     this.setState({ selectedFeature: null, selectedLayer: null }, cb)
