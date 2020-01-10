@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { render } from 'react-dom'
-import { OlReact, SingleFeatureSelector, LayerManager } from '../src'
+import { OlReact, SingleFeatureSelector, LayerManager, DragAndDrop } from '../src'
 import { clusterSource } from './sources'
 import {
   beehStormflow,
@@ -52,77 +52,99 @@ class App extends PureComponent {
     return (
       <OlReact style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
         {({ map }) => (
-          <LayerManager map={map}>
-            {({ layerProxies, refreshLayerProxies, layers, addLayer }) => (
-              <>
-                {/* This can be, but doesn't have to be a child of LayerManager */}
-                {/* This way it has access to callbacks defined in LayerManager */}
-                <SingleFeatureSelector
-                  unselectedStyle={clusterStyle1}
-                  selectedStyle={clusterStyle2}
-                  map={map}
-                >
-                  {({ selectedFeature, unselectFeature }) =>
-                    selectedFeature ? (
-                      <div>
-                        {/* Any OpenLayer Feature instance can be selected/deslected */}
-                        <button onClick={unselectFeature}>Unselect feature</button>
+          <>
+            {/* A module that provides a means of selecting/deselecting a single feature */}
+            <SingleFeatureSelector
+              unselectedStyle={clusterStyle1}
+              selectedStyle={clusterStyle2}
+              map={map}
+            >
+              {({ selectedFeature, unselectFeature }) =>
+                selectedFeature ? (
+                  <div>
+                    {/* Any OpenLayer Feature instance can be selected/deslected */}
+                    <button onClick={unselectFeature}>Unselect feature</button>
 
-                        {/* Deleting a feature is a little different - A Feature instance can be a group of features */}
-                        {/* So first unselect the feature, then reset the layer */}
-                        <button
-                          onClick={() =>
-                            unselectFeature(() => {
-                              // First reset the source data
-                              newPointData = (newPointData || pointData).filter(
-                                p =>
-                                  !(selectedFeature.get('features') || [selectedFeature])
-                                    .map(f => f.get('id'))
-                                    .includes(p.id)
-                              )
+                    {/* Deleting a feature is a little different - A Feature instance can be a group of features */}
+                    {/* So first unselect the feature, then reset the layer */}
+                    <button
+                      onClick={() =>
+                        unselectFeature(() => {
+                          // First reset the source data
+                          newPointData = (newPointData || pointData).filter(
+                            p =>
+                              !(selectedFeature.get('features') || [selectedFeature])
+                                .map(f => f.get('id'))
+                                .includes(p.id)
+                          )
 
-                              // Then reset the layer
-                              this.clusteredSitesLayer.setSource(
-                                clusterSource({
-                                  data: newPointData,
-                                  locAttribute: 'location'
-                                })
-                              )
+                          // Then reset the layer
+                          this.clusteredSitesLayer.setSource(
+                            clusterSource({
+                              data: newPointData,
+                              locAttribute: 'location'
                             })
-                          }
-                        >
-                          Delete feature
-                        </button>
-                      </div>
-                    ) : (
-                      ''
-                    )
-                  }
-                </SingleFeatureSelector>
+                          )
+                        })
+                      }
+                    >
+                      Delete feature
+                    </button>
+                  </div>
+                ) : (
+                  ''
+                )
+              }
+            </SingleFeatureSelector>
 
-                <ul>
-                  <li>
-                    <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
-                  </li>
-                  {layerProxies.map((layerProxy, i) => (
-                    <li key={i}>
-                      {layerProxy.id}
-                      <span>({JSON.stringify(layerProxy.visible)})</span>
-                      <button onClick={layerProxy.toggleVisible}>Toggle visible</button>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={layerProxy.opacity * 100}
-                        onChange={e => layerProxy.updateOpacity(e.target.value / 100)}
-                      />
-                      <button onClick={layerProxy.remove}>Remove layer</button>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </LayerManager>
+            {/* LayerManager provides map layers as an array */}
+            {/* Updates to the array will reflect on the map (LayerManager 'ties' state of the array to the map) */}
+            <LayerManager map={map}>
+              {({ layerProxies, refreshLayerProxies, layers, addLayer }) => (
+                <>
+                  {/* Renders a drag/droppable list of provided children */}
+                  <DragAndDrop
+                    map={map}
+                    listStyle={isDraggingOver => ({
+                      background: isDraggingOver ? 'lightblue' : 'lightgrey',
+                      padding: 4,
+                      width: 1000
+                    })}
+                    itemStyle={(isDragging, draggableStyle) => ({
+                      userSelect: 'none',
+                      margin: `0 0 4px 0`,
+                      padding: '4px',
+                      background: isDragging ? 'lightgreen' : 'grey',
+                      ...draggableStyle
+                    })}
+                    items={layerProxies}
+                  >
+                    {(items, makeDraggable) =>
+                      items.map((item, i) =>
+                        makeDraggable(
+                          <div key={i}>
+                            {item.id}
+                            <span>({JSON.stringify(item.visible)})</span>
+                            <button onClick={item.toggleVisible}>Toggle visible</button>
+                            <input
+                              type="range"
+                              min="0"
+                              max="100"
+                              value={item.opacity * 100}
+                              onChange={e => item.updateOpacity(e.target.value / 100)}
+                            />
+                            <button onClick={item.remove}>Remove layer</button>
+                          </div>,
+                          i
+                        )
+                      )
+                    }
+                  </DragAndDrop>
+                  <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
+                </>
+              )}
+            </LayerManager>
+          </>
         )}
       </OlReact>
     )
