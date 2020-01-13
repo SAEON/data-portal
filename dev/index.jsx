@@ -102,13 +102,16 @@ class App extends PureComponent {
             <LayerManager map={map}>
               {({ layerProxies, refreshLayerProxies, layers, addLayer }) => (
                 <>
+                  <button style={{ margin: '8px 8px 4px' }} onClick={() => addLayer(cdngiAerial())}>
+                    Add layer
+                  </button>
                   {/* Renders a drag/droppable list of provided children */}
                   <DragAndDrop
                     map={map}
                     listStyle={isDraggingOver => ({
                       background: isDraggingOver ? 'lightblue' : 'lightgrey',
-                      padding: 4,
-                      width: 1000
+                      padding: 8,
+                      margin: 8
                     })}
                     itemStyle={(isDragging, draggableStyle) => ({
                       userSelect: 'none',
@@ -140,7 +143,6 @@ class App extends PureComponent {
                       )
                     }
                   </DragAndDrop>
-                  <button onClick={() => addLayer(cdngiAerial())}>Add layer</button>
                 </>
               )}
             </LayerManager>
