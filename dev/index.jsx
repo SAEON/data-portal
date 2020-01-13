@@ -100,12 +100,14 @@ class App extends PureComponent {
             {/* LayerManager provides map layers as an array */}
             {/* Updates to the array will reflect on the map (LayerManager 'ties' state of the array to the map) */}
             <LayerManager map={map}>
-              {({ layerProxies, refreshLayerProxies, layers, addLayer }) => (
+              {({ proxy }) => (
                 <>
-                  <button style={{ margin: '8px 8px 4px' }} onClick={() => addLayer(cdngiAerial())}>
+                  <button
+                    style={{ margin: '8px 8px 4px' }}
+                    onClick={() => proxy.addLayer(cdngiAerial())}
+                  >
                     Add layer
                   </button>
-                  {/* Renders a drag/droppable list of provided children */}
                   <DragAndDrop
                     map={map}
                     listStyle={isDraggingOver => ({
@@ -120,7 +122,7 @@ class App extends PureComponent {
                       background: isDragging ? 'lightgreen' : 'grey',
                       ...draggableStyle
                     })}
-                    items={layerProxies}
+                    items={proxy.layers}
                   >
                     {(items, makeDraggable) =>
                       items.map((item, i) =>
@@ -128,15 +130,15 @@ class App extends PureComponent {
                           <div key={i}>
                             {item.id}
                             <span>({JSON.stringify(item.visible)})</span>
-                            <button onClick={item.toggleVisible}>Toggle visible</button>
+                            <button onClick={() => item.toggleVisible()}>Toggle visible</button>
                             <input
                               type="range"
                               min="0"
                               max="100"
                               value={item.opacity * 100}
-                              onChange={e => item.updateOpacity(e.target.value / 100)}
+                              onChange={e => (item.opacity = e.target.value / 100)}
                             />
-                            <button onClick={item.remove}>Remove layer</button>
+                            <button onClick={() => item.removeLayer()}>Remove layer</button>
                           </div>,
                           i
                         )

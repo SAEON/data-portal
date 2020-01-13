@@ -12,6 +12,7 @@ export default ({ map, items, listStyle, itemStyle, children }) => {
   return (
     <DragDropContext
       onDragEnd={result => {
+        console.log(result)
         if (!result.destination) return
         const newItems = reorder(items, result.source.index, result.destination.index)
         // setItems(newItems)

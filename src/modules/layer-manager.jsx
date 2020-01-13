@@ -1,68 +1,69 @@
-import { PureComponent } from 'react'
+import { Component } from 'react'
 
-const keys = ['id', 'title', 'visible', 'opacity']
-
-const descriptorProperties = {
-  writable: false,
-  configurable: false,
-  enumerable: false
-}
-
-export default class extends PureComponent {
-  state = { layerProxies: [] }
-
+export default class extends Component {
   constructor(props) {
     super(props)
-    this.map = props.map
-  }
 
-  componentDidMount() {
-    this.refreshLayerProxies()
-  }
+    const reRender = this.reRender
 
-  refreshLayerProxies = () => {
-    const layerProxies = []
-    this.map.getLayers().forEach(layer => {
-      const layerProxy = Object.fromEntries(keys.map(key => [key, layer.get(key)]))
+    this.state = {
+      render: 0,
+      proxy: new Proxy(this.props.map, {
+        get: function(map, prop) {
+          // [layer]
+          if (prop === 'layers')
+            return new Proxy(map.getLayers().getArray(), {
+              get: function(layers, i) {
+                if (typeof i === 'symbol') return
+                if (isNaN(parseInt(i))) return layers[i]
 
-      Object.defineProperties(layerProxy, {
-        toggleVisible: {
-          ...descriptorProperties,
-          value: () => {
-            layer.setVisible(!layer.getVisible())
-            this.refreshLayerProxies()
-          }
-        },
-        updateOpacity: {
-          ...descriptorProperties,
-          value: val => {
-            layer.setOpacity(val)
-            this.refreshLayerProxies()
-          }
-        },
-        remove: {
-          ...descriptorProperties,
-          value: () => {
-            this.map.removeLayer(layer)
-            this.refreshLayerProxies()
-          }
+                // layer
+                return new Proxy(
+                  {},
+                  {
+                    get: function(_, attribute) {
+                      if (['id', 'title', 'visible', 'opacity'].includes(attribute))
+                        return layers[i].get(attribute)
+
+                      if (attribute === 'toggleVisible')
+                        return () => {
+                          layers[i].setVisible(!layers[i].getVisible())
+                          reRender()
+                        }
+
+                      if (attribute === 'removeLayer')
+                        return () => {
+                          map.removeLayer(layers[i])
+                          reRender()
+                        }
+                    },
+                    set: function(_, attribute, value) {
+                      layers[i].setOpacity(value)
+                      reRender()
+                      return true
+                    }
+                  }
+                )
+              }
+            })
+
+          if (prop === 'addLayer')
+            return layer => {
+              map.addLayer(layer)
+              reRender()
+            }
+
+          // Return the map object
+          return map[prop]
         }
       })
-
-      layerProxies.push(layerProxy)
-    })
-    this.setState({ layerProxies })
+    }
   }
 
-  addLayer = layer => {
-    this.map.addLayer(layer)
-    this.refreshLayerProxies()
-  }
+  reRender = () => this.setState({ render: this.state.render + 1 })
 
   render() {
-    const { map, state, props, refreshLayerProxies, addLayer } = this
-    const layers = map.getLayers()
-    const { layerProxies } = state
-    return props.children({ layers, addLayer, layerProxies, refreshLayerProxies })
+    const { proxy } = this.state
+    return this.props.children({ proxy })
   }
 }
