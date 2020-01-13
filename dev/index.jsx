@@ -109,6 +109,13 @@ class App extends PureComponent {
                     Add layer
                   </button>
                   <DragAndDrop
+                    layers={proxy.layers}
+                    reorderItems={result => {
+                      if (!result.destination) return
+                      const from = result.source.index
+                      const to = result.destination.index
+                      proxy.reorderLayers(from, to)
+                    }}
                     map={map}
                     listStyle={isDraggingOver => ({
                       background: isDraggingOver ? 'lightblue' : 'lightgrey',
@@ -122,23 +129,22 @@ class App extends PureComponent {
                       background: isDragging ? 'lightgreen' : 'grey',
                       ...draggableStyle
                     })}
-                    items={proxy.layers}
                   >
-                    {(items, makeDraggable) =>
-                      items.map((item, i) =>
+                    {(layers, makeDraggable) =>
+                      layers.map((layer, i) =>
                         makeDraggable(
                           <div key={i}>
-                            {item.id}
-                            <span>({JSON.stringify(item.visible)})</span>
-                            <button onClick={() => item.toggleVisible()}>Toggle visible</button>
+                            {layer.id}
+                            <span>({JSON.stringify(layer.visible)})</span>
+                            <button onClick={() => layer.toggleVisible()}>Toggle visible</button>
                             <input
                               type="range"
                               min="0"
                               max="100"
-                              value={item.opacity * 100}
-                              onChange={e => (item.opacity = e.target.value / 100)}
+                              value={layer.opacity * 100}
+                              onChange={e => (layer.opacity = e.target.value / 100)}
                             />
-                            <button onClick={() => item.removeLayer()}>Remove layer</button>
+                            <button onClick={() => layer.removeLayer()}>Remove layer</button>
                           </div>,
                           i
                         )
