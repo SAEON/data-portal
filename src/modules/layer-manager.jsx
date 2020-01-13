@@ -63,6 +63,6 @@ export default class extends PureComponent {
     const { map, state, props, refreshLayerProxies, addLayer } = this
     const layers = map.getLayers()
     const { layerProxies } = state
-    return props.children({ layerProxies, layers, addLayer, refreshLayerProxies })
+    return props.children({ layers, addLayer, layerProxies, refreshLayerProxies })
   }
 }
