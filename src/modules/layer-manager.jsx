@@ -29,11 +29,28 @@ export default class extends Component {
               reRender()
             }
           },
+
+          /**
+           * Layers must have unique IDs
+           */
           addLayer: {
             value: layer => {
-              // TODO no duplicates
-              map.addLayer(layer)
-              reRender()
+              if (
+                map
+                  .getLayers()
+                  .getArray()
+                  .map(layer => layer.get('id'))
+                  .includes(layer.get('id'))
+              ) {
+                throw new Error(
+                  `@saeon/atlas. Cannot add layer with ID ${layer.get(
+                    'id'
+                  )} to the atlas since a layer with that ID already exists`
+                )
+              } else {
+                map.addLayer(layer)
+                reRender()
+              }
             }
           },
           getLayers: {
