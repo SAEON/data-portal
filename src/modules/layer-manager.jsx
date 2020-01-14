@@ -1,8 +1,14 @@
 import { PureComponent } from 'react'
 import LayerGroup from 'ol/layer/Group'
+import { WMSCapabilities } from 'ol/format'
+
+const wmsParser = new WMSCapabilities()
 
 export default class extends PureComponent {
-  state = { render: 0 }
+  state = {
+    servers: {},
+    render: 0
+  }
 
   constructor(props) {
     super(props)
@@ -28,6 +34,22 @@ export default class extends PureComponent {
               map.removeLayer(layer._target)
               reRender()
             }
+          },
+
+          addServer: {
+            value: async baseUri =>
+              this.setState({
+                servers: Object.assign(
+                  {
+                    [baseUri]: await fetch(
+                      `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
+                    )
+                      .then(res => res.text())
+                      .then(txt => wmsParser.read(txt))
+                  },
+                  { ...this.state.servers }
+                )
+              })
           },
 
           /**

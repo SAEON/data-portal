@@ -102,6 +102,21 @@ class App extends PureComponent {
             <LayerManager map={map}>
               {({ proxy }) => (
                 <>
+                  {/* This is how you add a server */}
+                  <button
+                    style={{ margin: '8px 8px 4px' }}
+                    onClick={() => {
+                      const uri = prompt(
+                        'Enter WMS Server address',
+                        'http://app01.saeon.ac.za:8082/geoserver/BEEH_shp/wms'
+                      )
+                      proxy.addServer(uri)
+                    }}
+                  >
+                    Add server
+                  </button>
+
+                  {/* This is how you add a layer */}
                   <button
                     style={{ margin: '8px 8px 4px' }}
                     onClick={() => proxy.addLayer(cdngiAerial())}
