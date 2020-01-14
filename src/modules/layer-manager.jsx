@@ -1,7 +1,7 @@
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import LayerGroup from 'ol/layer/Group'
 
-export default class extends Component {
+export default class extends PureComponent {
   state = { render: 0 }
 
   constructor(props) {
