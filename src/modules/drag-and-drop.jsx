@@ -12,7 +12,7 @@ export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
             style={listStyle(snapshot.isDraggingOver)}
           >
             {children(layers, (children, i) => (
-              <Draggable key={layers[i].id} draggableId={layers[i].id} index={i}>
+              <Draggable key={layers[i].get('id')} draggableId={layers[i].get('id')} index={i}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}

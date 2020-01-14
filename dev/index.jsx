@@ -108,15 +108,15 @@ class App extends PureComponent {
                   >
                     Add layer
                   </button>
+
                   <DragAndDrop
-                    layers={proxy.layers}
+                    layers={proxy.getLayers().getArray()}
                     reorderItems={result => {
                       if (!result.destination) return
                       const from = result.source.index
                       const to = result.destination.index
                       proxy.reorderLayers(from, to)
                     }}
-                    map={map}
                     listStyle={isDraggingOver => ({
                       background: isDraggingOver ? 'lightblue' : 'lightgrey',
                       padding: 8,
@@ -134,17 +134,19 @@ class App extends PureComponent {
                       layers.map((layer, i) =>
                         makeDraggable(
                           <div key={i}>
-                            {layer.id}
-                            <span>({JSON.stringify(layer.visible)})</span>
-                            <button onClick={() => layer.toggleVisible()}>Toggle visible</button>
+                            {layer.get('id')}
+                            <span>({JSON.stringify(layer.get('visible'))})</span>
+                            <button onClick={() => layer.setVisible(!layer.get('visible'))}>
+                              Toggle visible
+                            </button>
                             <input
                               type="range"
                               min="0"
                               max="100"
-                              value={layer.opacity * 100}
-                              onChange={e => (layer.opacity = e.target.value / 100)}
+                              value={layer.get('opacity') * 100}
+                              onChange={e => layer.setOpacity(e.target.value / 100)}
                             />
-                            <button onClick={() => layer.removeLayer()}>Remove layer</button>
+                            <button onClick={() => proxy.removeLayer(layer)}>Remove layer</button>
                           </div>,
                           i
                         )
