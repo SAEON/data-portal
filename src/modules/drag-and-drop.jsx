@@ -11,8 +11,8 @@ export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
             ref={provided.innerRef}
             style={listStyle(snapshot.isDraggingOver)}
           >
-            {children(layers, (children, i) => (
-              <Draggable key={layers[i].get('id')} draggableId={layers[i].get('id')} index={i}>
+            {children(layers, (child, i) => (
+              <Draggable key={i} draggableId={i.toString()} index={i}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
@@ -20,7 +20,7 @@ export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
                     {...provided.dragHandleProps}
                     style={itemStyle(snapshot.isDragging, provided.draggableProps.style)}
                   >
-                    {children}
+                    {child}
                   </div>
                 )}
               </Draggable>

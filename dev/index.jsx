@@ -133,7 +133,7 @@ class App extends PureComponent {
                     {(layers, makeDraggable) =>
                       layers.map((layer, i) =>
                         makeDraggable(
-                          <div key={i}>
+                          <div>
                             {layer.get('id')}
                             <span>({JSON.stringify(layer.get('visible'))})</span>
                             <button onClick={() => layer.setVisible(!layer.get('visible'))}>
