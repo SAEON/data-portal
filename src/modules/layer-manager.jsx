@@ -30,84 +30,70 @@ export default class extends Component {
           },
           addLayer: {
             value: layer => {
-              // TODO no duplicates allowed
+              // TODO no duplicates
               map.addLayer(layer)
               reRender()
             }
           },
           getLayers: {
-            get() {
-              return () =>
-                new Proxy(
-                  Object.defineProperties(
-                    {},
-                    {
-                      getArray: {
-                        get() {
-                          return () =>
-                            new Proxy(
-                              map
-                                .getLayers()
-                                .getArray()
-                                .map(
-                                  layer =>
-                                    new Proxy(
-                                      Object.defineProperties(
-                                        {},
-                                        {
-                                          _target: {
-                                            value: layer
-                                          },
-                                          setOpacity: {
-                                            value: num => {
-                                              layer.setOpacity(num)
-                                              reRender()
-                                            }
-                                          },
-                                          setVisible: {
-                                            value: bool => {
-                                              layer.setVisible(bool)
-                                              reRender()
-                                            }
-                                          },
-                                          get: {
-                                            get() {
-                                              return attribute => layer.get(attribute)
-                                            }
-                                          }
-                                        }
-                                      ),
-                                      {
-                                        get: function(target, prop) {
-                                          return target[prop]
-                                        }
-                                      }
-                                    )
-                                ),
-                              {
-                                get: function(target, prop) {
-                                  return target[prop]
-                                }
-                              }
-                            )
-                        }
-                      }
-                    }
-                  ),
+            get: () => () =>
+              new Proxy(
+                Object.defineProperties(
+                  {},
                   {
-                    get: function(target, prop) {
-                      return target[prop]
+                    getArray: {
+                      get: () => () =>
+                        new Proxy(
+                          map
+                            .getLayers()
+                            .getArray()
+                            .map(
+                              layer =>
+                                new Proxy(
+                                  Object.defineProperties(
+                                    {},
+                                    {
+                                      _target: {
+                                        value: layer
+                                      },
+                                      setOpacity: {
+                                        value: num => {
+                                          layer.setOpacity(num)
+                                          reRender()
+                                        }
+                                      },
+                                      setVisible: {
+                                        value: bool => {
+                                          layer.setVisible(bool)
+                                          reRender()
+                                        }
+                                      },
+                                      get: {
+                                        get: () => attribute => layer.get(attribute)
+                                      }
+                                    }
+                                  ),
+                                  {
+                                    get: (target, prop) => target[prop]
+                                  }
+                                )
+                            ),
+                          {
+                            get: (target, prop) => target[prop]
+                          }
+                        )
                     }
                   }
-                )
-            }
+                ),
+                {
+                  get: (target, prop) => target[prop]
+                }
+              )
           }
         }
       ),
       {
-        get: function(target, prop) {
-          return target[prop]
-        }
+        get: (target, prop) => target[prop]
       }
     )
   }
