@@ -10,6 +10,7 @@ export default class extends Component {
     const reRender = this.reRender
 
     this.proxy = new Proxy(
+      // Map proxy object
       Object.defineProperties(
         {},
         {
@@ -38,9 +39,13 @@ export default class extends Component {
           getLayers: {
             get: () => () =>
               new Proxy(
+                // Collection proxy object
                 Object.defineProperties(
                   {},
                   {
+                    _target: {
+                      value: map.getLayers()
+                    },
                     getArray: {
                       get: () => () =>
                         new Proxy(
@@ -50,23 +55,12 @@ export default class extends Component {
                             .map(
                               layer =>
                                 new Proxy(
+                                  // Layer proxy object
                                   Object.defineProperties(
                                     {},
                                     {
                                       _target: {
                                         value: layer
-                                      },
-                                      setOpacity: {
-                                        value: num => {
-                                          layer.setOpacity(num)
-                                          reRender()
-                                        }
-                                      },
-                                      setVisible: {
-                                        value: bool => {
-                                          layer.setVisible(bool)
-                                          reRender()
-                                        }
                                       },
                                       get: {
                                         get: () => attribute => layer.get(attribute)
@@ -74,10 +68,21 @@ export default class extends Component {
                                     }
                                   ),
                                   {
-                                    get: (target, prop) => target[prop]
+                                    get: (target, prop) =>
+                                      target.hasOwnProperty(prop)
+                                        ? target[prop]
+                                        : typeof target._target[prop] === 'function'
+                                        ? (...args) => {
+                                            target._target[prop].apply(target._target, [...args])
+                                            reRender()
+                                          }
+                                        : target._target[prop]
                                   }
                                 )
                             ),
+
+                          // getArray() proxy handler (proxies an array)
+                          // Arrays as proxy objects are transparent
                           {
                             get: (target, prop) => target[prop]
                           }
@@ -85,15 +90,35 @@ export default class extends Component {
                     }
                   }
                 ),
+
+                // getLayers() proxy handler (proxies an OpenLayers Collection)
                 {
-                  get: (target, prop) => target[prop]
+                  get: (target, prop) =>
+                    target.hasOwnProperty(prop)
+                      ? target[prop]
+                      : typeof target[prop] === 'function'
+                      ? (...args) => {
+                          target._target[prop].apply(target._target, [...args])
+                          reRender()
+                        }
+                      : target._target[prop]
                 }
               )
           }
         }
       ),
+
+      // map proxy object (proxies the map object)
       {
-        get: (target, prop) => target[prop]
+        get: (target, prop) =>
+          target.hasOwnProperty(prop)
+            ? target[prop]
+            : typeof map[prop] === 'function'
+            ? (...args) => {
+                map[prop].apply(map, [...args])
+                reRender()
+              }
+            : map[prop]
       }
     )
   }
