@@ -19,8 +19,7 @@ export default class extends PureComponent {
     super(props)
     const { map } = this.props
     const reRender = this.reRender
-
-    this.proxy = new Proxy(
+    const proxy = new Proxy(
       // Map proxy object
       Object.defineProperties(
         {},
@@ -35,55 +34,83 @@ export default class extends PureComponent {
               reRender()
             }
           },
-          removeLayer: {
-            ...descriptor,
-            get: () => layer => {
-              map.removeLayer(layer._target)
-              reRender()
-            }
-          },
 
           addServer: {
             ...descriptor,
             get: () => async baseUri =>
-              this.setState(
-                {
-                  servers: Object.assign(
-                    {
-                      [baseUri]: await fetch(
-                        `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
-                      )
-                        .then(res => res.text())
-                        .then(txt => wmsParser.read(txt))
-                        .then(
-                          wms =>
-                            new Proxy(
-                              Object.defineProperties(
-                                {},
-                                {
-                                  remove: {
-                                    get: () => () =>
-                                      this.setState({
-                                        servers: Object.fromEntries(
-                                          Object.entries(this.state.servers).filter(
-                                            ([uri]) => uri !== baseUri
-                                          )
-                                        )
-                                      })
-                                  }
+              this.setState({
+                servers: Object.assign(
+                  {
+                    [baseUri]: await fetch(
+                      `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
+                    )
+                      .then(res => res.text())
+                      .then(txt => wmsParser.read(txt))
+                      .then(
+                        wms =>
+                          new Proxy(
+                            Object.defineProperties(wms, {
+                              wmsAddress: {
+                                get: () => baseUri
+                              },
+                              remove: {
+                                get: () => () => {
+                                  // Delete layers from map
+                                  proxy
+                                    .getLayersByServerAddress(baseUri)
+                                    .forEach(layer => map.removeLayer(layer))
+
+                                  // Then register the server as deleted
+                                  this.setState({
+                                    servers: Object.fromEntries(
+                                      Object.entries(this.state.servers).filter(
+                                        ([uri]) => uri !== baseUri
+                                      )
+                                    )
+                                  })
                                 }
-                              ),
-                              {
-                                get: (target, value) => target[value]
                               }
-                            )
-                        )
-                    },
-                    { ...this.state.servers }
-                  )
-                },
-                () => console.log(this.state.servers)
-              )
+                            }),
+                            {
+                              get: (target, value) => target[value]
+                            }
+                          )
+                      )
+                  },
+                  { ...this.state.servers }
+                )
+              })
+          },
+
+          getLayersByServerAddress: {
+            ...descriptor,
+            get: () => baseUri =>
+              map
+                .getLayers()
+                .getArray()
+                .filter(layer => (layer.getSource().urls || []).includes(baseUri))
+          },
+
+          removeLayer: {
+            ...descriptor,
+            get: () => layer => {
+              map.removeLayer(layer) || map.removeLayer(layer._self)
+              reRender()
+            }
+          },
+
+          removeLayerById: {
+            ...descriptor,
+            get: () => id => proxy.removeLayer(proxy.getLayerById(id))
+          },
+
+          getLayerById: {
+            ...descriptor,
+            get: () => id =>
+              map
+                .getLayers()
+                .getArray()
+                .filter(layer => id === layer.get('id'))[0]
           },
 
           /**
@@ -118,7 +145,7 @@ export default class extends PureComponent {
                 Object.defineProperties(
                   {},
                   {
-                    _target: {
+                    _self: {
                       ...descriptor,
                       get: () => map.getLayers()
                     },
@@ -136,7 +163,7 @@ export default class extends PureComponent {
                                   Object.defineProperties(
                                     {},
                                     {
-                                      _target: {
+                                      _self: {
                                         ...descriptor,
                                         get: () => layer
                                       },
@@ -147,15 +174,17 @@ export default class extends PureComponent {
                                     }
                                   ),
                                   {
-                                    get: (target, prop) =>
-                                      target.hasOwnProperty(prop)
-                                        ? target[prop]
-                                        : typeof target._target[prop] === 'function'
+                                    get: (proxiedTarget, prop) =>
+                                      proxiedTarget.hasOwnProperty(prop)
+                                        ? proxiedTarget[prop]
+                                        : typeof proxiedTarget._self[prop] === 'function'
                                         ? (...args) => {
-                                            target._target[prop].apply(target._target, [...args])
+                                            proxiedTarget._self[prop].apply(proxiedTarget._self, [
+                                              ...args
+                                            ])
                                             reRender()
                                           }
-                                        : target._target[prop]
+                                        : proxiedTarget._self[prop]
                                   }
                                 )
                             ),
@@ -172,15 +201,15 @@ export default class extends PureComponent {
 
                 // getLayers() proxy handler (proxies an OpenLayers Collection)
                 {
-                  get: (target, prop) =>
-                    target.hasOwnProperty(prop)
-                      ? target[prop]
-                      : typeof target[prop] === 'function'
+                  get: (proxiedTarget, prop) =>
+                    proxiedTarget.hasOwnProperty(prop)
+                      ? proxiedTarget[prop]
+                      : typeof proxiedTarget[prop] === 'function'
                       ? (...args) => {
-                          target._target[prop].apply(target._target, [...args])
+                          proxiedTarget._self[prop].apply(proxiedTarget._self, [...args])
                           reRender()
                         }
-                      : target._target[prop]
+                      : proxiedTarget._self[prop]
                 }
               )
           }
@@ -200,6 +229,8 @@ export default class extends PureComponent {
             : map[prop]
       }
     )
+
+    this.proxy = proxy
   }
 
   reRender = () => this.setState({ render: this.state.render + 1 })

@@ -14,7 +14,6 @@ export const beehStormflowCount = () =>
         FORMAT: 'image/png'
       },
       serverType: 'geoserver',
-      // Countries have transparency, so do not fade tiles:
       transition: 0
     }),
     opacity: 0.7
@@ -33,7 +32,6 @@ export const beehStormflow = () =>
         FORMAT: 'image/png'
       },
       serverType: 'geoserver',
-      // Countries have transparency, so do not fade tiles:
       transition: 0
     }),
     opacity: 0.7

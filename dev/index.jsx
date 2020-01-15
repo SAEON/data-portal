@@ -7,7 +7,8 @@ import {
   beehStormflowCount,
   ahocevarBaseMap,
   cdngiAerial,
-  clusterLayer
+  clusterLayer,
+  newLayer
 } from './layers'
 import { clusterStyle1, clusterStyle2 } from './styles'
 import './index.scss'
@@ -140,16 +141,54 @@ class App extends PureComponent {
                           {Object.keys(servers).length > 0 ? (
                             Object.entries(servers).map(([uri, server], i) => (
                               <div key={i} style={{ padding: '8px', backgroundColor: 'grey' }}>
-                                <p style={{ margin: 0, display: 'inline-block' }}>{uri}</p>
-                                <button style={{ display: 'inline-block', marginLeft: '8px' }}>
-                                  Show layers
-                                </button>
                                 <button
                                   onClick={() => server.remove()}
-                                  style={{ display: 'inline-block', marginLeft: '8px' }}
+                                  style={{ display: 'inline-block', marginRight: '8px' }}
                                 >
                                   Remove server
                                 </button>
+                                <p style={{ margin: 0, display: 'inline-block' }}>{uri}</p>
+                                <Form visible={false}>
+                                  {({ updateForm, visible }) => (
+                                    <>
+                                      <button
+                                        onClick={() => updateForm({ visible: !visible })}
+                                        style={{ display: 'inline-block', marginLeft: '8px' }}
+                                      >
+                                        Toggle layer list (for this server)
+                                      </button>
+                                      <div
+                                        style={
+                                          visible
+                                            ? { height: '200px', overflow: 'auto', margin: '8px' }
+                                            : { display: 'none' }
+                                        }
+                                      >
+                                        {server.Capability.Layer.Layer.map(({ Name }, i) => (
+                                          <div key={i}>
+                                            <p style={{ display: 'inline-block' }}>{Name}</p>
+                                            <input
+                                              checked={proxy.getLayerById(Name) ? true : false}
+                                              onChange={({ target }) =>
+                                                target.checked
+                                                  ? proxy.addLayer(
+                                                      newLayer({
+                                                        id: Name,
+                                                        url: server.wmsAddress,
+                                                        name: Name
+                                                      })
+                                                    )
+                                                  : proxy.removeLayerById(Name)
+                                              }
+                                              style={{ marginLeft: '8px' }}
+                                              type="checkbox"
+                                            />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </>
+                                  )}
+                                </Form>
                               </div>
                             ))
                           ) : (
