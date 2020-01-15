@@ -46,18 +46,44 @@ export default class extends PureComponent {
           addServer: {
             ...descriptor,
             get: () => async baseUri =>
-              this.setState({
-                servers: Object.assign(
-                  {
-                    [baseUri]: await fetch(
-                      `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
-                    )
-                      .then(res => res.text())
-                      .then(txt => wmsParser.read(txt))
-                  },
-                  { ...this.state.servers }
-                )
-              })
+              this.setState(
+                {
+                  servers: Object.assign(
+                    {
+                      [baseUri]: await fetch(
+                        `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
+                      )
+                        .then(res => res.text())
+                        .then(txt => wmsParser.read(txt))
+                        .then(
+                          wms =>
+                            new Proxy(
+                              Object.defineProperties(
+                                {},
+                                {
+                                  remove: {
+                                    get: () => () =>
+                                      this.setState({
+                                        servers: Object.fromEntries(
+                                          Object.entries(this.state.servers).filter(
+                                            ([uri]) => uri !== baseUri
+                                          )
+                                        )
+                                      })
+                                  }
+                                }
+                              ),
+                              {
+                                get: (target, value) => target[value]
+                              }
+                            )
+                        )
+                    },
+                    { ...this.state.servers }
+                  )
+                },
+                () => console.log(this.state.servers)
+              )
           },
 
           /**
@@ -180,6 +206,7 @@ export default class extends PureComponent {
 
   render() {
     const { proxy } = this
-    return this.props.children({ proxy })
+    const { servers } = this.state
+    return this.props.children({ proxy, servers })
   }
 }

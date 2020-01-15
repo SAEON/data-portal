@@ -12,6 +12,7 @@ import {
 import { clusterStyle1, clusterStyle2 } from './styles'
 import './index.scss'
 import pointData from './point-data.json'
+import Form from './lib/form'
 var newPointData
 
 const mapStyle = { width: '100%', height: '100%' }
@@ -100,75 +101,119 @@ class App extends PureComponent {
             {/* LayerManager provides map layers as an array */}
             {/* Updates to the array will reflect on the map (LayerManager 'ties' state of the array to the map) */}
             <LayerManager map={map}>
-              {({ proxy }) => (
-                <>
-                  {/* This is how you add a server */}
-                  <button
-                    style={{ margin: '8px 8px 4px' }}
-                    onClick={() => {
-                      const uri = prompt(
-                        'Enter WMS Server address',
-                        'http://app01.saeon.ac.za:8082/geoserver/BEEH_shp/wms'
-                      )
-                      proxy.addServer(uri)
-                    }}
-                  >
-                    Add server
-                  </button>
+              {({ proxy, servers }) => (
+                <Form visible={false}>
+                  {({ updateForm, visible }) => (
+                    <>
+                      <button
+                        style={{ margin: '8px 8px 4px' }}
+                        onClick={() => updateForm({ visible: !visible })}
+                      >
+                        Toggle layer menu
+                      </button>
+                      <div
+                        style={{
+                          display: visible ? 'inherit' : 'none',
+                          margin: '8px 8px 4px'
+                        }}
+                      >
+                        {/* This is how you add a server */}
+                        <button
+                          onClick={() => {
+                            const uri = prompt(
+                              'Enter WMS Server address',
+                              'http://app01.saeon.ac.za:8082/geoserver/BEEH_shp/wms'
+                            )
+                            proxy.addServer(uri)
+                          }}
+                        >
+                          Add server
+                        </button>
 
-                  {/* This is how you add a layer */}
-                  <button
-                    style={{ margin: '8px 8px 4px' }}
-                    onClick={() => proxy.addLayer(cdngiAerial())}
-                  >
-                    Add layer
-                  </button>
+                        {/* This is how you add a layer */}
+                        <button onClick={() => proxy.addLayer(cdngiAerial())}>Add layer</button>
+                        <br />
 
-                  <DragAndDrop
-                    layers={proxy.getLayers().getArray()}
-                    reorderItems={result => {
-                      if (!result.destination) return
-                      const from = result.source.index
-                      const to = result.destination.index
-                      proxy.reorderLayers(from, to)
-                    }}
-                    listStyle={isDraggingOver => ({
-                      background: isDraggingOver ? 'lightblue' : 'lightgrey',
-                      padding: 8,
-                      margin: 8
-                    })}
-                    itemStyle={(isDragging, draggableStyle) => ({
-                      userSelect: 'none',
-                      margin: `0 0 4px 0`,
-                      padding: '4px',
-                      background: isDragging ? 'lightgreen' : 'grey',
-                      ...draggableStyle
-                    })}
-                  >
-                    {(layers, makeDraggable) =>
-                      layers.map((layer, i) =>
-                        makeDraggable(
-                          <div>
-                            {layer.get('id')}
-                            <span>({JSON.stringify(layer.get('visible'))})</span>
-                            <button onClick={() => layer.setVisible(!layer.get('visible'))}>
-                              Toggle visible
-                            </button>
-                            <input
-                              type="range"
-                              min="0"
-                              max="100"
-                              value={layer.get('opacity') * 100}
-                              onChange={e => layer.setOpacity(e.target.value / 100)}
-                            />
-                            <button onClick={() => proxy.removeLayer(layer)}>Remove layer</button>
-                          </div>,
-                          i
-                        )
-                      )
-                    }
-                  </DragAndDrop>
-                </>
+                        <div style={{ marginTop: '8px' }}>
+                          {/* Server toggle */}
+                          <h1>Current servers</h1>
+                          {Object.keys(servers).length > 0 ? (
+                            Object.entries(servers).map(([uri, server], i) => (
+                              <div key={i} style={{ padding: '8px', backgroundColor: 'grey' }}>
+                                <p style={{ margin: 0, display: 'inline-block' }}>{uri}</p>
+                                <button style={{ display: 'inline-block', marginLeft: '8px' }}>
+                                  Show layers
+                                </button>
+                                <button
+                                  onClick={() => server.remove()}
+                                  style={{ display: 'inline-block', marginLeft: '8px' }}
+                                >
+                                  Remove server
+                                </button>
+                              </div>
+                            ))
+                          ) : (
+                            <p>None</p>
+                          )}
+
+                          {/* Layer toggle */}
+                          <h1>Current layers</h1>
+                          {proxy.getLayers().getArray().length > 0 ? (
+                            <DragAndDrop
+                              layers={proxy.getLayers().getArray()}
+                              reorderItems={result => {
+                                if (!result.destination) return
+                                const from = result.source.index
+                                const to = result.destination.index
+                                proxy.reorderLayers(from, to)
+                              }}
+                              listStyle={isDraggingOver => ({
+                                background: isDraggingOver ? 'lightblue' : 'lightgrey',
+                                padding: 8
+                              })}
+                              itemStyle={(isDragging, draggableStyle) => ({
+                                userSelect: 'none',
+                                margin: `0 0 4px 0`,
+                                padding: '4px',
+                                background: isDragging ? 'lightgreen' : 'grey',
+                                ...draggableStyle
+                              })}
+                            >
+                              {(layers, makeDraggable) =>
+                                layers.map((layer, i) =>
+                                  makeDraggable(
+                                    <div>
+                                      {layer.get('id')}
+                                      <span>({JSON.stringify(layer.get('visible'))})</span>
+                                      <button
+                                        onClick={() => layer.setVisible(!layer.get('visible'))}
+                                      >
+                                        Toggle visible
+                                      </button>
+                                      <input
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        value={layer.get('opacity') * 100}
+                                        onChange={e => layer.setOpacity(e.target.value / 100)}
+                                      />
+                                      <button onClick={() => proxy.removeLayer(layer)}>
+                                        Remove layer
+                                      </button>
+                                    </div>,
+                                    i
+                                  )
+                                )
+                              }
+                            </DragAndDrop>
+                          ) : (
+                            <p>None</p>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </Form>
               )}
             </LayerManager>
           </>
