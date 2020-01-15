@@ -4,6 +4,11 @@ import { WMSCapabilities } from 'ol/format'
 
 const wmsParser = new WMSCapabilities()
 
+const descriptor = {
+  enumerable: false,
+  configurable: false
+}
+
 export default class extends PureComponent {
   state = {
     servers: {},
@@ -21,7 +26,8 @@ export default class extends PureComponent {
         {},
         {
           reorderLayers: {
-            value: (startIndex, endIndex) => {
+            ...descriptor,
+            get: () => (startIndex, endIndex) => {
               const layers = Array.from(map.getLayers().getArray())
               const [removed] = layers.splice(startIndex, 1)
               layers.splice(endIndex, 0, removed)
@@ -30,14 +36,16 @@ export default class extends PureComponent {
             }
           },
           removeLayer: {
-            value: layer => {
+            ...descriptor,
+            get: () => layer => {
               map.removeLayer(layer._target)
               reRender()
             }
           },
 
           addServer: {
-            value: async baseUri =>
+            ...descriptor,
+            get: () => async baseUri =>
               this.setState({
                 servers: Object.assign(
                   {
@@ -56,7 +64,8 @@ export default class extends PureComponent {
            * Layers must have unique IDs
            */
           addLayer: {
-            value: layer => {
+            ...descriptor,
+            get: () => layer => {
               if (
                 map
                   .getLayers()
@@ -76,6 +85,7 @@ export default class extends PureComponent {
             }
           },
           getLayers: {
+            ...descriptor,
             get: () => () =>
               new Proxy(
                 // Collection proxy object
@@ -83,9 +93,11 @@ export default class extends PureComponent {
                   {},
                   {
                     _target: {
-                      value: map.getLayers()
+                      ...descriptor,
+                      get: () => map.getLayers()
                     },
                     getArray: {
+                      ...descriptor,
                       get: () => () =>
                         new Proxy(
                           map
@@ -99,9 +111,11 @@ export default class extends PureComponent {
                                     {},
                                     {
                                       _target: {
-                                        value: layer
+                                        ...descriptor,
+                                        get: () => layer
                                       },
                                       get: {
+                                        ...descriptor,
                                         get: () => attribute => layer.get(attribute)
                                       }
                                     }
