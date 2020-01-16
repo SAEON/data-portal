@@ -130,9 +130,6 @@ class App extends PureComponent {
                         >
                           Add server
                         </button>
-
-                        {/* This is how you add a layer */}
-                        <button onClick={() => proxy.addLayer(cdngiAerial())}>Add layer</button>
                         <br />
 
                         <div style={{ marginTop: '8px' }}>
