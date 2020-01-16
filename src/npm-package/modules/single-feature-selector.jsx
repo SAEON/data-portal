@@ -1,6 +1,5 @@
 import { PureComponent } from 'react'
-import debounce from '../lib/debounce'
-
+import { debounce } from '../../_lib'
 export default class extends PureComponent {
   state = { selectedFeature: null, selectedLayer: null }
 

@@ -6,7 +6,7 @@ import { ahocevarBaseMap, clusterLayer, newLayer } from './layers'
 import { clusterStyle1, clusterStyle2 } from './styles'
 import './index.scss'
 import pointData from './point-data.json'
-import Form from './lib/form'
+import { Form } from './lib'
 var newPointData
 
 const mapStyle = { width: '100%', height: '100%' }

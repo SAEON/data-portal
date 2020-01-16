@@ -23,7 +23,7 @@
     "pack": "webpack --env.mode=production"
   },
   "keywords": [
-    "OpenLayers",
+    "OpenLayers 6",
     "SAEON",
     "Atlas",
     "Map"
@@ -61,8 +61,7 @@
   },
   "dependencies": {
     "ol": "^6.1.1",
-    "react-beautiful-dnd": "^12.2.0",
-    "xml2js": "^0.4.23"
+    "react-beautiful-dnd": "^12.2.0"
   },
   "repository": {
     "type": "git",
