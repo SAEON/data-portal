@@ -1,15 +1,8 @@
 import React, { PureComponent } from 'react'
 import { render } from 'react-dom'
-import { OlReact, SingleFeatureSelector, LayerManager, DragAndDrop } from '../src'
+import OlReact, { SingleFeatureSelector, MapProxy, DragAndDrop } from '../src'
 import { clusterSource } from './sources'
-import {
-  beehStormflow,
-  beehStormflowCount,
-  ahocevarBaseMap,
-  cdngiAerial,
-  clusterLayer,
-  newLayer
-} from './layers'
+import { ahocevarBaseMap, clusterLayer, newLayer } from './layers'
 import { clusterStyle1, clusterStyle2 } from './styles'
 import './index.scss'
 import pointData from './point-data.json'
@@ -29,33 +22,18 @@ class App extends PureComponent {
       id: 'sites',
       style: clusterStyle1
     })
-
-    /**
-     * This array is passed to the OpenLayers Map constructor
-     * new Map({ ... layers: this.layers ...})
-     * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
-     */
-    this.layers = [
-      ahocevarBaseMap(),
-      beehStormflow(),
-      beehStormflowCount(),
-      this.clusteredSitesLayer
-    ]
-
-    /**
-     * This object is passed to the OpenLayers View constructor
-     * new View(this.viewOptions)
-     * https://openlayers.org/en/latest/apidoc/module-ol_View-View.html
-     */
-    this.viewOptions = {}
   }
 
   render() {
     return (
-      <OlReact style={mapStyle} viewOptions={this.viewOptions} layers={this.layers}>
+      <OlReact
+        style={mapStyle}
+        viewOptions={{}}
+        layers={[ahocevarBaseMap(), this.clusteredSitesLayer]}
+      >
         {({ map }) => (
           <>
-            {/* A module that provides a means of selecting/deselecting a single feature */}
+            {/* TODO: I think for this to work with the proxy that features also need to be proxied? */}
             <SingleFeatureSelector
               unselectedStyle={clusterStyle1}
               selectedStyle={clusterStyle2}
@@ -99,9 +77,7 @@ class App extends PureComponent {
               }
             </SingleFeatureSelector>
 
-            {/* LayerManager provides map layers as an array */}
-            {/* Updates to the array will reflect on the map (LayerManager 'ties' state of the array to the map) */}
-            <LayerManager map={map}>
+            <MapProxy map={map}>
               {({ proxy, servers }) => (
                 <Form visible={false}>
                   {({ updateForm, visible }) => (
@@ -251,7 +227,7 @@ class App extends PureComponent {
                   )}
                 </Form>
               )}
-            </LayerManager>
+            </MapProxy>
           </>
         )}
       </OlReact>

@@ -19,8 +19,11 @@ export default class extends PureComponent {
     super(props)
     const { map } = this.props
     const reRender = this.reRender
+
+    /**
+     * Map proxy object
+     */
     const proxy = new Proxy(
-      // Map proxy object
       Object.defineProperties(
         {},
         {
@@ -48,6 +51,9 @@ export default class extends PureComponent {
                       .then(txt => wmsParser.read(txt))
                       .then(
                         wms =>
+                          /**
+                           * Server proxy object
+                           */
                           new Proxy(
                             Object.defineProperties(wms, {
                               wmsAddress: {
@@ -140,8 +146,10 @@ export default class extends PureComponent {
           getLayers: {
             ...descriptor,
             get: () => () =>
+              /**
+               * OpenLayers.Collection proxy object
+               */
               new Proxy(
-                // Collection proxy object
                 Object.defineProperties(
                   {},
                   {
@@ -152,6 +160,9 @@ export default class extends PureComponent {
                     getArray: {
                       ...descriptor,
                       get: () => () =>
+                        /**
+                         * [OpenLayer.Layer] proxy object
+                         */
                         new Proxy(
                           map
                             .getLayers()
@@ -159,7 +170,9 @@ export default class extends PureComponent {
                             .map(
                               layer =>
                                 new Proxy(
-                                  // Layer proxy object
+                                  /**
+                                   * OpenLayer.Layer proxy object
+                                   */
                                   Object.defineProperties(
                                     {},
                                     {
@@ -179,9 +192,10 @@ export default class extends PureComponent {
                                         ? proxiedTarget[prop]
                                         : typeof proxiedTarget._self[prop] === 'function'
                                         ? (...args) => {
-                                            proxiedTarget._self[prop].apply(proxiedTarget._self, [
-                                              ...args
-                                            ])
+                                            proxiedTarget._self[prop].apply(
+                                              proxiedTarget._self,
+                                              args
+                                            )
                                             reRender()
                                           }
                                         : proxiedTarget._self[prop]
@@ -206,7 +220,7 @@ export default class extends PureComponent {
                       ? proxiedTarget[prop]
                       : typeof proxiedTarget[prop] === 'function'
                       ? (...args) => {
-                          proxiedTarget._self[prop].apply(proxiedTarget._self, [...args])
+                          proxiedTarget._self[prop].apply(proxiedTarget._self, args)
                           reRender()
                         }
                       : proxiedTarget._self[prop]
@@ -223,7 +237,7 @@ export default class extends PureComponent {
             ? target[prop]
             : typeof map[prop] === 'function'
             ? (...args) => {
-                map[prop].apply(map, [...args])
+                map[prop].apply(map, args)
                 reRender()
               }
             : map[prop]

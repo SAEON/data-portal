@@ -1,4 +1,5 @@
 import { PureComponent } from 'react'
+import debounce from '../lib/debounce'
 
 export default class extends PureComponent {
   state = { selectedFeature: null, selectedLayer: null }
@@ -10,10 +11,13 @@ export default class extends PureComponent {
 
   componentDidMount() {
     // Pointer cursor
-    this.map.on('pointermove', e => {
-      const hit = this.map.forEachFeatureAtPixel(e.pixel, () => true) || false
-      e.target.getTarget().style.cursor = hit ? 'pointer' : ''
-    })
+    this.map.on(
+      'pointermove',
+      debounce(e => {
+        const hit = this.map.forEachFeatureAtPixel(e.pixel, () => true) || false
+        e.target.getTarget().style.cursor = hit ? 'pointer' : ''
+      }, 3)
+    )
 
     // Add click handler
     this.map.on('click', e => {
