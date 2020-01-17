@@ -9,7 +9,6 @@ const typeDefsPath = normalize(join(__dirname, './schema.graphql'))
 const typeDefs = readFileSync(typeDefsPath, { encoding: 'utf8' })
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-console.log('testing')
 const app = express()
 
 app.get('/', (req, res) => res.send('hello world'))
