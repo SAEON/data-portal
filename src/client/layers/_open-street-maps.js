@@ -6,6 +6,5 @@ export const openStreetMaps = () =>
     id: 'openStreetMap',
     title: 'Open Street Maps',
     visible: true,
-    id: 'openStreetLayers',
     source: new OSM({})
   })

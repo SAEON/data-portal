@@ -188,7 +188,7 @@ export default class extends PureComponent {
                                   ),
                                   {
                                     get: (proxiedTarget, prop) =>
-                                      proxiedTarget.hasOwnProperty(prop)
+                                      Object.prototype.hasOwnProperty.call(proxiedTarget, prop)
                                         ? proxiedTarget[prop]
                                         : typeof proxiedTarget._self[prop] === 'function'
                                         ? (...args) => {
@@ -216,7 +216,7 @@ export default class extends PureComponent {
                 // getLayers() proxy handler (proxies an OpenLayers Collection)
                 {
                   get: (proxiedTarget, prop) =>
-                    proxiedTarget.hasOwnProperty(prop)
+                    Object.prototype.hasOwnProperty.call(proxiedTarget, prop)
                       ? proxiedTarget[prop]
                       : typeof proxiedTarget[prop] === 'function'
                       ? (...args) => {
@@ -233,7 +233,7 @@ export default class extends PureComponent {
       // map proxy object (proxies the map object)
       {
         get: (target, prop) =>
-          target.hasOwnProperty(prop)
+          Object.prototype.hasOwnProperty.call(target, prop)
             ? target[prop]
             : typeof map[prop] === 'function'
             ? (...args) => {
