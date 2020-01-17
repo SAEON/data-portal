@@ -9,7 +9,8 @@
   "scripts": {
     "__GENERAL__": "====================================================================",
     "start": "npm-run-all start:client",
-    "pre-commit": "echo hi",
+    "pre-commit": "npm-run-all -s prettier ",
+    "lint": "echo linter",
     "prettier": "prettier --write \"src/**/*.@(js|jsx|css|scss)\"",
     "__SERVER__": "=====================================================================",
     "start:server": "nodemon --exec \"npm-run-all-s prettier:server server:dev\"",
