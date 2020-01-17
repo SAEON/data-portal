@@ -7,10 +7,15 @@
     "dist"
   ],
   "scripts": {
+    "start:server": "nodemon --exec \"npm-run-all prettier:server server:dev\"",
+    "prettier:server": "prettier --write \"src/server/**/*.@(js|jsx|css|scss)\"",
+    "server:dev": "TZ=utc babel-node src/server/bin/index.js",
+
+
     "start": "npm-run-all -p onchange dev-server",
-    "onchange": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "onchange": "onchange \"./src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "dev-server": "webpack-dev-server --env.mode=development --open",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|css|scss)\"",
+    "prettier": "prettier --write \"src/**/*.@(js|jsx|css|scss)\"",
     "publish-patch": "npm-run-all -s build increment-patch push-to-npm",
     "publish-minor": "npm-run-all -s build increment-minor push-to-npm",
     "publish-major": "npm-run-all -s build increment-major push-to-npm",
@@ -31,7 +36,9 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
+    "nodemon": "^2.0.2",
     "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
@@ -60,6 +67,9 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.8",
+    "graphql-tools": "^4.0.6",
     "ol": "^6.1.1",
     "react-beautiful-dnd": "^12.2.0"
   },
