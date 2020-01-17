@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { render } from 'react-dom'
-import OlReact, { SingleFeatureSelector, MapProxy, DragAndDrop } from '../npm-package'
+import OlReact, { SingleFeatureSelector, MapProxy, DragAndDrop } from '../@saeon/atlas'
 import { clusterSource } from './sources'
 import { ahocevarBaseMap, clusterLayer, newLayer } from './layers'
 import { clusterStyle1, clusterStyle2 } from './styles'

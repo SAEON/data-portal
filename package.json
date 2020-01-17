@@ -18,7 +18,7 @@
     "server:dev": "TZ=utc babel-node src/server/bin/index.js",
     "__CLIENT__": "=====================================================================",
     "start:client": "npm-run-all -p onchange dev-server",
-    "onchange": "onchange \"src/@(client|npm-package)/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "onchange": "onchange \"src/@(client|@saeon/atlas)/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "dev-server": "webpack-dev-server --env.mode=development --open",
     "__PACKAGE__": "=====================================================================",
     "publish-patch": "npm-run-all -s publish:pack increment-patch push-to-npm",
