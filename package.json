@@ -10,11 +10,11 @@
     "__GENERAL__": "====================================================================",
     "start": "npm-run-all -p start:server start:client",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "pretty-quick": "pretty-quick --staged",
+    "prettier:staged": "pretty-quick --staged",
     "__SERVER__": "=====================================================================",
     "start:server": "nodemon --exec \"npm-run-all -s prettier:server server:dev\"",
     "prettier:server": "prettier --write \"src/server/**/*.@(js|jsx|css|scss)\"",
-    "server:dev": "TZ=utc babel-node src/server/bin/index.js",
+    "server:dev": "TZ=utc NODE_ENV=development babel-node src/server/bin/index.js",
     "__CLIENT__": "=====================================================================",
     "start:client": "npm-run-all -p onchange dev-server",
     "onchange": "onchange \"src/@(client|@saeon/atlas)/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
@@ -31,7 +31,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all -s pretty-quick lint"
+      "pre-commit": "npm-run-all -s prettier:staged lint"
     }
   },
   "keywords": [
@@ -79,9 +79,13 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.6",
+    "morgan": "^1.9.1",
     "ol": "^6.1.1",
     "react-beautiful-dnd": "^12.2.0"
   },

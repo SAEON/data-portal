@@ -1,21 +1,98 @@
+// Express
 import express from 'express'
-import graphqlHTTP from 'express-graphql'
-import { normalize, join } from 'path'
-import { readFileSync } from 'fs'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
+import compression from 'compression'
+import router from './routes'
+
+// GraphQL
 import resolvers from './resolvers'
+import graphqlHTTP from 'express-graphql'
 import { makeExecutableSchema } from 'graphql-tools'
 
+// Standard Library
+import { normalize, join } from 'path'
+import { readFileSync } from 'fs'
+
+// Configuration / other
+import { log, logError } from '../_lib'
+import { config } from 'dotenv'
+
+config()
+if (!process.env.NODE_ENV || !['production', 'development'].includes(process.env.NODE_ENV)) {
+  throw new Error(
+    'The server MUST be started with a NODE_ENV environment variable, with a value of either "production" or "development"'
+  )
+}
+
+// Helper for allowing async / await with middleware
+const asyncHandler = fn => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(error => {
+    logError('Top level application error', error)
+    return next()
+  })
+
+const corsMiddleware = (ALLOWED_ORIGINS => (req, res, next) => {
+  const { method, headers } = req
+  const { origin } = headers
+  log(`Checking CORS policy`, `${origin}`, `${ALLOWED_ORIGINS.includes(origin)}`)
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.header('Access-Control-Allow-Credentials', true)
+  if (method === 'OPTIONS') {
+    res.sendStatus(200)
+  } else {
+    next()
+  }
+})(
+  process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : ['http://localhost:3000', 'http://localhost:3001']
+)
+
+const compressionFilter = (req, res) =>
+  req.headers['x-no-compression'] ? false : compression.filter(req, res)
+
+// GraphQL
 const typeDefsPath = normalize(join(__dirname, './schema.graphql'))
 const typeDefs = readFileSync(typeDefsPath, { encoding: 'utf8' })
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
+// Middleware
 const app = express()
-
-app.get('/', (req, res) => res.send('hello world'))
-
-//Make Graphiql available
-app.use('/graphiql', graphqlHTTP({ schema, graphiql: true }))
+app.use(
+  asyncHandler(async (req, res, next) => {
+    req.ctx = {
+      db: {},
+      schema
+    }
+    next()
+  })
+)
+app.use(compression({ filter: compressionFilter }))
+app.use(morgan('short'))
+app.use(corsMiddleware)
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(express.static(join(__dirname, '../public')))
+app.use('/', asyncHandler(router))
+app.use(
+  '/graphiql',
+  graphqlHTTP({
+    schema,
+    graphiql: true
+  })
+)
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema,
+    graphiql: false
+  })
+)
 
 export default app
-
-//basic graphql requires a query and a resolver for the query using graphql-tools
