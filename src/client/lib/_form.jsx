@@ -11,11 +11,6 @@ export default class extends PureComponent {
     }
   }
 
-  componentDidUpdate() {
-    const { onComponentDidUpdate } = this.props
-    if (onComponentDidUpdate) onComponentDidUpdate({ updateForm: this.updateForm, ...this.state })
-  }
-
   updateForm = (obj, cb = null) => this.setState(obj, cb)
 
   render() {

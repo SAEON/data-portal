@@ -280,7 +280,7 @@ const httpClient = new ApolloClient({
 
 render(
   <ApolloProvider client={httpClient}>
-    <App httpClient={httpClient} />
+    <App />
   </ApolloProvider>,
   document.getElementById('root')
 )
