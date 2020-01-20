@@ -81,7 +81,7 @@ module.exports = ({ mode }) => ({
   plugins: pluginsConfig(mode),
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: 9000,
+    port: 3001,
     historyApiFallback: true,
     compress: true,
     allowedHosts: ['.localhost'],
