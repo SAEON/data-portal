@@ -17,7 +17,7 @@
     "server:dev": "TZ=utc NODE_ENV=development babel-node src/server/bin/index.js",
     "__CLIENT__": "=====================================================================",
     "start:client": "npm-run-all -p onchange dev-server",
-    "onchange": "onchange \"src/@(client|@saeon/atlas)/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "onchange": "onchange \"src/{client,@saeon}/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "dev-server": "webpack-dev-server --env.mode=development --open",
     "__PACKAGE__": "=====================================================================",
     "publish-patch": "npm-run-all -s publish:pack increment-patch push-to-npm",
@@ -79,14 +79,22 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link-http": "^1.5.16",
+    "apollo-link-rest": "^0.7.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
+    "graphql-anywhere": "^4.2.6",
+    "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.6",
+    "http-proxy-middleware": "^0.20.0",
     "morgan": "^1.9.1",
     "ol": "^6.1.1",
+    "react-apollo": "^3.1.3",
     "react-beautiful-dnd": "^12.2.0"
   },
   "repository": {

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import compression from 'compression'
 import router from './routes'
+import proxy from 'http-proxy-middleware'
 
 // GraphQL
 import resolvers from './resolvers'
@@ -92,6 +93,17 @@ app.use(
   graphqlHTTP({
     schema,
     graphiql: false
+  })
+)
+
+app.use(
+  '/saeon-metadata',
+  proxy({
+    target: 'http://192.168.116.66:9210',
+    changeOrigin: true,
+    pathRewrite: {
+      '/saeon-metadata': '/'
+    }
   })
 )
 
