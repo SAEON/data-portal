@@ -38,6 +38,7 @@ export default class extends PureComponent {
             }
           },
 
+          // TODO: Add warning for CORS, or proxy to API
           addServer: {
             ...descriptor,
             get: () => async baseUri =>
