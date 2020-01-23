@@ -1,7 +1,9 @@
 import React from 'react'
+import { newLayer } from '../../layers'
 import { Form, debounceGlobal } from '../../lib'
+import npmUrl from 'url'
 
-export default () => (
+export default ({ proxy }) => (
   <Form search="test" result={{}}>
     {({ updateForm, ...fields }) => (
       <div>
@@ -29,22 +31,38 @@ export default () => (
           {fields.loading ? (
             'Loading ...'
           ) : (
-            <div>
+            <div style={{ maxHeight: '300px', overflow: 'auto' }}>
               <div>{fields.result.result_length || 0} items found</div>
               {fields.result.results
                 ? fields.result.results.map(({ metadata_json }) =>
                     metadata_json.linkedResources
                       .filter(r => r.linkedResourceType === 'Query')
-                      .map((r, i) => (
-                        <div key={i}>
-                          <p style={{ display: 'inline-block' }}>{r.resourceDescription}</p>
-
+                      .map(({ resourceURL, resourceDescription }, i) => (
+                        <div key={i} style={{ margin: '8px 0', backgroundColor: '#8080807a' }}>
                           <input
-                            style={{ marginLeft: '8px' }}
+                            style={{ margin: '0 8px' }}
                             type="checkbox"
-                            checked={false}
-                            onChange={() => alert('hi')}
+                            checked={proxy.getLayerById(resourceDescription)}
+                            onChange={({ target }) => {
+                              if (target.checked) {
+                                const uri = npmUrl.parse(resourceURL, true)
+                                const { protocol, host, pathname, query } = uri
+                                const { layers } = query
+                                const serverAddress = `${protocol}//${host}${pathname}`
+                                proxy.addLayer(
+                                  newLayer({
+                                    id: resourceDescription,
+                                    title: resourceDescription,
+                                    url: serverAddress,
+                                    name: layers
+                                  })
+                                )
+                              } else {
+                                proxy.removeLayerById(resourceDescription)
+                              }
+                            }}
                           />
+                          <p style={{ display: 'inline-block' }}>{resourceDescription}</p>
                         </div>
                       ))
                   )

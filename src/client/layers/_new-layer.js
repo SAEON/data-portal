@@ -1,8 +1,9 @@
 import { Tile as TileLayer } from 'ol/layer.js'
 import { TileWMS } from 'ol/source'
 
-export const newLayer = ({ id, title, url, name }) =>
-  new TileLayer({
+export const newLayer = ({ id, title, url, name }) => {
+  console.log(url)
+  return new TileLayer({
     id,
     title: title || id,
     visible: true,
@@ -14,7 +15,8 @@ export const newLayer = ({ id, title, url, name }) =>
         FORMAT: 'image/png'
       },
       serverType: 'geoserver',
-      transition: 0
+      transition: 500
     }),
     opacity: 0.7
   })
+}

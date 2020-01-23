@@ -109,7 +109,7 @@ class App extends PureComponent {
                         <div
                           style={{ display: visible ? 'inherit' : 'none', margin: '8px 8px 4px' }}
                         >
-                          <CkanSearcher httpClient={this.props.httpClient} />
+                          <CkanSearcher proxy={proxy} />
                         </div>
                       </>
                     )}
