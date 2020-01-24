@@ -3,8 +3,10 @@ import { newLayer } from '../../layers'
 import { Form, debounceGlobal } from '../../lib'
 import npmUrl from 'url'
 
+const searcher = ({ url }) => fetch(url).then(res => res.json())
+
 export default ({ proxy }) => (
-  <Form search="test" result={{}}>
+  <Form search="" searchResults={[]}>
     {({ updateForm, ...fields }) => (
       <div>
         <input
@@ -17,9 +19,11 @@ export default ({ proxy }) => (
               debounceGlobal(
                 async () =>
                   updateForm({
-                    result: await fetch(
-                      `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`
-                    ).then(res => res.json()),
+                    searchResults: [
+                      await searcher({
+                        url: `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`
+                      })
+                    ],
                     loading: false
                   }),
                 1000
@@ -32,9 +36,9 @@ export default ({ proxy }) => (
             'Loading ...'
           ) : (
             <div style={{ maxHeight: '300px', overflow: 'auto' }}>
-              <div>{fields.result.result_length || 0} items found</div>
-              {fields.result.results
-                ? fields.result.results.map(({ metadata_json }) =>
+              <div>{fields.searchResults[0]?.result_length || 0} items found</div>
+              {fields.searchResults[0]?.results
+                ? fields.searchResults[0].results.map(({ metadata_json }) =>
                     metadata_json.linkedResources
                       .filter(r => r.linkedResourceType === 'Query')
                       .map(({ resourceURL, resourceDescription }, i) => (
@@ -42,7 +46,7 @@ export default ({ proxy }) => (
                           <input
                             style={{ margin: '0 8px' }}
                             type="checkbox"
-                            checked={proxy.getLayerById(resourceDescription)}
+                            checked={proxy.getLayerById(resourceDescription) || false}
                             onChange={({ target }) => {
                               if (target.checked) {
                                 const uri = npmUrl.parse(resourceURL, true)
@@ -67,6 +71,13 @@ export default ({ proxy }) => (
                       ))
                   )
                 : ''}
+              <div>
+                {fields.searchResults[0] && fields.searchResults[0].result_length >= 100 ? (
+                  <button onClick={() => alert('hi')}>Load more results</button>
+                ) : (
+                  ''
+                )}
+              </div>
             </div>
           )}
         </div>
