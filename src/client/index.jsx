@@ -115,7 +115,19 @@ class App extends PureComponent {
                     )}
                   </Form>
 
-                  {/* Input direct server */}
+                  {/* Server menu */}
+                  <Form visible={false}>
+                    {({ updateForm, visible }) => (
+                      <button
+                        style={{ margin: '8px 8px 4px' }}
+                        onClick={() => updateForm({ visible: !visible })}
+                      >
+                        Toggle server menu
+                      </button>
+                    )}
+                  </Form>
+
+                  {/* Layer menu */}
                   <Form visible={false}>
                     {({ updateForm, visible }) => (
                       <>
