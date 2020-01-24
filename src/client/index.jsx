@@ -118,12 +118,93 @@ class App extends PureComponent {
                   {/* Server menu */}
                   <Form visible={false}>
                     {({ updateForm, visible }) => (
-                      <button
-                        style={{ margin: '8px 8px 4px' }}
-                        onClick={() => updateForm({ visible: !visible })}
-                      >
-                        Toggle server menu
-                      </button>
+                      <>
+                        <button
+                          style={{ margin: '8px 8px 4px' }}
+                          onClick={() => updateForm({ visible: !visible })}
+                        >
+                          Toggle server menu
+                        </button>
+
+                        <div
+                          style={{
+                            display: visible ? 'inherit' : 'none',
+                            margin: '8px 8px 4px'
+                          }}
+                        >
+                          <button
+                            onClick={() => {
+                              const uri = prompt(
+                                'Enter WMS Server address',
+                                'http://app01.saeon.ac.za:8082/geoserver/BEEH_shp/wms'
+                              )
+                              proxy.addServer(uri)
+                            }}
+                          >
+                            Add server
+                          </button>
+                          <br />
+
+                          {/* Server toggle */}
+                          <h1>Current servers</h1>
+                          {Object.keys(servers).length > 0 ? (
+                            Object.entries(servers).map(([uri, server], i) => (
+                              <div key={i} style={{ padding: '8px', backgroundColor: 'grey' }}>
+                                <button
+                                  onClick={() => server.remove()}
+                                  style={{ display: 'inline-block', marginRight: '8px' }}
+                                >
+                                  Remove server
+                                </button>
+                                <p style={{ margin: 0, display: 'inline-block' }}>{uri}</p>
+                                <Form visible={false}>
+                                  {({ updateForm, visible }) => (
+                                    <>
+                                      <button
+                                        onClick={() => updateForm({ visible: !visible })}
+                                        style={{ display: 'inline-block', marginLeft: '8px' }}
+                                      >
+                                        Toggle layer list (for this server)
+                                      </button>
+                                      <div
+                                        style={
+                                          visible
+                                            ? { height: '200px', overflow: 'auto', margin: '8px' }
+                                            : { display: 'none' }
+                                        }
+                                      >
+                                        {server.Capability.Layer.Layer.map(({ Name }, i) => (
+                                          <div key={i}>
+                                            <p style={{ display: 'inline-block' }}>{Name}</p>
+                                            <input
+                                              checked={proxy.getLayerById(Name) ? true : false}
+                                              onChange={({ target }) =>
+                                                target.checked
+                                                  ? proxy.addLayer(
+                                                      newLayer({
+                                                        id: Name,
+                                                        url: server.wmsAddress,
+                                                        name: Name
+                                                      })
+                                                    )
+                                                  : proxy.removeLayerById(Name)
+                                              }
+                                              style={{ marginLeft: '8px' }}
+                                              type="checkbox"
+                                            />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </>
+                                  )}
+                                </Form>
+                              </div>
+                            ))
+                          ) : (
+                            <p>None</p>
+                          )}
+                        </div>
+                      </>
                     )}
                   </Form>
 
@@ -143,80 +224,7 @@ class App extends PureComponent {
                             margin: '8px 8px 4px'
                           }}
                         >
-                          {/* This is how you add a server */}
-                          <button
-                            onClick={() => {
-                              const uri = prompt(
-                                'Enter WMS Server address',
-                                'http://app01.saeon.ac.za:8082/geoserver/BEEH_shp/wms'
-                              )
-                              proxy.addServer(uri)
-                            }}
-                          >
-                            Add server
-                          </button>
-                          <br />
-
                           <div style={{ marginTop: '8px' }}>
-                            {/* Server toggle */}
-                            <h1>Current servers</h1>
-                            {Object.keys(servers).length > 0 ? (
-                              Object.entries(servers).map(([uri, server], i) => (
-                                <div key={i} style={{ padding: '8px', backgroundColor: 'grey' }}>
-                                  <button
-                                    onClick={() => server.remove()}
-                                    style={{ display: 'inline-block', marginRight: '8px' }}
-                                  >
-                                    Remove server
-                                  </button>
-                                  <p style={{ margin: 0, display: 'inline-block' }}>{uri}</p>
-                                  <Form visible={false}>
-                                    {({ updateForm, visible }) => (
-                                      <>
-                                        <button
-                                          onClick={() => updateForm({ visible: !visible })}
-                                          style={{ display: 'inline-block', marginLeft: '8px' }}
-                                        >
-                                          Toggle layer list (for this server)
-                                        </button>
-                                        <div
-                                          style={
-                                            visible
-                                              ? { height: '200px', overflow: 'auto', margin: '8px' }
-                                              : { display: 'none' }
-                                          }
-                                        >
-                                          {server.Capability.Layer.Layer.map(({ Name }, i) => (
-                                            <div key={i}>
-                                              <p style={{ display: 'inline-block' }}>{Name}</p>
-                                              <input
-                                                checked={proxy.getLayerById(Name) ? true : false}
-                                                onChange={({ target }) =>
-                                                  target.checked
-                                                    ? proxy.addLayer(
-                                                        newLayer({
-                                                          id: Name,
-                                                          url: server.wmsAddress,
-                                                          name: Name
-                                                        })
-                                                      )
-                                                    : proxy.removeLayerById(Name)
-                                                }
-                                                style={{ marginLeft: '8px' }}
-                                                type="checkbox"
-                                              />
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </>
-                                    )}
-                                  </Form>
-                                </div>
-                              ))
-                            ) : (
-                              <p>None</p>
-                            )}
-
                             {/* Layer toggle */}
                             <h1>Current layers</h1>
                             {proxy.getLayers().getArray().length > 0 ? (
