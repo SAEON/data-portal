@@ -43,9 +43,9 @@ const pluginsConfig = mode =>
         })
       ]
 
-module.exports = ({ mode }) => ({
+module.exports = ({ mode, entry, port }) => ({
   mode,
-  entry: mode === 'production' ? './src/@saeon/ol-react/index.jsx' : './src/_dev/index.jsx',
+  entry: path.resolve(__dirname, entry),
   output: outputConfig(mode),
   resolve: resolveConfig(mode),
   externals: externalsConfig(mode),
@@ -81,7 +81,7 @@ module.exports = ({ mode }) => ({
   plugins: pluginsConfig(mode),
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: 3001,
+    port: parseInt(port),
     historyApiFallback: true,
     compress: true,
     allowedHosts: ['.localhost'],
