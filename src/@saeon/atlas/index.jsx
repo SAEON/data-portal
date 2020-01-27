@@ -1,14 +1,30 @@
+import 'typeface-roboto'
 import './index.scss'
 import React from 'react'
 import { render } from 'react-dom'
-import WebFontLoader from 'webfontloader'
+import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
+import Layout from './modules/layout'
 
-WebFontLoader.load({
-  google: {
-    families: ['Roboto:300,400,500,700', 'Material Icons', 'Open+Sans:400,600']
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#00796b'
+    },
+    secondary: {
+      main: '#607d8b'
+    }
+  },
+  status: {
+    danger: 'orange'
   }
 })
 
-const App = () => <div>hello world</div>
+const App = () => (
+  <CssBaseline>
+    <ThemeProvider theme={theme}>
+      <Layout />
+    </ThemeProvider>
+  </CssBaseline>
+)
 
 render(<App />, document.getElementById('root'))

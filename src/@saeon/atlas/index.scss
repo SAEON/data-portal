@@ -1,3 +1,6 @@
-@import '~react-md/dist/react-md';
-
-@include react-md-utils;
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
