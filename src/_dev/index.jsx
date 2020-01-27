@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { render } from 'react-dom'
 
 // Atlas
-import OlReact, { SingleFeatureSelector, MapProxy, DragAndDrop } from '../@saeon/atlas'
+import OlReact, { SingleFeatureSelector, MapProxy, DragAndDrop } from '../@saeon/ol-react'
 
 // Bespoke map stuff
 import './index.scss'
