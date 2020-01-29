@@ -64,7 +64,6 @@ export default class extends PureComponent {
           close={() => this.setState({ searchActive: false })}
           proxy={proxy}
         />
-
         <DraggableLayersMenu
           active={layersActive}
           close={() => this.setState({ layersActive: false })}
