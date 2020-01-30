@@ -15,7 +15,6 @@ import { Search, DragIndicator, Close } from '@material-ui/icons'
 import Form from '../../components/form'
 import { debounceGlobal } from '../../../../_lib'
 import npmUrl from 'url'
-
 import WindowedList from './windowed-list'
 
 const searcher = ({ url }) => fetch(url).then(res => res.json())

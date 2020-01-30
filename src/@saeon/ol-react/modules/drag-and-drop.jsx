@@ -1,5 +1,11 @@
 import React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { createPortal } from 'react-dom'
+
+const _dragEl = document.getElementById('draggable')
+
+const optionalPortal = (styles, element) =>
+  styles.position === 'fixed' ? createPortal(element, _dragEl) : element
 
 export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
   return (
@@ -9,20 +15,23 @@ export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            style={listStyle(snapshot.isDraggingOver)}
+            style={listStyle(snapshot.isDraggingOver, snapshot.isUsingPlaceholder)}
           >
             {children(layers, (child, i) => (
               <Draggable key={i} draggableId={i.toString()} index={i}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={itemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                  >
-                    {child}
-                  </div>
-                )}
+                {(provided, snapshot) =>
+                  optionalPortal(
+                    provided.draggableProps.style,
+                    <div
+                      ref={provided.innerRef}
+                      style={itemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <div style={itemStyle(snapshot.isDragging)}>{child}</div>
+                    </div>
+                  )
+                }
               </Draggable>
             ))}
             {provided.placeholder}
