@@ -7,7 +7,8 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Collapse
+  Collapse,
+  Slider
 } from '@material-ui/core'
 import {
   DragIndicator,
@@ -28,6 +29,7 @@ export default class extends PureComponent {
     return (
       <Draggable>
         <div
+          className="layers-menu"
           style={{
             opacity: 0.8,
             zIndex: 50,
@@ -61,7 +63,7 @@ export default class extends PureComponent {
                 </AppBar>
               </div>
             </CardContent>
-            <CardContent>
+            <CardContent style={{ maxHeight: '500px', overflow: 'auto' }}>
               {proxy.getLayers().getArray().length > 0 ? (
                 <DragAndDrop
                   layers={proxy.getLayers().getArray()}
@@ -77,14 +79,22 @@ export default class extends PureComponent {
                   itemStyle={(isDragging, draggableStyle) => ({
                     userSelect: 'none',
                     margin: `0 0 4px 0`,
-                    background: isDragging ? 'grey' : 'lightgrey',
+                    background: isDragging ? 'lightgrey' : 'transparent',
                     ...draggableStyle
                   })}
                 >
                   {(layers, makeDraggable) =>
                     layers.map((layer, i) => {
                       return makeDraggable(
-                        <Card style={{ background: 'transparent' }} variant="outlined">
+                        <Card
+                          style={{
+                            background: 'transparent',
+                            borderRadius: 'unset',
+                            border: 'none',
+                            maxWidth: '600px'
+                          }}
+                          variant="outlined"
+                        >
                           <CardHeader
                             component={({ children }) => (
                               <AppBar position="relative" variant="outlined">
@@ -114,15 +124,31 @@ export default class extends PureComponent {
                                 <IconButton
                                   onClick={() => proxy.removeLayer(layer)}
                                   aria-label="delete-layer"
+                                  style={{ marginRight: 10 }}
                                 >
                                   <Delete />
                                 </IconButton>
                               </div>
                             }
-                            title={<Typography variant="subtitle1">{layer.get('id')}</Typography>}
+                            title={
+                              <Typography style={{ wordBreak: 'break-word' }} variant="caption">
+                                {layer.get('id')}
+                              </Typography>
+                            }
                           />
                           <Collapse in={state[layer.get('id')]} timeout="auto" unmountOnExit>
                             <CardContent>
+                              <Slider
+                                defaultValue={0.00000005}
+                                getAriaValueText={() => 'hi'}
+                                onChange={() => alert('hi')}
+                                aria-labelledby="discrete-slider-small-steps"
+                                step={0.00000001}
+                                marks
+                                min={-0.00000005}
+                                max={0.0000001}
+                                valueLabelDisplay="auto"
+                              />
                               <div>
                                 <input
                                   type="range"
