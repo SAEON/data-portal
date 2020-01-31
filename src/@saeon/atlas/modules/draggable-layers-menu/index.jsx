@@ -1,5 +1,13 @@
 import React from 'react'
-import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton
+} from '@material-ui/core'
 import { DragIndicator, Close } from '@material-ui/icons'
 import { DragAndDrop, Draggable } from '../../../ol-react'
 
@@ -59,21 +67,28 @@ export default ({ proxy, active, close }) => (
               {(layers, makeDraggable) =>
                 layers.map((layer, i) =>
                   makeDraggable(
-                    <div>
-                      {layer.get('id')}
-                      <span>({JSON.stringify(layer.get('visible'))})</span>
-                      <button onClick={() => layer.setVisible(!layer.get('visible'))}>
-                        Toggle visible
-                      </button>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={layer.get('opacity') * 100}
-                        onChange={e => layer.setOpacity(e.target.value / 100)}
-                      />
-                      <button onClick={() => proxy.removeLayer(layer)}>Remove layer</button>
-                    </div>,
+                    <Card variant="outlined">
+                      <CardHeader title={layer.get('id')} />
+                      <CardContent>
+                        <div>
+                          <span>({JSON.stringify(layer.get('visible'))})</span>
+                          <button onClick={() => layer.setVisible(!layer.get('visible'))}>
+                            Toggle visible
+                          </button>
+                        </div>
+                        <div>
+                          <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={layer.get('opacity') * 100}
+                            onChange={e => layer.setOpacity(e.target.value / 100)}
+                          />
+                        </div>
+
+                        <button onClick={() => proxy.removeLayer(layer)}>Remove layer</button>
+                      </CardContent>
+                    </Card>,
                     i
                   )
                 )
