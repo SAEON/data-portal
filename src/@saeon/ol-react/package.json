@@ -11,10 +11,13 @@
     "react-dom": "^16.12.0"
   },
   "scripts": {
+    "start": "npm-run-all -p onchange dev-server",
+    "onchange": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "dev-server": "webpack-dev-server --env.mode=development --env.entry=src/@saeon/ol-react/_dev/index.jsx --env.port=3002 --open",
     "publish-patch": "npm-run-all -s publish:pack increment-patch push-to-npm",
     "publish-minor": "npm-run-all -s publish:pack increment-minor push-to-npm",
     "publish-major": "npm-run-all -s publish:pack increment-major push-to-npm",
-    "publish:pack": "webpack --env.mode=production --env.entry=src/@saeon/ol-react/index.jsx",
+    "publish:pack": "webpack --env.mode=production --env.entry=src/@saeon/ol-react/index.js",
     "increment-patch": "scripts/increment-patch.sh",
     "increment-minor": "scripts/increment-minor.sh",
     "increment-major": "scripts/increment-major.sh",

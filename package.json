@@ -2,14 +2,18 @@
   "name": "@saeon/atlas",
   "description": "SAEON's 'Atlas' codebase (monorepo)",
   "scripts": {
+    "**************** GENERAL": "****************",
     "start": "npm-run-all -p atlas-api:start atlas-client:start",
     "test": "npm-run-all -p atlas-api:start ol-react:start",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:staged": "pretty-quick --staged",
-    "ol-react:start": "npm --prefix src/_test/ start",
+    "**************** ATLAS-API": "****************",
+    "atlas-api:start": "npm --prefix src/@saeon/atlas-api start",
+    "**************** ATLAS-CLIENT": "****************",
     "atlas-client:start": "npm --prefix src/@saeon/atlas-client start",
     "atlas-client:build": "npm --prefix src/@saeon/atlas-client run build",
-    "atlas-api:start": "npm --prefix src/@saeon/atlas-api start"
+    "**************** OL-REACT": "****************",
+    "ol-react:start": "npm --prefix src/@saeon/ol-react start"
   },
   "husky": {
     "hooks": {

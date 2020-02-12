@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import app from '../app'
 import http from 'http'
-import { log, logError } from '../_lib'
 
 const normalizePort = val => {
   const port = parseInt(val, 10)
@@ -20,11 +19,11 @@ server.on('error', err => {
   var bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT
   switch (err.code) {
     case 'EACCES':
-      logError(bind + ' requires elevated privileges')
+      console.error(bind + ' requires elevated privileges')
       process.exit(1)
       break
     case 'EADDRINUSE':
-      logError(bind + ' is already in use')
+      console.error(bind + ' is already in use')
       process.exit(1)
       break
     default:
@@ -35,5 +34,5 @@ server.on('error', err => {
 server.on('listening', () => {
   var addr = server.address()
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
-  log('Listening on ' + bind)
+  console.log('Listening on ' + bind)
 })
