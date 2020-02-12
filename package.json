@@ -1,11 +1,6 @@
 {
   "name": "@saeon/atlas",
-  "version": "6.1.2",
-  "description": "Generalized openLayer wrapper for GIS data navigation",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "description": "SAEON's 'Atlas' codebase (monorepo)",
   "scripts": {
     "__GENERAL__": "====================================================================",
     "start": "npm-run-all -p start:api atlas:dev",
@@ -39,12 +34,6 @@
       "pre-commit": "npm-run-all -s prettier:staged lint"
     }
   },
-  "keywords": [
-    "OpenLayers 6",
-    "SAEON",
-    "Atlas",
-    "Map"
-  ],
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
@@ -78,10 +67,6 @@
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.3"
-  },
-  "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
