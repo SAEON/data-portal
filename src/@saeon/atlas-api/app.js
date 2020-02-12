@@ -16,7 +16,7 @@ import { normalize, join } from 'path'
 import { readFileSync } from 'fs'
 
 // Configuration / other
-import { log, logError } from '../_lib'
+import { log, logError } from '../../_lib'
 import { config } from 'dotenv'
 
 config()
