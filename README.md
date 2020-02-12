@@ -1,4 +1,5 @@
 # @SAEON/Atlas
+
 Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atlas)
 
 ```sh
@@ -6,19 +7,23 @@ npm install @saeon/atlas
 ```
 
 ## Modules
+
 The basis of the Atlas is that it comprises of many `Modules`. Please see `./dev/index.jsx` (in this repository) for a working proof of concept that uses all the 'built-in' modules. This documentation describes how the example works, and is aimed at showing how to structure your own modules. These examples show two different mechanisms for 'composition' when authoring modules.
 
 ### Built in modules
 
 #### SingleFeatureSelector
+
 TODO
 
 #### LayerManager
+
 The OpenLayers library maintains it's own layer state. This is problematic when using React.js, since React will not update state automatically in response to changes to an OpenLayers `map` instance. This modules provides an array of 'proxy' layer objects, and helper functions to update these objects; these proxy layer objects are stored in React state. Essentially this module 'binds' react state to OpenLayers state, and makes working with layers easier.
 
 TODO example
 
 ### Example 1
+
 ```jsx
 class App extends PureComponent {
   constructor(props) { ... }
@@ -41,6 +46,7 @@ class App extends PureComponent {
 ```
 
 ### Example 2
+
 Since you can define your own modules, you can define composition. Nested module composition might be useful if, for example, Module1 contained filtering logic that you want to make available to other modules.
 
 ```jsx
@@ -67,6 +73,7 @@ class App extends PureComponent {
 ```
 
 # Developers
+
 To contribute code to this component fork the source code, install dependencies, and start the development server (`webpack-dev-server`). Please work on a branch OTHER than the master branch!
 
 ```sh
@@ -91,6 +98,7 @@ npm link @saeon/atlas
 **NOTE** - when using `npm link`, after making source code changes to the package you need to **rebuild** the package (and NOT update the package on NPM). The command to do this is `npm run build`
 
 # Publish to NPM
+
 There are 4 scripts included in this repository for publishing - when you clone this repository you need to check that they are executable:
 
 ```sh
@@ -119,3 +127,7 @@ With this in mind, 3 scripts are defined in the `package.json` file:
 - `publish-major` - Major version is bumped, and code is pushed to NPM
 
 Running these scripts will provide CLI prompts that you need to answer, and then a new package version will be pushed to NPM. In all cases existing changes are committed prior to version bump, and then the code on that branch is packaged. **Please don't push non-master branch changes to the NPM registry**!! Unless otherwise intended, please run the `publish-patch` script (`npm run publish-patch`).
+
+## TODO
+
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)

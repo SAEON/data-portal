@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import app from '../app'
 import http from 'http'
-import { log, logError } from '../../../_lib'
+import { log, logError } from '../_lib'
 
 const normalizePort = val => {
   const port = parseInt(val, 10)

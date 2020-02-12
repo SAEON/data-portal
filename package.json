@@ -29,7 +29,7 @@
     "increment-major": "scripts/increment-major.sh",
     "push-to-npm": "scripts/push-to-npm.sh"
   },
-  "husky": {
+  "husky_disabled_for_now": {
     "hooks": {
       "pre-commit": "npm-run-all -s prettier:staged lint"
     }
@@ -53,6 +53,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.1",
+    "lerna": "^3.20.2",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
