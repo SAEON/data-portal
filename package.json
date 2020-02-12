@@ -4,14 +4,10 @@
   "scripts": {
     "__GENERAL__": "====================================================================",
     "start": "npm-run-all -p start:api atlas:dev",
-    "test": "npm-run-all -p start:api start:test",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:staged": "pretty-quick --staged",
     "__TEST__": "=====================================================================",
-    "start:test": "npm-run-all -p onchange:test test-api",
-    "onchange:test": "onchange \"src/{_lib,_test,@saeon}/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "test-api": "webpack-dev-server --env.mode=development --env.entry=src/_test/index.jsx --env.port=3002 --open",
-    "__ATLAS-CLIENT__": "=====================================================================",
+    "ol-react-dev:start": "lerna exec --scope @saeon/ol-react-dev npm start",
     "atlas-client:start": "lerna exec --scope @saeon/atlas-client npm start",
     "atlas-client:build": "lerna exec --scope @saeon/atlas-client npm run build",
     "atlas-api:start": "lerna exec --scope @saeon/atlas-api npm start",
@@ -25,7 +21,7 @@
     "increment-major": "scripts/increment-major.sh",
     "push-to-npm": "scripts/push-to-npm.sh"
   },
-  "husky_disabled_for_now": {
+  "husky": {
     "hooks": {
       "pre-commit": "npm-run-all -s prettier:staged lint"
     }
