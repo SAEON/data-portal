@@ -38,8 +38,8 @@ const pluginsConfig = mode =>
     ? []
     : [
         new HtmlWebPackPlugin({
-          template: './index.html',
-          filename: './index.html'
+          template: 'index.html',
+          filename: 'index.html'
         })
       ]
 
@@ -55,7 +55,10 @@ module.exports = ({ mode, entry, port }) => ({
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            rootMode: "upward",
+          }
         }
       },
       {
@@ -88,7 +91,7 @@ module.exports = ({ mode, entry, port }) => ({
   },
   plugins: pluginsConfig(mode),
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: 'dist',
     port: parseInt(port),
     historyApiFallback: true,
     compress: true,

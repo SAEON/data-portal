@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import { Search, DragIndicator, Close } from '@material-ui/icons'
 import Form from '../../components/form'
-import { debounceGlobal } from '../../../../_lib'
+import { debounceGlobal } from '../../_lib'
 import npmUrl from 'url'
 import WindowedList from './windowed-list'
 

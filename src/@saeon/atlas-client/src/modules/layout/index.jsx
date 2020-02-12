@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab'
 import { Settings, Share, Search, Layers } from '@material-ui/icons'
-import OlReact, { MapProxy } from '../../../ol-react'
+import OlReact, { MapProxy } from '../../../../ol-react'
 import { ahocevarBaseMap } from '../../layers'
 
 // Menus
