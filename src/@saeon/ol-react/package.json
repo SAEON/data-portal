@@ -10,7 +10,16 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
-  "scripts": {},
+  "scripts": {
+    "publish-patch": "npm-run-all -s publish:pack increment-patch push-to-npm",
+    "publish-minor": "npm-run-all -s publish:pack increment-minor push-to-npm",
+    "publish-major": "npm-run-all -s publish:pack increment-major push-to-npm",
+    "publish:pack": "webpack --env.mode=production --env.entry=src/@saeon/ol-react/index.jsx",
+    "increment-patch": "scripts/increment-patch.sh",
+    "increment-minor": "scripts/increment-minor.sh",
+    "increment-major": "scripts/increment-major.sh",
+    "push-to-npm": "scripts/push-to-npm.sh"
+  },
   "keywords": [
     "@saeon/ol-react"
   ],
