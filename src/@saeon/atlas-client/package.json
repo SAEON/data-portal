@@ -1,0 +1,12 @@
+{
+  "name": "@saeon/atlas-client",
+  "version": "0.0.1",
+  "description": "An interactive atlas for interacting with spatial data - specifically SAEON's metadata store, although it should also be a generally useful means of interacting with any OGC-compliant resource.",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "@saeon/atlas-client"
+  ],
+  "author": "zach@saeon.ac.za",
+  "license": "MIT"
+}
