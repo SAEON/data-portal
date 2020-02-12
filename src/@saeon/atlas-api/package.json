@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec \"npm-run-all -s prettier server\"",
     "prettier": "prettier --write \"src/**/*.@(js|graphql)\"",
-    "server": "TZ=utc NODE_ENV=development babel-node src/bin/index.js"
+    "server": "TZ=utc NODE_ENV=development babel-node --root-mode upward src/bin/index.js"
   },
   "keywords": [
     "@saeon/atlas-api"
