@@ -12,33 +12,5 @@
     "@saeon/atlas-api"
   ],
   "author": "zach@saeon.ac.za",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/node": "^7.8.4",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-react": "^7.8.3",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.8.0",
-    "nodemon": "^2.0.2",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^1.19.1"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.8.4",
-    "@babel/runtime-corejs3": "^7.8.4",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^8.2.0",
-    "express-graphql": "^0.9.0",
-    "graphql": "^14.6.0",
-    "graphql-anywhere": "^4.2.6",
-    "graphql-tag": "^2.10.3",
-    "graphql-tools": "^4.0.6",
-    "http-proxy-middleware": "^0.20.0",
-    "morgan": "^1.9.1"
-  }
+  "license": "MIT"
 }
