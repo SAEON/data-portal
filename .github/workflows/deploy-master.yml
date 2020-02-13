@@ -1,0 +1,21 @@
+name: DEV
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+    
+    - uses: actions/checkout@v1
+      with:
+        ref: master
+        token: ${{ secrets.ACCESS_TOKEN }}
+        submodules: recursive
+
+    - name: test
+      run: |
+        echo hi
