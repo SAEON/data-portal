@@ -16,6 +16,8 @@ jobs:
         token: ${{ secrets.ACCESS_TOKEN }}
         submodules: recursive
 
-    - name: test
+    - name: Configure the server
       run: |
-        echo 'hi'
+        sudo /opt/copy-main-nginx-conf.sh # This script contains this command: cp ./nginx/nginx.conf /etc/nginx/nginx.conf
+        sudo /opt/copy-nginx-vhosts.sh # This script contains this command: cp ./nginx/vhosts/* /etc/nginx/conf.d/
+        sudo /opt/restart-nginx.sh # This script contains this command: service nginx restart
