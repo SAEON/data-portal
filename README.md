@@ -130,4 +130,12 @@ Running these scripts will provide CLI prompts that you need to answer, and then
 
 ## TODO
 
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+## Deploy atlas-api
+```
+
+```
+
+## Deploy atlas-client
+```
+docker build -t atlas-client -f ./src/@saeon/atlas-client/Dockerfile .
+```

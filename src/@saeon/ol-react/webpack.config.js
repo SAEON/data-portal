@@ -5,6 +5,7 @@ const outputConfig = ({mode, output}) =>
   mode === 'production'
     ? {
         filename: 'index.js',
+        libraryTarget: 'commonjs',
         path: output
       }
     : {
@@ -14,7 +15,11 @@ const outputConfig = ({mode, output}) =>
 const resolveConfig = mode =>
   mode === 'production'
     ? {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx'],
+        alias: {
+          react: path.resolve('./node_modules/react'),
+          'react-dom': path.resolve('./node_modules/react-dom')
+        }
       }
     : {
         extensions: ['.js', '.jsx']
@@ -22,7 +27,11 @@ const resolveConfig = mode =>
 
 const externalsConfig = mode =>
   mode === 'production'
-    ? {}
+    ? {
+        react: 'react',
+        'react-dom': 'react-dom',
+        'react-md': 'react-md'
+      }
     : {}
 
 const pluginsConfig = ({mode, output}) =>
