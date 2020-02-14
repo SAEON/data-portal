@@ -38,6 +38,7 @@ export default class extends PureComponent {
           () => {
             const { selectedFeature } = this.state
             selectedFeature.setStyle(selectedStyle(feature))
+            if (this.props.onFeatureSelect) this.props.onFeatureSelect(selectedFeature)
           }
         )
       } else {
@@ -46,6 +47,12 @@ export default class extends PureComponent {
     })
   }
 
+  /**
+   * A callback is allowed (specified by user)
+   * HOWEVER, when a callback is not specified,
+   * an event argument is passed instead. This needs
+   * to be handled
+   */
   unselectFeature = (cb = null) => {
     // This function is often called with an event object. which is not a function
     if (typeof cb !== 'function') cb = null

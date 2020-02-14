@@ -45,6 +45,7 @@ class App extends PureComponent {
           <>
             {/* TODO: I think for this to work with the proxy that features also need to be proxied? */}
             <SingleFeatureSelector
+              onFeatureSelect={selectedFeature => console.log(selectedFeature)}
               unselectedStyle={clusterStyle1}
               selectedStyle={clusterStyle2}
               map={map}
@@ -287,8 +288,4 @@ class App extends PureComponent {
   }
 }
 
-
-render(
-    <App />,
-  document.getElementById('root')
-)
+render(<App />, document.getElementById('root'))
