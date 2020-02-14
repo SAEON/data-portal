@@ -17,8 +17,8 @@ export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
             ref={provided.innerRef}
             style={listStyle(snapshot.isDraggingOver, snapshot.isUsingPlaceholder)}
           >
-            {children(layers, (child, i) => (
-              <Draggable key={i} draggableId={i.toString()} index={i}>
+            {children(layers, (child, i, disableDrag) => (
+              <Draggable key={i} isDragDisabled={disableDrag} draggableId={i.toString()} index={i}>
                 {(provided, snapshot) =>
                   optionalPortal(
                     provided.draggableProps.style,

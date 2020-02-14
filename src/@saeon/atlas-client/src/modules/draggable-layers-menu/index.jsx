@@ -22,7 +22,9 @@ import {
 import { DragAndDrop, Draggable } from '../../../../ol-react'
 
 export default class extends PureComponent {
-  state = {}
+  state = {
+    disableDrag: false
+  }
   render() {
     const { state } = this
     const { proxy, active, close } = this.props
@@ -141,7 +143,11 @@ export default class extends PureComponent {
                               <Slider
                                 defaultValue={0.00000005}
                                 getAriaValueText={() => 'hi'}
-                                onChange={() => alert('hi')}
+                                onChange={() => {
+                                  this.setState({ disableDrag: true }, () => {
+                                    console.log('hi')
+                                  })
+                                }}
                                 aria-labelledby="discrete-slider-small-steps"
                                 step={0.00000001}
                                 marks
@@ -161,7 +167,8 @@ export default class extends PureComponent {
                             </CardContent>
                           </Collapse>
                         </Card>,
-                        i
+                        i,
+                        this.state.disableDrag
                       )
                     })
                   }
