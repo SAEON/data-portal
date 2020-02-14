@@ -132,7 +132,7 @@ Running these scripts will provide CLI prompts that you need to answer, and then
 
 ## Deploy atlas-api
 ```
-
+docker build -t atlas-api -f ./src/@saeon/atlas-api/Dockerfile .
 ```
 
 ## Deploy atlas-client
