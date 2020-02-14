@@ -12,12 +12,6 @@ import { ahocevarBaseMap, clusterLayer, newLayer } from './layers'
 import { clusterStyle1, clusterStyle2 } from './styles'
 import pointData from './point-data.json'
 
-// GraphQL
-import { ApolloProvider } from 'react-apollo'
-import { RestLink } from 'apollo-link-rest'
-import ApolloClient from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-
 // Components
 import { Form } from './lib'
 import CkanSearcher from './modules/saeon-ckan-search'
@@ -293,14 +287,8 @@ class App extends PureComponent {
   }
 }
 
-const httpClient = new ApolloClient({
-  link: new RestLink({ uri: 'http://localhost:3000' }),
-  cache: new InMemoryCache()
-})
 
 render(
-  <ApolloProvider client={httpClient}>
-    <App />
-  </ApolloProvider>,
+    <App />,
   document.getElementById('root')
 )

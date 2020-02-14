@@ -29,7 +29,7 @@ export default class extends PureComponent {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div style={{ height: 'calc(100% - 48px)', width: '100%' }}>
+        <div style={{ height: 'calc(100% - 54px)', width: '100%' }}>
           <OlReact layers={[ahocevarBaseMap()]} style={{ width: '100%', height: '100%' }}>
             {({ map }) => (
               <MapProxy map={map}>
