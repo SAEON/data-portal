@@ -20,6 +20,8 @@ import {
   ExpandMore
 } from '@material-ui/icons'
 import { DragAndDrop, Draggable } from '../../../../ol-react'
+import Form from '../../components/form'
+import { debounce } from '../../../../../_lib'
 
 export default class extends PureComponent {
   state = {
@@ -140,30 +142,29 @@ export default class extends PureComponent {
                           />
                           <Collapse in={state[layer.get('id')]} timeout="auto" unmountOnExit>
                             <CardContent>
-                              <Slider
-                                defaultValue={0.00000005}
-                                getAriaValueText={() => 'hi'}
-                                onChange={() => {
-                                  this.setState({ disableDrag: true }, () => {
-                                    console.log('hi')
-                                  })
-                                }}
-                                aria-labelledby="discrete-slider-small-steps"
-                                step={0.00000001}
-                                marks
-                                min={-0.00000005}
-                                max={0.0000001}
-                                valueLabelDisplay="auto"
-                              />
-                              <div>
-                                <input
-                                  type="range"
-                                  min="0"
-                                  max="100"
-                                  value={layer.get('opacity') * 100}
-                                  onChange={e => layer.setOpacity(e.target.value / 100)}
-                                />
-                              </div>
+                              <Form value={layer.get('opacity') * 100}>
+                                {({ updateForm, value }) => (
+                                  <Slider
+                                    onMouseEnter={() => this.setState({ disableDrag: true })}
+                                    onMouseLeave={() => this.setState({ disableDrag: false })}
+                                    defaultValue={50}
+                                    getAriaValueText={() => parseInt(value, 10)}
+                                    value={value}
+                                    onChange={(e, v) =>
+                                      updateForm(
+                                        { value: v },
+                                        debounce(() => layer.setOpacity(v / 100))
+                                      )
+                                    }
+                                    aria-labelledby="discrete-slider-small-steps"
+                                    step={0.00001}
+                                    marks={false}
+                                    min={1}
+                                    max={100}
+                                    valueLabelDisplay="off"
+                                  />
+                                )}
+                              </Form>
                             </CardContent>
                           </Collapse>
                         </Card>,
