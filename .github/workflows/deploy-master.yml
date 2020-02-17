@@ -16,8 +16,12 @@ jobs:
         token: ${{ secrets.ACCESS_TOKEN }}
         submodules: recursive
 
-    # - name: Configure the server
-    #   run: |
-    #     sudo /opt/copy-main-nginx-conf.sh # This script contains this command: cp ./nginx/nginx.conf /etc/nginx/nginx.conf
-    #     sudo /opt/copy-nginx-vhosts.sh # This script contains this command: cp ./nginx/vhosts/* /etc/nginx/conf.d/
-    #     sudo /opt/restart-nginx.sh # This script contains this command: service nginx restart
+    - name: Configure the server
+      run: |
+        sudo /opt/copy-main-nginx-conf.sh # This script contains this command: cp ./nginx/nginx.conf /etc/nginx/nginx.conf
+        sudo /opt/copy-nginx-vhosts.sh # This script contains this command: cp ./nginx/vhosts/* /etc/nginx/conf.d/
+        sudo /opt/restart-nginx.sh # This script contains this command: service nginx restart
+
+    - name: Deploy the API, client, and PostGIS
+      run: |
+        /usr/local/bin/docker-compose up -d --force-recreate --build
