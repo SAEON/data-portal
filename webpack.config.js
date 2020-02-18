@@ -1,17 +1,29 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
-module.exports = ({plugins = []}) => ({ mode, entry, output = '/dist', port }) => ({
+
+module.exports = ({
+  pluginsCb = null,
+  resolveCb = null,
+  externalsCb = null,
+  outputCb = null
+}) => ({
+  mode,
+  entry,
+  output = '/dist',
+  port
+}) => ({
   mode,
   entry: path.resolve(__dirname, entry),
-  output: {
+  output: outputCb ? outputCb({mode, output}) : {
     filename: 'index.js',
     path: path.join(__dirname, output)
   },
   resolve: {
+    ...(resolveCb ? resolveCb(mode) : {}),
     extensions: ['.js', '.jsx']
   },
-  externals: {},
+  externals: externalsCb ? externalsCb(mode) : {},
   module: {
     rules: [
       {
@@ -52,13 +64,10 @@ module.exports = ({plugins = []}) => ({ mode, entry, output = '/dist', port }) =
       }
     ]
   },
-  plugins: [
-    ...plugins,
-    new HtmlWebPackPlugin({
-      template: 'index.html',
-      filename: path.join(__dirname, output, '/index.html')
-    })
-  ],
+  plugins: pluginsCb(    new HtmlWebPackPlugin({
+    template: 'index.html',
+    filename: path.join(__dirname, output, '/index.html')
+  }), mode),
   devServer: {
     contentBase: path.join(__dirname, output),
     port: parseInt(port),
