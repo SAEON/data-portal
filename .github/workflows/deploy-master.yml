@@ -18,7 +18,7 @@ jobs:
 
     - name: Configure the API
       run: |
-        echo "TODO" > src/@saeon/atlas-api/.env
+        echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/@saeon/atlas-api/.env
 
     - name: Configure the client
       run: |
