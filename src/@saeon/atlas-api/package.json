@@ -9,7 +9,7 @@
     "server": "TZ=utc NODE_ENV=development babel-node --root-mode upward src/bin/index.js",
     "start:prod": "NODE_ENV=production npm-run-all clean:prod build:prod copy:gqlschema copy:env server:prod",
     "clean:prod": "rimraf ./dist",
-    "build:prod": "babel ./src --out-dir dist",
+    "build:prod": "babel --root-mode upward ./src --out-dir dist",
     "copy:gqlschema": "copyfiles -u 1 ./src/schema.graphql dist/",
     "copy:env": "copyfiles ./.env dist/",
     "server:prod": "TZ=utc node ./dist/bin"
