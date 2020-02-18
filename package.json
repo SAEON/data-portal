@@ -4,7 +4,7 @@
   "scripts": {
     "**************** GENERAL": "****************",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
-    "prettier:staged": "pretty-quick --staged",
+    "prettier:staged": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "**************** DEV": "****************",
     "start": "npm-run-all -p atlas-api:start atlas-client:start",
