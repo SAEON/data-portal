@@ -1,6 +1,3 @@
-
-console.log(require('./package.json'))
-
 module.exports = {
   env: {
     browser: true,
@@ -28,7 +25,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: require('./package.json').devDependencies.react
+      version: require('./package.json').dependencies.react
     }
   }
 }
