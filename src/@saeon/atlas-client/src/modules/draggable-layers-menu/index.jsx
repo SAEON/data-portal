@@ -19,7 +19,7 @@ import {
   ExpandLess,
   ExpandMore
 } from '@material-ui/icons'
-import { DragAndDrop, Draggable } from '../../../../ol-react'
+import { DragAndDrop, Draggable } from '@saeon/ol-react'
 import Form from '../../components/form'
 import { debounce } from '../../../../../_lib'
 
