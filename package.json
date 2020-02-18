@@ -4,8 +4,9 @@
   "scripts": {
     "**************** GENERAL": "****************",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
-    "prettier:staged": "pretty-quick",
+    "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
+    "build-readme": "scripts/build-readme.sh",
     "**************** DEV": "****************",
     "start": "npm-run-all -p atlas-api:start atlas-client:start",
     "test": "npm-run-all -p atlas-api:start ol-react:start",
@@ -25,7 +26,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all -s prettier:staged lint"
+      "pre-commit": "npm-run-all -s prettier:changed lint"
     }
   },
   "author": "zach@saeon.ac.za",
