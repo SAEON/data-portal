@@ -1,13 +1,13 @@
 const path = require('path')
 
 module.exports = require('../../../webpack.config')({
-    pluginsCb: (plugins, mode) => mode === 'production' ? [] : plugins,
+  pluginsCb: (plugins, mode) => (mode === 'production' ? [] : plugins),
   outputCb: ({ mode, output }) =>
     mode === 'production'
       ? {
           filename: 'index.js',
           libraryTarget: 'commonjs',
-          path: path.join(__dirname, output)
+          path: output
         }
       : {
           filename: 'index.js'

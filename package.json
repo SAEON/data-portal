@@ -5,6 +5,7 @@
     "**************** GENERAL": "****************",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:staged": "pretty-quick --staged",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "**************** DEV": "****************",
     "start": "npm-run-all -p atlas-api:start atlas-client:start",
     "test": "npm-run-all -p atlas-api:start ol-react:start",

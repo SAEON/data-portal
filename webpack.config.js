@@ -1,13 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
-
-module.exports = ({
-  pluginsCb = null,
-  resolveCb = null,
-  externalsCb = null,
-  outputCb = null
-}) => ({
+module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outputCb = null }) => ({
   mode,
   entry,
   output = '/dist',
@@ -15,10 +9,12 @@ module.exports = ({
 }) => ({
   mode,
   entry: path.resolve(__dirname, entry),
-  output: outputCb ? outputCb({mode, output}) : {
-    filename: 'index.js',
-    path: path.join(__dirname, output)
-  },
+  output: outputCb
+    ? outputCb({ mode, output: path.join(__dirname, output) })
+    : {
+        filename: 'index.js',
+        path: path.join(__dirname, output)
+      },
   resolve: {
     ...(resolveCb ? resolveCb(mode) : {}),
     extensions: ['.js', '.jsx']
@@ -32,7 +28,7 @@ module.exports = ({
         use: {
           loader: 'babel-loader',
           options: {
-            rootMode: "upward",
+            rootMode: 'upward'
           }
         }
       },
@@ -64,10 +60,13 @@ module.exports = ({
       }
     ]
   },
-  plugins: pluginsCb(    new HtmlWebPackPlugin({
-    template: 'index.html',
-    filename: path.join(__dirname, output, '/index.html')
-  }), mode),
+  plugins: pluginsCb(
+    new HtmlWebPackPlugin({
+      template: 'index.html',
+      filename: path.join(__dirname, output, '/index.html')
+    }),
+    mode
+  ),
   devServer: {
     contentBase: path.join(__dirname, output),
     port: parseInt(port),
