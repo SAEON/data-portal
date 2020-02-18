@@ -1,51 +1,17 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
-const outputConfig = ({mode, output}) =>
-  mode === 'production'
-    ? {
-        filename: 'index.js',
-        path: output
-      }
-    : {
-        filename: 'index.js'
-      }
-
-const resolveConfig = mode =>
-  mode === 'production'
-    ? {
-        extensions: ['.js', '.jsx']
-      }
-    : {
-        extensions: ['.js', '.jsx']
-      }
-
-const externalsConfig = mode =>
-  mode === 'production'
-    ? {}
-    : {}
-
-const pluginsConfig = ({mode, output}) =>
-  mode === 'production'
-    ? [
-      new HtmlWebPackPlugin({
-        template: 'index.html',
-        filename: path.join(__dirname, output, '/index.html')
-      })
-    ]
-    : [
-        new HtmlWebPackPlugin({
-          template: 'index.html',
-          filename: path.join(__dirname, output, '/index.html')
-        })
-      ]
-
-module.exports = ({ mode, entry, output = '/dist', port }) => ({
+module.exports = ({plugins = []}) => ({ mode, entry, output = '/dist', port }) => ({
   mode,
   entry: path.resolve(__dirname, entry),
-  output: outputConfig(({mode, output: path.join(__dirname, output)})),
-  resolve: resolveConfig(mode),
-  externals: externalsConfig(mode),
+  output: {
+    filename: 'index.js',
+    path: path.join(__dirname, output)
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  externals: {},
   module: {
     rules: [
       {
@@ -86,7 +52,13 @@ module.exports = ({ mode, entry, output = '/dist', port }) => ({
       }
     ]
   },
-  plugins: pluginsConfig(({mode, output})),
+  plugins: [
+    ...plugins,
+    new HtmlWebPackPlugin({
+      template: 'index.html',
+      filename: path.join(__dirname, output, '/index.html')
+    })
+  ],
   devServer: {
     contentBase: path.join(__dirname, output),
     port: parseInt(port),

@@ -19,6 +19,9 @@ import WindowedList from './windowed-list'
 
 const searcher = ({ url }) => fetch(url).then(res => res.json())
 
+const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'
+console.log(process.env.ATLAS_API_ADDRESS, ATLAS_API_ADDRESS)
+
 export default ({ proxy, active, close }) => (
   <Draggable
     axis="both"
@@ -81,7 +84,7 @@ export default ({ proxy, active, close }) => (
                                   updateForm({
                                     searchResults: [
                                       await searcher({
-                                        url: `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`
+                                        url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`
                                       })
                                     ],
                                     loading: false
@@ -111,7 +114,7 @@ export default ({ proxy, active, close }) => (
                               searchResults: [
                                 ...searchResults,
                                 await searcher({
-                                  url: `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${searchResults.reduce(
+                                  url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${searchResults.reduce(
                                     (c, curr) => c + curr.result_length,
                                     0
                                   ) + 1}`

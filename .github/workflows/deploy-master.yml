@@ -16,6 +16,14 @@ jobs:
         token: ${{ secrets.ACCESS_TOKEN }}
         submodules: recursive
 
+    - name: Configure the API
+      run: |
+        echo "TODO" > src/@saeon/atlas-api/.env
+
+    - name: Configure the client
+      run: |
+        echo "ATLAS_API_ADDRESS=https://api.atlas.saeon.ac.za" > src/@saeon/atlas-client/.env
+
     - name: Configure the server
       run: |
         sudo /opt/copy-main-nginx-conf.sh # This script contains this command: cp ./nginx/nginx.conf /etc/nginx/nginx.conf
