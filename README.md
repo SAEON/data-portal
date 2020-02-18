@@ -129,6 +129,7 @@ With this in mind, 3 scripts are defined in the `package.json` file:
 Running these scripts will provide CLI prompts that you need to answer, and then a new package version will be pushed to NPM. In all cases existing changes are committed prior to version bump, and then the code on that branch is packaged. **Please don't push non-master branch changes to the NPM registry**!! Unless otherwise intended, please run the `publish-patch` script (`npm run publish-patch`).
 
 ## TODO
+This is nw a monorepor. Update this!
 
 ## Deploy atlas-api
 ```
