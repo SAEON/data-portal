@@ -1,3 +1,6 @@
+
+console.log(require('./package.json'))
+
 module.exports = {
   env: {
     browser: true,
