@@ -26,7 +26,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all -s prettier:changed lint"
+      "pre-commit": "npm-run-all -s build-readme prettier:changed lint"
     }
   },
   "author": "zach@saeon.ac.za",
