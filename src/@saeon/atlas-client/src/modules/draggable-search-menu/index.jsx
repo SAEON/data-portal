@@ -20,7 +20,6 @@ import WindowedList from './windowed-list'
 const searcher = ({ url }) => fetch(url).then(res => res.json())
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'
-console.log(process.env.ATLAS_API_ADDRESS, ATLAS_API_ADDRESS)
 
 export default ({ proxy, active, close }) => (
   <Draggable
