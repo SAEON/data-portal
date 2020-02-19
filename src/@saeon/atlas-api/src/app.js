@@ -98,13 +98,16 @@ app.use(
   })
 )
 
+// Simple search
 app.use(
-  '/saeon-metadata/search',
+  '/saeon-metadata',
   proxy({
     target: 'http://192.168.116.66:9210',
     changeOrigin: true,
     pathRewrite: {
-      '/saeon-metadata/search': '/search'
+      '/saeon-metadata/search': '/search',
+      '/saeon-metadata/faceted_search': '/faceted_search',
+      '/saeon-metadata': '/search'
     }
   })
 )
