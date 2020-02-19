@@ -8,6 +8,10 @@ Monorepo format - this is the source code for SAEON's Atlas-related source code.
 - [@saeon/atlas-client](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/atlas-client)
 - [@saeon/atlas-api](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/atlas-api)
 
+## Setting up the REPO
+
+- There are a number of `.sh` scripts that need to be made executable. Run this command: `chmod 771 **/*.sh`
+
 # @saeon/ol-react
 
 Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atlas)
