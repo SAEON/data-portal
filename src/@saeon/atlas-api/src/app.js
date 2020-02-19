@@ -99,6 +99,8 @@ app.use(
 )
 
 // Simple search
+// TODO - https://github.com/chimurai/http-proxy-middleware#context-matching
+// The path matching needs to be a little better
 app.use(
   '/saeon-metadata',
   proxy({
