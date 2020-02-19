@@ -99,12 +99,12 @@ app.use(
 )
 
 app.use(
-  '/saeon-metadata',
+  '/saeon-metadata/search',
   proxy({
     target: 'http://192.168.116.66:9210',
     changeOrigin: true,
     pathRewrite: {
-      '/saeon-metadata': '/'
+      '/saeon-metadata/search': '/search'
     }
   })
 )
