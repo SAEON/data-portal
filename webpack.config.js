@@ -60,10 +60,12 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
     ]
   },
   plugins: pluginsCb(
-    [new HtmlWebPackPlugin({
-      template: 'index.html',
-      filename: path.join(__dirname, output, '/index.html')
-    })],
+    [
+      new HtmlWebPackPlugin({
+        template: 'index.html',
+        filename: path.join(__dirname, output, '/index.html')
+      })
+    ],
     mode
   ),
   devServer: {
