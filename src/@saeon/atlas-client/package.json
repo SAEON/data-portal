@@ -9,7 +9,7 @@
     "build": "webpack --env.mode=production --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx",
     "start": "npm-run-all -p onchange dev-server",
     "onchange": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "dev-server": "webpack-dev-server --env.mode=development --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx --env.port=3001 --open"
+    "dev-server": "webpack-dev-server --port 4001 --env.mode=development --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx --env.port=3001 --open"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT"

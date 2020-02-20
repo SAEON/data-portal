@@ -21,11 +21,14 @@ export default class extends Component {
         attribution: false
       }).extend([]),
       view: new View(
-        Object.assign(this.props.viewOptions || {}, {
-          center: [0, 0],
-          zoom: 2.5,
-          projection: 'EPSG:4326'
-        })
+        Object.assign(
+          {
+            center: [0, 0],
+            zoom: 3,
+            projection: 'EPSG:4326'
+          },
+          this.props.viewOptions || {}
+        )
       )
     })
   }

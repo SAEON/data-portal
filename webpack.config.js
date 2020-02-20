@@ -4,8 +4,7 @@ const path = require('path')
 module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outputCb = null }) => ({
   mode,
   entry,
-  output = '/dist',
-  port
+  output = '/dist'
 }) => ({
   mode,
   entry: path.resolve(__dirname, entry),
@@ -69,7 +68,6 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
   ),
   devServer: {
     contentBase: path.join(__dirname, output),
-    port: parseInt(port),
     historyApiFallback: true,
     compress: true,
     allowedHosts: ['.localhost'],

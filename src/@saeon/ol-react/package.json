@@ -13,7 +13,7 @@
   "scripts": {
     "start": "npm-run-all -p watch dev-server",
     "watch": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "dev-server": "webpack-dev-server --env.mode=development --env.output=src/@saeon/ol-react/dist --env.entry=src/@saeon/ol-react/_dev/index.jsx --env.port=3002 --open",
+    "dev-server": "webpack-dev-server --port=3002 --env.mode=development --env.output=src/@saeon/ol-react/dist --env.entry=src/@saeon/ol-react/_dev/index.jsx --open",
     "publish-patch": "npm-run-all -s pack increment-patch push-to-npm",
     "publish-minor": "npm-run-all -s pack increment-minor push-to-npm",
     "publish-major": "npm-run-all -s pack increment-major push-to-npm",
