@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import compression from 'compression'
 import router from './routes'
-import {createProxyMiddleware} from 'http-proxy-middleware'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 // GraphQL
 import resolvers from './resolvers'
