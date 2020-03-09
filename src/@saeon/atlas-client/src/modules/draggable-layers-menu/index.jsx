@@ -21,7 +21,7 @@ import {
 } from '@material-ui/icons'
 import { DragAndDrop, Draggable } from '@saeon/ol-react'
 import Form from '../../components/form'
-import { debounce } from '../../../../../_lib'
+import { debounce } from '../../../../fns-lib'
 
 export default class extends PureComponent {
   state = {

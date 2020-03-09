@@ -17,6 +17,7 @@ import { readFileSync } from 'fs'
 
 // Configuration / other
 import { config } from 'dotenv'
+import { log, logError } from '../../fns-lib'
 
 config()
 if (!process.env.NODE_ENV || !['production', 'development'].includes(process.env.NODE_ENV)) {
@@ -28,16 +29,16 @@ if (!process.env.NODE_ENV || !['production', 'development'].includes(process.env
 // Helper for allowing async / await with middleware
 const asyncHandler = fn => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(error => {
-    console.error('Top level application error', error)
+    logError('Top level application error', error)
     return next()
   })
 
 const corsMiddleware = (ALLOWED_ORIGINS => {
-  console.log('Allowed origins registered', ALLOWED_ORIGINS)
+  log('Allowed origins registered', ALLOWED_ORIGINS)
   return (req, res, next) => {
     const { method, headers } = req
     const { origin } = headers
-    console.log(`Checking CORS policy`, `${origin}`, `${ALLOWED_ORIGINS.includes(origin)}`)
+    log(`Checking CORS policy`, `${origin}`, `${ALLOWED_ORIGINS.includes(origin)}`)
     if (ALLOWED_ORIGINS.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin)
     }
