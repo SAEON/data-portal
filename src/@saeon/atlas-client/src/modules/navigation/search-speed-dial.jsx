@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
 import DraggableSearchMenu from '../draggable-search-menu'
+import { DragMenu } from '../../components'
 import {
   Extension as ExtensionIcon,
   Layers as LayersIcon,
@@ -41,13 +42,18 @@ export default class extends PureComponent {
           <SpeedDialAction
             icon={<ExtensionIcon color={searchEsriActive ? 'primary' : 'secondary'} />}
             tooltipTitle={'Search ESRI'}
-            onClick={() =>
-              this.setState({ open: false, searchEsriActive: !searchEsriActive }, () =>
-                alert('todo')
-              )
-            }
+            onClick={() => this.setState({ open: false, searchEsriActive: !searchEsriActive })}
           />
         </SpeedDial>
+
+        <DragMenu
+          title="Search ESRI"
+          active={searchEsriActive}
+          close={() => this.setState({ searchEsriActive: false })}
+          proxy={proxy}
+        >
+          hello world
+        </DragMenu>
 
         <DraggableSearchMenu
           active={searchLayersActive}
