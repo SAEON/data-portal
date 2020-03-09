@@ -5,6 +5,10 @@ body,
   width: 100%;
 }
 
+.MuiToolbar-dense {
+  min-height: 35px !important;
+}
+
 .draggable-handle {
   cursor: grab;
 }

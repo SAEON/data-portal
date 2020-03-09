@@ -12,7 +12,7 @@ import {
   IconButton
 } from '@material-ui/core'
 import { Search, DragIndicator, Close } from '@material-ui/icons'
-import Form from '../../components/form'
+import Form from '../../components/form.jsx'
 import { debounceGlobal } from '../../../../fns-lib'
 import npmUrl from 'url'
 import WindowedList from './windowed-list'
@@ -73,6 +73,7 @@ export default ({ proxy, active, close }) => (
                       </Grid>
                       <Grid item>
                         <TextField
+                          autoComplete="off"
                           value={search}
                           onChange={e => {
                             const search = e.target.value
