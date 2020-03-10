@@ -1,9 +1,5 @@
-html,
-body,
-#root {
-  height: 100%;
-  width: 100%;
-}
+@import './scss/layout';
+@import './scss/scrollbar';
 
 // TODO - rather don't overwrite class names
 .MuiToolbar-dense {
@@ -30,22 +26,4 @@ body,
   .MuiCardHeader-action {
     margin-top: 0;
   }
-}
-
-/* Custom scroll bar style - class specific for now - think * might cause user confusion on page scroll*/
-::-webkit-scrollbar-track {
-  background-color: #dadada;
-}
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  background-color: #f5f5f5;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #999999;
-}
-.thin-scrollbar::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-  background-color: #f5f5f5;
 }
