@@ -1,6 +1,14 @@
 import React from 'react'
 import Draggable from 'react-draggable'
-import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
+import {
+  Card,
+  CardContent,
+  CardActions,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton
+} from '@material-ui/core'
 import { DragIndicator, Close } from '@material-ui/icons'
 
 export default ({ active, close, title, children }) => (
@@ -47,7 +55,9 @@ export default ({ active, close, title, children }) => (
               </AppBar>
             </div>
           </CardContent>
-          <CardContent>{children}</CardContent>
+          <CardContent>
+            <CardActions>{children}</CardActions>
+          </CardContent>
         </Card>
       </div>
     </Draggable>

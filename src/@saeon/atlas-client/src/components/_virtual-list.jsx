@@ -7,33 +7,10 @@ import {
   Checkbox
 } from '@material-ui/core'
 import { FixedSizeList } from 'react-window'
-
-import { Tile as TileLayer } from 'ol/layer.js'
-import { TileWMS } from 'ol/source'
-
-export const newLayer = ({ id, title, url, name }) => {
-  return new TileLayer({
-    id,
-    title: title || id,
-    visible: true,
-    source: new TileWMS({
-      url,
-      params: {
-        LAYERS: name,
-        TILED: true,
-        FORMAT: 'image/png'
-      },
-      serverType: 'geoserver',
-      transition: 500
-    }),
-    opacity: 0.7
-  })
-}
+import { addTileWMSLayer } from '../ol'
 
 export default class extends PureComponent {
-  state = {
-    items: this.props.content
-  }
+  state = { items: this.props.content }
 
   componentDidUpdate() {
     this.setState({ items: this.props.content })
@@ -69,7 +46,7 @@ export default class extends PureComponent {
                         if (target.checked) {
                           const serverAddress = `${protocol}//${host}${pathname}`
                           proxy.addLayer(
-                            newLayer({
+                            addTileWMSLayer({
                               id: layerId,
                               title: layerId,
                               url: serverAddress,

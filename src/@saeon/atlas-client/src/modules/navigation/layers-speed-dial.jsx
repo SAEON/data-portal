@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
 import {
   Map as MapIcon,
@@ -7,14 +7,20 @@ import {
   Layers as LayersIcon
 } from '@material-ui/icons'
 
+import { DragMenu } from '../../components'
+
 import DraggableLayersMenu from '../draggable-layers-menu'
 
-export default class extends PureComponent {
+export default class extends Component {
   state = {
     open: false,
     layersActive: false,
     legendActive: false,
     printActive: false
+  }
+
+  shouldComponentUpdate() {
+    return true
   }
 
   constructor(props) {
@@ -44,18 +50,32 @@ export default class extends PureComponent {
           <SpeedDialAction
             icon={<TocIcon color={legendActive ? 'primary' : 'secondary'} />}
             tooltipTitle={'Map legend'}
-            onClick={() =>
-              this.setState({ open: false, legendActive: !legendActive }, () => alert('todo'))
-            }
+            onClick={() => this.setState({ open: false, legendActive: !legendActive })}
           />
           <SpeedDialAction
             icon={<PrintIcon color={printActive ? 'primary' : 'secondary'} />}
             tooltipTitle={'Print'}
-            onClick={() =>
-              this.setState({ open: false, printActive: !printActive }, () => alert('todo'))
-            }
+            onClick={() => this.setState({ open: false, printActive: !printActive })}
           />
         </SpeedDial>
+
+        <DragMenu
+          title="Print menu"
+          active={printActive}
+          close={() => this.setState({ printActive: false })}
+          proxy={proxy}
+        >
+          Content
+        </DragMenu>
+
+        <DragMenu
+          title="Legend"
+          active={legendActive}
+          close={() => this.setState({ legendActive: false })}
+          proxy={proxy}
+        >
+          Content
+        </DragMenu>
 
         <DraggableLayersMenu
           active={layersActive}

@@ -20,7 +20,7 @@ import {
   ExpandMore
 } from '@material-ui/icons'
 import { DragAndDrop, Draggable } from '@saeon/ol-react'
-import Form from '../../components/form'
+import { Form } from '../../components'
 import { debounce } from '../../../../fns-lib'
 
 export default class extends PureComponent {

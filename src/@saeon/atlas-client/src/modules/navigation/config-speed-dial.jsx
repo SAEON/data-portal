@@ -1,10 +1,9 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
 import { Settings as SettingsIcon, BeachAccess } from '@material-ui/icons'
+import { DragMenu } from '../../components'
 
-import DraggableMenuExample from '../draggable-menu-example'
-
-export default class extends PureComponent {
+export default class extends Component {
   state = {
     open: false,
     todoOpen: false
@@ -12,6 +11,10 @@ export default class extends PureComponent {
 
   constructor(props) {
     super(props)
+  }
+
+  shouldComponentUpdate() {
+    return true
   }
 
   render() {
@@ -35,12 +38,14 @@ export default class extends PureComponent {
             onClick={() => this.setState({ open: false, todoOpen: !todoOpen })}
           />
         </SpeedDial>
-
-        <DraggableMenuExample
+        <DragMenu
+          title="Config item example"
           active={todoOpen}
           close={() => this.setState({ todoOpen: false })}
           proxy={proxy}
-        />
+        >
+          Content area
+        </DragMenu>
       </>
     )
   }
