@@ -5,8 +5,14 @@ body,
   width: 100%;
 }
 
+// TODO - rather don't overwrite class names
 .MuiToolbar-dense {
   min-height: 35px !important;
+}
+
+// TODO - instead of using !important, remove classes where necessary
+.thin-header {
+  min-height: 25px !important;
 }
 
 .draggable-handle {

@@ -16,7 +16,7 @@ export default ({ active, close, title, children }) => (
     <Draggable
       axis="both"
       handle=".draggable-handle"
-      defaultPosition={{ x: 400, y: 200 }}
+      defaultPosition={{ x: 100, y: 25 }}
       position={null}
       grid={[1, 1]}
       scale={1}
@@ -24,7 +24,7 @@ export default ({ active, close, title, children }) => (
       <div
         style={{
           opacity: 0.8,
-          zIndex: 50,
+          zIndex: 1,
           position: 'relative',
           display: active ? 'block' : 'none'
         }}
@@ -33,20 +33,14 @@ export default ({ active, close, title, children }) => (
           <CardContent style={{ padding: 0 }}>
             <div className="draggable-handle">
               <AppBar position="relative" variant="outlined">
-                <Toolbar disableGutters variant="dense">
+                <Toolbar disableGutters className="thin-header">
                   <DragIndicator />
-                  <Typography
-                    style={{ padding: '0 50px 0 10px' }}
-                    display="block"
-                    variant="overline"
-                  >
-                    {title}
-                  </Typography>
+                  <Typography variant="overline">{title}</Typography>
                   <IconButton
                     onClick={close}
                     edge="start"
                     color="inherit"
-                    style={{ order: 2, marginLeft: 'auto' }}
+                    style={{ order: 2, marginLeft: 'auto', padding: 2 }}
                     aria-label="close"
                   >
                     <Close />
