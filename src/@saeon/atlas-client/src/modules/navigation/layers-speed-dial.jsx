@@ -70,8 +70,7 @@ class LayerManager extends Component {
                     style={{
                       background: 'transparent',
                       borderRadius: 'unset',
-                      border: 'none',
-                      maxWidth: '600px'
+                      border: 'none'
                     }}
                     variant="outlined"
                   >

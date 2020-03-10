@@ -85,6 +85,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
     "react-draggable": "^4.2.0",
+    "react-resizable": "^1.10.1",
     "react-window": "^1.8.5",
     "typeface-roboto": "0.0.75",
     "url": "^0.11.0"
