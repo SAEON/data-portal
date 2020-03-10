@@ -1,52 +1,37 @@
-import React, { Component } from 'react'
-import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
-import { Settings as SettingsIcon, BeachAccess } from '@material-ui/icons'
+import React, { useState } from 'react'
+import { SpeedDial } from '../../components'
+import { Settings as SettingsIcon, BeachAccess as BeachAccessIcon } from '@material-ui/icons'
 import { DragMenu } from '../../components'
 
-export default class extends Component {
-  state = {
-    open: false,
-    todoOpen: false
-  }
+export default ({ proxy }) => {
+  const [dialOpen, setDialOpen] = useState(false)
+  const [configMenuOpen, setConfigMenuOpen] = useState(false)
 
-  constructor(props) {
-    super(props)
-  }
-
-  shouldComponentUpdate() {
-    return true
-  }
-
-  render() {
-    const { open, todoOpen } = this.state
-    const { proxy } = this.props
-
-    return (
-      <>
-        <SpeedDial
-          style={{ position: 'absolute', left: 20, top: 197 }}
-          ariaLabel="Config speed dial menu"
-          icon={<SettingsIcon />}
-          onClose={() => this.setState({ open: false })}
-          onOpen={() => this.setState({ open: true })}
-          open={open}
-          direction={'right'}
-        >
-          <SpeedDialAction
-            icon={<BeachAccess color={todoOpen ? 'primary' : 'secondary'} />}
-            tooltipTitle={'Layers'}
-            onClick={() => this.setState({ open: false, todoOpen: !todoOpen })}
-          />
-        </SpeedDial>
-        <DragMenu
-          title="Config item example"
-          active={todoOpen}
-          close={() => this.setState({ todoOpen: false })}
-          proxy={proxy}
-        >
-          Content area
-        </DragMenu>
-      </>
-    )
-  }
+  return (
+    <SpeedDial
+      style={{ position: 'absolute', left: 20, top: 197 }}
+      onOpen={() => setDialOpen(true)}
+      onClose={() => setDialOpen(false)}
+      open={dialOpen}
+      icon={<SettingsIcon />}
+    >
+      {[
+        {
+          icon: <BeachAccessIcon />,
+          tooltip: 'TODO',
+          toggle: () => setConfigMenuOpen(!configMenuOpen),
+          Component: (
+            <DragMenu
+              title="Config item example"
+              active={configMenuOpen}
+              close={() => setConfigMenuOpen(false)}
+              proxy={proxy}
+            >
+              Content area
+            </DragMenu>
+          )
+        }
+      ]}
+    </SpeedDial>
+  )
 }

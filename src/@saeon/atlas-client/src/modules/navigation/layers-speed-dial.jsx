@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
-import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
+import React, { Component, useState } from 'react'
+import { SpeedDial } from '../../components'
 import {
   Map as MapIcon,
-  Print as PrintIcon,
-  Toc as TocIcon,
   Layers as LayersIcon,
   Visibility,
   VisibilityOff,
@@ -23,11 +21,9 @@ import {
   Collapse,
   Slider
 } from '@material-ui/core'
-
 import { DragAndDrop } from '@saeon/ol-react'
 import { Form } from '../../components'
 import { debounce } from '../../../../fns-lib'
-
 import { DragMenu } from '../../components'
 
 class LayerManager extends Component {
@@ -157,77 +153,35 @@ class LayerManager extends Component {
   }
 }
 
-export default class extends Component {
-  state = {
-    open: false,
-    layersActive: false,
-    legendActive: false,
-    printActive: false
-  }
+export default ({ proxy }) => {
+  const [dialOpen, setDialOpen] = useState(false)
+  const [layersActive, setLayersActive] = useState(false)
 
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    const { open, layersActive, legendActive, printActive } = this.state
-    const { proxy } = this.props
-
-    return (
-      <>
-        <SpeedDial
-          style={{ position: 'absolute', left: 20, top: 127 }}
-          ariaLabel="Layers speed dial menu"
-          icon={<MapIcon />}
-          onClose={() => this.setState({ open: false })}
-          onOpen={() => this.setState({ open: true })}
-          open={open}
-          direction={'right'}
-        >
-          <SpeedDialAction
-            icon={<LayersIcon color={layersActive ? 'primary' : 'secondary'} />}
-            tooltipTitle={'Layers'}
-            onClick={() => this.setState({ open: false, layersActive: !layersActive })}
-          />
-          <SpeedDialAction
-            icon={<TocIcon color={legendActive ? 'primary' : 'secondary'} />}
-            tooltipTitle={'Map legend'}
-            onClick={() => this.setState({ open: false, legendActive: !legendActive })}
-          />
-          <SpeedDialAction
-            icon={<PrintIcon color={printActive ? 'primary' : 'secondary'} />}
-            tooltipTitle={'Print'}
-            onClick={() => this.setState({ open: false, printActive: !printActive })}
-          />
-        </SpeedDial>
-
-        <DragMenu
-          title="Print menu"
-          active={printActive}
-          close={() => this.setState({ printActive: false })}
-          proxy={proxy}
-        >
-          Content
-        </DragMenu>
-
-        <DragMenu
-          title="Legend"
-          active={legendActive}
-          close={() => this.setState({ legendActive: false })}
-          proxy={proxy}
-        >
-          Content
-        </DragMenu>
-
-        <DragMenu
-          title="Layer manager"
-          active={layersActive}
-          close={() => this.setState({ layersActive: false })}
-          proxy={proxy}
-        >
-          <LayerManager layersActive={layersActive} proxy={proxy} />
-        </DragMenu>
-      </>
-    )
-  }
+  return (
+    <SpeedDial
+      style={{ position: 'absolute', left: 20, top: 127 }}
+      onOpen={() => setDialOpen(true)}
+      onClose={() => setDialOpen(false)}
+      open={dialOpen}
+      icon={<MapIcon />}
+    >
+      {[
+        {
+          icon: <LayersIcon />,
+          tooltip: 'Active layers',
+          toggle: () => setLayersActive(!layersActive),
+          Component: (
+            <DragMenu
+              title="Layer manager"
+              active={layersActive}
+              close={() => setLayersActive(false)}
+              proxy={proxy}
+            >
+              <LayerManager layersActive={layersActive} proxy={proxy} />
+            </DragMenu>
+          )
+        }
+      ]}
+    </SpeedDial>
+  )
 }
