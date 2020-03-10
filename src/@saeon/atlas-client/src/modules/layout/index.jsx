@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import { OlReact, MapProxy } from '@saeon/ol-react'
-import { terrestrisBaseMap, esriLayer } from '../../layers'
+import { terrestrisBaseMap, esriLayer } from '../../ol'
 
 // Speed dials
 import LayersSpeedDial from '../navigation/layers-speed-dial'

@@ -1,7 +1,7 @@
 import { Tile as TileLayer } from 'ol/layer.js'
 import { TileWMS } from 'ol/source'
 
-export default ({ id, title, url, name }) => {
+export const addTileWMSLayer = ({ id, title, url, name }) => {
   return new TileLayer({
     id,
     title: title || id,
