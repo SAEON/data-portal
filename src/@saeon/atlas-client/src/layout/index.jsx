@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap, esriLayer } from '../ol'
-import { LayersModule, SearchModule, AppConfiguration } from './app-modules'
+import DialNavigation from './dial-navigation'
 
 const esriUrls = [
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services/RCP45_B_rain_v3/MapServer',
@@ -33,15 +33,7 @@ export default class extends PureComponent {
             style={{ width: '100%', height: '100%' }}
           >
             {({ map }) => (
-              <MapProxy map={map}>
-                {({ proxy }) => (
-                  <>
-                    <LayersModule proxy={proxy} />
-                    <SearchModule proxy={proxy} />
-                    <AppConfiguration proxy={proxy} />
-                  </>
-                )}
-              </MapProxy>
+              <MapProxy map={map}>{({ proxy }) => <DialNavigation proxy={proxy} />}</MapProxy>
             )}
           </OlReact>
         </div>
