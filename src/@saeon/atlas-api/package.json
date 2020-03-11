@@ -4,7 +4,7 @@
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=DEVELOPMENT TZ=utc nodemon --ignore dist/ src/bin/index.js --exec 'prettier --write \"**/*.@(js|json|graphql)\" && rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=DEVELOPMENT TZ=utc node dist/bin'",
+    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=DEVELOPMENT TZ=utc node dist/bin'",
     "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=PRODUCTION TZ=utc node dist/bin"
   },
   "keywords": [
