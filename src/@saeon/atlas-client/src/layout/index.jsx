@@ -1,12 +1,8 @@
 import React, { PureComponent } from 'react'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import { OlReact, MapProxy } from '@saeon/ol-react'
-import { terrestrisBaseMap, esriLayer } from '../../ol'
-
-// Speed dials
-import LayersSpeedDial from '../navigation/layers-speed-dial'
-import SearchSpeedDial from '../navigation/search-speed-dial'
-import ConfigSpeedDial from '../navigation/config-speed-dial'
+import { terrestrisBaseMap, esriLayer } from '../ol'
+import { LayersModule, SearchModule, AppConfiguration } from './app-modules'
 
 const esriUrls = [
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services/RCP45_B_rain_v3/MapServer',
@@ -40,9 +36,9 @@ export default class extends PureComponent {
               <MapProxy map={map}>
                 {({ proxy }) => (
                   <>
-                    <SearchSpeedDial proxy={proxy} />
-                    <LayersSpeedDial proxy={proxy} />
-                    <ConfigSpeedDial proxy={proxy} />
+                    <LayersModule proxy={proxy} />
+                    <SearchModule proxy={proxy} />
+                    <AppConfiguration proxy={proxy} />
                   </>
                 )}
               </MapProxy>
