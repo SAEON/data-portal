@@ -31,8 +31,8 @@ export default class extends PureComponent {
         <div style={{ height: 'calc(100% - 42px)', width: '100%' }}>
           <OlReact
             layers={[
-              terrestrisBaseMap(),
-              ...esriUrls.map((uri, i) => esriLayer({ uri, title: 'esri ' + i }))
+              ...esriUrls.map((uri, i) => esriLayer({ uri, title: 'esri ' + i })),
+              terrestrisBaseMap()
             ]}
             style={{ width: '100%', height: '100%' }}
           >

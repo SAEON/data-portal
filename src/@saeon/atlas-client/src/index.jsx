@@ -8,14 +8,14 @@ import Layout from './modules/layout'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // main: '#00796b'
+      main: '#039be5'
     },
     secondary: {
-      // main: '#607d8b'
+      main: '#f44336'
     }
   },
   status: {
-    // danger: 'orange'
+    danger: 'orange'
   }
 })
 
