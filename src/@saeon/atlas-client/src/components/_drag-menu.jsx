@@ -5,7 +5,7 @@ import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 
-export default ({ active, close, title, children }) => (
+export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => (
   <div style={{ position: 'absolute' }}>
     <Draggable
       axis="both"
@@ -18,12 +18,12 @@ export default ({ active, close, title, children }) => (
       <div
         style={{
           opacity: 0.8,
-          zIndex: 1,
+          zIndex,
           position: 'relative',
           display: active ? 'block' : 'none'
         }}
       >
-        <Card variant="elevation">
+        <Card onMouseDown={onMouseDown} variant="elevation">
           <ResizableBox
             width={450}
             height={400}
