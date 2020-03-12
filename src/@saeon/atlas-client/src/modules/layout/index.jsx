@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { AppBar, Toolbar, Typography, Avatar } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Typography, Avatar, Menu, MenuItem } from '@material-ui/core'
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap, esriLayer } from '../../lib/ol'
 import { NavigationDial, navItem } from './_navigation'
@@ -10,9 +10,10 @@ import {
   Search as SearchIcon,
   Layers as LayersIcon,
   List as ListIcon,
-  BarChart as BarChartIcon
+  BarChart as BarChartIcon,
+  Menu as MenuIcon
 } from '@material-ui/icons'
-import { DragMenu } from '../../components'
+import { DragMenu, SideMenu } from '../../components'
 
 const esriUrls = [
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services/RCP45_B_rain_v3/MapServer',
@@ -24,11 +25,44 @@ const esriUrls = [
 ]
 
 export default class extends PureComponent {
+  state = {
+    menuAnchor: null
+  }
+
+  constructor(props) {
+    super(props)
+  }
+
   render() {
+    const { menuAnchor } = this.state
     return (
       <>
         <AppBar variant="outlined" position="static">
           <Toolbar disableGutters={false} variant="dense">
+            <IconButton
+              onClick={e => this.setState({ menuAnchor: e.currentTarget })}
+              style={{ padding: 0 }}
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={menuAnchor}
+              keepMounted
+              open={Boolean(menuAnchor)}
+              onClose={() => this.setState({ menuAnchor: null })}
+            >
+              <MenuItem onClick={() => alert('hi')}>Not</MenuItem>
+              <MenuItem onClick={() => alert('hi')}>sure</MenuItem>
+              <MenuItem onClick={() => alert('hi')}>if</MenuItem>
+              <MenuItem onClick={() => alert('hi')}>this</MenuItem>
+              <MenuItem onClick={() => alert('hi')}>is</MenuItem>
+              <MenuItem onClick={() => alert('hi')}>needed</MenuItem>
+              <MenuItem onClick={() => alert('hi')}>yet</MenuItem>
+            </Menu>
             <Typography style={{ padding: '10px' }} display="block" variant="body2">
               SAEON Atlas
             </Typography>
@@ -51,10 +85,10 @@ export default class extends PureComponent {
                       direction={'left'}
                       icon={<SearchIcon />}
                       searchSaeonOpen={false}
-                      searchCGISOpen={false}
+                      searchCSIROpen={false}
                       style={{ position: 'absolute', right: 20, top: 57 }}
                     >
-                      {(toggle, { searchSaeonOpen, searchCGISOpen }) => [
+                      {(toggle, { searchSaeonOpen, searchCSIROpen }) => [
                         navItem({
                           icon: <Avatar>S</Avatar>,
                           tooltip: 'Saerch SAEON data',
@@ -73,18 +107,18 @@ export default class extends PureComponent {
                         }),
                         navItem({
                           icon: <Avatar>C</Avatar>,
-                          tooltip: 'Saerch CGIS data',
-                          toggle: () => toggle({ searchCGISOpen: !searchCGISOpen }),
-                          title: 'Search SAEON data',
-                          active: searchCGISOpen,
+                          tooltip: 'Saerch CSIR data',
+                          toggle: () => toggle({ searchCSIROpen: !searchCSIROpen }),
+                          title: 'Search CSIR data',
+                          active: searchCSIROpen,
                           Component: (
-                            <DragMenu
-                              title={'Search SAEON data'}
-                              active={searchCGISOpen}
-                              close={() => toggle({ searchCGISOpen: false })}
+                            <SideMenu
+                              location="top"
+                              active={searchCSIROpen}
+                              toggle={() => toggle({ searchCSIROpen: !searchCSIROpen })}
                             >
-                              TODO
-                            </DragMenu>
+                              hello world
+                            </SideMenu>
                           )
                         })
                       ]}

@@ -12,7 +12,7 @@ export default ({ active, close, title, children }) => (
       handle=".draggable-handle"
       defaultPosition={{ x: 100, y: 25 }}
       position={null}
-      grid={[1, 1]}
+      grid={[15, 15]}
       scale={1}
     >
       <div
@@ -24,7 +24,12 @@ export default ({ active, close, title, children }) => (
         }}
       >
         <Card variant="elevation">
-          <ResizableBox width={450} height={400} minConstraints={[200, 200]}>
+          <ResizableBox
+            width={450}
+            height={400}
+            minConstraints={[200, 200]}
+            draggableOpts={{ grid: [15, 15] }}
+          >
             <CardContent style={{ padding: 0 }}>
               <div className="draggable-handle">
                 <AppBar position="relative" variant="outlined">
