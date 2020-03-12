@@ -1,7 +1,7 @@
 import React from 'react'
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@material-ui/lab'
 
-export default ({ onOpen, onClose, open, children, icon, style }) => (
+export default ({ onOpen, onClose, open, children, icon, style, direction }) => (
   <>
     <SpeedDial
       style={style}
@@ -10,7 +10,7 @@ export default ({ onOpen, onClose, open, children, icon, style }) => (
       onOpen={onOpen}
       onClose={onClose}
       open={open}
-      direction={'right'}
+      direction={direction || 'right'}
     >
       {children.map((m, i) => (
         <SpeedDialAction key={i} icon={m.icon} tooltipTitle={m.tooltip} onClick={m.toggle} />
