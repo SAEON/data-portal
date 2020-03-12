@@ -2,16 +2,16 @@ import React, { PureComponent } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Avatar, Menu, MenuItem } from '@material-ui/core'
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap, esriLayer } from '../../lib/ol'
-import { NavigationDial, navItem } from './_navigation'
+import { NavigationDial, NavigationButton, navItem } from './_navigation'
 import { SaeonSearch, LayerManager } from '..'
 import {
-  Settings as SettingsIcon,
-  BeachAccess as BeachAccessIcon,
   Search as SearchIcon,
   Layers as LayersIcon,
   List as ListIcon,
   BarChart as BarChartIcon,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  Build as BuildIcon,
+  Edit as EditIcon
 } from '@material-ui/icons'
 import { DragMenu, SideMenu } from '../../components'
 
@@ -113,7 +113,9 @@ export default class extends PureComponent {
                           active: searchCSIROpen,
                           Component: (
                             <SideMenu
+                              title={'Search CSIR data'}
                               location="top"
+                              width={420}
                               active={searchCSIROpen}
                               toggle={() => toggle({ searchCSIROpen: !searchCSIROpen })}
                             >
@@ -164,32 +166,51 @@ export default class extends PureComponent {
                       ]}
                     </NavigationDial>
 
-                    {/* App Configuration SpeedDial menu */}
-                    <NavigationDial
-                      direction={'left'}
-                      icon={<SettingsIcon />}
-                      configMenuOpen={false}
-                      style={{ position: 'absolute', right: 20, top: 197 }}
+                    {/* Edit menu */}
+                    <NavigationButton
+                      open={false}
+                      style={{ position: 'absolute', right: 80, bottom: 20, zIndex: 1 }}
+                      icon={<EditIcon fontSize="inherit" />}
                     >
-                      {(toggleConfigMenu, { configMenuOpen }) => [
+                      {(toggle, { open }) => [
                         navItem({
-                          icon: <BeachAccessIcon />,
-                          tooltip: 'TODO',
-                          toggle: () => toggleConfigMenu({ configMenuOpen: !configMenuOpen }),
-                          title: 'Config TODO menu',
-                          active: configMenuOpen,
+                          active: open,
+                          toggle: () => toggle({ open: !open }),
                           Component: (
                             <DragMenu
-                              title={'App configuration'}
-                              active={configMenuOpen}
-                              close={() => toggleConfigMenu({ configMenuOpen: false })}
+                              title={'Open layers menu'}
+                              active={open}
+                              close={() => toggle({ open: false })}
                             >
-                              hello world
+                              hi
                             </DragMenu>
                           )
                         })
                       ]}
-                    </NavigationDial>
+                    </NavigationButton>
+
+                    {/* Config menu */}
+                    <NavigationButton
+                      open={false}
+                      style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
+                      icon={<BuildIcon fontSize="inherit" />}
+                    >
+                      {(toggle, { open }) => [
+                        navItem({
+                          active: open,
+                          toggle: () => toggle({ open: !open }),
+                          Component: (
+                            <DragMenu
+                              title={'Open layers menu'}
+                              active={open}
+                              close={() => toggle({ open: false })}
+                            >
+                              hi
+                            </DragMenu>
+                          )
+                        })
+                      ]}
+                    </NavigationButton>
                   </>
                 )}
               </MapProxy>

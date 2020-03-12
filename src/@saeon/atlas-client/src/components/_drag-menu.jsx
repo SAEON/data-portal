@@ -3,7 +3,7 @@ import React from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
-import { DragIndicator, Close } from '@material-ui/icons'
+import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 
 export default ({ active, close, title, children }) => (
   <div style={{ position: 'absolute' }}>
@@ -43,7 +43,7 @@ export default ({ active, close, title, children }) => (
                       style={{ order: 2, marginLeft: 'auto', padding: 2 }}
                       aria-label="close"
                     >
-                      <Close />
+                      <CloseButton />
                     </IconButton>
                   </Toolbar>
                 </AppBar>
