@@ -67,7 +67,9 @@ export default class extends PureComponent {
                               active={searchSaeonOpen}
                               close={() => toggle({ searchSaeonOpen: false })}
                             >
-                              <SaeonSearch proxy={proxy} />
+                              {(height, width) => (
+                                <SaeonSearch proxy={proxy} height={height} width={width} />
+                              )}
                             </DragMenu>
                           )
                         }),
@@ -83,7 +85,7 @@ export default class extends PureComponent {
                               active={searchCGISOpen}
                               close={() => toggle({ searchCGISOpen: false })}
                             >
-                              TODO
+                              {(height, width) => 'TODO'}
                             </DragMenu>
                           )
                         })
@@ -109,7 +111,7 @@ export default class extends PureComponent {
                               active={layerMenuOpen}
                               close={() => toggle({ layerMenuOpen: false })}
                             >
-                              <LayerManager layersActive={layerMenuOpen} proxy={proxy} />
+                              {() => <LayerManager layersActive={layerMenuOpen} proxy={proxy} />}
                             </DragMenu>
                           )
                         }),
@@ -123,7 +125,7 @@ export default class extends PureComponent {
                               active={chartMenuOpen}
                               close={() => toggle({ chartMenuOpen: false })}
                             >
-                              TODO
+                              {(height, width) => 'hello world'}
                             </DragMenu>
                           )
                         })
@@ -150,7 +152,7 @@ export default class extends PureComponent {
                               active={configMenuOpen}
                               close={() => toggleConfigMenu({ configMenuOpen: false })}
                             >
-                              hello world
+                              {(height, width) => 'hello world'}
                             </DragMenu>
                           )
                         })

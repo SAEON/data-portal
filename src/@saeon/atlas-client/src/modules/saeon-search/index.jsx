@@ -4,12 +4,12 @@ import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { debounceGlobal } from '../../../../fns-lib'
 import npmUrl from 'url'
-import { VirtualList } from '../../components'
+import { VirtualList, VirtualList2 } from '../../components'
 
 const searcher = ({ url }) => fetch(url).then(res => res.json())
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'
 
-export default ({ proxy }) => (
+export default ({ proxy, height, width }) => (
   <Form loading={false} search="" searchResults={[{ result_length: 0 }]}>
     {({ updateForm, loading, search, searchResults }) => (
       <Grid container spacing={3}>
@@ -52,7 +52,9 @@ export default ({ proxy }) => (
           ) : (
             <div style={{ width: '100%' }}>
               <div>{searchResults?.reduce((c, curr) => c + curr.result_length, 0)} items found</div>
-              <VirtualList
+              <VirtualList2
+                height={height}
+                width={width}
                 loadMoreItems={async () =>
                   updateForm({
                     searchResults: [
