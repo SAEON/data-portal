@@ -1,15 +1,5 @@
-import React, { Component, useState } from 'react'
-import { SpeedDial } from '../../components'
-import {
-  Map as MapIcon,
-  Layers as LayersIcon,
-  Visibility,
-  VisibilityOff,
-  Delete,
-  ExpandLess,
-  ExpandMore
-} from '@material-ui/icons'
-
+import React, { Component } from 'react'
+import { Visibility, VisibilityOff, Delete, ExpandLess, ExpandMore } from '@material-ui/icons'
 import {
   Card,
   CardContent,
@@ -24,9 +14,8 @@ import {
 import { DragAndDrop } from '@saeon/ol-react'
 import { Form } from '../../components'
 import { debounce } from '../../../../fns-lib'
-import { DragMenu } from '../../components'
 
-class LayerManager extends Component {
+export default class extends Component {
   state = {
     disableDrag: false
   }
@@ -151,37 +140,4 @@ class LayerManager extends Component {
       </>
     )
   }
-}
-
-export default ({ proxy }) => {
-  const [dialOpen, setDialOpen] = useState(false)
-  const [layersActive, setLayersActive] = useState(false)
-
-  return (
-    <SpeedDial
-      style={{ position: 'absolute', left: 20, top: 127 }}
-      onOpen={() => setDialOpen(true)}
-      onClose={() => setDialOpen(false)}
-      open={dialOpen}
-      icon={<MapIcon />}
-    >
-      {[
-        {
-          icon: <LayersIcon />,
-          tooltip: 'Active layers',
-          toggle: () => setLayersActive(!layersActive),
-          Component: (
-            <DragMenu
-              title="Layer manager"
-              active={layersActive}
-              close={() => setLayersActive(false)}
-              proxy={proxy}
-            >
-              <LayerManager layersActive={layersActive} proxy={proxy} />
-            </DragMenu>
-          )
-        }
-      ]}
-    </SpeedDial>
-  )
 }

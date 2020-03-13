@@ -7,7 +7,7 @@ import {
   Checkbox
 } from '@material-ui/core'
 import { FixedSizeList } from 'react-window'
-import { addTileWMSLayer } from '../ol'
+import { addTileWMSLayer } from '../lib/ol'
 
 export default class extends PureComponent {
   state = { items: this.props.content }

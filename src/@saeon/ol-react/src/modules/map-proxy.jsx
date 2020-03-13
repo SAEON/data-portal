@@ -1,6 +1,7 @@
 import { PureComponent } from 'react'
 import LayerGroup from 'ol/layer/Group'
 import { WMSCapabilities } from 'ol/format'
+const packageJson = require('../../package.json')
 
 const wmsParser = new WMSCapabilities()
 
@@ -33,7 +34,14 @@ export default class extends PureComponent {
               const layers = Array.from(map.getLayers().getArray())
               const [removed] = layers.splice(startIndex, 1)
               layers.splice(endIndex, 0, removed)
-              map.setLayerGroup(new LayerGroup({ layers }))
+              map.setLayerGroup(
+                new LayerGroup({
+                  layers: layers.map((layer, i, arr) => {
+                    layer.setZIndex(arr.length - i)
+                    return layer
+                  })
+                })
+              )
               reRender()
             }
           },
@@ -134,12 +142,27 @@ export default class extends PureComponent {
                   .includes(layer.get('id'))
               ) {
                 throw new Error(
-                  `@saeon/atlas. Cannot add layer with ID ${layer.get(
+                  `${packageJson.name} v${
+                    packageJson.version
+                  } ERROR: Cannot add layer with ID ${layer.get(
                     'id'
                   )} to the atlas since a layer with that ID already exists`
                 )
               } else {
-                map.addLayer(layer)
+                map.setLayerGroup(
+                  new LayerGroup({
+                    layers: [
+                      layer,
+                      ...map
+                        .getLayerGroup()
+                        .getLayers()
+                        .getArray()
+                    ].map((layer, i, arr) => {
+                      layer.setZIndex(arr.length - i)
+                      return layer
+                    })
+                  })
+                )
                 reRender()
               }
             }

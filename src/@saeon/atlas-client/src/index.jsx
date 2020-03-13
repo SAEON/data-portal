@@ -4,20 +4,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
 import Layout from './modules/layout'
+import themeConfig from './theme'
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#00796b'
-    },
-    secondary: {
-      main: '#607d8b'
-    }
-  },
-  status: {
-    danger: 'orange'
-  }
-})
+const theme = createMuiTheme(themeConfig)
 
 const App = () => (
   <CssBaseline>

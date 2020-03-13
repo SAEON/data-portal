@@ -4,15 +4,8 @@
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec \"npm-run-all -s prettier server\"",
-    "prettier": "prettier --write \"src/**/*.@(js|graphql)\"",
-    "server": "TZ=utc NODE_ENV=development babel-node --root-mode upward src/bin/index.js",
-    "start:prod": "npm-run-all clean:prod build:prod copy:gqlschema copy:env server:prod",
-    "clean:prod": "rimraf dist",
-    "build:prod": "babel --root-mode upward src --out-dir dist",
-    "copy:gqlschema": "copyfiles -u 1 src/schema.graphql dist/",
-    "copy:env": "copyfiles .env dist/",
-    "server:prod": "NODE_ENV=production TZ=utc node dist/bin"
+    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=DEVELOPMENT TZ=utc node dist/bin'",
+    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=PRODUCTION TZ=utc node dist/bin"
   },
   "keywords": [
     "@saeon/atlas-api"

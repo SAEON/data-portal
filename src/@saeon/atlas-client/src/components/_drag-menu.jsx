@@ -3,30 +3,35 @@ import React from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
-import { DragIndicator, Close } from '@material-ui/icons'
+import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 
-export default ({ active, close, title, children }) => (
+export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => (
   <div style={{ position: 'absolute' }}>
     <Draggable
       axis="both"
       handle=".draggable-handle"
       defaultPosition={{ x: 100, y: 25 }}
       position={null}
-      grid={[1, 1]}
+      grid={[15, 15]}
       scale={1}
     >
       <div
         style={{
           opacity: 0.8,
-          zIndex: 1,
+          zIndex,
           position: 'relative',
           display: active ? 'block' : 'none'
         }}
       >
         <Card variant="elevation">
-          <ResizableBox width={450} height={400} minConstraints={[200, 200]}>
+          <ResizableBox
+            width={450}
+            height={400}
+            minConstraints={[200, 200]}
+            draggableOpts={{ grid: [15, 15] }}
+          >
             <CardContent style={{ padding: 0 }}>
-              <div className="draggable-handle">
+              <div onMouseDown={onMouseDown} className="draggable-handle">
                 <AppBar position="relative" variant="outlined">
                   <Toolbar disableGutters className="thin-header">
                     <DragIndicator />
@@ -38,7 +43,7 @@ export default ({ active, close, title, children }) => (
                       style={{ order: 2, marginLeft: 'auto', padding: 2 }}
                       aria-label="close"
                     >
-                      <Close />
+                      <CloseButton />
                     </IconButton>
                   </Toolbar>
                 </AppBar>

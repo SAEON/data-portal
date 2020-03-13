@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control.js'
+import LayerGroup from 'ol/layer/Group'
 
 export default class extends Component {
   constructor(props) {
@@ -13,7 +14,12 @@ export default class extends Component {
 
     // Create a map reference
     this.map = new Map({
-      layers: [...this.props.layers],
+      layers: new LayerGroup({
+        layers: [...this.props.layers].map((layer, i, arr) => {
+          layer.setZIndex(arr.length - i)
+          return layer
+        })
+      }),
       controls: defaultControls({
         zoom: false,
         rotateOptions: false,
