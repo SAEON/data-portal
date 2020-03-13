@@ -62,6 +62,10 @@ export default () => {
       </AppBar>
       <div style={{ height: 'calc(100% - 42px)', width: '100%' }}>
         <OlReact
+          viewOptions={{
+            center: [32, -15],
+            zoom: 4.6
+          }}
           layers={[
             ...esriUrls.map((uri, i) => esriLayer({ uri, title: 'esri ' + i })),
             terrestrisBaseMap()
