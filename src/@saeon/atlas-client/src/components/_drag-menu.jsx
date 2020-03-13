@@ -23,7 +23,7 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
           display: active ? 'block' : 'none'
         }}
       >
-        <Card onMouseDown={onMouseDown} variant="elevation">
+        <Card variant="elevation">
           <ResizableBox
             width={450}
             height={400}
@@ -31,7 +31,7 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
             draggableOpts={{ grid: [15, 15] }}
           >
             <CardContent style={{ padding: 0 }}>
-              <div className="draggable-handle">
+              <div onMouseDown={onMouseDown} className="draggable-handle">
                 <AppBar position="relative" variant="outlined">
                   <Toolbar disableGutters className="thin-header">
                     <DragIndicator />
