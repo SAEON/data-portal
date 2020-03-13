@@ -60,10 +60,11 @@ export default ({ proxy }) => (
                   title={'Search CSIR data'}
                   location="top"
                   width={420}
+                  height={'calc(100% - 75px)'}
                   active={searchCSIROpen}
                   toggle={() => toggle({ searchCSIROpen: !searchCSIROpen })}
                 >
-                  <CsirLayers />
+                  <CsirLayers proxy={proxy} />
                 </SideMenu>
               )
             })
