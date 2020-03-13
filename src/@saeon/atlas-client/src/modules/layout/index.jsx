@@ -107,7 +107,9 @@ export default () => {
                                 active={searchSaeonOpen}
                                 close={() => toggle({ searchSaeonOpen: false })}
                               >
-                                <SaeonSearch proxy={proxy} />
+                               {(height, width) => (
+                                <SaeonSearch proxy={proxy} height={height} width={width} />
+                              )}
                               </DragMenu>
                             )
                           }),
@@ -157,7 +159,7 @@ export default () => {
                                 active={layerMenuOpen}
                                 close={() => toggle({ layerMenuOpen: false })}
                               >
-                                <LayerManager layersActive={layerMenuOpen} proxy={proxy} />
+                                {(height, width) => (<LayerManager layersActive={layerMenuOpen} proxy={proxy} />)}
                               </DragMenu>
                             )
                           }),
@@ -177,7 +179,7 @@ export default () => {
                                 active={chartMenuOpen}
                                 close={() => toggle({ chartMenuOpen: false })}
                               >
-                                TODO
+                                {(height, width) => ('TODO')}
                               </DragMenu>
                             )
                           })
@@ -206,7 +208,7 @@ export default () => {
                                 active={open}
                                 close={() => toggle({ open: false })}
                               >
-                                hi
+                                {(height, width) => ('hi')}
                               </DragMenu>
                             )
                           })
@@ -235,7 +237,7 @@ export default () => {
                                 active={open}
                                 close={() => toggle({ open: false })}
                               >
-                                hi
+                                {(height, width) => ('hi')}
                               </DragMenu>
                             )
                           })
