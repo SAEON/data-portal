@@ -24,8 +24,8 @@
     "**************** OL-REACT": "****************",
     "ol-react:start": "npm --prefix src/@saeon/ol-react start",
     "ol-react:publish-patch": "npm --prefix src/@saeon/ol-react run publish-patch",
-	"styleguidist": "styleguidist server",
-	"styleguidist-build":"styleguidist build --config ./styleguidist.config.js"
+    "styleguidist": "styleguidist server",
+    "styleguidist-build": "styleguidist build --config ./styleguidist.config.js"
   },
   "husky": {
     "hooks": {
