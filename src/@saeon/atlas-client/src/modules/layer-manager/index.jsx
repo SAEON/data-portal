@@ -11,8 +11,7 @@ import {
   Collapse,
   Slider
 } from '@material-ui/core'
-import { DragAndDrop } from '@saeon/ol-react'
-import { Form } from '../../components'
+import { Form, DragAndDrop } from '../../components'
 import { debounce } from '../../../../fns-lib'
 
 export default class extends Component {
@@ -31,7 +30,7 @@ export default class extends Component {
       <>
         {proxy.getLayers().getArray().length > 0 ? (
           <DragAndDrop
-            layers={proxy.getLayers().getArray()}
+            items={proxy.getLayers().getArray()}
             reorderItems={result => {
               if (!result.destination) return
               const from = result.source.index
@@ -48,9 +47,9 @@ export default class extends Component {
               ...draggableStyle
             })}
           >
-            {(layers, makeDraggable) =>
-              layers.map((layer, i) => {
-                return makeDraggable(
+            {(items, makeDraggable) =>
+              items.map((layer, i) =>
+                makeDraggable(
                   <Card
                     style={{
                       background: 'transparent',
@@ -131,7 +130,7 @@ export default class extends Component {
                   i,
                   this.state.disableDrag
                 )
-              })
+              )
             }
           </DragAndDrop>
         ) : (
