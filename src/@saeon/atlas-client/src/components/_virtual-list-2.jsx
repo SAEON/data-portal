@@ -10,10 +10,10 @@ import InfiniteLoader from 'react-window-infinite-loader'
 import { FixedSizeList } from 'react-window'
 import { addTileWMSLayer } from '../lib/ol'
 
+
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-
 export default class extends PureComponent {
   state = { items: this.props.content }
 

@@ -4,7 +4,7 @@ module.exports = {
 	title: 'some sample title',
 	version,
 	webpackConfig: require('./webpack.config.js'),
-	components: './src/@saeon/atlas-client/src/**/*.jsx',
+	components: './src/@saeon/atlas-client/src/components/*.jsx',
 //   components: 'src/components/[A-Z]**/*.js',
   	ignore:["**/src/test.js","**/*.css"],
   	require:['./src/styles/index.scss'],
