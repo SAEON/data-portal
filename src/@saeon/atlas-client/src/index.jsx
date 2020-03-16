@@ -3,7 +3,7 @@ import './index.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
-import Layout from './modules/layout'
+import { Layout } from './modules'
 import themeConfig from './theme'
 
 const theme = createMuiTheme(themeConfig)

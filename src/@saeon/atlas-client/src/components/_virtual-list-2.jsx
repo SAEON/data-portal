@@ -6,7 +6,6 @@ import {
   ListItemSecondaryAction,
   Checkbox
 } from '@material-ui/core'
-import AutoSizer from 'react-virtualized-auto-sizer' //remove from package.json. NOT USED
 import InfiniteLoader from 'react-window-infinite-loader'
 import { FixedSizeList } from 'react-window'
 import { addTileWMSLayer } from '../lib/ol'

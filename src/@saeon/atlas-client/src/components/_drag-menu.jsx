@@ -18,8 +18,9 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
       axis="both"
       handle=".draggable-handle"
       defaultPosition={{ x: 100, y: 25 }}
+      bounds={{ left: 0, top: 0 }}
       position={null}
-      grid={[15, 15]}
+      grid={[5, 5]}
       scale={1}
     >
       <div
@@ -35,7 +36,7 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
             width={450}
             height={400}
             minConstraints={[200, 200]}
-            draggableOpts={{ grid: [15, 15] }}
+            draggableOpts={{ grid: [5, 5] }}
             onResize={onResize}
           >
             <CardContent style={{ padding: 0 }}>

@@ -7,7 +7,7 @@ const _dragEl = document.getElementById('draggable')
 const optionalPortal = (styles, element) =>
   styles.position === 'fixed' ? createPortal(element, _dragEl) : element
 
-export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
+export default ({ items, listStyle, itemStyle, children, reorderItems }) => {
   return (
     <DragDropContext onDragEnd={reorderItems}>
       <Droppable droppableId="droppable">
@@ -17,7 +17,7 @@ export default ({ layers, listStyle, itemStyle, children, reorderItems }) => {
             ref={provided.innerRef}
             style={listStyle(snapshot.isDraggingOver, snapshot.isUsingPlaceholder)}
           >
-            {children(layers, (child, i, disableDrag) => (
+            {children(items, (child, i, disableDrag) => (
               <Draggable key={i} isDragDisabled={disableDrag} draggableId={i.toString()} index={i}>
                 {(provided, snapshot) =>
                   optionalPortal(
