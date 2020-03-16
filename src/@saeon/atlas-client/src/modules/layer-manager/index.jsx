@@ -61,7 +61,8 @@ export default class extends Component {
                   <Card
                     style={{
                       background: 'transparent',
-                      borderRadius: 'unset'
+                      borderRadius: 'unset',
+                      border: 'none'
                     }}
                     variant="outlined"
                   >
