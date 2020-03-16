@@ -1,7 +1,7 @@
 import React from 'react'
 import { SpeedDial } from '../../components'
 import { Form } from '../../components'
-import { IconButton } from '@material-ui/core'
+import { IconButton, Fab } from '@material-ui/core'
 
 export const navItem = ({ icon, tooltip, toggle, Component }) => ({
   icon,
@@ -14,14 +14,15 @@ export const NavigationButton = ({ children, style, icon, open, ...props }) => (
   <Form open={open} {...props}>
     {({ updateForm, ...fields }) => (
       <>
-        <IconButton
+        <Fab
+          size="small"
           color="primary"
-          style={Object.assign({ backgroundColor: 'white' }, style)}
+          style={Object.assign({}, style)}
           aria-label="toggle menu"
           onClick={() => updateForm({ open: !fields.open })}
         >
           {icon}
-        </IconButton>
+        </Fab>
         {children(updateForm, { ...fields }).map(({ Component }, i) => (
           <div key={i}>{Component}</div>
         ))}

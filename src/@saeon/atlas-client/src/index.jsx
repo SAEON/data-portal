@@ -25,7 +25,7 @@ const App = () => (
           {({ map }) => (
             <MapProxy map={map}>
               {({ proxy }) => (
-                <MenuManager test="jo there">
+                <MenuManager>
                   <AppLayout proxy={proxy} />
                 </MenuManager>
               )}

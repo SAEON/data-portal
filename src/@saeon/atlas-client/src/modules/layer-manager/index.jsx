@@ -19,7 +19,8 @@ import {
   IconButton,
   Collapse,
   Slider,
-  Button
+  Button,
+  Grid
 } from '@material-ui/core'
 import { Form, DragAndDrop } from '../../components'
 import { debounce } from '../../../../fns-lib'
@@ -27,6 +28,10 @@ import { debounce } from '../../../../fns-lib'
 const headerButtonProps = {
   color: 'inherit',
   size: 'small'
+}
+
+const layerButtonStyle = {
+  width: '100%'
 }
 
 export default class extends Component {
@@ -130,27 +135,34 @@ export default class extends Component {
                     />
                     <Collapse in={state[layer.get('id')]} timeout="auto" unmountOnExit>
                       <CardContent>
-                        <Button
-                          className="layer-info-control"
-                          variant="outlined"
-                          startIcon={<VpnKey />}
-                          onClick={() => alert('hi')}
-                          size="small"
-                        >
-                          Legend
-                        </Button>
-                        <Button
-                          className="layer-info-control"
-                          variant="outlined"
-                          startIcon={<InfoIcon />}
-                          onClick={() => alert('hi')}
-                          size="small"
-                        >
-                          Layer info
-                        </Button>
+                        <Grid container spacing={3}>
+                          <Grid item xs={6}>
+                            <Button
+                              style={layerButtonStyle}
+                              variant="outlined"
+                              startIcon={<VpnKey />}
+                              onClick={() => alert('hi')}
+                              size="small"
+                            >
+                              Legend
+                            </Button>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Button
+                              style={layerButtonStyle}
+                              variant="outlined"
+                              startIcon={<InfoIcon />}
+                              onClick={() => alert('hi')}
+                              size="small"
+                            >
+                              Info
+                            </Button>
+                          </Grid>
+                        </Grid>
+
                         <Form value={layer.get('opacity') * 100}>
                           {({ updateForm, value }) => (
-                            <div className="layer-info-control">
+                            <div style={{ margin: '5px 0', paddingRight: 5, width: '100%' }}>
                               <Typography style={{ display: 'table-cell', paddingRight: 20 }}>
                                 Opacity
                               </Typography>

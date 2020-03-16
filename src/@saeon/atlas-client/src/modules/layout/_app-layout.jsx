@@ -1,7 +1,9 @@
 import React from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar } from '@material-ui/core'
 import { NavigationDial, NavigationButton, navItem } from './_navigation'
-import { SaeonSearch, LayerManager, CsirLayers } from '..'
+import SaeonSearch from '../saeon-search'
+import LayerManager from '../layer-manager'
+import CsirLayers from '../csir-layers'
 import {
   Search as SearchIcon,
   Layers as LayersIcon,
@@ -169,8 +171,8 @@ export default ({ proxy }) => (
             {/* Edit menu */}
             <NavigationButton
               open={false}
-              style={{ position: 'absolute', right: 80, bottom: 20, zIndex: 1 }}
-              icon={<EditIcon fontSize="inherit" />}
+              style={{ position: 'absolute', right: 75, bottom: 20, zIndex: 1 }}
+              icon={<EditIcon />}
             >
               {(toggle, { open }) => [
                 navItem({
@@ -199,7 +201,7 @@ export default ({ proxy }) => (
             <NavigationButton
               open={false}
               style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
-              icon={<BuildIcon fontSize="inherit" />}
+              icon={<BuildIcon />}
             >
               {(toggle, { open }) => [
                 navItem({
