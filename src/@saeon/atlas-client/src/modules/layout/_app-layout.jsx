@@ -28,7 +28,7 @@ export default ({ proxy }) => (
       <>
         {/* Top menu bar */}
         <AppBar variant="outlined" position="static">
-          <Toolbar disableGutters={false} variant="dense">
+          <Toolbar disableGutters={false} className="thin-toolbar">
             <IconButton
               onClick={e => updateForm({ menuAnchor: e.currentTarget })}
               style={{ padding: 0 }}

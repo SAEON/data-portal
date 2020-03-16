@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { Visibility, VisibilityOff, Delete, ExpandLess, ExpandMore } from '@material-ui/icons'
+import {
+  Visibility,
+  VisibilityOff,
+  Delete,
+  ExpandLess,
+  ExpandMore,
+  DragIndicator
+} from '@material-ui/icons'
 import {
   Card,
   CardContent,
@@ -49,50 +56,53 @@ export default class extends Component {
           >
             {(items, makeDraggable) =>
               items.map((layer, i) =>
+                // A single layer item
                 makeDraggable(
                   <Card
                     style={{
                       background: 'transparent',
-                      borderRadius: 'unset',
-                      border: 'none'
+                      borderRadius: 'unset'
                     }}
                     variant="outlined"
                   >
                     <CardHeader
                       component={({ children }) => (
                         <AppBar position="relative" variant="outlined">
-                          <Toolbar style={{ paddingRight: 0 }} variant="dense">
+                          <Toolbar
+                            style={{ paddingRight: 0, paddingLeft: 0 }}
+                            className="thin-toolbar"
+                          >
+                            <DragIndicator style={{ marginRight: 10 }} />
                             {children}
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                this.setState({
+                                  [layer.get('id')]: state[layer.get('id')] ? false : true
+                                })
+                              }
+                              aria-label="toggle-layer-info"
+                            >
+                              {state[layer.get('id')] ? <ExpandLess /> : <ExpandMore />}
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              onClick={() => layer.setVisible(!layer.get('visible'))}
+                              aria-label="toggle-visibility"
+                            >
+                              {layer.get('visible') ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              onClick={() => proxy.removeLayer(layer)}
+                              aria-label="delete-layer"
+                              style={{ marginRight: 10 }}
+                            >
+                              <Delete />
+                            </IconButton>
                           </Toolbar>
                         </AppBar>
                       )}
-                      action={
-                        <div style={{ marginLeft: 100 }}>
-                          <IconButton
-                            onClick={() =>
-                              this.setState({
-                                [layer.get('id')]: state[layer.get('id')] ? false : true
-                              })
-                            }
-                            aria-label="toggle-layer-info"
-                          >
-                            {state[layer.get('id')] ? <ExpandLess /> : <ExpandMore />}
-                          </IconButton>
-                          <IconButton
-                            onClick={() => layer.setVisible(!layer.get('visible'))}
-                            aria-label="toggle-visibility"
-                          >
-                            {layer.get('visible') ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                          <IconButton
-                            onClick={() => proxy.removeLayer(layer)}
-                            aria-label="delete-layer"
-                            style={{ marginRight: 10 }}
-                          >
-                            <Delete />
-                          </IconButton>
-                        </div>
-                      }
                       title={
                         <Typography style={{ wordBreak: 'break-word' }} variant="caption">
                           {layer.get('id')}
