@@ -18,7 +18,8 @@ import {
   Layers as LayersIcon,
   List as ListIcon,
   Build as BuildIcon,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  GitHub as GitHubIcon
 } from '@material-ui/icons'
 import { DragMenu, SideMenu } from '../../components'
 import { MenuContext } from './_menu-manager'
@@ -56,6 +57,19 @@ export default ({ proxy }) => (
             <Typography style={{ padding: '10px' }} display="block" variant="body2">
               SAEON Atlas
             </Typography>
+
+            <IconButton
+              onClick={() =>
+                window.open(
+                  'https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/atlas-client'
+                )
+              }
+              style={{ marginLeft: 'auto' }}
+              color="inherit"
+              size="small"
+            >
+              <GitHubIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
 
