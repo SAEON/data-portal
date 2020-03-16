@@ -9,7 +9,7 @@ import {
   Avatar,
   Fab
 } from '@material-ui/core'
-import { NavigationDial, NavigationButton, navItem } from './_navigation'
+import { NavigationDial, navItem } from './_navigation'
 import SaeonSearch from '../saeon-search'
 import LayerManager from '../layer-manager'
 import CsirLayers from '../csir-layers'
@@ -17,9 +17,7 @@ import {
   Search as SearchIcon,
   Layers as LayersIcon,
   List as ListIcon,
-  BarChart as BarChartIcon,
   Build as BuildIcon,
-  Edit as EditIcon,
   Menu as MenuIcon
 } from '@material-ui/icons'
 import { DragMenu, SideMenu } from '../../components'

@@ -49,7 +49,7 @@ export default class extends Component {
     const { proxy } = this.props
     return (
       <MenuContext.Consumer>
-        {({ updateMenuManager, setActiveMenu, ...fields }) => (
+        {({ addMenu, removeMenu, addedMenus }) => (
           <>
             {proxy.getLayers().getArray().length > 0 ? (
               <DragAndDrop
@@ -155,11 +155,29 @@ export default class extends Component {
                                   style={layerButtonStyle}
                                   variant="outlined"
                                   startIcon={<InfoIcon />}
-                                  onClick={() =>
-                                    updateMenuManager({
-                                      layerInfo: { active: !fields.layerInfo.active }
-                                    })
-                                  }
+                                  onClick={() => {
+                                    if (addedMenus[layer.get('id')]) {
+                                      removeMenu(layer.get('id'))
+                                    } else {
+                                      addMenu({
+                                        id: layer.get('id'),
+                                        Component: i => (
+                                          <DragMenu
+                                            key={i}
+                                            onMouseDown={() => console.log('todo')}
+                                            zIndex={99}
+                                            defaultPosition={{ x: 650, y: 25 }}
+                                            width={200}
+                                            title={layer.get('id').truncate(14)}
+                                            active={true}
+                                            close={() => removeMenu(layer.get('id'))}
+                                          >
+                                            hi
+                                          </DragMenu>
+                                        )
+                                      })
+                                    }
+                                  }}
                                   size="small"
                                 >
                                   Info

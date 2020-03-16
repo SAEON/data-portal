@@ -7,6 +7,9 @@ import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap } from './lib/ol'
 import { MenuManager, AppLayout } from './modules/layout'
 import themeConfig from './theme'
+import { nativeExtensions } from '../../fns-lib'
+
+nativeExtensions()
 
 const theme = createMuiTheme(themeConfig)
 

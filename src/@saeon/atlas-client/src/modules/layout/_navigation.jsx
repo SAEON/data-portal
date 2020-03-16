@@ -1,7 +1,6 @@
 import React from 'react'
 import { SpeedDial } from '../../components'
 import { Form } from '../../components'
-import { Fab } from '@material-ui/core'
 
 export const navItem = ({ icon, tooltip, toggle, Component }) => ({
   icon,
