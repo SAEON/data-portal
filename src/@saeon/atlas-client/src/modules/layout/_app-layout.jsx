@@ -1,5 +1,14 @@
 import React from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar } from '@material-ui/core'
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Avatar,
+  Fab
+} from '@material-ui/core'
 import { NavigationDial, NavigationButton, navItem } from './_navigation'
 import SaeonSearch from '../saeon-search'
 import LayerManager from '../layer-manager'
@@ -56,24 +65,23 @@ export default ({ proxy }) => (
         <NavigationDial
           direction={'left'}
           icon={<SearchIcon />}
-          searchSaeonOpen={false}
-          searchCSIROpen={false}
           style={{ position: 'absolute', right: 20, top: 57 }}
         >
-          {(toggle, { searchSaeonOpen, searchCSIROpen }) => [
+          {() => [
             navItem({
               icon: <Avatar>S</Avatar>,
               tooltip: 'Saerch SAEON data',
-              toggle: () => toggle({ searchSaeonOpen: !searchSaeonOpen }),
+              toggle: () =>
+                updateMenuManager({ saeonSearchMenu: { active: !fields.saeonSearchMenu.active } }),
               title: 'Search SAEON data',
-              active: searchSaeonOpen,
+              active: fields.saeonSearchMenu.active,
               Component: (
                 <DragMenu
                   onMouseDown={() => setActiveMenu('saeonSearchMenu')}
                   zIndex={fields.saeonSearchMenu.zIndex}
                   title={'Search SAEON data'}
-                  active={searchSaeonOpen}
-                  close={() => toggle({ searchSaeonOpen: false })}
+                  active={fields.saeonSearchMenu.active}
+                  close={() => updateMenuManager({ saeonSearchMenu: { active: false } })}
                 >
                   <SaeonSearch proxy={proxy} />
                 </DragMenu>
@@ -82,17 +90,20 @@ export default ({ proxy }) => (
             navItem({
               icon: <Avatar>C</Avatar>,
               tooltip: 'Saerch CSIR data',
-              toggle: () => toggle({ searchCSIROpen: !searchCSIROpen }),
+              toggle: () =>
+                updateMenuManager({ csirSearchMenu: { active: !fields.csirSearchMenu.active } }),
               title: 'Search CSIR data',
-              active: searchCSIROpen,
+              active: fields.csirSearchMenu.active,
               Component: (
                 <SideMenu
                   title={'Search CSIR data'}
                   location="top"
                   width={420}
                   height={'calc(100% - 75px)'}
-                  active={searchCSIROpen}
-                  toggle={() => toggle({ searchCSIROpen: !searchCSIROpen })}
+                  active={fields.csirSearchMenu.active}
+                  toggle={() =>
+                    updateMenuManager({ csirSearchMenu: { active: !fields.csirSearchMenu.active } })
+                  }
                 >
                   <CsirLayers proxy={proxy} />
                 </SideMenu>
@@ -105,95 +116,51 @@ export default ({ proxy }) => (
         <NavigationDial
           direction={'left'}
           icon={<LayersIcon />}
-          layerMenuOpen={false}
           chartMenuOpen={false}
           style={{ position: 'absolute', right: 20, top: 127 }}
         >
-          {(toggle, { layerMenuOpen, chartMenuOpen }) => [
+          {() => [
             navItem({
               icon: <ListIcon />,
               tooltip: 'Layers menu',
-              toggle: () => toggle({ layerMenuOpen: !layerMenuOpen }),
+              toggle: () =>
+                updateMenuManager({ layersMenu: { active: !fields.layersMenu.active } }),
               Component: (
                 <DragMenu
                   onMouseDown={() => setActiveMenu('layersMenu')}
                   zIndex={fields.layersMenu.zIndex}
                   title={'Open layers menu'}
-                  active={layerMenuOpen}
-                  close={() => toggle({ layerMenuOpen: false })}
+                  active={fields.layersMenu.active}
+                  close={() => updateMenuManager({ layersMenu: { active: false } })}
                 >
-                  <LayerManager layersActive={layerMenuOpen} proxy={proxy} />
-                </DragMenu>
-              )
-            }),
-            navItem({
-              icon: <BarChartIcon />,
-              tooltip: 'Charts',
-              toggle: () => toggle({ chartMenuOpen: !chartMenuOpen }),
-              Component: (
-                <DragMenu
-                  onMouseDown={() => setActiveMenu('chartsMenu')}
-                  zIndex={fields.chartsMenu.zIndex}
-                  title={'Open chart menu'}
-                  active={chartMenuOpen}
-                  close={() => toggle({ chartMenuOpen: false })}
-                >
-                  TODO
+                  <LayerManager layersActive={fields.layersMenu.active} proxy={proxy} />
                 </DragMenu>
               )
             })
           ]}
         </NavigationDial>
 
-        {/* Edit menu */}
-        <NavigationButton
-          open={false}
-          style={{ position: 'absolute', right: 75, bottom: 20, zIndex: 1 }}
-          icon={<EditIcon />}
-        >
-          {(toggle, { open }) => [
-            navItem({
-              active: open,
-              toggle: () => toggle({ open: !open }),
-              Component: (
-                <DragMenu
-                  onMouseDown={() => setActiveMenu('editMenu')}
-                  zIndex={fields.editMenu.zIndex}
-                  title={'Open layers menu'}
-                  active={open}
-                  close={() => toggle({ open: false })}
-                >
-                  hi
-                </DragMenu>
-              )
-            })
-          ]}
-        </NavigationButton>
-
         {/* Config menu */}
-        <NavigationButton
-          open={false}
-          style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
-          icon={<BuildIcon />}
-        >
-          {(toggle, { open }) => [
-            navItem({
-              active: open,
-              toggle: () => toggle({ open: !open }),
-              Component: (
-                <DragMenu
-                  onMouseDown={() => setActiveMenu('configMenu')}
-                  zIndex={fields.configMenu.zIndex}
-                  title={'Open layers menu'}
-                  active={open}
-                  close={() => toggle({ open: false })}
-                >
-                  hi
-                </DragMenu>
-              )
-            })
-          ]}
-        </NavigationButton>
+        <>
+          <Fab
+            size="small"
+            color="primary"
+            style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
+            aria-label="toggle menu"
+            onClick={() => updateMenuManager({ configMenu: { active: !fields.configMenu.active } })}
+          >
+            <BuildIcon />
+          </Fab>
+          <DragMenu
+            onMouseDown={() => setActiveMenu('configMenu')}
+            zIndex={fields.configMenu.zIndex}
+            title={'Open layers menu'}
+            active={fields.configMenu.active}
+            close={() => updateMenuManager({ configMenu: { active: false } })}
+          >
+            hi
+          </DragMenu>
+        </>
       </>
     )}
   </MenuContext.Consumer>

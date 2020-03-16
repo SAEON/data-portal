@@ -1,15 +1,16 @@
 import React, { createContext, useState } from 'react'
+import { DragMenu } from '../../components'
 
 export const MenuContext = createContext()
 
 export const MenuManager = ({ children }) => {
   const [state, setState] = useState({
     topMenu: { menuAnchor: null },
-    configMenu: { zIndex: 1 },
-    editMenu: { zIndex: 1 },
-    chartsMenu: { zIndex: 1 },
-    layersMenu: { zIndex: 1 },
-    saeonSearchMenu: { zIndex: 1 }
+    configMenu: { active: false, zIndex: 1 },
+    layersMenu: { active: false, zIndex: 1 },
+    layerInfo: { active: false, zIndex: 1 },
+    saeonSearchMenu: { active: false, zIndex: 1 },
+    csirSearchMenu: { active: false }
   })
 
   const setActiveMenu = id => {
@@ -20,7 +21,7 @@ export const MenuManager = ({ children }) => {
 
   const updateMenuManager = obj => {
     const newState = { ...state }
-    Object.entries(obj).forEach(([k, v]) => (newState[k] = v))
+    Object.entries(obj).forEach(([k, v]) => (newState[k] = Object.assign(state[k], v)))
     setState(newState)
   }
 
@@ -32,6 +33,19 @@ export const MenuManager = ({ children }) => {
         updateMenuManager
       }}
     >
+      {/* TODO - Render menus here */}
+      <DragMenu
+        onMouseDown={() => setActiveMenu('layerInfo')}
+        zIndex={state.layerInfo.zIndex}
+        defaultPosition={{ x: 650, y: 25 }}
+        width={200}
+        title={'Layer info'}
+        active={state.layerInfo.active}
+        close={() => updateMenuManager({ layerInfo: { active: false } })}
+      >
+        hi
+      </DragMenu>
+
       {children}
     </MenuContext.Provider>
   )
