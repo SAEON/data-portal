@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, CardHeader } from '@material-ui/core'
-import esriServers from './layers'
+import esriLayers from './layers'
 import { Checkbox } from '@material-ui/core'
 import { esriLayer } from '../../lib/ol'
 
@@ -8,12 +8,14 @@ const fetchMeta = uri => fetch(`${uri}?f=pjson`).then(res => res.json())
 
 export default class extends Component {
   state = {
-    servers: []
+    esriLayers: []
   }
 
   async componentDidMount() {
     this.setState({
-      servers: await Promise.all(esriServers.map(uri => fetchMeta(uri)))
+      esriLayers: Object.fromEntries(
+        await Promise.all(esriLayers.map(uri => Promise.all([uri, fetchMeta(uri)])))
+      )
     })
   }
 
@@ -23,10 +25,10 @@ export default class extends Component {
 
   render() {
     const { proxy } = this.props
-    const { servers } = this.state
+    const { esriLayers } = this.state
     return (
       <div style={{ height: '100%', overflow: 'auto', paddingRight: 5 }}>
-        {servers.map(({ mapName, currentVersion }, i) => (
+        {Object.entries(esriLayers).map(([uri, { mapName, currentVersion }], i) => (
           <Card key={i} style={{ margin: 5 }} variant="outlined" square={true}>
             <CardHeader
               titleTypographyProps={{
@@ -42,13 +44,13 @@ export default class extends Component {
                   style={{ float: 'right' }}
                   size="small"
                   edge="start"
-                  checked={proxy.getLayerById(mapName) ? true : false}
+                  checked={proxy.getLayerById(uri) ? true : false}
                   onChange={({ target }) => {
                     const { checked } = target
                     if (checked) {
-                      proxy.addLayer(esriLayer({ uri: esriServers[i], title: mapName }))
+                      proxy.addLayer(esriLayer({ id: uri, uri, title: mapName }))
                     } else {
-                      proxy.removeLayerById(mapName)
+                      proxy.removeLayerById(uri)
                     }
                   }}
                 />
