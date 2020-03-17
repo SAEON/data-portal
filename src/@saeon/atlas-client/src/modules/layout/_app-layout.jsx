@@ -22,7 +22,7 @@ import {
   GitHub as GitHubIcon
 } from '@material-ui/icons'
 import { DragMenu, SideMenu } from '../../components'
-import { MenuContext } from './_menu-manager'
+import { MenuContext } from '../menu-provider'
 
 export default ({ proxy }) => (
   <MenuContext.Consumer>

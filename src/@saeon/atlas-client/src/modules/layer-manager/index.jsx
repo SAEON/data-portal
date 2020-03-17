@@ -22,7 +22,7 @@ import {
   Button,
   Grid
 } from '@material-ui/core'
-import { MenuContext } from '../layout/_menu-manager'
+import { MenuContext } from '../menu-provider'
 import { Form, DragAndDrop, DragMenu } from '../../components'
 import { debounce } from '../../../../fns-lib'
 

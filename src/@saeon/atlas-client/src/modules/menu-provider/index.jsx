@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react'
 
 export const MenuContext = createContext()
 
-export const MenuManager = ({ children }) => {
+export default ({ children }) => {
   const [state, setState] = useState({
     topMenu: { menuAnchor: null },
     configMenu: { active: false, zIndex: 1 },
