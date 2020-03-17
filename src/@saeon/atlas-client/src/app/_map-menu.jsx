@@ -10,33 +10,35 @@ export default () => (
   <MapContext.Consumer>
     {({ proxy }) => (
       <MenuContext.Consumer>
-        {({ updateMenuManager, setActiveMenu, ...fields }) => (
-          <DialMenu
-            style={{ position: 'absolute', right: 20, top: 127 }}
-            direction={'left'}
-            icon={<LayersIcon />}
-          >
-            {[
-              {
-                icon: <ListIcon />,
-                tooltip: 'Layers menu',
-                toggle: () =>
-                  updateMenuManager({ layersMenu: { active: !fields.layersMenu.active } }),
-                Component: (
-                  <DragMenu
-                    onMouseDown={() => setActiveMenu('layersMenu')}
-                    zIndex={fields.layersMenu.zIndex}
-                    title={'Open layers menu'}
-                    active={fields.layersMenu.active}
-                    close={() => updateMenuManager({ layersMenu: { active: false } })}
-                  >
-                    <LayerManager layersActive={fields.layersMenu.active} proxy={proxy} />
-                  </DragMenu>
-                )
-              }
-            ]}
-          </DialMenu>
-        )}
+        {({ updateMenuManager, setActiveMenu, getMenuById }) => {
+          const layersMenu = getMenuById('layersMenu')
+          return (
+            <DialMenu
+              style={{ position: 'absolute', right: 20, top: 127 }}
+              direction={'left'}
+              icon={<LayersIcon />}
+            >
+              {[
+                {
+                  icon: <ListIcon />,
+                  tooltip: 'Layers menu',
+                  toggle: () => updateMenuManager({ layersMenu: { active: !layersMenu.active } }),
+                  Component: (
+                    <DragMenu
+                      onMouseDown={() => setActiveMenu('layersMenu')}
+                      zIndex={layersMenu.zIndex}
+                      title={'Open layers menu'}
+                      active={layersMenu.active}
+                      close={() => updateMenuManager({ layersMenu: { active: false } })}
+                    >
+                      <LayerManager layersActive={layersMenu.active} proxy={proxy} />
+                    </DragMenu>
+                  )
+                }
+              ]}
+            </DialMenu>
+          )
+        }}
       </MenuContext.Consumer>
     )}
   </MapContext.Consumer>

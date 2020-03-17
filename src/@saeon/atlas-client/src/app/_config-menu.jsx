@@ -6,27 +6,30 @@ import { MenuContext } from '../modules/menu-provider'
 
 export default () => (
   <MenuContext.Consumer>
-    {({ updateMenuManager, setActiveMenu, ...fields }) => (
-      <>
-        <Fab
-          size="small"
-          color="primary"
-          style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
-          aria-label="toggle menu"
-          onClick={() => updateMenuManager({ configMenu: { active: !fields.configMenu.active } })}
-        >
-          <BuildIcon />
-        </Fab>
-        <DragMenu
-          onMouseDown={() => setActiveMenu('configMenu')}
-          zIndex={fields.configMenu.zIndex}
-          title={'Open layers menu'}
-          active={fields.configMenu.active}
-          close={() => updateMenuManager({ configMenu: { active: false } })}
-        >
-          hi
-        </DragMenu>
-      </>
-    )}
+    {({ updateMenuManager, setActiveMenu, getMenuById }) => {
+      const configMenu = getMenuById('configMenu')
+      return (
+        <>
+          <Fab
+            size="small"
+            color="primary"
+            style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
+            aria-label="toggle menu"
+            onClick={() => updateMenuManager({ configMenu: { active: !configMenu.active } })}
+          >
+            <BuildIcon />
+          </Fab>
+          <DragMenu
+            onMouseDown={() => setActiveMenu('configMenu')}
+            zIndex={configMenu.zIndex}
+            title={'Open layers menu'}
+            active={configMenu.active}
+            close={() => updateMenuManager({ configMenu: { active: false } })}
+          >
+            hi
+          </DragMenu>
+        </>
+      )
+    }}
   </MenuContext.Consumer>
 )

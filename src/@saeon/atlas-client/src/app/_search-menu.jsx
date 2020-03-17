@@ -12,63 +12,67 @@ export default () => (
   <MapContext.Consumer>
     {({ proxy }) => (
       <MenuContext.Consumer>
-        {({ updateMenuManager, setActiveMenu, ...fields }) => (
-          <DialMenu
-            style={{ position: 'absolute', right: 20, top: 57 }}
-            direction={'left'}
-            icon={<SearchIcon />}
-          >
-            {[
-              {
-                icon: <Avatar>S</Avatar>,
-                tooltip: 'Saerch SAEON data',
-                toggle: () =>
-                  updateMenuManager({
-                    saeonSearchMenu: { active: !fields.saeonSearchMenu.active }
-                  }),
-                title: 'Search SAEON data',
-                active: fields.saeonSearchMenu.active,
-                Component: (
-                  <DragMenu
-                    onMouseDown={() => setActiveMenu('saeonSearchMenu')}
-                    zIndex={fields.saeonSearchMenu.zIndex}
-                    title={'Search SAEON data'}
-                    active={fields.saeonSearchMenu.active}
-                    close={() => updateMenuManager({ saeonSearchMenu: { active: false } })}
-                  >
-                    <SaeonSearch proxy={proxy} />
-                  </DragMenu>
-                )
-              },
-              {
-                icon: <Avatar>C</Avatar>,
-                tooltip: 'Saerch CSIR data',
-                toggle: () =>
-                  updateMenuManager({
-                    csirSearchMenu: { active: !fields.csirSearchMenu.active }
-                  }),
-                title: 'Search CSIR data',
-                active: fields.csirSearchMenu.active,
-                Component: (
-                  <SideMenu
-                    title={'Search CSIR data'}
-                    location="top"
-                    width={420}
-                    height={'calc(100% - 75px)'}
-                    active={fields.csirSearchMenu.active}
-                    toggle={() =>
-                      updateMenuManager({
-                        csirSearchMenu: { active: !fields.csirSearchMenu.active }
-                      })
-                    }
-                  >
-                    <CsirLayers proxy={proxy} />
-                  </SideMenu>
-                )
-              }
-            ]}
-          </DialMenu>
-        )}
+        {({ updateMenuManager, getMenuById, setActiveMenu }) => {
+          const saeonSearchMenu = getMenuById('saeonSearchMenu')
+          const csirSearchMenu = getMenuById('csirSearchMenu')
+          return (
+            <DialMenu
+              style={{ position: 'absolute', right: 20, top: 57 }}
+              direction={'left'}
+              icon={<SearchIcon />}
+            >
+              {[
+                {
+                  icon: <Avatar>S</Avatar>,
+                  tooltip: 'Saerch SAEON data',
+                  toggle: () =>
+                    updateMenuManager({
+                      saeonSearchMenu: { active: !saeonSearchMenu.active }
+                    }),
+                  title: 'Search SAEON data',
+                  active: saeonSearchMenu.active,
+                  Component: (
+                    <DragMenu
+                      onMouseDown={() => setActiveMenu('saeonSearchMenu')}
+                      zIndex={saeonSearchMenu.zIndex}
+                      title={'Search SAEON data'}
+                      active={saeonSearchMenu.active}
+                      close={() => updateMenuManager({ saeonSearchMenu: { active: false } })}
+                    >
+                      <SaeonSearch proxy={proxy} />
+                    </DragMenu>
+                  )
+                },
+                {
+                  icon: <Avatar>C</Avatar>,
+                  tooltip: 'Saerch CSIR data',
+                  toggle: () =>
+                    updateMenuManager({
+                      csirSearchMenu: { active: !csirSearchMenu.active }
+                    }),
+                  title: 'Search CSIR data',
+                  active: csirSearchMenu.active,
+                  Component: (
+                    <SideMenu
+                      title={'Search CSIR data'}
+                      location="top"
+                      width={420}
+                      height={'calc(100% - 75px)'}
+                      active={csirSearchMenu.active}
+                      toggle={() =>
+                        updateMenuManager({
+                          csirSearchMenu: { active: !csirSearchMenu.active }
+                        })
+                      }
+                    >
+                      <CsirLayers proxy={proxy} />
+                    </SideMenu>
+                  )
+                }
+              ]}
+            </DialMenu>
+          )
+        }}
       </MenuContext.Consumer>
     )}
   </MapContext.Consumer>
