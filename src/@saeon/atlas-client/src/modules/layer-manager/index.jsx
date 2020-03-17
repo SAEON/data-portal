@@ -144,8 +144,30 @@ export default class extends Component {
                                   style={layerButtonStyle}
                                   variant="outlined"
                                   startIcon={<VpnKey />}
-                                  onClick={() => alert('hi')}
                                   size="small"
+                                  onClick={() => {
+                                    if (addedMenus[`${layer.get('id')}-legend`]) {
+                                      removeMenu(`${layer.get('id')}-legend`)
+                                    } else {
+                                      addMenu({
+                                        id: `${layer.get('id')}-legend`,
+                                        Component: i => (
+                                          <DragMenu
+                                            key={i}
+                                            onMouseDown={() => console.log('todo')}
+                                            zIndex={99}
+                                            defaultPosition={{ x: 650, y: 25 }}
+                                            width={200}
+                                            title={'Legend'}
+                                            active={true}
+                                            close={() => removeMenu(`${layer.get('id')}-legend`)}
+                                          >
+                                            <Typography>{layer.get('id').truncate(50)}</Typography>
+                                          </DragMenu>
+                                        )
+                                      })
+                                    }
+                                  }}
                                 >
                                   Legend
                                 </Button>
@@ -155,12 +177,13 @@ export default class extends Component {
                                   style={layerButtonStyle}
                                   variant="outlined"
                                   startIcon={<InfoIcon />}
+                                  size="small"
                                   onClick={() => {
-                                    if (addedMenus[layer.get('id')]) {
-                                      removeMenu(layer.get('id'))
+                                    if (addedMenus[`${layer.get('id')}-info`]) {
+                                      removeMenu(`${layer.get('id')}-info`)
                                     } else {
                                       addMenu({
-                                        id: layer.get('id'),
+                                        id: `${layer.get('id')}-info`,
                                         Component: i => (
                                           <DragMenu
                                             key={i}
@@ -168,17 +191,16 @@ export default class extends Component {
                                             zIndex={99}
                                             defaultPosition={{ x: 650, y: 25 }}
                                             width={200}
-                                            title={layer.get('id').truncate(14)}
+                                            title={'Layer info'}
                                             active={true}
-                                            close={() => removeMenu(layer.get('id'))}
+                                            close={() => removeMenu(`${layer.get('id')}-info`)}
                                           >
-                                            hi
+                                            <Typography>{layer.get('id').truncate(50)}</Typography>
                                           </DragMenu>
                                         )
                                       })
                                     }
                                   }}
-                                  size="small"
                                 >
                                   Info
                                 </Button>
