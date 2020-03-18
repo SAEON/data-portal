@@ -4,6 +4,8 @@ import esriLayers from './layers'
 import { Checkbox } from '@material-ui/core'
 import { esriLayer } from '../../lib/ol'
 
+const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
+
 const fetchMeta = uri => fetch(`${uri}?f=pjson`).then(res => res.json())
 
 export default class extends Component {
@@ -14,7 +16,19 @@ export default class extends Component {
   async componentDidMount() {
     this.setState({
       esriLayers: Object.fromEntries(
-        await Promise.all(esriLayers.map(uri => Promise.all([uri, fetchMeta(uri)])))
+        await Promise.all(
+          esriLayers.map(uri =>
+            Promise.all([
+              uri,
+              fetchMeta(
+                uri.replace(
+                  'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
+                  `${ATLAS_API_ADDRESS}/csir`
+                )
+              )
+            ])
+          )
+        )
       )
     })
   }
@@ -48,7 +62,17 @@ export default class extends Component {
                   onChange={({ target }) => {
                     const { checked } = target
                     if (checked) {
-                      proxy.addLayer(esriLayer({ id: uri, uri, title: mapName }))
+                      proxy.addLayer(
+                        esriLayer({
+                          id: uri,
+                          sourceType: 'esri',
+                          uri: uri.replace(
+                            'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
+                            `${ATLAS_API_ADDRESS}/csir`
+                          ),
+                          title: mapName
+                        })
+                      )
                     } else {
                       proxy.removeLayerById(uri)
                     }

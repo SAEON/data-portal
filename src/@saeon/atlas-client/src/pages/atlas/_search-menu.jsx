@@ -1,12 +1,12 @@
 import React from 'react'
 import { Avatar } from '@material-ui/core'
-import SaeonSearch from '../modules/saeon-search'
-import CsirLayers from '../modules/csir-layers'
+import SaeonSearch from '../../modules/saeon-search'
+import CsirLayers from '../../modules/csir-layers'
 import { Search as SearchIcon } from '@material-ui/icons'
-import { DragMenu, SideMenu } from '../components'
-import DialMenu from '../modules/dial-menu'
-import { MenuContext } from '../modules/menu-provider'
-import { MapContext } from '../modules/map-provider'
+import { DragMenu, SideMenu } from '../../components'
+import DialMenu from '../../modules/dial-menu'
+import { MenuContext } from '../../modules/menu-provider'
+import { MapContext } from '../../modules/map-provider'
 
 export default () => (
   <MapContext.Consumer>

@@ -7,7 +7,7 @@ import npmUrl from 'url'
 import { VirtualList } from '../../components'
 import { Alert } from '@material-ui/lab'
 
-const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'
+const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 
 const searcher = ({ url }) =>
   fetch(url)

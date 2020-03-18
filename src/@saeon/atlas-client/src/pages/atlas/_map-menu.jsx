@@ -1,10 +1,10 @@
 import React from 'react'
-import LayerManager from '../modules/layer-manager'
+import LayerManager from '../../modules/layer-manager'
 import { Layers as LayersIcon, List as ListIcon } from '@material-ui/icons'
-import { DragMenu } from '../components'
-import DialMenu from '../modules/dial-menu'
-import { MenuContext } from '../modules/menu-provider'
-import { MapContext } from '../modules/map-provider'
+import { DragMenu } from '../../components'
+import DialMenu from '../../modules/dial-menu'
+import { MenuContext } from '../../modules/menu-provider'
+import { MapContext } from '../../modules/map-provider'
 
 export default () => (
   <MapContext.Consumer>

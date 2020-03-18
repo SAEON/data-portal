@@ -1,8 +1,8 @@
 import React from 'react'
 import { Fab } from '@material-ui/core'
 import { Build as BuildIcon } from '@material-ui/icons'
-import { DragMenu } from '../components'
-import { MenuContext } from '../modules/menu-provider'
+import { DragMenu } from '../../components'
+import { MenuContext } from '../../modules/menu-provider'
 
 export default () => (
   <MenuContext.Consumer>

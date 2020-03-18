@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core'
 import { Menu as MenuIcon, GitHub as GitHubIcon } from '@material-ui/icons'
-import { MenuContext } from '../modules/menu-provider'
+import { MenuContext } from '../../modules/menu-provider'
 
 export default () => (
   <MenuContext.Consumer>

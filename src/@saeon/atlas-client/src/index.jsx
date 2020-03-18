@@ -3,7 +3,7 @@ import './index.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
-import App from './app'
+import Atlas from './pages/atlas'
 import MapProvider from './modules/map-provider'
 import MenuProvider from './modules/menu-provider'
 import ExceptionProvider from './modules/exception-provider'
@@ -17,7 +17,7 @@ render(
       <ExceptionProvider>
         <MenuProvider>
           <MapProvider>
-            <App />
+            <Atlas />
           </MapProvider>
         </MenuProvider>
       </ExceptionProvider>
