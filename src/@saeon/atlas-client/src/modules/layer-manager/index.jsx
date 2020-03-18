@@ -182,6 +182,7 @@ export default class extends Component {
                                       Component: i => (
                                         <Info
                                           key={i}
+                                          uri={layer.get('uri')}
                                           onClose={() => removeMenu(`${layer.get('id')}-info`)}
                                           title={layer.get('title').truncate(50)}
                                         />
