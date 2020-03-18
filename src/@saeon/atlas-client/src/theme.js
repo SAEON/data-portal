@@ -18,7 +18,7 @@ export default {
       main: '#039be5'
     },
     secondary: {
-      main: '#f44336'
+      main: '#ffcc80'
     }
   },
   status: {

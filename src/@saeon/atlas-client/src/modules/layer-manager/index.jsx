@@ -86,7 +86,7 @@ export default class extends Component {
                       {/* Layer item header */}
                       <CardHeader
                         component={({ children }) => (
-                          <AppBar position="relative" variant="outlined">
+                          <AppBar color="secondary" position="relative" variant="outlined">
                             <Toolbar
                               style={{ paddingRight: 0, paddingLeft: 0 }}
                               className="thin-toolbar"
@@ -133,7 +133,7 @@ export default class extends Component {
                         )}
                         title={
                           <Typography style={{ wordBreak: 'break-word' }} variant="caption">
-                            {layer.get('id')}
+                            {layer.get('title')}
                           </Typography>
                         }
                       />

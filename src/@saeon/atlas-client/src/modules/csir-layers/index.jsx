@@ -60,6 +60,7 @@ export default class extends Component {
                   edge="start"
                   checked={proxy.getLayerById(uri) ? true : false}
                   onChange={({ target }) => {
+                    console.log(mapName)
                     const { checked } = target
                     if (checked) {
                       proxy.addLayer(
