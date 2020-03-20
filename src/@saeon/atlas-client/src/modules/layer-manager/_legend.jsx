@@ -2,25 +2,28 @@ import React, { useState, useEffect } from 'react'
 import { DragMenu } from '../../components'
 import { Typography } from '@material-ui/core'
 
-const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
-
-export default ({ title, onClose, uri }) => {
+export default ({ layer, onClose }) => {
   const [state, setState] = useState({ loading: true, data: null, error: null })
+  const title = layer.get('title').truncate(50)
+  const fetchLegend = layer.get('fetchLegend')
+  const legendType = layer.get('legendType') || 'json'
 
   useEffect(() => {
-    /**
-     * TODO
-     * Different layer types will have different logic for getting legend resources
-     */
     async function _() {
-      const response = await fetch(
-        `${uri.replace(
-          'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
-          `${ATLAS_API_ADDRESS}/csir`
-        )}/legend?f=pjson`
-      )
-      const data = await response.json()
-      setState(Object.assign({ ...state }, { loading: false, data }))
+      if (fetchLegend) {
+        setState(Object.assign({ ...state }, { loading: false, data: await fetchLegend() }))
+      } else {
+        setState(
+          Object.assign(
+            { ...state },
+            {
+              loading: false,
+              data: null,
+              error: 'No function for retrieving layer legend specified'
+            }
+          )
+        )
+      }
     }
     _()
   }, [])
@@ -35,20 +38,24 @@ export default ({ title, onClose, uri }) => {
       active={true}
       close={onClose}
     >
+      <div style={{ marginBottom: 10 }}>
+        <Typography variant="overline">{title}</Typography>
+      </div>
       {state.loading ? (
         <Typography>Loading ...</Typography>
-      ) : (
-        <>
-          <div style={{ marginBottom: 10 }}>
-            <Typography variant="overline">{title}</Typography>
+      ) : state.error ? (
+        <Typography>{state.error}</Typography>
+      ) : legendType === 'json' ? (
+        state.data.layers[0].legend.map((key, i) => (
+          <div style={{ margin: '5px 0', display: 'flex' }} key={i}>
+            <img style={{ display: 'flex' }} src={`data:image/png;base64, ${key.imageData}`} />
+            <span style={{ display: 'flex', marginLeft: 'auto' }}>{key.label}</span>
           </div>
-          {state.data.layers[0].legend.map((key, i) => (
-            <div style={{ margin: '5px 0', display: 'flex' }} key={i}>
-              <img style={{ display: 'flex' }} src={`data:image/png;base64, ${key.imageData}`} />
-              <span style={{ display: 'flex', marginLeft: 'auto' }}>{key.label}</span>
-            </div>
-          ))}
-        </>
+        ))
+      ) : legendType === 'image' ? (
+        <img src={state.data} />
+      ) : (
+        'Unknown legend type'
       )}
     </DragMenu>
   )

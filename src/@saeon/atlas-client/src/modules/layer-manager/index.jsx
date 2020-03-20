@@ -155,9 +155,8 @@ export default class extends Component {
                                       Component: i => (
                                         <Legend
                                           key={i}
-                                          uri={layer.get('uri')}
+                                          layer={layer}
                                           onClose={() => removeMenu(`${layer.get('id')}-legend`)}
-                                          title={layer.get('title').truncate(50)}
                                         />
                                       )
                                     })
@@ -182,9 +181,8 @@ export default class extends Component {
                                       Component: i => (
                                         <Info
                                           key={i}
-                                          uri={layer.get('uri')}
+                                          layer={layer}
                                           onClose={() => removeMenu(`${layer.get('id')}-info`)}
-                                          title={layer.get('title').truncate(50)}
                                         />
                                       )
                                     })

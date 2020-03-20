@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Card, CardHeader } from '@material-ui/core'
 import esriLayers from './layers'
 import { Checkbox } from '@material-ui/core'
-import { esriLayer } from '../../lib/ol'
+import { createLayer, LayerTypes } from '../../lib/ol'
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 
@@ -60,17 +60,21 @@ export default class extends Component {
                   edge="start"
                   checked={proxy.getLayerById(uri) ? true : false}
                   onChange={({ target }) => {
-                    console.log(mapName)
+                    const proxiedUri = uri.replace(
+                      'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
+                      `${ATLAS_API_ADDRESS}/csir`
+                    )
                     const { checked } = target
                     if (checked) {
                       proxy.addLayer(
-                        esriLayer({
+                        createLayer({
+                          fetchInfo: () =>
+                            fetch(`${proxiedUri}/layers?f=pjson`).then(res => res.json()),
+                          fetchLegend: () =>
+                            fetch(`${proxiedUri}/legend?f=pjson`).then(res => res.json()),
+                          layerType: LayerTypes.TileArcGISRest,
                           id: uri,
-                          sourceType: 'esri',
-                          uri: uri.replace(
-                            'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
-                            `${ATLAS_API_ADDRESS}/csir`
-                          ),
+                          uri: proxiedUri,
                           title: mapName
                         })
                       )
