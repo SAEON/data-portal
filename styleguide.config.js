@@ -1,11 +1,10 @@
 const {version} = require('./package.json');
 
 module.exports = {
-	title: 'some sample title',
+	title: 'SAEON Atlas Docs',
 	version,
 	webpackConfig: require('./webpack.config.js'),
-	components: './src/@saeon/atlas-client/src/components/*.jsx',
-//   components: 'src/components/[A-Z]**/*.js',
+	components: './src/@saeon/atlas-client/src/components/**/*.jsx',
   	ignore:["**/src/test.js","**/*.css"],
   	require:['./src/styles/index.scss'],
 	  

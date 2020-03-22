@@ -2,6 +2,9 @@ import React from 'react'
 import { Drawer, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { Close as CloseButton } from '@material-ui/icons'
 
+/**
+ * General functional component description in JSDoc format. Markdown is *supported*.
+ */
 export default ({ active, toggle, title, children, width }) => {
   return (
     <Drawer variant="persistent" open={active} onClose={toggle}>

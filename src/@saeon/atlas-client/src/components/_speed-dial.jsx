@@ -1,6 +1,9 @@
 import React from 'react'
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@material-ui/lab'
 
+/**
+ * General functional component description in JSDoc format. Markdown is *supported*.
+ */
 export default ({ onOpen, onClose, open, children, icon, style, direction }) => (
   <>
     <SpeedDial

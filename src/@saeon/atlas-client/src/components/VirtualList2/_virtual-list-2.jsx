@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Component } from 'react'
 import {
   Button,
   ListItem,
@@ -8,20 +8,25 @@ import {
 } from '@material-ui/core'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { FixedSizeList } from 'react-window'
-import { addTileWMSLayer } from '../lib/ol'
-
+import { addTileWMSLayer } from '../../lib/ol'
 
 /**
- * General component description in JSDoc format. Markdown is *supported*.
+ * A list component that makes use of react-window InfiniteLoader and FixedSizeList to allow for pagination and partial rendering of list items
  */
-export default class extends PureComponent {
+export default class VirtualList2 extends Component {
   state = { items: this.props.content }
 
   componentDidUpdate() {
-    this.setState({ items: this.props.content })
+    // this.setState({ items: this.props.content })
   }
 
+  /**
+   * Set method of this.state.items. Flagging method as public means styleguidist will publish it to the docs
+   * @param {Array} items the new value of this.state.items
+   * @public
+   */
   setItems = items => this.setState({ items })
+
   render() {
     const { proxy, loadMoreItems, height, width } = this.props
     const { items } = this.state

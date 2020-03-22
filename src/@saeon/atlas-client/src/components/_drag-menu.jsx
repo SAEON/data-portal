@@ -5,6 +5,9 @@ import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 
+/**
+ * General functional component description in JSDoc format. Markdown is *supported*.
+ */
 export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => {
   const [width, setWidth] = useState(450)
   const [height, setHeight] = useState(400)
