@@ -2,13 +2,10 @@ import React from 'react'
 import { Drawer, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { Close as CloseButton } from '@material-ui/icons'
 
-/**
- * General functional component description in JSDoc format. Markdown is *supported*.
- */
-export default ({ active, toggle, title, children, width }) => {
+export default ({ active, toggle, title, children, width, height }) => {
   return (
     <Drawer variant="persistent" open={active} onClose={toggle}>
-      <div style={{ width: width || 400 }}>
+      <div style={{ width: width || 400, height: height || '100%' }}>
         <AppBar variant="outlined" color="secondary" position="relative">
           {title ? (
             <Toolbar disableGutters={true}>
@@ -27,7 +24,7 @@ export default ({ active, toggle, title, children, width }) => {
             </Toolbar>
           ) : null}
         </AppBar>
-        <div style={{ padding: 20 }}>{children}</div>
+        <div style={{ padding: '20px 10px', height: '100%' }}>{children}</div>
       </div>
     </Drawer>
   )

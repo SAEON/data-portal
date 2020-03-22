@@ -63,7 +63,8 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
     [
       new HtmlWebPackPlugin({
         template: 'index.html',
-        filename: path.join(__dirname, output, '/index.html')
+        filename: path.join(__dirname, output, '/index.html'),
+        PUBLIC_PATH: ''
       })
     ],
     mode

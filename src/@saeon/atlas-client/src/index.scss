@@ -1,8 +1,9 @@
 @import './scss/layout';
 @import './scss/scrollbar';
+@import './scss/layer-manager';
 
-// TODO - rather dont overwrite class names
-.MuiToolbar-dense {
+// TODO - rather don't overwrite class names
+.thin-toolbar {
   min-height: 35px !important;
 }
 

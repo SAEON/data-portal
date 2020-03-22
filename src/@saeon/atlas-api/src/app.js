@@ -119,4 +119,15 @@ app.use(
   })
 )
 
+app.use(
+  '/csir',
+  createProxyMiddleware({
+    target: 'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
+    changeOrigin: true,
+    pathRewrite: {
+      '/csir': '/'
+    }
+  })
+)
+
 export default app

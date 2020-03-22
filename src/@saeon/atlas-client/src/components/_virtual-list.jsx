@@ -7,7 +7,7 @@ import {
   Checkbox
 } from '@material-ui/core'
 import { FixedSizeList } from 'react-window'
-import { addTileWMSLayer } from '../lib/ol'
+import { createLayer, LayerTypes } from '../lib/ol'
 
 /**
  * General class component description in JSDoc format. Markdown is *supported*. Class components require a named export to be readable by styleguidist
@@ -49,11 +49,19 @@ export default class VirtualList extends PureComponent {
                         if (target.checked) {
                           const serverAddress = `${protocol}//${host}${pathname}`
                           proxy.addLayer(
-                            addTileWMSLayer({
+                            createLayer({
+                              fetchLegend: () =>
+                                fetch(
+                                  `${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`
+                                )
+                                  .then(res => res.blob())
+                                  .then(blob => URL.createObjectURL(blob)),
+                              legendType: 'image',
+                              layerType: LayerTypes.TileWMS,
                               id: layerId,
                               title: layerId,
-                              url: serverAddress,
-                              name: layers
+                              uri: serverAddress,
+                              LAYERS: layers
                             })
                           )
                           newItems = items.results.map(r =>

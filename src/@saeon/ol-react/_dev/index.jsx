@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { render } from 'react-dom'
 
 // Atlas
-import { OlReact, SingleFeatureSelector, MapProxy, DragAndDrop } from '../index'
+import { OlReact, SingleFeatureSelector, MapProxy } from '../index'
 
 // Bespoke map stuff
 import './index.scss'
@@ -39,7 +39,7 @@ class App extends PureComponent {
       <OlReact
         style={mapStyle}
         viewOptions={{}}
-        layers={[ahocevarBaseMap(), this.clusteredSitesLayer]}
+        layers={[this.clusteredSitesLayer, ahocevarBaseMap()]}
       >
         {({ map }) => (
           <>
@@ -222,57 +222,28 @@ class App extends PureComponent {
                           <div style={{ marginTop: '8px' }}>
                             {/* Layer toggle */}
                             <h1>Current layers</h1>
-                            {proxy.getLayers().getArray().length > 0 ? (
-                              <DragAndDrop
-                                layers={proxy.getLayers().getArray()}
-                                reorderItems={result => {
-                                  if (!result.destination) return
-                                  const from = result.source.index
-                                  const to = result.destination.index
-                                  proxy.reorderLayers(from, to)
-                                }}
-                                listStyle={isDraggingOver => ({
-                                  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-                                  padding: 8
-                                })}
-                                itemStyle={(isDragging, draggableStyle) => ({
-                                  userSelect: 'none',
-                                  margin: `0 0 4px 0`,
-                                  padding: '4px',
-                                  background: isDragging ? 'lightgreen' : 'grey',
-                                  ...draggableStyle
-                                })}
-                              >
-                                {(layers, makeDraggable) =>
-                                  layers.map((layer, i) =>
-                                    makeDraggable(
-                                      <div>
-                                        {layer.get('id')}
-                                        <span>({JSON.stringify(layer.get('visible'))})</span>
-                                        <button
-                                          onClick={() => layer.setVisible(!layer.get('visible'))}
-                                        >
-                                          Toggle visible
-                                        </button>
-                                        <input
-                                          type="range"
-                                          min="0"
-                                          max="100"
-                                          value={layer.get('opacity') * 100}
-                                          onChange={e => layer.setOpacity(e.target.value / 100)}
-                                        />
-                                        <button onClick={() => proxy.removeLayer(layer)}>
-                                          Remove layer
-                                        </button>
-                                      </div>,
-                                      i
-                                    )
-                                  )
-                                }
-                              </DragAndDrop>
-                            ) : (
-                              <p>None</p>
-                            )}
+                            {proxy
+                              .getLayers()
+                              .getArray()
+                              .map((layer, i) => (
+                                <div key={i}>
+                                  {layer.get('id')}
+                                  <span>({JSON.stringify(layer.get('visible'))})</span>
+                                  <button onClick={() => layer.setVisible(!layer.get('visible'))}>
+                                    Toggle visible
+                                  </button>
+                                  <input
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    value={layer.get('opacity') * 100}
+                                    onChange={e => layer.setOpacity(e.target.value / 100)}
+                                  />
+                                  <button onClick={() => proxy.removeLayer(layer)}>
+                                    Remove layer
+                                  </button>
+                                </div>
+                              ))}
                           </div>
                         </div>
                       </>

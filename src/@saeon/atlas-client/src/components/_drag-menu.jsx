@@ -5,10 +5,17 @@ import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 
-/**
- * General functional component description in JSDoc format. Markdown is *supported*.
- */
-export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => {
+export default ({
+  active,
+  close,
+  title,
+  children,
+  onMouseDown,
+  zIndex,
+  defaultPosition = { x: 100, y: 25 },
+  width = 450,
+  height = 400
+}) => {
   const [width, setWidth] = useState(450)
   const [height, setHeight] = useState(400)
   const onResize = (event, { element, size, handle }) => {
@@ -20,9 +27,10 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
     <Draggable
       axis="both"
       handle=".draggable-handle"
-      defaultPosition={{ x: 100, y: 25 }}
+      defaultPosition={defaultPosition}
+      bounds={{ left: 0, top: 0 }}
       position={null}
-      grid={[15, 15]}
+      grid={[5, 5]}
       scale={1}
     >
       <div
@@ -35,10 +43,10 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
       >
         <Card variant="elevation">
           <ResizableBox
-            width={450}
-            height={400}
+            width={width}
+            height={height}
             minConstraints={[200, 200]}
-            draggableOpts={{ grid: [15, 15] }}
+            draggableOpts={{ grid: [5, 5] }}
             onResize={onResize}
           >
             <CardContent style={{ padding: 0 }}>
