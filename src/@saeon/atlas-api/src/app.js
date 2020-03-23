@@ -120,12 +120,13 @@ app.use(
 )
 
 app.use(
-  '/saeon-elastic-search',
+  '/saeon-elk',
   createProxyMiddleware({
     target: 'http://192.168.116.66:9200',
     changeOrigin: true,
     pathRewrite: {
-      '/saeon-metadata-search': '/',
+      '/saeon-elk/_search': '/_search',
+      '/saeon-elk': '/_search',
     },
   })
 )
