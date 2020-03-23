@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 import { FixedSizeList } from 'react-window'
 import { createLayer, LayerTypes } from '../lib/ol'
+import LegendMenu from '../modules/saeon-search/_legend-menu'
 
 export default class extends PureComponent {
   state = { items: this.props.content }
@@ -47,13 +48,12 @@ export default class extends PureComponent {
                           const serverAddress = `${protocol}//${host}${pathname}`
                           proxy.addLayer(
                             createLayer({
-                              fetchLegend: () =>
-                                fetch(
-                                  `${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`
-                                )
-                                  .then((res) => res.blob())
-                                  .then((blob) => URL.createObjectURL(blob)),
-                              legendType: 'image',
+                              LegendMenu: () => (
+                                <LegendMenu
+                                  title={layerId}
+                                  uri={`${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`}
+                                />
+                              ),
                               layerType: LayerTypes.TileWMS,
                               id: layerId,
                               title: layerId,

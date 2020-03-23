@@ -25,8 +25,8 @@ import {
 import { MenuContext } from '../menu-provider'
 import { Form, DragAndDrop } from '../../components'
 import { debounce } from '../../../../fns-lib'
-import Legend from './_legend'
-import Info from './_info'
+import Legend from './_legend-menu-menu'
+import Info from './_info-menu-menu'
 
 const headerButtonProps = {
   color: 'inherit',
@@ -147,22 +147,20 @@ export default class extends Component {
                                 variant="outlined"
                                 startIcon={<VpnKey />}
                                 size="small"
-                                onClick={() => {
-                                  if (addedMenus[`${layer.get('id')}-legend`]) {
-                                    removeMenu(`${layer.get('id')}-legend`)
-                                  } else {
-                                    addMenu({
-                                      id: `${layer.get('id')}-legend`,
-                                      Component: (i) => (
-                                        <Legend
-                                          key={i}
-                                          layer={layer}
-                                          onClose={() => removeMenu(`${layer.get('id')}-legend`)}
-                                        />
-                                      ),
-                                    })
-                                  }
-                                }}
+                                onClick={() =>
+                                  addedMenus[`${layer.get('id')}-legend`]
+                                    ? removeMenu(`${layer.get('id')}-legend`)
+                                    : addMenu({
+                                        id: `${layer.get('id')}-legend`,
+                                        Component: (i) => (
+                                          <Legend
+                                            key={i}
+                                            layer={layer}
+                                            onClose={() => removeMenu(`${layer.get('id')}-legend`)}
+                                          />
+                                        ),
+                                      })
+                                }
                               >
                                 Legend
                               </Button>
@@ -174,22 +172,20 @@ export default class extends Component {
                                 variant="outlined"
                                 startIcon={<InfoIcon />}
                                 size="small"
-                                onClick={() => {
-                                  if (addedMenus[`${layer.get('id')}-info`]) {
-                                    removeMenu(`${layer.get('id')}-info`)
-                                  } else {
-                                    addMenu({
-                                      id: `${layer.get('id')}-info`,
-                                      Component: (i) => (
-                                        <Info
-                                          key={i}
-                                          layer={layer}
-                                          onClose={() => removeMenu(`${layer.get('id')}-info`)}
-                                        />
-                                      ),
-                                    })
-                                  }
-                                }}
+                                onClick={() =>
+                                  addedMenus[`${layer.get('id')}-info`]
+                                    ? removeMenu(`${layer.get('id')}-info`)
+                                    : addMenu({
+                                        id: `${layer.get('id')}-info`,
+                                        Component: (i) => (
+                                          <Info
+                                            key={i}
+                                            layer={layer}
+                                            onClose={() => removeMenu(`${layer.get('id')}-info`)}
+                                          />
+                                        ),
+                                      })
+                                }
                               >
                                 Info
                               </Button>
