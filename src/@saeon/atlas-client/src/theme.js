@@ -15,10 +15,10 @@ export default {
   },
   palette: {
     primary: {
-      main: '#039be5',
+      main: '#002255',
     },
     secondary: {
-      main: '#ffcc80',
+      main: '#039be5',
     },
   },
   status: {
