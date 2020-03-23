@@ -120,6 +120,17 @@ app.use(
 )
 
 app.use(
+  '/saeon-elastic-search',
+  createProxyMiddleware({
+    target: 'http://192.168.116.66:9200',
+    changeOrigin: true,
+    pathRewrite: {
+      '/saeon-metadata-search': '/',
+    },
+  })
+)
+
+app.use(
   '/csir',
   createProxyMiddleware({
     target: 'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
