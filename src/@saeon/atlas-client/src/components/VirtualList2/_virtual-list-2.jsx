@@ -8,7 +8,8 @@ import {
 } from '@material-ui/core'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { FixedSizeList } from 'react-window'
-import { addTileWMSLayer } from '../../lib/ol'
+import { createLayer, LayerTypes } from '../../lib/ol'
+import LegendMenu from '../../modules/saeon-search/_legend-menu'
 
 /**
  * A list component that makes use of react-window InfiniteLoader and FixedSizeList to allow for pagination and partial rendering of list items
@@ -32,6 +33,8 @@ export default class VirtualList2 extends Component {
     const { items } = this.state
     const { results } = items
     const { setItems } = this
+
+    console.log(height, width)
 
     return results ? (
       <>
@@ -78,11 +81,18 @@ export default class VirtualList2 extends Component {
                             if (target.checked) {
                               const serverAddress = `${protocol}//${host}${pathname}`
                               proxy.addLayer(
-                                addTileWMSLayer({
+                                createLayer({
+                                  LegendMenu: () => (
+                                    <LegendMenu
+                                      title={layerId}
+                                      uri={`${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`}
+                                    />
+                                  ),
+                                  layerType: LayerTypes.TileWMS,
                                   id: layerId,
                                   title: layerId,
-                                  url: serverAddress,
-                                  name: layers,
+                                  uri: serverAddress,
+                                  LAYERS: layers,
                                 })
                               )
                               newItems = items.results.map((r) =>

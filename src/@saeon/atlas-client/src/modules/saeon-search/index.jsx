@@ -14,7 +14,7 @@ const searcher = ({ url }) =>
     .then((res) => res.json())
     .catch(() => ({ error: new Error('SAEON catalogue is not responding') }))
 
-export default ({ proxy }) => (
+export default ({ proxy, height, width }) => (
   <Form loading={false} search="" error={false} searchResults={[{ result_length: 0 }]}>
     {({ updateForm, loading, error, search, searchResults }) => (
       <>
@@ -70,8 +70,8 @@ export default ({ proxy }) => (
                   {searchResults.reduce((c, curr) => c + curr.result_length, 0)} items found
                 </div>
                 <VirtualList2
-                  // height={height}
-                  // width={width}
+                  height={height}
+                  width={width}
                   loadMoreItems={async () => {
                     const searchResponse = await searcher({
                       url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${

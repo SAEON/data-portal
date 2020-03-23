@@ -70,7 +70,9 @@ export default ({
               </CardContent>
               <div style={{ height: 'calc(100% - 35px)', padding: '10px 5px' }}>
                 <div className="thin-scrollbar" style={{ height: '100%', overflow: 'auto' }}>
-                  <CardContent>{children(height, width)}</CardContent>
+                  <CardContent>
+                    {typeof children === 'function' ? children({ height, width }) : children}
+                  </CardContent>
                 </div>
               </div>
             </ResizableBox>

@@ -16,7 +16,7 @@ export default ({ layer, onClose }) => {
       onMouseDown={() => console.log('update zIndex todo')}
       zIndex={99}
       defaultPosition={{ x: 650, y: 25 }}
-      width={200}
+      defaultWidth={200}
       title={'Legend'}
       active={true}
       close={onClose}

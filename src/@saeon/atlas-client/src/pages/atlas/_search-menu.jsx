@@ -39,7 +39,9 @@ export default () => (
                       active={saeonSearchMenu.active}
                       close={() => updateMenuManager({ saeonSearchMenu: { active: false } })}
                     >
-                      <SaeonSearch proxy={proxy} />
+                      {({ width, height }) => (
+                        <SaeonSearch width={width} height={height} proxy={proxy} />
+                      )}
                     </DragMenu>
                   ),
                 },
