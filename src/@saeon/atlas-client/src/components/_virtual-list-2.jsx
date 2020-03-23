@@ -18,6 +18,7 @@ export default class extends PureComponent {
     this.setState({ items: this.props.content })
   }
 
+  
   setItems = (items) => this.setState({ items })
   render() {
     const { proxy, loadMoreItems } = this.props
