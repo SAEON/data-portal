@@ -85,7 +85,9 @@ export default ({ proxy }) => (
                   active={searchSaeonOpen}
                   close={() => toggle({ searchSaeonOpen: false })}
                 >
-                  {(height, width) => <SaeonSearch proxy={proxy} />}
+                  {({ height, width }) => (
+                    <SaeonSearch height={height} width={width} proxy={proxy} />
+                  )}
                 </DragMenu>
               )
             }),

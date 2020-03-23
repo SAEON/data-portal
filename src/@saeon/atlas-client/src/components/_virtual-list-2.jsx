@@ -23,7 +23,6 @@ export default class extends PureComponent {
     const { items } = this.state
     const { results } = items
     const { setItems } = this
-
     return results ? (
       <>
         <InfiniteLoader
@@ -43,8 +42,9 @@ export default class extends PureComponent {
         >
           {({ onItemsRendered }) => (
             <FixedSizeList
+              style={{ transition: 'width 0.4s, height 0.4s' }}
               height={height - 230}
-              width={width - 25}
+              width={width - 40}
               itemSize={125}
               itemCount={results.length}
               onItemsRendered={onItemsRendered}
