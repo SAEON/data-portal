@@ -7,13 +7,13 @@ const wmsParser = new WMSCapabilities()
 
 const descriptor = {
   enumerable: false,
-  configurable: false
+  configurable: false,
 }
 
 export default class extends PureComponent {
   state = {
     servers: {},
-    render: 0
+    render: 0,
   }
 
   constructor(props) {
@@ -39,41 +39,41 @@ export default class extends PureComponent {
                   layers: layers.map((layer, i, arr) => {
                     layer.setZIndex(arr.length - i)
                     return layer
-                  })
+                  }),
                 })
               )
               reRender()
-            }
+            },
           },
 
           // TODO: Add warning for CORS, or proxy to API
           addServer: {
             ...descriptor,
-            get: () => async baseUri =>
+            get: () => async (baseUri) =>
               this.setState({
                 servers: Object.assign(
                   {
                     [baseUri]: await fetch(
                       `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
                     )
-                      .then(res => res.text())
-                      .then(txt => wmsParser.read(txt))
+                      .then((res) => res.text())
+                      .then((txt) => wmsParser.read(txt))
                       .then(
-                        wms =>
+                        (wms) =>
                           /**
                            * Server proxy object
                            */
                           new Proxy(
                             Object.defineProperties(wms, {
                               wmsAddress: {
-                                get: () => baseUri
+                                get: () => baseUri,
                               },
                               remove: {
                                 get: () => () => {
                                   // Delete layers from map
                                   proxy
                                     .getLayersByServerAddress(baseUri)
-                                    .forEach(layer => map.removeLayer(layer))
+                                    .forEach((layer) => map.removeLayer(layer))
 
                                   // Then register the server as deleted
                                   this.setState({
@@ -81,51 +81,51 @@ export default class extends PureComponent {
                                       Object.entries(this.state.servers).filter(
                                         ([uri]) => uri !== baseUri
                                       )
-                                    )
+                                    ),
                                   })
-                                }
-                              }
+                                },
+                              },
                             }),
                             {
-                              get: (target, value) => target[value]
+                              get: (target, value) => target[value],
                             }
                           )
-                      )
+                      ),
                   },
                   { ...this.state.servers }
-                )
-              })
+                ),
+              }),
           },
 
           getLayersByServerAddress: {
             ...descriptor,
-            get: () => baseUri =>
+            get: () => (baseUri) =>
               map
                 .getLayers()
                 .getArray()
-                .filter(layer => (layer.getSource().urls || []).includes(baseUri))
+                .filter((layer) => (layer.getSource().urls || []).includes(baseUri)),
           },
 
           removeLayer: {
             ...descriptor,
-            get: () => layer => {
+            get: () => (layer) => {
               map.removeLayer(layer) || map.removeLayer(layer._self)
               reRender()
-            }
+            },
           },
 
           removeLayerById: {
             ...descriptor,
-            get: () => id => proxy.removeLayer(proxy.getLayerById(id))
+            get: () => (id) => proxy.removeLayer(proxy.getLayerById(id)),
           },
 
           getLayerById: {
             ...descriptor,
-            get: () => id =>
+            get: () => (id) =>
               map
                 .getLayers()
                 .getArray()
-                .filter(layer => id === layer.get('id'))[0]
+                .filter((layer) => id === layer.get('id'))[0],
           },
 
           /**
@@ -133,12 +133,12 @@ export default class extends PureComponent {
            */
           addLayer: {
             ...descriptor,
-            get: () => layer => {
+            get: () => (layer) => {
               if (
                 map
                   .getLayers()
                   .getArray()
-                  .map(layer => layer.get('id'))
+                  .map((layer) => layer.get('id'))
                   .includes(layer.get('id'))
               ) {
                 throw new Error(
@@ -151,21 +151,17 @@ export default class extends PureComponent {
               } else {
                 map.setLayerGroup(
                   new LayerGroup({
-                    layers: [
-                      layer,
-                      ...map
-                        .getLayerGroup()
-                        .getLayers()
-                        .getArray()
-                    ].map((layer, i, arr) => {
-                      layer.setZIndex(arr.length - i)
-                      return layer
-                    })
+                    layers: [layer, ...map.getLayerGroup().getLayers().getArray()].map(
+                      (layer, i, arr) => {
+                        layer.setZIndex(arr.length - i)
+                        return layer
+                      }
+                    ),
                   })
                 )
                 reRender()
               }
-            }
+            },
           },
           getLayers: {
             ...descriptor,
@@ -179,7 +175,7 @@ export default class extends PureComponent {
                   {
                     _self: {
                       ...descriptor,
-                      get: () => map.getLayers()
+                      get: () => map.getLayers(),
                     },
                     getArray: {
                       ...descriptor,
@@ -192,7 +188,7 @@ export default class extends PureComponent {
                             .getLayers()
                             .getArray()
                             .map(
-                              layer =>
+                              (layer) =>
                                 new Proxy(
                                   /**
                                    * OpenLayer.Layer proxy object
@@ -202,12 +198,12 @@ export default class extends PureComponent {
                                     {
                                       _self: {
                                         ...descriptor,
-                                        get: () => layer
+                                        get: () => layer,
                                       },
                                       get: {
                                         ...descriptor,
-                                        get: () => attribute => layer.get(attribute)
-                                      }
+                                        get: () => (attribute) => layer.get(attribute),
+                                      },
                                     }
                                   ),
                                   {
@@ -222,7 +218,7 @@ export default class extends PureComponent {
                                             )
                                             reRender()
                                           }
-                                        : proxiedTarget._self[prop]
+                                        : proxiedTarget._self[prop],
                                   }
                                 )
                             ),
@@ -230,10 +226,10 @@ export default class extends PureComponent {
                           // getArray() proxy handler (proxies an array)
                           // Arrays as proxy objects are transparent
                           {
-                            get: (target, prop) => target[prop]
+                            get: (target, prop) => target[prop],
                           }
-                        )
-                    }
+                        ),
+                    },
                   }
                 ),
 
@@ -247,10 +243,10 @@ export default class extends PureComponent {
                           proxiedTarget._self[prop].apply(proxiedTarget._self, args)
                           reRender()
                         }
-                      : proxiedTarget._self[prop]
+                      : proxiedTarget._self[prop],
                 }
-              )
-          }
+              ),
+          },
         }
       ),
 
@@ -264,7 +260,7 @@ export default class extends PureComponent {
                 map[prop].apply(map, args)
                 reRender()
               }
-            : map[prop]
+            : map[prop],
       }
     )
 

@@ -6,18 +6,18 @@ import { createLayer, LayerTypes } from '../../lib/ol'
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 
-const fetchMeta = uri => fetch(`${uri}?f=pjson`).then(res => res.json())
+const fetchMeta = (uri) => fetch(`${uri}?f=pjson`).then((res) => res.json())
 
 export default class extends Component {
   state = {
-    esriLayers: []
+    esriLayers: [],
   }
 
   async componentDidMount() {
     this.setState({
       esriLayers: Object.fromEntries(
         await Promise.all(
-          esriLayers.map(uri =>
+          esriLayers.map((uri) =>
             Promise.all([
               uri,
               fetchMeta(
@@ -25,11 +25,11 @@ export default class extends Component {
                   'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
                   `${ATLAS_API_ADDRESS}/csir`
                 )
-              )
+              ),
             ])
           )
         )
-      )
+      ),
     })
   }
 
@@ -46,10 +46,10 @@ export default class extends Component {
           <Card key={i} style={{ margin: 5 }} variant="outlined" square={true}>
             <CardHeader
               titleTypographyProps={{
-                variant: 'overline'
+                variant: 'overline',
               }}
               subheaderTypographyProps={{
-                variant: 'caption'
+                variant: 'caption',
               }}
               title={mapName || 'UNKNOWN TITLE'}
               subheader={`VERSION ${currentVersion}`}
@@ -69,13 +69,13 @@ export default class extends Component {
                       proxy.addLayer(
                         createLayer({
                           fetchInfo: () =>
-                            fetch(`${proxiedUri}/layers?f=pjson`).then(res => res.json()),
+                            fetch(`${proxiedUri}/layers?f=pjson`).then((res) => res.json()),
                           fetchLegend: () =>
-                            fetch(`${proxiedUri}/legend?f=pjson`).then(res => res.json()),
+                            fetch(`${proxiedUri}/legend?f=pjson`).then((res) => res.json()),
                           layerType: LayerTypes.TileArcGISRest,
                           id: uri,
                           uri: proxiedUri,
-                          title: mapName
+                          title: mapName,
                         })
                       )
                     } else {

@@ -26,18 +26,18 @@ const getStyle = ({ opacity, feature }) => {
           ? 20
           : 15,
       stroke: new Stroke({
-        color: `rgba(255, 255, 255, ${opacity})`
+        color: `rgba(255, 255, 255, ${opacity})`,
       }),
       fill: new Fill({
-        color: `rgba(51, 153, 204,${opacity})`
-      })
+        color: `rgba(51, 153, 204,${opacity})`,
+      }),
     }),
     text: new Text({
       text: size.toString(),
       fill: new Fill({
-        color: `rgba(255, 255, 255,${opacity})`
-      })
-    })
+        color: `rgba(255, 255, 255,${opacity})`,
+      }),
+    }),
   })
 }
 
@@ -45,10 +45,10 @@ const getStyle = ({ opacity, feature }) => {
  * Intended as the style for unselected clusters
  * @param {Object} feature Instance of ol/Feature
  */
-export const clusterStyle1 = feature => getStyle({ opacity: OPACITY_1, feature })
+export const clusterStyle1 = (feature) => getStyle({ opacity: OPACITY_1, feature })
 
 /**
  * Intended as the style for selected clusters
  * @param {Object} feature Instance of ol/Feature
  */
-export const clusterStyle2 = feature => getStyle({ opacity: OPACITY_2, feature })
+export const clusterStyle2 = (feature) => getStyle({ opacity: OPACITY_2, feature })

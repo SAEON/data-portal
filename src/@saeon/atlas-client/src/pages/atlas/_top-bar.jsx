@@ -11,7 +11,7 @@ export default () => (
         <AppBar variant="outlined" position="static">
           <Toolbar disableGutters={false} className="thin-toolbar">
             <IconButton
-              onClick={e => updateMenuManager({ topMenu: { menuAnchor: e.currentTarget } })}
+              onClick={(e) => updateMenuManager({ topMenu: { menuAnchor: e.currentTarget } })}
               style={{ padding: 0 }}
               edge="start"
               color="inherit"

@@ -4,7 +4,7 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  Checkbox
+  Checkbox,
 } from '@material-ui/core'
 import { FixedSizeList } from 'react-window'
 import { createLayer, LayerTypes } from '../lib/ol'
@@ -16,7 +16,7 @@ export default class extends PureComponent {
     this.setState({ items: this.props.content })
   }
 
-  setItems = items => this.setState({ items })
+  setItems = (items) => this.setState({ items })
   render() {
     const { proxy, loadMoreItems } = this.props
     const { items } = this.state
@@ -51,26 +51,26 @@ export default class extends PureComponent {
                                 fetch(
                                   `${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`
                                 )
-                                  .then(res => res.blob())
-                                  .then(blob => URL.createObjectURL(blob)),
+                                  .then((res) => res.blob())
+                                  .then((blob) => URL.createObjectURL(blob)),
                               legendType: 'image',
                               layerType: LayerTypes.TileWMS,
                               id: layerId,
                               title: layerId,
                               uri: serverAddress,
-                              LAYERS: layers
+                              LAYERS: layers,
                             })
                           )
-                          newItems = items.results.map(r =>
+                          newItems = items.results.map((r) =>
                             Object.assign(r, {
-                              selected: layerId === r.layerId ? true : r.selected
+                              selected: layerId === r.layerId ? true : r.selected,
                             })
                           )
                         } else {
                           proxy.removeLayerById(layerId)
-                          newItems = items.results.map(r =>
+                          newItems = items.results.map((r) =>
                             Object.assign(r, {
-                              selected: layerId === r.layerId ? false : r.selected
+                              selected: layerId === r.layerId ? false : r.selected,
                             })
                           )
                         }

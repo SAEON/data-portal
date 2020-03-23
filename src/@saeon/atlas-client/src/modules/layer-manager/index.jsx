@@ -7,7 +7,7 @@ import {
   ExpandMore,
   DragIndicator,
   Info as InfoIcon,
-  VpnKey
+  VpnKey,
 } from '@material-ui/icons'
 import {
   Card,
@@ -20,7 +20,7 @@ import {
   Collapse,
   Slider,
   Button,
-  Grid
+  Grid,
 } from '@material-ui/core'
 import { MenuContext } from '../menu-provider'
 import { Form, DragAndDrop } from '../../components'
@@ -30,16 +30,16 @@ import Info from './_info'
 
 const headerButtonProps = {
   color: 'inherit',
-  size: 'small'
+  size: 'small',
 }
 
 const layerButtonStyle = {
-  width: '100%'
+  width: '100%',
 }
 
 export default class extends Component {
   state = {
-    disableDrag: false
+    disableDrag: false,
   }
 
   shouldComponentUpdate() {
@@ -55,20 +55,20 @@ export default class extends Component {
           proxy.getLayers().getArray().length > 0 ? (
             <DragAndDrop
               items={proxy.getLayers().getArray()}
-              reorderItems={result => {
+              reorderItems={(result) => {
                 if (!result.destination) return
                 const from = result.source.index
                 const to = result.destination.index
                 proxy.reorderLayers(from, to)
               }}
               listStyle={() => ({
-                padding: 8
+                padding: 8,
               })}
               itemStyle={(isDragging, draggableStyle) => ({
                 userSelect: 'none',
                 margin: `0 0 4px 0`,
                 background: isDragging ? 'lightgrey' : 'transparent',
-                ...draggableStyle
+                ...draggableStyle,
               })}
             >
               {(items, makeDraggable) =>
@@ -79,7 +79,7 @@ export default class extends Component {
                       style={{
                         background: 'transparent',
                         borderRadius: 'unset',
-                        border: 'none'
+                        border: 'none',
                       }}
                       variant="outlined"
                     >
@@ -102,7 +102,7 @@ export default class extends Component {
                                 {...headerButtonProps}
                                 onClick={() =>
                                   this.setState({
-                                    [layer.get('id')]: state[layer.get('id')] ? false : true
+                                    [layer.get('id')]: state[layer.get('id')] ? false : true,
                                   })
                                 }
                                 aria-label="expand-item-card"
@@ -153,13 +153,13 @@ export default class extends Component {
                                   } else {
                                     addMenu({
                                       id: `${layer.get('id')}-legend`,
-                                      Component: i => (
+                                      Component: (i) => (
                                         <Legend
                                           key={i}
                                           layer={layer}
                                           onClose={() => removeMenu(`${layer.get('id')}-legend`)}
                                         />
-                                      )
+                                      ),
                                     })
                                   }
                                 }}
@@ -180,13 +180,13 @@ export default class extends Component {
                                   } else {
                                     addMenu({
                                       id: `${layer.get('id')}-info`,
-                                      Component: i => (
+                                      Component: (i) => (
                                         <Info
                                           key={i}
                                           layer={layer}
                                           onClose={() => removeMenu(`${layer.get('id')}-info`)}
                                         />
-                                      )
+                                      ),
                                     })
                                   }
                                 }}

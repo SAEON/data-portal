@@ -12,28 +12,28 @@ export default class extends PureComponent {
     // Pointer cursor
     this.map.on(
       'pointermove',
-      debounce(e => {
+      debounce((e) => {
         const hit = this.map.forEachFeatureAtPixel(e.pixel, () => true) || false
         e.target.getTarget().style.cursor = hit ? 'pointer' : ''
       }, 3)
     )
 
     // Add click handler
-    this.map.on('click', e => {
+    this.map.on('click', (e) => {
       if (this.props.ignoreClicks) return
       const { unselectedStyle, selectedStyle } = this.props
       const { selectedFeature } = this.state
       const { feature, layer } =
         this.map.forEachFeatureAtPixel(e.pixel, (feature, layer) => ({
           feature,
-          layer
+          layer,
         })) || {}
       if (selectedFeature) selectedFeature.setStyle(unselectedStyle(selectedFeature))
       if (feature && feature !== selectedFeature) {
         this.setState(
           {
             selectedFeature: feature,
-            selectedLayer: layer
+            selectedLayer: layer,
           },
           () => {
             const { selectedFeature } = this.state

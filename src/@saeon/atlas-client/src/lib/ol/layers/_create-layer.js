@@ -3,7 +3,7 @@ import { TileWMS, TileArcGISRest } from 'ol/source'
 
 export const LayerTypes = Object.freeze({
   TileArcGISRest: Symbol('TileArcGISRest'),
-  TileWMS: Symbol('TileWMS')
+  TileWMS: Symbol('TileWMS'),
 })
 
 export const createLayer = ({
@@ -30,15 +30,15 @@ export const createLayer = ({
               REQUEST: 'GetMap',
               LAYERS,
               TILED,
-              FORMAT
+              FORMAT,
             },
             serverType: 'geoserver',
-            transition: 500
+            transition: 500,
           })
         : layerType === LayerTypes.TileArcGISRest
         ? new TileArcGISRest({
-            url: uri
+            url: uri,
           })
         : null,
-    opacity: 0.7
+    opacity: 0.7,
   })

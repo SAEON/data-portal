@@ -7,26 +7,26 @@ module.exports = require('../../../webpack.config')({
       ? {
           filename: 'index.js',
           libraryTarget: 'commonjs',
-          path: output
+          path: output,
         }
       : {
-          filename: 'index.js'
+          filename: 'index.js',
         },
-  resolveCb: mode =>
+  resolveCb: (mode) =>
     mode === 'production'
       ? {
           alias: {
             react: path.resolve('./node_modules/react'),
-            'react-dom': path.resolve('./node_modules/react-dom')
-          }
+            'react-dom': path.resolve('./node_modules/react-dom'),
+          },
         }
       : {},
-  externalsCb: mode =>
+  externalsCb: (mode) =>
     mode === 'production'
       ? {
           react: 'react',
           'react-dom': 'react-dom',
-          'react-md': 'react-md'
+          'react-md': 'react-md',
         }
-      : {}
+      : {},
 })

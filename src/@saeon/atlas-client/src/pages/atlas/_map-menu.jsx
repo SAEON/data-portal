@@ -33,8 +33,8 @@ export default () => (
                     >
                       <LayerManager layersActive={layersMenu.active} proxy={proxy} />
                     </DragMenu>
-                  )
-                }
+                  ),
+                },
               ]}
             </DialMenu>
           )

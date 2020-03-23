@@ -27,7 +27,7 @@ export default () => (
                   tooltip: 'Saerch SAEON data',
                   toggle: () =>
                     updateMenuManager({
-                      saeonSearchMenu: { active: !saeonSearchMenu.active }
+                      saeonSearchMenu: { active: !saeonSearchMenu.active },
                     }),
                   title: 'Search SAEON data',
                   active: saeonSearchMenu.active,
@@ -41,14 +41,14 @@ export default () => (
                     >
                       <SaeonSearch proxy={proxy} />
                     </DragMenu>
-                  )
+                  ),
                 },
                 {
                   icon: <Avatar>C</Avatar>,
                   tooltip: 'Saerch CSIR data',
                   toggle: () =>
                     updateMenuManager({
-                      csirSearchMenu: { active: !csirSearchMenu.active }
+                      csirSearchMenu: { active: !csirSearchMenu.active },
                     }),
                   title: 'Search CSIR data',
                   active: csirSearchMenu.active,
@@ -61,14 +61,14 @@ export default () => (
                       active={csirSearchMenu.active}
                       toggle={() =>
                         updateMenuManager({
-                          csirSearchMenu: { active: !csirSearchMenu.active }
+                          csirSearchMenu: { active: !csirSearchMenu.active },
                         })
                       }
                     >
                       <CsirLayers proxy={proxy} />
                     </SideMenu>
-                  )
-                }
+                  ),
+                },
               ]}
             </DialMenu>
           )

@@ -5,7 +5,7 @@ module.exports = {
     '@babel/plugin-proposal-class-properties',
     [
       '@babel/plugin-transform-runtime',
-      { corejs: { version: 3, proposals: true }, regenerator: true }
-    ]
-  ]
+      { corejs: { version: 3, proposals: true }, regenerator: true },
+    ],
+  ],
 }

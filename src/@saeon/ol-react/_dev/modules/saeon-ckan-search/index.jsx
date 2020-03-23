@@ -3,7 +3,7 @@ import { newLayer } from '../../layers'
 import { Form, debounceGlobal } from '../../lib'
 import npmUrl from 'url'
 
-const searcher = ({ url }) => fetch(url).then(res => res.json())
+const searcher = ({ url }) => fetch(url).then((res) => res.json())
 
 export default ({ proxy }) => (
   <Form search="" searchResults={[]}>
@@ -12,7 +12,7 @@ export default ({ proxy }) => (
         <input
           type="text"
           value={fields.search}
-          onChange={e => {
+          onChange={(e) => {
             const search = e.target.value
             updateForm(
               { search, loading: true },
@@ -21,10 +21,10 @@ export default ({ proxy }) => (
                   updateForm({
                     searchResults: [
                       await searcher({
-                        url: `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`
-                      })
+                        url: `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`,
+                      }),
                     ],
-                    loading: false
+                    loading: false,
                   }),
                 1000
               )
@@ -43,17 +43,17 @@ export default ({ proxy }) => (
                       (result, current) => ({
                         success: result.success && current.success,
                         results: result.results.concat(current.results),
-                        result_length: result.result_length + current.result_length
+                        result_length: result.result_length + current.result_length,
                       }),
                       {
                         success: fields.searchResults[0].success,
                         result_length: 0,
-                        results: []
+                        results: [],
                       }
                     )
                     .results.map(({ metadata_json }) =>
                       metadata_json.linkedResources
-                        .filter(r => r.linkedResourceType === 'Query')
+                        .filter((r) => r.linkedResourceType === 'Query')
                         .map(({ resourceURL, resourceDescription }, i) => {
                           const uri = npmUrl.parse(resourceURL, true)
                           const { protocol, host, pathname, query } = uri
@@ -73,7 +73,7 @@ export default ({ proxy }) => (
                                         id: layerId,
                                         title: layerId,
                                         url: serverAddress,
-                                        name: layers
+                                        name: layers,
                                       })
                                     )
                                   } else {
@@ -97,12 +97,12 @@ export default ({ proxy }) => (
                           await searcher({
                             url: `http://localhost:3000/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${
                               fields.search
-                            }&metadata_json.linkedResources.resourceURL=*WMS&start=${fields.searchResults.reduce(
-                              (c, curr) => c + curr.result_length,
-                              0
-                            ) + 1}`
-                          })
-                        ]
+                            }&metadata_json.linkedResources.resourceURL=*WMS&start=${
+                              fields.searchResults.reduce((c, curr) => c + curr.result_length, 0) +
+                              1
+                            }`,
+                          }),
+                        ],
                       })
                     }
                   >

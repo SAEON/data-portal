@@ -11,7 +11,7 @@ const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:400
 
 const searcher = ({ url }) =>
   fetch(url)
-    .then(res => res.json())
+    .then((res) => res.json())
     .catch(() => ({ error: new Error('SAEON catalogue is not responding') }))
 
 export default ({ proxy }) => (
@@ -35,13 +35,13 @@ export default ({ proxy }) => (
                 <TextField
                   autoComplete="off"
                   value={search}
-                  onChange={e => {
+                  onChange={(e) => {
                     const search = e.target.value
                     updateForm(
                       { search, loading: true },
                       debounceGlobal(async () => {
                         const searchResponse = await searcher({
-                          url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`
+                          url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS`,
                         })
                         if (searchResponse.error) {
                           updateForm({ error: searchResponse.error })
@@ -49,7 +49,7 @@ export default ({ proxy }) => (
                           updateForm({
                             searchResults: [searchResponse],
                             loading: false,
-                            error: false
+                            error: false,
                           })
                         }
                       }, 1000)
@@ -72,10 +72,9 @@ export default ({ proxy }) => (
                 <VirtualList
                   loadMoreItems={async () => {
                     const searchResponse = await searcher({
-                      url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${searchResults.reduce(
-                        (c, curr) => c + curr.result_length,
-                        0
-                      ) + 1}`
+                      url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${
+                        searchResults.reduce((c, curr) => c + curr.result_length, 0) + 1
+                      }`,
                     })
                     if (searchResponse.error) {
                       updateForm({ error: searchResponse.error })
@@ -83,7 +82,7 @@ export default ({ proxy }) => (
                       updateForm({
                         searchResults: [...searchResults, searchResponse],
                         loading: false,
-                        error: false
+                        error: false,
                       })
                     }
                   }}
@@ -97,7 +96,7 @@ export default ({ proxy }) => (
                               .concat(
                                 current.results.map(({ metadata_json }) =>
                                   metadata_json.linkedResources
-                                    .filter(r => r.linkedResourceType === 'Query')
+                                    .filter((r) => r.linkedResourceType === 'Query')
                                     .map(({ resourceURL, resourceDescription }) => {
                                       const uri = npmUrl.parse(resourceURL, true)
                                       const { protocol, host, pathname, query } = uri
@@ -105,7 +104,7 @@ export default ({ proxy }) => (
                                       const layerId = `${resourceDescription} - ${layers}`
                                       return Object.assign(
                                         {
-                                          selected: proxy.getLayerById(layerId) ? true : false
+                                          selected: proxy.getLayerById(layerId) ? true : false,
                                         },
                                         {
                                           layerId,
@@ -114,19 +113,19 @@ export default ({ proxy }) => (
                                           protocol,
                                           host,
                                           pathname,
-                                          layers
+                                          layers,
                                         }
                                       )
                                     })
                                 )
                               )
                               .flat(),
-                            result_length: result.result_length + current.result_length
+                            result_length: result.result_length + current.result_length,
                           }),
                           {
                             success: searchResults[0].success,
                             result_length: 0,
-                            results: []
+                            results: [],
                           }
                         )
                       : { result_length: 0 }

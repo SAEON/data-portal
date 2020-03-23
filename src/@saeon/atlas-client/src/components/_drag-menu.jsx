@@ -14,7 +14,7 @@ export default ({
   zIndex,
   defaultPosition = { x: 100, y: 25 },
   width = 450,
-  height = 400
+  height = 400,
 }) => (
   <div style={{ position: 'absolute' }}>
     <Draggable
@@ -31,7 +31,7 @@ export default ({
           opacity: 0.8,
           zIndex,
           position: 'relative',
-          display: active ? 'block' : 'none'
+          display: active ? 'block' : 'none',
         }}
       >
         <Card variant="elevation">

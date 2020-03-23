@@ -11,45 +11,45 @@ export default class extends PureComponent {
       { id: 'layersMenu', active: false, zIndex: 1 },
       { id: 'layerInfo', active: false, zIndex: 1 },
       { id: 'saeonSearchMenu', active: false, zIndex: 1 },
-      { id: 'csirSearchMenu', active: false }
+      { id: 'csirSearchMenu', active: false },
     ],
-    addedMenus: {}
+    addedMenus: {},
   }
 
   addMenu = ({ id, Component }) =>
     this.setState({
-      addedMenus: { ...this.state.addedMenus, [id]: Component }
+      addedMenus: { ...this.state.addedMenus, [id]: Component },
     })
 
-  removeMenu = removeId =>
+  removeMenu = (removeId) =>
     this.setState({
       addedMenus: Object.fromEntries(
         Object.entries({ ...this.state.addedMenus }).filter(([id]) => id !== removeId)
-      )
+      ),
     })
 
-  getMenuById = id => this.state.menus.find(item => item.id === id)
+  getMenuById = (id) => this.state.menus.find((item) => item.id === id)
 
-  setActiveMenu = id => {
+  setActiveMenu = (id) => {
     const newMenus = [...this.state.menus]
-    newMenus.find(menu => menu.id === id).zIndex = Math.max(
+    newMenus.find((menu) => menu.id === id).zIndex = Math.max(
       ...this.state.menus.map(({ zIndex }) => (zIndex || 0) + 1)
     )
     this.setState({
-      menus: newMenus
+      menus: newMenus,
     })
   }
 
   /**
    * @param {Object} obj {id: {... vals}}
    */
-  updateMenuManager = obj => {
+  updateMenuManager = (obj) => {
     const newMenus = [...this.state.menus]
     Object.entries(obj).forEach(([id, kvs]) =>
-      Object.assign(newMenus.find(item => id === item.id) || {}, { ...kvs })
+      Object.assign(newMenus.find((item) => id === item.id) || {}, { ...kvs })
     )
     this.setState({
-      menus: newMenus
+      menus: newMenus,
     })
   }
 
@@ -61,7 +61,7 @@ export default class extends PureComponent {
       addMenu,
       getMenuById,
       setActiveMenu,
-      updateMenuManager
+      updateMenuManager,
     } = this
     const { children } = props
     const { menus, addedMenus } = state
@@ -75,7 +75,7 @@ export default class extends PureComponent {
           setActiveMenu,
           updateMenuManager,
           addMenu,
-          removeMenu
+          removeMenu,
         }}
       >
         {/* These are menus. TODO */}

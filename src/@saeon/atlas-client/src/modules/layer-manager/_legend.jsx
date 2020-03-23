@@ -19,7 +19,7 @@ export default ({ layer, onClose }) => {
             {
               loading: false,
               data: null,
-              error: 'No function for retrieving layer legend specified'
+              error: 'No function for retrieving layer legend specified',
             }
           )
         )

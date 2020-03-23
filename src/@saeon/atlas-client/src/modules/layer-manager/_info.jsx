@@ -10,7 +10,7 @@ export default ({ layer, onClose }) => {
   const [state, setState] = useState({
     loading: true,
     data: null,
-    error: null
+    error: null,
   })
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default ({ layer, onClose }) => {
             {
               loading: false,
               data: null,
-              error: 'No function for retrieving layer information specified'
+              error: 'No function for retrieving layer information specified',
             }
           )
         )
@@ -71,7 +71,7 @@ export default ({ layer, onClose }) => {
             base0C: '#00aabb',
             base0D: '#0e5a94',
             base0E: '#b31e8d',
-            base0F: '#7a2d00'
+            base0F: '#7a2d00',
           }}
           data={state.data}
         />

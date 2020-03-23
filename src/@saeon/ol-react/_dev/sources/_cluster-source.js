@@ -13,9 +13,9 @@ export const clusterSource = ({ data, locAttribute, distance }) =>
   new Cluster({
     distance: distance ? distance : 100,
     source: new VectorSource({
-      features: data.map(datum => {
+      features: data.map((datum) => {
         const xyz = JSON.parse(datum[locAttribute]).coordinates
         return new Feature({ ...datum, geometry: new Point([xyz[0], xyz[1]]) })
-      })
-    })
+      }),
+    }),
   })

@@ -11,11 +11,11 @@ export const newLayer = ({ id, title, url, name }) => {
       params: {
         LAYERS: name,
         TILED: true,
-        FORMAT: 'image/png'
+        FORMAT: 'image/png',
       },
       serverType: 'geoserver',
-      transition: 500
+      transition: 500,
     }),
-    opacity: 0.7
+    opacity: 0.7,
   })
 }

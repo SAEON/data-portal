@@ -30,7 +30,7 @@ class App extends PureComponent {
     this.clusteredSitesLayer = clusterLayer({
       source: this.clusteredSites,
       id: 'sites',
-      style: clusterStyle1
+      style: clusterStyle1,
     })
   }
 
@@ -45,7 +45,7 @@ class App extends PureComponent {
           <>
             {/* TODO: I think for this to work with the proxy that features also need to be proxied? */}
             <SingleFeatureSelector
-              onFeatureSelect={selectedFeature => console.log(selectedFeature)}
+              onFeatureSelect={(selectedFeature) => console.log(selectedFeature)}
               unselectedStyle={clusterStyle1}
               selectedStyle={clusterStyle2}
               map={map}
@@ -63,9 +63,9 @@ class App extends PureComponent {
                         unselectFeature(() => {
                           // First reset the source data
                           newPointData = (newPointData || pointData).filter(
-                            p =>
+                            (p) =>
                               !(selectedFeature.get('features') || [selectedFeature])
-                                .map(f => f.get('id'))
+                                .map((f) => f.get('id'))
                                 .includes(p.id)
                           )
 
@@ -73,7 +73,7 @@ class App extends PureComponent {
                           this.clusteredSitesLayer.setSource(
                             clusterSource({
                               data: newPointData,
-                              locAttribute: 'location'
+                              locAttribute: 'location',
                             })
                           )
                         })
@@ -124,7 +124,7 @@ class App extends PureComponent {
                         <div
                           style={{
                             display: visible ? 'inherit' : 'none',
-                            margin: '8px 8px 4px'
+                            margin: '8px 8px 4px',
                           }}
                         >
                           <button
@@ -179,7 +179,7 @@ class App extends PureComponent {
                                                       newLayer({
                                                         id: Name,
                                                         url: server.wmsAddress,
-                                                        name: Name
+                                                        name: Name,
                                                       })
                                                     )
                                                   : proxy.removeLayerById(Name)
@@ -216,7 +216,7 @@ class App extends PureComponent {
                         <div
                           style={{
                             display: visible ? 'inherit' : 'none',
-                            margin: '8px 8px 4px'
+                            margin: '8px 8px 4px',
                           }}
                         >
                           <div style={{ marginTop: '8px' }}>
@@ -237,7 +237,7 @@ class App extends PureComponent {
                                     min="0"
                                     max="100"
                                     value={layer.get('opacity') * 100}
-                                    onChange={e => layer.setOpacity(e.target.value / 100)}
+                                    onChange={(e) => layer.setOpacity(e.target.value / 100)}
                                   />
                                   <button onClick={() => proxy.removeLayer(layer)}>
                                     Remove layer

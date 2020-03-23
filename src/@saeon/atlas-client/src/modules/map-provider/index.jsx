@@ -12,7 +12,7 @@ export default class extends PureComponent {
         <OlReact
           viewOptions={{
             center: [32, -15],
-            zoom: 4.6
+            zoom: 4.6,
           }}
           layers={[terrestrisBaseMap()]}
           style={{ width: '100%', height: '100%' }}

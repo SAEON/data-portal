@@ -10,18 +10,18 @@ export default {
       subtitle1: 'h2',
       subtitle2: 'h2',
       body1: 'span',
-      body2: 'span'
-    }
+      body2: 'span',
+    },
   },
   palette: {
     primary: {
-      main: '#039be5'
+      main: '#039be5',
     },
     secondary: {
-      main: '#ffcc80'
-    }
+      main: '#ffcc80',
+    },
   },
   status: {
-    danger: 'orange'
-  }
+    danger: 'orange',
+  },
 }
