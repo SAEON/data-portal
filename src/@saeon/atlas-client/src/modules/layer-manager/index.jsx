@@ -25,8 +25,8 @@ import {
 import { MenuContext } from '../menu-provider'
 import { Form, DragAndDrop } from '../../components'
 import { debounce } from '../../../../fns-lib'
-import Legend from './_legend-menu-menu'
-import Info from './_info-menu-menu'
+import Legend from './_legend-menu'
+import Info from './_info-menu'
 
 const headerButtonProps = {
   color: 'inherit',
