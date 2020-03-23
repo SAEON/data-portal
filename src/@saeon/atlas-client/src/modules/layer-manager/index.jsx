@@ -141,6 +141,7 @@ export default class extends Component {
                         <CardContent>
                           <Grid container spacing={3}>
                             <Grid item xs={6}>
+                              {/* Legend menu */}
                               <Button
                                 style={layerButtonStyle}
                                 variant="outlined"
@@ -167,6 +168,7 @@ export default class extends Component {
                               </Button>
                             </Grid>
                             <Grid item xs={6}>
+                              {/* Info menu */}
                               <Button
                                 style={layerButtonStyle}
                                 variant="outlined"

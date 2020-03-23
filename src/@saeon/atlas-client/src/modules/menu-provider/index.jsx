@@ -1,55 +1,89 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext } from 'react'
+import { PureComponent } from 'react'
 
 export const MenuContext = createContext()
 
-export default ({ children }) => {
-  const [menus, updateMenus] = useState([
-    { id: 'topMenu', menuAnchor: null },
-    { id: 'configMenu', active: false, zIndex: 1 },
-    { id: 'layersMenu', active: false, zIndex: 1 },
-    { id: 'layerInfo', active: false, zIndex: 1 },
-    { id: 'saeonSearchMenu', active: false, zIndex: 1 },
-    { id: 'csirSearchMenu', active: false }
-  ])
+export default class extends PureComponent {
+  state = {
+    menus: [
+      { id: 'topMenu', menuAnchor: null },
+      { id: 'configMenu', active: false, zIndex: 1 },
+      { id: 'layersMenu', active: false, zIndex: 1 },
+      { id: 'layerInfo', active: false, zIndex: 1 },
+      { id: 'saeonSearchMenu', active: false, zIndex: 1 },
+      { id: 'csirSearchMenu', active: false }
+    ],
+    addedMenus: {}
+  }
 
-  const [addedMenus, updateAddedMenus] = useState({})
+  addMenu = ({ id, Component }) =>
+    this.setState({
+      addedMenus: { ...this.state.addedMenus, [id]: Component }
+    })
 
-  return (
-    <MenuContext.Provider
-      value={{
-        getMenuById: id => menus.find(item => item.id === id),
-        addedMenus,
-        setActiveMenu: id => {
-          const newMenus = [...menus]
-          newMenus.find(menu => menu.id === id).zIndex = Math.max(
-            ...menus.map(({ zIndex }) => (zIndex || 0) + 1)
-          )
-          updateMenus(newMenus)
-        },
+  removeMenu = removeId =>
+    this.setState({
+      addedMenus: Object.fromEntries(
+        Object.entries({ ...this.state.addedMenus }).filter(([id]) => id !== removeId)
+      )
+    })
 
-        /**
-         * @param {Object} obj {id: {... vals}}
-         */
-        updateMenuManager: obj => {
-          const newMenus = [...menus]
-          Object.entries(obj).forEach(([id, kvs]) =>
-            Object.assign(newMenus.find(item => id === item.id) || {}, { ...kvs })
-          )
-          updateMenus(newMenus)
-        },
-        addMenu: ({ id, Component }) => updateAddedMenus({ ...addedMenus, [id]: Component }),
-        removeMenu: removeId => {
-          updateAddedMenus(
-            Object.fromEntries(Object.entries({ ...addedMenus }).filter(([id]) => id !== removeId))
-          )
-        }
-      }}
-    >
-      {/* These are menus. TODO */}
-      {Object.entries(addedMenus).map(([i, Component]) => Component(i))}
+  getMenuById = id => this.state.menus.find(item => item.id === id)
 
-      {/* All app children */}
-      {children}
-    </MenuContext.Provider>
-  )
+  setActiveMenu = id => {
+    const newMenus = [...this.state.menus]
+    newMenus.find(menu => menu.id === id).zIndex = Math.max(
+      ...this.state.menus.map(({ zIndex }) => (zIndex || 0) + 1)
+    )
+    this.setState({
+      menus: newMenus
+    })
+  }
+
+  /**
+   * @param {Object} obj {id: {... vals}}
+   */
+  updateMenuManager = obj => {
+    const newMenus = [...this.state.menus]
+    Object.entries(obj).forEach(([id, kvs]) =>
+      Object.assign(newMenus.find(item => id === item.id) || {}, { ...kvs })
+    )
+    this.setState({
+      menus: newMenus
+    })
+  }
+
+  render() {
+    const {
+      state,
+      props,
+      removeMenu,
+      addMenu,
+      getMenuById,
+      setActiveMenu,
+      updateMenuManager
+    } = this
+    const { children } = props
+    const { menus, addedMenus } = state
+
+    return (
+      <MenuContext.Provider
+        value={{
+          getMenuById,
+          addedMenus,
+          menus,
+          setActiveMenu,
+          updateMenuManager,
+          addMenu,
+          removeMenu
+        }}
+      >
+        {/* These are menus. TODO */}
+        {Object.entries(addedMenus).map(([i, Component]) => Component(i))}
+
+        {/* All app children */}
+        {children}
+      </MenuContext.Provider>
+    )
+  }
 }
