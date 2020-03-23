@@ -34,8 +34,6 @@ export default class VirtualList2 extends Component {
     const { results } = items
     const { setItems } = this
 
-    console.log(height, width)
-
     return results ? (
       <>
         <InfiniteLoader
