@@ -1,6 +1,5 @@
 export * from './_ahocevar'
 export * from './_open-street-maps'
 export * from './_cluster'
-export * from './_add-layer'
+export * from './_create-layer'
 export * from './_terrestris'
-export * from './_esri'

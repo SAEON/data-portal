@@ -3,17 +3,25 @@ import './index.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
-import { Layout } from './modules'
-import themeConfig from './theme'
+import Atlas from './pages/atlas'
+import MapProvider from './modules/map-provider'
+import MenuProvider from './modules/menu-provider'
+import ExceptionProvider from './modules/exception-provider'
+import theme from './theme'
+import { nativeExtensions } from '../../fns-lib'
+nativeExtensions()
 
-const theme = createMuiTheme(themeConfig)
-
-const App = () => (
+render(
   <CssBaseline>
-    <ThemeProvider theme={theme}>
-      <Layout />
+    <ThemeProvider theme={createMuiTheme(theme)}>
+      <ExceptionProvider>
+        <MenuProvider>
+          <MapProvider>
+            <Atlas />
+          </MapProvider>
+        </MenuProvider>
+      </ExceptionProvider>
     </ThemeProvider>
-  </CssBaseline>
+  </CssBaseline>,
+  document.getElementById('root')
 )
-
-render(<App />, document.getElementById('root'))

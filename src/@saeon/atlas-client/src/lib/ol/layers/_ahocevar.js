@@ -11,7 +11,7 @@ export const ahocevarBaseMap = () =>
       url: 'https://ahocevar.com/geoserver/wms',
       params: {
         LAYERS: 'ne:NE1_HR_LC_SR_W_DR',
-        TILED: true
-      }
-    })
+        TILED: true,
+      },
+    }),
   })

@@ -36,7 +36,7 @@ export default [
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services/Settlement_coastal_flood_risk_2/MapServer',
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services/3_HeatStressMatrix_RCP85_m_B17_Anon_v2/MapServer',
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services/3_GW_rch_change_85_50_RiskTool_v5/MapServer',
-  'https://pta-gis-2-web1.csir.co.za/server2/rest/services/Groundwater_PressureMatric_drch_85_50mf_v4/MapServera'
+  'https://pta-gis-2-web1.csir.co.za/server2/rest/services/Groundwater_PressureMatric_drch_85_50mf_v4/MapServera',
 
   // Vulnerability story map
   // 'https://pta-gis-2-web1.csir.co.za/server2/rest/services/SocioEconomic_Vulnerability_Index_1996/MapServer',

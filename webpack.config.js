@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outputCb = null }) => ({
   mode,
   entry,
-  output = '/dist'
+  output = '/dist',
 }) => ({
   mode,
   entry: path.resolve(__dirname, entry),
@@ -12,11 +12,11 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
     ? outputCb({ mode, output: path.join(__dirname, output) })
     : {
         filename: 'index.js',
-        path: path.join(__dirname, output)
+        path: path.join(__dirname, output),
       },
   resolve: {
     ...(resolveCb ? resolveCb(mode) : {}),
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   externals: externalsCb ? externalsCb(mode) : {},
   module: {
@@ -27,21 +27,21 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
         use: {
           loader: 'babel-loader',
           options: {
-            rootMode: 'upward'
-          }
-        }
+            rootMode: 'upward',
+          },
+        },
       },
       {
         test: /\.*css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(woff|woff2|eot|ttf)$/,
         use: [
           {
-            loader: 'file-loader'
-          }
-        ]
+            loader: 'file-loader',
+          },
+        ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -52,19 +52,20 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
               fallback: 'file-loader',
               name: '[name][md5:hash].[ext]',
               outputPath: 'assets/',
-              publicPath: '/assets/'
-            }
-          }
-        ]
-      }
-    ]
+              publicPath: '/assets/',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: pluginsCb(
     [
       new HtmlWebPackPlugin({
         template: 'index.html',
-        filename: path.join(__dirname, output, '/index.html')
-      })
+        filename: path.join(__dirname, output, '/index.html'),
+        PUBLIC_PATH: '',
+      }),
     ],
     mode
   ),
@@ -74,7 +75,7 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
     compress: true,
     allowedHosts: ['.localhost'],
     headers: {
-      'Access-Control-Allow-Headers': '*'
-    }
-  }
+      'Access-Control-Allow-Headers': '*',
+    },
+  },
 })

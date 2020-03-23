@@ -26,13 +26,13 @@ if (!process.env.NODE_ENV || !['PRODUCTION', 'DEVELOPMENT'].includes(process.env
 }
 
 // Helper for allowing async / await with middleware
-const asyncHandler = fn => (req, res, next) =>
-  Promise.resolve(fn(req, res, next)).catch(error => {
+const asyncHandler = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch((error) => {
     console.error('Top level application error', error)
     return next()
   })
 
-const corsMiddleware = (ALLOWED_ORIGINS => {
+const corsMiddleware = ((ALLOWED_ORIGINS) => {
   console.log('Allowed origins registered', ALLOWED_ORIGINS)
   return (req, res, next) => {
     const { method, headers } = req
@@ -57,7 +57,7 @@ const corsMiddleware = (ALLOWED_ORIGINS => {
         'http://localhost:3000',
         'http://localhost:3001',
         'http://localhost:4000',
-        'http://localhost:4001'
+        'http://localhost:4001',
       ]
 )
 
@@ -75,7 +75,7 @@ app.use(
   asyncHandler(async (req, res, next) => {
     req.ctx = {
       db: {},
-      schema
+      schema,
     }
     next()
   })
@@ -92,14 +92,14 @@ app.use(
   '/graphiql',
   graphqlHTTP({
     schema,
-    graphiql: true
+    graphiql: true,
   })
 )
 app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    graphiql: false
+    graphiql: false,
   })
 )
 
@@ -114,8 +114,19 @@ app.use(
     pathRewrite: {
       '/saeon-metadata/search': '/search',
       '/saeon-metadata/faceted_search': '/faceted_search',
-      '/saeon-metadata': '/search'
-    }
+      '/saeon-metadata': '/search',
+    },
+  })
+)
+
+app.use(
+  '/csir',
+  createProxyMiddleware({
+    target: 'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
+    changeOrigin: true,
+    pathRewrite: {
+      '/csir': '/',
+    },
   })
 )
 

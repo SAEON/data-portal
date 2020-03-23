@@ -119,7 +119,20 @@ Running these scripts will provide CLI prompts that you need to answer, and then
 
 # @saeon/atlas-client
 
-TODO
+From the root of the repository (`/atlas`)
+
+```
+npm install
+npm start
+```
+
+## Configuration
+
+Add a `.env` file to `src/@saeon/atlas-client`. And configure as required. Default values are shown:
+
+```
+ATLAS_API_ADDRESS=http://localhost:4000
+```
 
 ## Docker deployment
 

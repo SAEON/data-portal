@@ -6,10 +6,13 @@
     "@saeon/atlas-client"
   ],
   "scripts": {
-    "build": "webpack --env.mode=production --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx",
-    "start": "npm-run-all -p onchange dev-server",
+    "build": "npm-run-all -s clean:dist pack copy:public",
+    "start": "npm-run-all -s clean:dist copy:public -p onchange dev-server",
+    "dev-server": "webpack-dev-server --port 4001 --env.mode=development --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx --open",
     "onchange": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "dev-server": "webpack-dev-server --port 4001 --env.mode=development --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx --open"
+    "clean:dist": "rimraf ./dist",
+    "copy:public": "copyfiles -u 1 ./public/* dist",
+    "pack": "webpack --env.mode=production --env.output=src/@saeon/atlas-client/dist --env.entry=src/@saeon/atlas-client/src/index.jsx"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT"

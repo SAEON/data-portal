@@ -18,24 +18,24 @@ export default class extends Component {
         layers: [...this.props.layers].map((layer, i, arr) => {
           layer.setZIndex(arr.length - i)
           return layer
-        })
+        }),
       }),
       controls: defaultControls({
         zoom: false,
         rotateOptions: false,
         rotate: false,
-        attribution: false
+        attribution: false,
       }).extend([]),
       view: new View(
         Object.assign(
           {
             center: [0, 0],
             zoom: 3,
-            projection: 'EPSG:4326'
+            projection: 'EPSG:4326',
           },
           this.props.viewOptions || {}
         )
-      )
+      ),
     })
   }
 

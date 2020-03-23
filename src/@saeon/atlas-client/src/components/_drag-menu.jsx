@@ -52,10 +52,6 @@ export default ({ active, close, title, children, onMouseDown, zIndex = 1 }) => 
                 setHeight(size.height)
                 setIsResizing(false)
               }}
-              // onResize={debounce((event, { element, size, handle }) => {
-              //   setWidth(size.width)
-              //   setHeight(size.height)
-              // }, 100)}
             >
               <CardContent style={{ padding: 0 }}>
                 <div onMouseDown={onMouseDown} className="draggable-handle">
