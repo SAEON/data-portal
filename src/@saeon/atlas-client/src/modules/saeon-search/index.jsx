@@ -4,7 +4,7 @@ import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { debounceGlobal } from '../../../../fns-lib'
 import npmUrl from 'url'
-import { VirtualList } from '../../components'
+import { VirtualList2 } from '../../components'
 import { Alert } from '@material-ui/lab'
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
@@ -69,7 +69,9 @@ export default ({ proxy }) => (
                 <div>
                   {searchResults.reduce((c, curr) => c + curr.result_length, 0)} items found
                 </div>
-                <VirtualList
+                <VirtualList2
+                  // height={height}
+                  // width={width}
                   loadMoreItems={async () => {
                     const searchResponse = await searcher({
                       url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${

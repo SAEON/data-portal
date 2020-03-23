@@ -1,6 +1,9 @@
 import { PureComponent } from 'react'
 
-export default class extends PureComponent {
+/**
+ * General class component description in JSDoc format. Markdown is *supported*.
+ */
+export default class Form extends PureComponent {
   state = {}
   constructor(props) {
     super(props)

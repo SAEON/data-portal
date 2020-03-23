@@ -10,7 +10,10 @@ import { FixedSizeList } from 'react-window'
 import { createLayer, LayerTypes } from '../lib/ol'
 import LegendMenu from '../modules/saeon-search/_legend-menu'
 
-export default class extends PureComponent {
+/**
+ * General class component description in JSDoc format. Markdown is *supported*. Class components require a named export to be readable by styleguidist
+ */
+export default class VirtualList extends PureComponent {
   state = { items: this.props.content }
 
   componentDidUpdate() {
