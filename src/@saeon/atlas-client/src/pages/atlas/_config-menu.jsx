@@ -26,7 +26,7 @@ export default () => (
             active={configMenu.active}
             close={() => updateMenuManager({ configMenu: { active: false } })}
           >
-            hi
+            {() => 'hi'}
           </DragMenu>
         </>
       )

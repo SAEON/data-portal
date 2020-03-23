@@ -20,7 +20,7 @@ export default ({ layer, onClose }) => {
       active={true}
       close={onClose}
     >
-      <InfoMenu />
+      {() => <InfoMenu />}
     </DragMenu>
   )
 }

@@ -31,7 +31,7 @@ export default () => (
                       active={layersMenu.active}
                       close={() => updateMenuManager({ layersMenu: { active: false } })}
                     >
-                      <LayerManager layersActive={layersMenu.active} proxy={proxy} />
+                      {() => <LayerManager layersActive={layersMenu.active} proxy={proxy} />}
                     </DragMenu>
                   ),
                 },

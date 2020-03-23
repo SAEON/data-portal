@@ -21,18 +21,14 @@ export default class VirtualList2 extends Component {
     // this.setState({ items: this.props.content })
   }
 
-  /**
-   * Set method of this.state.items. Flagging method as public means styleguidist will publish it to the docs
-   * @param {Array} items the new value of this.state.items
-   * @public
-   */
   setItems = (items) => this.setState({ items })
-
   render() {
     const { proxy, loadMoreItems, height, width } = this.props
     const { items } = this.state
     const { results } = items
     const { setItems } = this
+
+    console.log(height, width)
 
     return results ? (
       <>
@@ -53,8 +49,9 @@ export default class VirtualList2 extends Component {
         >
           {({ onItemsRendered }) => (
             <FixedSizeList
+              style={{ transition: 'width 0.4s, height 0.4s' }}
               height={height - 230}
-              width={width - 25}
+              width={width - 40}
               itemSize={125}
               itemCount={results.length}
               onItemsRendered={onItemsRendered}

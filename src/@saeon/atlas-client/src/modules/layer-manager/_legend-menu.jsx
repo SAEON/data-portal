@@ -21,7 +21,7 @@ export default ({ layer, onClose }) => {
       active={true}
       close={onClose}
     >
-      <LegendMenu />
+      {() => <LegendMenu />}
     </DragMenu>
   )
 }
