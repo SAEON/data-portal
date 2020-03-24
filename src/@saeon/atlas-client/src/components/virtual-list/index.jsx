@@ -14,7 +14,7 @@ import LegendMenu from '../../modules/saeon-search/_legend-menu'
 /**
  * A list component that makes use of react-window InfiniteLoader and FixedSizeList to allow for pagination and partial rendering of list items
  */
-export default class VirtualList2 extends Component {
+export default class VirtualList extends Component {
   state = { items: this.props.content }
 
   componentDidUpdate() {
@@ -27,8 +27,6 @@ export default class VirtualList2 extends Component {
     const { items } = this.state
     const { results } = items
     const { setItems } = this
-
-    console.log(height, width)
 
     return results ? (
       <>
@@ -74,7 +72,15 @@ export default class VirtualList2 extends Component {
                           onChange={({ target }) => {
                             var newItems
                             if (target.checked) {
-                              const serverAddress = `${protocol}//${host}${pathname}`
+                              // TODO - this will be obsolute soon
+                              let serverAddress = `${protocol}//${host}${pathname}`
+                              if (process.env.NODE_ENV === 'PRODUCTION')
+                                serverAddress = serverAddress.replace(
+                                  'http://app01.saeon.ac.za',
+                                  'https://spatialdata.saeon.ac.za'
+                                )
+                              console.log(serverAddress)
+
                               proxy.addLayer(
                                 createLayer({
                                   LegendMenu: () => (

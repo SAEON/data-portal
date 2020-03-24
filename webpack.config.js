@@ -1,5 +1,7 @@
+const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
+require('dotenv').config()
 
 module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outputCb = null }) => ({
   mode,
@@ -61,6 +63,9 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
   },
   plugins: pluginsCb(
     [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'PRODUCTION'),
+      }),
       new HtmlWebPackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, output, '/index.html'),

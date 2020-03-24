@@ -1,6 +1,6 @@
 export { default as DragMenu } from './_drag-menu'
 export { default as Form } from './_form'
-export { default as VirtualList2 } from './VirtualList2/_virtual-list-2'
+export { default as VirtualList } from './virtual-list'
 export { default as SideMenu } from './_side-menu'
 export { default as FormattedObject } from './_formatted-object'
 export { default as DragAndDrop } from './_drag-and-drop'

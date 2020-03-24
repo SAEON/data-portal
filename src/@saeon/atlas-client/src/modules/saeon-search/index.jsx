@@ -4,7 +4,7 @@ import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { debounceGlobal } from '../../../../fns-lib'
 import npmUrl from 'url'
-import { VirtualList2 } from '../../components'
+import { VirtualList } from '../../components'
 import { Alert } from '@material-ui/lab'
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
@@ -69,7 +69,7 @@ export default ({ proxy, height, width }) => (
                 <div>
                   {searchResults.reduce((c, curr) => c + curr.result_length, 0)} items found
                 </div>
-                <VirtualList2
+                <VirtualList
                   height={height}
                   width={width}
                   loadMoreItems={async () => {
