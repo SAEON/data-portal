@@ -1,11 +1,13 @@
 import React from 'react'
-import { TextField, Grid } from '@material-ui/core'
+import { TextField, Grid, Card, CardHeader, Checkbox } from '@material-ui/core'
 import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { debounceGlobal } from '../../../../fns-lib'
 import npmUrl from 'url'
 import { VirtualList } from '../../components'
 import { Alert } from '@material-ui/lab'
+import { createLayer, LayerTypes } from '../../lib/ol'
+import LegendMenu from './_legend-menu'
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 
@@ -15,8 +17,8 @@ const searcher = ({ url }) =>
     .catch(() => ({ error: new Error('SAEON catalogue is not responding') }))
 
 export default ({ proxy, height, width }) => (
-  <Form loading={false} search="" error={false} searchResults={[{ result_length: 0 }]}>
-    {({ updateForm, loading, error, search, searchResults }) => (
+  <Form loading={false} search="" error={false} items={[]}>
+    {({ updateForm, loading, error, search, items }) => (
       <>
         {error ? (
           <div style={{ marginBottom: 20 }}>
@@ -47,7 +49,29 @@ export default ({ proxy, height, width }) => (
                           updateForm({ error: searchResponse.error })
                         } else {
                           updateForm({
-                            searchResults: [searchResponse],
+                            items: searchResponse.results
+                              ? searchResponse.results
+                                  .map(({ metadata_json }) =>
+                                    metadata_json.linkedResources
+                                      .filter((r) => r.linkedResourceType === 'Query')
+                                      .map(({ resourceURL, resourceDescription }) => {
+                                        const uri = npmUrl.parse(resourceURL, true)
+                                        const { protocol, host, pathname, query } = uri
+                                        const { layers } = query
+                                        const layerId = `${resourceDescription} - ${layers}`
+                                        return {
+                                          layerId,
+                                          resourceURL,
+                                          resourceDescription,
+                                          protocol,
+                                          host,
+                                          pathname,
+                                          layers,
+                                        }
+                                      })
+                                  )
+                                  .flat()
+                              : [],
                             loading: false,
                             error: false,
                           })
@@ -66,72 +90,74 @@ export default ({ proxy, height, width }) => (
               'Loading ...'
             ) : (
               <div style={{ width: '100%' }}>
-                <div>
-                  {searchResults.reduce((c, curr) => c + curr.result_length, 0)} items found
-                </div>
+                <div>{items.length} items found</div>
                 <VirtualList
                   height={height}
                   width={width}
+                  Template={({
+                    layerId,
+                    protocol,
+                    host,
+                    pathname,
+                    layers,
+                    resourceDescription,
+                  }) => {
+                    return (
+                      <Card style={{ marginRight: 5 }} variant="outlined" square={true}>
+                        <CardHeader
+                          titleTypographyProps={{
+                            variant: 'overline',
+                          }}
+                          subheaderTypographyProps={{
+                            variant: 'caption',
+                          }}
+                          title={resourceDescription}
+                          subheader={layerId}
+                          action={
+                            <Checkbox
+                              style={{ float: 'right' }}
+                              size="small"
+                              edge="start"
+                              checked={Boolean(proxy.getLayerById(layerId))}
+                              onChange={({ target }) => {
+                                if (target.checked) {
+                                  let serverAddress = `${protocol}//${host}${pathname}`
+                                  if (process.env.NODE_ENV === 'PRODUCTION')
+                                    serverAddress = serverAddress.replace(
+                                      'http://app01.saeon.ac.za',
+                                      'https://spatialdata.saeon.ac.za'
+                                    )
+
+                                  proxy.addLayer(
+                                    createLayer({
+                                      LegendMenu: () => (
+                                        <LegendMenu
+                                          title={layerId}
+                                          uri={`${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`}
+                                        />
+                                      ),
+                                      layerType: LayerTypes.TileWMS,
+                                      id: layerId,
+                                      title: layerId,
+                                      uri: serverAddress,
+                                      LAYERS: layers,
+                                    })
+                                  )
+                                } else {
+                                  proxy.removeLayerById(layerId)
+                                }
+                              }}
+                            />
+                          }
+                        />
+                      </Card>
+                    )
+                  }}
                   loadMoreItems={async () => {
-                    const searchResponse = await searcher({
-                      url: `${ATLAS_API_ADDRESS}/saeon-metadata/search?index=saeon-odp-4-2&fields=metadata_json.linkedResources,record_id,metadata_json.titles,metadata_json.subjects&metadata_json.subjects.subject=${search}&metadata_json.linkedResources.resourceURL=*WMS&start=${
-                        searchResults.reduce((c, curr) => c + curr.result_length, 0) + 1
-                      }`,
-                    })
-                    if (searchResponse.error) {
-                      updateForm({ error: searchResponse.error })
-                    } else {
-                      updateForm({
-                        searchResults: [...searchResults, searchResponse],
-                        loading: false,
-                        error: false,
-                      })
-                    }
+                    alert('TODO - this is being migrated to a Lucene-based search')
                   }}
                   proxy={proxy}
-                  content={
-                    searchResults[0]?.results
-                      ? searchResults.reduce(
-                          (result, current) => ({
-                            success: result.success && current.success,
-                            results: result.results
-                              .concat(
-                                current.results.map(({ metadata_json }) =>
-                                  metadata_json.linkedResources
-                                    .filter((r) => r.linkedResourceType === 'Query')
-                                    .map(({ resourceURL, resourceDescription }) => {
-                                      const uri = npmUrl.parse(resourceURL, true)
-                                      const { protocol, host, pathname, query } = uri
-                                      const { layers } = query
-                                      const layerId = `${resourceDescription} - ${layers}`
-                                      return Object.assign(
-                                        {
-                                          selected: proxy.getLayerById(layerId) ? true : false,
-                                        },
-                                        {
-                                          layerId,
-                                          resourceURL,
-                                          resourceDescription,
-                                          protocol,
-                                          host,
-                                          pathname,
-                                          layers,
-                                        }
-                                      )
-                                    })
-                                )
-                              )
-                              .flat(),
-                            result_length: result.result_length + current.result_length,
-                          }),
-                          {
-                            success: searchResults[0].success,
-                            result_length: 0,
-                            results: [],
-                          }
-                        )
-                      : { result_length: 0 }
-                  }
+                  items={items}
                 />
               </div>
             )}
