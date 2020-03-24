@@ -156,7 +156,6 @@ export default ({ proxy, height, width }) => (
                   loadMoreItems={async () => {
                     alert('TODO - this is being migrated to a Lucene-based search')
                   }}
-                  proxy={proxy}
                   items={items}
                 />
               </div>
