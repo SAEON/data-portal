@@ -22,8 +22,10 @@
     "atlas-client:start": "npm --prefix src/@saeon/atlas-client start",
     "atlas-client:build": "npm --prefix src/@saeon/atlas-client run build",
     "**************** OL-REACT": "****************",
-    "ol-react:start": "npm --prefix src/@saeon/ol-react start",
-    "ol-react:publish-patch": "npm --prefix src/@saeon/ol-react run publish-patch",
+    "ol-react:publish:patch": "npm --prefix src/@saeon/ol-react run publish:patch",
+    "**************** CATALOGUE-SEARCH": "****************",
+    "catalogue-search:publish:patch": "npm --prefix src/@saeon/catalogue-search run publish:patch",
+    "**************** DOCS": "****************",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },

@@ -1,5 +1,6 @@
 #!/bin/bash
 README=".README.md"
+README_CATALOGUE_SEARCH="src/@saeon/catalgoue-search/README.md"
 README_OL_REACT="src/@saeon/ol-react/README.md"
 README_ATLAS_CLIENT="src/@saeon/atlas-client/README.md"
 README_ATLAS_API="src/@saeon/atlas-API/README.md"
@@ -16,6 +17,9 @@ cat $README >> README.md
 end_section
 
 cat $README_OL_REACT >> README.md
+end_section
+
+cat $README_CATALOGUE_SEARCH >> README.md
 end_section
 
 cat $README_ATLAS_CLIENT >> README.md

@@ -8,6 +8,8 @@ import { VirtualList } from '../../components'
 import { Alert } from '@material-ui/lab'
 import { createLayer, LayerTypes } from '../../lib/ol'
 import LegendMenu from './_legend-menu'
+import CatalogueSearch from '@saeon/catalogue-search'
+CatalogueSearch()
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 

@@ -11,14 +11,11 @@
     "react-dom": "^16.12.0"
   },
   "scripts": {
-    "start": "npm-run-all -p watch dev-server",
-    "watch": "onchange \"./**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "dev-server": "webpack-dev-server --port=3002 --env.mode=development --env.output=src/@saeon/ol-react/dist --env.entry=src/@saeon/ol-react/_dev/index.jsx --open",
-    "publish-patch": "npm-run-all -s pack increment-patch push-to-npm",
+    "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
     "publish-minor": "npm-run-all -s pack increment-minor push-to-npm",
     "publish-major": "npm-run-all -s pack increment-major push-to-npm",
-    "pack": "webpack --env.mode=production --env.output=src/@saeon/ol-react/dist/ --env.entry=src/@saeon/ol-react/index.js",
-    "increment-patch": "scripts/increment-patch.sh",
+    "pack": "webpack --env.mode=production --env.output=src/@saeon/ol-react/dist/ --env.entry=src/@saeon/ol-react/src/index.js",
+    "increment:patch": "scripts/increment-patch.sh",
     "increment-minor": "scripts/increment-minor.sh",
     "increment-major": "scripts/increment-major.sh",
     "push-to-npm": "scripts/push-to-npm.sh"
