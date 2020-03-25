@@ -18,7 +18,7 @@ export default ({ loadMoreItems, height, width, Template, items }) =>
       {({ onItemsRendered }) => (
         <FixedSizeList
           style={{ transition: 'width 0.4s, height 0.4s' }}
-          height={height - 170}
+          height={height - 175}
           width={width - 40}
           itemSize={125}
           itemCount={items.length}
