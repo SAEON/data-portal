@@ -64,7 +64,7 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
   plugins: pluginsCb(
     [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': mode,
+        'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       new HtmlWebPackPlugin({
         template: 'index.html',
