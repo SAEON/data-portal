@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = require('../../../webpack.config')({
   pluginsCb: (plugins, mode) => (mode === 'production' ? [] : plugins),
   outputCb: ({ mode, output }) =>
