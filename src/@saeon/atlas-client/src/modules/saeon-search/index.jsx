@@ -122,7 +122,7 @@ export default ({ proxy, height, width }) => (
                               onChange={({ target }) => {
                                 if (target.checked) {
                                   let serverAddress = `${protocol}//${host}${pathname}`
-                                  if (process.env.NODE_ENV === 'PRODUCTION')
+                                  if (process.env.NODE_ENV === 'production')
                                     serverAddress = serverAddress.replace(
                                       'http://app01.saeon.ac.za',
                                       'https://spatialdata.saeon.ac.za'

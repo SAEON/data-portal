@@ -4,8 +4,8 @@
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
-    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=DEVELOPMENT TZ=utc node dist/bin'",
-    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=PRODUCTION TZ=utc node dist/bin"
+    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=development TZ=utc node dist/bin'",
+    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=production TZ=utc node dist/bin"
   },
   "keywords": [
     "@saeon/atlas-api"

@@ -19,7 +19,7 @@ import { readFileSync } from 'fs'
 import { config } from 'dotenv'
 
 config()
-if (!process.env.NODE_ENV || !['PRODUCTION', 'DEVELOPMENT'].includes(process.env.NODE_ENV)) {
+if (!process.env.NODE_ENV || !['production', 'development'].includes(process.env.NODE_ENV)) {
   throw new Error(
     'The server MUST be started with a NODE_ENV environment variable, with a value of either "production" or "development"'
   )
