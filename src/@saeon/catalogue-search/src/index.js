@@ -1,11 +1,9 @@
 export class ElasticCatalogue {
-    
-    constructor({ dslAddress }) {
-        this.dslAddress = dslAddress
-    }
+  constructor({ dslAddress }) {
+    this.dslAddress = dslAddress
+  }
 
-    async query(dsl) {
-        return []
-    }
+  async query(dsl) {
+    return []
+  }
 }
-
