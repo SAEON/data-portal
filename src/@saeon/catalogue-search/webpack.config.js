@@ -18,8 +18,5 @@ module.exports = require('../../../webpack.config')({
           alias: {},
         }
       : {},
-  externalsCb: (mode) =>
-    mode === 'production'
-      ? {}
-      : {},
+  externalsCb: (mode) => (mode === 'production' ? {} : {}),
 })

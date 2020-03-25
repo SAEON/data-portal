@@ -1,30 +1,31 @@
 {
-    "name": "@saeon/catalogue-search",
-    "version": "0.0.1",
-    "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
-    "main": "dist/index.js",
-    "files": [
-      "dist"
-    ],
-    "peerDependencies": {},
-    "scripts": {
-      "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
-      "pack": "webpack --env.mode=production --env.output=src/@saeon/catalogue-search/dist/ --env.entry=src/@saeon/catalogue-search/src/index.js",
-      "increment:patch": "../../../scripts/increment-patch.sh",
-      "push-to-npm": "../../../scripts/push-to-npm.sh"
-    },
-    "keywords": [ "@saeon/catalogue-search" ],
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/SAEONData/saeon-atlas.git"
-    },
-    "bugs": {
-      "url": "https://github.com/SAEONData/saeon-atlas/issues"
-    },
-    "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/catalogue-search",
-    "author": "zach@saeon.ac.za",
-    "license": "MIT",
-    "dependencies": {},
-    "devDependencies": {}
-  }
-  
+  "name": "@saeon/catalogue-search",
+  "version": "0.0.1",
+  "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {},
+  "scripts": {
+    "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
+    "pack": "webpack --env.mode=production --env.output=src/@saeon/catalogue-search/dist/ --env.entry=src/@saeon/catalogue-search/src/index.js",
+    "increment:patch": "../../../scripts/increment-patch.sh",
+    "push-to-npm": "../../../scripts/push-to-npm.sh"
+  },
+  "keywords": [
+    "@saeon/catalogue-search"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/catalogue-search",
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
