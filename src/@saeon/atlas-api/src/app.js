@@ -71,6 +71,59 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 // Middleware
 const app = express()
+
+/**
+ * Proxies need to be the first of the middleware
+ * TODO - https://github.com/chimurai/http-proxy-middleware#context-matching
+ * The path matching needs to be a little better
+ */
+
+//  TODO - target can be a function (router?) that returns depending on path
+const proxy = createProxyMiddleware({
+  target: 'http://192.168.116.66:9200',
+  changeOrigin: true,
+  pathRewrite: {
+    // SAEON python
+    '/saeon-metadata/search': '/search',
+    '/saeon-metadata/faceted_search': '/faceted_search',
+    '/saeon-metadata': '/search',
+
+    // ELK
+    '/saeon-elk/_search': '/_search',
+    '/saeon-elk': '/_search',
+
+    // CSIR
+    '/csir': '/',
+  },
+})
+
+app.use(
+  '/saeon-metadata',
+  createProxyMiddleware({
+    target: 'http://192.168.116.66:9210',
+    changeOrigin: true,
+    pathRewrite: {
+      '/saeon-metadata/search': '/search',
+      '/saeon-metadata/faceted_search': '/faceted_search',
+      '/saeon-metadata': '/search',
+    },
+  })
+)
+app.use('/saeon-elk', proxy)
+app.use(
+  '/csir',
+  createProxyMiddleware({
+    target: 'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
+    changeOrigin: true,
+    pathRewrite: {
+      '/csir': '/',
+    },
+  })
+)
+
+/**
+ * Then the rest of the middleware
+ */
 app.use(
   asyncHandler(async (req, res, next) => {
     req.ctx = {
@@ -100,45 +153,6 @@ app.use(
   graphqlHTTP({
     schema,
     graphiql: false,
-  })
-)
-
-// Simple search
-// TODO - https://github.com/chimurai/http-proxy-middleware#context-matching
-// The path matching needs to be a little better
-app.use(
-  '/saeon-metadata',
-  createProxyMiddleware({
-    target: 'http://192.168.116.66:9210',
-    changeOrigin: true,
-    pathRewrite: {
-      '/saeon-metadata/search': '/search',
-      '/saeon-metadata/faceted_search': '/faceted_search',
-      '/saeon-metadata': '/search',
-    },
-  })
-)
-
-app.use(
-  '/saeon-elk',
-  createProxyMiddleware({
-    target: 'http://192.168.116.66:9200',
-    changeOrigin: true,
-    pathRewrite: {
-      '/saeon-elk/_search': '/_search',
-      '/saeon-elk': '/_search',
-    },
-  })
-)
-
-app.use(
-  '/csir',
-  createProxyMiddleware({
-    target: 'https://pta-gis-2-web1.csir.co.za/server2/rest/services',
-    changeOrigin: true,
-    pathRewrite: {
-      '/csir': '/',
-    },
   })
 )
 

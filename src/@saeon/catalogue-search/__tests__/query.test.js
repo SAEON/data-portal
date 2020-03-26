@@ -6,12 +6,7 @@ describe("SAEON's DSL API", () => {
   describe('Leaf queries', () => {
     test('match', async () => {
       const result = await catalog.query({
-        query: {
-          multi_match: {
-            fields: ['metadata_json.subjects.subject'],
-            query: 'SASDI',
-          },
-        },
+        query: { match: { 'metadata_json.subjects.subject': 'SASDI' } },
       })
       console.log(result)
       expect(result).toEqual([])
