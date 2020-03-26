@@ -26,8 +26,8 @@
     "**************** CATALOGUE-SEARCH": "****************",
     "catalogue-search:publish:patch": "npm --prefix src/@saeon/catalogue-search run publish:patch",
     "**************** DOCS": "****************",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
+    "styleguide": "styleguidist server --config ./src/styleguidist/styleguide.config.js",
+    "styleguide:build": "styleguidist build --config ./src/styleguidist/styleguide.config.js"
   },
   "husky": {
     "hooks": {
@@ -61,12 +61,12 @@
     "onchange": "^6.1.0",
     "prettier": "^2.0.1",
     "pretty-quick": "^2.0.1",
-    "react-styleguidist": "^11.0.1",
+    "react-styleguidist": "^11.0.4",
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",
     "url-loader": "^4.0.0",
-    "webpack": "^4.42.0",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },

@@ -94,8 +94,8 @@ export default ({ proxy, height, width }) => (
               <div style={{ width: '100%' }}>
                 <div>{items.length} items found</div>
                 <VirtualList
-                  height={height}
-                  width={width}
+                           height={height - 175}
+                           width={width - 40}
                   Template={({
                     layerId,
                     protocol,

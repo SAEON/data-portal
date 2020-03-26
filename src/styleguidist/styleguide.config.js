@@ -1,12 +1,15 @@
-const { version } = require('./package.json')
+const { version } = require('../../package.json')
 
 module.exports = {
   title: 'SAEON Atlas Docs',
   version,
-  webpackConfig: require('./webpack.config.js'),
-  components: './src/@saeon/atlas-client/src/components/**/*.jsx',
+  webpackConfig: require('../../webpack.config.js'),
+  components: '../@saeon/atlas-client/src/components/**/*.jsx',
   ignore: ['**/src/test.js', '**/*.css'],
-  require: ['./src/styles/index.scss'],
+  template:{
+    favicon: './src/styleguidist/styleguide/favicon.ico'
+  },
+
 
   webpackConfig: {
     module: {
