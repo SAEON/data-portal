@@ -34,7 +34,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all -s build-readme prettier:changed lint update-git-snapshot"
+      "pre-commit": "npm-run-all -s test build-readme prettier:changed lint update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za",

@@ -14,7 +14,7 @@ export class ElasticCatalogue {
     body = typeof body === 'string' ? body : JSON.stringify(body)
     const response = await fetch(this.dslAddress, {
       method: 'POST',
-      body
+      body,
     })
     const txt = await response.text()
     console.log(response, txt)

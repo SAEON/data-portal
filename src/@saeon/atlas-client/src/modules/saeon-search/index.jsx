@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react'
-import { TextField, Grid, Card, CardHeader, Checkbox } from '@material-ui/core'
+import { TextField, Grid } from '@material-ui/core'
 import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
-import { debounceGlobal } from '../../../../fns-lib'
-import npmUrl from 'url'
-import { VirtualList } from '../../components'
-import { Alert } from '@material-ui/lab'
-import { createLayer, LayerTypes } from '../../lib/ol'
-import LegendMenu from './_legend-menu'
+// import { debounceGlobal } from '../../../../fns-lib'
+// import npmUrl from 'url'
+// import { VirtualList } from '../../components'
+// import { Alert } from '@material-ui/lab'
+// import { createLayer, LayerTypes } from '../../lib/ol'
+// import LegendMenu from './_legend-menu'
 import { ElasticCatalogue } from '@saeon/catalogue-search'
 
 const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
@@ -18,7 +18,7 @@ export default class extends PureComponent {
   })
 
   render() {
-    const { state, props, catalog } = this
+    const { catalog } = this
     catalog.query()
 
     return (
