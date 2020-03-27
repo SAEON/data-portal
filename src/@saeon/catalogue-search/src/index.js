@@ -15,6 +15,7 @@ export class ElasticCatalogue {
     try {
       const response = await fetch(this.dslAddress, {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
