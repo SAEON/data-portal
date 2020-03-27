@@ -13,6 +13,10 @@ const DSL_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 }/proxy/saeon-elk/_search`
 
+const SPATIALDATA_PROXY = `${
+  process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
+}/proxy/saeon-spatialdata`
+
 export default class extends Component {
   state = {
     loading: true,
@@ -46,7 +50,7 @@ export default class extends Component {
               ?.filter((r) => r.linkedResourceType === 'Query')
               ?.map(({ resourceURL, resourceDescription }) => {
                 const uri = npmUrl.parse(resourceURL, true)
-                const { protocol, host, pathname, query } = uri
+                const { protocol, host, pathname, query, port } = uri
                 const { layers } = query
                 const layerId = `${resourceDescription} - ${layers}`
                 return {
@@ -54,6 +58,7 @@ export default class extends Component {
                   resourceURL,
                   resourceDescription,
                   protocol,
+                  port,
                   host,
                   pathname,
                   layers,
@@ -112,14 +117,7 @@ export default class extends Component {
                           items={elkResults}
                           height={height}
                           width={width}
-                          Template={({
-                            layerId,
-                            protocol,
-                            host,
-                            pathname,
-                            layers,
-                            resourceDescription,
-                          }) => {
+                          Template={({ layerId, port, pathname, layers, resourceDescription }) => {
                             return (
                               <Card style={{ marginRight: 5 }} variant="outlined" square={true}>
                                 <CardHeader
@@ -139,13 +137,7 @@ export default class extends Component {
                                       checked={Boolean(proxy.getLayerById(layerId))}
                                       onChange={({ target }) => {
                                         if (target.checked) {
-                                          let serverAddress = `${protocol}//${host}${pathname}`
-                                          if (process.env.NODE_ENV === 'production')
-                                            serverAddress = serverAddress.replace(
-                                              'http://app01.saeon.ac.za',
-                                              'https://spatialdata.saeon.ac.za'
-                                            )
-
+                                          let serverAddress = `${SPATIALDATA_PROXY}/${port}${pathname}`
                                           proxy.addLayer(
                                             createLayer({
                                               LegendMenu: () => (
