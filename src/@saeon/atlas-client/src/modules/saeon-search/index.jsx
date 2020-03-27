@@ -10,11 +10,13 @@ import { Search as SearchIcon } from '@material-ui/icons'
 // import LegendMenu from './_legend-menu'
 import { ElasticCatalogue } from '@saeon/catalogue-search'
 
-const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
+const DSL_PROXY = `${
+  process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
+}/proxy/saeon-elk/_search`
 
 export default class extends PureComponent {
   catalog = new ElasticCatalogue({
-    dslAddress: `${ATLAS_API_ADDRESS}/saeon-elk/_search`,
+    dslAddress: DSL_PROXY,
   })
 
   render() {

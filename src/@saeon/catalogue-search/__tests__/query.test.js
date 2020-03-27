@@ -8,7 +8,6 @@ describe("SAEON's DSL API", () => {
       const result = await catalog.query({
         query: { match: { 'metadata_json.subjects.subject': 'SASDI' } },
       })
-      console.log(result)
       expect(result).toEqual([])
     })
   })
