@@ -25,8 +25,8 @@ export default createProxyMiddleware({
   changeOrigin: true,
   pathRewrite: (path) =>
     path
-      .replace('proxy/saeon-elk/_search', '/_search')
-      .replace('proxy/saeon-elk', '/_search')
-      .replace('proxy/csir', '/')
+      .replace('/proxy/saeon-elk/_search', '/_search')
+      .replace('/proxy/saeon-elk', '/_search')
+      .replace('/proxy/csir', '')
       .replace(/\/proxy\/saeon-spatialdata\/\d{4}\//, '/'),
 })
