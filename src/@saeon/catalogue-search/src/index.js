@@ -12,12 +12,21 @@ export class ElasticCatalogue {
 
   async query(body) {
     body = typeof body === 'string' ? body : JSON.stringify(body)
-    const response = await fetch(this.dslAddress, {
-      method: 'POST',
-      body,
-    })
-    const txt = await response.text()
-    console.log(response, txt)
-    return []
+    try {
+      const response = await fetch(this.dslAddress, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body,
+      })
+      return await response.json()
+    }
+    catch (error) {
+      throw new Error(
+        `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${body}`
+      )
+    }
   }
 }
