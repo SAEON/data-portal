@@ -1,3 +1,6 @@
+import { config } from 'dotenv'
+config()
+
 export default ((ALLOWED_ORIGINS) => {
   console.log('Allowed origins registered', ALLOWED_ORIGINS)
   return (req, res, next) => {
