@@ -6,7 +6,6 @@ export class ElasticCatalogue {
       throw new Error(
         `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: Incorrect options param passed to constructor`
       )
-
     this.dslAddress = dslAddress
   }
 
@@ -17,16 +16,15 @@ export class ElasticCatalogue {
         method: 'POST',
         mode: 'cors',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         body,
       })
       return await response.json()
-    }
-    catch (error) {
+    } catch (error) {
       throw new Error(
-        `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${body}`
+        `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${body}. ${error}`
       )
     }
   }
