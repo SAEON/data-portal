@@ -13,9 +13,11 @@ export default createProxyMiddleware({
     }
 
     if (path.includes('/proxy/saeon-spatialdata')) {
-      return `http://app01.saeon.ac.za:${path
-        .match(/^\/proxy\/saeon-spatialdata\/\d{4}/)[0]
-        .slice(-4)}`
+      console.log('proxying spatialdata')
+      const port = path.match(/^\/proxy\/saeon-spatialdata\/\d{4}/)[0].slice(-4)
+      const newAddress = `http://app01.saeon.ac.za:${port}`
+      console.log(newAddress)
+      return newAddress
     }
 
     if (path.includes('/proxy/csir')) {
