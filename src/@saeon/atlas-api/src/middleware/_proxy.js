@@ -1,4 +1,11 @@
 import { createProxyMiddleware } from 'http-proxy-middleware'
+import { config } from 'dotenv'
+config()
+
+const SPATIALDATA_PROXY = process.env.SPATIALDATA_PROXY || 'http://app01.saeon.ac.za'
+const SAEON_ELK_PROXY = process.env.ELK_PROXY || 'http://192.168.116.66:9200'
+const CSIR_ARCGIS_PROXY =
+  process.env.CSIR_ARCGIS_PROXY || 'https://pta-gis-2-web1.csir.co.za/server2/rest/services'
 
 /**
  * options.target is required even though it's not used
@@ -9,16 +16,16 @@ export default createProxyMiddleware({
   router: ({ path }) => {
     let target
     if (path.includes('/proxy/saeon-elk')) {
-      target = 'http://192.168.116.66:9200'
+      target = SAEON_ELK_PROXY
     }
 
     if (path.includes('/proxy/saeon-spatialdata')) {
       const port = path.match(/^\/proxy\/saeon-spatialdata\/\d{4}/)[0].slice(-4)
-      target = `http://app01.saeon.ac.za:${port}`
+      target = `${SPATIALDATA_PROXY}:${port}`
     }
 
     if (path.includes('/proxy/csir')) {
-      target = 'https://pta-gis-2-web1.csir.co.za/server2/rest/services'
+      target = CSIR_ARCGIS_PROXY
     }
 
     console.log('Proxy target configured', path, target)

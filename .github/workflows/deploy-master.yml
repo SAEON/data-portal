@@ -17,6 +17,9 @@ jobs:
       - name: Configure the API
         run: |
           echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/@saeon/atlas-api/.env
+          echo "SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za" >> src/@saeon/atlas-api/.env
+          echo "SAEON_ELK_PROXY==http://192.168.116.66:9200" >> src/@saeon/atlas-api/.env
+          echo "CSIR_ARCGIS_PROXY=https://pta-gis-2-web1.csir.co.za/server2/rest/services" >> src/@saeon/atlas-api/.env
 
       - name: Configure the client
         run: |
