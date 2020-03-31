@@ -22,7 +22,7 @@ describe('Query DSL', () => {
       })
 
       test('Query single field', async () => {
-        const query = 'terrestrial'
+        const query = 'landcover'
         const response = await catalog.query({
           _source: {
             includes: ['metadata_json.subjects.*'],
@@ -31,6 +31,7 @@ describe('Query DSL', () => {
             match: {
               'metadata_json.subjects.subject': {
                 query,
+                fuzziness: 'AUTO'
               },
             },
           },
@@ -41,12 +42,13 @@ describe('Query DSL', () => {
           metadata_json.subjects.forEach(({ subject }) => {
             if (subject.toLowerCase().includes(query.toLowerCase())) exists = true
           })
+          console.log(JSON.stringify(response, null, 2))
           expect(exists).toBe(true)
         })
       })
 
       test('Query term with whitespace (fuzzy search)', async () => {
-        const query = 'landcover'
+        const query = 'land-cover'
         const response = await catalog.query({
           _source: {
             includes: ['metadata_json.subjects.subject'],
@@ -55,12 +57,12 @@ describe('Query DSL', () => {
             fuzzy: {
               'metadata_json.subjects.subject': {
                 value: query,
-                fuzziness: 6,
+                fuzziness: 'AUTO',
               },
             },
           },
         })
-        console.log(JSON.stringify(response, null, 2))
+        // console.log(JSON.stringify(response, null, 2))
         expect(1).toBe(1)
       })
     })
