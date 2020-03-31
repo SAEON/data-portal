@@ -13,6 +13,8 @@ const DSL_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 }/proxy/saeon-elk/_search`
 
+const DSL_INDEX = `saeon-odp-4-2`
+
 const SPATIALDATA_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 }/proxy/saeon-spatialdata`
@@ -30,6 +32,7 @@ export default class extends Component {
 
   catalog = new ElasticCatalogue({
     dslAddress: DSL_PROXY,
+    index: DSL_INDEX,
   })
 
   async componentDidMount() {

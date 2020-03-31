@@ -55,7 +55,6 @@ describe('Query DSL', () => {
             fuzzy: {
               'metadata_json.subjects.subject': {
                 value: query,
-                fuzziness: 'AUTO',
                 fuzziness: 6,
               },
             },
