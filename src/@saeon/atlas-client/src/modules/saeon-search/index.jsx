@@ -7,7 +7,7 @@ import { VirtualList } from '../../components'
 import { Alert } from '@material-ui/lab'
 import { createLayer, LayerTypes } from '../../lib/ol'
 import LegendMenu from './_legend-menu'
-import { ElasticCatalogue } from '@saeon/catalogue-search'
+import { ReactCatalogue } from '@saeon/catalogue-search'
 
 const DSL_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
@@ -19,95 +19,52 @@ const SPATIALDATA_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 }/proxy/saeon-spatialdata`
 
-export default class extends Component {
-  state = {
-    loading: true,
-    error: false,
-    elkResults: [],
-  }
+export default ({ height, width, proxy }) => (
+  <Form search="">
+    {({ updateForm, search }) => (
+      <Grid container spacing={3}>
+        {/* Search controls */}
+        <Grid item xs={12}>
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item>
+              <SearchIcon />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="saeon-ckan-search"
+                label="Search"
+                autoComplete="off"
+                value={search}
+                onChange={({ target }) => updateForm({ search: target.value })}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-  shouldComponentUpdate() {
-    return true
-  }
+        {/* Search results */}
+        <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
+          {(useCatalog) => {
+            const { error, loading, data } = useCatalog({
+              _source: {
+                includes: ['metadata_json.subjects.*'],
+              },
+              query: {
+                match: {
+                  'metadata_json.subjects.subject': {
+                    query: 'landcover',
+                    fuzziness: 'AUTO',
+                  },
+                },
+              },
+            })
 
-  catalog = new ElasticCatalogue({
-    dslAddress: DSL_PROXY,
-    index: DSL_INDEX,
-  })
-
-  async componentDidMount() {
-    const { catalog } = this
-
-    const elkResults = await catalog.query({
-      query: { match: { 'metadata_json.subjects.subject': 'atmospheric' } },
-    })
-
-    this.setState({
-      loading: false,
-      elkResults: elkResults.hits.hits
-        .map(({ _source }) => {
-          const { metadata_json } = _source
-
-          return (
-            metadata_json.linkedResources
-              ?.filter((r) => r.linkedResourceType === 'Query')
-              ?.map(({ resourceURL, resourceDescription }) => {
-                const uri = npmUrl.parse(resourceURL, true)
-                const { protocol, host, pathname, query, port } = uri
-                const { layers } = query
-                const layerId = `${resourceDescription} - ${layers}`
-                return {
-                  layerId,
-                  resourceURL,
-                  resourceDescription,
-                  protocol,
-                  port,
-                  host,
-                  pathname,
-                  layers,
-                }
-              }) || []
-          )
-        })
-        .flat(),
-    })
-  }
-
-  render() {
-    const { state, props } = this
-    const { height, width, proxy } = props
-    const { loading, error, elkResults } = state
-    return (
-      <>
-        {error ? (
-          <div style={{ marginBottom: 20 }}>
-            <Alert severity="error">{error.message}</Alert>
-          </div>
-        ) : (
-          ''
-        )}
-        <Form search="">
-          {({ updateForm, search }) => (
-            <Grid container spacing={3}>
-              {/* Search controls */}
-              <Grid item xs={12}>
-                <Grid container spacing={1} alignItems="flex-end">
-                  <Grid item>
-                    <SearchIcon />
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      id="saeon-ckan-search"
-                      label="Search"
-                      autoComplete="off"
-                      value={search}
-                      onChange={({ target }) => updateForm({ search: target.value })}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              {/* Search results */}
+            return error ? (
+              <div style={{ marginBottom: 20 }}>
+                <Alert severity="error">{error.message}</Alert>
+              </div>
+            ) : loading ? (
+              'Loading...'
+            ) : (
               <Grid item xs={12}>
                 <Grid container spacing={1} alignItems="flex-end">
                   <Grid item>
@@ -175,10 +132,10 @@ export default class extends Component {
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          )}
-        </Form>
-      </>
-    )
-  }
-}
+            )
+          }}
+        </ReactCatalogue>
+      </Grid>
+    )}
+  </Form>
+)

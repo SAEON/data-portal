@@ -1,6 +1,6 @@
-import { ElasticCatalogue } from '../src'
+import { ElasticCatalogue } from '../../src'
 
-describe('Library contract', () => {
+describe('Unit test', () => {
   describe('ElasticCatalogue constructor', () => {
     describe('Direct properties', () => {
       const expected = {}

@@ -1,5 +1,5 @@
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
-import { ElasticCatalogue } from '../src'
+import { ElasticCatalogue } from '../../src'
 const dslAddress = 'http://localhost:4000/proxy/saeon-elk'
 const index = 'saeon-odp-4-2'
 
@@ -31,7 +31,7 @@ describe('Query DSL', () => {
             match: {
               'metadata_json.subjects.subject': {
                 query,
-                fuzziness: 'AUTO'
+                fuzziness: 'AUTO',
               },
             },
           },
@@ -42,7 +42,7 @@ describe('Query DSL', () => {
           metadata_json.subjects.forEach(({ subject }) => {
             if (subject.toLowerCase().includes(query.toLowerCase())) exists = true
           })
-          console.log(JSON.stringify(response, null, 2))
+          // console.log(JSON.stringify(response, null, 2))
           expect(exists).toBe(true)
         })
       })
