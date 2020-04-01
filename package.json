@@ -9,7 +9,7 @@
     "build-readme": "scripts/build-readme.sh",
     "update-git-snapshot": "git add .",
     "**************** DEV": "****************",
-    "start": "npm-run-all -p atlas-api:start atlas-client:start",
+    "start": "npm-run-all -p atlas-api:start atlas-client:start styleguide",
     "test": "npm-run-all -p atlas-api:start ol-react:start",
     "**************** PUBLISH": "****************",
     "publish-patch": "npm-run-all -p ol-react:publish-patch",
