@@ -23,8 +23,17 @@ module.exports = require('../../../webpack.config')({
   resolveCb: (mode) =>
     mode === 'production'
       ? {
-          alias: {},
+          alias: {
+            react: path.resolve('./node_modules/react'),
+            'react-dom': path.resolve('./node_modules/react-dom'),
+          },
         }
       : {},
-  externalsCb: (mode) => (mode === 'production' ? {} : {}),
+  externalsCb: (mode) =>
+    mode === 'production'
+      ? {
+          react: 'react',
+          'react-dom': 'react-dom',
+        }
+      : {},
 })

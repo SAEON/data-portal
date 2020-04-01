@@ -6,7 +6,10 @@
   "files": [
     "dist"
   ],
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
