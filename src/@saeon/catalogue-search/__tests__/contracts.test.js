@@ -38,12 +38,13 @@ describe('Library contract', () => {
   })
 
   describe('ElasticCatalogue instance', () => {
-    const catalog = new ElasticCatalogue({ dslAddress: 'testing' })
+    const catalog = new ElasticCatalogue({ dslAddress: 'na', index: 'na' })
 
     describe('Direct properties', () => {
       const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(catalog)
       const expected = {
         dslAddress: 'string',
+        index: 'string',
       }
 
       test('Has expected properties', () => {
