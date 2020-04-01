@@ -2,32 +2,38 @@ import { useState, useEffect } from 'react'
 import { Catalogue } from '../../src'
 import PropTypes from 'prop-types'
 
-const useCatalogue = ({ catalog }) => (query) => {
+const createHook = ({ catalog }) => (query) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [data, setData] = useState(null)
 
-  useEffect(() => {
-    async function _() {
-      try {
-        const result = await catalog.query(query)
-        setData(result)
-      } catch (error) {
-        setError(error.message)
-        setLoading(false)
-      }
+  const fetchData = async (abortFetch) => {
+    try {
+      const result = await catalog.query(query, abortFetch)
+      setData(result)
+    } catch (error) {
+      setError(error)
+    } finally {
+      setLoading(false)
     }
-    _()
-  })
+  }
+
+  useEffect(() => {
+    const abortFetch = new AbortController()
+    setData(null)
+    setLoading(true)
+    setError(false)
+    fetchData(abortFetch)
+    return () => abortFetch.abort()
+  }, [JSON.stringify(query)])
 
   return { loading, error, data }
 }
 
-
 let catalog
 export const ReactCatalogue = ({ dslAddress, index, children } = {}) => {
   if (!catalog) catalog = new Catalogue({ dslAddress, index })
-  return children(useCatalogue({ catalog }))
+  return children(createHook({ catalog }))
 }
 
 ReactCatalogue.propTypes = {

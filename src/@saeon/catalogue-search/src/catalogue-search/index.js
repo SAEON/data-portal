@@ -10,10 +10,11 @@ export class Catalogue {
     this.index = index
   }
 
-  async query(query) {
+  async query(query, abortFetch) {
     query = typeof query === 'string' ? query : JSON.stringify(query)
     try {
       const response = await fetch(`${this.dslAddress}?index=${this.index}`, {
+        signal: abortFetch?.signal,
         method: 'POST',
         mode: 'cors',
         headers: {

@@ -1,11 +1,11 @@
-import { ElasticCatalogue } from '../../src'
+import { Catalogue } from '../../src'
 
 describe('Unit test', () => {
   describe('ElasticCatalogue constructor', () => {
     describe('Direct properties', () => {
       const expected = {}
       const classOwnProperties = Object.getOwnPropertyDescriptors(class _ {})
-      const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(ElasticCatalogue)
+      const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(Catalogue)
       test('Has expected properties', () => {
         Object.entries(expected).forEach(([key, type]) =>
           expect(typeof ownPropertyDescriptors[key].value).toBe(type)
@@ -23,7 +23,7 @@ describe('Unit test', () => {
         query: 'function',
       }
       const classOwnProperties = Object.getOwnPropertyDescriptors(class _ {}.prototype)
-      const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(ElasticCatalogue.prototype)
+      const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(Catalogue.prototype)
       test('Has expected properties', () => {
         Object.entries(expected).forEach(([key, type]) =>
           expect(typeof ownPropertyDescriptors[key].value).toBe(type)
@@ -38,7 +38,7 @@ describe('Unit test', () => {
   })
 
   describe('ElasticCatalogue instance', () => {
-    const catalog = new ElasticCatalogue({ dslAddress: 'na', index: 'na' })
+    const catalog = new Catalogue({ dslAddress: 'na', index: 'na' })
 
     describe('Direct properties', () => {
       const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(catalog)
