@@ -18,7 +18,7 @@
     "increment:patch": "../../../scripts/increment-patch.sh",
     "increment-minor": "../../../scripts/increment-minor.sh",
     "increment-major": "../../../scripts/increment-major.sh",
-    "push-to-npm": "../../../scripts/push-to-npm.sh"
+    "push-to-npm": "../../../scripts/push-to-npm.sh -p @saeon/ol-react"
   },
   "keywords": [
     "@saeon/ol-react"
