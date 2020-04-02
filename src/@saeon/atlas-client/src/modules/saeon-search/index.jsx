@@ -1,5 +1,13 @@
 import React from 'react'
-import { TextField, Grid, Typography, Card, CardHeader, Checkbox } from '@material-ui/core'
+import {
+  TextField,
+  Grid,
+  Typography,
+  Card,
+  CardHeader,
+  Checkbox,
+  InputAdornment,
+} from '@material-ui/core'
 import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import npmUrl from 'url'
@@ -26,20 +34,28 @@ export default ({ height, width, proxy }) => {
         <Grid container spacing={3}>
           {/* Search controls */}
           <Grid item xs={12}>
-            <Grid container spacing={1} alignItems="flex-end">
-              <Grid item>
-                <SearchIcon />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id="saeon-elasticsearch-query"
-                  label="Search"
-                  autoComplete="off"
-                  value={query}
-                  onChange={({ target }) => updateForm({ query: target.value })}
-                />
-              </Grid>
-            </Grid>
+            <TextField
+              // style={{ margin: 8 }}
+              id="saeon-elasticsearch-query"
+              placeholder="e.g. atmospheric, water, etc."
+              label="Enter comma-separated terms"
+              autoComplete="off"
+              value={query}
+              fullWidth
+              margin="normal"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              onChange={({ target }) => updateForm({ query: target.value })}
+            />
           </Grid>
 
           {/* Search results */}
