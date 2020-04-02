@@ -25,9 +25,10 @@ export class Catalogue {
       })
       return await response.json()
     } catch (error) {
-      throw new Error(
-        `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${query}. ${error}`
-      )
+      if (error.name !== 'AbortError')
+        throw new Error(
+          `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${query}. ${error}`
+        )
     }
   }
 }

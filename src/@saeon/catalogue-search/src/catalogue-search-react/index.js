@@ -2,32 +2,41 @@ import { useState, useEffect } from 'react'
 import { Catalogue } from '../../src'
 import PropTypes from 'prop-types'
 
+const defaultState = {
+  loading: true,
+  error: null,
+  data: null,
+}
+
 const createHook = ({ catalog }) => (query) => {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-  const [data, setData] = useState(null)
+  const [state, setState] = useState(defaultState)
 
   const fetchData = async (abortFetch) => {
     try {
       const result = await catalog.query(query, abortFetch)
-      setData(result)
+      if (result)
+        setState({
+          loading: false,
+          error: null,
+          data: result,
+        })
     } catch (error) {
-      setError(error)
-    } finally {
-      setLoading(false)
+      setState({
+        loading: false,
+        error: error,
+        data: null,
+      })
     }
   }
 
   useEffect(() => {
+    setState(defaultState)
     const abortFetch = new AbortController()
-    setData(null)
-    setLoading(true)
-    setError(false)
     fetchData(abortFetch)
     return () => abortFetch.abort()
   }, [JSON.stringify(query)])
 
-  return { loading, error, data }
+  return { loading: state.loading, error: state.error, data: state.data }
 }
 
 let catalog
