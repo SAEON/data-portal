@@ -13,6 +13,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "build": "npm-run-all -s clean:dist pack",
+    "clean:dist": "rimraf ./dist",
     "pack": "webpack --env.mode=production --env.output=src/@saeon/catalogue-search/dist/ --env.entry=src/@saeon/catalogue-search/src/index.js",
     "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
     "publish:minor": "npm-run-all -s pack increment:minor push-to-npm",
