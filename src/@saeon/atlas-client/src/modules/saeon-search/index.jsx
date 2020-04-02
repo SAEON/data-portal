@@ -7,12 +7,13 @@ import {
   CardHeader,
   Checkbox,
   InputAdornment,
+  Chip,
 } from '@material-ui/core'
 import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import npmUrl from 'url'
 import { VirtualList } from '../../components'
-import { Alert } from '@material-ui/lab'
+import { Alert, Autocomplete } from '@material-ui/lab'
 import { createLayer, LayerTypes } from '../../lib/ol'
 import LegendMenu from './_legend-menu'
 import { ReactCatalogue } from '@saeon/catalogue-search'
@@ -34,11 +35,12 @@ export default ({ height, width, proxy }) => {
         <Grid container spacing={3}>
           {/* Search controls */}
           <Grid item xs={12}>
+            {/* Free search */}
             <TextField
-              // style={{ margin: 8 }}
-              id="saeon-elasticsearch-query"
+              size="small"
+              id="catalog-search-free-text"
               placeholder="e.g. atmospheric, water, etc."
-              label="Enter comma-separated terms"
+              label="Text search"
               autoComplete="off"
               value={query}
               fullWidth
@@ -55,6 +57,39 @@ export default ({ height, width, proxy }) => {
               }}
               variant="outlined"
               onChange={({ target }) => updateForm({ query: target.value })}
+            />
+
+            {/* Tagged, constrained terms */}
+            <Autocomplete
+              multiple
+              autoHighlight
+              size="small"
+              style={{ width: '100%', marginTop: 10 }}
+              id="catalog-search-tagged-search"
+              options={[
+                { id: 1, title: 'thing 1' },
+                { id: 2, title: 'thing 2' },
+              ]}
+              getOptionLabel={(option) => option.title}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    size="small"
+                    color="secondary"
+                    label={option.title}
+                    {...getTagProps({ index })}
+                    disabled={false}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Term search"
+                  variant="outlined"
+                  placeholder="Start typing..."
+                />
+              )}
             />
           </Grid>
 
