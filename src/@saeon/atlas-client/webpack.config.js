@@ -4,18 +4,14 @@ require('dotenv').config()
 
 module.exports = require('../../../webpack.config')({
   pluginsCb: (plugins) => [...plugins, new Dotenv()],
-  resolveCb: (mode) => ({
+  resolveCb: (mode) => mode === 'production' ? {} :{
     alias: {
       '@saeon/ol-react': path.resolve(
-        __dirname,
-        mode === 'production' ? '../../../node_modules/@saeon/ol-react' : '../ol-react/src/index'
+        __dirname, '../ol-react/src/index'
       ),
       '@saeon/catalogue-search': path.resolve(
-        __dirname,
-        mode === 'production'
-          ?'../catalogue-search/src/index'
-          : '../catalogue-search/src/index'
+        __dirname, '../catalogue-search/src/index'
       ),
     },
-  }),
+  },
 })
