@@ -3,6 +3,7 @@ import { config } from 'dotenv'
 config()
 
 const SAEON_SPATIALDATA_PROXY = process.env.SAEON_SPATIALDATA_PROXY || 'http://app01.saeon.ac.za'
+const SAEON_SPATIALDATA_PROXY2 = process.env.SAEON_SPATIALDATA_PROXY2 || 'http://196.21.191.55'
 const SAEON_ELK_PROXY = process.env.ELK_PROXY || 'http://192.168.116.66:9200'
 const CSIR_ARCGIS_PROXY =
   process.env.CSIR_ARCGIS_PROXY || 'https://pta-gis-2-web1.csir.co.za/server2/rest/services'
@@ -19,8 +20,13 @@ export default createProxyMiddleware({
       target = SAEON_ELK_PROXY
     }
 
-    if (path.includes('/proxy/saeon-spatialdata')) {
-      const port = path.match(/^\/proxy\/saeon-spatialdata\/\d{4}/)[0].slice(-4)
+    if (path.includes('/proxy/saeon-spatialdata/196.21.191.55')) {
+      const port = path.match(/^\/proxy\/saeon-spatialdata\/196\.21\.191\.55\/\d{4}/)[0].slice(-4)
+      target = `${SAEON_SPATIALDATA_PROXY2}:${port}`
+    }
+
+    if (path.includes('/proxy/saeon-spatialdata/app01.saeon.ac.za')) {
+      const port = path.match(/^\/proxy\/saeon-spatialdata\/app01.saeon.ac.za\/\d{4}/)[0].slice(-4)
       target = `${SAEON_SPATIALDATA_PROXY}:${port}`
     }
 
@@ -37,7 +43,8 @@ export default createProxyMiddleware({
       .replace('/proxy/saeon-elk/_search', '/_search')
       .replace('/proxy/saeon-elk', '/_search')
       .replace('/proxy/csir', '')
-      .replace(/\/proxy\/saeon-spatialdata\/\d{4}\//, '/')
+      .replace(/\/proxy\/saeon-spatialdata\/196\.21\.191\.55\/\d{4}\//, '/')
+      .replace(/\/proxy\/saeon-spatialdata\/app01.saeon.ac.za\/\d{4}\//, '/')
     console.log('Proxy path configured', path, newPath)
     return newPath
   },

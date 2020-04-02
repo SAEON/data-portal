@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   TextField,
   Grid,
@@ -12,7 +12,7 @@ import {
 import { Form } from '../../components'
 import { Search as SearchIcon } from '@material-ui/icons'
 import npmUrl from 'url'
-import { VirtualList } from '../../components'
+import { VirtualList, useHttpDataQuery } from '../../components'
 import { Alert, Autocomplete } from '@material-ui/lab'
 import { createLayer, LayerTypes } from '../../lib/ol'
 import LegendMenu from './_legend-menu'
@@ -29,9 +29,26 @@ const SPATIALDATA_PROXY = `${
 }/proxy/saeon-spatialdata`
 
 export default ({ height, width, proxy }) => {
-  return (
-    <Form query="">
-      {({ updateForm, query }) => (
+  const [selectedTerms, setSelectedTerms] = useState([])
+  const { error, loading, data } = useHttpDataQuery({
+    uri: DSL_PROXY,
+    method: 'POST',
+    body: {
+      aggs: {
+        subjects: {
+          terms: { field: 'metadata_json.subjects.subject.raw', size: 1000 },
+        },
+      },
+    },
+  })
+
+  return loading ? (
+    <Typography>Loading ...</Typography>
+  ) : error ? (
+    <Typography>Error TODO</Typography>
+  ) : (
+    <Form textSearch="">
+      {({ updateForm, textSearch }) => (
         <Grid container spacing={3}>
           {/* Search controls */}
           <Grid item xs={12}>
@@ -42,7 +59,7 @@ export default ({ height, width, proxy }) => {
               placeholder="e.g. atmospheric, water, etc."
               label="Text search"
               autoComplete="off"
-              value={query}
+              value={textSearch}
               fullWidth
               margin="normal"
               InputProps={{
@@ -56,27 +73,30 @@ export default ({ height, width, proxy }) => {
                 shrink: true,
               }}
               variant="outlined"
-              onChange={({ target }) => updateForm({ query: target.value })}
+              onChange={({ target }) => updateForm({ textSearch: target.value })}
             />
 
             {/* Tagged, constrained terms */}
             <Autocomplete
+              getOptionSelected={(a, b) => a.key === b.key}
+              onChange={(e, value) => setSelectedTerms(value.map((v) => v.key))}
               multiple
               autoHighlight
               size="small"
               style={{ width: '100%', marginTop: 10 }}
               id="catalog-search-tagged-search"
-              options={[
-                { id: 1, title: 'thing 1' },
-                { id: 2, title: 'thing 2' },
-              ]}
-              getOptionLabel={(option) => option.title}
+              options={data.aggregations.subjects.buckets.map(({ key, doc_count }) => ({
+                key: key.trim(),
+                doc_count,
+              }))}
+              getOptionLabel={(option) => option.key}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
                   <Chip
+                    key={index}
                     size="small"
                     color="secondary"
-                    label={option.title}
+                    label={option.key}
                     {...getTagProps({ index })}
                     disabled={false}
                   />
@@ -87,7 +107,7 @@ export default ({ height, width, proxy }) => {
                   {...params}
                   label="Term search"
                   variant="outlined"
-                  placeholder="Start typing..."
+                  placeholder="start typing..."
                 />
               )}
             />
@@ -103,7 +123,7 @@ export default ({ height, width, proxy }) => {
                 query: {
                   match: {
                     'metadata_json.subjects.subject': {
-                      query,
+                      query: `${textSearch}, ${selectedTerms.join(',')}`,
                       fuzziness: 'AUTO',
                     },
                   },
@@ -130,7 +150,7 @@ export default ({ height, width, proxy }) => {
                                     ?.filter((r) => r.linkedResourceType === 'Query')
                                     ?.map(({ resourceURL, resourceDescription }) => {
                                       const uri = npmUrl.parse(resourceURL, true)
-                                      const { protocol, host, pathname, query, port } = uri
+                                      const { protocol, pathname, query, port, hostname } = uri
                                       const { layers } = query
                                       const layerId = `${resourceDescription} - ${layers}`
                                       return {
@@ -139,7 +159,7 @@ export default ({ height, width, proxy }) => {
                                         resourceDescription,
                                         protocol,
                                         port,
-                                        host,
+                                        hostname,
                                         pathname,
                                         layers,
                                       }
@@ -150,6 +170,7 @@ export default ({ height, width, proxy }) => {
                             height={height}
                             width={width}
                             Template={({
+                              hostname,
                               layerId,
                               port,
                               pathname,
@@ -175,7 +196,8 @@ export default ({ height, width, proxy }) => {
                                         checked={Boolean(proxy.getLayerById(layerId))}
                                         onChange={({ target }) => {
                                           if (target.checked) {
-                                            let serverAddress = `${SPATIALDATA_PROXY}/${port}${pathname}`
+                                            let serverAddress = `${SPATIALDATA_PROXY}/${hostname}/${port}${pathname}`
+                                            console.log(hostname)
                                             proxy.addLayer(
                                               createLayer({
                                                 LegendMenu: () => (
