@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
@@ -10,7 +11,6 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
 }) => ({
   mode,
   entry: path.resolve(__dirname, entry),
-  target: targetCb ? targetCb({ mode }) : 'web',
   output: outputCb
     ? outputCb({ mode, output: path.join(__dirname, output) })
     : {
@@ -64,6 +64,7 @@ module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outp
   },
   plugins: pluginsCb(
     [
+      new Dotenv(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
