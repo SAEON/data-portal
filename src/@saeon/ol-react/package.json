@@ -10,10 +10,12 @@
     "react": ">=16.13.1"
   },
   "scripts": {
+    "build": "npm-run-all -s clean:dist pack",
+    "clean:dist": "rimraf ./dist",
     "pack": "webpack --env.mode=production --env.output=src/@saeon/ol-react/dist/ --env.entry=src/@saeon/ol-react/src/index.js",
-    "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
-    "publish:minor": "npm-run-all -s pack increment:minor push-to-npm",
-    "publish:major": "npm-run-all -s pack increment:major push-to-npm",
+    "publish:patch": "npm-run-all -s build increment:patch push-to-npm",
+    "publish:minor": "npm-run-all -s build increment:minor push-to-npm",
+    "publish:major": "npm-run-all -s build increment:major push-to-npm",
     "increment:patch": "../../../scripts/increment-patch.sh",
     "increment:minor": "../../../scripts/increment-minor.sh",
     "increment:major": "../../../scripts/increment-major.sh",
