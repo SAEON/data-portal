@@ -4,11 +4,13 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 require('dotenv').config()
 
-module.exports = ({ pluginsCb = null, resolveCb = null, externalsCb = null, outputCb = null, targetCb = null }) => ({
-  mode,
-  entry,
-  output = '/dist',
-}) => ({
+module.exports = ({
+  pluginsCb = null,
+  resolveCb = null,
+  externalsCb = null,
+  outputCb = null,
+  targetCb = null,
+}) => ({ mode, entry, output = '/dist' }) => ({
   mode,
   entry: path.resolve(__dirname, entry),
   output: outputCb
