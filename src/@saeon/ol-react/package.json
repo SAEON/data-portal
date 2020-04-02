@@ -7,8 +7,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": ">=16.13.1"
   },
   "scripts": {
     "pack": "webpack --env.mode=production --env.output=src/@saeon/ol-react/dist/ --env.entry=src/@saeon/ol-react/src/index.js",
