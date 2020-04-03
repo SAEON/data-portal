@@ -1,6 +1,6 @@
 import React from 'react'
 import InfiniteLoader from 'react-window-infinite-loader'
-import { FixedSizeList, VariableSizeList } from 'react-window'
+import { VariableSizeList } from 'react-window'
 
 /**
  * A list component that makes use of react-window InfiniteLoader and FixedSizeList to allow for pagination and partial rendering of list items
@@ -20,7 +20,7 @@ const initialItems = (items, Template) => {
 }
 const getItemSizes = (items, Template) => {
   const elements = initialItems(items, Template)
-  elements.forEach((element) => {
+  elements.forEach(() => {
     itemSizes.push(125)
   })
 }

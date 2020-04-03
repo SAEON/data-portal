@@ -40,16 +40,16 @@ export default ({
   const [width, setWidth] = useState(defaultWidth)
   const [height, setHeight] = useState(defaultHeight)
   const [isResizing, setIsResizing] = useState(false)
-  const [snappedLeft, setSnappedLeft] = useState(false)
-  const [snappedRight, setSnappedRight] = useState(false)
-  const [snapReady, setSnapReady] = useState(false)
+  const [, setSnappedLeft] = useState(false)
+  const [, setSnappedRight] = useState(false)
+  // const [snapReady, setSnapReady] = useState(false)
 
   const onDrag = (DraggableEventHandler) => {
     //fetching parent dimensions
     const containerHeight = document.getElementById('olreact-mapprovider').clientHeight
     const containerWidth = document.getElementById('olreact-mapprovider').clientWidth
     //fetching dragMenu position. DraggableEventHandler has several other position values should offset values have unforseen issues
-    const { offsetX, offsetY } = DraggableEventHandler
+    const { offsetX } = DraggableEventHandler
 
     //if snapped left
     if (offsetX <= 0) {

@@ -1,16 +1,5 @@
-const path = require('path')
-
-module.exports = ({ mode, entry, output = '/dist' }) => {
+module.exports = () => {
   return {
-    mode,
-    entry: path.resolve(__dirname, entry),
-    output: {
-      filename: 'index.js',
-      path: path.join(__dirname, output),
-    },
-    resolve: {
-      extensions: ['.js', '.jsx'],
-    },
     module: {
       rules: [
         {
@@ -50,15 +39,6 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
           ],
         },
       ],
-    },
-    devServer: {
-      contentBase: path.join(__dirname, output),
-      historyApiFallback: true,
-      compress: true,
-      allowedHosts: ['.localhost'],
-      headers: {
-        'Access-Control-Allow-Headers': '*',
-      },
     },
   }
 }
