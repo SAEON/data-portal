@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar } from '@material-ui/core'
 import SaeonSearch from '../../modules/saeon-search'
+import FakeItemsTest from '../../modules/saeon-search/fake-items-test'
 import CsirLayers from '../../modules/csir-layers'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { DragMenu, SideMenu } from '../../components'
@@ -41,6 +42,7 @@ export default () => (
                     >
                       {({ height, width }) => (
                         <SaeonSearch height={height} width={width} proxy={proxy} />
+                        // <FakeItemsTest height={height} width={width} proxy={proxy} />
                       )}
                     </DragMenu>
                   ),

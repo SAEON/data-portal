@@ -8,7 +8,7 @@ export default class extends PureComponent {
   render() {
     const { children } = this.props
     return (
-      <div style={{ height: 'calc(100% - 42px)', width: '100%' }}>
+      <div id="olreact-mapprovider" style={{ height: 'calc(100% - 42px)', width: '100%' }}>
         <OlReact
           viewOptions={{
             center: [32, -15],

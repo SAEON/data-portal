@@ -8,10 +8,9 @@
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "build-readme": "scripts/build-readme.sh",
     "update-git-snapshot": "git add .",
-    "test": "npm-run-all -p catalogue-search:test",
-    "test:watch": "npm-run-all -p catalogue-search:test:watch",
     "**************** DEV": "****************",
-    "start": "npm-run-all -p atlas-api:start atlas-client:start",
+    "start": "npm-run-all -p atlas-api:start atlas-client:start styleguide",
+    "test": "npm-run-all -p atlas-api:start ol-react:start",
     "**************** PUBLISH": "****************",
     "publish-patch": "npm-run-all -p ol-react:publish-patch",
     "publish-minor": "echo TODO",
@@ -35,12 +34,12 @@
     "catalogue-search:publish:minor": "npm --prefix src/@saeon/catalogue-search run publish:minor",
     "catalogue-search:publish:major": "npm --prefix src/@saeon/catalogue-search run publish:major",
     "**************** DOCS": "****************",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
+    "styleguide": "styleguidist server --config ./src/styleguidist/styleguide.config.js",
+    "styleguide:build": "styleguidist build --config ./src/styleguidist/styleguide.config.js"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all -s test build-readme prettier:changed lint update-git-snapshot"
+      "pre-commit": "npm-run-all -s build-readme prettier:changed lint update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za",
@@ -98,6 +97,7 @@
     "express-graphql": "^0.9.0",
     "graphql": "^15.0.0",
     "graphql-tools": "^4.0.7",
+    "html2canvas": "^1.0.0-rc.5",
     "http-proxy-middleware": "^1.0.3",
     "morgan": "^1.10.0",
     "ol": "^6.3.0",
