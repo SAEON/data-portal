@@ -16,16 +16,15 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
       alias: {
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? '../ol-react' : '../ol-react/src/index'
+          mode === 'production' ? '@saeon/ol-react' : '../ol-react/src/index'
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
-          mode === 'production' ? '../catalogue-search' : '../catalogue-search/src/index'
+          mode === 'production' ? '@saeon/catalogue-search' : '../catalogue-search/src/index'
         ),
       },
       extensions: ['.js', '.jsx'],
     },
-    externals: {},
     module: {
       rules: [
         {

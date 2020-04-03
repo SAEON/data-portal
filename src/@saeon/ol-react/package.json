@@ -7,7 +7,8 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": ">=16.13.1"
+    "react": ">=16",
+    "ol": ">=6"
   },
   "scripts": {
     "build": "npm-run-all -s clean:dist pack",
