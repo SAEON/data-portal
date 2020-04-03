@@ -51,7 +51,7 @@ export default class extends Component {
     const { proxy } = this.props
     return (
       <MenuContext.Consumer>
-        {({ addMenu, removeMenu, addedMenus }) =>
+        {({ addMenu, removeMenu, getMenuById }) =>
           proxy.getLayers().getArray().length > 0 ? (
             <DragAndDrop
               items={proxy.getLayers().getArray()}
@@ -148,13 +148,14 @@ export default class extends Component {
                                 startIcon={<VpnKey />}
                                 size="small"
                                 onClick={() =>
-                                  addedMenus[`${layer.get('id')}-legend`]
+                                  getMenuById(`${layer.get('id')}-legend`)
                                     ? removeMenu(`${layer.get('id')}-legend`)
                                     : addMenu({
                                         id: `${layer.get('id')}-legend`,
-                                        Component: (i) => (
+                                        Component: (
                                           <Legend
-                                            key={i}
+                                            id={`${layer.get('id')}-legend`}
+                                            key={`${layer.get('id')}-legend`}
                                             layer={layer}
                                             onClose={() => removeMenu(`${layer.get('id')}-legend`)}
                                           />
@@ -173,13 +174,14 @@ export default class extends Component {
                                 startIcon={<InfoIcon />}
                                 size="small"
                                 onClick={() =>
-                                  addedMenus[`${layer.get('id')}-info`]
+                                  getMenuById(`${layer.get('id')}-info`)
                                     ? removeMenu(`${layer.get('id')}-info`)
                                     : addMenu({
                                         id: `${layer.get('id')}-info`,
-                                        Component: (i) => (
+                                        Component: (
                                           <Info
-                                            key={i}
+                                            id={`${layer.get('id')}-info`}
+                                            key={`${layer.get('id')}-info`}
                                             layer={layer}
                                             onClose={() => removeMenu(`${layer.get('id')}-info`)}
                                           />

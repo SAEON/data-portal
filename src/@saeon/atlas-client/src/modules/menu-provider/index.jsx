@@ -13,19 +13,16 @@ export default class extends PureComponent {
       { id: 'saeonSearchMenu', active: false, zIndex: 1 },
       { id: 'csirSearchMenu', active: false },
     ],
-    addedMenus: {},
   }
 
   addMenu = ({ id, Component }) =>
     this.setState({
-      addedMenus: { ...this.state.addedMenus, [id]: Component },
+      menus: [...this.state.menus, { id, zIndex: 1, Component }],
     })
 
   removeMenu = (removeId) =>
     this.setState({
-      addedMenus: Object.fromEntries(
-        Object.entries({ ...this.state.addedMenus }).filter(([id]) => id !== removeId)
-      ),
+      menus: [...this.state.menus].filter(({ id }) => id !== removeId),
     })
 
   getMenuById = (id) => this.state.menus.find((item) => item.id === id)
@@ -64,13 +61,12 @@ export default class extends PureComponent {
       updateMenuManager,
     } = this
     const { children } = props
-    const { menus, addedMenus } = state
+    const { menus } = state
 
     return (
       <MenuContext.Provider
         value={{
           getMenuById,
-          addedMenus,
           menus,
           setActiveMenu,
           updateMenuManager,
@@ -78,10 +74,10 @@ export default class extends PureComponent {
           removeMenu,
         }}
       >
-        {/* These are menus. TODO */}
-        {Object.entries(addedMenus).map(([i, Component]) => Component(i))}
+        {/* Render menus with defined components */}
+        {menus.filter(({ Component }) => Component).map(({ Component }) => Component)}
 
-        {/* All app children */}
+        {/* Render children */}
         {children}
       </MenuContext.Provider>
     )
