@@ -45,7 +45,7 @@ export default ({ height, width, proxy }) => {
   return loading ? (
     <Typography>Loading ...</Typography>
   ) : error ? (
-    <Typography>Error TODO</Typography>
+    <Alert severity="error">Unable to connect to the SAEON catalogue: {error.message}</Alert>
   ) : (
     <Form textSearch="">
       {({ updateForm, textSearch }) => (

@@ -20,7 +20,9 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
-          mode === 'production' ? '../../../node_modules/@saeon/catalogue-search' : '../catalogue-search/src/index'
+          mode === 'production'
+            ? '../../../node_modules/@saeon/catalogue-search'
+            : '../catalogue-search/src/index'
         ),
       },
       extensions: ['.js', '.jsx'],

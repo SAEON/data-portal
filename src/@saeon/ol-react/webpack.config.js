@@ -17,7 +17,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
     'ol/View': 'ol/View',
     'ol/control.js': 'ol/control.js',
     'ol/layer/Group': 'ol/layer/Group',
-    'ol/format': 'ol/format'
+    'ol/format': 'ol/format',
   },
   module: {
     rules: [
