@@ -9,7 +9,7 @@
     "build-readme": "scripts/build-readme.sh",
     "update-git-snapshot": "git add .",
     "**************** DEV": "****************",
-    "start": "npm-run-all -p atlas-api:start atlas-client:start styleguide",
+    "start": "npm-run-all -p atlas-api:start atlas-client:start docs:watch",
     "test": "npm-run-all -p atlas-api:start ol-react:start",
     "**************** PUBLISH": "****************",
     "publish-patch": "npm-run-all -p ol-react:publish-patch",
@@ -34,8 +34,8 @@
     "catalogue-search:publish:minor": "npm --prefix src/@saeon/catalogue-search run publish:minor",
     "catalogue-search:publish:major": "npm --prefix src/@saeon/catalogue-search run publish:major",
     "**************** DOCS": "****************",
-    "styleguide": "styleguidist server --config ./src/styleguidist/styleguide.config.js",
-    "styleguide:build": "styleguidist build --config ./src/styleguidist/styleguide.config.js"
+    "docs:watch": "styleguidist server --config src/docs/styleguide.config.js",
+    "docs:build": "styleguidist build --config src/docs/styleguide.config.js"
   },
   "husky": {
     "hooks": {
