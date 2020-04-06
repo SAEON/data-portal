@@ -10,6 +10,7 @@ Monorepo format - this is the source code for SAEON's Atlas-related source code.
 
 ## Setting up the REPO
 
+
 - There are a number of `.sh` scripts that need to be made executable. Run this command: `chmod 771 **/*.sh`
 
 # @saeon/ol-react
