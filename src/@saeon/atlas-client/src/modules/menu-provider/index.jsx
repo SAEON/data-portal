@@ -1,23 +1,18 @@
-import React, { createContext } from 'react'
-import { PureComponent } from 'react'
+import React, { createContext, PureComponent } from 'react'
+import { createPortal } from 'react-dom'
+
+const el = document.getElementById('menu-portal')
 
 export const MenuContext = createContext()
 
 export default class extends PureComponent {
   state = {
-    menus: [
-      { id: 'topMenu', menuAnchor: null },
-      { id: 'configMenu', active: false, zIndex: 1 },
-      { id: 'layersMenu', active: false, zIndex: 1 },
-      { id: 'layerInfo', active: false, zIndex: 1 },
-      { id: 'saeonSearchMenu', active: false, zIndex: 1 },
-      { id: 'csirSearchMenu', active: false },
-    ],
+    menus: [{ id: 'topMenu', menuAnchor: null }],
   }
 
-  addMenu = ({ id, Component }) =>
+  addMenu = ({ id, Component, ...props }) =>
     this.setState({
-      menus: [...this.state.menus, { id, zIndex: 1, Component }],
+      menus: [...this.state.menus, { id, zIndex: 1, Component, ...props }],
     })
 
   removeMenu = (removeId) =>
@@ -37,29 +32,8 @@ export default class extends PureComponent {
     })
   }
 
-  /**
-   * @param {Object} obj {id: {... vals}}
-   */
-  updateMenuManager = (obj) => {
-    const newMenus = [...this.state.menus]
-    Object.entries(obj).forEach(([id, kvs]) =>
-      Object.assign(newMenus.find((item) => id === item.id) || {}, { ...kvs })
-    )
-    this.setState({
-      menus: newMenus,
-    })
-  }
-
   render() {
-    const {
-      state,
-      props,
-      removeMenu,
-      addMenu,
-      getMenuById,
-      setActiveMenu,
-      updateMenuManager,
-    } = this
+    const { state, props, removeMenu, addMenu, getMenuById, setActiveMenu } = this
     const { children } = props
     const { menus } = state
 
@@ -69,13 +43,16 @@ export default class extends PureComponent {
           getMenuById,
           menus,
           setActiveMenu,
-          updateMenuManager,
           addMenu,
           removeMenu,
         }}
       >
-        {/* Render menus with defined components */}
-        {menus.filter(({ Component }) => Component).map(({ Component }) => Component)}
+        {/* Render menus into a top level portal */}
+        {menus
+          .filter(({ Component }) => Component)
+          .map((item, i) => {
+            return createPortal(<item.Component {...item} key={i} />, el)
+          })}
 
         {/* Render children */}
         {children}
