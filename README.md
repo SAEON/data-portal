@@ -16,7 +16,7 @@ Monorepo format - this is the source code for SAEON's Atlas-related source code.
 # @saeon/ol-react
  
 Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atlas)
-
+ 
 ```sh
 npm install @saeon/ol-react
 ```
