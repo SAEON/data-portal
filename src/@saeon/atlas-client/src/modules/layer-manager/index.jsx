@@ -53,7 +53,7 @@ export default class extends Component {
       <MapContext.Consumer>
         {({ proxy }) => (
           <MenuContext.Consumer>
-            {({ addMenu, removeMenu, getMenuById }) =>
+            {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) =>
               proxy.getLayers().getArray().length > 0 ? (
                 <DragAndDrop
                   items={proxy.getLayers().getArray()}
@@ -154,6 +154,7 @@ export default class extends Component {
                                         ? removeMenu(`${layer.get('id')}-legend`)
                                         : addMenu({
                                             id: `${layer.get('id')}-legend`,
+                                            zIndex: getActiveMenuZIndex(),
                                             Component: () => (
                                               <Legend
                                                 id={`${layer.get('id')}-legend`}
@@ -182,6 +183,7 @@ export default class extends Component {
                                         ? removeMenu(`${layer.get('id')}-info`)
                                         : addMenu({
                                             id: `${layer.get('id')}-info`,
+                                            zIndex: getActiveMenuZIndex(),
                                             Component: () => (
                                               <Info
                                                 id={`${layer.get('id')}-info`}

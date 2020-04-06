@@ -9,7 +9,7 @@ import { SpeedDialAction } from '@material-ui/lab'
 export default () => {
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, setActiveMenu, getMenuById }) => {
+      {({ addMenu, removeMenu, setActiveMenu, getMenuById, getActiveMenuZIndex }) => {
         return (
           <DialMenu
             style={{ position: 'absolute', right: 20, top: 127 }}
@@ -26,16 +26,16 @@ export default () => {
                 } else {
                   addMenu({
                     id,
+                    zIndex: getActiveMenuZIndex(),
                     Component: () => {
                       return (
                         <DragMenu
-                          onMouseDown={() => setActiveMenu('layersMenu')}
-                          zIndex={getMenuById('layersMenu').zIndex}
+                          onMouseDown={() => setActiveMenu(id)}
+                          zIndex={getMenuById(id).zIndex}
                           title={'Open layers menu'}
-                          active={Boolean(getMenuById('layersMenu'))}
                           close={() => removeMenu(id)}
                         >
-                          {() => <LayerManager layersActive={Boolean(getMenuById('layersMenu'))} />}
+                          {() => <LayerManager layersActive={Boolean(getMenuById(id))} />}
                         </DragMenu>
                       )
                     },

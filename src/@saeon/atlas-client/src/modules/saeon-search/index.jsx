@@ -35,7 +35,7 @@ export default ({ height, width }) => {
     <Alert severity="error">Unable to connect to the SAEON catalogue: {error.message}</Alert>
   ) : (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById }) => (
+      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => (
         <Form textSearch="">
           {({ updateForm, textSearch }) => (
             <Grid container spacing={3}>
@@ -144,6 +144,7 @@ export default ({ height, width }) => {
                                   } else {
                                     addMenu({
                                       id,
+                                      zIndex: getActiveMenuZIndex(),
                                       Component: () => (
                                         <SearchResultsMenu
                                           data={data}

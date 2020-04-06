@@ -26,7 +26,6 @@ linear-gradient(to top, #adadad 4px, transparent 4px) 0 100%,
 linear-gradient(to top, #adadad 4px, transparent 4px) 100% 100%`
 
 export default ({
-  active,
   close,
   title,
   children,
@@ -89,7 +88,6 @@ export default ({
             opacity: 0.8,
             zIndex,
             position: 'relative',
-            display: active ? 'block' : 'none',
           }}
         >
           <Card variant="elevation">

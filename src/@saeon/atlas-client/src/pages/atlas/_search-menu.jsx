@@ -11,7 +11,7 @@ import { SpeedDialAction } from '@material-ui/lab'
 export default () => {
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, setActiveMenu }) => {
+      {({ addMenu, removeMenu, getMenuById, setActiveMenu, getActiveMenuZIndex }) => {
         return (
           <DialMenu
             style={{ position: 'absolute', right: 20, top: 57 }}
@@ -29,12 +29,13 @@ export default () => {
                 } else {
                   addMenu({
                     id,
+                    zIndex: getActiveMenuZIndex(),
                     Component: memo(
                       ({ id }) => {
                         return (
                           <DragMenu
                             onMouseDown={() => setActiveMenu('saeonSearchMenu')}
-                            zIndex={getMenuById('saeonSearchMenu').zIndex}
+                            zIndex={getMenuById(id).zIndex}
                             title={'Search SAEON data'}
                             active={Boolean(getMenuById(id))}
                             close={() => removeMenu(id)}
@@ -61,14 +62,14 @@ export default () => {
                 } else {
                   addMenu({
                     id,
+                    zIndex: getActiveMenuZIndex(),
                     Component: memo(
                       ({ id }) => {
                         return (
                           <DragMenu
                             onMouseDown={() => setActiveMenu('csirSearchMenu')}
-                            zIndex={getMenuById('csirSearchMenu').zIndex}
+                            zIndex={getMenuById(id).zIndex}
                             title={'Search CSIR data'}
-                            active={Boolean(getMenuById(id))}
                             close={() => removeMenu(id)}
                           >
                             {({ height, width }) => <CsirLayers />}

@@ -6,7 +6,7 @@ import { MenuContext } from '../../modules/menu-provider'
 
 export default () => (
   <MenuContext.Consumer>
-    {({ addMenu, removeMenu, setActiveMenu, getMenuById }) => {
+    {({ addMenu, removeMenu, setActiveMenu, getMenuById, getActiveMenuZIndex }) => {
       return (
         <Fab
           size="small"
@@ -20,12 +20,12 @@ export default () => (
             } else {
               addMenu({
                 id,
+                zIndex: getActiveMenuZIndex() || 1,
                 Component: () => (
                   <DragMenu
-                    onMouseDown={() => setActiveMenu('configMenu')}
+                    onMouseDown={() => setActiveMenu(id)}
                     zIndex={getMenuById(id).zIndex}
                     title={'Open layers menu'}
-                    active={Boolean(getMenuById(id))}
                     close={() => removeMenu(id)}
                   >
                     {() => 'hi'}
