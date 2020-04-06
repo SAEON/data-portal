@@ -12,6 +12,7 @@ export default class extends PureComponent {
       { id: 'layerInfo', active: false, zIndex: 1 },
       { id: 'saeonSearchMenu', active: false, zIndex: 1 },
       { id: 'csirSearchMenu', active: false },
+      { id: 'screenshotMenu', active: false, zIndex: 1 },
     ],
     addedMenus: {},
   }

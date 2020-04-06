@@ -4,17 +4,6 @@ import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
-// import html2canvas from 'html2canvas'
-// const test = () => {
-//   console.log('in test')
-//   html2canvas(document.body).then(function (canvas) {
-//     console.log('canvas', canvas)
-//     console.log('in then')
-//     document.body.appendChild(canvas)
-//     console.log('appended child')
-//   })
-//   console.log('done!')
-// }
 
 const borderedBackground = `linear-gradient(to right, #adadad 4px, transparent 4px) 0 0,
 linear-gradient(to right, #adadad 4px, transparent 4px) 0 100%,
@@ -40,9 +29,6 @@ export default ({
   const [width, setWidth] = useState(defaultWidth)
   const [height, setHeight] = useState(defaultHeight)
   const [isResizing, setIsResizing] = useState(false)
-  const [snappedLeft, setSnappedLeft] = useState(false)
-  const [snappedRight, setSnappedRight] = useState(false)
-  const [snapReady, setSnapReady] = useState(false)
 
   const onDrag = (DraggableEventHandler) => {
     //fetching parent dimensions
@@ -53,23 +39,66 @@ export default ({
 
     //if snapped left
     if (offsetX <= 0) {
-      setSnappedLeft(true)
-      setHeight(containerHeight)
-      setPosition({ x: 0, y: 0 })
+      //if snapped left-top-corner
+      if (offsetY <= 0) {
+        setPosition({ x: 0, y: 0 })
+        setHeight(containerHeight / 2)
+        setWidth(containerWidth / 2)
+      }
+
+      //else if snapped left-bot-corner
+      else if (offsetY >= containerHeight) {
+        setPosition({ x: 0, y: containerHeight / 2 })
+        setHeight(containerHeight / 2)
+        setWidth(containerWidth / 2)
+      }
+
+      //else snapped left
+      else {
+        setPosition({ x: 0, y: 0 })
+        setHeight(containerHeight)
+        setWidth(containerWidth / 2)
+      }
     }
+
     //else if snapped right
     else if (offsetX >= containerWidth) {
-      setSnappedRight(true)
+      //if snapped right-top-corner
+      if (offsetY <= 0) {
+        // alert('right top')
+        setPosition({ x: containerWidth - width, y: 0 })
+        setHeight(containerHeight / 2)
+        setWidth(containerWidth / 2)
+      }
+
+      //else if snapped right-bot-corner
+      else if (offsetY >= containerHeight) {
+        // alert('right bot')
+        setPosition({ x: containerWidth - width, y: containerHeight / 2 })
+        setHeight(containerHeight / 2)
+        setWidth(containerWidth / 2)
+      }
+      //else snapped right
+      else {
+        setPosition({ x: containerWidth - width, y: 0 })
+        setHeight(containerHeight)
+        setWidth(containerWidth / 2)
+      }
+    }
+    //else if snapped top
+    else if (offsetY <= 0) {
+      setPosition({ x: 0, y: 0 })
       setHeight(containerHeight)
-      setPosition({ x: containerWidth - width, y: 0 })
+      setWidth(containerWidth)
     }
     //else not snapped
     else onUnsnap()
   }
   const onUnsnap = () => {
-    setSnappedLeft(false)
-    setSnappedRight(false)
+    // setSnappedLeft(false)
+    // setSnappedRight(false)
     setHeight(defaultHeight)
+    setWidth(defaultWidth)
     setPosition(null)
   }
   return (
