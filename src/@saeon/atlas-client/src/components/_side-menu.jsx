@@ -1,10 +1,10 @@
 import React from 'react'
-import { Drawer, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, IconButton, SwipeableDrawer } from '@material-ui/core'
 import { Close as CloseButton } from '@material-ui/icons'
 
-export default ({ active, toggle, title, children, width, height }) => {
+export default ({ active, toggle, title, children, width, height, anchor = 'left' }) => {
   return (
-    <Drawer variant="persistent" open={active} onClose={toggle}>
+    <SwipeableDrawer anchor={anchor} variant="persistent" open={active} onClose={toggle}>
       <div style={{ width: width || 400, height: height || '100%' }}>
         <AppBar variant="outlined" color="secondary" position="relative">
           {title ? (
@@ -26,6 +26,6 @@ export default ({ active, toggle, title, children, width, height }) => {
         </AppBar>
         <div style={{ padding: '20px 10px', height: '100%' }}>{children}</div>
       </div>
-    </Drawer>
+    </SwipeableDrawer>
   )
 }

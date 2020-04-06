@@ -9,36 +9,35 @@ export default ({ title, uri }) => {
     data: null,
   })
 
-  useEffect(() => {
-    const abortFetch = new AbortController()
-    async function _() {
-      try {
-        setState(
-          Object.assign(
-            { ...state },
-            {
-              loading: false,
-              data: await fetch(uri, {
-                signal: abortFetch.signal,
-              }).then((res) => res.json()),
-            }
-          )
-        )
-      } catch (err) {
-        if (err.name === 'AbortError') {
-          console.log('Fetch aborted')
-        } else {
-          console.error('Error', err)
-          setState({
+  const fetchData = async (abortFetch) => {
+    try {
+      setState(
+        Object.assign(
+          { ...state },
+          {
             loading: false,
-            error: err.message,
-          })
-        }
+            data: await fetch(uri, {
+              signal: abortFetch.signal,
+            }).then((res) => res.json()),
+          }
+        )
+      )
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log('Fetch aborted')
+      } else {
+        console.error('Error', err)
+        setState({
+          loading: false,
+          error: err.message,
+        })
       }
     }
+  }
 
-    _()
-    // Cleanup
+  useEffect(() => {
+    const abortFetch = new AbortController()
+    fetchData(abortFetch)
     return () => abortFetch.abort()
   }, [])
 

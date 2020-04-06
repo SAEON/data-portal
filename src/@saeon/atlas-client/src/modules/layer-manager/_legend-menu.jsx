@@ -1,8 +1,9 @@
 import React from 'react'
 import { DragMenu } from '../../components'
 import { Typography } from '@material-ui/core'
+import { MenuContext } from '../../modules/menu-provider'
 
-export default ({ layer, onClose }) => {
+export default ({ id, layer, onClose }) => {
   const LegendMenu =
     layer.get('LegendMenu') ||
     (() => (
@@ -12,16 +13,20 @@ export default ({ layer, onClose }) => {
     ))
 
   return (
-    <DragMenu
-      onMouseDown={() => console.log('update zIndex todo')}
-      zIndex={99}
-      defaultPosition={{ x: 650, y: 25 }}
-      defaultWidth={200}
-      title={'Legend'}
-      active={true}
-      close={onClose}
-    >
-      {() => <LegendMenu />}
-    </DragMenu>
+    <MenuContext.Consumer>
+      {({ getMenuById, setActiveMenu }) => (
+        <DragMenu
+          onMouseDown={() => setActiveMenu(id)}
+          zIndex={getMenuById(id).zIndex}
+          defaultPosition={{ x: 650, y: 25 }}
+          defaultWidth={200}
+          title={'Legend'}
+          active={true}
+          close={onClose}
+        >
+          {() => <LegendMenu />}
+        </DragMenu>
+      )}
+    </MenuContext.Consumer>
   )
 }

@@ -1,19 +1,28 @@
 {
   "name": "@saeon/catalogue-search",
-  "version": "0.0.4",
+  "version": "1.1.3",
   "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "build": "npm-run-all -s clean:dist pack",
+    "clean:dist": "rimraf ./dist",
+    "pack": "webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
     "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
-    "pack": "webpack --env.mode=production --env.output=src/@saeon/catalogue-search/dist/ --env.entry=src/@saeon/catalogue-search/src/index.js",
+    "publish:minor": "npm-run-all -s pack increment:minor push-to-npm",
+    "publish:major": "npm-run-all -s pack increment:major push-to-npm",
     "increment:patch": "../../../scripts/increment-patch.sh",
-    "push-to-npm": "../../../scripts/push-to-npm.sh"
+    "increment:minor": "../../../scripts/increment-minor.sh",
+    "increment:major": "../../../scripts/increment-major.sh",
+    "push-to-npm": "../../../scripts/push-to-npm.sh -p @saeon/catalogue-search"
   },
   "keywords": [
     "@saeon/catalogue-search"

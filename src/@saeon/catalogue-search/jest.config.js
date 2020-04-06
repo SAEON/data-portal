@@ -6,5 +6,5 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': path.resolve(__dirname, './jest-babel-config.js'),
   },
-  testMatch: ['**/__tests__/*.js?(x)'],
+  testMatch: ['**/__tests__/**/*.js?(x)'],
 }
