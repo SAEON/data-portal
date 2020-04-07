@@ -44,7 +44,7 @@ export default () => {
                           </DragMenu>
                         )
                       },
-                      ({ zIndex: z1 }, { zIndex: z2 }) => false
+                      ({ zIndex: z1 }, { zIndex: z2 }) => z1 == z2
                     ),
                   })
                 }
@@ -72,7 +72,7 @@ export default () => {
                             title={'Search CSIR data'}
                             close={() => removeMenu(id)}
                           >
-                            {({ height, width }) => <CsirLayers />}
+                            {({ height, width }) => <CsirLayers height={height} width={width} />}
                           </DragMenu>
                         )
                       },

@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { createPortal } from 'react-dom'
-import { TextField, Grid, Typography, InputAdornment, Chip, Button } from '@material-ui/core'
+import { Grid, Typography, Button } from '@material-ui/core'
 import { Form } from '../../components'
-import { Search as SearchIcon, Visibility as ViewIcon } from '@material-ui/icons'
+import { Visibility as ViewIcon } from '@material-ui/icons'
 import { useHttpDataQuery } from '../../components'
-import { Alert, Autocomplete } from '@material-ui/lab'
+import { Alert } from '@material-ui/lab'
 import { MenuContext } from '../menu-provider'
 import SearchResultsMenu from './_search-results-menu'
 import { ReactCatalogue } from '@saeon/catalogue-search'
+import SearchUI from './_search-ui'
 import useStyles from './style'
 const DSL_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
@@ -18,7 +19,6 @@ const searchListMenuId = 'saeon-search-results-menu'
 
 export default () => {
   const classes = useStyles()
-  const [selectedTerms, setSelectedTerms] = useState([])
   const { error, loading, data } = useHttpDataQuery({
     uri: DSL_PROXY,
     method: 'POST',
@@ -38,70 +38,12 @@ export default () => {
   ) : (
     <MenuContext.Consumer>
       {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex, menus, menuContainerEl }) => (
-        <Form textSearch="">
-          {({ updateForm, textSearch }) => (
+        <Form textSearch="" selectedTerms={[]}>
+          {({ updateForm, ...fields }) => (
             <Grid container spacing={3}>
               {/* Search controls */}
               <Grid item xs={12}>
-                {/* Free search */}
-                <TextField
-                  size="small"
-                  id="catalog-search-free-text"
-                  placeholder="e.g. atmospheric, water, etc."
-                  label="Text search"
-                  autoComplete="off"
-                  value={textSearch}
-                  fullWidth
-                  margin="normal"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  onChange={({ target }) => updateForm({ textSearch: target.value })}
-                />
-
-                {/* Tagged, constrained terms */}
-                <Autocomplete
-                  getOptionSelected={(a, b) => a.key === b.key}
-                  onChange={(e, value) => setSelectedTerms(value.map((v) => v.key))}
-                  multiple
-                  autoHighlight
-                  size="small"
-                  style={{ width: '100%', marginTop: 10 }}
-                  id="catalog-search-tagged-search"
-                  options={data.aggregations.subjects.buckets.map(({ key, doc_count }) => ({
-                    key: key.trim(),
-                    doc_count,
-                  }))}
-                  getOptionLabel={(option) => option.key}
-                  renderTags={(value, getTagProps) =>
-                    value.map((option, index) => (
-                      <Chip
-                        key={index}
-                        size="small"
-                        color="secondary"
-                        label={option.key}
-                        {...getTagProps({ index })}
-                        disabled={false}
-                      />
-                    ))
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Term search"
-                      variant="outlined"
-                      placeholder="start typing..."
-                    />
-                  )}
-                />
+                <SearchUI data={data} updateForm={updateForm} {...fields} />
               </Grid>
 
               {/* Search results */}
@@ -114,7 +56,7 @@ export default () => {
                     query: {
                       match: {
                         'metadata_json.subjects.subject': {
-                          query: `${textSearch}, ${selectedTerms.join(',')}`,
+                          query: `${fields.textSearch}, ${fields.selectedTerms.join(',')}`,
                           fuzziness: 'AUTO',
                         },
                       },
@@ -129,13 +71,15 @@ export default () => {
                           createPortal(<menu.Component data={data} />, menuContainerEl)
                         ) || null}
                       <Grid item xs={12}>
-                        <Grid container spacing={1} alignItems="flex-end">
-                          <Grid item>
-                            {error ? (
+                        {error ? (
+                          <Grid container spacing={1} alignItems="flex-end">
+                            <Grid item>
                               <Alert severity="error">{error.message}</Alert>
-                            ) : loading ? (
-                              <Typography>Loading...</Typography>
-                            ) : (
+                            </Grid>
+                          </Grid>
+                        ) : (
+                          <Grid container spacing={1}>
+                            <Grid item style={{ position: 'absolute', bottom: 0, right: 0 }}>
                               <div style={{ width: '100%' }}>
                                 <Button
                                   variant="text"
@@ -163,13 +107,16 @@ export default () => {
                                     }
                                   }}
                                 >
-                                  {getMenuById(searchListMenuId) ? 'Hide ' : 'Show '}
-                                  {data.hits.total} results
+                                  {loading
+                                    ? 'Loading...'
+                                    : getMenuById(searchListMenuId)
+                                    ? `Hide results (${data?.hits?.total})`
+                                    : `Show results (${data?.hits?.total})`}
                                 </Button>
                               </div>
-                            )}
+                            </Grid>
                           </Grid>
-                        </Grid>
+                        )}
                       </Grid>
                     </>
                   )
