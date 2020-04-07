@@ -38,147 +38,145 @@ export default () => {
   ) : (
     <MenuContext.Consumer>
       {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex, menus, menuContainerEl }) => (
-        <EventBoundary>
-          <Form textSearch="">
-            {({ updateForm, textSearch }) => (
-              <Grid container spacing={3}>
-                {/* Search controls */}
-                <Grid item xs={12}>
-                  {/* Free search */}
-                  <TextField
-                    size="small"
-                    id="catalog-search-free-text"
-                    placeholder="e.g. atmospheric, water, etc."
-                    label="Text search"
-                    autoComplete="off"
-                    value={textSearch}
-                    fullWidth
-                    margin="normal"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                    onChange={({ target }) => updateForm({ textSearch: target.value })}
-                  />
+        <Form textSearch="">
+          {({ updateForm, textSearch }) => (
+            <Grid container spacing={3}>
+              {/* Search controls */}
+              <Grid item xs={12}>
+                {/* Free search */}
+                <TextField
+                  size="small"
+                  id="catalog-search-free-text"
+                  placeholder="e.g. atmospheric, water, etc."
+                  label="Text search"
+                  autoComplete="off"
+                  value={textSearch}
+                  fullWidth
+                  margin="normal"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  onChange={({ target }) => updateForm({ textSearch: target.value })}
+                />
 
-                  {/* Tagged, constrained terms */}
-                  <Autocomplete
-                    getOptionSelected={(a, b) => a.key === b.key}
-                    onChange={(e, value) => setSelectedTerms(value.map((v) => v.key))}
-                    multiple
-                    autoHighlight
-                    size="small"
-                    style={{ width: '100%', marginTop: 10 }}
-                    id="catalog-search-tagged-search"
-                    options={data.aggregations.subjects.buckets.map(({ key, doc_count }) => ({
-                      key: key.trim(),
-                      doc_count,
-                    }))}
-                    getOptionLabel={(option) => option.key}
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => (
-                        <Chip
-                          key={index}
-                          size="small"
-                          color="secondary"
-                          label={option.key}
-                          {...getTagProps({ index })}
-                          disabled={false}
-                        />
-                      ))
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Term search"
-                        variant="outlined"
-                        placeholder="start typing..."
+                {/* Tagged, constrained terms */}
+                <Autocomplete
+                  getOptionSelected={(a, b) => a.key === b.key}
+                  onChange={(e, value) => setSelectedTerms(value.map((v) => v.key))}
+                  multiple
+                  autoHighlight
+                  size="small"
+                  style={{ width: '100%', marginTop: 10 }}
+                  id="catalog-search-tagged-search"
+                  options={data.aggregations.subjects.buckets.map(({ key, doc_count }) => ({
+                    key: key.trim(),
+                    doc_count,
+                  }))}
+                  getOptionLabel={(option) => option.key}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                      <Chip
+                        key={index}
+                        size="small"
+                        color="secondary"
+                        label={option.key}
+                        {...getTagProps({ index })}
+                        disabled={false}
                       />
-                    )}
-                  />
-                </Grid>
+                    ))
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Term search"
+                      variant="outlined"
+                      placeholder="start typing..."
+                    />
+                  )}
+                />
+              </Grid>
 
-                {/* Search results */}
-                <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
-                  {(useCatalog) => {
-                    const { error, loading, data } = useCatalog({
-                      _source: {
-                        includes: ['metadata_json.*'],
-                      },
-                      query: {
-                        match: {
-                          'metadata_json.subjects.subject': {
-                            query: `${textSearch}, ${selectedTerms.join(',')}`,
-                            fuzziness: 'AUTO',
-                          },
+              {/* Search results */}
+              <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
+                {(useCatalog) => {
+                  const { error, loading, data } = useCatalog({
+                    _source: {
+                      includes: ['metadata_json.*'],
+                    },
+                    query: {
+                      match: {
+                        'metadata_json.subjects.subject': {
+                          query: `${textSearch}, ${selectedTerms.join(',')}`,
+                          fuzziness: 'AUTO',
                         },
                       },
-                    })
+                    },
+                  })
 
-                    return (
-                      <>
-                        {menus
-                          ?.filter((menu) => menu.id === searchListMenuId)
-                          ?.map((menu) =>
-                            createPortal(<menu.Component data={data} />, menuContainerEl)
-                          ) || null}
-                        <Grid item xs={12}>
-                          <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item>
-                              {error ? (
-                                <Alert severity="error">{error.message}</Alert>
-                              ) : loading ? (
-                                <Typography>Loading...</Typography>
-                              ) : (
-                                <div style={{ width: '100%' }}>
-                                  <Button
-                                    variant="text"
-                                    disableElevation
-                                    color="secondary"
-                                    size="small"
-                                    className={classes.button}
-                                    startIcon={<ViewIcon />}
-                                    onClick={() => {
-                                      if (getMenuById(searchListMenuId)) {
-                                        removeMenu(searchListMenuId)
-                                      } else {
-                                        addMenu({
-                                          id: searchListMenuId,
-                                          zIndex: getActiveMenuZIndex(),
-                                          norender: true,
-                                          Component: ({ data }) => (
-                                            <SearchResultsMenu
-                                              data={data}
-                                              id={searchListMenuId}
-                                              onClose={() => removeMenu(searchListMenuId)}
-                                            />
-                                          ),
-                                        })
-                                      }
-                                    }}
-                                  >
-                                    Show {data.hits.total} results
-                                  </Button>
-                                </div>
-                              )}
-                            </Grid>
+                  return (
+                    <>
+                      {menus
+                        ?.filter((menu) => menu.id === searchListMenuId)
+                        ?.map((menu) =>
+                          createPortal(<menu.Component data={data} />, menuContainerEl)
+                        ) || null}
+                      <Grid item xs={12}>
+                        <Grid container spacing={1} alignItems="flex-end">
+                          <Grid item>
+                            {error ? (
+                              <Alert severity="error">{error.message}</Alert>
+                            ) : loading ? (
+                              <Typography>Loading...</Typography>
+                            ) : (
+                              <div style={{ width: '100%' }}>
+                                <Button
+                                  variant="text"
+                                  disableElevation
+                                  color="secondary"
+                                  size="small"
+                                  className={classes.button}
+                                  startIcon={<ViewIcon />}
+                                  onClick={() => {
+                                    if (getMenuById(searchListMenuId)) {
+                                      removeMenu(searchListMenuId)
+                                    } else {
+                                      addMenu({
+                                        id: searchListMenuId,
+                                        zIndex: getActiveMenuZIndex(),
+                                        norender: true,
+                                        Component: ({ data }) => (
+                                          <SearchResultsMenu
+                                            data={data}
+                                            id={searchListMenuId}
+                                            onClose={() => removeMenu(searchListMenuId)}
+                                          />
+                                        ),
+                                      })
+                                    }
+                                  }}
+                                >
+                                  Show {data.hits.total} results
+                                </Button>
+                              </div>
+                            )}
                           </Grid>
                         </Grid>
-                      </>
-                    )
-                  }}
-                </ReactCatalogue>
-              </Grid>
-            )}
-          </Form>
-        </EventBoundary>
+                      </Grid>
+                    </>
+                  )
+                }}
+              </ReactCatalogue>
+            </Grid>
+          )}
+        </Form>
       )}
     </MenuContext.Consumer>
   )
