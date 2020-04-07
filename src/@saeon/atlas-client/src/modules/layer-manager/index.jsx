@@ -202,34 +202,38 @@ export default class extends Component {
                                 </Grid>
                               </Grid>
 
-                              <Form value={layer.get('opacity') * 100}>
-                                {({ updateForm, value }) => (
-                                  <div style={{ margin: '5px 0', paddingRight: 5, width: '100%' }}>
-                                    <Typography style={{ display: 'table-cell', paddingRight: 20 }}>
-                                      Opacity
-                                    </Typography>
-                                    <Slider
-                                      style={{ display: 'table-cell' }}
-                                      onMouseEnter={() => this.setState({ disableDrag: true })}
-                                      onMouseLeave={() => this.setState({ disableDrag: false })}
-                                      defaultValue={50}
-                                      getAriaValueText={() => parseInt(value, 10)}
-                                      value={value}
-                                      onChange={(e, v) =>
-                                        updateForm(
-                                          { value: v },
-                                          debounce(() => layer.setOpacity(v / 100))
-                                        )
-                                      }
-                                      aria-labelledby="discrete-slider-small-steps"
-                                      step={0.00001}
-                                      marks={false}
-                                      min={1}
-                                      max={100}
-                                      valueLabelDisplay="off"
-                                    />
-                                  </div>
-                                )}
+                              <Form
+                                effects={[debounce(({ value }) => layer.setOpacity(value / 100))]}
+                                value={layer.get('opacity') * 100}
+                              >
+                                {({ updateForm, value }) => {
+                                  return (
+                                    <div
+                                      style={{ margin: '5px 0', paddingRight: 5, width: '100%' }}
+                                    >
+                                      <Typography
+                                        style={{ display: 'table-cell', paddingRight: 20 }}
+                                      >
+                                        Opacity
+                                      </Typography>
+                                      <Slider
+                                        style={{ display: 'table-cell' }}
+                                        onMouseEnter={() => this.setState({ disableDrag: true })}
+                                        onMouseLeave={() => this.setState({ disableDrag: false })}
+                                        defaultValue={50}
+                                        getAriaValueText={() => parseInt(value, 10)}
+                                        value={value}
+                                        onChange={(e, v) => updateForm({ value: v })}
+                                        aria-labelledby="discrete-slider-small-steps"
+                                        step={0.00001}
+                                        marks={false}
+                                        min={1}
+                                        max={100}
+                                        valueLabelDisplay="off"
+                                      />
+                                    </div>
+                                  )
+                                }}
                               </Form>
                             </CardContent>
                           </Collapse>
