@@ -44,7 +44,7 @@ export default () => {
                           </DragMenu>
                         )
                       },
-                      ({ zIndex: z1 }, { zIndex: z2 }) => z1 == z2
+                      ({ zIndex: z1 }, { zIndex: z2 }) => false
                     ),
                   })
                 }

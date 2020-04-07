@@ -10,7 +10,7 @@ const SPATIALDATA_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
 }/proxy/saeon-spatialdata`
 
-export default ({ height = 400, width = 400, data }) => {
+export default ({ height, width, data }) => {
   return (
     <MapContext.Consumer>
       {({ proxy }) => (

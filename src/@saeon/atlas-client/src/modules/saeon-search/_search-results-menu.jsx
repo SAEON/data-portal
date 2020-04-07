@@ -17,9 +17,9 @@ export default ({ id, onClose, data }) => {
           active={true}
           close={onClose}
         >
-          {() =>
+          {({ height, width }) =>
             data && data.hits.total ? (
-              <ResultsList data={data} />
+              <ResultsList height={height} width={width} data={data} />
             ) : (
               <Typography>No results...</Typography>
             )
