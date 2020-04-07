@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { TextField, Grid, Typography, InputAdornment, Chip, Button } from '@material-ui/core'
-import { Form, EventBoundary } from '../../components'
+import { Form } from '../../components'
 import { Search as SearchIcon, Visibility as ViewIcon } from '@material-ui/icons'
 import { useHttpDataQuery } from '../../components'
 import { Alert, Autocomplete } from '@material-ui/lab'
@@ -163,7 +163,8 @@ export default () => {
                                     }
                                   }}
                                 >
-                                  Show {data.hits.total} results
+                                  {getMenuById(searchListMenuId) ? 'Hide ' : 'Show '}
+                                  {data.hits.total} results
                                 </Button>
                               </div>
                             )}
