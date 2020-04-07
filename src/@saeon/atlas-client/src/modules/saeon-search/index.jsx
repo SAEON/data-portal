@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { TextField, Grid, Typography, InputAdornment, Chip, Button } from '@material-ui/core'
 import { Form } from '../../components'
 import { Search as SearchIcon, Visibility as ViewIcon } from '@material-ui/icons'
@@ -13,6 +14,7 @@ const DSL_PROXY = `${
 }/proxy/saeon-elk/_search`
 
 const DSL_INDEX = `saeon-odp-4-2`
+const searchListMenuId = 'saeon-search-results-menu'
 
 export default ({ height, width }) => {
   const classes = useStyles()
@@ -35,7 +37,7 @@ export default ({ height, width }) => {
     <Alert severity="error">Unable to connect to the SAEON catalogue: {error.message}</Alert>
   ) : (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => (
+      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex, menus, menuContainerEl }) => (
         <Form textSearch="">
           {({ updateForm, textSearch }) => (
             <Grid container spacing={3}>
@@ -120,49 +122,55 @@ export default ({ height, width }) => {
                   })
 
                   return (
-                    <Grid item xs={12}>
-                      <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                          {error ? (
-                            <Alert severity="error">{error.message}</Alert>
-                          ) : loading ? (
-                            <Typography>Loading...</Typography>
-                          ) : (
-                            <div style={{ width: '100%' }}>
-                              <Button
-                                variant="contained"
-                                disableElevation
-                                color="secondary"
-                                disabled={!data.hits.total ? true : false}
-                                size="small"
-                                className={classes.button}
-                                startIcon={<ViewIcon />}
-                                onClick={() => {
-                                  const id = 'saeon-search-results-menu'
-                                  if (getMenuById(id)) {
-                                    removeMenu(id)
-                                  } else {
-                                    addMenu({
-                                      id,
-                                      zIndex: getActiveMenuZIndex(),
-                                      Component: () => (
-                                        <SearchResultsMenu
-                                          data={data}
-                                          id={id}
-                                          onClose={() => removeMenu(id)}
-                                        />
-                                      ),
-                                    })
-                                  }
-                                }}
-                              >
-                                View {data.hits.total} items
-                              </Button>
-                            </div>
-                          )}
+                    <>
+                      {menus
+                        ?.filter((menu) => menu.id === searchListMenuId)
+                        ?.map((menu) =>
+                          createPortal(<menu.Component data={data} />, menuContainerEl)
+                        ) || null}
+                      <Grid item xs={12}>
+                        <Grid container spacing={1} alignItems="flex-end">
+                          <Grid item>
+                            {error ? (
+                              <Alert severity="error">{error.message}</Alert>
+                            ) : loading ? (
+                              <Typography>Loading...</Typography>
+                            ) : (
+                              <div style={{ width: '100%' }}>
+                                <Button
+                                  variant="text"
+                                  disableElevation
+                                  color="secondary"
+                                  size="small"
+                                  className={classes.button}
+                                  startIcon={<ViewIcon />}
+                                  onClick={() => {
+                                    if (getMenuById(searchListMenuId)) {
+                                      removeMenu(searchListMenuId)
+                                    } else {
+                                      addMenu({
+                                        id: searchListMenuId,
+                                        zIndex: getActiveMenuZIndex(),
+                                        norender: true,
+                                        Component: ({ data }) => (
+                                          <SearchResultsMenu
+                                            data={data}
+                                            id={searchListMenuId}
+                                            onClose={() => removeMenu(searchListMenuId)}
+                                          />
+                                        ),
+                                      })
+                                    }
+                                  }}
+                                >
+                                  Show {data.hits.total} results
+                                </Button>
+                              </div>
+                            )}
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </>
                   )
                 }}
               </ReactCatalogue>

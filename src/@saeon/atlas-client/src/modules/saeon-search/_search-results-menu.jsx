@@ -2,6 +2,7 @@ import React from 'react'
 import { DragMenu } from '../../components'
 import { MenuContext } from '../menu-provider'
 import ResultsList from './_results-vlist'
+import { Typography } from '@material-ui/core'
 
 export default ({ id, onClose, data }) => {
   return (
@@ -12,11 +13,17 @@ export default ({ id, onClose, data }) => {
           zIndex={getMenuById(id).zIndex}
           defaultPosition={{ x: 650, y: 25 }}
           defaultWidth={500}
-          title={'SAEON catalogue search results'}
+          title={'Search results'}
           active={true}
           close={onClose}
         >
-          {() => <ResultsList data={data} />}
+          {() =>
+            data && data.hits.total ? (
+              <ResultsList data={data} />
+            ) : (
+              <Typography>No results...</Typography>
+            )
+          }
         </DragMenu>
       )}
     </MenuContext.Consumer>

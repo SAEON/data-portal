@@ -1,16 +1,16 @@
 import React, { createContext, PureComponent } from 'react'
 import { createPortal } from 'react-dom'
 
-const el = document.getElementById('menu-portal')
+const menuContainerEl = document.getElementById('menu-portal')
 
 export const MenuContext = createContext()
 
 export default class extends PureComponent {
   state = { menus: [] }
 
-  addMenu = ({ id, Component, zIndex = 1, ...props }) =>
+  addMenu = ({ id, Component, zIndex = 1, norender = false, ...props }) =>
     this.setState({
-      menus: [...this.state.menus, { id, zIndex, Component, ...props }],
+      menus: [...this.state.menus, { id, zIndex, Component, norender, ...props }],
     })
 
   removeMenu = (removeId) =>
@@ -61,13 +61,14 @@ export default class extends PureComponent {
           addMenu,
           removeMenu,
           getActiveMenuZIndex,
+          menuContainerEl,
         }}
       >
         {/* Render menus into a top level portal */}
         {menus
-          .filter(({ Component }) => Component)
+          .filter(({ Component, norender = false }) => Component && !norender)
           .map((item, i) => {
-            return createPortal(<item.Component {...item} key={i} />, el)
+            return createPortal(<item.Component {...item} key={i} />, menuContainerEl)
           })}
 
         {/* Render children */}
