@@ -1,10 +1,10 @@
 import React from 'react'
-import { DragMenu } from '../../components'
+import { DragMenu, Form } from '../../components'
 import { MenuContext } from '../menu-provider'
-import { IconButton, Grid, Tooltip } from '@material-ui/core'
+import { IconButton, Tooltip } from '@material-ui/core'
 import { Gesture as GestureIcon, CropSquare as SquareIcon } from '@material-ui/icons'
 
-export default ({ id, onClose, data }) => {
+export default ({ id, onClose }) => {
   return (
     <MenuContext.Consumer>
       {({ getMenuById, setActiveMenu }) => (
@@ -19,26 +19,46 @@ export default ({ id, onClose, data }) => {
           close={onClose}
         >
           {() => (
-            <>
-              <div>
-                <Tooltip placement="right" title="Selected rectangle">
-                  <IconButton
-                    style={{ padding: 0 }}
-                    color="secondary"
-                    aria-label="select-rectangle"
-                  >
-                    <SquareIcon fontSize="default" />
-                  </IconButton>
-                </Tooltip>
-              </div>
-              <div style={{ marginTop: 16 }}>
-                <Tooltip placement="right" title="Select polygon">
-                  <IconButton style={{ padding: 0 }} color="secondary" aria-label="select-polygon">
-                    <GestureIcon fontSize="default" />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </>
+            <Form selectPolygonActic={false} selectRectActive={false}>
+              {({ updateForm, selectPolygonActic, selectRectActive }) => (
+                <>
+                  <div>
+                    <Tooltip placement="right" title="Selected rectangle">
+                      <IconButton
+                        style={{ padding: 0 }}
+                        color={selectRectActive ? 'secondary' : 'default'}
+                        aria-label="select-rectangle"
+                        onClick={() =>
+                          updateForm({
+                            selectRectActive: !selectRectActive,
+                            selectPolygonActic: false,
+                          })
+                        }
+                      >
+                        <SquareIcon fontSize="default" />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  <div style={{ marginTop: 16 }}>
+                    <Tooltip placement="right" title="Select polygon">
+                      <IconButton
+                        onClick={() =>
+                          updateForm({
+                            selectPolygonActic: !selectPolygonActic,
+                            selectRectActive: false,
+                          })
+                        }
+                        style={{ padding: 0 }}
+                        color={selectPolygonActic ? 'secondary' : 'default'}
+                        aria-label="select-polygon"
+                      >
+                        <GestureIcon fontSize="default" />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                </>
+              )}
+            </Form>
           )}
         </DragMenu>
       )}
