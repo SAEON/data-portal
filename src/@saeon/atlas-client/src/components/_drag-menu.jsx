@@ -26,79 +26,133 @@ export default ({
   defaultHeight = 400,
 }) => {
   const [position, setPosition] = useState(null)
+
   const [width, setWidth] = useState(defaultWidth)
   const [height, setHeight] = useState(defaultHeight)
+  const [indicatorProperties, setIndicatorProperties] = useState({
+    active: false,
+    position: { x: null, y: null },
+    height: null,
+    width: null,
+  })
   const [isResizing, setIsResizing] = useState(false)
 
   const onDrag = (DraggableEventHandler) => {
     //fetching parent dimensions
-    const containerHeight = document.getElementById('olreact-mapprovider').clientHeight
-    const containerWidth = document.getElementById('olreact-mapprovider').clientWidth
-    //fetching dragMenu position. DraggableEventHandler has several other position values should offset values have unforseen issues
-    const { offsetX, offsetY } = DraggableEventHandler
-
+    const containerHeight = document.getElementById('olreact-mapprovider').clientHeight //refactor to ref / prop
+    const containerWidth = document.getElementById('olreact-mapprovider').clientWidth //refactor to ref / prop
+    //fetching dragMenu position. DraggableEventHandler has several other position values should chosen values have unforseen issues
+    const { clientX, clientY } = DraggableEventHandler
+    console.log('dragevent', DraggableEventHandler)
     //if snapped left
-    if (offsetX <= 0) {
+    if (clientX <= 0) {
       //if snapped left-top-corner
-      if (offsetY <= 0) {
-        setPosition({ x: 0, y: 0 })
-        setHeight(containerHeight / 2)
-        setWidth(containerWidth / 2)
+      if (clientY <= 0) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: 0, y: 0 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
       }
 
       //else if snapped left-bot-corner
-      else if (offsetY >= containerHeight) {
-        setPosition({ x: 0, y: containerHeight / 2 })
-        setHeight(containerHeight / 2)
-        setWidth(containerWidth / 2)
+      else if (clientY >= containerHeight) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: 0, y: containerHeight / 2 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
       }
 
       //else snapped left
       else {
-        setPosition({ x: 0, y: 0 })
-        setHeight(containerHeight)
-        setWidth(containerWidth / 2)
+        setIndicatorProperties({
+          active: true,
+          position: { x: 0, y: 0 },
+          height: containerHeight,
+          width: containerWidth / 2,
+        })
       }
     }
 
     //else if snapped right
-    else if (offsetX >= containerWidth) {
+    else if (clientX >= containerWidth) {
       //if snapped right-top-corner
-      if (offsetY <= 0) {
-        setPosition({ x: containerWidth - width, y: 0 })
-        setHeight(containerHeight / 2)
-        setWidth(containerWidth / 2)
+      if (clientY <= 0) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: containerWidth - width, y: 0 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
       }
 
       //else if snapped right-bot-corner
-      else if (offsetY >= containerHeight) {
-        setPosition({ x: containerWidth - width, y: containerHeight / 2 })
-        setHeight(containerHeight / 2)
-        setWidth(containerWidth / 2)
+      else if (clientY >= containerHeight) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: containerWidth - width, y: containerHeight / 2 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
       }
       //else snapped right
       else {
-        setPosition({ x: containerWidth - width, y: 0 })
-        setHeight(containerHeight)
-        setWidth(containerWidth / 2)
+        setIndicatorProperties({
+          active: true,
+          position: { x: containerWidth - width, y: 0 },
+          height: containerHeight,
+          width: containerWidth / 2,
+        })
       }
     }
     //else if snapped top
-    else if (offsetY <= 0) {
-      setPosition({ x: 0, y: 0 })
-      setHeight(containerHeight)
-      setWidth(containerWidth)
+    else if (clientY <= 0) {
+      setIndicatorProperties({
+        active: true,
+        position: { x: 0, y: 0 },
+        height: containerHeight,
+        width: containerWidth,
+      })
     }
     //else not snapped
     else onUnsnap()
   }
   const onUnsnap = () => {
-    setHeight(defaultHeight)
-    setWidth(defaultWidth)
-    setPosition(null)
+    if (indicatorProperties.active)
+      setIndicatorProperties({
+        active: true,
+        position: { x: null, y: null },
+        width: null,
+        height: null,
+      })
+    // setHeight(defaultHeight)
+    // setWidth(defaultWidth)
+    // setPosition(null)
   }
   return (
     <div style={{ position: 'absolute' }}>
+      <div
+        id="snap-indicator"
+        style={{
+          zIndex,
+          position: 'relative',
+          display: indicatorProperties.active ? 'block' : 'none',
+        }}
+      >
+        <Card
+          style={{
+            position: 'absolute',
+            backgroundColor: 'red',
+            height: indicatorProperties.height,
+            width: indicatorProperties.width,
+            left: indicatorProperties.position.x,
+            top: indicatorProperties.position.y,
+          }}
+        ></Card>
+      </div>
       <Draggable
         axis="both"
         handle=".draggable-handle"
