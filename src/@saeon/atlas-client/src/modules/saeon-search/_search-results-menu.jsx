@@ -1,7 +1,7 @@
 import React from 'react'
 import { DragMenu } from '../../components'
 import { MenuContext } from '../menu-provider'
-import ResultsList from './_results-vlist'
+import ResultsList from './_results'
 import { Typography } from '@material-ui/core'
 
 export default ({ id, onClose, data }) => {
@@ -14,7 +14,6 @@ export default ({ id, onClose, data }) => {
           defaultPosition={{ x: 650, y: 25 }}
           defaultWidth={500}
           title={'Search results'}
-          active={true}
           close={onClose}
         >
           {({ height, width }) =>

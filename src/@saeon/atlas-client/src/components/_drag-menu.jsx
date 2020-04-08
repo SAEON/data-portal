@@ -30,9 +30,10 @@ export default ({
   close,
   title,
   children,
+  resizable = true,
   onMouseDown,
   zIndex = 1,
-  defaultPosition = { x: 100, y: 25 },
+  defaultPosition = { x: 100, y: 75 },
   defaultWidth = 450,
   defaultHeight = 400,
 }) => {
@@ -94,14 +95,18 @@ export default ({
           >
             <Card variant="elevation">
               <ResizableBox
+                resizeHandles={resizable ? ['se'] : []}
                 width={width}
                 height={height}
-                minConstraints={[250, 200]}
+                axis={resizable ? 'both' : 'none'}
+                minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
                 draggableOpts={{ grid: [5, 5] }}
                 onResizeStart={() => {
+                  if (!resizable) return
                   setIsResizing(true)
                 }}
                 onResizeStop={(event, { size }) => {
+                  if (!resizable) return
                   setWidth(size.width)
                   setHeight(size.height)
                   setIsResizing(false)

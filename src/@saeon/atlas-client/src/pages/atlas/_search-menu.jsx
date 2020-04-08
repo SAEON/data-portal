@@ -35,6 +35,7 @@ export default () => {
                         return (
                           <DragMenu
                             defaultWidth={800}
+                            defaultHeight={600}
                             onMouseDown={() => setActiveMenu('saeonSearchMenu')}
                             zIndex={getMenuById(id).zIndex}
                             title={'Search SAEON data'}
