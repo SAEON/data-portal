@@ -65,7 +65,6 @@ export default ({
     else if (offsetX >= containerWidth) {
       //if snapped right-top-corner
       if (offsetY <= 0) {
-        // alert('right top')
         setPosition({ x: containerWidth - width, y: 0 })
         setHeight(containerHeight / 2)
         setWidth(containerWidth / 2)
@@ -73,7 +72,6 @@ export default ({
 
       //else if snapped right-bot-corner
       else if (offsetY >= containerHeight) {
-        // alert('right bot')
         setPosition({ x: containerWidth - width, y: containerHeight / 2 })
         setHeight(containerHeight / 2)
         setWidth(containerWidth / 2)
@@ -95,8 +93,6 @@ export default ({
     else onUnsnap()
   }
   const onUnsnap = () => {
-    // setSnappedLeft(false)
-    // setSnappedRight(false)
     setHeight(defaultHeight)
     setWidth(defaultWidth)
     setPosition(null)
