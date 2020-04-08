@@ -123,7 +123,11 @@ export default ({ data, children }) => (
                         id,
                         zIndex: getActiveMenuZIndex(),
                         Component: () => (
-                          <PolygonSelectionTool id={id} onClose={() => removeMenu(id)} />
+                          <PolygonSelectionTool
+                            onDrawEnd={(geometry) => console.log(geometry)}
+                            id={id}
+                            onClose={() => removeMenu(id)}
+                          />
                         ),
                       })
                     }
