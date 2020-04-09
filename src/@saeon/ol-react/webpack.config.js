@@ -13,8 +13,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
   },
   externals: {
     react: 'react',
-    'ol/Map': 'ol/Map',
-    'ol/View': 'ol/View',
+    'ol': 'ol',
     'ol/control.js': 'ol/control.js',
     'ol/layer/Group': 'ol/layer/Group',
     'ol/format': 'ol/format',
