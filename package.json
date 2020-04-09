@@ -8,8 +8,7 @@
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "build-readme": "scripts/build-readme.sh",
     "update-git-snapshot": "git add .",
-    "atlas-api:start:prod": "npm --prefix src/@saeon/atlas-api run start:prod",
-    "atlas-client:build": "npm --prefix src/@saeon/atlas-client run build"
+    "atlas-api:start:prod": "npm --prefix src/@saeon/atlas-api run start:prod"
   },
   "husky": {
     "hooks": {
@@ -27,6 +26,7 @@
     "pretty-quick": "^2.0.1"
   },
   "dependencies": {
+    "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/plugin-transform-runtime": "^7.9.0",
