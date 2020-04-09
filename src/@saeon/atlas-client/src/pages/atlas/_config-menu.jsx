@@ -12,7 +12,7 @@ export default () => (
           size="small"
           color="primary"
           style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
-          aria-label="toggle menu"
+          aria-label="toggle-config-menu"
           onClick={() => {
             const id = 'configMenu'
             if (getMenuById(id)) {

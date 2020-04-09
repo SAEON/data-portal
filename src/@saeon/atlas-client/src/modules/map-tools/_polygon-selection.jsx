@@ -7,15 +7,9 @@ import { Gesture as GestureIcon, CropSquare as SquareIcon } from '@material-ui/i
 import { Vector as VectorLayer } from 'ol/layer'
 import { Vector as VectorSource } from 'ol/source'
 import Draw, { createBox } from 'ol/interaction/Draw'
+import { nanoid } from 'nanoid'
 
 var draw
-const source = new VectorSource({ wrapX: false })
-const layer = new VectorLayer({
-  id: 'drawLayer',
-  title: 'Draw layer',
-  source,
-})
-
 export default ({ id, onClose, onDrawEnd }) => {
   return (
     <MapContext.Consumer>
@@ -34,10 +28,6 @@ export default ({ id, onClose, onDrawEnd }) => {
                 close={onClose}
               >
                 {() => {
-                  useEffect(() => {
-                    proxy.addLayer(layer)
-                    return () => proxy.removeLayer(layer)
-                  }, [])
                   return (
                     <Form selectPolygonActic={false} selectRectActive={false}>
                       {({ updateForm, selectPolygonActic, selectRectActive }) => (
@@ -51,6 +41,12 @@ export default ({ id, onClose, onDrawEnd }) => {
                                 onClick={() => {
                                   proxy.removeInteraction(draw)
                                   if (!selectRectActive) {
+                                    const source = new VectorSource({ wrapX: false })
+                                    const layer = new VectorLayer({
+                                      id: `${nanoid()}-drawLayer`,
+                                      title: 'Draw layer',
+                                      source,
+                                    })
                                     draw = new Draw({
                                       source: source,
                                       type: 'Circle',
@@ -62,6 +58,7 @@ export default ({ id, onClose, onDrawEnd }) => {
                                       const geometry = feat.getGeometry()
                                       onDrawEnd(geometry)
                                     })
+                                    proxy.addLayer(layer)
                                   }
                                   updateForm({
                                     selectRectActive: !selectRectActive,
@@ -79,6 +76,12 @@ export default ({ id, onClose, onDrawEnd }) => {
                                 onClick={() => {
                                   proxy.removeInteraction(draw)
                                   if (!selectPolygonActic) {
+                                    const source = new VectorSource({ wrapX: false })
+                                    const layer = new VectorLayer({
+                                      id: `${nanoid()}-drawLayer`,
+                                      title: 'Draw layer',
+                                      source,
+                                    })
                                     draw = new Draw({
                                       source: source,
                                       type: 'Polygon',
@@ -90,6 +93,7 @@ export default ({ id, onClose, onDrawEnd }) => {
                                       const geometry = feat.getGeometry()
                                       onDrawEnd(geometry)
                                     })
+                                    proxy.addLayer(layer)
                                   }
                                   updateForm({
                                     selectPolygonActic: !selectPolygonActic,
