@@ -11,8 +11,8 @@
     "react-dom": ">=16.13.1"
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest",
+    "test:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --watch",
     "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s minor",
@@ -43,6 +43,8 @@
     "babel-jest": "^25.3.0",
     "jest": "^25.3.0",
     "node-fetch": "^2.6.0",
+    "onchange": "^6.1.0",
+    "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

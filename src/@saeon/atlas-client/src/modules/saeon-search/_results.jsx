@@ -1,10 +1,11 @@
 import React from 'react'
-import { Card, CardHeader, Checkbox } from '@material-ui/core'
+import { Card, CardHeader, Checkbox, CardContent, IconButton, Link } from '@material-ui/core'
 import npmUrl from 'url'
 import { VirtualList } from '../../components'
 import { createLayer, LayerTypes } from '../../lib/ol'
 import LegendContent from './_legend'
 import { MapContext } from '../map-provider'
+import { Visibility as VisibilityIcon } from '@material-ui/icons'
 
 const SPATIALDATA_PROXY = `${
   process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
@@ -18,6 +19,7 @@ export default ({ height, width, data }) => {
           items={data.hits.hits
             .map(({ _source }) => {
               const { metadata_json } = _source
+              const { alternateIdentifiers } = metadata_json
               return (
                 metadata_json.linkedResources
                   ?.filter((r) => r.linkedResourceType === 'Query')
@@ -26,6 +28,11 @@ export default ({ height, width, data }) => {
                     const { protocol, pathname, query, port, hostname } = uri
                     const { layers } = query
                     const layerId = `${resourceDescription} - ${layers}`
+                    const altId = alternateIdentifiers?.filter(
+                      ({ alternateIdentifierType }) =>
+                        alternateIdentifierType.toLowerCase() === 'plone'
+                    )?.[0]?.alternateIdentifier
+                    const metadataUrl = `http://www.sasdi.net/metaview.aspx?uuid=${altId}`
                     return {
                       layerId,
                       resourceURL,
@@ -35,6 +42,7 @@ export default ({ height, width, data }) => {
                       hostname,
                       pathname,
                       layers,
+                      metadataUrl,
                     }
                   }) || []
               )
@@ -42,7 +50,15 @@ export default ({ height, width, data }) => {
             .flat()}
           height={height}
           width={width}
-          Template={({ hostname, layerId, port, pathname, layers, resourceDescription }) => {
+          Template={({
+            hostname,
+            layerId,
+            port,
+            pathname,
+            layers,
+            resourceDescription,
+            metadataUrl,
+          }) => {
             return (
               <Card style={{ marginRight: 5 }} variant="outlined" square={true}>
                 <CardHeader
@@ -55,37 +71,45 @@ export default ({ height, width, data }) => {
                   title={resourceDescription}
                   subheader={layerId}
                   action={
-                    <Checkbox
-                      style={{ float: 'right' }}
-                      size="small"
-                      edge="start"
-                      checked={Boolean(proxy.getLayerById(layerId))}
-                      onChange={({ target }) => {
-                        if (target.checked) {
-                          let serverAddress = `${SPATIALDATA_PROXY}/${hostname}/${port}${pathname}`
-                          console.log(hostname)
-                          proxy.addLayer(
-                            createLayer({
-                              LegendMenu: () => (
-                                <LegendContent
-                                  title={layerId}
-                                  uri={`${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`}
-                                />
-                              ),
-                              layerType: LayerTypes.TileWMS,
-                              id: layerId,
-                              title: layerId,
-                              uri: serverAddress,
-                              LAYERS: layers,
-                            })
-                          )
-                        } else {
-                          proxy.removeLayerById(layerId)
-                        }
-                      }}
-                    />
+                    <div>
+                      <Link target="_blank" rel="noopener noreferrer" href={metadataUrl}>
+                        <IconButton ria-label="view-record">
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Link>
+
+                      <Checkbox
+                        style={{ float: 'right' }}
+                        size="small"
+                        edge="start"
+                        checked={Boolean(proxy.getLayerById(layerId))}
+                        onChange={({ target }) => {
+                          if (target.checked) {
+                            let serverAddress = `${SPATIALDATA_PROXY}/${hostname}/${port}${pathname}`
+                            proxy.addLayer(
+                              createLayer({
+                                LegendMenu: () => (
+                                  <LegendContent
+                                    title={layerId}
+                                    uri={`${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`}
+                                  />
+                                ),
+                                layerType: LayerTypes.TileWMS,
+                                id: layerId,
+                                title: layerId,
+                                uri: serverAddress,
+                                LAYERS: layers,
+                              })
+                            )
+                          } else {
+                            proxy.removeLayerById(layerId)
+                          }
+                        }}
+                      />
+                    </div>
                   }
                 />
+                <CardContent>{metadataUrl}</CardContent>
               </Card>
             )
           }}
