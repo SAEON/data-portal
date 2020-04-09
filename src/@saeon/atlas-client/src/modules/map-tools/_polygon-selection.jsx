@@ -12,25 +12,40 @@ import { nanoid } from 'nanoid'
 var draw
 export default ({ id, onClose, onDrawEnd }) => {
   return (
-    <MapContext.Consumer>
-      {({ proxy }) => {
-        return (
-          <MenuContext.Consumer>
-            {({ getMenuById, setActiveMenu }) => (
-              <DragMenu
-                onMouseDown={() => setActiveMenu(id)}
-                zIndex={getMenuById(id).zIndex}
-                defaultPosition={{ x: 150, y: 25 }}
-                defaultWidth={60}
-                defaultHeight={143}
-                title={''}
-                resizable={false}
-                close={onClose}
-              >
-                {() => {
-                  return (
-                    <Form selectPolygonActic={false} selectRectActive={false}>
-                      {({ updateForm, selectPolygonActic, selectRectActive }) => (
+    <Form selectPolygonActic={false} selectRectActive={false}>
+      {({ updateForm, selectPolygonActic, selectRectActive }) => (
+        <MapContext.Consumer>
+          {({ proxy }) => {
+            return (
+              <MenuContext.Consumer>
+                {({ getMenuById, setActiveMenu }) => (
+                  <DragMenu
+                    onMouseDown={() => setActiveMenu(id)}
+                    zIndex={getMenuById(id).zIndex}
+                    defaultPosition={{ x: 150, y: 25 }}
+                    defaultWidth={60}
+                    defaultHeight={143}
+                    title={''}
+                    resizable={false}
+                    close={onClose}
+                  >
+                    {() => {
+                      const keyDown = (e) => {
+                        if (e.key === 'Escape') {
+                          proxy.removeInteraction(draw)
+                          updateForm({
+                            selectRectActive: false,
+                            selectPolygonActic: false,
+                          })
+                        }
+                      }
+
+                      useEffect(() => {
+                        const body = document.getElementsByTagName('body')[0]
+                        body.addEventListener('keydown', keyDown)
+                        return () => body.removeEventListener('keydown', keyDown)
+                      }, [])
+                      return (
                         <>
                           <div>
                             <Tooltip placement="right" title="Selected rectangle">
@@ -109,15 +124,15 @@ export default ({ id, onClose, onDrawEnd }) => {
                             </Tooltip>
                           </div>
                         </>
-                      )}
-                    </Form>
-                  )
-                }}
-              </DragMenu>
-            )}
-          </MenuContext.Consumer>
-        )
-      }}
-    </MapContext.Consumer>
+                      )
+                    }}
+                  </DragMenu>
+                )}
+              </MenuContext.Consumer>
+            )
+          }}
+        </MapContext.Consumer>
+      )}
+    </Form>
   )
 }
