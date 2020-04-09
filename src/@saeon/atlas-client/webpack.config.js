@@ -1,6 +1,7 @@
 const Dotenv = require('dotenv-webpack')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 require('dotenv').config()
 
@@ -14,14 +15,18 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
     },
     resolve: {
       alias: {
+        'ol': path.resolve(__dirname, './node_modules/ol'),
+        'ol/control.js': path.resolve(__dirname, './node_modules/ol/control.js'),
+        'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
+        'react': path.resolve(__dirname, './node_modules/react'),
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? '../../../node_modules/@saeon/ol-react' : '../ol-react/src/index'
+          mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
           mode === 'production'
-            ? '../../../node_modules/@saeon/catalogue-search'
+            ? './node_modules/@saeon/catalogue-search'
             : '../catalogue-search/src/index'
         ),
       },
@@ -72,6 +77,12 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
+      new CopyPlugin([
+        {
+          from: path.resolve(__dirname, './public'),
+          to: path.resolve(__dirname, './dist')
+        }
+      ]),
       new HtmlWebPackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, output, '/index.html'),

@@ -13,16 +13,10 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "npm-run-all -s clean:dist pack",
-    "clean:dist": "rimraf ./dist",
-    "pack": "webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
-    "publish:patch": "npm-run-all -s pack increment:patch push-to-npm",
-    "publish:minor": "npm-run-all -s pack increment:minor push-to-npm",
-    "publish:major": "npm-run-all -s pack increment:major push-to-npm",
-    "increment:patch": "../../../scripts/increment-patch.sh",
-    "increment:minor": "../../../scripts/increment-minor.sh",
-    "increment:major": "../../../scripts/increment-major.sh",
-    "push-to-npm": "../../../scripts/push-to-npm.sh -p @saeon/catalogue-search"
+    "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
+    "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s major"
   },
   "keywords": [
     "@saeon/catalogue-search"
@@ -37,6 +31,16 @@
   "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/catalogue-search",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "prop-types": "^15.7.2",
+    "rimraf": "^3.0.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "babel-jest": "^25.3.0",
+    "jest": "^25.3.0",
+    "node-fetch": "^2.6.0"
+  }
 }

@@ -11,16 +11,10 @@
     "ol": ">=6"
   },
   "scripts": {
-    "build": "npm-run-all -s clean:dist pack",
-    "clean:dist": "rimraf ./dist",
-    "pack": "webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
-    "publish:patch": "npm-run-all -s build increment:patch push-to-npm",
-    "publish:minor": "npm-run-all -s build increment:minor push-to-npm",
-    "publish:major": "npm-run-all -s build increment:major push-to-npm",
-    "increment:patch": "../../../scripts/increment-patch.sh",
-    "increment:minor": "../../../scripts/increment-minor.sh",
-    "increment:major": "../../../scripts/increment-major.sh",
-    "push-to-npm": "../../../scripts/push-to-npm.sh -p @saeon/ol-react"
+    "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
+    "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s major"
   },
   "keywords": [
     "@saeon/ol-react"
@@ -35,6 +29,13 @@
   "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/ol-react",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
   "devDependencies": {}
 }

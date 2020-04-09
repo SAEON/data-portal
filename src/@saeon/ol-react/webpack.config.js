@@ -43,20 +43,6 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
           },
         ],
       },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              fallback: 'file-loader',
-              name: '[name][md5:hash].[ext]',
-              outputPath: 'assets/',
-              publicPath: '/assets/',
-            },
-          },
-        ],
-      },
     ],
   },
   plugins: [],
