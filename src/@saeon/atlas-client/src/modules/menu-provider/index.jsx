@@ -1,24 +1,16 @@
-import React, { createContext } from 'react'
-import { PureComponent } from 'react'
+import React, { createContext, PureComponent } from 'react'
+import { createPortal } from 'react-dom'
+
+const menuContainerEl = document.getElementById('menu-portal')
 
 export const MenuContext = createContext()
 
 export default class extends PureComponent {
-  state = {
-    menus: [
-      { id: 'topMenu', menuAnchor: null },
-      { id: 'configMenu', active: false, zIndex: 1 },
-      { id: 'layersMenu', active: false, zIndex: 1 },
-      { id: 'layerInfo', active: false, zIndex: 1 },
-      { id: 'saeonSearchMenu', active: false, zIndex: 1 },
-      { id: 'csirSearchMenu', active: false },
-      { id: 'screenshotMenu', active: false, zIndex: 1 },
-    ],
-  }
+  state = { menus: [] }
 
-  addMenu = ({ id, Component }) =>
+  addMenu = ({ id, Component, zIndex = 1, norender = false, ...props }) =>
     this.setState({
-      menus: [...this.state.menus, { id, zIndex: 1, Component }],
+      menus: [...this.state.menus, { id, zIndex, Component, norender, ...props }],
     })
 
   removeMenu = (removeId) =>
@@ -29,26 +21,22 @@ export default class extends PureComponent {
   getMenuById = (id) => this.state.menus.find((item) => item.id === id)
 
   setActiveMenu = (id) => {
-    const newMenus = [...this.state.menus]
-    newMenus.find((menu) => menu.id === id).zIndex = Math.max(
-      ...this.state.menus.map(({ zIndex }) => (zIndex || 0) + 1)
-    )
+    const newMenus = [...this.state.menus].map((m) => {
+      if (m.id === id) {
+        return Object.assign({ ...m }, { zIndex: this.getActiveMenuZIndex() })
+      } else {
+        return m
+      }
+    })
     this.setState({
       menus: newMenus,
     })
   }
 
-  /**
-   * @param {Object} obj {id: {... vals}}
-   */
-  updateMenuManager = (obj) => {
-    const newMenus = [...this.state.menus]
-    Object.entries(obj).forEach(([id, kvs]) =>
-      Object.assign(newMenus.find((item) => id === item.id) || {}, { ...kvs })
-    )
-    this.setState({
-      menus: newMenus,
-    })
+  getActiveMenuZIndex = () => {
+    const zIndices = this.state.menus.map(({ zIndex }) => (zIndex || 1) + 1)
+    const zIndex = zIndices.length ? Math.max(...zIndices) : 1
+    return zIndex
   }
 
   render() {
@@ -59,7 +47,7 @@ export default class extends PureComponent {
       addMenu,
       getMenuById,
       setActiveMenu,
-      updateMenuManager,
+      getActiveMenuZIndex,
     } = this
     const { children } = props
     const { menus } = state
@@ -70,13 +58,18 @@ export default class extends PureComponent {
           getMenuById,
           menus,
           setActiveMenu,
-          updateMenuManager,
           addMenu,
           removeMenu,
+          getActiveMenuZIndex,
+          menuContainerEl,
         }}
       >
-        {/* Render menus with defined components */}
-        {menus.filter(({ Component }) => Component).map(({ Component }) => Component)}
+        {/* Render menus into a top level portal */}
+        {menus
+          .filter(({ Component, norender = false }) => Component && !norender)
+          .map((item, i) => {
+            return createPortal(<item.Component {...item} key={i} />, menuContainerEl)
+          })}
 
         {/* Render children */}
         {children}

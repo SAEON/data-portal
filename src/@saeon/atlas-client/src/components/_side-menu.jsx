@@ -2,9 +2,15 @@ import React from 'react'
 import { AppBar, Toolbar, Typography, IconButton, SwipeableDrawer } from '@material-ui/core'
 import { Close as CloseButton } from '@material-ui/icons'
 
-export default ({ active, toggle, title, children, width, height, anchor = 'left' }) => {
+export default ({ open, toggle, title, children, width, height, anchor = 'left' }) => {
   return (
-    <SwipeableDrawer anchor={anchor} variant="persistent" open={active} onClose={toggle}>
+    <SwipeableDrawer
+      onOpen={() => null}
+      anchor={anchor}
+      variant="persistent"
+      open={open}
+      onClose={toggle}
+    >
       <div style={{ width: width || 400, height: height || '100%' }}>
         <AppBar variant="outlined" color="secondary" position="relative">
           {title ? (

@@ -1,25 +1,34 @@
-import { PureComponent } from 'react'
+import { useState, useEffect } from 'react'
 
 /**
- * General class component description in JSDoc format. Markdown is *supported*.
+ * General component description in JSDoc format. Markdown is *supported*.
  */
-export default class Form extends PureComponent {
-  state = {}
-  constructor(props) {
-    super(props)
-    for (const prop in this.props) {
-      if (Object.prototype.hasOwnProperty.call(this.props, prop)) {
-        if (prop !== 'children') this.state[prop] = this.props[prop]
-      }
-    }
+export default (props) => {
+  const [fields, updateAllFields] = useState(
+    Object.fromEntries(
+      Object.entries(props).filter(
+        ([key]) =>
+          Object.prototype.hasOwnProperty.call(props, key) &&
+          key !== 'children' &&
+          key !== 'effects'
+      )
+    )
+  )
+
+  useEffect(
+    () =>
+      props.effects?.forEach((effect) => {
+        effect(fields)
+      }),
+    Object.entries(fields).map(([, v]) => v)
+  )
+
+  const updateForm = (obj) => {
+    updateAllFields(Object.assign({ ...fields }, obj))
   }
 
-  updateForm = (obj, cb = null) => this.setState(obj, cb)
-
-  render() {
-    return this.props.children({
-      updateForm: this.updateForm,
-      ...this.state,
-    })
-  }
+  return props.children({
+    updateForm,
+    ...fields,
+  })
 }

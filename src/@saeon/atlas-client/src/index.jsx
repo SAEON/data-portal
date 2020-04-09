@@ -15,11 +15,11 @@ render(
   <CssBaseline>
     <ThemeProvider theme={createMuiTheme(theme)}>
       <ExceptionProvider>
-        <MenuProvider>
-          <MapProvider>
+        <MapProvider>
+          <MenuProvider>
             <Atlas />
-          </MapProvider>
-        </MenuProvider>
+          </MenuProvider>
+        </MapProvider>
       </ExceptionProvider>
     </ThemeProvider>
   </CssBaseline>,
