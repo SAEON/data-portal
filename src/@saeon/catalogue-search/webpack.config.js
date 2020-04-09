@@ -26,7 +26,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
             rootMode: 'upward',
           },
         },
-      }
+      },
     ],
   },
   plugins:

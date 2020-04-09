@@ -15,10 +15,10 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
     },
     resolve: {
       alias: {
-        'ol': path.resolve(__dirname, './node_modules/ol'),
+        ol: path.resolve(__dirname, './node_modules/ol'),
         'ol/control.js': path.resolve(__dirname, './node_modules/ol/control.js'),
         'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
-        'react': path.resolve(__dirname, './node_modules/react'),
+        react: path.resolve(__dirname, './node_modules/react'),
         '@saeon/ol-react': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'
@@ -80,8 +80,8 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
       new CopyPlugin([
         {
           from: path.resolve(__dirname, './public'),
-          to: path.resolve(__dirname, './dist')
-        }
+          to: path.resolve(__dirname, './dist'),
+        },
       ]),
       new HtmlWebPackPlugin({
         template: 'index.html',

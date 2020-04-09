@@ -12,7 +12,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all -s test build-readme prettier:changed lint update-git-snapshot"
+      "pre-commit": "npm run test && npm run build-readme && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za",
