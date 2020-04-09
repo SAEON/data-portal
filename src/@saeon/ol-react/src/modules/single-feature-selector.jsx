@@ -1,5 +1,13 @@
 import { PureComponent } from 'react'
-import { debounce } from '../../../fns-lib'
+
+const debounce = (cb, duration = 0) => {
+  var timer
+  return (...args) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => cb(...args), duration)
+  }
+}
+
 export default class extends PureComponent {
   state = { selectedFeature: null, selectedLayer: null }
 

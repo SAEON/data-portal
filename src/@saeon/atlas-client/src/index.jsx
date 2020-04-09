@@ -8,7 +8,7 @@ import MapProvider from './modules/map-provider'
 import MenuProvider from './modules/menu-provider'
 import ExceptionProvider from './modules/exception-provider'
 import theme from './theme'
-import { nativeExtensions } from '../../fns-lib'
+import { nativeExtensions } from './lib/fns'
 nativeExtensions()
 
 render(

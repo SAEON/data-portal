@@ -25,7 +25,7 @@ import {
 import { MenuContext } from '../menu-provider'
 import { MapContext } from '../map-provider'
 import { Form, DragAndDrop } from '../../components'
-import { debounce } from '../../../../fns-lib'
+import { debounce } from '../../lib/fns'
 import Legend from './_legend-menu'
 import Info from './_info-menu'
 
