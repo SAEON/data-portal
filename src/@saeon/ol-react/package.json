@@ -14,7 +14,8 @@
     "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s major"
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s major",
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}"
   },
   "keywords": [
     "@saeon/ol-react"
