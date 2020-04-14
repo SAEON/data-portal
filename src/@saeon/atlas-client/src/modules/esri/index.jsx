@@ -7,11 +7,17 @@ import InfoMenu from '../esri/_info-menu'
 import LegendMenu from '../esri/_legend-menu'
 import { MapContext } from '../map-provider'
 
-const fetchMeta = (uri) => fetch(`${uri}?f=pjson`).then((res) => res.json())
+const fetchMeta = (uri) =>
+  fetch(`${uri}?f=pjson`, {
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+    },
+  }).then((res) => res.json())
 
 export default class extends Component {
   state = {
-    csirLayers: [],
+    esriLayers: [],
     loading: true,
     error: false,
   }
@@ -25,11 +31,11 @@ export default class extends Component {
         Promise.all([uri, fetchMeta(uri.replace(this.servicesAddress, this.proxy))])
       )
     )
-      .then((csirLayers) =>
+      .then((esriLayers) =>
         this.setState({
           loading: false,
           error: false,
-          csirLayers: Object.fromEntries(csirLayers || []),
+          esriLayers: Object.fromEntries(esriLayers || []),
         })
       )
 
@@ -37,7 +43,7 @@ export default class extends Component {
         this.setState({
           loading: false,
           error,
-          csirLayers: [],
+          esriLayers: [],
         })
       )
   }
@@ -47,16 +53,17 @@ export default class extends Component {
   }
 
   render() {
-    const { csirLayers, loading, error } = this.state
+    const { esriLayers, loading, error } = this.state
+    console.log(esriLayers)
     return loading ? (
       <Typography>Loading ...</Typography>
     ) : error ? (
-      <Typography>ERROR. Unable to load CSIR layers</Typography>
+      <Typography>ERROR. Unable to load data from ESRI RESTful services</Typography>
     ) : (
       <MapContext.Consumer>
         {({ proxy }) => (
           <div style={{ height: '100%', overflow: 'auto', paddingRight: 5 }}>
-            {Object.entries(csirLayers).map(([uri, { mapName, currentVersion }], i) => (
+            {Object.entries(esriLayers).map(([uri, { mapName, currentVersion }], i) => (
               <Card key={i} style={{ margin: 5 }} variant="outlined" square={true}>
                 <CardHeader
                   titleTypographyProps={{

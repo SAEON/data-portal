@@ -4,11 +4,8 @@ import layers from './layers'
 import { ATLAS_API_ADDRESS } from '../../config'
 
 const PROXY_ADDRESS = `${ATLAS_API_ADDRESS}/proxy/hst`
+const SERVICES_ADDRESS = 'https://gisportal.saeon.ac.za/server/rest/services'
 
 export default () => (
-  <Esri
-    servicesAddress="https://gisportal.saeon.ac.za/server/rest/services"
-    layers={layers}
-    proxy={PROXY_ADDRESS}
-  />
+  <Esri servicesAddress={SERVICES_ADDRESS} layers={layers} proxy={PROXY_ADDRESS} />
 )
