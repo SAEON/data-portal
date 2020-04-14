@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
-import { Avatar } from '@material-ui/core'
 import SaeonSearch from '../../modules/saeon-search'
 import CsirLayers from '../../modules/csir-layers'
 import { Search as SearchIcon } from '@material-ui/icons'
-import { DragMenu } from '../../components'
+import { DragMenu, CsirIcon, NrfIcon, HstIcon } from '../../components'
 import DialMenu from './_dial-menu'
 import { MenuContext } from '../../modules/menu-provider'
 import { SpeedDialAction } from '@material-ui/lab'
@@ -18,9 +17,42 @@ export default () => {
             direction={'left'}
             icon={<SearchIcon />}
           >
+            {/* HST (Health System Trust) search */}
+            <SpeedDialAction
+              icon={<HstIcon />}
+              tooltipTitle="Search HST (Health System Trust) data"
+              onClick={() => {
+                const id = 'hstSearchMenu'
+                if (getMenuById(id)) {
+                  removeMenu(id)
+                } else {
+                  addMenu({
+                    id,
+                    zIndex: getActiveMenuZIndex(),
+                    Component: memo(
+                      ({ id }) => {
+                        return (
+                          <DragMenu
+                            onMouseDown={() => setActiveMenu(id)}
+                            zIndex={getMenuById(id).zIndex}
+                            title={'Search HST data'}
+                            active={Boolean(getMenuById(id))}
+                            close={() => removeMenu(id)}
+                          >
+                            {() => <>Coming soon!</>}
+                          </DragMenu>
+                        )
+                      },
+                      ({ zIndex: z1 }, { zIndex: z2 }) => z1 == z2
+                    ),
+                  })
+                }
+              }}
+            />
+
             {/* CSIR search */}
             <SpeedDialAction
-              icon={<Avatar>S</Avatar>}
+              icon={<NrfIcon />}
               tooltipTitle="Search SAEON data"
               onClick={() => {
                 const id = 'saeonSearchMenu'
@@ -36,7 +68,7 @@ export default () => {
                           <DragMenu
                             defaultWidth={800}
                             defaultHeight={600}
-                            onMouseDown={() => setActiveMenu('saeonSearchMenu')}
+                            onMouseDown={() => setActiveMenu(id)}
                             zIndex={getMenuById(id).zIndex}
                             title={'Search SAEON data'}
                             active={Boolean(getMenuById(id))}
@@ -55,7 +87,7 @@ export default () => {
 
             {/* CSIR search */}
             <SpeedDialAction
-              icon={<Avatar>C</Avatar>}
+              icon={<CsirIcon />}
               tooltipTitle={'Search CSIR data'}
               onClick={() => {
                 const id = 'csirSearchMenu'
@@ -69,7 +101,7 @@ export default () => {
                       ({ id }) => {
                         return (
                           <DragMenu
-                            onMouseDown={() => setActiveMenu('csirSearchMenu')}
+                            onMouseDown={() => setActiveMenu(id)}
                             zIndex={getMenuById(id).zIndex}
                             title={'Search CSIR data'}
                             close={() => removeMenu(id)}

@@ -57,7 +57,11 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
           ],
         },
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.svg$/,
+          use: ['@svgr/webpack'],
+        },
+        {
+          test: /\.(png|jpg|gif)$/,
           use: [
             {
               loader: 'url-loader',
