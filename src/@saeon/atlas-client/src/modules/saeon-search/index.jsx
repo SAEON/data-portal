@@ -9,11 +9,11 @@ import SearchResultsMenu from './_search-results-menu'
 import { ReactCatalogue } from '@saeon/catalogue-search'
 import SearchUI from './_search-ui'
 import useStyles from './style'
-const DSL_PROXY = `${
-  process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'
-}/proxy/saeon-elk/_search`
+import { ATLAS_API_ADDRESS } from '../../config'
 
+const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk/_search`
 const DSL_INDEX = `saeon-odp-4-2`
+
 const searchListMenuId = 'saeon-search-results-menu'
 
 export default () => {

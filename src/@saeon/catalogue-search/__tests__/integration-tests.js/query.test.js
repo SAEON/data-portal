@@ -1,6 +1,8 @@
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 import { Catalogue } from '../../src'
-const dslAddress = 'https://api.atlas.saeon.ac.za/proxy/saeon-elk'
+import { API_ADDRESS } from '../config'
+
+const dslAddress = `${API_ADDRESS}/proxy/saeon-elk`
 const index = 'saeon-odp-4-2'
 
 const catalog = new Catalogue({ dslAddress, index })

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import app from '../app'
 import http from 'http'
+import { PORT } from '../config'
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10)
@@ -9,14 +10,15 @@ const normalizePort = (val) => {
   return false
 }
 
-const PORT = normalizePort(process.env.PORT || '3000')
-app.set('port', PORT)
+const normalizedPort = normalizePort(PORT)
+app.set('port', normalizedPort)
 const server = http.createServer(app)
-server.listen(PORT)
+server.listen(normalizedPort)
 
 server.on('error', (err) => {
   if (err.syscall !== 'listen') throw err
-  var bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT
+  var bind =
+    typeof normalizedPort === 'string' ? 'Pipe ' + normalizedPort : 'Port ' + normalizedPort
   switch (err.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges')

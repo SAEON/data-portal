@@ -7,8 +7,9 @@ import { Typography } from '@material-ui/core'
 import InfoMenu from './_info-menu'
 import LegendMenu from './_legend-menu'
 import { MapContext } from '../map-provider'
+import { ATLAS_API_ADDRESS } from '../../config'
 
-const CSIR_PROXY = `${process.env.ATLAS_API_ADDRESS || 'http://localhost:4000'}/proxy/csir`
+const CSIR_PROXY = `${ATLAS_API_ADDRESS}/proxy/csir`
 
 const fetchMeta = (uri) => fetch(`${uri}?f=pjson`).then((res) => res.json())
 

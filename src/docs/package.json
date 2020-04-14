@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-loader": "^8.1.0",
-    "css-loader": "^3.5.1",
+    "css-loader": "^3.5.2",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

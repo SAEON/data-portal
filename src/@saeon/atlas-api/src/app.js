@@ -8,17 +8,19 @@ import graphqlHTTP from 'express-graphql'
 import { makeExecutableSchema } from 'graphql-tools'
 import { normalize, join } from 'path'
 import { readFileSync } from 'fs'
-import { config } from 'dotenv'
 import { createRequestContext, cors, proxy } from './middleware'
 import { homeRoute } from './routes'
+import { NODE_ENV } from './config'
 
 const router = express.Router()
-config()
 
-if (!process.env.NODE_ENV || !['production', 'development'].includes(process.env.NODE_ENV)) {
-  throw new Error(
-    'The server MUST be started with a NODE_ENV environment variable, with a value of either "production" or "development"'
+if (!['production', 'development'].includes(NODE_ENV)) {
+  console.error(
+    new Error(
+      'The server MUST be started with a NODE_ENV environment variable, with a value of either "production" or "development"'
+    )
   )
+  process.exit(1)
 }
 
 // GraphQL

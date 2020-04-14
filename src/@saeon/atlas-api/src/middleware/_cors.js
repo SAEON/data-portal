@@ -1,5 +1,4 @@
-import { config } from 'dotenv'
-config()
+import { ALLOWED_ORIGINS } from '../config'
 
 export default ((ALLOWED_ORIGINS) => {
   console.log('Allowed origins registered', ALLOWED_ORIGINS)
@@ -19,13 +18,4 @@ export default ((ALLOWED_ORIGINS) => {
       next()
     }
   }
-})(
-  process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',')
-    : [
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://localhost:4000',
-        'http://localhost:4001',
-      ]
-)
+})(ALLOWED_ORIGINS.split(','))
