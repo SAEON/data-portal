@@ -3,6 +3,7 @@ import { Fab } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
 import { DragMenu } from '../../components'
 import { MenuContext } from '../../modules/menu-provider'
+import packageJson from '../../../package.json'
 
 export default () => (
   <MenuContext.Consumer>
@@ -25,7 +26,7 @@ export default () => (
                   <DragMenu
                     onMouseDown={() => setActiveMenu(id)}
                     zIndex={getMenuById(id).zIndex}
-                    title={'Open layers menu'}
+                    title={`About ${packageJson.name}`}
                     close={() => removeMenu(id)}
                   >
                     {() => 'hi'}

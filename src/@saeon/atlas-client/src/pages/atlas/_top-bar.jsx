@@ -32,7 +32,7 @@ export default () => {
           <MenuItem onClick={() => alert('hi')}>needed</MenuItem>
         </Menu>
         <Typography style={{ padding: '10px' }} display="block" variant="body2">
-          {packageJson.name} v{packageJson.version}
+          {`${packageJson.name}`}
         </Typography>
 
         <IconButton
