@@ -34,11 +34,11 @@ export default () => (
                         <Typography variant="overline">
                           Version {packageJson.version}. &copy; SAEON 2020
                         </Typography>
+                        <Typography>Thank you for visting our site!</Typography>
                         <Typography>
-                          Thank you for visting out site! Even the work-in-progress (news update,
-                          this info panel, etc) is still a work-in-progress! We are moving quickly
-                          though, please check back in a couple days for the latest deployment of
-                          this open source code base
+                          Even the work-in-progress (news update, this info panel, etc) is still a
+                          work-in-progress! We are moving quickly though, please check back in a
+                          couple days for the latest deployment of this open source code base
                         </Typography>
                       </div>
                     )}
