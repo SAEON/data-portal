@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Typography } from '@material-ui/core'
 
+// TODO - change this to use a general http query hook
+
 export default ({ title, uri }) => {
   const [state, setState] = useState({
     error: null,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Fab } from '@material-ui/core'
+import { Fab, Typography } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
 import { DragMenu } from '../../components'
 import { MenuContext } from '../../modules/menu-provider'
@@ -29,7 +29,19 @@ export default () => (
                     title={`About ${packageJson.name}`}
                     close={() => removeMenu(id)}
                   >
-                    {() => 'hi'}
+                    {() => (
+                      <div>
+                        <Typography variant="overline">
+                          Version {packageJson.version}. &copy; SAEON 2020
+                        </Typography>
+                        <Typography>
+                          Thank you for visting out site! Even the work-in-progress (news update,
+                          this info panel, etc) is still a work-in-progress! We are moving quickly
+                          though, please check back in a couple days for the latest deployment of
+                          this open source code base
+                        </Typography>
+                      </div>
+                    )}
                   </DragMenu>
                 ),
               })
