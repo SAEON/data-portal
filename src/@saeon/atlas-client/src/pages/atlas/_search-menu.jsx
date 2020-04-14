@@ -6,8 +6,10 @@ import { DragMenu, CsirIcon, NrfIcon, HstIcon } from '../../components'
 import DialMenu from './_dial-menu'
 import { MenuContext } from '../../modules/menu-provider'
 import { SpeedDialAction } from '@material-ui/lab'
+import useStyles from './style'
 
 export default () => {
+  const classes = useStyles()
   return (
     <MenuContext.Consumer>
       {({ addMenu, removeMenu, getMenuById, setActiveMenu, getActiveMenuZIndex }) => {
@@ -19,7 +21,8 @@ export default () => {
           >
             {/* HST (Health Systems Trust) search */}
             <SpeedDialAction
-              icon={<HstIcon />}
+              className={classes.dialAction}
+              icon={<HstIcon fontSize="large" />}
               tooltipTitle="Search HST (Health Systems Trust) data"
               onClick={() => {
                 const id = 'hstSearchMenu'
@@ -52,7 +55,8 @@ export default () => {
 
             {/* CSIR search */}
             <SpeedDialAction
-              icon={<NrfIcon />}
+              className={classes.dialAction}
+              icon={<NrfIcon fontSize="large" />}
               tooltipTitle="Search SAEON data"
               onClick={() => {
                 const id = 'saeonSearchMenu'
@@ -87,7 +91,8 @@ export default () => {
 
             {/* CSIR search */}
             <SpeedDialAction
-              icon={<CsirIcon />}
+              className={classes.dialAction}
+              icon={<CsirIcon fontSize="large" />}
               tooltipTitle={'Search CSIR data'}
               onClick={() => {
                 const id = 'csirSearchMenu'

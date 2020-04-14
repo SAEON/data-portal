@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core'
 import { Menu as MenuIcon, GitHub as GitHubIcon } from '@material-ui/icons'
+import packageJson from '../../../package.json'
 
 export default () => {
   const [menuAnchor, setMenuAnchor] = useState(null)
@@ -31,7 +32,7 @@ export default () => {
           <MenuItem onClick={() => alert('hi')}>needed</MenuItem>
         </Menu>
         <Typography style={{ padding: '10px' }} display="block" variant="body2">
-          SAEON Atlas
+          {packageJson.name} v{packageJson.version}
         </Typography>
 
         <IconButton

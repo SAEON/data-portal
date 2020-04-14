@@ -9,7 +9,7 @@
     "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.jsx",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & webpack-dev-server --port 3001 --env.mode=development --env.output=dist --env.entry=src/index.jsx --open"
   },
-  "author": "zach@saeon.ac.za",
+  "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.2",
