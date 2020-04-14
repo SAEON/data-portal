@@ -6,11 +6,11 @@ import { Typography } from '@material-ui/core'
 import InfoMenu from '../esri/_info-menu'
 import LegendMenu from '../esri/_legend-menu'
 import { MapContext } from '../map-provider'
-import { useHttpDataQuery } from '../../components'
 
-const fetchMeta = (uri) =>
+const fetchMeta = ({ uri, abortController }) =>
   fetch(`${uri}?f=pjson`, {
     mode: 'cors',
+    signal: abortController?.signal,
     headers: {
       Accept: 'application/json',
     },
@@ -24,26 +24,38 @@ export default ({ apiProxyAddress, servicesAddress, layers }) => {
   })
 
   useEffect(() => {
+    const abortController = new AbortController()
     Promise.all(
       layers.map((uri) =>
-        Promise.all([uri, fetchMeta(uri.replace(servicesAddress, apiProxyAddress))])
+        Promise.all([
+          uri,
+          fetchMeta({
+            uri: uri.replace(servicesAddress, apiProxyAddress),
+            abortController,
+          }),
+        ])
       )
     )
-      .then((esriLayers) =>
-        setState({
-          loading: false,
-          error: false,
-          esriLayers: Object.fromEntries(esriLayers || []),
-        })
-      )
+      .then((esriLayers) => {
+        if (!abortController.signal.aborted) {
+          setState({
+            loading: false,
+            error: false,
+            esriLayers: Object.fromEntries(esriLayers || []),
+          })
+        }
+      })
+      .catch((error) => {
+        if (!abortController.signal.aborted) {
+          setState({
+            loading: false,
+            error,
+            esriLayers: [],
+          })
+        }
+      })
 
-      .catch((error) =>
-        setState({
-          loading: false,
-          error,
-          esriLayers: [],
-        })
-      )
+    return () => abortController.abort()
   }, [])
 
   return state.loading ? (
