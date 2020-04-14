@@ -17,10 +17,10 @@ export default () => {
             direction={'left'}
             icon={<SearchIcon />}
           >
-            {/* HST (Health System Trust) search */}
+            {/* HST (Health Systems Trust) search */}
             <SpeedDialAction
               icon={<HstIcon />}
-              tooltipTitle="Search HST (Health System Trust) data"
+              tooltipTitle="Search HST (Health Systems Trust) data"
               onClick={() => {
                 const id = 'hstSearchMenu'
                 if (getMenuById(id)) {
