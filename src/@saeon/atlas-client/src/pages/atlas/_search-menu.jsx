@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import SaeonSearch from '../../modules/saeon-search'
 import CsirLayers from '../../modules/csir-layers'
+import HstLayers from '../../modules/hst-layers'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { DragMenu, CsirIcon, NrfIcon, HstIcon } from '../../components'
 import DialMenu from './_dial-menu'
@@ -42,7 +43,7 @@ export default () => {
                             active={Boolean(getMenuById(id))}
                             close={() => removeMenu(id)}
                           >
-                            {() => <>Coming soon!</>}
+                            {({ height, width }) => <HstLayers height={height} width={width} />}
                           </DragMenu>
                         )
                       },
