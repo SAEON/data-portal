@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
 
           {/* Title */}
           <Typography style={{ padding: '10px' }} display="block" variant="body2">
-            {`${packageJson.name}`}
+            SAEON Atlas {packageJson.version}
           </Typography>
 
           {/* GitHub link */}

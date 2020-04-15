@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, Checkbox, CardContent, IconButton, Link } from '@material-ui/core'
+import { Card, CardHeader, Checkbox, IconButton, Link } from '@material-ui/core'
 import npmUrl from 'url'
 import { VirtualList } from '../../../../components'
 import { createLayer, LayerTypes } from '../../../../lib/ol'
@@ -76,12 +76,11 @@ export default ({ height, width, data }) => {
                         <div>
                           <Link target="_blank" rel="noopener noreferrer" href={metadataUrl}>
                             <IconButton ria-label="view-record">
-                              <VisibilityIcon />
+                              <VisibilityIcon size="small" />
                             </IconButton>
                           </Link>
 
                           <Checkbox
-                            style={{ float: 'right' }}
                             size="small"
                             edge="start"
                             checked={Boolean(proxy.getLayerById(layerId))}
@@ -117,7 +116,6 @@ export default ({ height, width, data }) => {
                         </div>
                       }
                     />
-                    <CardContent>{metadataUrl}</CardContent>
                   </Card>
                 )
               }}
