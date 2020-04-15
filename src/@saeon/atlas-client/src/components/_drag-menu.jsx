@@ -148,7 +148,7 @@ export default ({
                       backgroundSize: isResizing ? '20px 20px' : undefined,
                     }}
                   >
-                    <CardContent>
+                    <CardContent style={{ height: '100%', width: '100%' }}>
                       {typeof children === 'function' ? children({ height, width }) : children}
                       {/* <button onClick={test}>TEST</button> */}
                     </CardContent>
