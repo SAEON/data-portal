@@ -19,10 +19,12 @@ const status = Object.freeze({
   complete: Symbol('complete'),
 })
 
-const createRow = (...cells) => ({
-  name: cells[0],
-  status: cells[1] === status.planned ? 'planned' : status.partial ? 'partial' : 'complete',
-})
+const createRow = (cells) => {
+  return {
+    name: cells[0],
+    status: cells[1] === status.planned ? 'planned' : status.partial ? 'partial' : 'complete',
+  }
+}
 
 const rows = [
   ['WMS support', status.partial],
