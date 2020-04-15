@@ -1,6 +1,6 @@
 import React from 'react'
-import { DragMenu } from '../../components'
-import { MenuContext } from '../menu-provider'
+import { DragMenu } from '../../../../components'
+import { MenuContext } from '../../../provider-menu'
 import ResultsList from './_results'
 import { Typography } from '@material-ui/core'
 

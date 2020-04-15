@@ -2,7 +2,7 @@ import React from 'react'
 import { Fab, Typography } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
 import { DragMenu } from '../../components'
-import { MenuContext } from '../../modules/menu-provider'
+import { MenuContext } from '../provider-menu'
 import packageJson from '../../../package.json'
 
 export default () => (

@@ -1,11 +1,11 @@
 import React from 'react'
-import { DragMenu } from '../../components'
+import { DragMenu } from '../../../../components'
 import { Typography } from '@material-ui/core'
-import { MenuContext } from '../../modules/menu-provider'
+import { MenuContext } from '../../../provider-menu'
 
 export default ({ id, layer, onClose }) => {
-  const InfoMenu =
-    layer.get('InfoMenu') ||
+  const LegendMenu =
+    layer.get('LegendMenu') ||
     (() => (
       <div style={{ marginBottom: 10 }}>
         <Typography>No component specified for {layer.get('title')}</Typography>
@@ -19,12 +19,12 @@ export default ({ id, layer, onClose }) => {
           onMouseDown={() => setActiveMenu(id)}
           zIndex={getMenuById(id).zIndex}
           defaultPosition={{ x: 650, y: 25 }}
-          defaultWidth={230}
-          title={'Layer info'}
+          defaultWidth={200}
+          title={'Legend'}
           active={true}
           close={onClose}
         >
-          {() => <InfoMenu />}
+          {() => <LegendMenu />}
         </DragMenu>
       )}
     </MenuContext.Consumer>

@@ -1,8 +1,8 @@
 import React from 'react'
-import LayerManager from '../../modules/layer-manager'
+import LayerManager from './modules/layer-manager'
 import { Layers as LayersIcon } from '@material-ui/icons'
 import { DragMenu } from '../../components'
-import { MenuContext } from '../../modules/menu-provider'
+import { MenuContext } from '../provider-menu'
 import { Fab } from '@material-ui/core'
 
 export default () => {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardHeader } from '@material-ui/core'
 import { Checkbox } from '@material-ui/core'
-import { createLayer, LayerTypes } from '../../lib/ol'
+import { createLayer, LayerTypes } from '../../../../lib/ol'
 import { Typography } from '@material-ui/core'
-import InfoMenu from '../esri/_info-menu'
-import LegendMenu from '../esri/_legend-menu'
-import { MapContext } from '../map-provider'
+import InfoMenu from './_info-menu'
+import LegendMenu from './_legend-menu'
+import { MapContext } from '../../../provider-map'
 
 const fetchMeta = ({ uri, abortController }) =>
   fetch(`${uri}?f=pjson`, {

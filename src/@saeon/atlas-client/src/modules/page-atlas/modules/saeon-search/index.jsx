@@ -2,14 +2,14 @@ import React from 'react'
 import { createPortal } from 'react-dom'
 import { Grid, Typography, Button } from '@material-ui/core'
 import { Visibility as ViewIcon } from '@material-ui/icons'
-import { useHttpDataQuery } from '../../components'
+import { useHttpDataQuery } from '../../../../components'
 import { Alert } from '@material-ui/lab'
-import { MenuContext } from '../menu-provider'
+import { MenuContext } from '../../../provider-menu'
 import SearchResultsMenu from './_search-results-menu'
 import { ReactCatalogue } from '@saeon/catalogue-search'
 import SearchUI from './_search-ui'
 import useStyles from './style'
-import { ATLAS_API_ADDRESS } from '../../config'
+import { ATLAS_API_ADDRESS } from '../../../../config'
 
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk/_search`
 const DSL_INDEX = `saeon-odp-4-2`
