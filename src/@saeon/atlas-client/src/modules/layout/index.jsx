@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Switch, withRouter } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Typography, Menu, Fade } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Typography, Menu } from '@material-ui/core'
 import {
   Menu as MenuIcon,
   GitHub as GitHubIcon,

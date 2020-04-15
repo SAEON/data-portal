@@ -7,11 +7,12 @@
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "build-readme": "scripts/build-readme.sh",
+    "bump-patch": "scripts/bump-patch.sh",
     "update-git-snapshot": "git add ."
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && npm run build-readme && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
+      "pre-commit": "npm run test && npm run build-readme && npm run prettier:changed && npm run lint && npm run bump-patch && npm run update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za",
