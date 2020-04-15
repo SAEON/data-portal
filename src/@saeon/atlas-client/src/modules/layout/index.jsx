@@ -1,63 +1,78 @@
 import React, { useState } from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core'
-import { Menu as MenuIcon, GitHub as GitHubIcon } from '@material-ui/icons'
-import { MenuContext } from '../provider-menu'
+import { Switch, withRouter } from 'react-router-dom'
+import { AppBar, Toolbar, IconButton, Typography, Menu } from '@material-ui/core'
+import {
+  Menu as MenuIcon,
+  GitHub as GitHubIcon,
+  Info as InfoIcon,
+  Home as HomeIcon,
+} from '@material-ui/icons'
+import NavItem from './nav-item'
 import packageJson from '../../../package.json'
 
-export default ({ children }) => {
-  const [menuAnchor, setMenuAnchor] = useState(null)
-  return (
-    <MenuContext.Consumer>
-      {({}) => (
-        <>
-          <AppBar variant="outlined" position="static">
-            <Toolbar disableGutters={false} className="thin-toolbar">
-              <IconButton
-                onClick={(e) => setMenuAnchor(e.currentTarget)}
-                style={{ padding: 0 }}
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={menuAnchor}
-                keepMounted
-                open={Boolean(menuAnchor)}
-                onClose={() => setMenuAnchor(null)}
-              >
-                <MenuItem onClick={() => alert('hi')}>
-                  <GitHubIcon /> View source code
-                </MenuItem>
-                <MenuItem onClick={() => alert('hi')}>sure</MenuItem>
-                <MenuItem onClick={() => alert('hi')}>if</MenuItem>
-                <MenuItem onClick={() => alert('hi')}>this</MenuItem>
-                <MenuItem onClick={() => alert('hi')}>is</MenuItem>
-                <MenuItem onClick={() => alert('hi')}>needed</MenuItem>
-              </Menu>
-              <Typography style={{ padding: '10px' }} display="block" variant="body2">
-                {`${packageJson.name}`}
-              </Typography>
+const SOURCE_CODE_LINK =
+  'https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/atlas-client'
 
-              <IconButton
-                onClick={() =>
-                  window.open(
-                    'https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/atlas-client'
-                  )
-                }
-                style={{ marginLeft: 'auto' }}
-                color="inherit"
-                size="small"
-              >
-                <GitHubIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          {children}
-        </>
-      )}
-    </MenuContext.Consumer>
+const Layout = ({ children }) => {
+  const [menuAnchor, setMenuAnchor] = useState(null)
+
+  const closeMenu = () => setMenuAnchor(null)
+
+  return (
+    <>
+      <AppBar variant="outlined" position="static">
+        <Toolbar disableGutters={false} className="thin-toolbar">
+          <IconButton
+            onClick={(e) => setMenuAnchor(e.currentTarget)}
+            style={{ padding: 0 }}
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={menuAnchor}
+            keepMounted
+            open={Boolean(menuAnchor)}
+            onClose={closeMenu}
+            onClick={closeMenu}
+          >
+            {/* Home page */}
+            <NavItem label={'Home'} icon={<HomeIcon />} to="/" />
+
+            {/* About page */}
+            <NavItem label={'About'} icon={<InfoIcon />} to="/about" />
+
+            {/* Source code link */}
+            <NavItem label={'Source Code'} icon={<GitHubIcon />} href={SOURCE_CODE_LINK} />
+          </Menu>
+
+          {/* Title */}
+          <Typography style={{ padding: '10px' }} display="block" variant="body2">
+            {`${packageJson.name}`}
+          </Typography>
+
+          {/* GitHub link */}
+          <IconButton
+            component={'a'}
+            href={SOURCE_CODE_LINK}
+            style={{ marginLeft: 'auto' }}
+            rel={'noopener noreferrer'}
+            target={'_blank'}
+            color="inherit"
+            size="small"
+          >
+            <GitHubIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      {/* Application routes */}
+      <Switch key={location.pathname || '/'}>{children}</Switch>
+    </>
   )
 }
+
+export default withRouter(Layout)

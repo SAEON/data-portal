@@ -19,6 +19,7 @@ import FeedbackProvider from './modules/provider-feedback'
 // Pages
 import Layout from './modules/layout'
 import Atlas from './modules/page-atlas'
+import AboutPage from './modules/page-about'
 
 // Some helpers
 import { nativeExtensions } from './lib/fns'
@@ -30,13 +31,21 @@ const Application = () => (
       <ErrorBoundary>
         <FeedbackProvider>
           <MapProvider>
-            <MenuProvider>
-              <Router>
-                <Layout>
-                  <Route key={'home'} path={'/'} exact={true} render={() => <Atlas />} />
-                </Layout>
-              </Router>
-            </MenuProvider>
+            <Router>
+              <Layout>
+                <Route
+                  key={'home'}
+                  path={'/'}
+                  exact={true}
+                  render={() => (
+                    <MenuProvider>
+                      <Atlas />
+                    </MenuProvider>
+                  )}
+                />
+                <Route key={'about'} path={'/about'} exact={true} render={() => <AboutPage />} />
+              </Layout>
+            </Router>
           </MapProvider>
         </FeedbackProvider>
       </ErrorBoundary>
