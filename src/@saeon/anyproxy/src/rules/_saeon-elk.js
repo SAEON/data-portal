@@ -1,6 +1,6 @@
 import url from 'url'
 import { normalize } from 'path'
-import { SAEON_ELK_PROXY } from '../confg'
+import { SAEON_ELK_PROXY } from '../config'
 const SAEON_ELK_PROXY_PARSED = url.parse(SAEON_ELK_PROXY)
 
 export default ({ path, requestDetail }) => {
