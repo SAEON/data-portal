@@ -1,17 +1,17 @@
-import AnyProxy from 'anyproxy'
+import { ProxyServer } from 'anyproxy'
 import options from './options'
 
-const proxyServer = new AnyProxy.ProxyServer(options)
+const proxy = new ProxyServer(options)
 
-proxyServer.on('ready', () => {
-  console.log(
-    `anyproxy ready on port ${options.port}`,
-    `anyrpxy interface ready on port ${options.webInterface.webPort}`
-  )
+proxy.on('ready', () => {
+  console.log(`anyproxy ready on port ${options.port}`)
+  console.log(`anyproxy interface ready on port ${options.webInterface.webPort}`)
 })
 
-proxyServer.on('error', (e) => {
+proxy.on('error', (e) => {
   console.error('anyproxy error', e)
 })
 
-proxyServer.start()
+proxy.start()
+
+// proxy.close() // Not sure why I would want to call this?

@@ -1,4 +1,4 @@
-import rule from './rules/csir'
+import rule from './rules'
 import { PORT, ENABLE_WEB_INTERFACE, WEB_INTERFACE_PORT, THROTTLE } from './confg'
 
 export default {
