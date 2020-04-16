@@ -1,8 +1,7 @@
-FROM node:13-alpine
+FROM node:13
 WORKDIR /app
 COPY . .
-RUN npm config set ignore-scripts true
-RUN npm ci
-RUN npm config set ignore-scripts false
+RUN npm ci --only=production
+RUN npm --prefix src/@saeon/atlas-api ci --only=production
 EXPOSE 3000
-CMD [ "npm", "run", "atlas-api:start:prod" ]
+CMD npm run --prefix src/@saeon/atlas-api start:prod

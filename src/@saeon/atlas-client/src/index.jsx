@@ -1,27 +1,56 @@
 import 'typeface-roboto'
 import './index.scss'
 import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { render } from 'react-dom'
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
-import Atlas from './pages/atlas'
-import MapProvider from './modules/map-provider'
-import MenuProvider from './modules/menu-provider'
-import ExceptionProvider from './modules/exception-provider'
+
+// Material UI theme
 import theme from './theme'
-import { nativeExtensions } from '../../fns-lib'
+
+// Global wrappers
+import ErrorBoundary from './modules/error-boundary'
+
+// Global providers
+import MapProvider from './modules/provider-map'
+import MenuProvider from './modules/provider-menu'
+import FeedbackProvider from './modules/provider-feedback'
+
+// Pages
+import Layout from './modules/layout'
+import Atlas from './modules/page-atlas'
+import AboutPage from './modules/page-about'
+
+// Some helpers
+import { nativeExtensions } from './lib/fns'
 nativeExtensions()
 
-render(
+const Application = () => (
   <CssBaseline>
     <ThemeProvider theme={createMuiTheme(theme)}>
-      <ExceptionProvider>
-        <MapProvider>
-          <MenuProvider>
-            <Atlas />
-          </MenuProvider>
-        </MapProvider>
-      </ExceptionProvider>
+      <ErrorBoundary>
+        <FeedbackProvider>
+          <MapProvider>
+            <Router>
+              <Layout>
+                <Route
+                  key={'home'}
+                  path={'/'}
+                  exact={true}
+                  render={() => (
+                    <MenuProvider>
+                      <Atlas />
+                    </MenuProvider>
+                  )}
+                />
+                <Route key={'about'} path={'/about'} exact={true} render={() => <AboutPage />} />
+              </Layout>
+            </Router>
+          </MapProvider>
+        </FeedbackProvider>
+      </ErrorBoundary>
     </ThemeProvider>
-  </CssBaseline>,
-  document.getElementById('root')
+  </CssBaseline>
 )
+
+render(<Application />, document.getElementById('root'))

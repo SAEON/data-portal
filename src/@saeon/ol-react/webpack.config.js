@@ -13,8 +13,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
   },
   externals: {
     react: 'react',
-    'ol/Map': 'ol/Map',
-    'ol/View': 'ol/View',
+    ol: 'ol',
     'ol/control.js': 'ol/control.js',
     'ol/layer/Group': 'ol/layer/Group',
     'ol/format': 'ol/format',
@@ -40,20 +39,6 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
         use: [
           {
             loader: 'file-loader',
-          },
-        ],
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              fallback: 'file-loader',
-              name: '[name][md5:hash].[ext]',
-              outputPath: 'assets/',
-              publicPath: '/assets/',
-            },
           },
         ],
       },

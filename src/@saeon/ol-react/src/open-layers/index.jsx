@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Map from 'ol/Map'
-import View from 'ol/View'
+import { Map } from 'ol'
+import { View } from 'ol'
 import { defaults as defaultControls } from 'ol/control.js'
 import LayerGroup from 'ol/layer/Group'
 

@@ -1,12 +1,11 @@
 import { createProxyMiddleware } from 'http-proxy-middleware'
-import { config } from 'dotenv'
-config()
-
-const SAEON_SPATIALDATA_PROXY = process.env.SAEON_SPATIALDATA_PROXY || 'http://app01.saeon.ac.za'
-const SAEON_SPATIALDATA_PROXY2 = process.env.SAEON_SPATIALDATA_PROXY2 || 'http://196.21.191.55'
-const SAEON_ELK_PROXY = process.env.ELK_PROXY || 'http://192.168.116.66:9200'
-const CSIR_ARCGIS_PROXY =
-  process.env.CSIR_ARCGIS_PROXY || 'https://pta-gis-2-web1.csir.co.za/server2/rest/services'
+import {
+  SAEON_SPATIALDATA_PROXY,
+  SAEON_ELK_PROXY,
+  CSIR_ESRI_PROXY,
+  HST_ESRI_PROXY,
+  SAEON_SPATIALDATA_PROXY2,
+} from '../config'
 
 /**
  * options.target is required even though it's not used
@@ -30,8 +29,12 @@ export default createProxyMiddleware({
       target = `${SAEON_SPATIALDATA_PROXY}:${port}`
     }
 
+    if (path.includes('/proxy/hst')) {
+      target = HST_ESRI_PROXY
+    }
+
     if (path.includes('/proxy/csir')) {
-      target = CSIR_ARCGIS_PROXY
+      target = CSIR_ESRI_PROXY
     }
 
     console.log('Proxy target configured', path, target)
@@ -43,6 +46,7 @@ export default createProxyMiddleware({
       .replace('/proxy/saeon-elk/_search', '/_search')
       .replace('/proxy/saeon-elk', '/_search')
       .replace('/proxy/csir', '')
+      .replace('/proxy/hst', '')
       .replace(/\/proxy\/saeon-spatialdata\/196\.21\.191\.55\/\d{4}\//, '/')
       .replace(/\/proxy\/saeon-spatialdata\/app01.saeon.ac.za\/\d{4}\//, '/')
     console.log('Proxy path configured', path, newPath)

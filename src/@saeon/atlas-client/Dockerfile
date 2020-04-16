@@ -2,9 +2,9 @@
 FROM node:13 as build
 WORKDIR /app
 COPY . .
-
-RUN npm ci
-RUN npm run atlas-client:build
+RUN npm ci --only=production
+RUN npm --prefix src/@saeon/atlas-client ci --only=production
+RUN npm --prefix src/@saeon/atlas-client run build 
 
 # Serve static files
 FROM nginx:alpine

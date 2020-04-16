@@ -232,9 +232,8 @@ export default ({
                       backgroundSize: isResizing ? '20px 20px' : undefined,
                     }}
                   >
-                    <CardContent>
-                      {typeof children === 'function'
-                        ? children({ height: dimensions.height, width: dimensions.width })
+                    <CardContent style={{ height: '100%', width: '100%' }}>
+                      {typeof children === 'function' ? children({ height: dimensions.height, width: dimensions.width })
                         : children}
                     </CardContent>
                   </div>

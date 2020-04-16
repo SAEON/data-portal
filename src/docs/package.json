@@ -1,0 +1,33 @@
+{
+  "name": "atlas-documentation",
+  "version": "0.0.1",
+  "description": "Docmentation for @saeon/ol-react, @saeon/catalogue-search, @saeon/atlas-api, @saeon/atlas-client",
+  "keywords": [
+    "SAEON",
+    "atlas",
+    "documentation",
+    "docs"
+  ],
+  "scripts": {
+    "start": "styleguidist server --config styleguide.config.js",
+    "build": "styleguidist build --config src/docs/styleguide.config.js"
+  },
+  "author": "steven@saeon.ac.za,zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.2",
+    "node-sass": "^4.13.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-styleguidist": "^11.0.5",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.3"
+  }
+}
