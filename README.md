@@ -139,7 +139,7 @@ ATLAS_API_ADDRESS=http://localhost:4000
 ```
 docker build -t atlas-client -f ./src/@saeon/atlas-client/Dockerfile .
 ```
-
+ 
 # @saeon/atlas-api
 
 TODO
