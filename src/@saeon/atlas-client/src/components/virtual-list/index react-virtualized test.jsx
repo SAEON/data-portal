@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
+import { List, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 
 export default class extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ export default class extends Component {
     const cache = new CellMeasurerCache({ fixedWidth: false, defaultHeight: 125 })
     this.cache = cache
   }
-  renderRow = ({ index: i, parent, key, style }, Template) => {
+  renderRow = ({ index: i, parent, /* key,*/ style }, Template) => {
     return (
       <CellMeasurer key={i} cache={this.cache} parent={parent} columnIndex={0} rowIndex={i}>
         <div style={style} id={'virtualListItem-' + i}>
@@ -21,14 +21,14 @@ export default class extends Component {
 
   render() {
     const {
-      loadMoreItems,
+      // loadMoreItems,
       height,
       width,
       Template,
-      items,
-      fixedSize = true,
-      itemSize = 125,
-      itemCount = 20000000,
+      // items,
+      // fixedSize = true,
+      // itemSize = 125,
+      // itemCount = 20000000,
     } = this.props
 
     return (

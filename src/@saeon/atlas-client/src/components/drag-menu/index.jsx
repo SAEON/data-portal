@@ -47,7 +47,6 @@ export default ({
   // const container = document.getElementById('olreact-mapprovider')
   // const container = document.getElementsByClassName('ol-overlaycontainer')[0]
   const container = document.getElementById('root')
-  console.log('Am I rendering too many times?', container)
   const containerHeight = container.offsetHeight //refactor to ref / prop
   const containerWidth = container.offsetWidth //refactor to ref / prop
 
