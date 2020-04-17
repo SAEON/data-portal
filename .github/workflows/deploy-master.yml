@@ -20,7 +20,7 @@ jobs:
       - name: Configure @saeon/atlas-api
         run: |
           echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/@saeon/atlas-api/.env
-          echo "HTTP_PROXY=atlas-anyproxy-dev:8001"
+          echo "HTTP_PROXY=atlas-anyproxy-dev:8001" >> src/@saeon/atlas-api/.env
 
       - name: Configure @saeon/atlas-client
         run: |
