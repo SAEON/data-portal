@@ -1,0 +1,37 @@
+{
+  "name": "@saeon/anyproxy",
+  "version": "0.0.1",
+  "description": "A wraper for anyproxy, to deploy behind Node.js as a caching server",
+  "main": "index.js",
+  "scripts": {
+    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && babel --root-mode upward src --out-dir dist && copyfiles .env dist/ && NODE_ENV=development TZ=utc node dist'",
+    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles .env dist/ && NODE_ENV=production TZ=utc node dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+  },
+  "keywords": [
+    "anyproxy"
+  ],
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas#readme",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/runtime-corejs3": "^7.9.2",
+    "anyproxy": "^4.1.2",
+    "copyfiles": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "redis": "^3.0.2",
+    "rimraf": "^3.0.2",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.4"
+  }
+}
