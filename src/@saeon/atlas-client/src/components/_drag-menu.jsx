@@ -48,6 +48,8 @@ export default ({
   const containerWidth = container.offsetWidth //refactor to ref / prop
 
   const DetermineIndicator = (x, y) => {
+    console.log('x', x)
+    console.log('y', y)
     const pastLeft = x <= 0 ? true : false
     const pastRight = x >= containerWidth ? true : false
     const pastTop = y <= 0 ? true : false
@@ -117,6 +119,7 @@ export default ({
   }
 
   const onDrag = (DraggableEventHandler) => {
+    console.log('draggin')
     setDimensions({ width: presnapDimensions.width, height: presnapDimensions.height })
     //fetching mouse position. DraggableEventHandler has several other position properties should chosen values have unforseen issues
     const { clientX: mouseX, clientY: mouseY } = DraggableEventHandler
@@ -232,8 +235,9 @@ export default ({
                       backgroundSize: isResizing ? '20px 20px' : undefined,
                     }}
                   >
-                    <CardContent style={{ height: '100%', width: '100%' }}>
-                      {typeof children === 'function' ? children({ height: dimensions.height, width: dimensions.width })
+                    <CardContent>
+                      {typeof children === 'function'
+                        ? children({ height: dimensions.height, width: dimensions.width })
                         : children}
                     </CardContent>
                   </div>
