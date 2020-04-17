@@ -4,10 +4,6 @@ import hstRule from './_hst'
 import saeonElk from './_saeon-elk'
 import saeonGeoServers from './_saeon-geoservers'
 
-/**
- * Only GET requests are cached. Otherwise just proxy requests
- * @param {Object} requestDetail Node.js request object
- */
 const beforeSendRequest = async (requestDetail) => {
   const { path } = url.parse(requestDetail.url)
   csirRule({ path, requestDetail })
@@ -17,6 +13,10 @@ const beforeSendRequest = async (requestDetail) => {
   return requestDetail
 }
 
+// eslint-disable-next-line no-unused-vars
+const beforeSendResponse = async (requestDetail, responseDetail) => {}
+
 export default {
   beforeSendRequest,
+  beforeSendResponse,
 }

@@ -1,5 +1,5 @@
 import rule from './rules'
-import { PORT, ENABLE_WEB_INTERFACE, WEB_INTERFACE_PORT, THROTTLE } from './confg'
+import { PORT, ENABLE_WEB_INTERFACE, WEB_INTERFACE_PORT, THROTTLE } from './config'
 
 export default {
   port: PORT,
