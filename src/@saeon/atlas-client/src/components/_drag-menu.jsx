@@ -5,17 +5,6 @@ import { ResizableBox } from 'react-resizable'
 import { EventBoundary } from '.'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
-// import html2canvas from 'html2canvas'
-// const test = () => {
-//   console.log('in test')
-//   html2canvas(document.body).then(function (canvas) {
-//     console.log('canvas', canvas)
-//     console.log('in then')
-//     document.body.appendChild(canvas)
-//     console.log('appended child')
-//   })
-//   console.log('done!')
-// }
 
 const borderedBackground = `linear-gradient(to right, #adadad 4px, transparent 4px) 0 0,
 linear-gradient(to right, #adadad 4px, transparent 4px) 0 100%,
@@ -38,43 +27,135 @@ export default ({
   defaultHeight = 400,
 }) => {
   const [position, setPosition] = useState(null)
-  const [width, setWidth] = useState(defaultWidth)
-  const [height, setHeight] = useState(defaultHeight)
+  const [dimensions, setDimensions] = useState({ width: defaultWidth, height: defaultHeight })
+  const [presnapDimensions, setPresnapDimensions] = useState({
+    width: defaultWidth,
+    height: defaultHeight,
+  })
+  const [indicatorProperties, setIndicatorProperties] = useState({
+    active: false,
+    position: { x: null, y: null },
+    height: null,
+    width: null,
+  })
   const [isResizing, setIsResizing] = useState(false)
-  const [, setSnappedLeft] = useState(false)
-  const [, setSnappedRight] = useState(false)
-  // const [snapReady, setSnapReady] = useState(false)
+
+  //fetching parent dimensions
+  // const container = document.getElementById('olreact-mapprovider')
+  // const container = document.getElementsByClassName('ol-overlaycontainer')[0]
+  const container = document.getElementById('root')
+  const containerHeight = container.offsetHeight //refactor to ref / prop
+  const containerWidth = container.offsetWidth //refactor to ref / prop
+
+  const DetermineIndicator = (x, y) => {
+    console.log('x', x)
+    console.log('y', y)
+    const pastLeft = x <= 0 ? true : false
+    const pastRight = x >= containerWidth ? true : false
+    const pastTop = y <= 0 ? true : false
+    const pastBot = y >= containerHeight ? true : false
+
+    if (pastLeft) {
+      if (pastTop) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: 0, y: 0 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
+      } else if (pastBot) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: 0, y: containerHeight / 2 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
+      } else {
+        setIndicatorProperties({
+          active: true,
+          position: { x: 0, y: 0 },
+          height: containerHeight,
+          width: containerWidth / 2,
+        })
+      }
+    } else if (pastRight) {
+      if (pastTop) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: containerWidth - dimensions.width, y: 0 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
+      } else if (pastBot) {
+        setIndicatorProperties({
+          active: true,
+          position: { x: containerWidth - dimensions.width, y: containerHeight / 2 },
+          height: containerHeight / 2,
+          width: containerWidth / 2,
+        })
+      } else {
+        setIndicatorProperties({
+          active: true,
+          position: { x: containerWidth - dimensions.width, y: 0 },
+          height: containerHeight,
+          width: containerWidth / 2,
+        })
+      }
+    } else if (pastTop) {
+      setIndicatorProperties({
+        active: true,
+        position: { x: 0, y: 0 },
+        height: containerHeight,
+        width: containerWidth,
+      })
+    } else {
+      setIndicatorProperties({
+        active: false,
+        position: null,
+        height: null,
+        width: null,
+      })
+    }
+  }
 
   const onDrag = (DraggableEventHandler) => {
-    //fetching parent dimensions
-    const containerHeight = document.getElementById('olreact-mapprovider').clientHeight
-    const containerWidth = document.getElementById('olreact-mapprovider').clientWidth
-    //fetching dragMenu position. DraggableEventHandler has several other position values should offset values have unforseen issues
-    const { offsetX } = DraggableEventHandler
+    console.log('draggin')
+    setDimensions({ width: presnapDimensions.width, height: presnapDimensions.height })
+    //fetching mouse position. DraggableEventHandler has several other position properties should chosen values have unforseen issues
+    const { clientX: mouseX, clientY: mouseY } = DraggableEventHandler
+    DetermineIndicator(mouseX, mouseY)
+  }
+  const onStop = () => {
+    if (indicatorProperties.active) {
+      setDimensions({ width: indicatorProperties.width, height: indicatorProperties.height })
+      setPosition({ x: indicatorProperties.position.x, y: indicatorProperties.position.y })
+    } else setPosition(null)
+    setIndicatorProperties({ position: null, width: null, height: null, active: null })
+  }
 
-    //if snapped left
-    if (offsetX <= 0) {
-      setSnappedLeft(true)
-      setHeight(containerHeight)
-      setPosition({ x: 0, y: 0 })
-    }
-    //else if snapped right
-    else if (offsetX >= containerWidth) {
-      setSnappedRight(true)
-      setHeight(containerHeight)
-      setPosition({ x: containerWidth - width, y: 0 })
-    }
-    //else not snapped
-    else onUnsnap()
-  }
-  const onUnsnap = () => {
-    setSnappedLeft(false)
-    setSnappedRight(false)
-    setHeight(defaultHeight)
-    setPosition(null)
-  }
   return (
     <EventBoundary>
+      <div
+        id="snap-indicator"
+        style={{
+          zIndex,
+          position: 'relative',
+          display: indicatorProperties.active ? 'block' : 'none',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            boxShadow: '0px 0px 7px 3px rgba(140,140,140,1)',
+            backgroundColor: 'black',
+            opacity: '50%',
+            height: indicatorProperties.height,
+            width: indicatorProperties.width,
+            left: indicatorProperties.position?.x,
+            top: indicatorProperties.position?.y,
+          }}
+        ></div>
+      </div>
       <div style={{ position: 'absolute' }}>
         <Draggable
           axis="both"
@@ -85,6 +166,7 @@ export default ({
           grid={[5, 5]}
           scale={1}
           onDrag={onDrag}
+          onStop={onStop}
         >
           <div
             style={{
@@ -96,8 +178,8 @@ export default ({
             <Card variant="elevation">
               <ResizableBox
                 resizeHandles={resizable ? ['se'] : []}
-                width={width}
-                height={height}
+                width={dimensions.width}
+                height={dimensions.height}
                 axis={resizable ? 'both' : 'none'}
                 minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
                 draggableOpts={{ grid: [5, 5] }}
@@ -107,9 +189,14 @@ export default ({
                 }}
                 onResizeStop={(event, { size }) => {
                   if (!resizable) return
-                  setWidth(size.width)
-                  setHeight(size.height)
+                  setDimensions({ width: size.width, height: size.height })
                   setIsResizing(false)
+                  if (
+                    size.width !== indicatorProperties.width &&
+                    size.height !== indicatorProperties.height
+                  ) {
+                    setPresnapDimensions({ width: size.width, height: size.height })
+                  }
                 }}
               >
                 <CardContent style={{ padding: 0 }}>
@@ -148,9 +235,10 @@ export default ({
                       backgroundSize: isResizing ? '20px 20px' : undefined,
                     }}
                   >
-                    <CardContent style={{ height: '100%', width: '100%' }}>
-                      {typeof children === 'function' ? children({ height, width }) : children}
-                      {/* <button onClick={test}>TEST</button> */}
+                    <CardContent>
+                      {typeof children === 'function'
+                        ? children({ height: dimensions.height, width: dimensions.width })
+                        : children}
                     </CardContent>
                   </div>
                 </div>

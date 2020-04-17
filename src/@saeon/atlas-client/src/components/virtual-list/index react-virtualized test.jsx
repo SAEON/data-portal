@@ -7,7 +7,7 @@ export default class extends Component {
     const cache = new CellMeasurerCache({ fixedWidth: false, defaultHeight: 125 })
     this.cache = cache
   }
-  renderRow = ({ index: i, parent, /*key,*/ style }, Template) => {
+  renderRow = ({ index: i, parent, /* key,*/ style }, Template) => {
     return (
       <CellMeasurer key={i} cache={this.cache} parent={parent} columnIndex={0} rowIndex={i}>
         <div style={style} id={'virtualListItem-' + i}>
