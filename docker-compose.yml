@@ -1,5 +1,9 @@
 version: '3.7'
 
+networks:
+  saeon-atlas:
+    driver: bridge
+
 services:
   # redis:
   #   image: redis:latest
@@ -9,7 +13,8 @@ services:
   #     - 6379:6379
 
   anyproxy:
-    network_mode: host
+    networks:
+      - saeon-atlas
     container_name: atlas-anyproxy-dev
     restart: always
     build:
@@ -20,7 +25,8 @@ services:
       - 8002:8002
 
   atlas-api-dev:
-    network_mode: host
+    networks:
+      - saeon-atlas
     container_name: atlas-api-dev
     restart: always
     build:
@@ -30,6 +36,8 @@ services:
       - 5000:3000
 
   atlas-client-dev:
+    networks:
+      - saeon-atlas
     container_name: atlas-client-dev
     restart: always
     build:
