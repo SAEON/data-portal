@@ -30,7 +30,6 @@ services:
       - 5000:3000
 
   atlas-client-dev:
-    network_mode: host
     container_name: atlas-client-dev
     restart: always
     build:
