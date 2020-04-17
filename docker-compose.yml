@@ -9,7 +9,7 @@ services:
   #     - 6379:6379
 
   anyproxy:
-    container_name: anyproxy
+    container_name: atlas-anyproxy-dev
     restart: always
     build:
       context: .
