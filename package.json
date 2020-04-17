@@ -8,7 +8,8 @@
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "build-readme": "scripts/build-readme.sh",
     "bump-patch": "scripts/bump-patch.sh",
-    "update-git-snapshot": "git add ."
+    "update-git-snapshot": "git add .",
+    "install": "npm --prefix src/@saeon/anyproxy install & npm --prefix src/@saeon/atlas-api install & npm --prefix src/@saeon/atlas-client install & npm --prefix src/@saeon/catalogue-search install & npm --prefix src/@saeon/ol-react install"
   },
   "husky": {
     "hooks": {
