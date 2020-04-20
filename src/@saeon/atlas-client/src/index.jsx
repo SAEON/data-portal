@@ -4,6 +4,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { render } from 'react-dom'
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { DEFAULT_ERROR, DEFAULT_WARNING, DEFAULT_INFO, DEFAULT_SUCCESS } from './config'
 
 // Material UI theme
 import theme from './theme'
@@ -29,7 +30,12 @@ const Application = () => (
   <CssBaseline>
     <ThemeProvider theme={createMuiTheme(theme)}>
       <ErrorBoundary>
-        <FeedbackProvider>
+        <FeedbackProvider
+          defaultError={DEFAULT_ERROR}
+          defaultWarning={DEFAULT_WARNING}
+          defaultInfo={DEFAULT_INFO}
+          defaultSuccess={DEFAULT_SUCCESS}
+        >
           <MapProvider>
             <Router>
               <Layout>
