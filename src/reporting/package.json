@@ -1,0 +1,29 @@
+{
+  "name": "reporting",
+  "version": "0.0.1",
+  "description": "This project generates reports on progress in terms of work done on the SAEON-Atlas repository by interacting with the Github API",
+  "main": ".build/index.js",
+  "scripts": {
+    "start": "rimraf .build && prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build",
+    "start:prod": "rimraf .build && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=production TZ=utc node .build"
+  },
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/runtime-corejs3": "^7.9.2",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-fetch": "^0.7.0",
+    "apollo-link-http": "^1.5.17",
+    "copyfiles": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.0.0",
+    "graphql-tag": "^2.10.3",
+    "node-fetch": "^2.6.0",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.4"
+  }
+}

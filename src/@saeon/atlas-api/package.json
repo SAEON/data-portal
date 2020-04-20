@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-api",
-  "version": "0.0.19",
+  "version": "0.0.22",
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
@@ -32,6 +32,6 @@
     "morgan": "^1.10.0",
     "rimraf": "^3.0.2"
   },
-  "author": "zach@saeon.ac.za",
+  "author": "zach@saeon.ac.za, steven@saeon.ac.za",
   "license": "MIT"
 }
