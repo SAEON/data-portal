@@ -1,22 +1,24 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "An interactive atlas for interacting with spatial data - specifically SAEON's metadata store, although it should also be a generally useful means of interacting with any OGC-compliant resource.",
   "keywords": [
     "@saeon/atlas-client"
   ],
   "scripts": {
     "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.jsx",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & webpack-dev-server --port 3001 --env.mode=development --env.output=dist --env.entry=src/index.jsx --open"
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & webpack-dev-server --port 3001 --env.mode=development --env.output=dist --env.entry=src/index.jsx --open",
+    "check-package-updates": "ncu",
+    "update-packages": "ncu -u"
   },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.2",
     "@date-io/date-fns": "^1.3.13",
-    "@material-ui/core": "^4.9.10",
+    "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.49",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "@material-ui/pickers": "^3.2.10",
     "@saeon/catalogue-search": "^1.1.5",
     "@saeon/ol-react": "^7.1.5",
@@ -45,7 +47,7 @@
     "react-window": "^1.8.5",
     "react-window-infinite-loader": "^1.0.5",
     "sass-loader": "^8.0.2",
-    "style-loader": "^1.1.3",
+    "style-loader": "^1.1.4",
     "typeface-roboto": "0.0.75",
     "url": "^0.11.0",
     "url-loader": "^4.1.0",

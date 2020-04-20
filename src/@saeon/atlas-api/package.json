@@ -1,11 +1,13 @@
 {
   "name": "@saeon/atlas-api",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
     "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=development TZ=utc node dist/bin'",
-    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=production TZ=utc node dist/bin"
+    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=production TZ=utc node dist/bin",
+    "check-package-updates": "ncu",
+    "update-packages": "ncu -u"
   },
   "keywords": [
     "@saeon/atlas-api"
@@ -24,7 +26,7 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^15.0.0",
-    "graphql-tools": "^4.0.7",
+    "graphql-tools": "^5.0.0",
     "http-proxy": "^1.18.0",
     "http-proxy-middleware": "^1.0.3",
     "morgan": "^1.10.0",

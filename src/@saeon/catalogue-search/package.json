@@ -1,6 +1,6 @@
 {
   "name": "@saeon/catalogue-search",
-  "version": "1.1.16",
+  "version": "1.1.17",
   "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
   "main": "dist/index.js",
   "files": [
@@ -17,7 +17,9 @@
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s major",
-    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}"
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "check-package-updates": "ncu",
+    "update-packages": "ncu -u"
   },
   "keywords": [
     "@saeon/catalogue-search"
@@ -40,9 +42,9 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
-    "babel-jest": "^25.3.0",
+    "babel-jest": "^25.4.0",
     "dotenv": "^8.2.0",
-    "jest": "^25.3.0",
+    "jest": "^25.4.0",
     "node-fetch": "^2.6.0",
     "onchange": "^6.1.0",
     "prettier": "^2.0.4",
