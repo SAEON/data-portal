@@ -89,7 +89,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
       ]),
       new HtmlWebPackPlugin({
         template: 'index.html',
-        filename: path.join(__dirname, output, '/index.html'),
+        filename: path.join(__dirname, output, 'index.html'),
         PUBLIC_PATH: '',
       }),
     ],
