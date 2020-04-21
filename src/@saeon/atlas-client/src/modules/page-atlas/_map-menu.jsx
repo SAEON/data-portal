@@ -13,7 +13,7 @@ export default () => {
           <Fab
             size="large"
             color="primary"
-            style={{ position: 'absolute', right: 20, top: 127, zIndex: 1 }}
+            style={{ float: 'right', marginTop: 6, marginRight: 12 }}
             aria-label="toggle menu"
             onClick={() => {
               const id = 'layersMenu'

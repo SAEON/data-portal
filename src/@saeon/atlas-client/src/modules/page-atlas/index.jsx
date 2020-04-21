@@ -8,11 +8,13 @@ import { Fade } from '@material-ui/core'
 
 export default () => (
   <Fade in={true}>
-    <>
-      <SearchMenu />
-      <MapMenu />
-      <AboutMenu />
-      {/* <ScreenshotMenu/> */}
-    </>
+    <div style={{ position: 'relative' }}>
+      <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, zIndex: 1 }}>
+        <SearchMenu />
+        <MapMenu />
+        <AboutMenu />
+        {/* <ScreenshotMenu/> */}
+      </div>
+    </div>
   </Fade>
 )

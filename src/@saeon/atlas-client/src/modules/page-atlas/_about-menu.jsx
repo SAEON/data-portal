@@ -13,7 +13,7 @@ export default () => (
         <Fab
           size="small"
           color="primary"
-          style={{ position: 'absolute', right: 20, bottom: 20, zIndex: 1 }}
+          style={{ position: 'fixed', right: 20, bottom: 20 }}
           aria-label="toggle-config-menu"
           onClick={() => {
             const id = 'configMenu'

@@ -16,7 +16,7 @@ export default () => {
       {({ addMenu, removeMenu, getMenuById, setActiveMenu, getActiveMenuZIndex }) => {
         return (
           <DialMenu
-            style={{ position: 'absolute', right: 20, top: 57 }}
+            style={{ marginTop: 6, marginRight: 12 }}
             direction={'left'}
             icon={<SearchIcon />}
           >
@@ -54,7 +54,7 @@ export default () => {
               }}
             />
 
-            {/* CSIR search */}
+            {/* SAEON search */}
             <SpeedDialAction
               className={classes.dialAction}
               icon={<NrfIcon fontSize="large" />}
