@@ -2,59 +2,55 @@ import fetch from 'node-fetch'
 import { createHttpLink } from 'apollo-link-http'
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { ACCESS_TOKEN } from './config'
-import gql from 'graphql-tag'
+import { GQL_ENDPOINT, FILEPATH } from './config'
+import configureGql, { commits } from './gql'
+import stringify from 'csv-stringify'
+import { createWriteStream, unlinkSync } from 'fs'
 
-const client = new ApolloClient({
-  link: createHttpLink({ uri: 'https://api.github.com/graphql', fetch }),
-  cache: new InMemoryCache(),
-})
+try {
+  unlinkSync(FILEPATH)
+} catch (error) {
+  console.log(error)
+}
+const stream = createWriteStream(FILEPATH)
 
-const query = gql`
-  {
-    repository(owner: "SAEONData", name: "saeon-atlas") {
-      ref(qualifiedName: "master") {
-        target {
-          ... on Commit {
-            history(first: 100, since: "2020-04-10T00:00:00") {
-              pageInfo {
-                hasPreviousPage
-                hasNextPage
-                startCursor
-                endCursor
-              }
-              edges {
-                node {
-                  id
-                  oid
-                  message
-                  changedFiles
-                  additions
-                  deletions
-                  commitUrl
-                  committer {
-                    name
-                    date
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
+const exec = configureGql(
+  new ApolloClient({
+    link: createHttpLink({ uri: GQL_ENDPOINT, fetch }),
+    cache: new InMemoryCache(),
+  })
+)
 
 ;(async () => {
-  const result = await client.query({
-    query,
-    context: {
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+  const result = (
+    await exec({
+      variables: {
+        owner: 'SAEONData',
+        name: 'saeon-atlas',
+        since: '2020-04-01T00:00:00',
       },
-    },
-  })
+      query: commits,
+    })
+  ).data.repository.ref.target.history.edges
+    .map(({ node }) => node)
+    .filter(({ message }) => message.length >= 30)
 
-  console.log(JSON.stringify(result))
-})()
+  stringify(result, {
+    header: true,
+    delimiter: ',',
+    quoted: true,
+    quoted_empty: true,
+    quote: '"',
+    escape: '\n',
+    cast: {},
+    columns: [
+      'committer.date',
+      'committer.name',
+      'oid',
+      'changedFiles',
+      'deletions',
+      'commitUrl',
+      'message',
+    ],
+  }).pipe(stream)
+})().catch((err) => console.log('Top level error caught', err))

@@ -4,7 +4,7 @@
   "description": "This project generates reports on progress in terms of work done on the SAEON-Atlas repository by interacting with the Github API",
   "main": ".build/index.js",
   "scripts": {
-    "start": "rimraf .build && prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build",
+    "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build'",
     "start:prod": "rimraf .build && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=production TZ=utc node .build"
   },
   "author": "zach@saeon.ac.za",
@@ -17,6 +17,7 @@
     "apollo-fetch": "^0.7.0",
     "apollo-link-http": "^1.5.17",
     "copyfiles": "^2.2.0",
+    "csv-stringify": "^5.4.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
@@ -24,6 +25,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "nodemon": "^2.0.3",
     "prettier": "^2.0.4"
   }
 }
