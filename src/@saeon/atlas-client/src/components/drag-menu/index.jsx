@@ -235,9 +235,9 @@ export default ({
                       backgroundSize: isResizing ? '20px 20px' : undefined,
                     }}
                   >
-                    <CardContent>
+                    <CardContent style={{ paddingBottom: 12 }}>
                       {typeof children === 'function'
-                        ? children({ height: dimensions.height, width: dimensions.width })
+                        ? children({ height: dimensions.height - 70, width: dimensions.width - 32 })
                         : children}
                     </CardContent>
                   </div>
