@@ -1,9 +1,43 @@
+// Issued refers to the metadata data stamp (It shouldn’t be important to users). The publication date should be under “PublicationYear”
+
 POST /saeon-odp-4-2/_search
 {
+  "_source": {
+    "includes": ["metadata_json.dates.*"]
+  },
+  "query": {
+    "terms": {
+      "metadata_json.dates.dateType": ["valid", "Collected"]
+      }
+    }
+  }
+}
+
+
+POST /saeon-odp-4-2/_search
+{
+  "_source": {
+    "includes": ["metadata_json.dates.*"]
+  },
   "query": {
     "match": {
-      "metadata_json.subjects.subject": {
-        "query": "noterm"
+      "metadata_json.dates.dateType": {
+        "query": "Valid"
+      }
+    }
+  }
+}
+
+
+
+POST /saeon-odp-4-2/_search
+{
+  "_source": {
+    "includes": ["metadata_json.dates.*"]
+  },
+  "query": {
+    "exists": {
+      "field": "metadata_json.dates.dateType*"
       }
     }
   }
