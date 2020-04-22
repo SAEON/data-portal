@@ -1,7 +1,7 @@
 import React from 'react'
-import { DragMenu } from '../../../../components'
-import { MenuContext } from '../../../provider-menu'
-import ResultsList from './_results'
+import { DragMenu } from '../../../../../components'
+import { MenuContext } from '../../../../provider-menu'
+import ResultsList from './_results-list'
 import { Typography } from '@material-ui/core'
 
 export default ({ id, onClose, data }) => {

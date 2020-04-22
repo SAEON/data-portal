@@ -1,13 +1,13 @@
 import React from 'react'
 import { Card, CardHeader, Checkbox, IconButton, Link } from '@material-ui/core'
 import npmUrl from 'url'
-import { VirtualList } from '../../../../components'
-import { createLayer, LayerTypes } from '../../../../lib/ol'
+import { VirtualList } from '../../../../../components'
+import { createLayer, LayerTypes } from '../../../../../lib/ol'
 import LegendContent from './_legend'
-import { MapContext } from '../../../provider-map'
-import { FeedbackContext } from '../../../provider-feedback'
+import { MapContext } from '../../../../provider-map'
+import { FeedbackContext } from '../../../../provider-feedback'
 import { Visibility as VisibilityIcon } from '@material-ui/icons'
-import { ATLAS_API_ADDRESS } from '../../../../config'
+import { ATLAS_API_ADDRESS } from '../../../../../config'
 
 const SPATIALDATA_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-spatialdata`
 
