@@ -71,6 +71,17 @@ const Layout = ({ children }) => {
 
       {/* Application routes */}
       <Switch key={location.pathname || '/'}>{children}</Switch>
+
+      {/* Footer */}
+      <AppBar variant="outlined" position="fixed" style={{ bottom: 0, top: 'auto', zIndex: 1 }}>
+        <Toolbar
+          style={{ justifyContent: 'center' }}
+          disableGutters={false}
+          className="very-thin-toolbar"
+        >
+          <Typography variant="caption">&copy; SAEON 2020</Typography>
+        </Toolbar>
+      </AppBar>
     </>
   )
 }
