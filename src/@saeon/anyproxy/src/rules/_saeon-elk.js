@@ -5,6 +5,7 @@ const SAEON_ELK_PROXY_PARSED = url.parse(SAEON_ELK_PROXY)
 
 export default ({ path, requestDetail }) => {
   if (path.includes('/saeon-elk')) {
+    const index = path.match(/(?<=\/saeon-elk\/)(.*)$/)[0].replace('/_search', '')
     const { protocol, hostname, port, host, path: proxyPath } = SAEON_ELK_PROXY_PARSED
     requestDetail.protocol = protocol
     Object.assign(requestDetail.requestOptions, {
@@ -13,8 +14,8 @@ export default ({ path, requestDetail }) => {
       port,
       path: normalize(
         `${proxyPath}${path
-          .replace('/saeon-elk/_search', '/_search')
-          .replace('/saeon-elk', '/_search')}`
+          .replace(`/saeon-elk/${index}/_search`, `${index}/_search`)
+          .replace(`/saeon-elk/${index}`, `${index}/_search`)}`
       ),
     })
   }

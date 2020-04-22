@@ -11,15 +11,15 @@ import { ATLAS_API_ADDRESS } from '../../../../config'
 import SearchControls from './search-controls'
 import SearchResults from './search-results'
 
-const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk/_search`
 const DSL_INDEX = `saeon-odp-4-2`
+const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
 
 const searchListMenuId = 'saeon-search-results-menu'
 
 export default () => {
   const classes = useStyles()
   const { error, loading, data } = useHttpDataQuery({
-    uri: DSL_PROXY,
+    uri: `${DSL_PROXY}/${DSL_INDEX}`,
     method: 'POST',
     body: {
       aggs: {
@@ -63,6 +63,8 @@ export default () => {
                   <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
                     {(useCatalog) => {
                       const { error, loading, data } = useCatalog(query)
+
+                      console.log(data)
 
                       return (
                         <>
