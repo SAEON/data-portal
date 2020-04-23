@@ -8,8 +8,8 @@
   "scripts": {
     "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.jsx",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & webpack-dev-server --port 3001 --env.mode=development --env.output=dist --env.entry=src/index.jsx --open",
-    "check-package-updates": "ncu",
-    "update-packages": "ncu -u"
+    "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
+    "update-packages": "ncu -u --reject \"@date-io/date-fns\""
   },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
@@ -20,8 +20,8 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.50",
     "@material-ui/pickers": "^3.2.10",
-    "@saeon/catalogue-search": "^1.1.5",
-    "@saeon/ol-react": "^7.1.5",
+    "@saeon/catalogue-search": "^2.0.0",
+    "@saeon/ol-react": "^7.1.32",
     "@svgr/webpack": "^5.3.1",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^5.1.1",
@@ -51,12 +51,12 @@
     "typeface-roboto": "0.0.75",
     "url": "^0.11.0",
     "url-loader": "^4.1.0",
-    "webpack": "^4.42.1",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
-    "onchange": "^6.1.0",
-    "prettier": "^2.0.4",
+    "onchange": "^6.1.1",
+    "prettier": "^2.0.5",
     "webpack-dev-server": "^3.10.3"
   }
 }
