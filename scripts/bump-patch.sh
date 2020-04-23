@@ -9,5 +9,7 @@ fi
 
 npm --prefix src/@saeon/atlas-api version patch -m "on-commit patch" 
 npm --prefix src/@saeon/atlas-client version patch -m "on-commit patch"
-npm --prefix src/@saeon/catalogue-search version patch -m "on-commit patch"
-npm --prefix src/@saeon/ol-react version patch -m "on-commit patch"
+
+# Not sure these should be bumped on commit
+# npm --prefix src/@saeon/catalogue-search version patch -m "on-commit patch"
+# npm --prefix src/@saeon/ol-react version patch -m "on-commit patch"
