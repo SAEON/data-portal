@@ -58,13 +58,10 @@ export default () => {
 
                 const polygon = polygons.length ? polygons[polygons.length - 1] : null
 
-                console.log(polygon?.flatCoordinates.length)
                 const coordinates =
                   polygon?.flatCoordinates.length > 10
                     ? polygon?.simplify(1).getCoordinates()
                     : polygon?.getCoordinates()
-
-                console.log(coordinates)
 
                 // Add extent to query
                 if (polygon) {

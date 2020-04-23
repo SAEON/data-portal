@@ -1,7 +1,7 @@
 import { Catalogue } from '../../src'
 import { API_ADDRESS } from '../config/constants'
 
-const dslAddress = `${API_ADDRESS}/proxy/saeon-elk`
+const dslAddress = `${API_ADDRESS}`
 const index = 'saeon-odp-4-2'
 
 const catalog = new Catalogue({ dslAddress, index })
