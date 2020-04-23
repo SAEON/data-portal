@@ -1,6 +1,6 @@
 import { PureComponent } from 'react'
 import LayerGroup from 'ol/layer/Group'
-import { WMSCapabilities } from 'ol/format'
+// import { WMSCapabilities } from 'ol/format'
 const packageJson = require('../../package.json')
 
 // const wmsParser = new WMSCapabilities()
