@@ -30,6 +30,7 @@ export default ({ id, onClose, onDrawEnd }) => {
                     close={onClose}
                   >
                     {() => {
+                      // TODO. These should be handled in a top level provider specifically for the map.
                       const keyDown = (e) => {
                         if (e.key === 'Escape') {
                           proxy.removeInteraction(draw)
@@ -43,7 +44,10 @@ export default ({ id, onClose, onDrawEnd }) => {
                       useEffect(() => {
                         const body = document.getElementsByTagName('body')[0]
                         body.addEventListener('keydown', keyDown)
-                        return () => body.removeEventListener('keydown', keyDown)
+                        return () => {
+                          proxy.removeInteraction(draw)
+                          body.removeEventListener('keydown', keyDown)
+                        }
                       }, [])
                       return (
                         <>

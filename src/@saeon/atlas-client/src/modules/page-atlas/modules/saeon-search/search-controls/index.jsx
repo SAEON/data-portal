@@ -23,7 +23,7 @@ export default ({ data, children }) => {
     <Form
       fixedDateRange="all"
       textSearch=""
-      extents={[]}
+      polygons={[]}
       selectedTerms={[]}
       _dateRange={[maxSlider - 365, maxSlider]}
       dateRange={[getDateStringFromInt(maxSlider - 365), getDateStringFromInt(maxSlider)]}

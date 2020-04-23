@@ -43,7 +43,7 @@ export default () => {
             <SearchControls data={data}>
               {({ ...fields }) => {
                 // Use the search-context to create a query
-                const { fixedDateRange, dateRange, textSearch, selectedTerms } = fields
+                const { fixedDateRange, dateRange, textSearch, selectedTerms, polygons } = fields
 
                 const query = {
                   _source: {
@@ -51,20 +51,51 @@ export default () => {
                   },
                   query: {
                     bool: {
-                      must: [
-                        {
-                          match: {
-                            'metadata_json.subjects.subject': {
-                              query: `${textSearch}, ${selectedTerms.join(',')}`,
-                              fuzziness: 'AUTO',
-                            },
-                          },
-                        },
-                      ],
+                      must: [],
                     },
                   },
                 }
 
+                const polygon = polygons.length ? polygons[polygons.length - 1] : null
+
+                console.log(polygon?.flatCoordinates.length)
+                const coordinates =
+                  polygon?.flatCoordinates.length > 10
+                    ? polygon?.simplify(1).getCoordinates()
+                    : polygon?.getCoordinates()
+
+                console.log(coordinates)
+
+                // Add extent to query
+                if (polygon) {
+                  query.query.bool.filter = {
+                    geo_shape: {
+                      'metadata_json.geoLocations.geoLocationBox': {
+                        shape: {
+                          type: 'polygon',
+                          coordinates,
+                        },
+                        relation: 'within',
+                      },
+                    },
+                  }
+                }
+
+                // Add text search to query
+                if (textSearch || selectedTerms.length) {
+                  query.query.bool.must = query.query.bool.must.concat([
+                    {
+                      match: {
+                        'metadata_json.subjects.subject': {
+                          query: `${textSearch}, ${selectedTerms.join(',')}`,
+                          fuzziness: 'AUTO',
+                        },
+                      },
+                    },
+                  ])
+                }
+
+                // Add date range to query
                 if (fixedDateRange !== 'all') {
                   query.query.bool.must = query.query.bool.must.concat([
                     {
@@ -89,19 +120,15 @@ export default () => {
                   ])
                 }
 
-                console.log(fixedDateRange, dateRange, query)
-
                 // Pass the query to the catalogue search
                 return (
                   <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
                     {(useCatalog) => {
                       const { error, loading, data } = useCatalog(query)
 
-                      console.log(data)
-
                       return (
                         <>
-                          {/* Render any seach-context menus */}
+                          {/* Render search reslts if necessary */}
                           {menus
                             ?.filter((menu) => menu.id === searchListMenuId)
                             ?.map((menu) =>

@@ -3,7 +3,7 @@ import LayerGroup from 'ol/layer/Group'
 import { WMSCapabilities } from 'ol/format'
 const packageJson = require('../../package.json')
 
-const wmsParser = new WMSCapabilities()
+// const wmsParser = new WMSCapabilities()
 
 const descriptor = {
   enumerable: false,
@@ -46,56 +46,57 @@ export default class extends PureComponent {
             },
           },
 
-          // TODO: Add warning for CORS, or proxy to API
-          addServer: {
-            ...descriptor,
-            get: () => async (baseUri) =>
-              this.setState({
-                servers: Object.assign(
-                  {
-                    [baseUri]: await fetch(
-                      `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
-                    )
-                      .then((res) => res.text())
-                      .then((txt) => wmsParser.read(txt))
-                      .then(
-                        (wms) =>
-                          /**
-                           * Server proxy object
-                           */
-                          new Proxy(
-                            Object.defineProperties(wms, {
-                              wmsAddress: {
-                                get: () => baseUri,
-                              },
-                              remove: {
-                                get: () => () => {
-                                  // Delete layers from map
-                                  proxy
-                                    .getLayersByServerAddress(baseUri)
-                                    .forEach((layer) => map.removeLayer(layer))
+          // // NOTE: This currently isn't used, so it's commented out
+          // // TODO: Add warning for CORS, or proxy to API
+          // addServer: {
+          //   ...descriptor,
+          //   get: () => async (baseUri) =>
+          //     this.setState({
+          //       servers: Object.assign(
+          //         {
+          //           [baseUri]: await fetch(
+          //             `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
+          //           )
+          //             .then((res) => res.text())
+          //             .then((txt) => wmsParser.read(txt))
+          //             .then(
+          //               (wms) =>
+          //                 /**
+          //                  * Server proxy object
+          //                  */
+          //                 new Proxy(
+          //                   Object.defineProperties(wms, {
+          //                     wmsAddress: {
+          //                       get: () => baseUri,
+          //                     },
+          //                     remove: {
+          //                       get: () => () => {
+          //                         // Delete layers from map
+          //                         proxy
+          //                           .getLayersByServerAddress(baseUri)
+          //                           .forEach((layer) => map.removeLayer(layer))
 
-                                  // Then register the server as deleted
-                                  this.setState({
-                                    servers: Object.fromEntries(
-                                      Object.entries(this.state.servers).filter(
-                                        ([uri]) => uri !== baseUri
-                                      )
-                                    ),
-                                  })
-                                },
-                              },
-                            }),
-                            {
-                              get: (target, value) => target[value],
-                            }
-                          )
-                      ),
-                  },
-                  { ...this.state.servers }
-                ),
-              }),
-          },
+          //                         // Then register the server as deleted
+          //                         this.setState({
+          //                           servers: Object.fromEntries(
+          //                             Object.entries(this.state.servers).filter(
+          //                               ([uri]) => uri !== baseUri
+          //                             )
+          //                           ),
+          //                         })
+          //                       },
+          //                     },
+          //                   }),
+          //                   {
+          //                     get: (target, value) => target[value],
+          //                   }
+          //                 )
+          //             ),
+          //         },
+          //         { ...this.state.servers }
+          //       ),
+          //     }),
+          // },
 
           getLayersByServerAddress: {
             ...descriptor,
@@ -117,6 +118,22 @@ export default class extends PureComponent {
           removeLayerById: {
             ...descriptor,
             get: () => (id) => proxy.removeLayer(proxy.getLayerById(id)),
+          },
+
+          addInteraction: {
+            ...descriptor,
+            get: () => (interaction) => {
+              map.addInteraction(interaction)
+              reRender()
+            },
+          },
+
+          removeInteraction: {
+            ...descriptor,
+            get: () => (interaction) => {
+              map.removeInteraction(interaction)
+              reRender()
+            },
           },
 
           getLayerById: {

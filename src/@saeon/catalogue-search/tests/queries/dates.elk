@@ -75,7 +75,66 @@ POST /saeon-odp-4-2/_search
   }
 }
 
+POST /saeon-odp-4-2/_search
+{
+  "_source": {
+    "includes": [
+      "metadata_json.geoLocations.*"
+    ]
+  },
+  "query": {
+    "bool": {
+      "filter": {
+        "geo_shape": {
+          "metadata_json.geoLocations.geoLocationBox": {
+            "shape": {
+              "type": "polygon",
+              "coordinates": [
+                [
+                  [
+                    -26.528445,
+                    27.702679
+                  ],
+                  [
+                    -26.528445,
+                    28.215037
+                  ],
+                  [
+                    -25.900638,
+                    28.215037
+                  ],
+                  [
+                    -25.900638,
+                    27.702679
+                  ],
+                  [
+                    -26.528445,
+                    27.702679
+                  ]
+                ]
+              ]
+            },
+            "relation": "within"
+          }
+        }
+      }
+    }
+  }
+}
 
+POST /saeon-odp-4-2/_search
+{
+  "_source": {
+    "includes": [
+      "metadata_json.geoLocations.*"
+    ]
+  },
+  "query": {
+    "exists": {
+      "field": "metadata_json.geoLocations.geoLocationBox"
+    }
+  }
+}
 
 POST /saeon-odp-4-2/_search
 {
