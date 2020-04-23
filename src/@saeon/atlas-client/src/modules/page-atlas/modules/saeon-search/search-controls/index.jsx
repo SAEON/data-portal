@@ -21,7 +21,6 @@ const Div = () => (
 export default ({ data, children }) => {
   return (
     <Form
-      selectedDates={[null, null]}
       fixedDateRange="all"
       textSearch=""
       extents={[]}

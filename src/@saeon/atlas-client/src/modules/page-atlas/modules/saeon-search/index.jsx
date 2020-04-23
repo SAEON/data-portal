@@ -43,20 +43,53 @@ export default () => {
             <SearchControls data={data}>
               {({ ...fields }) => {
                 // Use the search-context to create a query
-                const { selectedDates, fixedDateRange, textSearch, selectedTerms, extents } = fields
+                const { fixedDateRange, dateRange, textSearch, selectedTerms } = fields
+
                 const query = {
                   _source: {
                     includes: ['metadata_json.*'],
                   },
                   query: {
-                    match: {
-                      'metadata_json.subjects.subject': {
-                        query: `${textSearch}, ${selectedTerms.join(',')}`,
-                        fuzziness: 'AUTO',
-                      },
+                    bool: {
+                      must: [
+                        {
+                          match: {
+                            'metadata_json.subjects.subject': {
+                              query: `${textSearch}, ${selectedTerms.join(',')}`,
+                              fuzziness: 'AUTO',
+                            },
+                          },
+                        },
+                      ],
                     },
                   },
                 }
+
+                if (fixedDateRange !== 'all') {
+                  query.query.bool.must = query.query.bool.must.concat([
+                    {
+                      terms: {
+                        'metadata_json.dates.dateType': ['valid', 'Collected'],
+                      },
+                    },
+                    {
+                      range: {
+                        'metadata_json.dates.date.gte': {
+                          gte: dateRange[0].split('/')[2],
+                        },
+                      },
+                    },
+                    {
+                      range: {
+                        'metadata_json.dates.date.lte': {
+                          lte: dateRange[1].split('/')[2],
+                        },
+                      },
+                    },
+                  ])
+                }
+
+                console.log(fixedDateRange, dateRange, query)
 
                 // Pass the query to the catalogue search
                 return (

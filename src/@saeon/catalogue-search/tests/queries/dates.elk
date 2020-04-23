@@ -3,11 +3,6 @@
 
 POST /saeon-odp-4-2/_search
 {
-  "_source": {
-    "includes": [
-      "metadata_json.dates.*"
-    ]
-  },
   "query": {
     "range": {
       "metadata_json.dates.date": {
@@ -36,6 +31,49 @@ POST /saeon-odp-4-2/_search
   }
 }
 
+
+POST /saeon-odp-4-2/_search
+{
+  "_source": {
+    "includes": [
+      "metadata_json.dates.*",
+      "metadata_json.identifier",
+      "metadata_json.alternateIdentifiers.*",
+      "metadata_json.titles.*",
+      "metadata_json.geoLocations.*"
+    ]
+  },
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "metadata_json.dates.date.gte": {
+              "lte": 2012,
+              "gte": 2012
+            }
+          }
+        },
+        {
+          "range": {
+            "metadata_json.dates.date.lte": {
+              "lte": 2012,
+              "gte": 2012
+            }
+          }
+        },
+        {
+          "terms": {
+            "metadata_json.dates.dateType": [
+              "valid",
+              "Collected"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
 
 
 
