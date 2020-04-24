@@ -5,19 +5,57 @@ import { ResizableBox } from 'react-resizable'
 import { EventBoundary } from '..'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
+import useStyles from './style'
+import clsx from 'clsx'
 
-const borderedBackground = `linear-gradient(to right, #adadad 4px, transparent 4px) 0 0,
-linear-gradient(to right, #adadad 4px, transparent 4px) 0 100%,
-linear-gradient(to left, #adadad 4px, transparent 4px) 100% 0,
-linear-gradient(to left, #adadad 4px, transparent 4px) 100% 100%,
-linear-gradient(to bottom, #adadad 4px, transparent 4px) 0 0,
-linear-gradient(to bottom, #adadad 4px, transparent 4px) 100% 0,
-linear-gradient(to top, #adadad 4px, transparent 4px) 0 100%,
-linear-gradient(to top, #adadad 4px, transparent 4px) 100% 100%`
-/*bugs:
--There is an obvious performance issue. The entire component is potentially re-rendering every time onDrag is called. Either way ondrag needs to be looked at(debouncing may help)
--Search Menu button is in front of drag menus while layers and about buttons are behind
-*/
+// Get the width of the page
+const container = document.getElementById('root')
+const containerHeight = container.offsetHeight
+const containerWidth = container.offsetWidth
+
+const snapZoneX = 100
+const snapZoneY = 50
+
+/**
+ * | 1 | 2 |
+ * | 3 | 4 |
+ */
+const quadrants = {
+  1: { x: 0, y: 0 },
+  2: { x: containerWidth / 2, y: 0 },
+  3: { x: 0, y: containerHeight / 2 },
+  4: { x: containerWidth / 2, y: containerHeight / 2 },
+}
+
+const getSnapZone = (x, y) => {
+  const snapLeft = x <= snapZoneX ? true : false
+  const snapRight = x >= containerWidth - snapZoneX ? true : false
+  const snapTop = y <= snapZoneY ? true : false
+  const snapBottom = y >= containerHeight - snapZoneY ? true : false
+
+  let position = null
+  const midX = containerWidth / 2
+  const midY = containerHeight / 2
+
+  if (x < midX && y < midY) {
+    position = quadrants[1]
+  } else if (x > midX && y < midY) {
+    position = quadrants[2]
+  } else if (x < midX && y > midY) {
+    position = quadrants[3]
+  } else if (x > midX && y > midY) {
+    position = quadrants[4]
+  }
+
+  return {
+    position,
+    active: snapLeft || snapRight || snapTop || snapBottom || false,
+    height:
+      (snapTop && (snapLeft || snapRight)) || snapBottom ? containerHeight / 2 : containerHeight,
+    width: snapLeft || snapRight ? containerWidth / 2 : containerWidth,
+  }
+}
+
 export default ({
   close,
   title,
@@ -29,6 +67,7 @@ export default ({
   defaultWidth = 450,
   defaultHeight = 400,
 }) => {
+  const classes = useStyles()
   const [position, setPosition] = useState(null)
   const [dimensions, setDimensions] = useState({ width: defaultWidth, height: defaultHeight })
   const [presnapDimensions, setPresnapDimensions] = useState({
@@ -43,100 +82,9 @@ export default ({
   })
   const [isResizing, setIsResizing] = useState(false)
 
-  //fetching parent dimensions
-  // const container = document.getElementById('olreact-mapprovider')
-  // const container = document.getElementsByClassName('ol-overlaycontainer')[0]
-  const container = document.getElementById('root')
-  const containerHeight = container.offsetHeight //refactor to ref / prop
-  const containerWidth = container.offsetWidth //refactor to ref / prop
-
-  const DetermineIndicator = (x, y) => {
-    const pastLeft = x <= 0 ? true : false
-    const pastRight = x >= containerWidth ? true : false
-    const pastTop = y <= 0 ? true : false
-    const pastBot = y >= containerHeight ? true : false
-
-    if (pastLeft) {
-      if (pastTop) {
-        setIndicatorProperties({
-          active: true,
-          position: { x: 0, y: 0 },
-          height: containerHeight / 2,
-          width: containerWidth / 2,
-        })
-      } else if (pastBot) {
-        setIndicatorProperties({
-          active: true,
-          position: { x: 0, y: containerHeight / 2 },
-          height: containerHeight / 2,
-          width: containerWidth / 2,
-        })
-      } else {
-        setIndicatorProperties({
-          active: true,
-          position: { x: 0, y: 0 },
-          height: containerHeight,
-          width: containerWidth / 2,
-        })
-      }
-    } else if (pastRight) {
-      if (pastTop) {
-        setIndicatorProperties({
-          active: true,
-          position: { x: containerWidth / 2, y: 0 },
-          height: containerHeight / 2,
-          width: containerWidth / 2,
-        })
-      } else if (pastBot) {
-        setIndicatorProperties({
-          active: true,
-          position: { x: containerWidth / 2, y: containerHeight / 2 },
-          height: containerHeight / 2,
-          width: containerWidth / 2,
-        })
-      } else {
-        setIndicatorProperties({
-          active: true,
-          position: { x: containerWidth / 2, y: 0 },
-          height: containerHeight,
-          width: containerWidth / 2,
-        })
-      }
-    } else if (pastTop) {
-      setIndicatorProperties({
-        active: true,
-        position: { x: 0, y: 0 },
-        height: containerHeight,
-        width: containerWidth,
-      })
-    } else {
-      setIndicatorProperties({
-        active: false,
-        position: null,
-        height: null,
-        width: null,
-      })
-    }
-  }
-
-  const onDrag = (DraggableEventHandler) => {
-    setDimensions({ width: presnapDimensions.width, height: presnapDimensions.height })
-    //fetching mouse position. DraggableEventHandler has several other position properties should chosen values have unforseen issues
-    const { clientX: mouseX, clientY: mouseY } = DraggableEventHandler
-    DetermineIndicator(mouseX, mouseY)
-  }
-  const onStop = () => {
-    if (indicatorProperties.active) {
-      setDimensions({ width: indicatorProperties.width, height: indicatorProperties.height })
-      setPosition({ x: indicatorProperties.position.x, y: indicatorProperties.position.y })
-    } else setPosition(null)
-    setIndicatorProperties({ position: null, width: null, height: null, active: null })
-  }
-
   return (
     <EventBoundary>
       <div
-        id="snap-indicator"
         style={{
           zIndex,
           position: 'relative',
@@ -144,11 +92,8 @@ export default ({
         }}
       >
         <div
+          className={classes.snapOutline}
           style={{
-            position: 'absolute',
-            boxShadow: '0px 0px 7px 3px rgba(140,140,140,1)',
-            backgroundColor: 'black',
-            opacity: '50%',
             height: indicatorProperties.height,
             width: indicatorProperties.width,
             left: indicatorProperties.position?.x,
@@ -165,8 +110,22 @@ export default ({
           position={position}
           grid={[5, 5]}
           scale={1}
-          onDrag={onDrag}
-          onStop={onStop}
+          onDrag={(e) => {
+            const { clientX: mouseX, clientY: mouseY } = e
+            setDimensions({ width: presnapDimensions.width, height: presnapDimensions.height })
+            const result = getSnapZone(mouseX, mouseY)
+            setIndicatorProperties(result)
+          }}
+          onStop={() => {
+            if (indicatorProperties.active) {
+              setDimensions({
+                width: indicatorProperties.width,
+                height: indicatorProperties.height,
+              })
+              setPosition({ x: indicatorProperties.position.x, y: indicatorProperties.position.y })
+            } else setPosition(null)
+            setIndicatorProperties({ position: null, width: null, height: null, active: null })
+          }}
         >
           <div
             style={{
@@ -187,7 +146,7 @@ export default ({
                   if (!resizable) return
                   setIsResizing(true)
                 }}
-                onResizeStop={(event, { size }) => {
+                onResizeStop={(e, { size }) => {
                   if (!resizable) return
                   setDimensions({ width: size.width, height: size.height })
                   setIsResizing(false)
@@ -218,22 +177,12 @@ export default ({
                     </AppBar>
                   </div>
                 </CardContent>
-                <div
-                  style={{
-                    height: 'calc(100% - 35px)',
-                    padding: '2px',
-                  }}
-                >
+                <div className={classes.menuContent}>
                   <div
-                    className="thin-scrollbar"
-                    style={{
-                      height: '100%',
-                      overflowY: 'auto',
-                      overflowX: 'hidden',
-                      background: isResizing ? borderedBackground : undefined,
-                      backgroundRepeat: isResizing ? 'no-repeat' : undefined,
-                      backgroundSize: isResizing ? '20px 20px' : undefined,
-                    }}
+                    className={clsx({
+                      [classes.resizing]: isResizing,
+                      'thin-scrollbar': true,
+                    })}
                   >
                     <CardContent style={{ paddingBottom: 12 }}>
                       {typeof children === 'function'
