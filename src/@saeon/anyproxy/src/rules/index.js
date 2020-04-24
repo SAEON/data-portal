@@ -10,15 +10,15 @@ const beforeSendRequest = async (requestDetail) => {
 
   try {
     let proxiedRequest
-    if (path.includes('/csir')) {
+    if (path.includes('/proxy/csir')) {
       proxiedRequest = csirRule({ path, requestDetail })
-    } else if (path.includes('/hst')) {
+    } else if (path.includes('/proxy/hst')) {
       proxiedRequest = hstRule({ path, requestDetail })
-    } else if (path.includes('/saeon-elk')) {
+    } else if (path.includes('/proxy/saeon-elk')) {
       proxiedRequest = saeonElk({ path, requestDetail })
-    } else if (path.includes('/saeon-spatialdata/app01.saeon.ac.za')) {
+    } else if (path.includes('/proxy/saeon-spatialdata/app01.saeon.ac.za')) {
       proxiedRequest = saeonGeoServer1({ path, requestDetail })
-    } else if (path.includes('/saeon-spatialdata/196.21.191.55')) {
+    } else if (path.includes('/proxy/saeon-spatialdata/196.21.191.55')) {
       proxiedRequest = saeonGeoServer2({ path, requestDetail })
     } else {
       throw new Error('No rule found')

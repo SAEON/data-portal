@@ -12,7 +12,7 @@ export default ({ path, requestDetail }) => {
     hostname,
     port,
     path: normalize(
-      `${proxyPath}${path.replace(/\/saeon-spatialdata\/app01.saeon.ac.za\/\d{4}\//, '/')}`
+      `${proxyPath}${path.replace(/\/proxy\/saeon-spatialdata\/app01.saeon.ac.za\/\d{4}\//, '/')}`
     ),
   }
 }

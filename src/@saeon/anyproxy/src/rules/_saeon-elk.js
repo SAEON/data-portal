@@ -13,8 +13,8 @@ export default ({ path, requestDetail }) => {
     port,
     path: normalize(
       `${proxyPath}${path
-        .replace(`/saeon-elk/${index}/_search`, `${index}/_search`)
-        .replace(`/saeon-elk/${index}`, `${index}/_search`)}`
+        .replace(`/proxy/saeon-elk/${index}/_search`, `${index}/_search`)
+        .replace(`/proxy/saeon-elk/${index}`, `${index}/_search`)}`
     ),
   }
 }

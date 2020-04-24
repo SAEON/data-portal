@@ -10,6 +10,6 @@ export default ({ path, requestDetail }) => {
     headers: Object.assign(requestDetail.requestOptions.headers, { host }),
     hostname,
     port,
-    path: normalize(`${proxyPath}${path.replace('/hst', '')}`),
+    path: normalize(`${proxyPath}${path.replace('/proxy/hst', '')}`),
   }
 }
