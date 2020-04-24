@@ -1,7 +1,4 @@
-export default ({ schema }) => async (req, res, next) => {
-  req.ctx = {
-    db: {},
-    schema,
-  }
-  next()
+export default (app) => async (ctx, next) => {
+  app.context.db = {}
+  await next()
 }

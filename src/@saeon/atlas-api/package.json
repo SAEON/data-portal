@@ -4,8 +4,8 @@
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
-    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=development TZ=utc node dist/bin'",
-    "start:prod": "rimraf dist && babel --root-mode upward src --out-dir dist && copyfiles -u 1 src/schema.graphql dist/ && copyfiles .env dist/ && NODE_ENV=production TZ=utc node dist/bin",
+    "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir .build && copyfiles -u 2 \"src/graphql/schema.graphql\" .build/graphql/ && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build'",
+    "start:prod": "rimraf .build && babel --root-mode upward src --out-dir .build && copyfiles -u 2 \"src/graphql/schema.graphql\" .build/graphql/ && copyfiles .env .build/ && NODE_ENV=production TZ=utc node .build",
     "check-package-updates": "ncu",
     "update-packages": "ncu -u"
   },
@@ -19,17 +19,14 @@
   "dependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/runtime-corejs3": "^7.9.2",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.5",
+    "@koa/router": "^8.0.8",
+    "apollo-server-koa": "^2.12.0",
     "copyfiles": "^2.2.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
     "graphql": "^15.0.0",
-    "graphql-tools": "^5.0.0",
-    "http-proxy": "^1.18.0",
-    "http-proxy-middleware": "^1.0.3",
-    "morgan": "^1.10.0",
+    "koa": "^2.11.0",
+    "koa-compress": "^3.1.0",
+    "koa-proxies": "^0.11.0",
     "rimraf": "^3.0.2"
   },
   "author": "zach@saeon.ac.za, steven@saeon.ac.za",
