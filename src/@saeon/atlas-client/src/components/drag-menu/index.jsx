@@ -6,6 +6,7 @@ import { EventBoundary } from '..'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 import useStyles from './style'
+import { debounce } from '../../lib/fns'
 import clsx from 'clsx'
 
 // Get the width of the page
@@ -13,47 +14,57 @@ const container = document.getElementById('root')
 const containerHeight = container.offsetHeight
 const containerWidth = container.offsetWidth
 
-const snapZoneX = 100
-const snapZoneY = 50
+const getPositionFromSnap = (snapZone) => {
+  if (snapZone === 'Top' || snapZone === 'TopLeft' || snapZone === 'Left') return { x: 0, y: 0 }
+  if (snapZone === 'Right' || snapZone === 'TopRight') return { x: containerWidth / 2, y: 0 }
+  if (snapZone === 'Bottom' || snapZone === 'BottomLeft') return { x: 0, y: containerHeight / 2 }
+  if (snapZone === 'BottomRight') return { x: containerWidth / 2, y: containerHeight / 2 }
+  return 'Position error: invalid snapZone'
+}
 
-/**
- * | 1 | 2 |
- * | 3 | 4 |
- */
-const quadrants = {
-  1: { x: 0, y: 0 },
-  2: { x: containerWidth / 2, y: 0 },
-  3: { x: 0, y: containerHeight / 2 },
-  4: { x: containerWidth / 2, y: containerHeight / 2 },
+const getDimensionsFromSnap = (snapZone) => {
+  if (snapZone === 'Top') return { width: containerWidth, height: containerHeight }
+  if (snapZone === 'Left' || snapZone === 'Right')
+    return { width: containerWidth / 2, height: containerHeight }
+  if (
+    snapZone === 'TopLeft' ||
+    snapZone === 'TopRight' ||
+    snapZone === 'BottomLeft' ||
+    snapZone === 'BottomRight'
+  )
+    return { width: containerWidth / 2, height: containerHeight / 2 }
+  if (snapZone === 'Bottom') return { width: containerWidth, height: containerHeight / 2 }
+  return 'Dimensions error: Invalid snapZone'
 }
 
 const getSnapZone = (x, y) => {
-  const snapLeft = x <= snapZoneX ? true : false
-  const snapRight = x >= containerWidth - snapZoneX ? true : false
+  const snapZoneX = 75
+  const snapZoneY = 75
   const snapTop = y <= snapZoneY ? true : false
   const snapBottom = y >= containerHeight - snapZoneY ? true : false
+  const snapLeft = x <= snapZoneX ? true : false
+  const snapRight = x >= containerWidth - snapZoneX ? true : false
 
-  let position = null
-  const midX = containerWidth / 2
-  const midY = containerHeight / 2
-
-  if (x < midX && y < midY) {
-    position = quadrants[1]
-  } else if (x > midX && y < midY) {
-    position = quadrants[2]
-  } else if (x < midX && y > midY) {
-    position = quadrants[3]
-  } else if (x > midX && y > midY) {
-    position = quadrants[4]
+  let snapZone = null
+  if (snapLeft && snapTop) {
+    snapZone = 'TopLeft'
+  } else if (snapRight && snapTop) {
+    snapZone = 'TopRight'
+  } else if (snapLeft && snapBottom) {
+    snapZone = 'BottomLeft'
+  } else if (snapRight && snapBottom) {
+    snapZone = 'BottomRight'
+  } else if (snapTop) {
+    snapZone = 'Top'
+  } else if (snapLeft) {
+    snapZone = 'Left'
+  } else if (snapRight) {
+    snapZone = 'Right'
+  } else if (snapBottom) {
+    snapZone = 'Bottom'
   }
 
-  return {
-    position,
-    active: snapLeft || snapRight || snapTop || snapBottom || false,
-    height:
-      (snapTop && (snapLeft || snapRight)) || snapBottom ? containerHeight / 2 : containerHeight,
-    width: snapLeft || snapRight ? containerWidth / 2 : containerWidth,
-  }
+  return snapZone
 }
 
 export default ({
@@ -67,64 +78,76 @@ export default ({
   defaultWidth = 450,
   defaultHeight = 400,
 }) => {
-  const classes = useStyles()
-  const [position, setPosition] = useState(null)
-  const [dimensions, setDimensions] = useState({ width: defaultWidth, height: defaultHeight })
-  const [presnapDimensions, setPresnapDimensions] = useState({
-    width: defaultWidth,
-    height: defaultHeight,
+  const classes = useStyles({ height: containerHeight, width: containerWidth })()
+
+  // State related to snapping
+  const [snapState, setSnapState] = useState({
+    snapZone: null,
   })
-  const [indicatorProperties, setIndicatorProperties] = useState({
-    active: false,
-    position: { x: null, y: null },
-    height: null,
-    width: null,
+
+  // State related to the size of the menus
+  const [sizeState, setSizeState] = useState({
+    isResizing: false,
+    dimensions: { width: defaultWidth, height: defaultHeight },
+    position: null,
   })
-  const [isResizing, setIsResizing] = useState(false)
 
   return (
     <EventBoundary>
+      {/* Snap ghost */}
       <div
         style={{
           zIndex,
           position: 'relative',
-          display: indicatorProperties.active ? 'block' : 'none',
+          display: snapState.snapZone ? 'block' : 'none',
         }}
       >
         <div
-          className={classes.snapOutline}
-          style={{
-            height: indicatorProperties.height,
-            width: indicatorProperties.width,
-            left: indicatorProperties.position?.x,
-            top: indicatorProperties.position?.y,
-          }}
-        ></div>
+          className={clsx({
+            [classes.ghost]: true,
+            [classes[snapState.snapZone]]: true,
+          })}
+        />
       </div>
+
+      {/* Menu */}
       <div style={{ position: 'absolute' }}>
         <Draggable
           axis="both"
           handle=".draggable-handle"
           defaultPosition={defaultPosition}
           bounds={{ left: 0, top: 0 }}
-          position={position}
+          position={sizeState.position}
           grid={[5, 5]}
           scale={1}
-          onDrag={(e) => {
+          onDrag={debounce((e) => {
             const { clientX: mouseX, clientY: mouseY } = e
-            setDimensions({ width: presnapDimensions.width, height: presnapDimensions.height })
-            const result = getSnapZone(mouseX, mouseY)
-            setIndicatorProperties(result)
-          }}
-          onStop={() => {
-            if (indicatorProperties.active) {
-              setDimensions({
-                width: indicatorProperties.width,
-                height: indicatorProperties.height,
+            const snapZone = getSnapZone(mouseX, mouseY)
+            if (snapZone && snapZone !== snapState.snapZone) {
+              setSnapState({
+                snapZone,
               })
-              setPosition({ x: indicatorProperties.position.x, y: indicatorProperties.position.y })
-            } else setPosition(null)
-            setIndicatorProperties({ position: null, width: null, height: null, active: null })
+            } else if (!snapZone && snapState.snapZone) {
+              setSnapState({
+                snapZone,
+              })
+            }
+          }, 10)}
+          onStop={({ x, y }) => {
+            console.log(x, y)
+            if (snapState.snapZone) {
+              const position = getPositionFromSnap(snapState.snapZone)
+              const dimensions = getDimensionsFromSnap(snapState.snapZone)
+              setSnapState({
+                snapZone: null,
+              })
+              setSizeState({
+                isResizing: sizeState.isResizing,
+                dimensions,
+                position,
+                previousPosition: { x, y },
+              })
+            }
           }}
         >
           <div
@@ -137,25 +160,27 @@ export default ({
             <Card variant="elevation">
               <ResizableBox
                 resizeHandles={resizable ? ['se'] : []}
-                width={dimensions.width}
-                height={dimensions.height}
+                width={sizeState.dimensions.width}
+                height={sizeState.dimensions.height}
                 axis={resizable ? 'both' : 'none'}
                 minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
                 draggableOpts={{ grid: [5, 5] }}
                 onResizeStart={() => {
                   if (!resizable) return
-                  setIsResizing(true)
+                  setSizeState({
+                    isResizing: true,
+                    dimensions: { ...sizeState.dimensions },
+                  })
                 }}
                 onResizeStop={(e, { size }) => {
                   if (!resizable) return
-                  setDimensions({ width: size.width, height: size.height })
-                  setIsResizing(false)
-                  if (
-                    size.width !== indicatorProperties.width &&
-                    size.height !== indicatorProperties.height
-                  ) {
-                    setPresnapDimensions({ width: size.width, height: size.height })
-                  }
+                  setSizeState({
+                    dimensions: {
+                      width: size.width,
+                      height: size.height,
+                    },
+                    isResizing: false,
+                  })
                 }}
               >
                 <CardContent style={{ padding: 0 }}>
@@ -180,13 +205,16 @@ export default ({
                 <div className={classes.menuContent}>
                   <div
                     className={clsx({
-                      [classes.resizing]: isResizing,
+                      [classes.resizing]: sizeState.isResizing,
                       'thin-scrollbar': true,
                     })}
                   >
                     <CardContent style={{ paddingBottom: 12 }}>
                       {typeof children === 'function'
-                        ? children({ height: dimensions.height - 70, width: dimensions.width - 32 })
+                        ? children({
+                            height: sizeState.dimensions.height - 70,
+                            width: sizeState.dimensions.width - 32,
+                          })
                         : children}
                     </CardContent>
                   </div>
