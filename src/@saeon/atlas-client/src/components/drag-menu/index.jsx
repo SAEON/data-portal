@@ -19,7 +19,7 @@ const getPositionFromSnap = (snapZone) => {
   if (snapZone === 'Right' || snapZone === 'TopRight') return { x: containerWidth / 2, y: 0 }
   if (snapZone === 'Bottom' || snapZone === 'BottomLeft') return { x: 0, y: containerHeight / 2 }
   if (snapZone === 'BottomRight') return { x: containerWidth / 2, y: containerHeight / 2 }
-  return 'Position error: invalid snapZone'
+  return null
 }
 
 const getDimensionsFromSnap = (snapZone) => {
@@ -34,7 +34,7 @@ const getDimensionsFromSnap = (snapZone) => {
   )
     return { width: containerWidth / 2, height: containerHeight / 2 }
   if (snapZone === 'Bottom') return { width: containerWidth, height: containerHeight / 2 }
-  return 'Dimensions error: Invalid snapZone'
+  return null
 }
 
 const getSnapZone = (x, y) => {
@@ -83,6 +83,7 @@ export default ({
   // State related to snapping
   const [snapState, setSnapState] = useState({
     snapZone: null,
+    snapped: false,
   })
 
   // State related to the size of the menus
@@ -120,9 +121,21 @@ export default ({
           position={sizeState.position}
           grid={[5, 5]}
           scale={1}
-          onDrag={debounce((e) => {
-            const { clientX: mouseX, clientY: mouseY } = e
-            const snapZone = getSnapZone(mouseX, mouseY)
+          onDrag={debounce(({ x, y }) => {
+            if (sizeState.previousDimensions) {
+              setSizeState(
+                Object.assign(
+                  { ...sizeState },
+                  {
+                    position: { x: x - sizeState.previousDimensions.width / 2, y: y - 15 },
+                    dimensions: sizeState.previousDimensions,
+                    previousDimensions: null,
+                  }
+                )
+              )
+            }
+
+            const snapZone = getSnapZone(x, y)
             if (snapZone && snapZone !== snapState.snapZone) {
               setSnapState({
                 snapZone,
@@ -132,32 +145,55 @@ export default ({
                 snapZone,
               })
             }
-          }, 10)}
-          onStop={({ x, y }) => {
-            console.log(x, y)
+          }, 40)}
+          onStop={() => {
             if (snapState.snapZone) {
-              const position = getPositionFromSnap(snapState.snapZone)
               const dimensions = getDimensionsFromSnap(snapState.snapZone)
+              const position = getPositionFromSnap(snapState.snapZone)
+              const previousDimensions = sizeState.dimensions
               setSnapState({
                 snapZone: null,
+                snapped: true,
               })
-              setSizeState({
-                isResizing: sizeState.isResizing,
-                dimensions,
-                position,
-                previousPosition: { x, y },
-              })
+              setSizeState(
+                Object.assign(
+                  { ...sizeState },
+                  {
+                    dimensions,
+                    position,
+                    previousDimensions,
+                  }
+                )
+              )
+            } else {
+              setSnapState(
+                Object.assign(
+                  { ...snapState },
+                  {
+                    snapped: false,
+                  }
+                )
+              )
+              setSizeState(
+                Object.assign(
+                  { ...sizeState },
+                  {
+                    position: null,
+                    previousDimensions: null,
+                  }
+                )
+              )
             }
           }}
         >
           <div
             style={{
-              opacity: 0.8,
+              opacity: snapState.snapped ? 1 : 0.8,
               zIndex,
               position: 'relative',
             }}
           >
-            <Card variant="elevation">
+            <Card style={snapState.snapped ? { borderRadius: 0 } : {}} variant="elevation">
               <ResizableBox
                 resizeHandles={resizable ? ['se'] : []}
                 width={sizeState.dimensions.width}
