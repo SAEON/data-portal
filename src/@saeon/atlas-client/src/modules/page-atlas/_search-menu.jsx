@@ -5,7 +5,7 @@ import HstLayers from './modules/health-systems-trust'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { DragMenu, CsirIcon, NrfIcon, HstIcon } from '../../components'
 import DialMenu from './_dial-menu'
-import { MenuContext } from '../provider-menu'
+import { MenuContext } from '@saeon/snap-menus'
 import { SpeedDialAction } from '@material-ui/lab'
 import useStyles from './style'
 

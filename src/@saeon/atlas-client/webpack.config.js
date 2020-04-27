@@ -19,6 +19,8 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         'ol/control.js': path.resolve(__dirname, './node_modules/ol/control.js'),
         'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
         react: path.resolve(__dirname, './node_modules/react'),
+        'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
+        '@saeon/snap-menus': path.resolve(__dirname, '../snap-menus/src/index'),
         '@saeon/ol-react': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'

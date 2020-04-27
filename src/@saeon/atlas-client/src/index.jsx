@@ -21,7 +21,7 @@ import ErrorBoundary from './modules/error-boundary'
 
 // Global providers
 import MapProvider from './modules/provider-map'
-import MenuProvider from './modules/provider-menu'
+import { MenuProvider } from '@saeon/snap-menus'
 import FeedbackProvider from './modules/provider-feedback'
 
 // Pages

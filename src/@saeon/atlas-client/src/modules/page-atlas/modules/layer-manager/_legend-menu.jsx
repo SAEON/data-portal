@@ -1,7 +1,7 @@
 import React from 'react'
 import { DragMenu } from '../../../../components'
 import { Typography } from '@material-ui/core'
-import { MenuContext } from '../../../provider-menu'
+import { MenuContext } from '@saeon/snap-menus'
 
 export default ({ id, layer, onClose }) => {
   const LegendMenu =

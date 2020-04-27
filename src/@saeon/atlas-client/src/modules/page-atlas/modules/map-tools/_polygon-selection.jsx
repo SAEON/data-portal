@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { DragMenu, Form } from '../../../../components'
-import { MenuContext } from '../../../provider-menu'
+import { MenuContext } from '@saeon/snap-menus'
 import { MapContext } from '../../../provider-map'
 import { IconButton, Tooltip } from '@material-ui/core'
 import { Gesture as GestureIcon, CropSquare as SquareIcon } from '@material-ui/icons'

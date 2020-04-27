@@ -1,10 +1,8 @@
-import React, { createContext, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { createPortal } from 'react-dom'
+import MenuContext from './_context'
 
 const menuContainerEl = document.getElementById('menu-portal')
-
-export const MenuContext = createContext()
-
 export default class extends PureComponent {
   state = { menus: [] }
 

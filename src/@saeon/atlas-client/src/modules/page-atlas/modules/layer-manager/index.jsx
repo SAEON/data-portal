@@ -22,7 +22,7 @@ import {
   Button,
   Grid,
 } from '@material-ui/core'
-import { MenuContext } from '../../../provider-menu'
+import { MenuContext } from '@saeon/snap-menus'
 import { MapContext } from '../../../provider-map'
 import { Form, DragAndDrop } from '../../../../components'
 import { debounce } from '../../../../lib/fns'

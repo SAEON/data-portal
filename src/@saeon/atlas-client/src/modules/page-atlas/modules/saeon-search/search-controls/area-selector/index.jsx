@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { Gesture as GestureIcon } from '@material-ui/icons'
 import { PolygonSelectionTool } from '../../../map-tools'
 import { Grid, Button } from '@material-ui/core'
-import { MenuContext } from '../../../../../provider-menu'
+import { MenuContext } from '@saeon/snap-menus'
 
 const id = 'map-selection-tools'
 
