@@ -24,15 +24,17 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? '../snap-menus' : '../snap-menus/src/index'
+          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src/index'
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? '../ol-react' : '../ol-react/src/index'
+          mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
-          mode === 'production' ? '../catalogue-search' : '../catalogue-search/src/index'
+          mode === 'production'
+            ? './node_modules/@saeon/catalogue-search'
+            : '../catalogue-search/src/index'
         ),
       },
       extensions: ['.js', '.jsx'],
@@ -45,7 +47,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
           vendor: {
             chunks: 'all',
             test: /node_modules/,
-            priority: 20
+            priority: 20,
           },
           common: {
             name: 'common',
@@ -53,8 +55,8 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
             chunks: 'async',
             priority: 10,
             reuseExistingChunk: true,
-            enforce: true
-        }
+            enforce: true,
+          },
         },
       },
     },
