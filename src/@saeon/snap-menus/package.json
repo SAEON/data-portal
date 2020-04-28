@@ -38,6 +38,7 @@
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.0",
     "css-loader": "^3.5.3",
+    "node-sass": "^4.14.0",
     "react-draggable": "^4.3.1",
     "react-resizable": "^1.10.1",
     "sass-loader": "^8.0.2",
