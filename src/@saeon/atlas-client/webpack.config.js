@@ -28,12 +28,12 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'
+          mode === 'production' ? '../ol-react/src/index' : '../ol-react/src/index'
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
           mode === 'production'
-            ? './node_modules/@saeon/catalogue-search'
+            ? '../catalogue-search/src/index'
             : '../catalogue-search/src/index'
         ),
       },
