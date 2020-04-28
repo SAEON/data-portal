@@ -12,9 +12,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  externals: {
-    react: 'react',
-  },
+  externals: [{ react: 'react' }],
   module: {
     rules: [
       {
