@@ -22,9 +22,17 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
         '@material-ui/core': path.resolve(__dirname, './node_modules/@material-ui/core'),
         '@material-ui/icons': path.resolve(__dirname, './node_modules/@material-ui/icons'),
-        '@saeon/snap-menus': path.resolve(__dirname, '../snap-menus/src/index'),
-        '@saeon/ol-react': path.resolve(__dirname, '../ol-react/src/index'),
-        '@saeon/catalogue-search': path.resolve(__dirname, '../catalogue-search/src/index'),
+        '@saeon/snap-menus': path.resolve(__dirname, mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src/index'),
+        '@saeon/ol-react': path.resolve(
+          __dirname,
+          mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'
+        ),
+        '@saeon/catalogue-search': path.resolve(
+          __dirname,
+          mode === 'production'
+            ? './node_modules/@saeon/catalogue-search'
+            : '../catalogue-search/src/index'
+        ),
       },
       extensions: ['.js', '.jsx'],
     },

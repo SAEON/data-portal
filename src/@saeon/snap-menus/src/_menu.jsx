@@ -149,7 +149,7 @@ export default ({
                 )
               )
             }
-          }, 40)}
+          })}
           onStop={() => {
             if (state.snapZone) {
               const dimensions = getDimensionsFromSnap(state.snapZone)
