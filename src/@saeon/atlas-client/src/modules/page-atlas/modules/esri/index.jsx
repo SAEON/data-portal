@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Card, CardHeader } from '@material-ui/core'
-import { Checkbox } from '@material-ui/core'
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Avatar,
+  Checkbox,
+  Typography,
+} from '@material-ui/core'
 import { createLayer, LayerTypes } from '../../../../lib/ol'
-import { Typography } from '@material-ui/core'
 import InfoMenu from './_info-menu'
 import LegendMenu from './_legend-menu'
 import { MapContext } from '../../../provider-map'
@@ -66,48 +76,71 @@ export default ({ apiProxyAddress, servicesAddress, layers }) => {
     <MapContext.Consumer>
       {({ proxy }) => (
         <div style={{ height: '100%', overflow: 'auto', paddingRight: 5 }}>
-          {Object.entries(state.esriLayers).map(([uri, { mapName, currentVersion }], i) => (
+          {Object.entries(state.esriLayers).map(([uri, { mapName, currentVersion, layers }], i) => (
             <Card key={i} style={{ margin: 5 }} variant="outlined" square={true}>
               <CardHeader
-                titleTypographyProps={{
-                  variant: 'overline',
-                }}
-                subheaderTypographyProps={{
-                  variant: 'caption',
-                }}
                 title={mapName || 'UNKNOWN TITLE'}
                 subheader={`VERSION ${currentVersion}`}
-                action={
-                  <Checkbox
-                    style={{ float: 'right' }}
-                    size="small"
-                    edge="start"
-                    checked={proxy.getLayerById(uri) ? true : false}
-                    onChange={({ target }) => {
-                      const proxiedUri = uri.replace(servicesAddress, apiProxyAddress)
-                      const { checked } = target
-                      if (checked) {
-                        proxy.addLayer(
-                          createLayer({
-                            InfoMenu: () => (
-                              <InfoMenu uri={`${proxiedUri}/layers?f=pjson`} title={mapName} />
-                            ),
-                            LegendMenu: () => (
-                              <LegendMenu uri={`${proxiedUri}/legend?f=pjson`} title={mapName} />
-                            ),
-                            layerType: LayerTypes.TileArcGISRest,
-                            id: uri,
-                            uri: proxiedUri,
-                            title: mapName,
-                          })
-                        )
-                      } else {
-                        proxy.removeLayerById(uri)
-                      }
-                    }}
-                  />
-                }
               />
+              <CardContent title="Layers">
+                <List>
+                  {layers.map(({ name }, i) => {
+                    const proxiedUri = uri.replace(servicesAddress, apiProxyAddress)
+                    const id = `${uri}-${name}`
+                    return (
+                      // Layer
+                      <ListItem
+                        onClick={() => console.log('TODO - this should load layer info')}
+                        key={i}
+                        role={undefined}
+                        dense
+                        button
+                      >
+                        <ListItemAvatar>
+                          <Avatar
+                            variant="square"
+                            alt="Thumbnail"
+                            src={`${proxiedUri}/info/thumbnail`}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText primary={name} />
+                        <ListItemSecondaryAction>
+                          <Checkbox
+                            edge="start"
+                            checked={proxy.getLayerById(id) ? true : false}
+                            tabIndex={-1}
+                            disableRipple
+                            onChange={({ target }) => {
+                              const { checked } = target
+                              if (checked) {
+                                proxy.addLayer(
+                                  createLayer({
+                                    InfoMenu: () => (
+                                      <InfoMenu uri={`${proxiedUri}/layers?f=pjson`} title={name} />
+                                    ),
+                                    LegendMenu: () => (
+                                      <LegendMenu
+                                        uri={`${proxiedUri}/legend?f=pjson`}
+                                        title={name}
+                                      />
+                                    ),
+                                    layerType: LayerTypes.TileArcGISRest,
+                                    id,
+                                    uri: proxiedUri,
+                                    title: mapName,
+                                  })
+                                )
+                              } else {
+                                proxy.removeLayerById(id)
+                              }
+                            }}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    )
+                  })}
+                </List>
+              </CardContent>
             </Card>
           ))}
         </div>

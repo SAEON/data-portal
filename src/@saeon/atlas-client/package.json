@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "An interactive atlas for interacting with spatial data - specifically SAEON's metadata store, although it should also be a generally useful means of interacting with any OGC-compliant resource.",
   "keywords": [
     "@saeon/atlas-client"
