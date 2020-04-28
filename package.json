@@ -13,7 +13,7 @@
     "update-git-snapshot": "git add .",
     "install-package-dependencies": "npm --prefix src/@saeon/anyproxy install && npm --prefix src/@saeon/atlas-api install && npm --prefix src/@saeon/atlas-client install && npm --prefix src/@saeon/catalogue-search install && npm --prefix src/@saeon/ol-react install",
     "check-package-updates": "npm --prefix src/@saeon/anyproxy run check-package-updates && npm --prefix src/@saeon/atlas-api run check-package-updates && npm --prefix src/@saeon/atlas-client run check-package-updates && npm --prefix src/@saeon/catalogue-search run check-package-updates && npm --prefix src/@saeon/ol-react run check-package-updates",
-    "update-packages": "npm --prefix src/@saeon/anyproxy run update-packages && npm --prefix src/@saeon/atlas-api run update-packages && npm --prefix src/@saeon/atlas-client run update-packages && npm --prefix src/@saeon/catalogue-search run update-packages && npm --prefix src/@saeon/ol-react run update-packages"
+    "update-packages": "npm --prefix src/@saeon/anyproxy run update-packages && npm --prefix src/@saeon/atlas-api run update-packages && npm --prefix src/@saeon/atlas-client run update-packages && npm --prefix src/@saeon/catalogue-search run update-packages && npm --prefix src/@saeon/ol-react run update-packages && npm run install-package-dependencies"
   },
   "husky": {
     "hooks": {

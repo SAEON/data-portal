@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "description": "An interactive atlas for interacting with spatial data - specifically SAEON's metadata store, although it should also be a generally useful means of interacting with any OGC-compliant resource.",
   "keywords": [
     "@saeon/atlas-client"
@@ -17,14 +17,14 @@
     "@apollo/client": "^3.0.0-beta.44",
     "@babel/runtime-corejs3": "^7.9.2",
     "@date-io/date-fns": "^1.3.13",
-    "@material-ui/core": "^4.9.11",
+    "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.50",
+    "@material-ui/lab": "^4.0.0-alpha.51",
     "@material-ui/pickers": "^3.2.10",
     "@saeon/catalogue-search": "^2.0.0",
     "@saeon/ol-react": "^7.3.0",
-    "@saeon/snap-menus": "^1.0.0",
-    "@svgr/webpack": "^5.3.1",
+    "@saeon/snap-menus": "^1.1.0",
+    "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.0",
     "copy-webpack-plugin": "^5.1.1",
@@ -57,7 +57,7 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
-    "onchange": "^6.1.1",
+    "onchange": "^7.0.1",
     "prettier": "^2.0.5",
     "webpack-dev-server": "^3.10.3"
   }
