@@ -15,7 +15,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
     react: 'react',
     'react-dom': 'react-dom',
     '@material-ui/core': '@material-ui/core',
-    '@material-ui/icons': '@material-ui/icons'
+    '@material-ui/icons': '@material-ui/icons',
   },
   module: {
     rules: [

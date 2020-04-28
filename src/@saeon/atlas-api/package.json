@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-api",
-  "version": "0.0.38",
+  "version": "0.0.40",
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
