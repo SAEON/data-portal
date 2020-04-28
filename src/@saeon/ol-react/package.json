@@ -33,6 +33,7 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.9.2",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "sass-loader": "^8.0.2",
