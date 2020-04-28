@@ -5,16 +5,12 @@ module.exports = {
     [
       'babel-plugin-transform-imports',
       {
-        'date-fns': {
-          transform: (importName) => `date-fns/${importName}`,
-          preventFullImport: true,
-        },
         '@material-ui/core': {
-          transform: '@material-ui/core/esm/${member}',
+          transform: '@material-ui/core/${member}',
           preventFullImport: true,
         },
         '@material-ui/icons': {
-          transform: '@material-ui/icons/esm/${member}',
+          transform: '@material-ui/icons/${member}',
           preventFullImport: true,
         },
       },

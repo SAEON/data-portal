@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "An interactive atlas for interacting with spatial data - specifically SAEON's metadata store, although it should also be a generally useful means of interacting with any OGC-compliant resource.",
   "keywords": [
     "@saeon/atlas-client"
@@ -21,9 +21,9 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.51",
     "@material-ui/pickers": "^3.2.10",
-    "@saeon/catalogue-search": "^2.0.0",
-    "@saeon/ol-react": "^7.3.0",
-    "@saeon/snap-menus": "^1.1.0",
+    "@saeon/catalogue-search": "^2.2.0",
+    "@saeon/ol-react": "^7.5.0",
+    "@saeon/snap-menus": "^1.4.0",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.0",
