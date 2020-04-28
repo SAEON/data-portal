@@ -11,13 +11,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  externals: {
-    react: 'react',
-    ol: 'ol',
-    'ol/control.js': 'ol/control.js',
-    'ol/layer/Group': 'ol/layer/Group',
-    'ol/format': 'ol/format',
-  },
+  externals: [{ react: 'react' }, /ol.*$/i],
   module: {
     rules: [
       {
