@@ -24,7 +24,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src/index'
+          mode === 'production' ? '../snap-menus/src/index' : '../snap-menus/src/index'
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
