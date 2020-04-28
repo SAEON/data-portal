@@ -13,7 +13,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
   },
   externals: {
     react: 'react',
-    'react-md': 'react-md',
+    'react-dom': 'react-dom',
     '@material-ui/core': '@material-ui/core',
     '@material-ui/icons': '@material-ui/icons'
   },
