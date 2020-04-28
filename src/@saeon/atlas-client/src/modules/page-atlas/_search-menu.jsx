@@ -8,6 +8,7 @@ import DialMenu from './_dial-menu'
 import { MenuContext, DragMenu } from '@saeon/snap-menus'
 import { SpeedDialAction } from '@material-ui/lab'
 import useStyles from './style'
+import { isMobile } from 'react-device-detect'
 
 export default () => {
   const classes = useStyles()
@@ -42,6 +43,7 @@ export default () => {
                             title={'Search HST data'}
                             active={Boolean(getMenuById(id))}
                             close={() => removeMenu(id)}
+                            isMobile={true}
                           >
                             {({ height, width }) => <HstLayers height={height} width={width} />}
                           </DragMenu>

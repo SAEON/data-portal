@@ -2,6 +2,7 @@ import React from 'react'
 import { MenuContext, DragMenu } from '@saeon/snap-menus'
 import ResultsList from './_results-list'
 import { Typography } from '@material-ui/core'
+import { isMobile } from 'react-device-detect'
 
 export default ({ id, onClose, data }) => {
   return (
@@ -14,6 +15,7 @@ export default ({ id, onClose, data }) => {
           defaultWidth={500}
           title={'Search results'}
           close={onClose}
+          fullscreen={isMobile}
         >
           {({ height, width }) =>
             data && data.hits.total ? (

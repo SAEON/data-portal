@@ -3,6 +3,7 @@ import { Fab } from '@material-ui/core'
 import { Print as PrintIcon } from '@material-ui/icons'
 import { MenuContext, DragMenu } from '../../modules/menu-provider'
 import html2canvas from 'html2canvas'
+import { isMobile } from 'react-device-detect'
 
 export default () => {
   const options = { width: 500, height: 500 }
@@ -45,6 +46,7 @@ export default () => {
               title={'Screenshot'}
               active={screenshotMenu.active}
               close={() => updateMenuManager({ screenshotMenu: { active: false } })}
+              isMobile={true}
             >
               {takeScreenshot}
             </DragMenu>

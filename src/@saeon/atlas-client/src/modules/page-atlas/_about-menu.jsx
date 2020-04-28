@@ -5,6 +5,7 @@ import { MenuContext, DragMenu } from '@saeon/snap-menus'
 import AboutContent from './modules/about'
 import packageJson from '../../../package.json'
 import useStyles from './style'
+import { isMobile } from 'react-device-detect'
 
 export default () => {
   const classes = useStyles()
@@ -27,13 +28,14 @@ export default () => {
                 } else {
                   addMenu({
                     id,
-                    zIndex: getActiveMenuZIndex() || 1,
+                    zIndex: getActiveMenuZIndex(),
                     Component: () => (
                       <DragMenu
                         onMouseDown={() => setActiveMenu(id)}
                         zIndex={getMenuById(id).zIndex}
                         title={`About ${packageJson.name}`}
                         close={() => removeMenu(id)}
+                        fullscreen={isMobile}
                       >
                         {() => <AboutContent />}
                       </DragMenu>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 import { MenuContext, DragMenu } from '@saeon/snap-menus'
+import { isMobile } from 'react-device-detect'
 
 export default ({ id, layer, onClose }) => {
   const LegendMenu =
@@ -22,6 +23,7 @@ export default ({ id, layer, onClose }) => {
           title={'Legend'}
           active={true}
           close={onClose}
+          isMobile={true}
         >
           {() => <LegendMenu />}
         </DragMenu>

@@ -8,6 +8,7 @@ import { Vector as VectorLayer } from 'ol/layer'
 import { Vector as VectorSource } from 'ol/source'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import { nanoid } from 'nanoid'
+import { isMobile } from 'react-device-detect'
 
 var draw
 export default ({ id, onClose, onDrawEnd }) => {
@@ -28,6 +29,7 @@ export default ({ id, onClose, onDrawEnd }) => {
                     title={''}
                     resizable={false}
                     close={onClose}
+                    fullscreen={isMobile}
                   >
                     {() => {
                       // TODO. These should be handled in a top level provider specifically for the map.
