@@ -13,6 +13,10 @@ module.exports = {
           transform: '@material-ui/icons/${member}',
           preventFullImport: true,
         },
+        '@material-ui/lab': {
+          transform: '@material-ui/lab/${member}',
+          preventFullImport: true,
+        },
       },
     ],
     '@babel/plugin-proposal-optional-chaining',
