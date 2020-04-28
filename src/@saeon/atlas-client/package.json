@@ -59,6 +59,7 @@
   "devDependencies": {
     "onchange": "^7.0.1",
     "prettier": "^2.0.5",
+    "webpack-bundle-analyzer": "^3.7.0",
     "webpack-dev-server": "^3.10.3"
   }
 }

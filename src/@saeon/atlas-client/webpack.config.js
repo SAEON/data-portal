@@ -1,3 +1,4 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const Dotenv = require('dotenv-webpack')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
@@ -22,7 +23,10 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
         '@material-ui/core': path.resolve(__dirname, './node_modules/@material-ui/core'),
         '@material-ui/icons': path.resolve(__dirname, './node_modules/@material-ui/icons'),
-        '@saeon/snap-menus': path.resolve(__dirname, mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src/index'),
+        '@saeon/snap-menus': path.resolve(
+          __dirname,
+          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src/index'
+        ),
         '@saeon/ol-react': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src/index'
@@ -81,6 +85,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
       ],
     },
     plugins: [
+      new BundleAnalyzerPlugin(),
       new Dotenv(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode),

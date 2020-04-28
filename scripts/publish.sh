@@ -22,34 +22,24 @@ if [ ! $SEMVER]; then
 fi
 
 # Update package version
+echo "Staging current changes. Bumping $PACKAGE $SEMVER"
+git add .
+git commit -m "Staging current changes. Bumping $SEMVER ($PACKAGE)" --no-verify
+
 case $SEMVER in
   patch)
-    echo "Staging current changes. Bumping patch"
-    git add .
-    git commit -m "Staging current changes. Bumping patch" --no-verify
-    npm version patch -m "Increment package.json version (patch)"
-    git add .
-    git commit -m "Bumped patch" --no-verify
+    npm version patch -m "Increment package.json $SEMVER version ($PACKAGE)"
     ;;
-
   minor)
-    echo "Staging current changes. Bumping minor"
-    git add .
-    git commit -m "Staging current changes. Bumping patch" --no-verify
-    npm version minor -m "Increment package.json version (minor)"
-    git add .
-    git commit -m "Bumped minor" --no-verify    
+    npm version minor -m "Increment package.json $SEMVER version ($PACKAGE)"
     ;;
-
   major)
-    echo "Staging current changes. Bumping major"
-    git add .
-    git commit -m "Staging current changes. Bumping patch" --no-verify
-    npm version major -m "Increment package.json version (major)"
-    git add .
-    git commit -m "Bumped major" --no-verify
+    npm version major -m "Increment package.json $SEMVER version ($PACKAGE)"
     ;;
 esac
+
+git add .
+git commit -m "Bumped $PACKAGE $SEMVER" --no-verify
 
 # Publish to NPM
 npm init --scope=@saeon

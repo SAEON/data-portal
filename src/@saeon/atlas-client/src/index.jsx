@@ -4,7 +4,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { CssBaseline } from '@material-ui/core'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import {
   DEFAULT_ERROR,
   DEFAULT_WARNING,
