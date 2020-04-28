@@ -11,12 +11,11 @@ module.exports = ({ mode, entry, output = '/dist' }) => ({
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  externals: {
-    react: 'react',
-    'react-dom': 'react-dom',
-    '@material-ui/core': '@material-ui/core',
-    '@material-ui/icons': '@material-ui/icons',
-  },
+  externals: [
+    { react: 'react', 'react-dom': 'react-dom' },
+    /@material-ui\/core.*$/i,
+    /@material-ui\/icons.*$/i,
+  ],
   module: {
     rules: [
       {
