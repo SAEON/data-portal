@@ -1,3 +1,3 @@
-export { default as MenuContext } from './_context'
-export { default as MenuProvider } from './_provider'
-export { default as DragMenu } from './_menu'
+export { default as MenuProvider } from './provider'
+export { default as MenuContext } from './provider/context'
+export { default as DragMenu } from './menu'

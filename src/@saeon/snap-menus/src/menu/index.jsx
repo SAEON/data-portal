@@ -2,70 +2,20 @@ import 'react-resizable/css/styles.css'
 import React, { useState } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
-import EventBoundary from './_event_boundary'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
-import useStyles from './_style'
-import debounce from './_debounce'
+import useStyles from './style'
+import debounce from '../lib/debounce'
+import EventBoundary from '../lib/event-boundary'
+import getDimensionsFromSnap from './get-dimensions'
+import getSnapZone from './get-zone'
+import getPositionFromSnap from './get-position'
 import clsx from 'clsx'
 
 // Get the width of the page
 const container = document.getElementById('root')
 const containerHeight = container.offsetHeight
 const containerWidth = container.offsetWidth
-
-const getPositionFromSnap = (snapZone) => {
-  if (snapZone === 'Top' || snapZone === 'TopLeft' || snapZone === 'Left') return { x: 0, y: 0 }
-  if (snapZone === 'Right' || snapZone === 'TopRight') return { x: containerWidth / 2, y: 0 }
-  if (snapZone === 'Bottom' || snapZone === 'BottomLeft') return { x: 0, y: containerHeight / 2 }
-  if (snapZone === 'BottomRight') return { x: containerWidth / 2, y: containerHeight / 2 }
-  return null
-}
-
-const getDimensionsFromSnap = (snapZone) => {
-  if (snapZone === 'Top') return { width: containerWidth, height: containerHeight }
-  if (snapZone === 'Left' || snapZone === 'Right')
-    return { width: containerWidth / 2, height: containerHeight }
-  if (
-    snapZone === 'TopLeft' ||
-    snapZone === 'TopRight' ||
-    snapZone === 'BottomLeft' ||
-    snapZone === 'BottomRight'
-  )
-    return { width: containerWidth / 2, height: containerHeight / 2 }
-  if (snapZone === 'Bottom') return { width: containerWidth, height: containerHeight / 2 }
-  return null
-}
-
-const getSnapZone = (x, y) => {
-  const snapZoneX = 75
-  const snapZoneY = 75
-  const snapTop = y <= snapZoneY ? true : false
-  const snapBottom = y >= containerHeight - snapZoneY ? true : false
-  const snapLeft = x <= snapZoneX ? true : false
-  const snapRight = x >= containerWidth - snapZoneX ? true : false
-
-  let snapZone = null
-  if (snapLeft && snapTop) {
-    snapZone = 'TopLeft'
-  } else if (snapRight && snapTop) {
-    snapZone = 'TopRight'
-  } else if (snapLeft && snapBottom) {
-    snapZone = 'BottomLeft'
-  } else if (snapRight && snapBottom) {
-    snapZone = 'BottomRight'
-  } else if (snapTop) {
-    snapZone = 'Top'
-  } else if (snapLeft) {
-    snapZone = 'Left'
-  } else if (snapRight) {
-    snapZone = 'Right'
-  } else if (snapBottom) {
-    snapZone = 'Bottom'
-  }
-
-  return snapZone
-}
 
 export default ({
   close,
@@ -77,14 +27,17 @@ export default ({
   defaultPosition = { x: 100, y: 75 },
   defaultWidth = 450,
   defaultHeight = 400,
+  fullscreen = false,
 }) => {
   const classes = useStyles({ height: containerHeight, width: containerWidth })()
   const [state, setState] = useState({
     snapZone: null,
-    snapped: false,
+    snapped: Boolean(fullscreen),
     isResizing: false,
-    dimensions: { width: defaultWidth, height: defaultHeight },
-    position: null,
+    dimensions: fullscreen
+      ? { width: containerWidth, height: containerHeight }
+      : { width: defaultWidth, height: defaultHeight },
+    position: fullscreen ? { x: 0, y: 0 } : null,
   })
 
   return (
@@ -129,7 +82,7 @@ export default ({
               )
             }
 
-            const snapZone = getSnapZone(x, y)
+            const snapZone = getSnapZone(x, y, container)
             if (snapZone && snapZone !== state.snapZone) {
               setState(
                 Object.assign(
@@ -152,8 +105,8 @@ export default ({
           })}
           onStop={() => {
             if (state.snapZone) {
-              const dimensions = getDimensionsFromSnap(state.snapZone)
-              const position = getPositionFromSnap(state.snapZone)
+              const dimensions = getDimensionsFromSnap(state.snapZone, container)
+              const position = getPositionFromSnap(state.snapZone, container)
               const previousDimensions = state.dimensions
               setState(
                 Object.assign(
@@ -183,7 +136,7 @@ export default ({
         >
           <div
             style={{
-              opacity: state.snapped ? 1 : 0.8,
+              opacity: state.snapped || fullscreen ? 0.95 : 0.8,
               zIndex,
               position: 'relative',
             }}

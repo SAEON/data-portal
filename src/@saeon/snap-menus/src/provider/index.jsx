@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react'
 import { createPortal } from 'react-dom'
-import MenuContext from './_context'
+import MenuContext from './context'
 
 const menuContainerEl = document.getElementById('menu-portal')
+
 export default class extends PureComponent {
   state = { menus: [] }
 
-  addMenu = ({ id, Component, zIndex = 1, norender = false, ...props }) =>
+  addMenu = ({ id, Component, zIndex = 2, norender = false, ...props }) =>
     this.setState({
       menus: [...this.state.menus, { id, zIndex, Component, norender, ...props }],
     })
@@ -33,7 +34,7 @@ export default class extends PureComponent {
 
   getActiveMenuZIndex = () => {
     const zIndices = this.state.menus.map(({ zIndex }) => (zIndex || 1) + 1)
-    const zIndex = zIndices.length ? Math.max(...zIndices) : 1
+    const zIndex = zIndices.length ? Math.max(...zIndices) : 2
     return zIndex
   }
 
