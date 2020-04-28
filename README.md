@@ -15,7 +15,7 @@ The repository is organized as a 'monorepo', split according to the following pa
 - [reporting](https://github.com/SAEONData/saeon-atlas/tree/master/src/reporting)
 
 # Tech Stack
-
+ 
 - API
   - Node.js server
   - Proxy server ([anyproxy](http://anyproxy.io/))
