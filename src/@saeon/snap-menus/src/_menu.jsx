@@ -2,11 +2,11 @@ import 'react-resizable/css/styles.css'
 import React, { useState } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
-import { EventBoundary } from '..'
+import EventBoundary from './_event_boundary'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
-import useStyles from './style'
-import { debounce } from '../../lib/fns'
+import useStyles from './_style'
+import debounce from './_debounce'
 import clsx from 'clsx'
 
 // Get the width of the page
@@ -79,15 +79,9 @@ export default ({
   defaultHeight = 400,
 }) => {
   const classes = useStyles({ height: containerHeight, width: containerWidth })()
-
-  // State related to snapping
-  const [snapState, setSnapState] = useState({
+  const [state, setState] = useState({
     snapZone: null,
     snapped: false,
-  })
-
-  // State related to the size of the menus
-  const [sizeState, setSizeState] = useState({
     isResizing: false,
     dimensions: { width: defaultWidth, height: defaultHeight },
     position: null,
@@ -100,13 +94,13 @@ export default ({
         style={{
           zIndex,
           position: 'relative',
-          display: snapState.snapZone ? 'block' : 'none',
+          display: state.snapZone ? 'block' : 'none',
         }}
       >
         <div
           className={clsx({
             [classes.ghost]: true,
-            [classes[snapState.snapZone]]: true,
+            [classes[state.snapZone]]: true,
           })}
         />
       </div>
@@ -118,17 +112,17 @@ export default ({
           handle=".draggable-handle"
           defaultPosition={defaultPosition}
           bounds={{ left: 0, top: 0 }}
-          position={sizeState.position}
+          position={state.position}
           grid={[5, 5]}
           scale={1}
           onDrag={debounce(({ x, y }) => {
-            if (sizeState.previousDimensions) {
-              setSizeState(
+            if (state.previousDimensions) {
+              setState(
                 Object.assign(
-                  { ...sizeState },
+                  { ...state },
                   {
-                    position: { x: x - sizeState.previousDimensions.width / 2, y: y - 15 },
-                    dimensions: sizeState.previousDimensions,
+                    position: { x: x - state.previousDimensions.width / 2, y: y - 15 },
+                    dimensions: state.previousDimensions,
                     previousDimensions: null,
                   }
                 )
@@ -136,29 +130,37 @@ export default ({
             }
 
             const snapZone = getSnapZone(x, y)
-            if (snapZone && snapZone !== snapState.snapZone) {
-              setSnapState({
-                snapZone,
-              })
-            } else if (!snapZone && snapState.snapZone) {
-              setSnapState({
-                snapZone,
-              })
+            if (snapZone && snapZone !== state.snapZone) {
+              setState(
+                Object.assign(
+                  { ...state },
+                  {
+                    snapZone,
+                  }
+                )
+              )
+            } else if (!snapZone && state.snapZone) {
+              setState(
+                Object.assign(
+                  { ...state },
+                  {
+                    snapZone,
+                  }
+                )
+              )
             }
           }, 40)}
           onStop={() => {
-            if (snapState.snapZone) {
-              const dimensions = getDimensionsFromSnap(snapState.snapZone)
-              const position = getPositionFromSnap(snapState.snapZone)
-              const previousDimensions = sizeState.dimensions
-              setSnapState({
-                snapZone: null,
-                snapped: true,
-              })
-              setSizeState(
+            if (state.snapZone) {
+              const dimensions = getDimensionsFromSnap(state.snapZone)
+              const position = getPositionFromSnap(state.snapZone)
+              const previousDimensions = state.dimensions
+              setState(
                 Object.assign(
-                  { ...sizeState },
+                  { ...state },
                   {
+                    snapZone: null,
+                    snapped: true,
                     dimensions,
                     position,
                     previousDimensions,
@@ -166,18 +168,11 @@ export default ({
                 )
               )
             } else {
-              setSnapState(
+              setState(
                 Object.assign(
-                  { ...snapState },
+                  { ...state },
                   {
                     snapped: false,
-                  }
-                )
-              )
-              setSizeState(
-                Object.assign(
-                  { ...sizeState },
-                  {
                     position: null,
                     previousDimensions: null,
                   }
@@ -188,35 +183,45 @@ export default ({
         >
           <div
             style={{
-              opacity: snapState.snapped ? 1 : 0.8,
+              opacity: state.snapped ? 1 : 0.8,
               zIndex,
               position: 'relative',
             }}
           >
-            <Card style={snapState.snapped ? { borderRadius: 0 } : {}} variant="elevation">
+            <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
               <ResizableBox
                 resizeHandles={resizable ? ['se'] : []}
-                width={sizeState.dimensions.width}
-                height={sizeState.dimensions.height}
+                width={state.dimensions.width}
+                height={state.dimensions.height}
                 axis={resizable ? 'both' : 'none'}
                 minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
                 draggableOpts={{ grid: [5, 5] }}
                 onResizeStart={() => {
                   if (!resizable) return
-                  setSizeState({
-                    isResizing: true,
-                    dimensions: { ...sizeState.dimensions },
-                  })
+                  setState(
+                    Object.assign(
+                      { ...state },
+                      {
+                        isResizing: true,
+                        dimensions: { ...state.dimensions },
+                      }
+                    )
+                  )
                 }}
                 onResizeStop={(e, { size }) => {
                   if (!resizable) return
-                  setSizeState({
-                    dimensions: {
-                      width: size.width,
-                      height: size.height,
-                    },
-                    isResizing: false,
-                  })
+                  setState(
+                    Object.assign(
+                      { ...state },
+                      {
+                        dimensions: {
+                          width: size.width,
+                          height: size.height,
+                        },
+                        isResizing: false,
+                      }
+                    )
+                  )
                 }}
               >
                 <CardContent style={{ padding: 0 }}>
@@ -241,15 +246,15 @@ export default ({
                 <div className={classes.menuContent}>
                   <div
                     className={clsx({
-                      [classes.resizing]: sizeState.isResizing,
+                      [classes.resizing]: state.isResizing,
                       'thin-scrollbar': true,
                     })}
                   >
                     <CardContent style={{ paddingBottom: 12 }}>
                       {typeof children === 'function'
                         ? children({
-                            height: sizeState.dimensions.height - 70,
-                            width: sizeState.dimensions.width - 32,
+                            height: state.dimensions.height - 70,
+                            width: state.dimensions.width - 32,
                           })
                         : children}
                     </CardContent>

@@ -20,6 +20,8 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
         react: path.resolve(__dirname, './node_modules/react'),
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
+        '@material-ui/core': path.resolve(__dirname, './node_modules/@material-ui/core'),
+        '@material-ui/icons': path.resolve(__dirname, './node_modules/@material-ui/icons'),
         '@saeon/snap-menus': path.resolve(__dirname, '../snap-menus/src/index'),
         '@saeon/ol-react': path.resolve(
           __dirname,

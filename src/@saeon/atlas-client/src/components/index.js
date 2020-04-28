@@ -1,5 +1,4 @@
 export { default as useHttpDataQuery } from './http-data-query'
-export { default as DragMenu } from './drag-menu'
 export { default as Form } from './_form'
 export { default as VirtualList } from './virtual-list'
 export { default as SideMenu } from './_side-menu'

@@ -1,8 +1,7 @@
 import React from 'react'
 import LayerManager from './modules/layer-manager'
 import { Layers as LayersIcon } from '@material-ui/icons'
-import { DragMenu } from '../../components'
-import { MenuContext } from '@saeon/snap-menus'
+import { MenuContext, DragMenu } from '@saeon/snap-menus'
 import { Fab } from '@material-ui/core'
 import useStyles from './style'
 

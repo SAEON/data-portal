@@ -8,7 +8,9 @@
   ],
   "peerDependencies": {
     "react": ">=16",
-    "react-dom": ">=16"
+    "react-dom": ">=16",
+    "@material-ui/core": ">=4",
+    "@material-ui/icons": ">=4"
   },
   "scripts": {
     "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
@@ -34,7 +36,10 @@
   "license": "MIT",
   "dependencies": {
     "babel-loader": "^8.1.0",
+    "clsx": "^1.1.0",
     "css-loader": "^3.5.3",
+    "react-draggable": "^4.3.1",
+    "react-resizable": "^1.10.1",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.0",
     "webpack": "^4.43.0",

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Fab } from '@material-ui/core'
 import { Print as PrintIcon } from '@material-ui/icons'
-import { DragMenu } from '../../components'
-import { MenuContext } from '../../modules/menu-provider'
+import { MenuContext, DragMenu } from '../../modules/menu-provider'
 import html2canvas from 'html2canvas'
 
 export default () => {
