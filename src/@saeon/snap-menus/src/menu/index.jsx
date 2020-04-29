@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton, Fade } from '@material-ui/core'
-import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
+import { DragIndicator, Close as CloseIcon } from '@material-ui/icons'
 import useStyles from './style'
 import debounce from '../lib/debounce'
 import EventBoundary from '../lib/event-boundary'
@@ -13,6 +13,16 @@ import getPositionFromSnap from './get-position'
 import clsx from 'clsx'
 import MapContext from '../provider/context'
 import packageJson from '../../package.json'
+
+const configureDragHandle = (fullscreen, C, cb) => {
+  if (fullscreen) return C
+  else
+    return (
+      <div onMouseDown={cb} className="draggable-handle">
+        {C}
+      </div>
+    )
+}
 
 // Get the width of the page
 const container = document.getElementById('root')
@@ -70,7 +80,9 @@ export default ({
             <Draggable
               axis="both"
               handle=".draggable-handle"
-              defaultPosition={defaultPosition || getDefaultPosition()}
+              defaultPosition={
+                fullscreen ? { x: 0, y: 0 } : defaultPosition || getDefaultPosition()
+              }
               bounds={{ left: 0, top: 0 }}
               position={state.position}
               grid={[5, 5]}
@@ -186,23 +198,28 @@ export default ({
                       }}
                     >
                       <CardContent style={{ padding: 0 }}>
-                        <div onMouseDown={() => setActiveMenu(id)} className="draggable-handle">
+                        {configureDragHandle(
+                          fullscreen,
                           <AppBar position="relative" variant="outlined">
                             <Toolbar disableGutters className="thin-header">
                               <DragIndicator />
                               <Typography variant="overline">{title}</Typography>
+
                               <IconButton
-                                onClick={() => removeMenu(id)}
+                                onClick={(e) => {
+                                  removeMenu(id)
+                                }}
                                 edge="start"
                                 color="inherit"
                                 style={{ order: 2, marginLeft: 'auto', padding: 2 }}
                                 aria-label="close"
                               >
-                                <CloseButton />
+                                <CloseIcon />
                               </IconButton>
                             </Toolbar>
-                          </AppBar>
-                        </div>
+                          </AppBar>,
+                          () => () => setActiveMenu(id)
+                        )}
                       </CardContent>
                       <div className={classes.menuContent}>
                         <div
