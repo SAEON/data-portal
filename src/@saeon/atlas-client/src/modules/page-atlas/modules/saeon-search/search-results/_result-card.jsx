@@ -1,0 +1,288 @@
+import React, { useState } from 'react'
+import clsx from 'clsx'
+import useStyles from './style'
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Collapse,
+  CardActions,
+  Button,
+  Chip,
+  Link,
+  IconButton,
+  Checkbox,
+  Tooltip,
+  ListItemIcon,
+  ListItemSecondaryAction,
+} from '@material-ui/core'
+import { ExpandMore as ExpandMoreIcon, Visibility as VisibilityIcon } from '@material-ui/icons'
+import npmUrl from 'url'
+import { createLayer, LayerTypes } from '../../../../../lib/ol'
+import LegendContent from './_legend'
+
+import { ATLAS_API_ADDRESS } from '../../../../../config'
+const SPATIALDATA_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-spatialdata`
+
+export default ({ _source, proxy, setInfo }) => {
+  const classes = useStyles()
+  const [contributorsExpanded, setContributorsExpanded] = useState(false)
+  const [creatorsExpanded, setCreatorsExpanded] = useState(false)
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false)
+  const { metadata_json } = _source
+  console.log(metadata_json)
+  const {
+    alternateIdentifiers,
+    titles,
+    publisher,
+    publicationYear,
+    contributors,
+    creators,
+    descriptions,
+    subjects,
+    linkedResources,
+  } = metadata_json
+
+  return (
+    <Card variant="outlined" style={{ margin: '5px 0' }}>
+      <CardHeader
+        titleTypographyProps={{
+          variant: 'overline',
+        }}
+        subheaderTypographyProps={{
+          variant: 'caption',
+        }}
+        title={titles.map(({ title }) => title).join(', ')}
+        subheader={`${publisher} (${publicationYear})`}
+        action={
+          <div>
+            {alternateIdentifiers.map(({ alternateIdentifier }, i) => (
+              <Link
+                key={i}
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`http://www.sasdi.net/metaview.aspx?uuid=${alternateIdentifier}`}
+              >
+                <IconButton ria-label="view-record">
+                  <VisibilityIcon size="small" />
+                </IconButton>
+              </Link>
+            ))}
+          </div>
+        }
+      />
+
+      {/* Subjects */}
+      <CardContent>
+        {subjects.map(({ subject }, i) => (
+          <Chip
+            key={i}
+            style={{ margin: 5 }}
+            clickable
+            variant="default"
+            size="small"
+            label={subject}
+          />
+        ))}
+      </CardContent>
+
+      {/* Linked resources (map layers) */}
+      <CardContent>
+        <List>
+          {linkedResources.map(({ resourceURL, resourceDescription, linkedResourceType }, i) => {
+            const uri = npmUrl.parse(resourceURL, true)
+            const { pathname, query, port, hostname } = uri
+            const { layers } = query
+            const layerId = `${resourceDescription} - ${layers}`
+            return linkedResourceType.toLowerCase() !== 'query' ? (
+              <Tooltip
+                key={i}
+                title={`${linkedResourceType}: This is not a layer that can be added to the map - click the info icon to learn more about this resource`}
+              >
+                <ListItem dense disableGutters key={i} role={undefined}>
+                  <ListItemIcon>
+                    <Checkbox disabled />
+                  </ListItemIcon>
+                  <ListItemText primary={linkedResourceType} secondary={resourceDescription} />
+                  <ListItemSecondaryAction>
+                    <Link key={i} target="_blank" rel="noopener noreferrer" href={resourceURL}>
+                      <IconButton edge="end">
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Link>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </Tooltip>
+            ) : (
+              <Tooltip key={i} title={`${linkedResourceType}: ${resourceURL}`}>
+                <ListItem dense disableGutters key={i} role={undefined}>
+                  <ListItemIcon>
+                    <Checkbox
+                      checked={Boolean(proxy.getLayerById(layerId))}
+                      onChange={({ target }) => {
+                        if (port && hostname && pathname) {
+                          if (target.checked) {
+                            let serverAddress = `${SPATIALDATA_PROXY}/${hostname}/${port}${pathname}`
+                            proxy.addLayer(
+                              createLayer({
+                                LegendMenu: () => (
+                                  <LegendContent
+                                    title={layerId}
+                                    uri={`${serverAddress}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${layers}&LEGEND_OPTIONS=forceLabels:on`}
+                                  />
+                                ),
+                                layerType: LayerTypes.TileWMS,
+                                id: layerId,
+                                title: layerId,
+                                uri: serverAddress,
+                                LAYERS: layers,
+                              })
+                            )
+                          } else {
+                            proxy.removeLayerById(layerId)
+                          }
+                        } else {
+                          setInfo(
+                            `This layer has a URI that we don't understand yet. We are working to improve this, and it should be available soon! : ${hostname}, ${port}, ${pathname}`
+                          )
+                        }
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={linkedResourceType} secondary={resourceDescription} />
+                  <ListItemSecondaryAction>
+                    <Link key={i} target="_blank" rel="noopener noreferrer" href={resourceURL}>
+                      <IconButton edge="end">
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Link>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </Tooltip>
+            )
+          })}
+        </List>
+      </CardContent>
+
+      <CardActions disableSpacing>
+        {/* Toggle description */}
+        <Button
+          onClick={() => setDescriptionExpanded(!descriptionExpanded)}
+          aria-expanded={descriptionExpanded}
+          aria-label="Show contributors"
+          variant="text"
+          size="small"
+          endIcon={
+            <ExpandMoreIcon
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: descriptionExpanded,
+              })}
+            />
+          }
+        >
+          Description
+        </Button>
+
+        {/* Toggle contributors */}
+        <Button
+          onClick={() => setContributorsExpanded(!contributorsExpanded)}
+          aria-expanded={contributorsExpanded}
+          aria-label="Show contributors"
+          variant="text"
+          size="small"
+          endIcon={
+            <ExpandMoreIcon
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: contributorsExpanded,
+              })}
+            />
+          }
+        >
+          Contributors
+        </Button>
+
+        {/* Toggle creators */}
+        <Button
+          onClick={() => setCreatorsExpanded(!creatorsExpanded)}
+          aria-expanded={creatorsExpanded}
+          aria-label="Show contributors"
+          variant="text"
+          size="small"
+          endIcon={
+            <ExpandMoreIcon
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: creatorsExpanded,
+              })}
+            />
+          }
+        >
+          Creators
+        </Button>
+      </CardActions>
+
+      {/* Description */}
+      <Collapse in={descriptionExpanded} timeout="auto" unmountOnExit>
+        <CardContent title="Creators">
+          <List>
+            {descriptions?.map(({ description }, i) => {
+              return (
+                <ListItem key={i} role={undefined} dense>
+                  <ListItemText primary={description} />
+                </ListItem>
+              )
+            })}
+          </List>
+        </CardContent>
+      </Collapse>
+
+      {/* Creators */}
+      <Collapse in={creatorsExpanded} timeout="auto" unmountOnExit>
+        <CardContent title="Creators">
+          <List>
+            {/* eslint-disable-next-line no-unused-vars */}
+            {creators?.map(({ givenName, familyName, name, affiliations }, i) => {
+              return (
+                <ListItem key={i} role={undefined} dense>
+                  <ListItemAvatar>
+                    <Avatar>{name[0] || '?'}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={name}
+                    secondary={affiliations.map(({ affiliation }) => affiliation).join(', ')}
+                  />
+                </ListItem>
+              )
+            })}
+          </List>
+        </CardContent>
+      </Collapse>
+
+      {/* Contributors */}
+      <Collapse in={contributorsExpanded} timeout="auto" unmountOnExit>
+        <CardContent title="Contributors">
+          <List>
+            {/* eslint-disable-next-line no-unused-vars */}
+            {contributors?.map(({ givenName, familyName, name, affiliations }, i) => {
+              return (
+                <ListItem key={i} role={undefined} dense>
+                  <ListItemAvatar>
+                    <Avatar>A</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={name}
+                    secondary={affiliations.map(({ affiliation }) => affiliation).join(', ')}
+                  />
+                </ListItem>
+              )
+            })}
+          </List>
+        </CardContent>
+      </Collapse>
+    </Card>
+  )
+}

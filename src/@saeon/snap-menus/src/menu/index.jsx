@@ -206,7 +206,7 @@ export default ({
                               <Typography variant="overline">{title}</Typography>
 
                               <IconButton
-                                onClick={(e) => {
+                                onClick={() => {
                                   removeMenu(id)
                                 }}
                                 edge="start"

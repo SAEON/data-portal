@@ -67,8 +67,8 @@ export default () => {
                         return (
                           <DragMenu
                             id={id}
-                            defaultWidth={800}
-                            defaultHeight={600}
+                            // defaultWidth={800}
+                            // defaultHeight={600}
                             title={'Search SAEON data'}
                             fullscreen={isMobile}
                           >

@@ -125,7 +125,7 @@ export default () => {
 
                       return (
                         <>
-                          {/* Render search reslts if necessary */}
+                          {/* Render search results if necessary */}
                           {menus
                             ?.filter((menu) => menu.id === searchListMenuId)
                             ?.map((menu) =>

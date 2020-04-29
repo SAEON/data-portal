@@ -4,9 +4,7 @@ import ResultsList from './_results-list'
 import { Typography } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 
-// TODO - onClose ?
-// eslint-disable-next-line no-unused-vars
-export default ({ id, onClose, data }) => {
+export default ({ id, data }) => {
   return (
     <DragMenu
       id={id}
