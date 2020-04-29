@@ -2,7 +2,7 @@ import React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { createPortal } from 'react-dom'
 
-const _dragEl = document.getElementById('draggable')
+const _dragEl = document.getElementById('dnd-portal')
 
 const optionalPortal = (styles, element) =>
   styles.position === 'fixed' ? createPortal(element, _dragEl) : element
