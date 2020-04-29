@@ -24,8 +24,8 @@ export default () => {
   }
   return (
     <MenuContext.Consumer>
-      {({ updateMenuManager, setActiveMenu, getMenuById }) => {
-        const screenshotMenu = getMenuById('screenshotMenu')
+      {() => {
+        const id = 'screenshotMenu'
         return (
           <>
             <Fab
@@ -33,21 +33,11 @@ export default () => {
               color="primary"
               style={{ position: 'absolute', right: 20, bottom: 70, zIndex: 1 }}
               aria-label="toggle menu"
-              onClick={() =>
-                updateMenuManager({ screenshotMenu: { active: !screenshotMenu.active } })
-              }
+              onClick={() => alert('NOTE - updateMenuManager is deleted. update code')}
             >
               <PrintIcon />
             </Fab>
-            <DragMenu
-              id="somedragmenu"
-              onMouseDown={() => setActiveMenu('screenshotMenu')}
-              zIndex={screenshotMenu.zIndex}
-              title={'Screenshot'}
-              active={screenshotMenu.active}
-              close={() => updateMenuManager({ screenshotMenu: { active: false } })}
-              fullscreen={isMobile}
-            >
+            <DragMenu id={id} title={'Screenshot'} fullscreen={isMobile}>
               {takeScreenshot}
             </DragMenu>
           </>

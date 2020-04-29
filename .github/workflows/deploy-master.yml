@@ -15,7 +15,7 @@ jobs:
 
       - name: Configure @saeon/anyproxy
         run: |
-          echo "SAEON_SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za" > src/@saeon/anyproxy/.env
+          echo "TODO -> SAEON_SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za src/@saeon/anyproxy/.env"
 
       - name: Configure @saeon/atlas-api
         run: |

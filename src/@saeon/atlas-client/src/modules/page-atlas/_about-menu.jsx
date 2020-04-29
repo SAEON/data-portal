@@ -11,7 +11,7 @@ export default () => {
   const classes = useStyles()
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, setActiveMenu, getMenuById, getActiveMenuZIndex }) => {
+      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => {
         return (
           <>
             <div style={{ clear: 'both' }} />
@@ -30,13 +30,7 @@ export default () => {
                     id,
                     zIndex: getActiveMenuZIndex(),
                     Component: () => (
-                      <DragMenu
-                        onMouseDown={() => setActiveMenu(id)}
-                        zIndex={getMenuById(id).zIndex}
-                        title={`About ${packageJson.name}`}
-                        close={() => removeMenu(id)}
-                        fullscreen={isMobile}
-                      >
+                      <DragMenu id={id} title={`About ${packageJson.name}`} fullscreen={isMobile}>
                         {() => <AboutContent />}
                       </DragMenu>
                     ),

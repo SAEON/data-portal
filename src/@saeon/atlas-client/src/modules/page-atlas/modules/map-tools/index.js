@@ -1,1 +1,1 @@
-export { default as PolygonSelectionTool } from './_polygon-selection'
+export { default as PolygonSelectionTool } from './polygon'

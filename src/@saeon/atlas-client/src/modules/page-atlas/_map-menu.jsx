@@ -10,7 +10,7 @@ export default () => {
   const classes = useStyles()
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, setActiveMenu, getMenuById, getActiveMenuZIndex }) => {
+      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => {
         return (
           <Fab
             size="large"
@@ -28,13 +28,7 @@ export default () => {
                   zIndex: getActiveMenuZIndex(),
                   Component: () => {
                     return (
-                      <DragMenu
-                        onMouseDown={() => setActiveMenu(id)}
-                        zIndex={getMenuById(id).zIndex}
-                        title={'Open layers menu'}
-                        close={() => removeMenu(id)}
-                        fullscreen={isMobile}
-                      >
+                      <DragMenu id={id} title={'Open layers menu'} fullscreen={isMobile}>
                         {() => <LayerManager layersActive={Boolean(getMenuById(id))} />}
                       </DragMenu>
                     )

@@ -14,7 +14,7 @@ export default () => {
   const classes = useStyles()
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, setActiveMenu, getActiveMenuZIndex }) => {
+      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => {
         return (
           <DialMenu
             style={{ marginTop: 6, marginRight: 12 }}
@@ -37,14 +37,7 @@ export default () => {
                     Component: memo(
                       ({ id }) => {
                         return (
-                          <DragMenu
-                            onMouseDown={() => setActiveMenu(id)}
-                            zIndex={getMenuById(id).zIndex}
-                            title={'Search HST data'}
-                            active={Boolean(getMenuById(id))}
-                            close={() => removeMenu(id)}
-                            fullscreen={isMobile}
-                          >
+                          <DragMenu id={id} title={'Search HST data'} fullscreen={isMobile}>
                             {({ height, width }) => <HstLayers height={height} width={width} />}
                           </DragMenu>
                         )
@@ -73,12 +66,10 @@ export default () => {
                       ({ id }) => {
                         return (
                           <DragMenu
+                            id={id}
                             defaultWidth={800}
                             defaultHeight={600}
-                            onMouseDown={() => setActiveMenu(id)}
-                            zIndex={getMenuById(id).zIndex}
                             title={'Search SAEON data'}
-                            close={() => removeMenu(id)}
                             fullscreen={isMobile}
                           >
                             {({ height, width }) => <SaeonSearch height={height} width={width} />}
@@ -108,13 +99,7 @@ export default () => {
                     Component: memo(
                       ({ id }) => {
                         return (
-                          <DragMenu
-                            onMouseDown={() => setActiveMenu(id)}
-                            zIndex={getMenuById(id).zIndex}
-                            title={'Search CSIR data'}
-                            close={() => removeMenu(id)}
-                            fullscreen={isMobile}
-                          >
+                          <DragMenu id={id} title={'Search CSIR data'} fullscreen={isMobile}>
                             {({ height, width }) => <CsirLayers height={height} width={width} />}
                           </DragMenu>
                         )
