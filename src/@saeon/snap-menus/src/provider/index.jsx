@@ -38,6 +38,12 @@ export default class extends PureComponent {
     return zIndex
   }
 
+  getDefaultPosition = () => {
+    const l = this.state.menus.length
+    const offset = (l - 1) * 25
+    return { x: 100 + offset, y: 75 + offset }
+  }
+
   render() {
     const {
       state,
@@ -47,6 +53,7 @@ export default class extends PureComponent {
       getMenuById,
       setActiveMenu,
       getActiveMenuZIndex,
+      getDefaultPosition,
     } = this
     const { children } = props
     const { menus } = state
@@ -61,6 +68,7 @@ export default class extends PureComponent {
           removeMenu,
           getActiveMenuZIndex,
           menuContainerEl,
+          getDefaultPosition,
         }}
       >
         {/* Render menus into a top level portal */}

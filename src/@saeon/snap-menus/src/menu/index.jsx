@@ -23,7 +23,7 @@ export default ({
   title,
   children,
   resizable = true,
-  defaultPosition = { x: 100, y: 75 },
+  defaultPosition,
   defaultWidth = 450,
   defaultHeight = 400,
   fullscreen = false,
@@ -33,6 +33,7 @@ export default ({
     throw Error(
       `${packageJson.name} v${packageJson.version}. Must provide props.id to Menu component`
     )
+
   const classes = useStyles({ height: containerHeight, width: containerWidth })()
   const [state, setState] = useState({
     snapZone: null,
@@ -46,7 +47,7 @@ export default ({
 
   return (
     <MapContext.Consumer>
-      {({ setActiveMenu, getMenuById, removeMenu }) => (
+      {({ setActiveMenu, getMenuById, removeMenu, getDefaultPosition }) => (
         <EventBoundary>
           {/* Snap ghost */}
           <div
@@ -69,7 +70,7 @@ export default ({
             <Draggable
               axis="both"
               handle=".draggable-handle"
-              defaultPosition={defaultPosition}
+              defaultPosition={defaultPosition || getDefaultPosition()}
               bounds={{ left: 0, top: 0 }}
               position={state.position}
               grid={[5, 5]}
