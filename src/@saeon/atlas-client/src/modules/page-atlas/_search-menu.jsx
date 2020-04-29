@@ -43,7 +43,7 @@ export default () => {
                             title={'Search HST data'}
                             active={Boolean(getMenuById(id))}
                             close={() => removeMenu(id)}
-                            isMobile={true}
+                            fullscreen={isMobile}
                           >
                             {({ height, width }) => <HstLayers height={height} width={width} />}
                           </DragMenu>
@@ -78,8 +78,8 @@ export default () => {
                             onMouseDown={() => setActiveMenu(id)}
                             zIndex={getMenuById(id).zIndex}
                             title={'Search SAEON data'}
-                            active={Boolean(getMenuById(id))}
                             close={() => removeMenu(id)}
+                            fullscreen={isMobile}
                           >
                             {({ height, width }) => <SaeonSearch height={height} width={width} />}
                           </DragMenu>
@@ -113,6 +113,7 @@ export default () => {
                             zIndex={getMenuById(id).zIndex}
                             title={'Search CSIR data'}
                             close={() => removeMenu(id)}
+                            fullscreen={isMobile}
                           >
                             {({ height, width }) => <CsirLayers height={height} width={width} />}
                           </DragMenu>

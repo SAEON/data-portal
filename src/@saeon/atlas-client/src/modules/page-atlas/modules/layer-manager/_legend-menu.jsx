@@ -23,7 +23,7 @@ export default ({ id, layer, onClose }) => {
           title={'Legend'}
           active={true}
           close={onClose}
-          isMobile={true}
+          fullscreen={isMobile}
         >
           {() => <LegendMenu />}
         </DragMenu>

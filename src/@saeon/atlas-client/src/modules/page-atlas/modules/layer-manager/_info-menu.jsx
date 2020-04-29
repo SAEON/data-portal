@@ -21,9 +21,8 @@ export default ({ id, layer, onClose }) => {
           defaultPosition={{ x: 650, y: 25 }}
           defaultWidth={230}
           title={'Layer info'}
-          active={true}
           close={onClose}
-          isMobile={true}
+          fullscreen={isMobile}
         >
           {() => <InfoMenu />}
         </DragMenu>

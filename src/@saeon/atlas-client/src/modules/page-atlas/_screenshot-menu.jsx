@@ -46,7 +46,7 @@ export default () => {
               title={'Screenshot'}
               active={screenshotMenu.active}
               close={() => updateMenuManager({ screenshotMenu: { active: false } })}
-              isMobile={true}
+              fullscreen={isMobile}
             >
               {takeScreenshot}
             </DragMenu>
