@@ -2,7 +2,7 @@ import 'react-resizable/css/styles.css'
 import React, { useState } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
-import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
+import { Card, CardContent, AppBar, Toolbar, Typography, IconButton, Fade } from '@material-ui/core'
 import { DragIndicator, Close as CloseButton } from '@material-ui/icons'
 import useStyles from './style'
 import debounce from '../lib/debounce'
@@ -147,80 +147,82 @@ export default ({
                   position: 'relative',
                 }}
               >
-                <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
-                  <ResizableBox
-                    resizeHandles={resizable ? ['se'] : []}
-                    width={state.dimensions.width}
-                    height={state.dimensions.height}
-                    axis={resizable ? 'both' : 'none'}
-                    minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
-                    draggableOpts={{ grid: [5, 5] }}
-                    onResizeStart={() => {
-                      if (!resizable) return
-                      setState(
-                        Object.assign(
-                          { ...state },
-                          {
-                            isResizing: true,
-                            dimensions: { ...state.dimensions },
-                          }
+                <Fade in={true}>
+                  <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
+                    <ResizableBox
+                      resizeHandles={resizable ? ['se'] : []}
+                      width={state.dimensions.width}
+                      height={state.dimensions.height}
+                      axis={resizable ? 'both' : 'none'}
+                      minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
+                      draggableOpts={{ grid: [5, 5] }}
+                      onResizeStart={() => {
+                        if (!resizable) return
+                        setState(
+                          Object.assign(
+                            { ...state },
+                            {
+                              isResizing: true,
+                              dimensions: { ...state.dimensions },
+                            }
+                          )
                         )
-                      )
-                    }}
-                    onResizeStop={(e, { size }) => {
-                      if (!resizable) return
-                      setState(
-                        Object.assign(
-                          { ...state },
-                          {
-                            dimensions: {
-                              width: size.width,
-                              height: size.height,
-                            },
-                            isResizing: false,
-                          }
+                      }}
+                      onResizeStop={(e, { size }) => {
+                        if (!resizable) return
+                        setState(
+                          Object.assign(
+                            { ...state },
+                            {
+                              dimensions: {
+                                width: size.width,
+                                height: size.height,
+                              },
+                              isResizing: false,
+                            }
+                          )
                         )
-                      )
-                    }}
-                  >
-                    <CardContent style={{ padding: 0 }}>
-                      <div onMouseDown={() => setActiveMenu(id)} className="draggable-handle">
-                        <AppBar position="relative" variant="outlined">
-                          <Toolbar disableGutters className="thin-header">
-                            <DragIndicator />
-                            <Typography variant="overline">{title}</Typography>
-                            <IconButton
-                              onClick={() => removeMenu(id)}
-                              edge="start"
-                              color="inherit"
-                              style={{ order: 2, marginLeft: 'auto', padding: 2 }}
-                              aria-label="close"
-                            >
-                              <CloseButton />
-                            </IconButton>
-                          </Toolbar>
-                        </AppBar>
+                      }}
+                    >
+                      <CardContent style={{ padding: 0 }}>
+                        <div onMouseDown={() => setActiveMenu(id)} className="draggable-handle">
+                          <AppBar position="relative" variant="outlined">
+                            <Toolbar disableGutters className="thin-header">
+                              <DragIndicator />
+                              <Typography variant="overline">{title}</Typography>
+                              <IconButton
+                                onClick={() => removeMenu(id)}
+                                edge="start"
+                                color="inherit"
+                                style={{ order: 2, marginLeft: 'auto', padding: 2 }}
+                                aria-label="close"
+                              >
+                                <CloseButton />
+                              </IconButton>
+                            </Toolbar>
+                          </AppBar>
+                        </div>
+                      </CardContent>
+                      <div className={classes.menuContent}>
+                        <div
+                          className={clsx({
+                            [classes.resizing]: state.isResizing,
+                            'thin-scrollbar': true,
+                          })}
+                        >
+                          <CardContent style={{ paddingBottom: 12 }}>
+                            {typeof children === 'function'
+                              ? children({
+                                  height: state.dimensions.height - 70,
+                                  width: state.dimensions.width - 32,
+                                })
+                              : children}
+                          </CardContent>
+                        </div>
                       </div>
-                    </CardContent>
-                    <div className={classes.menuContent}>
-                      <div
-                        className={clsx({
-                          [classes.resizing]: state.isResizing,
-                          'thin-scrollbar': true,
-                        })}
-                      >
-                        <CardContent style={{ paddingBottom: 12 }}>
-                          {typeof children === 'function'
-                            ? children({
-                                height: state.dimensions.height - 70,
-                                width: state.dimensions.width - 32,
-                              })
-                            : children}
-                        </CardContent>
-                      </div>
-                    </div>
-                  </ResizableBox>
-                </Card>
+                    </ResizableBox>
+                  </Card>
+                </Fade>
               </div>
             </Draggable>
           </div>
