@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import useStyles from './style'
 import {
   Card,
-  CardHeader,
   CardContent,
   List,
   ListItem,
@@ -20,6 +19,9 @@ import {
   Tooltip,
   ListItemIcon,
   ListItemSecondaryAction,
+  CardMedia,
+  CardActionArea,
+  Typography,
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, Visibility as VisibilityIcon } from '@material-ui/icons'
 import npmUrl from 'url'
@@ -51,34 +53,54 @@ export default ({ _source, proxy, setInfo }) => {
     rightsList,
   } = metadata_json
 
+  // TODO - this should be for individual, togglable layers
+  let thumbnailAddress
+  if (linkedResources.length) {
+    const linkedResource = linkedResources.find(
+      ({ linkedResourceType }) => linkedResourceType.toLowerCase() === 'query'
+    )
+    if (linkedResource) {
+      const { resourceURL } = linkedResource
+      thumbnailAddress = resourceURL.replace('application/openlayers', 'image/png')
+    }
+  }
+
   return (
     <Card variant="outlined" style={{ margin: '5px 0' }}>
-      <CardHeader
-        titleTypographyProps={{
-          variant: 'overline',
-        }}
-        subheaderTypographyProps={{
-          variant: 'caption',
-        }}
-        title={titles.map(({ title }) => title).join(', ')}
-        subheader={`${publisher} (${publicationYear})`}
-        action={
-          <div>
-            {alternateIdentifiers.map(({ alternateIdentifier }, i) => (
-              <Link
-                key={i}
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`http://www.sasdi.net/metaview.aspx?uuid=${alternateIdentifier}`}
+      {alternateIdentifiers.map(({ alternateIdentifier }, i, arr) => (
+        <Link
+          href={`http://www.sasdi.net/metaview.aspx?uuid=${alternateIdentifier}`}
+          key={i}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Tooltip title={`View full record at http://www.sasdi.net/metaview.aspx`}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.img}
+                component="img"
+                height={140 / arr.length}
+                src={thumbnailAddress}
+              />
+              <CardContent
+                style={{ position: 'absolute', top: 0, width: '100%', height: 140 / arr.length }}
               >
-                <IconButton ria-label="view-record">
-                  <VisibilityIcon size="small" />
-                </IconButton>
-              </Link>
-            ))}
-          </div>
-        }
-      />
+                <Typography style={{ lineBreak: 'anywhere' }} variant="h6">
+                  {titles.map(({ title }) => title).join(', ')}
+                </Typography>
+                <Typography
+                  style={{ lineBreak: 'anywhere' }}
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  {`${publisher} (${publicationYear})`}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Tooltip>
+        </Link>
+      ))}
 
       {/* Subjects */}
       <CardContent>

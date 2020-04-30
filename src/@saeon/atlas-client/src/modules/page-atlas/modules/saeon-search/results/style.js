@@ -11,4 +11,7 @@ export default makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+  img: {
+    // position: 'absolute',
+  },
 }))
