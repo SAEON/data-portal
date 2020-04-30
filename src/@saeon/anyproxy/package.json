@@ -24,7 +24,7 @@
   "homepage": "https://github.com/SAEONData/saeon-atlas#readme",
   "dependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/runtime-corejs3": "^7.9.2",
+    "@babel/runtime-corejs3": "^7.9.6",
     "anyproxy": "^4.1.2",
     "copyfiles": "^2.2.0",
     "dotenv": "^8.2.0",
