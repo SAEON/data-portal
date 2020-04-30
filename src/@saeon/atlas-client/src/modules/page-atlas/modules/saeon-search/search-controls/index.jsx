@@ -32,20 +32,28 @@ export default ({ data, children }) => {
         <div style={{ padding: 20 }}>
           <Grid container>
             {/* Text selector */}
-            <TextSelector fields={fields} updateForm={updateForm} />
+            <Grid item xs={12}>
+              <TextSelector fields={fields} updateForm={updateForm} />
+            </Grid>
 
             {/* Term selector */}
-            <TermSelector updateForm={updateForm} data={data} />
+            <Grid item xs={12}>
+              <TermSelector updateForm={updateForm} data={data} />
+            </Grid>
 
             <Div />
 
             {/* Area Selector */}
-            <AreaSelector updateForm={updateForm} {...fields} />
+            <Grid item xs={12}>
+              <AreaSelector updateForm={updateForm} {...fields} />
+            </Grid>
 
             <Div />
 
             {/* Date range */}
             <DateSelector updateForm={updateForm} {...fields} />
+
+            <Div />
 
             {/* Callback with search definition as arguments */}
             {children({ ...fields })}

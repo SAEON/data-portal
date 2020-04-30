@@ -2,9 +2,9 @@ import React from 'react'
 import { Fab } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
 import { MenuContext, DragMenu } from '@saeon/snap-menus'
-import AboutContent from './modules/about'
-import packageJson from '../../../package.json'
-import useStyles from './style'
+import AboutContent from '../about'
+import packageJson from '../../../../../package.json'
+import useStyles from '../../style'
 import { isMobile } from 'react-device-detect'
 
 export default () => {

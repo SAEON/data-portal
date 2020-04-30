@@ -1,7 +1,7 @@
 import React from 'react'
 import { SpeedDial, SpeedDialIcon } from '@material-ui/lab'
-import { Form } from '../../components'
-import useStyles from './style'
+import { Form } from '../../../../components'
+import useStyles from '../../style'
 
 export default ({ children, style, icon, direction }) => {
   const classes = useStyles()

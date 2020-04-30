@@ -1,7 +1,6 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
-import { Grid, Typography, Button } from '@material-ui/core'
-import { Visibility as ViewIcon } from '@material-ui/icons'
+import { Grid, Typography, Button, Fade } from '@material-ui/core'
 import { useHttpDataQuery } from '../../../../components'
 import { Alert } from '@material-ui/lab'
 import { MenuContext } from '@saeon/snap-menus'
@@ -135,50 +134,44 @@ export default () => {
                           {/* Render rest of page */}
                           <Grid item xs={12}>
                             {error ? (
-                              <Grid container spacing={1} alignItems="flex-end">
-                                <Grid item>
-                                  <Alert severity="error">{error.message}</Alert>
-                                </Grid>
-                              </Grid>
+                              <Alert severity="error">{error.message}</Alert>
                             ) : (
-                              <Grid container spacing={1}>
-                                <Grid item style={{ position: 'absolute', bottom: 20, right: 20 }}>
-                                  <div style={{ width: '100%' }}>
-                                    <Button
-                                      variant="text"
-                                      disableElevation
-                                      color="secondary"
-                                      size="small"
-                                      className={classes.button}
-                                      startIcon={<ViewIcon />}
-                                      onClick={() => {
-                                        if (getMenuById(searchListMenuId)) {
-                                          removeMenu(searchListMenuId)
-                                        } else {
-                                          addMenu({
-                                            id: searchListMenuId,
-                                            zIndex: getActiveMenuZIndex(),
-                                            norender: true,
-                                            Component: ({ data }) => (
-                                              <SearchResults
-                                                data={data}
-                                                id={searchListMenuId}
-                                                onClose={() => removeMenu(searchListMenuId)}
-                                              />
-                                            ),
-                                          })
-                                        }
-                                      }}
-                                    >
-                                      {loading
-                                        ? 'Loading...'
-                                        : getMenuById(searchListMenuId)
-                                        ? `Hide results (${data?.hits?.total})`
-                                        : `Show results (${data?.hits?.total})`}
-                                    </Button>
-                                  </div>
-                                </Grid>
-                              </Grid>
+                              <Fade in={true}>
+                                <Button
+                                  disabled={
+                                    getMenuById(searchListMenuId) ? false : data?.hits?.total < 1
+                                  }
+                                  variant="contained"
+                                  disableElevation
+                                  color="secondary"
+                                  size="small"
+                                  className={classes.button}
+                                  onClick={() => {
+                                    if (getMenuById(searchListMenuId)) {
+                                      removeMenu(searchListMenuId)
+                                    } else {
+                                      addMenu({
+                                        id: searchListMenuId,
+                                        zIndex: getActiveMenuZIndex(),
+                                        norender: true,
+                                        Component: ({ data }) => (
+                                          <SearchResults
+                                            data={data}
+                                            id={searchListMenuId}
+                                            onClose={() => removeMenu(searchListMenuId)}
+                                          />
+                                        ),
+                                      })
+                                    }
+                                  }}
+                                >
+                                  {loading
+                                    ? 'Show results (...)'
+                                    : getMenuById(searchListMenuId)
+                                    ? `Hide results (${data?.hits?.total})`
+                                    : `Show results (${data?.hits?.total})`}
+                                </Button>
+                              </Fade>
                             )}
                           </Grid>
                         </>
