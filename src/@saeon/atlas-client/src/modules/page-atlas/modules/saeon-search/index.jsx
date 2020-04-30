@@ -7,8 +7,8 @@ import { MenuContext } from '@saeon/snap-menus'
 import { ReactCatalogue } from '@saeon/catalogue-search'
 import useStyles from './style'
 import { ATLAS_API_ADDRESS } from '../../../../config'
-import SearchControls from './search-controls'
-import SearchResults from './search-results'
+import SearchControls from './controls'
+import SearchResults from './results'
 
 const DSL_INDEX = `saeon-odp-4-2`
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
@@ -145,6 +145,7 @@ export default () => {
                                   disableElevation
                                   color="secondary"
                                   size="small"
+                                  fullWidth
                                   className={classes.button}
                                   onClick={() => {
                                     if (getMenuById(searchListMenuId)) {

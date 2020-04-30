@@ -34,6 +34,8 @@ export default ({ _source, proxy, setInfo }) => {
   const [contributorsExpanded, setContributorsExpanded] = useState(false)
   const [creatorsExpanded, setCreatorsExpanded] = useState(false)
   const [descriptionExpanded, setDescriptionExpanded] = useState(false)
+  const [rightsExpanded, setRightsExpanded] = useState(false)
+
   const { metadata_json } = _source
   console.log(metadata_json)
   const {
@@ -46,6 +48,7 @@ export default ({ _source, proxy, setInfo }) => {
     descriptions,
     subjects,
     linkedResources,
+    rightsList,
   } = metadata_json
 
   return (
@@ -223,11 +226,29 @@ export default ({ _source, proxy, setInfo }) => {
         >
           Creators
         </Button>
+
+        {/* Toggle Rights */}
+        <Button
+          onClick={() => setRightsExpanded(!rightsExpanded)}
+          aria-expanded={rightsExpanded}
+          aria-label="Show contributors"
+          variant="text"
+          size="small"
+          endIcon={
+            <ExpandMoreIcon
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: rightsExpanded,
+              })}
+            />
+          }
+        >
+          Rights
+        </Button>
       </CardActions>
 
       {/* Description */}
       <Collapse in={descriptionExpanded} timeout="auto" unmountOnExit>
-        <CardContent title="Creators">
+        <CardContent title="Description">
           <List>
             {descriptions?.map(({ description }, i) => {
               return (
@@ -244,8 +265,7 @@ export default ({ _source, proxy, setInfo }) => {
       <Collapse in={creatorsExpanded} timeout="auto" unmountOnExit>
         <CardContent title="Creators">
           <List>
-            {/* eslint-disable-next-line no-unused-vars */}
-            {creators?.map(({ givenName, familyName, name, affiliations }, i) => {
+            {creators?.map(({ name, affiliations }, i) => {
               return (
                 <ListItem key={i} role={undefined} dense>
                   <ListItemAvatar>
@@ -266,16 +286,40 @@ export default ({ _source, proxy, setInfo }) => {
       <Collapse in={contributorsExpanded} timeout="auto" unmountOnExit>
         <CardContent title="Contributors">
           <List>
-            {/* eslint-disable-next-line no-unused-vars */}
-            {contributors?.map(({ givenName, familyName, name, affiliations }, i) => {
+            {contributors?.map(({ name, affiliations }, i) => {
               return (
                 <ListItem key={i} role={undefined} dense>
                   <ListItemAvatar>
-                    <Avatar>A</Avatar>
+                    <Avatar>{name[0] || '?'}</Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={name}
                     secondary={affiliations.map(({ affiliation }) => affiliation).join(', ')}
+                  />
+                </ListItem>
+              )
+            })}
+          </List>
+        </CardContent>
+      </Collapse>
+
+      {/* Rights list */}
+      <Collapse in={rightsExpanded} timeout="auto" unmountOnExit>
+        <CardContent title="Rights">
+          <List>
+            {rightsList?.map(({ rights, rightsURI }, i) => {
+              return (
+                <ListItem key={i} role={undefined} dense>
+                  <ListItemAvatar>
+                    <Avatar>{rights[0] || '?'}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={rights}
+                    secondary={
+                      <Link key={i} target="_blank" rel="noopener noreferrer" href={rightsURI}>
+                        View rights
+                      </Link>
+                    }
                   />
                 </ListItem>
               )

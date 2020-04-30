@@ -4,6 +4,5 @@ export default makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    width: '100%',
   },
 }))

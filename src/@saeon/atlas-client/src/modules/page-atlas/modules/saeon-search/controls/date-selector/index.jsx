@@ -12,7 +12,6 @@ import {
 import { debounce } from '../../../../../../lib/fns'
 import DateFnsUtils from '@date-io/date-fns'
 import { sub, format, parse } from 'date-fns'
-import { Form } from '../../../../../../components'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import useStyles from './style'
 
@@ -177,33 +176,30 @@ export default ({ updateForm, ...fields }) => {
             </Fade>
           </MuiPickersUtilsProvider>
         ) : (
-          <Form val={fields._dateRange}>
-            {({ updateForm: updateVal, val }) => (
-              <Fade in={true}>
-                <Slider
-                  disabled={fields.fixedDateRange === 'all' ? true : false}
-                  ValueLabelComponent={({ children, open, value }) => (
-                    <Tooltip open={open} placement="top" title={value}>
-                      {children}
-                    </Tooltip>
-                  )}
-                  onChange={debounce((e, v) => updateVal({ val: v }))}
-                  onChangeCommitted={(e, v) =>
-                    updateForm({
-                      dateRange: [getDateStringFromInt(v[0]), getDateStringFromInt(v[1])],
-                    })
-                  }
-                  value={val}
-                  min={minSlider}
-                  max={maxSlider}
-                  getAriaValueText={getDateStringFromInt}
-                  valueLabelFormat={getDateStringFromInt}
-                  valueLabelDisplay="auto"
-                  aria-labelledby="date-range-slider"
-                />
-              </Fade>
-            )}
-          </Form>
+          <Fade in={true}>
+            <Slider
+              disabled={fields.fixedDateRange === 'all' ? true : false}
+              ValueLabelComponent={({ children, open, value }) => (
+                <Tooltip open={open} placement="top" title={value}>
+                  {children}
+                </Tooltip>
+              )}
+              onChange={debounce((e, v) => updateForm({ _dateRange: v }))}
+              onChangeCommitted={(e, v) =>
+                updateForm({
+                  _dateRange: v,
+                  dateRange: [getDateStringFromInt(v[0]), getDateStringFromInt(v[1])],
+                })
+              }
+              value={fields._dateRange}
+              min={minSlider}
+              max={maxSlider}
+              getAriaValueText={getDateStringFromInt}
+              valueLabelFormat={getDateStringFromInt}
+              valueLabelDisplay="auto"
+              aria-labelledby="date-range-slider"
+            />
+          </Fade>
         )}
       </Grid>
     </Grid>

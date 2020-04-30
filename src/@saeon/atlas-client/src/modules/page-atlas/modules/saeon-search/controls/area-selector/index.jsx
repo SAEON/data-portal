@@ -25,7 +25,9 @@ export default ({ updateForm, ...fields }) => {
 
             <Grid item xs={12}>
               <Button
-                color="default"
+                fullWidth
+                color="secondary"
+                variant="contained"
                 disableElevation
                 size="small"
                 onClick={() => {
@@ -48,7 +50,6 @@ export default ({ updateForm, ...fields }) => {
                     })
                   }
                 }}
-                variant="outlined"
                 startIcon={<GestureIcon />}
               >
                 Select area
