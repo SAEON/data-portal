@@ -218,7 +218,7 @@ export default ({
                               </IconButton>
                             </Toolbar>
                           </AppBar>,
-                          () => () => setActiveMenu(id)
+                          () => setActiveMenu(id)
                         )}
                       </CardContent>
                       <div className={classes.menuContent}>
