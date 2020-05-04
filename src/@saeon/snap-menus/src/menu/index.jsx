@@ -205,32 +205,30 @@ export default ({
                       }}
                     >
                       <CardContent style={{ padding: 0 }}>
-                        <div>
-                          <AppBar position="relative" variant="outlined">
-                            <Toolbar
-                              style={{ cursor: 'grab' }}
-                              disableGutters
-                              className={clsx({
-                                'thin-header': true,
-                                'drag-handle': true,
-                              })}
-                            >
-                              <DragIndicator />
-                              <Typography variant="overline">{title}</Typography>
+                        <AppBar position="relative" variant="outlined">
+                          <Toolbar
+                            style={{ cursor: 'grab' }}
+                            disableGutters
+                            className={clsx({
+                              'thin-header': true,
+                              'drag-handle': true,
+                            })}
+                          >
+                            <DragIndicator />
+                            <Typography variant="overline">{title}</Typography>
 
-                              <IconButton
-                                onTouchStart={() => removeMenu(id)}
-                                onClick={() => removeMenu(id)}
-                                edge="start"
-                                color="inherit"
-                                style={{ order: 2, marginLeft: 'auto', padding: 2 }}
-                                aria-label="close"
-                              >
-                                <CloseIcon />
-                              </IconButton>
-                            </Toolbar>
-                          </AppBar>
-                        </div>
+                            <IconButton
+                              onTouchStart={() => removeMenu(id)}
+                              onClick={() => removeMenu(id)}
+                              edge="start"
+                              color="inherit"
+                              style={{ order: 2, marginLeft: 'auto', padding: 2 }}
+                              aria-label="close"
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          </Toolbar>
+                        </AppBar>
                       </CardContent>
                       <div className={classes.menuContent}>
                         <div
