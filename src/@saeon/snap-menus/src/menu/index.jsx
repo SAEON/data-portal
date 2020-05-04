@@ -79,7 +79,7 @@ export default ({
           <div style={{ position: 'absolute' }}>
             <Draggable
               axis="both"
-              handle=".draggable-handle"
+              handle=".drag-handle"
               defaultPosition={
                 fullscreen ? { x: 0, y: 0 } : defaultPosition || getDefaultPosition()
               }
@@ -87,7 +87,24 @@ export default ({
               position={state.position}
               grid={[5, 5]}
               scale={1}
-              onDrag={debounce(({ x, y }) => {
+              onStart={() => setActiveMenu(id)}
+              onDrag={debounce((ev) => {
+                // Get x,y from the event (could be a touch for mobile, click elsewise)
+                let x, y
+                if (ev.constructor === MouseEvent) {
+                  x = ev.x
+                  y = ev.y
+                } else if (ev.constructor === TouchEvent) {
+                  const { touches } = ev
+                  const touch = touches[0]
+                  x = touch.clientX
+                  y = touch.clientY
+                } else {
+                  throw new Error(
+                    `${packageJson.name} v${packageJson.version} ERROR: Unrecognized event type in onDrag handler`
+                  )
+                }
+
                 if (state.previousDimensions) {
                   setState(
                     Object.assign(
@@ -121,7 +138,7 @@ export default ({
                     )
                   )
                 }
-              })}
+              }, 15)}
               onStop={() => {
                 if (state.snapZone) {
                   const dimensions = getDimensionsFromSnap(state.snapZone, container)
@@ -198,17 +215,22 @@ export default ({
                       }}
                     >
                       <CardContent style={{ padding: 0 }}>
-                        {configureDragHandle(
-                          fullscreen,
+                        <div>
                           <AppBar position="relative" variant="outlined">
-                            <Toolbar disableGutters className="thin-header">
+                            <Toolbar
+                              style={{ cursor: 'grab' }}
+                              disableGutters
+                              className={clsx({
+                                'thin-header': true,
+                                'drag-handle': true,
+                              })}
+                            >
                               <DragIndicator />
                               <Typography variant="overline">{title}</Typography>
 
                               <IconButton
-                                onClick={() => {
-                                  removeMenu(id)
-                                }}
+                                onTouchStart={() => removeMenu(id)}
+                                onClick={() => removeMenu(id)}
                                 edge="start"
                                 color="inherit"
                                 style={{ order: 2, marginLeft: 'auto', padding: 2 }}
@@ -217,9 +239,8 @@ export default ({
                                 <CloseIcon />
                               </IconButton>
                             </Toolbar>
-                          </AppBar>,
-                          () => setActiveMenu(id)
-                        )}
+                          </AppBar>
+                        </div>
                       </CardContent>
                       <div className={classes.menuContent}>
                         <div
