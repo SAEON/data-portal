@@ -35,3 +35,39 @@ export default gql`
     }
   }
 `
+
+/*
+{
+  repository(owner: "SAEONData", name: "saeon-atlas") {
+    ref(qualifiedName: "master") {
+      target {
+        ... on Commit {
+          history(first: 100 since: "2020-04-10T00:00:00") {
+            pageInfo {
+              hasPreviousPage
+              hasNextPage
+              startCursor
+              endCursor
+            }
+            edges {
+              node {
+                id
+                oid
+                message
+                changedFiles
+                additions
+                deletions
+                commitUrl
+                committer {
+                  name
+                  date
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+*/

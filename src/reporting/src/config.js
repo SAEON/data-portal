@@ -1,4 +1,6 @@
+import console from './lib/console'
 import { config } from 'dotenv'
+import subDays from 'date-fns/subDays'
 config()
 
 // App configuration
@@ -9,4 +11,13 @@ export const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN || null
 export const OUTPUT_FILEPATH = process.env.OUTPUT_FILEPATH || './output.csv'
 export const REPOSITORY_OWNER = process.env.REPOSITORY_OWNER || 'SAEONData'
 export const REPOSITORY_NAME = process.env.REPOSITORY_NAME || 'saeon-atlas'
-export const SINCE = process.env.SINCE || '2020-04-01T00:00:00'
+export const SINCE = process.env.SINCE || subDays(new Date(), 14)
+
+console.log('Configuration', {
+  GQL_ENDPOINT,
+  GITHUB_ACCESS_TOKEN,
+  OUTPUT_FILEPATH,
+  REPOSITORY_NAME,
+  REPOSITORY_OWNER,
+  SINCE,
+})
