@@ -2,17 +2,17 @@ import fetch from 'node-fetch'
 import { createHttpLink } from 'apollo-link-http'
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { GQL_ENDPOINT, FILEPATH } from './config'
 import configureGql, { commits } from './gql'
 import stringify from 'csv-stringify'
 import { createWriteStream, unlinkSync } from 'fs'
+import { GQL_ENDPOINT, OUTPUT_FILEPATH, REPOSITORY_NAME, REPOSITORY_OWNER, SINCE } from './config'
 
 try {
-  unlinkSync(FILEPATH)
+  unlinkSync(OUTPUT_FILEPATH)
 } catch (error) {
   console.log(error)
 }
-const stream = createWriteStream(FILEPATH)
+const stream = createWriteStream(OUTPUT_FILEPATH)
 
 const exec = configureGql(
   new ApolloClient({
@@ -25,9 +25,9 @@ const exec = configureGql(
   const result = (
     await exec({
       variables: {
-        owner: 'SAEONData',
-        name: 'saeon-atlas',
-        since: '2020-04-01T00:00:00',
+        owner: REPOSITORY_OWNER,
+        name: REPOSITORY_NAME,
+        since: SINCE,
       },
       query: commits,
     })

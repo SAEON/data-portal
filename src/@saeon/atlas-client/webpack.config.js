@@ -32,7 +32,9 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/catalogue-search' : '../catalogue-search/src/index'
+          mode === 'production'
+            ? './node_modules/@saeon/catalogue-search'
+            : '../catalogue-search/src/index'
         ),
       },
       extensions: ['.js', '.jsx'],
@@ -45,7 +47,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
           vendor: {
             chunks: 'all',
             test: /node_modules/,
-            priority: 20
+            priority: 20,
           },
           common: {
             name: 'common',
@@ -53,8 +55,8 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
             chunks: 'async',
             priority: 10,
             reuseExistingChunk: true,
-            enforce: true
-        }
+            enforce: true,
+          },
         },
       },
     },

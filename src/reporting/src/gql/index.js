@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from '../config'
+import { GITHUB_ACCESS_TOKEN } from '../config'
 export { default as commits } from './_commits'
 
 export default (client) => async ({ variables, query }) =>
@@ -6,7 +6,7 @@ export default (client) => async ({ variables, query }) =>
     query,
     context: {
       headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`,
       },
     },
     variables,
