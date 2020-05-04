@@ -69,7 +69,16 @@ const Application = () => (
                     )}
                   />
                   <Route key={'about'} path={'/about'} exact={true} render={() => <AboutPage />} />
-                  <Route key={'Search'} path={'/search'} exact={true} render={() => <Search />} />
+                  <Route
+                    key={'Search'}
+                    path={'/search'}
+                    exact={true}
+                    render={() => (
+                      <MenuProvider>
+                        <Search />
+                      </MenuProvider>
+                    )}
+                  />
                   <Route
                     key={'Search-results'}
                     path={'/search-results'}

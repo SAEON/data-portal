@@ -1,7 +1,7 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
 import { Gesture as GestureIcon } from '@material-ui/icons'
-import { PolygonSelectionTool } from '../../../map-tools'
+import { PolygonSelectionTool } from '../../page-atlas/modules/map-tools'
 import { Grid, Button } from '@material-ui/core'
 import { MenuContext } from '@saeon/snap-menus'
 
