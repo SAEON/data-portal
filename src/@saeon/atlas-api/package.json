@@ -28,9 +28,11 @@
     "copyfiles": "^2.2.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
+    "graphql-type-json": "^0.3.1",
     "koa": "^2.11.0",
     "koa-compress": "^4.0.1",
     "koa-proxies": "^0.11.0",
+    "node-fetch": "^2.6.0",
     "rimraf": "^3.0.2"
   },
   "author": "zach@saeon.ac.za, steven@saeon.ac.za",

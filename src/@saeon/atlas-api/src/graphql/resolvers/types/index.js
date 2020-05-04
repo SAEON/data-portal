@@ -1,3 +1,5 @@
+export { default as JSON } from 'graphql-type-json'
 export { default as Mutation } from './_mutation'
 export { default as Query } from './_query'
 export { default as Subscription } from './_subscription'
+export { default as Date } from './_date'

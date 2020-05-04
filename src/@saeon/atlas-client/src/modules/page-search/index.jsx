@@ -14,6 +14,7 @@ import { useHttpDataQuery } from '../../components'
 import SearchControls from '../search-controls'
 import useStyles from './style'
 import clsx from 'clsx'
+import { useQuery, gql } from '@apollo/client'
 
 const DSL_INDEX = `saeon-odp-4-2`
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
@@ -22,7 +23,7 @@ export default () => {
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
-  console.log(matches)
+
   const { error, loading, data } = useHttpDataQuery({
     uri: `${DSL_PROXY}/${DSL_INDEX}`,
     method: 'POST',
@@ -62,12 +63,27 @@ export default () => {
               ) : loading ? (
                 'Loading ...'
               ) : (
-                <SearchControls data={data}>
-                  {({ error, loading, data }) => (
-                    <Typography>
-                      {error ? 'ERROR' : loading ? 'Loading ...' : `${data?.hits?.total} results`}
-                    </Typography>
-                  )}
+                <SearchControls type={'GQL'} data={data}>
+                  {({ query }) => {
+                    const DSL = gql`
+                      query($dsl: JSON!) {
+                        search(dsl: $dsl)
+                      }
+                    `
+                    const { error, loading, data } = useQuery(DSL, {
+                      variables: { dsl: query },
+                    })
+                    console.log(error, loading, data)
+                    return (
+                      <Typography>
+                        {error
+                          ? 'ERROR'
+                          : loading
+                          ? 'Loading ...'
+                          : `${data.search.data.length} results`}
+                      </Typography>
+                    )
+                  }}
                 </SearchControls>
               )}
             </CardContent>

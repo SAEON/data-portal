@@ -101,7 +101,7 @@ const getQuery = (fields) => {
   return query
 }
 
-export default ({ data, children }) => {
+export default ({ type, data, children }) => {
   return (
     <Form
       fixedDateRange="all"
@@ -137,13 +137,16 @@ export default ({ data, children }) => {
             <DateSelector updateForm={updateForm} {...fields} />
 
             <Div />
-
-            <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
-              {(useCatalog) => {
-                const { error, loading, data } = useCatalog(getQuery(fields))
-                return children({ error, loading, data })
-              }}
-            </ReactCatalogue>
+            {type === 'GQL' ? (
+              children({ query: getQuery(fields) })
+            ) : (
+              <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
+                {(useCatalog) => {
+                  const { error, loading, data } = useCatalog(getQuery(fields))
+                  return children({ error, loading, data })
+                }}
+              </ReactCatalogue>
+            )}
           </Grid>
         </div>
       )}

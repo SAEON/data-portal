@@ -1,3 +1,3 @@
 export default {
-  hello: () => 'hello from mutation',
+  example: () => 'hello from mutation',
 }

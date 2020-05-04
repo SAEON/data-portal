@@ -1,11 +1,14 @@
+scalar Date
+scalar JSON
+
 type Query {
-  hello: String
+  search(dsl: JSON!): JSON
 }
 
 type Subscription {
-  hello: String
+  onFilterChange: JSON
 }
 
 type Mutation {
-  hello: String
+  example: String
 }

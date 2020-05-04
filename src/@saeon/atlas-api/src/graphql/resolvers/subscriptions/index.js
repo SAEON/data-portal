@@ -1,9 +1,9 @@
-import pubsub, { TEST_PUBSUB } from '../pubsub'
+import pubsub, { ON_FILTER_CHANGE } from '../pubsub'
 
 export default {
-  hello: {
+  onFilterChange: {
     subscribe: () => {
-      return pubsub.asyncIterator([TEST_PUBSUB])
+      return pubsub.asyncIterator([ON_FILTER_CHANGE])
     },
   },
 }

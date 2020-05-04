@@ -3,7 +3,9 @@ import './index.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider, split } from '@apollo/client'
+import { getMainDefinition } from '@apollo/client/utilities'
+import { WebSocketLink } from '@apollo/link-ws'
 import { CssBaseline } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import {
@@ -12,6 +14,7 @@ import {
   DEFAULT_INFO,
   DEFAULT_SUCCESS,
   GQL_PROVIDER,
+  GQL_SUBSCRIPTIONS_PROVIDER,
 } from './config'
 
 // Material UI theme
@@ -36,12 +39,32 @@ import SearchResults from './modules/page-search-results'
 import { nativeExtensions } from './lib/fns'
 nativeExtensions()
 
+// HTTP link (queries / mutations)
+const httpLink = new HttpLink({
+  uri: GQL_PROVIDER,
+})
+
+// WSS link (subscriptions)
+const wsLink = new WebSocketLink({
+  uri: GQL_SUBSCRIPTIONS_PROVIDER,
+  options: {
+    reconnect: true,
+  },
+})
+
+const link = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query)
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+  },
+  wsLink,
+  httpLink
+)
+
 // Configure Apollo GraphQL client
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: GQL_PROVIDER,
-  }),
+  link,
 })
 
 const Application = () => (
