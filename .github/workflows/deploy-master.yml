@@ -21,13 +21,13 @@ jobs:
         run: |
           echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/@saeon/atlas-api/.env
           echo "HTTP_PROXY=http://atlas-anyproxy-dev:8001" >> src/@saeon/atlas-api/.env
-          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za/graphql" >> src/@saeon/atlas-api/.env
-          echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.atlas.saeon.ac.za/graphql" >> src/@saeon/atlas-api/.env
+          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/@saeon/atlas-api/.env
 
       - name: Configure @saeon/atlas-client
         run: |
           echo "ATLAS_API_ADDRESS=https://api.atlas.saeon.ac.za" > src/@saeon/atlas-client/.env
           echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za/graphql" >> src/@saeon/atlas-client/.env
+          echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.atlas.saeon.ac.za/graphql" >> src/@saeon/atlas-client/.env
           echo "DEFAULT_WARNING=Please note that this service, although available for general comment, is not live. For more information contact zach@saeon.ac.za" >> src/@saeon/atlas-client/.env
 
       - name: Configure Nginx (server entry)
