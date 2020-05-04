@@ -6,6 +6,8 @@ import {
   GitHub as GitHubIcon,
   Info as InfoIcon,
   Home as HomeIcon,
+  Search as SearchIcon,
+  List as ListIcon,
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../package.json'
@@ -44,6 +46,12 @@ const Layout = ({ children }) => {
 
             {/* About page */}
             <NavItem label={'About'} icon={<InfoIcon />} to="/about" />
+
+            {/* Search page */}
+            <NavItem label={'Search'} icon={<SearchIcon />} to="/search" />
+
+            {/* Search results page */}
+            <NavItem label={'Search results'} icon={<ListIcon />} to="/search-results" />
 
             {/* Source code link */}
             <NavItem label={'Source Code'} icon={<GitHubIcon />} href={SOURCE_CODE_LINK} />

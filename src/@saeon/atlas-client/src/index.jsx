@@ -29,6 +29,8 @@ import FeedbackProvider from './modules/provider-feedback'
 import Layout from './modules/layout'
 import Atlas from './modules/page-atlas'
 import AboutPage from './modules/page-about'
+import Search from './modules/page-search'
+import SearchResults from './modules/page-search-results'
 
 // Some helpers
 import { nativeExtensions } from './lib/fns'
@@ -67,6 +69,13 @@ const Application = () => (
                     )}
                   />
                   <Route key={'about'} path={'/about'} exact={true} render={() => <AboutPage />} />
+                  <Route key={'Search'} path={'/search'} exact={true} render={() => <Search />} />
+                  <Route
+                    key={'Search-results'}
+                    path={'/search-results'}
+                    exact={true}
+                    render={() => <SearchResults />}
+                  />
                 </Layout>
               </Router>
             </MapProvider>
