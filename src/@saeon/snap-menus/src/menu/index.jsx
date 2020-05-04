@@ -14,16 +14,6 @@ import clsx from 'clsx'
 import MapContext from '../provider/context'
 import packageJson from '../../package.json'
 
-const configureDragHandle = (fullscreen, C, cb) => {
-  if (fullscreen) return C
-  else
-    return (
-      <div onMouseDown={cb} className="draggable-handle">
-        {C}
-      </div>
-    )
-}
-
 // Get the width of the page
 const container = document.getElementById('root')
 const containerHeight = container.offsetHeight
