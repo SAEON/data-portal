@@ -1,8 +1,14 @@
 scalar Date
 scalar JSON
 
+type Map {
+  id: ID!
+  name: String
+}
+
 type Query {
   search(dsl: JSON!): JSON
+  maps: [Map]!
 }
 
 type Subscription {
@@ -10,5 +16,5 @@ type Subscription {
 }
 
 type Mutation {
-  example: String
+  upsertMap: Map!
 }

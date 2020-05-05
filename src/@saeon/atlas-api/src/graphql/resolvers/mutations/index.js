@@ -1,3 +1,5 @@
+import upsertMap from './_upsert-map'
+
 export default {
-  example: () => 'hello from mutation',
+  upsertMap,
 }

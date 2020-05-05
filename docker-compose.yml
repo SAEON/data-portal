@@ -1,14 +1,21 @@
 version: '3.7'
 
 services:
-  # redis:
+  # atlas-redis-dev:
+  #   container_name: atlas-redis-dev
   #   image: redis:latest
-  #   container_name: redis
   #   restart: always
   #   ports:
   #     - 6379:6379
 
-  anyproxy:
+  atlas-mongodb-dev:
+    container_name: atlas-mongodb-dev
+    restart: always
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  atlas-anyproxy-dev:
     container_name: atlas-anyproxy-dev
     restart: always
     build:

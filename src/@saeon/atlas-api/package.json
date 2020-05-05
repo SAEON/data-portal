@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-api",
-  "version": "0.0.60",
+  "version": "0.0.63",
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "apollo-server-koa": "^2.13.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.2.0",
+    "dataloader": "^2.0.0",
     "date-fns": "^2.12.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
@@ -35,8 +36,10 @@
     "koa": "^2.11.0",
     "koa-compress": "^4.0.1",
     "koa-proxies": "^0.11.0",
+    "mongodb": "^3.5.7",
     "node-fetch": "^2.6.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "sift": "^12.0.1"
   },
   "author": "zach@saeon.ac.za, steven@saeon.ac.za",
   "license": "MIT"

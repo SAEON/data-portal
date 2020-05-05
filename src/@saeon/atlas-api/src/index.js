@@ -19,6 +19,7 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   process.exit(1)
 }
 
+// Setup App
 const app = new Koa()
 const router = new KoaRouter()
 
