@@ -1,11 +1,20 @@
 const packageJson = require('../../package.json')
 
 export class Catalogue {
-  constructor({ dslAddress = null, index = null } = {}) {
+  constructor({ dslAddress = null, index = null, httpClient = null } = {}) {
+    // Endpoint params are required
     if (!dslAddress || !index)
       throw new Error(
         `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: Incorrect options param passed to constructor`
       )
+
+    // A fetch implementation is required
+    this.httpClient = httpClient || fetch
+    if (!this.httpClient)
+      throw new Error(
+        `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: the runtime environment requires an implementation of fetch. Please specify options.httpClient (that is compatible with windows.fetch in browsers)`
+      )
+
     this.dslAddress = dslAddress
     this.index = index
   }
@@ -14,7 +23,7 @@ export class Catalogue {
     query = typeof query === 'string' ? query : JSON.stringify(query)
     try {
       const uri = `${this.dslAddress}/${this.index}/_search`
-      const response = await fetch(uri, {
+      const response = await this.httpClient(uri, {
         signal: abortFetch?.signal,
         method: 'POST',
         mode: 'cors',

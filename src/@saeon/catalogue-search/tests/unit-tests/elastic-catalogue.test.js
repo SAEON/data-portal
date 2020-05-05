@@ -44,6 +44,7 @@ describe('ElasticCatalogue instance', () => {
     const expected = {
       dslAddress: 'string',
       index: 'string',
+      httpClient: 'function',
     }
 
     test('Has expected properties', () => {
