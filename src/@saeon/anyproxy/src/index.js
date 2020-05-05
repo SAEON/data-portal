@@ -1,5 +1,6 @@
 import { ProxyServer } from 'anyproxy'
 import options from './options'
+import console from './lib/console'
 
 const proxy = new ProxyServer(options)
 

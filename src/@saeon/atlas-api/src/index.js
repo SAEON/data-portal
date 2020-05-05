@@ -6,7 +6,7 @@ import { createRequestContext, cors } from './middleware'
 import { home } from './http'
 import zlib from 'zlib'
 import configureApolloServer from './graphql'
-import { log } from './lib'
+import console from './lib/console'
 import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config'
 import proxy from 'koa-proxies'
 
@@ -54,7 +54,7 @@ apolloServer.installSubscriptionHandlers(httpServer)
 
 // Start the application
 httpServer.listen(PORT, () => {
-  log(`Auth server ready at ${PORT}`)
-  log(`GraphQL ready at ${GQL_PROVIDER}${apolloServer.graphqlPath}`)
-  log(`GraphQL subscriptions ready at ${GQL_PROVIDER}${apolloServer.subscriptionsPath}`)
+  console.log(`Auth server ready at ${PORT}`)
+  console.log(`GraphQL ready at ${GQL_PROVIDER}${apolloServer.graphqlPath}`)
+  console.log(`GraphQL subscriptions ready at ${GQL_PROVIDER}${apolloServer.subscriptionsPath}`)
 })

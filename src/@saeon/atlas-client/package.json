@@ -6,8 +6,8 @@
     "@saeon/atlas-client"
   ],
   "scripts": {
-    "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.jsx",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../snap-menus/src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & webpack-dev-server --port 3001 --env.mode=development --env.output=dist --env.entry=src/index.jsx --open",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../snap-menus/src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --env.entry=src/index.jsx --open",
     "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
     "update-packages": "ncu -u --reject \"@date-io/date-fns\""
   },

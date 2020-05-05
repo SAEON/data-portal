@@ -13,7 +13,7 @@
     "@material-ui/icons": ">=4"
   },
   "scripts": {
-    "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.jsx",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s major",

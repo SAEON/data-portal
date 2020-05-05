@@ -5,7 +5,8 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 require('dotenv').config()
 
-module.exports = ({ mode, entry, output = '/dist' }) => {
+module.exports = ({ entry, output = '/dist' }) => {
+  const { NODE_ENV: mode } = process.env
   return {
     mode,
     entry: path.resolve(__dirname, entry),
@@ -69,6 +70,7 @@ module.exports = ({ mode, entry, output = '/dist' }) => {
             loader: 'babel-loader',
             options: {
               rootMode: 'upward',
+              envName: mode,
             },
           },
         },

@@ -1,4 +1,8 @@
+// Useful reminder that babel transpilation is configurable per environment
+// const { NODE_ENV = 'production' } = process.env
+
 module.exports = {
+  babelrcRoots: ['.', 'src/@saeon/*'],
   sourceType: 'unambiguous',
   presets: [['@babel/preset-env'], ['@babel/preset-react']],
   plugins: [

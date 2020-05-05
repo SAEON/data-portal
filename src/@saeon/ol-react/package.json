@@ -11,7 +11,7 @@
     "ol": ">=6"
   },
   "scripts": {
-    "build": "rimraf ./dist && webpack --env.mode=production --env.output=dist --env.entry=src/index.js",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.js",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s major",
