@@ -43,9 +43,9 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
-    "babel-jest": "^26.0.0",
+    "babel-jest": "^26.0.1",
     "dotenv": "^8.2.0",
-    "jest": "^26.0.0",
+    "jest": "^26.0.1",
     "node-fetch": "^2.6.0",
     "onchange": "^7.0.2",
     "prettier": "^2.0.5",

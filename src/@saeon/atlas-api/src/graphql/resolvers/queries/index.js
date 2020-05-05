@@ -8,22 +8,15 @@ const index = 'saeon-odp-4-2'
 const catalog = new Catalogue({
   dslAddress,
   index,
+  httpClient: fetch,
 })
 
 export default {
   // eslint-disable-next-line no-unused-vars
   search: async (self, args, ctx) => {
     const { dsl } = args
-
-    try {
-      const response = await catalog.query(dsl)
-    } catch (error) {
-      console.log(error)
-    }
-
-    const result = await response.json()
-
-    pubsub.publish(ON_FILTER_CHANGE, { onFilterChange: { data: result?.hits?.hits } })
-    return { data: result?.hits?.hits }
+    const data = await catalog.query(dsl)
+    pubsub.publish(ON_FILTER_CHANGE, { onFilterChange: { data } })
+    return { data }
   },
 }

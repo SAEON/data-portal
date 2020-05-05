@@ -80,7 +80,7 @@ export default () => {
                           ? 'ERROR'
                           : loading
                           ? 'Loading ...'
-                          : `${data.search.data.length} results`}
+                          : `${data.search.data.hits.total} results`}
                       </Typography>
                     )
                   }}
