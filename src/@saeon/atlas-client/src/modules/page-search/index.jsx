@@ -73,7 +73,6 @@ export default () => {
                     const { error, loading, data } = useQuery(DSL, {
                       variables: { dsl: query },
                     })
-                    console.log(error, loading, data)
                     return (
                       <Typography>
                         {error
