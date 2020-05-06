@@ -2,7 +2,7 @@ import { GraphQLScalarType } from 'graphql'
 import { Kind } from 'graphql/language'
 
 export default new GraphQLScalarType({
-  name: 'Date',
+  name: 'DateTime',
   description: 'Custom scalar type for datetime objects',
   parseValue(value) {
     const parsed = new Date(value)

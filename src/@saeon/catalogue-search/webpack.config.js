@@ -9,7 +9,7 @@ module.exports = ({ output = '/dist' }) => {
     entry: {
       index: './src/index.js',
       catalogue: './src/catalogue-search/index.js',
-      catalogueReact: './src/catalogue-search-react/index.js'
+      catalogueReact: './src/catalogue-search-react/index.js',
     },
     output: {
       filename: '[name].js',

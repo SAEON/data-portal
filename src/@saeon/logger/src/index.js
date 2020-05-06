@@ -15,12 +15,6 @@ var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
       : globalConsole[prop],
 })
 
-/**
- * configure(({console, timestampFormat}) => ({
- *   overwrites: { log: () => console.log('new message) },
- *   formmater: timestampFormat // This uses the date-fns library
- * }))
- */
 export const configure = async (cb) => {
   const { overwrites, formatter } = cb({ console: globalConsole, timestampFormat })
   proxyTarget = Object.assign(proxyTarget, overwrites)

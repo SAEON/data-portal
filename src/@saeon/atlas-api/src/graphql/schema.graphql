@@ -1,20 +1,36 @@
-scalar Date
+scalar DateTime
 scalar JSON
 
-type Map {
+enum Entity {
+  Map
+}
+
+interface Node {
+  id: ID!
+  type: Entity!
+}
+
+type Map implements Node {
   id: ID!
   name: String
+  type: Entity!
 }
 
 type Query {
+  node(id: ID!): Node
   search(dsl: JSON!): JSON
-  maps: [Map]!
+  nodes: [Node]!
 }
 
 type Subscription {
   onFilterChange: JSON
 }
 
+input MapInput {
+  name: String
+  type: Entity!
+}
+
 type Mutation {
-  upsertMap: Map!
+  upsertMap(input: MapInput!, id: ID): Node!
 }

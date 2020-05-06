@@ -1,4 +1,4 @@
-import  './lib/console'
+import './lib/console'
 import fetch from 'node-fetch'
 import { createHttpLink } from 'apollo-link-http'
 import ApolloClient from 'apollo-client'

@@ -1,4 +1,5 @@
 import { ApolloServer } from 'apollo-server-koa'
+import { makeExecutableSchema } from 'graphql-tools'
 import { normalize, join } from 'path'
 import { readFileSync } from 'fs'
 import resolvers from './resolvers'
@@ -9,9 +10,8 @@ const typeDefs = readFileSync(typeDefsPath, { encoding: 'utf8' })
 
 export default () =>
   new ApolloServer({
+    schema: makeExecutableSchema({ typeDefs, resolvers, inheritResolversFromInterfaces: true }),
     introspection: true,
-    typeDefs,
-    resolvers,
     playground: {
       subscriptionEndpoint: `${GQL_PROVIDER}/graphql`,
       settings: {
