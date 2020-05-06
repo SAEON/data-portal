@@ -5,7 +5,7 @@ const overwrites = ['log', 'warn', 'info', 'error']
 var proxyTarget = {}
 var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
 
-(global || window).console = new Proxy(proxyTarget, {
+;(global || window).console = new Proxy(proxyTarget, {
   get: (obj, prop) =>
     prop in obj
       ? obj[prop]
