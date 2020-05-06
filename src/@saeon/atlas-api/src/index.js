@@ -1,3 +1,4 @@
+import './lib/console'
 import { createServer } from 'http'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
@@ -6,9 +7,9 @@ import { createRequestContext, cors } from './middleware'
 import { home } from './http'
 import zlib from 'zlib'
 import configureApolloServer from './graphql'
-import console from './lib/console'
-import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config'
 import proxy from 'koa-proxies'
+
+import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config'
 
 if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   console.error(

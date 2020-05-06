@@ -11,7 +11,7 @@ module.exports = {
         alias: {
           '@saeon/catalogue-search': path.join(
             __dirname,
-            NODE_ENV === 'development' ? '../catalogue-search' : './node_modules'
+            NODE_ENV === 'development' ? '../catalogue-search' : '../catalogue-search' // TODO - package needs to be exported for node as well
           ),
         },
       },

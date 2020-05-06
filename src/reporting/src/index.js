@@ -1,3 +1,4 @@
+import  './lib/console'
 import fetch from 'node-fetch'
 import { createHttpLink } from 'apollo-link-http'
 import ApolloClient from 'apollo-client'
@@ -7,7 +8,6 @@ import stringify from 'csv-stringify'
 import { createWriteStream, unlinkSync } from 'fs'
 import format from 'date-fns/format'
 import { GQL_ENDPOINT, OUTPUT_FILEPATH, REPOSITORY_NAME, REPOSITORY_OWNER, SINCE } from './config'
-import console from './lib/console'
 
 try {
   console.log(`Deleting ${OUTPUT_FILEPATH}`)

@@ -1,5 +1,4 @@
 import { ALLOWED_ORIGINS } from '../config'
-import console from '../lib/console'
 
 const handleCors = (ALLOWED_ORIGINS) => async (ctx, next) => {
   const { method, headers } = ctx.req

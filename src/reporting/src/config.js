@@ -1,4 +1,3 @@
-import console from './lib/console'
 import { config } from 'dotenv'
 import subDays from 'date-fns/subDays'
 config()
