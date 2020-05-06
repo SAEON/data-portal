@@ -1,4 +1,3 @@
-import './lib/console'
 import { ProxyServer } from 'anyproxy'
 import options from './options'
 

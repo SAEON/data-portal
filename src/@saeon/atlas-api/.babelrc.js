@@ -15,7 +15,9 @@ module.exports = {
           ),
           '@saeon/catalogue-search': path.join(
             __dirname,
-            NODE_ENV === 'development' ? '../catalogue-search' : './node_modules/@saeon/catalogue-search'
+            NODE_ENV === 'development'
+              ? '../catalogue-search'
+              : './node_modules/@saeon/catalogue-search/dist/catalogue'
           ),
         },
       },

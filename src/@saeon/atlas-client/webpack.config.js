@@ -34,7 +34,7 @@ module.exports = ({ entry, output = '/dist' }) => {
         '@saeon/catalogue-search': path.resolve(
           __dirname,
           mode === 'production'
-            ? './node_modules/@saeon/catalogue-search'
+            ? './node_modules/@saeon/catalogue-search/dist/catalogueReact'
             : '../catalogue-search/src/index'
         ),
       },

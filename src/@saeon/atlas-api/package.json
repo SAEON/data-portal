@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-api",
-  "version": "0.0.64",
+  "version": "0.0.66",
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "@babel/cli": "^7.8.4",
     "@babel/runtime-corejs3": "^7.9.6",
     "@koa/router": "^8.0.8",
-    "@saeon/catalogue-search": "^3.1.0",
+    "@saeon/catalogue-search": "^4.1.0",
+    "@saeon/logger": "^1.0.1",
     "apollo-server-koa": "^2.13.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.2.0",

@@ -1,15 +1,11 @@
 const path = require('path')
 
 module.exports = ({ entry, output = '/dist' }) => {
-  // const { NODE_ENV: mode } = process.env
-
-  mode = 'development'
+  const { NODE_ENV: mode } = process.env
   return {
     mode,
     entry: path.resolve(__dirname, entry),
-    externals: [
-      /date-fns\/.*$/i,
-    ],
+    externals: [/date-fns\/.*$/i],
     output: {
       filename: 'index.js',
       libraryTarget: 'commonjs2',
