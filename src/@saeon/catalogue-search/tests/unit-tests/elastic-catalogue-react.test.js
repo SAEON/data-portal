@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { ReactCatalogue } from '../../src'
+import { ReactCatalogue } from '../../src/catalogue-search-react'
 
 describe('COMPONENT: ElasticCatalogueReact', () => {
   it('Renders without crashing', () => {

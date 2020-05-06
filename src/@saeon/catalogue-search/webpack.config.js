@@ -1,14 +1,17 @@
 const webpack = require('webpack')
 const path = require('path')
 
-module.exports = ({ entry, output = '/dist' }) => {
+module.exports = ({ output = '/dist' }) => {
   const { NODE_ENV: mode } = process.env
 
   return {
     mode,
-    entry: path.resolve(__dirname, entry),
+    entry: {
+      catalogue: './src/catalogue-search/index.js',
+      catalogueReact: './src/catalogue-search-react/index.js'
+    },
     output: {
-      filename: 'index.js',
+      filename: '[name].js',
       libraryTarget: 'commonjs2',
       path: path.join(__dirname, output),
     },

@@ -13,7 +13,7 @@
   "scripts": {
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest",
     "test:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --watch",
-    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.js",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/catalogue-search -s major",

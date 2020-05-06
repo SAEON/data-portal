@@ -1,4 +1,4 @@
-import { Catalogue } from '../../src'
+import { Catalogue } from '../../src/catalogue-search'
 import { API_ADDRESS } from '../config/constants'
 
 const dslAddress = `${API_ADDRESS}`

@@ -1,4 +1,4 @@
-import { Catalogue } from '../../src'
+import { Catalogue } from '../../src/catalogue-search'
 
 describe('CONSTRUCTOR: ElasticCatalogue', () => {
   describe('Direct properties', () => {
