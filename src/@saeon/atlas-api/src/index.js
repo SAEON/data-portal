@@ -1,4 +1,4 @@
-import './lib/console'
+import '@saeon/logger'
 import { createServer } from 'http'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'

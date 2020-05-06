@@ -9,9 +9,13 @@ module.exports = {
       {
         root: ['.'],
         alias: {
+          '@saeon/logger': path.join(
+            __dirname,
+            NODE_ENV === 'development' ? '../logger' : './node_modules/@saeon/logger'
+          ),
           '@saeon/catalogue-search': path.join(
             __dirname,
-            NODE_ENV === 'development' ? '../catalogue-search' : '../catalogue-search' // TODO - package needs to be exported for node as well
+            NODE_ENV === 'development' ? '../catalogue-search' : './node_modules/@saeon/catalogue-search'
           ),
         },
       },
