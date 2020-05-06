@@ -9,7 +9,7 @@ export class Catalogue {
       )
 
     // A fetch implementation is required
-    this.httpClient = httpClient || fetch
+    this.httpClient = httpClient || fetch.bind(window)
     if (!this.httpClient)
       throw new Error(
         `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: the runtime environment requires an implementation of fetch. Please specify options.httpClient (that is compatible with windows.fetch in browsers)`
