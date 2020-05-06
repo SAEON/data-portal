@@ -1,6 +1,6 @@
 {
   "name": "@saeon/logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "main": "dist/index.js",
   "files": [
