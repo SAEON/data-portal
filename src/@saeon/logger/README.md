@@ -78,14 +78,19 @@ const uri = "https://your API address here.co.za/log"
 
 configure(() => ({
   overwrites: {
-    logToServer: (uri) => {
+    logToServer: (uri, client = fetch) => {
       const logBatch = (msgs) =>
         new Promise((resolve, reject) => {
-          fetch(uri, {
+          client(uri, {
+            mode: 'cors',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
             method: 'POST',
             body: JSON.stringify(msgs),
           })
-            .then((res) => res.json())
+            .then((res) => res.text())
             .then((json) => resolve(json))
             .catch((error) => reject(error))
         })
@@ -95,6 +100,7 @@ configure(() => ({
     },
   },
 }))
+
 ```
 
 And now you have the following console.* methods available in your browser or in your webserver
