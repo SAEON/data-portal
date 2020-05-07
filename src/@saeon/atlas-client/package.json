@@ -1,9 +1,14 @@
 {
   "name": "@saeon/atlas-client",
   "version": "0.0.67",
-  "description": "An interactive atlas for interacting with spatial data - specifically SAEON's metadata store, although it should also be a generally useful means of interacting with any OGC-compliant resource.",
+  "description": "A browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
-    "@saeon/atlas-client"
+    "@saeon/atlas-client",
+    "GIS",
+    "OGC-compliant",
+    "Atlas",
+    "SAEON",
+    "ULWAZI"
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",

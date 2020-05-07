@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
+const packageJson = require('./package.json')
 require('dotenv').config()
 
 module.exports = ({ entry, output = '/dist' }) => {
@@ -121,6 +122,8 @@ module.exports = ({ entry, output = '/dist' }) => {
         template: 'index.html',
         filename: path.join(__dirname, output, 'index.html'),
         PUBLIC_PATH: '',
+        PACKAGE_DESCRIPTION: packageJson.description,
+        PACKAGE_KEYWORDS: packageJson.keywords
       }),
     ],
     devServer: {
