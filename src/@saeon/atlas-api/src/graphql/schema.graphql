@@ -1,8 +1,10 @@
 scalar DateTime
 scalar JSON
+scalar Void
 
 enum Entity {
   Map
+  BrowserEvent
 }
 
 interface Node {
@@ -31,6 +33,12 @@ input MapInput {
   type: Entity!
 }
 
+input BrowserEventLog {
+  name: String!
+  createdAt: DateTime!
+}
+
 type Mutation {
   upsertMap(input: MapInput!, id: ID): Node!
+  logBrowserEvents(input: [BrowserEventLog]): [Boolean]!
 }

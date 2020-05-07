@@ -38,6 +38,10 @@ module.exports = ({ entry, output = '/dist' }) => {
             ? './node_modules/@saeon/catalogue-search/dist/catalogueReact'
             : '../catalogue-search/src/index'
         ),
+        '@saeon/logger': path.resolve(
+          __dirname,
+          mode === 'production' ? './node_modules/@saeon/logger' : '../logger/src/index'
+        ),
       },
       extensions: ['.js', '.jsx'],
     },
@@ -123,7 +127,7 @@ module.exports = ({ entry, output = '/dist' }) => {
         filename: path.join(__dirname, output, 'index.html'),
         PUBLIC_PATH: '',
         PACKAGE_DESCRIPTION: packageJson.description,
-        PACKAGE_KEYWORDS: packageJson.keywords
+        PACKAGE_KEYWORDS: packageJson.keywords,
       }),
     ],
     devServer: {

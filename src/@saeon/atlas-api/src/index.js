@@ -26,6 +26,7 @@ const router = new KoaRouter()
 
 // HTTP routes
 router.get('/', home)
+router.post('/', home)
 
 // Koa HTTP handler callback
 app

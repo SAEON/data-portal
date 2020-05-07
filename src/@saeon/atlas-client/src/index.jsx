@@ -1,5 +1,6 @@
 import 'typeface-roboto'
 import './index.scss'
+import { configure as configureLogger } from '@saeon/logger'
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -15,7 +16,16 @@ import {
   DEFAULT_SUCCESS,
   GQL_PROVIDER,
   GQL_SUBSCRIPTIONS_PROVIDER,
+  ATLAS_API_ADDRESS,
 } from './config'
+import { logToServer } from './lib/logger'
+
+// Configure server logs
+configureLogger(() => ({
+  overwrites: {
+    logToServer: logToServer(ATLAS_API_ADDRESS),
+  },
+}))
 
 // Material UI theme
 import theme from './theme'
