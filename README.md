@@ -14,8 +14,12 @@ The repository is organized as a 'monorepo', split according to the following pa
 - [@saeon/anyproxy](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/anyproxy)
 - [@saeon/catalogue-search](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/catalogue-search)
 - [@saeon/ol-react](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/ol-react)
+- [@saeon/snap-menus](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/snap-menus)
+- [@saeon/logger](https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/logger)
 - [docs](https://github.com/SAEONData/saeon-atlas/tree/master/src/docs)
 - [reporting](https://github.com/SAEONData/saeon-atlas/tree/master/src/reporting)
+
+Refer to these links for specific package documentation.
 
 # Tech Stack
 
@@ -31,7 +35,7 @@ The repository is organized as a 'monorepo', split according to the following pa
 
 Packages are mostly self-contained, in that each package includes a `package.json` file, and tracks it's own dependencies. For development purposes it's useful that packages can reference source code in other packages (instead of build output), and for this reason Babel is configured globally.
 
-### Setup the repository for developing
+### Setup the repository for development
 
 NOTE: This repository only support Linux/Mac development currently, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/saeon-atlas/issues).
 
@@ -70,222 +74,75 @@ Running the atlas requires starting 3 services:
 
 Running `npm start` will start these services in the same terminal window. It's useful to start these services individually for helpful log output (a terminal that allows for split screen is great for this).
 
-# Deployment
-
-#### Configuration
-
-TODO
-
-#### Docker Compose
-
-```sh
-docker-compose up -d --force-recreate --build
-```
-
-#### Automated deployment
-
-Forking this repository should allow for using the GitHub deployment configuration specified in `.github/workflows/deploy-master.yml`. Using the existing deployment specification should be as simple as:
-
-1. Configure a self hosted GitHub actions runner on your server
-2. Adjust the `.github/workflows/deploy-master.yml` to include configuration variables sensible for your environment
-3. The deployment should run on every push to the master branch
-
-#### Publishing NPM packages
-
-TODO
-
-# Source code documentation
-
-TODO
-
-# Reporting
-
-TODO
-
-# @saeon/atlas-client
-
-From the root of the repository (`/atlas`)
+To start these services indivudually
 
 ```
-npm install
+cd src/@saeon/atlas-client
+npm start
+
+cd src/@saeon/atlas-api
+npm start
+
+cd src/@saeon/anyproxy
 npm start
 ```
 
-## Configuration
+# Deployment
 
-Add a `.env` file to `src/@saeon/atlas-client`. And configure as required. Default values are shown:
+All services in this repository are dockerized (see `Dockerfiles`) located in the route of each package. Refer to the repository's [`docker-compose.yml`](/master/docker-compose.yml) file to see how to deploy all services together. By default, this repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instrunctions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/saeon-atlas/issues)). I.e. the process should be as simple as just 2 steps to get a deployment on every push to master:
+
+1. Configure a self hosted GitHub actions runner on your server
+2. Adjust the `.github/workflows/deploy-master.yml` to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
+
+NOTE - Docker images are built in the context of this repository, so the Dockerfiles for individual services are NOT the root context in which Docker is executed. This can be a bit confusing, the reason being to allow for commands running in docker containers to have access to the global babel configuration. For this reason, when building images with the `docker build` CLI, this command must be run from the root of this repository, with the path to the Dockerfile provided explicitly by the `--file , -f` options. For example:
 
 ```
-ATLAS_API_ADDRESS=http://localhost:4000
+docker build -t <image name> -f ./src/@saeon/<service name>/Dockerfile .
 ```
 
-## Docker deployment
+#### Configuration
 
-```
-docker build -t atlas-client -f ./src/@saeon/atlas-client/Dockerfile .
-```
+Build-time configuration essentially involves:
 
-# @saeon/ol-react
+1. Creating `.env` files with appropriate values at the beginning of the build process (overwriting existing .env files)
+2. Copying these `.env` files along with source code into the Docker build context, so that they are accessible during container runtime
 
-Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atlas)
+This is achieved using GitHub actions software. The configuration is specified in the [workflow file](/blob/master/.github/workflows/deploy-master.yml). Adjusting accordingly in repository forks and continuous deployment should (theoreticaly) work out the box if a self-hosted actions runner is configured on your server.
+
+#### Docker Compose
+
+To deploy this repository manually
 
 ```sh
-npm install @saeon/ol-react
+# Clone the repo
+git clone <...> saeon-atlas-fork
+
+# Add configuration for docker-compose.yml scripts
+echo "MONGO_USERNAME=<user>" > .env
+echo "MONGO_PASSWORD=<pswd>" >> .env
+
+# Build and run the images
+docker-compose up -d --force-recreate --build
 ```
 
-## Modules
+# NPM packages
 
-The basis of the Atlas is that it comprises of many `Modules`. Please see `./dev/index.jsx` (in this repository) for a working proof of concept that uses all the 'built-in' modules. This documentation describes how the example works, and is aimed at showing how to structure your own modules. These examples show two different mechanisms for 'composition' when authoring modules.
+During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the route of a package that supports publishing to NPM, these scripts are available:
 
-### Built in modules
+- `npm run publish:patch`
+- `npm run publish:minor`
+- `npm run publish:major`
 
-#### SingleFeatureSelector
+It's also possible to publish all packages at once; from the root of this repository, these scripts are available:
 
-TODO
+- `npm run publish-all-packages:patch`
+- `npm run publish-all-packages:minor`
+- `npm run publish-all-packages:major`
 
-#### LayerManager
+Running one of these scripts will result in all other packages updating their dependency lists to use the newly published package versions. **However**. If you published a package individually, then you will need to update the dependency version where the package is used. This can either be done manually via updating the appropriate `package.json` file, or all at once:
 
-The OpenLayers library maintains it's own layer state. This is problematic when using React.js, since React will not update state automatically in response to changes to an OpenLayers `map` instance. This modules provides an array of 'proxy' layer objects, and helper functions to update these objects; these proxy layer objects are stored in React state. Essentially this module 'binds' react state to OpenLayers state, and makes working with layers easier.
+- `npm run update-packages`
 
-TODO example
+It's also useful to see which packages will be updated by this script. To do that, run:
 
-### Example 1
-
-```jsx
-class App extends PureComponent {
-  constructor(props) { ... }
-
-  render() {
-    return (
-      <Map>
-        {({ map }) => (
-          <div>
-            {/* Add your modules here */}
-            <Module1 map={map} />
-            <Module2 map={map}/>
-            <Module3 map={map}/>
-          </div>
-        )}
-      </Map>
-    )
-  }
-}
-```
-
-### Example 2
-
-Since you can define your own modules, you can define composition. Nested module composition might be useful if, for example, Module1 contained filtering logic that you want to make available to other modules.
-
-```jsx
-class App extends PureComponent {
-  constructor(props) { ... }
-
-  render() {
-    return (
-      <Map>
-        {({ map }) => (
-          <Module1 map={map}>
-          {({ someFn }) => (
-            <Module2 map={map}>
-            {({ ... }) => (
-              <Module3 map={map}></Module3>
-            )}</Module2>
-          )}
-          </Module1>
-        )}
-      </Map>
-    )
-  }
-}
-```
-
-# Publish to NPM
-
-There are 4 scripts included in this repository for publishing - when you clone this repository you need to check that they are executable:
-
-```sh
-chmod +x ./scripts/*
-```
-
-If you don't already have an NPM account, [create one](https://www.npmjs.com/login)! Then login from the root of the source code
-
-```sh
-npm login
-# Enter your username
-# Enter your password
-# Enter your email address (probably best to use a work email address, since this is public)
-```
-
-This project uses [semantic versioning](https://docs.npmjs.com/about-semantic-versioning). This means that package versioning is controlled by 3 numbers: `major.minor.patch`, which in the case of this project means:
-
-- **major** - Users should expect breaking changes
-- **minor** - Users should not expect breaking changes
-- **patch** - Minor changes, updates, improvements, etc.
-
-With this in mind, 3 scripts are defined in the `package.json` file:
-
-- `publish-patch` - Patch version is bumped, and code is pushed to NPM
-- `publish-minor` - Minor version is bumped, and code is pushed to NPM
-- `publish-major` - Major version is bumped, and code is pushed to NPM
-
-Running these scripts will provide CLI prompts that you need to answer, and then a new package version will be pushed to NPM. In all cases existing changes are committed prior to version bump, and then the code on that branch is packaged. **Please don't push non-master branch changes to the NPM registry**!! Unless otherwise intended, please run the `publish-patch` script (`npm run publish-patch`).
-
-# @saeon/snap-menus
-
-TODO
-
-# @saeon/atlas-api
-
-TODO
-
-## Docker deployment
-
-```
-docker build -t atlas-api -f ./src/@saeon/atlas-api/Dockerfile .
-```
-
-# @saeon/logger
-
-A tiny package that adds timestamps to some of the functions on the console object
-
-```js
-npm install -s @saeon/logger
-```
-
-To use, include in your entry file
-
-```js
-import '@saeon/logger' // ESM
-require('@saeon/logger') // commonjs (default Node.js format)
-```
-
-#### Extend / configure the console object
-
-```js
-import { configure } from '@saeon/logger'
-// or
-const configure = require('@saeon/logger').configure
-
-/**
- * Call the configure function with a callback that exposes the global.console object
- * and the current date-fns formatter
- *
- * Your callback needs to return an object with this signature
- * {
- *   overwrites: {
- *     ... the console.* properties/fns you would like to overwrite
- *   },
- *   timestampFormat: ... date-fns format string (or null)
- * }
- */
-configure(({ console, timestampFormat }) => {
-  return {
-    overwrites: {
-      log: () => 'hello world',
-    },
-    formatter: timestampFormat,
-  }
-})
-
-// Now your application will unhelpfully print 'hello world' everytime console.log() is called
-```
+- `npm run check-package-updates`
