@@ -32,7 +32,7 @@
     "@material-ui/lab": "^4.0.0-alpha.52",
     "@material-ui/pickers": "^3.2.10",
     "@saeon/catalogue-search": "^4.1.2",
-    "@saeon/logger": "^1.0.4",
+    "@saeon/logger": "^1.0.5",
     "@saeon/ol-react": "^8.0.1",
     "@saeon/snap-menus": "^2.0.7",
     "@svgr/webpack": "^5.4.0",
