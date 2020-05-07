@@ -7,7 +7,7 @@ const CONNECTION_STRING = `${MONGO_URL}/${DB}`
 
 export const _collections = {
   Maps: 'maps',
-  BrowserEvents: 'BrowserEvents',
+  BrowserEvents: 'browserEvents',
 }
 
 export const db = MongoClient.connect(CONNECTION_STRING, {

@@ -1,19 +1,11 @@
-import { ObjectID } from 'mongodb'
-
 export default async (self, args, ctx) => {
-  const { Events } = await ctx.mongo.collections
+  const { BrowserEvents } = await ctx.mongo.collections
+  const { input } = args
+  const { insertedCount } = await BrowserEvents.insertMany(input)
 
-  const { input: $set } = args
-  await Events.findOneAndUpdate(
-    {
-      _id: ObjectID(),
-    },
-    {
-      $set: Object.assign({ type: 'BrowserEvent' }, $set), // TODO - should use the GraphQL enum
-    },
-    {
-      upsert: true,
-      returnOriginal: false,
-    }
-  )
+  const result = []
+  for (let i = 0; i < insertedCount; i++) {
+    result.push(true)
+  }
+  return result
 }

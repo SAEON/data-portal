@@ -18,14 +18,6 @@ import {
   GQL_SUBSCRIPTIONS_PROVIDER,
   ATLAS_API_ADDRESS,
 } from './config'
-import { logToServer } from './lib/logger'
-
-// Configure server logs
-configureLogger(() => ({
-  overwrites: {
-    logToServer: logToServer(ATLAS_API_ADDRESS),
-  },
-}))
 
 // Material UI theme
 import theme from './theme'
@@ -46,6 +38,7 @@ import Search from './modules/page-search'
 import SearchResults from './modules/page-search-results'
 
 // Some helpers
+import { logToHttp, logToGraphQL } from './lib/logger'
 import { nativeExtensions } from './lib/fns'
 nativeExtensions()
 
@@ -76,6 +69,14 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link,
 })
+
+// Configure server logs
+configureLogger(() => ({
+  overwrites: {
+    logToHttp: logToHttp(ATLAS_API_ADDRESS),
+    logToGraphQL: logToGraphQL(client),
+  },
+}))
 
 const Application = () => (
   <ApolloProvider client={client}>

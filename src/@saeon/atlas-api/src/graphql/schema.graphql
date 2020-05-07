@@ -33,12 +33,12 @@ input MapInput {
   type: Entity!
 }
 
-input BrowserEventLog {
+input BrowserEventInput {
   name: String!
   createdAt: DateTime!
 }
 
 type Mutation {
   upsertMap(input: MapInput!, id: ID): Node!
-  logBrowserEvents(input: [BrowserEventLog]): [Boolean]!
+  logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
 }

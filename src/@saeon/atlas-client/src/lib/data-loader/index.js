@@ -2,6 +2,7 @@
  * Inspired by the dataloader library
  * https://www.npmjs.com/package/dataloader
  */
+const MIN_BATCH_INTERVAL = 2000
 export default class DataLoader {
   constructor(_batchLoadingFn) {
     this._timer
@@ -19,7 +20,7 @@ export default class DataLoader {
         })
         this._keys = []
       })
-    }, 0)
+    }, MIN_BATCH_INTERVAL)
     return promisedValue
   }
 }
