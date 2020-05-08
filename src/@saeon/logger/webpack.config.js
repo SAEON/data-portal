@@ -1,6 +1,6 @@
 const path = require('path')
 
-module.exports = ({ entry, output = '/dist' }) => {
+module.exports = ({ output = '/dist' }) => {
   const { NODE_ENV: mode } = process.env
   return {
     mode,

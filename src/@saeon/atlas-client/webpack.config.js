@@ -20,6 +20,7 @@ module.exports = ({ entry, output = '/dist' }) => {
         // ol: path.resolve(__dirname, './node_modules/ol'),
         // 'ol/control.js': path.resolve(__dirname, './node_modules/ol/control.js'),
         // 'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
+        '@apollo/client': path.resolve(__dirname, './node_modules/@apollo/client'),
         '@material-ui/core': path.resolve(__dirname, './node_modules/@material-ui/core'),
         '@material-ui/icons': path.resolve(__dirname, './node_modules/@material-ui/icons'),
         react: path.resolve(__dirname, './node_modules/react'),
@@ -40,7 +41,7 @@ module.exports = ({ entry, output = '/dist' }) => {
         ),
         '@saeon/logger': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/logger' : '../logger/src/index'
+          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../logger/src'
         ),
       },
       extensions: ['.js', '.jsx'],

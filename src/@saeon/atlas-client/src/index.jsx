@@ -1,6 +1,8 @@
 import 'typeface-roboto'
 import './index.scss'
 import { configure as configureLogger } from '@saeon/logger'
+import logToHttp from '@saeon/logger/log-to-http'
+import logToGraphQL from '@saeon/logger/log-to-graphql'
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -38,7 +40,6 @@ import Search from './modules/page-search'
 import SearchResults from './modules/page-search-results'
 
 // Some helpers
-import { logToHttp, logToGraphQL } from './lib/logger'
 import { nativeExtensions } from './lib/fns'
 nativeExtensions()
 
@@ -70,7 +71,7 @@ const client = new ApolloClient({
   link,
 })
 
-// Configure server logs
+// Configure server logs for client usage tracking
 configureLogger(() => ({
   overwrites: {
     logToHttp: logToHttp(ATLAS_API_ADDRESS),

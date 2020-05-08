@@ -36,6 +36,7 @@ input MapInput {
 input BrowserEventInput {
   name: String!
   createdAt: DateTime!
+  info: JSON!
 }
 
 type Mutation {

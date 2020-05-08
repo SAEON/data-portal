@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.73",
+  "version": "0.0.75",
   "description": "A browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
     "@saeon/atlas-client",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../snap-menus/src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --env.entry=src/index.jsx --open",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../snap-menus/src/**/*.@(js|jsx)\" \"../logger/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --env.entry=src/index.jsx --open",
     "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
     "update-packages": "ncu -u --reject \"@date-io/date-fns\""
   },
