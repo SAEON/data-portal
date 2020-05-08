@@ -1,16 +1,12 @@
 import DataLoader from './_data-loader'
 import { gql, execute, toPromise } from '@apollo/client'
 
-export default ({ link }) => {
+export default ({ link, query }) => {
   const logBatch = (browserEvents) =>
     new Promise((resolve, reject) => {
       toPromise(
         execute(link, {
-          query: gql`
-            mutation logBrowserEvents($input: [BrowserEventInput]!) {
-              logBrowserEvents(input: $input)
-            }
-          `,
+          query,
           variables: {
             input: browserEvents,
           },

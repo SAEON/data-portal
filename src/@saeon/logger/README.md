@@ -67,22 +67,28 @@ configureLogger(() => ({
 ```
 
 ### Configuring GraphQL logging
-
-Refer to the ApolloClient documentation. Currently a client is required as an argument to use the GraphQL logging function. Please submit an issue if you would like to use only an Apollo link object.
+Refer to the ApolloClient documentation on how to configure a GraphQL `link`
 
 ```js
 import logToGraphQL from '@saeon/logger/log-to-graphql'
+import gql from 'graphql-tag'
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({ uri: 'your graphql endpoint' }),
-})
+const link = new HttpLink({ uri: 'your graphql endpoint' }),
 
 configureLogger(() => ({
   overwrites: {
-    logToGraphQL: logToGraphQL(client),
+    logToGraphQL: logToGraphQL({
+      link,
+      query: gql`
+        mutation logBrowserEvents($input: [BrowserEventInput]!) {
+          logBrowserEvents(input: $input)
+        }
+      `,
+    }),
   },
 }))
+
+
 ```
 
 ### Or both HTTP, GraphQL, with formatter specified and overwriting the console.error function
@@ -92,7 +98,7 @@ configure(({ console }) => {
   return {
     overwrites: {
       error: () => console.log('hello world'),
-      logToGraphQL: logToGraphQL(client), // see above
+      logToGraphQL: logToGraphQL({ link, query }), // see above
       logToHttp: logToHttp(httpUri), // see above
     },
     formatter: 'MM/DD/YYYY', // https://date-fns.org/v2.13.0/docs/format
@@ -114,7 +120,7 @@ console.logToGraphQL(msg)
 
 Both the `console.logToHttp` and `console.logToGraphQL` functions batch requests - the maximum rate at which servers are sent information is once per 5 second interval. This makes these functions suitable for logging even very many requests to the server.
 
-This is an example of logging batches of `mousemove` events every 5 seconds (debouncing events that are fired often is good practive):
+This is an example of logging batches of `mousemove` events every 5 seconds (debouncing events that are fired often is good practice):
 
 ```js
 const debounce = (cb, duration = 0) => {
