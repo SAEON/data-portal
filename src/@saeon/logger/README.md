@@ -114,7 +114,7 @@ console.logToGraphQL(msg)
 
 Both the `console.logToHttp` and `console.logToGraphQL` functions batch requests - the maximum rate at which servers are sent information is once per 5 second interval. This makes these functions suitable for logging even very many requests to the server.
 
-This is an example of logging batches of mouse move events every 5 seconds (but note that debouncing the mousemove event is still recommended):
+This is an example of logging batches of `mousemove` events every 5 seconds (debouncing events that are fired often is good practive):
 
 ```js
 const debounce = (cb, duration = 0) => {
