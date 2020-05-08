@@ -4,16 +4,20 @@ module.exports = ({ entry, output = '/dist' }) => {
   const { NODE_ENV: mode } = process.env
   return {
     mode,
-    entry: path.resolve(__dirname, entry),
-    externals: [/date-fns\/.*$/i],
+    entry: {
+      index: './src/index.js',
+      'log-to-graphql': './src/log-to-graphql.js',
+      'log-to-http': './src/log-to-http.js',
+    },
     output: {
-      filename: 'index.js',
+      filename: '[name].js',
       libraryTarget: 'commonjs2',
       path: path.join(__dirname, output),
     },
     resolve: {
       extensions: ['.js', '.jsx'],
     },
+    externals: [/@apollo\/client.*$/i, /date-fns\/.*$/i],
     module: {
       rules: [
         {
