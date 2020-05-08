@@ -7,6 +7,7 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:react/recommended'],
   globals: {
+    globalThis: false,
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
