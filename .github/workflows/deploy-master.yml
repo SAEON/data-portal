@@ -23,6 +23,8 @@ jobs:
           echo "HTTP_PROXY=http://atlas-anyproxy-dev:8001" >> src/@saeon/atlas-api/.env
           echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/@saeon/atlas-api/.env
           echo "MONGO_URL=mongodb://atlas-mongodb-dev:27017" >> src/@saeon/atlas-api/.env
+          echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/@saeon/atlas-api/.env
+          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/@saeon/atlas-api/.env
 
       - name: Configure @saeon/atlas-client
         run: |
@@ -38,4 +40,6 @@ jobs:
 
       - name: Deploy services
         run: |
+          echo "MONGO_USER=${{ secrets.MONGO_USER }}"" > ./.env
+          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}"" >> ./.env
           /usr/local/bin/docker-compose up -d --force-recreate --build

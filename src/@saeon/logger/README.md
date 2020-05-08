@@ -53,7 +53,7 @@ configure(({ console, timestampFormat }) => {
 
 Another potential use of this library is to extend the console object to log to a URL endpoint - there is built-in support for logging to HTTP endpoints as well as GraphQL endpoints (using the @apollo/client library)
 
-#### Configuring HTTP logging
+#### Configure HTTP logging
 
 ```js
 import logToHttp from '@saeon/logger/log-to-http'
@@ -66,7 +66,8 @@ configureLogger(() => ({
 }))
 ```
 
-### Configuring GraphQL logging
+#### Configure GraphQL logging
+
 Refer to the ApolloClient documentation on how to configure a GraphQL `link`
 
 ```js

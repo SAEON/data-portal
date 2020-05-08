@@ -1,5 +1,8 @@
 version: '3.7'
 
+volumes:
+  mongo:
+
 services:
   # atlas-redis-dev:
   #   container_name: atlas-redis-dev
@@ -12,6 +15,11 @@ services:
     container_name: atlas-mongodb-dev
     restart: always
     image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PSWD}
+    volumes:
+      - mongo:/data/db/
     ports:
       - 27017:27017
 
