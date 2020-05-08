@@ -6,7 +6,7 @@ import logToGraphQL from '@saeon/logger/log-to-graphql'
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider, split } from '@apollo/client'
+import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider, split, gql } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/link-ws'
 import { CssBaseline } from '@material-ui/core'
@@ -75,7 +75,14 @@ const client = new ApolloClient({
 configureLogger(() => ({
   overwrites: {
     logToHttp: logToHttp(ATLAS_API_ADDRESS),
-    logToGraphQL: logToGraphQL(client),
+    logToGraphQL: logToGraphQL({
+      link,
+      query: gql`
+        mutation logBrowserEvents($input: [BrowserEventInput]!) {
+          logBrowserEvents(input: $input)
+        }
+      `,
+    }),
   },
 }))
 
