@@ -40,6 +40,6 @@ jobs:
 
       - name: Deploy services
         run: |
-          echo "MONGO_USER=${{ secrets.MONGO_USER }}"" > ./.env
-          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}"" >> ./.env
+          echo "MONGO_USER=${{ secrets.MONGO_USER }}" > ./.env
+          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> ./.env
           /usr/local/bin/docker-compose up -d --force-recreate --build
