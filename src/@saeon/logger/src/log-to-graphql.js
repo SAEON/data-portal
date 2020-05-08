@@ -1,5 +1,5 @@
 import DataLoader from './_data-loader'
-import { gql, execute, toPromise } from '@apollo/client'
+import { execute, toPromise } from '@apollo/client'
 
 export default ({ link, query }) => {
   const logBatch = (browserEvents) =>
