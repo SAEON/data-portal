@@ -79,6 +79,8 @@ export default ({
               scale={1}
               onStart={() => setActiveMenu(id)}
               onDrag={debounce((ev) => {
+                const newState = {}
+
                 // Get x,y from the event (could be a touch for mobile, click elsewise)
                 let x, y
                 if (ev.constructor === MouseEvent) {
@@ -96,39 +98,23 @@ export default ({
                 }
 
                 if (state.previousDimensions) {
-                  setState(
-                    Object.assign(
-                      { ...state },
-                      {
-                        position: { x: x - state.previousDimensions.width / 2, y: y - 15 },
-                        dimensions: state.previousDimensions,
-                        previousDimensions: null,
-                      }
-                    )
-                  )
+                  newState.position = { x: x - state.previousDimensions.width / 2, y: y - 15 }
+                  newState.dimensions = state.previousDimensions
+                  newState.previousDimensions = null
+                  newState.snapZone = null
                 }
 
                 const snapZone = getSnapZone(x, y, container)
-                if (snapZone && snapZone !== state.snapZone) {
-                  setState(
-                    Object.assign(
-                      { ...state },
-                      {
-                        snapZone,
-                      }
-                    )
-                  )
-                } else if (!snapZone && state.snapZone) {
-                  setState(
-                    Object.assign(
-                      { ...state },
-                      {
-                        snapZone,
-                      }
-                    )
-                  )
+                if (!state.previousDimensions) {
+                  if (snapZone && snapZone !== state.snapZone) {
+                    newState.snapZone = snapZone
+                  } else if (!snapZone && state.snapZone) {
+                    newState.snapZone = snapZone
+                  }
                 }
-              }, 15)}
+
+                setState(Object.assign({ ...state }, newState))
+              }, 5)}
               onStop={() => {
                 if (state.snapZone) {
                   const dimensions = getDimensionsFromSnap(state.snapZone, container)

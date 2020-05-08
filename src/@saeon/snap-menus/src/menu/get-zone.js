@@ -2,7 +2,7 @@ export default (x, y, container) => {
   const containerHeight = container.offsetHeight
   const containerWidth = container.offsetWidth
   const snapZoneX = 75
-  const snapZoneY = 75
+  const snapZoneY = 25
   const snapTop = y <= snapZoneY ? true : false
   const snapBottom = y >= containerHeight - snapZoneY ? true : false
   const snapLeft = x <= snapZoneX ? true : false
