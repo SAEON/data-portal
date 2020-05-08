@@ -1,11 +1,11 @@
 import format from 'date-fns/format'
 
-const globalConsole = global.console
+const globalConsole = globalThis.console
 const overwrites = ['log', 'warn', 'info', 'error']
 var proxyTarget = {}
 var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
 
-;(global || window).console = new Proxy(proxyTarget, {
+globalThis.console = new Proxy(proxyTarget, {
   get: (obj, prop) =>
     prop in obj
       ? obj[prop]
