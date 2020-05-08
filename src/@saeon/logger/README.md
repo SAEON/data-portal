@@ -88,12 +88,12 @@ configureLogger(() => ({
 ### Or both HTTP, GraphQL, with formatter specified and overwriting the console.error function
 
 ```js
-configure(({ console, timestampFormat }) => {
+configure(({ console }) => {
   return {
     overwrites: {
       error: () => console.log('hello world'),
       logToGraphQL: logToGraphQL(client), // see above
-      logToHttp: logToHttp(httpUri),
+      logToHttp: logToHttp(httpUri), // see above
     },
     formatter: 'MM/DD/YYYY', // https://date-fns.org/v2.13.0/docs/format
   }

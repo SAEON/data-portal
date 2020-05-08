@@ -25,7 +25,7 @@
     "@babel/runtime-corejs3": "^7.9.6",
     "@koa/router": "^8.0.8",
     "@saeon/catalogue-search": "^4.1.2",
-    "@saeon/logger": "^1.0.5",
+    "@saeon/logger": "^2.0.0",
     "apollo-server-koa": "^2.13.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.2.0",
