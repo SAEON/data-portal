@@ -1,6 +1,6 @@
 # @saeon/logger
 
-A tiny package that adds timestamps to some of the functions on the console object. Please note that this is still in development. The library should work as expected but the build process isn't finalized yet and as such the bundle is still larger than necessary.
+A tiny package that adds timestamps to the `info`, `log`, `warn`, and `error` functions to `globalThis.console`, and allows for extending the console object with bespoke functions. For example, logging to a service via HTTP or GraphQL (example below). The signature of the original object is preserved (unless extended obviously).
 
 ### Installation
 
