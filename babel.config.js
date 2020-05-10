@@ -4,7 +4,14 @@
 module.exports = {
   babelrcRoots: ['.', 'src/@saeon/*'],
   sourceType: 'unambiguous',
-  presets: [['@babel/preset-env'], ['@babel/preset-react']],
+  presets: [
+    ['@babel/preset-env', {
+      targets: {
+        "esmodules": true
+      }
+    }],
+    ['@babel/preset-react']
+  ],
   plugins: [
     [
       'babel-plugin-transform-imports',
@@ -23,11 +30,7 @@ module.exports = {
         },
       },
     ],
-    '@babel/plugin-proposal-optional-chaining',
-    '@babel/plugin-proposal-class-properties',
-    [
-      '@babel/plugin-transform-runtime',
-      { corejs: { version: 3, proposals: true }, regenerator: true },
-    ],
+    ['@babel/plugin-proposal-optional-chaining'],
+    ['@babel/plugin-proposal-class-properties']
   ],
 }
