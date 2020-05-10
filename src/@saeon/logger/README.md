@@ -22,7 +22,7 @@ console.error(msg)
 
 ### Extend / configure the console object
 
-To unhelpfully print 'hello world' everytime console.log() is called:
+To unhelpfully print 'hello world' every time console.log() is called:
 
 ```js
 import { configure } from '@saeon/logger'
@@ -59,7 +59,7 @@ Another potential use of this library is to extend the console object to log to 
 import logToHttp from '@saeon/logger/log-to-http'
 const httpUri = 'https://your API address here.co.za/log'
 
-configureLogger(() => ({
+configure(() => ({
   overwrites: {
     logToHttp: logToHttp(httpUri),
   },
@@ -76,7 +76,7 @@ import gql from 'graphql-tag'
 
 const link = new HttpLink({ uri: 'your graphql endpoint' }),
 
-configureLogger(() => ({
+configure(() => ({
   overwrites: {
     logToGraphQL: logToGraphQL({
       link,
