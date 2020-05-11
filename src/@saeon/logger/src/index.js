@@ -1,8 +1,9 @@
 import format from 'date-fns/format'
 
+const globalThis = globalThis || window || global
 const _console = globalThis.console
-var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
 
+var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
 const formatDate = () => format(new Date(), timestampFormat)
 
 globalThis.console = {
