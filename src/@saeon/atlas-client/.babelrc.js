@@ -6,7 +6,7 @@ module.exports = {
       '@babel/preset-env',
       {
         debug: NODE_ENV === 'production' ? false : true,
-        useBuiltIns: 'entry',
+        useBuiltIns: 'usage',
         corejs: { version: 3, proposals: true },
       },
     ],
