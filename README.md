@@ -22,6 +22,16 @@ The repository is organized as a 'monorepo', split according to the following pa
 
 Refer to these links for specific package documentation.
 
+# Browser support
+Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/atlas-client build](/src/@saeon/atlas-client/.browserslistrc). As of 11 May 2020, these include:
+
+- chrome: 80
+- edge: 18
+- firefox: 74
+- ios: 12.2
+- safari: 13
+- samsung: 11.1
+
 # Tech Stack
 
 - API
