@@ -36,7 +36,7 @@
     "@material-ui/pickers": "^3.2.10",
     "@saeon/catalogue-search": "^4.2.0",
     "@saeon/logger": "^3.1.0",
-    "@saeon/ol-react": "^8.2.0",
+    "@saeon/ol-react": "^9.0.1",
     "@saeon/snap-menus": "^2.1.0",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",

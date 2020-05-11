@@ -17,14 +17,25 @@ module.exports = ({ entry, output = '/dist' }) => {
     },
     resolve: {
       alias: {
-        // ol: path.resolve(__dirname, './node_modules/ol'),
-        // 'ol/control.js': path.resolve(__dirname, './node_modules/ol/control.js'),
-        // 'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
+        // OpenLayers
+        'ol/control': path.resolve(__dirname, './node_modules/ol/control'),
+        'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
+        'ol/layer/Group': path.resolve(__dirname, './node_modules/ol/layer/Group'),
+        'ol/View': path.resolve(__dirname, './node_modules/ol/View'),
+        'ol/Map': path.resolve(__dirname, './node_modules/ol/Map'),
+
+        // Apollo
         '@apollo/client': path.resolve(__dirname, './node_modules/@apollo/client'),
+
+        // Material UI
         '@material-ui/core': path.resolve(__dirname, './node_modules/@material-ui/core'),
         '@material-ui/icons': path.resolve(__dirname, './node_modules/@material-ui/icons'),
+
+        // React
         react: path.resolve(__dirname, './node_modules/react'),
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
+
+        // @saeon
         '@saeon/snap-menus': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src/index'
