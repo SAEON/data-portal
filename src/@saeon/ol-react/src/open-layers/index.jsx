@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import defaults from 'ol/control.js'
+import { defaults as defaultControls } from 'ol/control'
 import LayerGroup from 'ol/layer/Group'
 
 export default class extends Component {
@@ -19,7 +19,7 @@ export default class extends Component {
           return layer
         }),
       }),
-      controls: defaults({
+      controls: defaultControls({
         zoom: false,
         rotateOptions: false,
         rotate: false,
