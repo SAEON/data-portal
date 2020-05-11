@@ -1,6 +1,6 @@
 {
   "name": "@saeon/snap-menus",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Draggable, snappable menus",
   "main": "dist/index.js",
   "files": [
