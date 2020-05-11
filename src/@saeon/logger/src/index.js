@@ -1,6 +1,6 @@
 import format from 'date-fns/format'
 
-const globalThis = globalThis || window || global
+globalThis = window || global
 const _console = globalThis.console
 
 var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"

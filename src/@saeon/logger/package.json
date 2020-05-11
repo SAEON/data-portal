@@ -11,7 +11,7 @@
     "@apollo/client": ">=3"
   },
   "scripts": {
-    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
+    "build": "rimraf ./dist && NODE_ENV=development webpack --env.output=dist",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s major",
