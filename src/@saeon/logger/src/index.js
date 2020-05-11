@@ -17,7 +17,7 @@ var proxyTarget = {
 }
 
 globalThis.console = new Proxy(proxyTarget, {
-  get: (obj, prop) => obj[prop]
+  get: (obj, prop) => obj[prop],
 })
 
 export const configure = async (cb) => {
