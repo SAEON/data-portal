@@ -1,3 +1,4 @@
+import 'core-js'
 import 'typeface-roboto'
 import './index.scss'
 import { configure as configureLogger } from '@saeon/logger'

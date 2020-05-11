@@ -11,7 +11,6 @@ export const _collections = {
 }
 
 export const db = MongoClient.connect(CONNECTION_STRING, {
-  autoReconnect: true,
   auth: {
     user: MONGO_USER,
     password: MONGO_PSWD,
@@ -19,7 +18,12 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
   authMechanism: 'SCRAM-SHA-256',
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then((client) => client.db(DB))
+})
+  .then((client) => client.db(DB))
+  .catch((error) => {
+    console.error('Unable to connect to MongoDB', error)
+    process.exit(1)
+  })
 
 export const collections = getCollections({ db, _collections })
 export const getDataLoaders = configureDataLoaders({ db, _collections })
