@@ -81,7 +81,7 @@ Running the atlas requires starting 3 services:
 
 Running `npm start` will start these services in the same terminal window. It's useful to start these services individually for helpful log output (a terminal that allows for split screen is great for this).
 
-To start these services indivudually
+To start these services individually:
 
 ```
 cd src/@saeon/atlas-client
@@ -96,7 +96,7 @@ npm start
 
 # Deployment
 
-All services in this repository are dockerized - see `Dockerfiles` located in the route of each package. Refer to the repository's [`docker-compose.yml`](/docker-compose.yml) file to see how to deploy all services together. By default, this repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instrunctions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/saeon-atlas/issues)). I.e. the process should be as simple as just 2 steps to get a deployment on every push to master:
+All services in this repository are dockerized - see Dockerfiles located in the root of each package. Refer to the repository's [`docker-compose.yml`](/docker-compose.yml) file to see how to deploy all services together. By default, this repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/saeon-atlas/issues)). I.e. the process should be as simple as just 2 steps to get a deployment on every push to master:
 
 1. Configure a self hosted GitHub actions runner on your server
 2. Adjust the `.github/workflows/deploy-master.yml` to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
@@ -114,7 +114,7 @@ Build-time configuration essentially involves:
 1. Creating `.env` files with appropriate values at the beginning of the build process (overwriting existing .env files)
 2. Copying these `.env` files along with source code into the Docker build context, so that they are accessible during container runtime
 
-This is achieved using GitHub actions software. The configuration is specified in the [workflow file](/.github/workflows/deploy-master.yml). Adjusting accordingly in repository forks and continuous deployment should (theoreticaly) work out the box if a self-hosted actions runner is configured on your server.
+This is achieved using GitHub actions software. The configuration is specified in the [workflow file](/.github/workflows/deploy-master.yml). Adjusting accordingly in repository forks and continuous deployment should (theoretically) work out the box if a self-hosted actions runner is configured on your server.
 
 #### Docker Compose
 
@@ -134,7 +134,7 @@ docker-compose up -d --force-recreate --build
 
 # NPM packages
 
-During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the route of a package that supports publishing to NPM, these scripts are available:
+During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
 
 - `npm run publish:patch`
 - `npm run publish:minor`
