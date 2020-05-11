@@ -9,5 +9,5 @@ RUN npm --prefix src/@saeon/atlas-client run build
 # Serve static files
 FROM nginx:alpine
 COPY --from=build /app/src/@saeon/atlas-client/dist /usr/share/nginx/html
-COPY src/@saeon/atlas-client/nginx.conf /etc/nginx/conf.d/default.conf
+COPY src/@saeon/atlas-client/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
