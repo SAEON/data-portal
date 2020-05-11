@@ -140,3 +140,14 @@ const Application = () => (
 )
 
 render(<Application />, document.getElementById('root'))
+
+// Worker defined in webpack.config.js (Google Workbox)
+if ('serviceWorker' in navigator) {
+  console.log('Regestering service worker...')
+  navigator.serviceWorker.register('/service-worker.js').then(
+    () => console.log('Service worker registered'),
+    (error) => console.log('Unable to register service worker', error)
+  )
+} else {
+  console.log('Service worker not supported')
+}

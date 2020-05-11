@@ -1,5 +1,5 @@
 {
-  "short_name": "",
+  "short_name": "SAEON Atlas",
   "name": "SAEON Atlas",
   "icons": [
     {
@@ -37,10 +37,15 @@
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0"
+    },
+    {
+      "src": "/sarva-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#000000",
+  "background_color": "#000000"
 }

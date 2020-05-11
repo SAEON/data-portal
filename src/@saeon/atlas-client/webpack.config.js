@@ -4,15 +4,18 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const packageJson = require('./package.json')
+const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
-module.exports = ({ entry, output = '/dist' }) => {
+module.exports = ({ output = '/dist' }) => {
   const { NODE_ENV: mode } = process.env
   return {
     mode,
-    entry: path.resolve(__dirname, entry),
+    entry: {
+      index: './src/index.jsx',
+    },
     output: {
-      filename: 'index.js',
+      filename: '[name].js',
       path: path.join(__dirname, output),
     },
     resolve: {
@@ -134,6 +137,7 @@ module.exports = ({ entry, output = '/dist' }) => {
           to: path.resolve(__dirname, './dist'),
         },
       ]),
+      new GenerateSW({}),
       new HtmlWebPackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, output, 'index.html'),
