@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-api",
-  "version": "0.0.78",
+  "version": "0.0.79",
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
@@ -20,12 +20,15 @@
     "type": "git",
     "url": "git+https://github.com/SAEONData/saeon-atlas.git"
   },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/atlas-api#readme",
   "dependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/runtime-corejs3": "^7.9.6",
     "@koa/router": "^8.0.8",
     "@saeon/catalogue-search": "^4.1.2",
-    "@saeon/logger": "^2.0.0",
+    "@saeon/logger": "^3.0.1",
     "apollo-server-koa": "^2.13.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.2.0",

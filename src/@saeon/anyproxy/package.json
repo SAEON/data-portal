@@ -21,11 +21,12 @@
   "bugs": {
     "url": "https://github.com/SAEONData/saeon-atlas/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas#readme",
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/anyproxy#readme",
   "dependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/runtime-corejs3": "^7.9.6",
+    "@saeon/logger": "^3.0.1",
     "anyproxy": "^4.1.2",
+    "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.2.0",
     "date-fns": "^2.13.0",
     "dotenv": "^8.2.0",

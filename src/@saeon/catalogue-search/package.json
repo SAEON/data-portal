@@ -1,6 +1,6 @@
 {
   "name": "@saeon/catalogue-search",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
   "main": "dist/index.js",
   "files": [
@@ -31,11 +31,10 @@
   "bugs": {
     "url": "https://github.com/SAEONData/saeon-atlas/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/catalogue-search",
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/catalogue-search",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.9.6",
     "babel-loader": "^8.1.0",
     "prop-types": "^15.7.2",
     "rimraf": "^3.0.2",

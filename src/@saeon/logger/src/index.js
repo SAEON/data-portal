@@ -5,10 +5,7 @@ var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
 
 const formatDate = () => format(new Date(), timestampFormat)
 
-/**
- * Keep the same signature as the window.console object
- */
-var proxyTarget = {
+globalThis.console = {
   ..._console,
   log: (...args) => _console.log.call(_console, formatDate(), ...args),
   info: (...args) => _console.info.call(_console, formatDate(), ...args),
@@ -16,12 +13,8 @@ var proxyTarget = {
   error: (...args) => _console.error.call(_console, formatDate(), ...args),
 }
 
-globalThis.console = new Proxy(proxyTarget, {
-  get: (obj, prop) => obj[prop],
-})
-
 export const configure = async (cb) => {
   const { overwrites, formatter } = cb({ console: _console, timestampFormat })
-  proxyTarget = Object.assign(proxyTarget, overwrites)
   timestampFormat = formatter || timestampFormat
+  globalThis.console = Object.assign(globalThis.console, overwrites)
 }

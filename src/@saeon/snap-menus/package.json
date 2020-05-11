@@ -1,6 +1,6 @@
 {
   "name": "@saeon/snap-menus",
-  "version": "2.0.8",
+  "version": "2.1.0",
   "description": "Draggable, snappable menus",
   "main": "dist/index.js",
   "files": [
@@ -31,11 +31,10 @@
   "bugs": {
     "url": "https://github.com/SAEONData/saeon-atlas/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/snap-menus",
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/snap-menus",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.9.2",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.0",
     "css-loader": "^3.5.3",

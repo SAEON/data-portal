@@ -1,6 +1,6 @@
 {
   "name": "@saeon/ol-react",
-  "version": "8.0.1",
+  "version": "8.2.0",
   "description": "React wrapper for the open-source OpenLayers JavaScript library, envisioned as a generally useful, opinionated means of interacting with OpenLayers within a React.js application",
   "main": "dist/index.js",
   "files": [
@@ -29,11 +29,10 @@
   "bugs": {
     "url": "https://github.com/SAEONData/saeon-atlas/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/ol-react",
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/ol-react",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.9.6",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "ol": "^6.3.1",

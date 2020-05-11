@@ -1,3 +1,4 @@
+import '@saeon/logger'
 import { ProxyServer } from 'anyproxy'
 import options from './options'
 

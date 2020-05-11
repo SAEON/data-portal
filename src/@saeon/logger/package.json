@@ -1,6 +1,6 @@
 {
   "name": "@saeon/logger",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "main": "dist/index.js",
   "files": [
@@ -29,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/SAEONData/saeon-atlas/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/logger",
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/logger",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {

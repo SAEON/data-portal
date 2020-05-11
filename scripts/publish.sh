@@ -16,7 +16,7 @@ if [ ! $PACKAGE ]; then
     echo 'Option -p missing - please provide a package name' >&2
     exit 1
 fi
-if [ ! $SEMVER]; then
+if [ ! $SEMVER ]; then
     echo 'Option -s missing - please provide a semver target' >&2
     exit 1
 fi
