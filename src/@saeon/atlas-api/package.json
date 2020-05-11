@@ -20,6 +20,10 @@
     "type": "git",
     "url": "git+https://github.com/SAEONData/saeon-atlas.git"
   },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/atlas-api#readme",
   "dependencies": {
     "@babel/cli": "^7.8.4",
     "@koa/router": "^8.0.8",

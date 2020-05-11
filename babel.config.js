@@ -5,12 +5,15 @@ module.exports = {
   babelrcRoots: ['.', 'src/@saeon/*'],
   sourceType: 'unambiguous',
   presets: [
-    ['@babel/preset-env', {
-      targets: {
-        "esmodules": true
-      }
-    }],
-    ['@babel/preset-react']
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          esmodules: true,
+        },
+      },
+    ],
+    ['@babel/preset-react'],
   ],
   plugins: [
     [
@@ -31,6 +34,6 @@ module.exports = {
       },
     ],
     ['@babel/plugin-proposal-optional-chaining'],
-    ['@babel/plugin-proposal-class-properties']
+    ['@babel/plugin-proposal-class-properties'],
   ],
 }

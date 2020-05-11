@@ -7,7 +7,6 @@
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
-    "build-readme": "scripts/build-readme.sh",
     "bump-patch": "scripts/bump-patch.sh",
     "configure-git": "git config --local include.path ../.gitconfig",
     "update-git-snapshot": "git add .",
@@ -21,7 +20,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run bump-patch && npm run test && npm run build-readme && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
+      "pre-commit": "npm run bump-patch && npm run test && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",

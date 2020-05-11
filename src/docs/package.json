@@ -12,6 +12,14 @@
     "start": "styleguidist server --config styleguide.config.js",
     "build": "styleguidist build --config src/docs/styleguide.config.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/docs",
   "author": "steven@saeon.ac.za,zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
