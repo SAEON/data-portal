@@ -56,9 +56,9 @@ docker run -p 3000:3000 -d atlas-api
 
 # Configuration
 
-Optionally create a `.env` file in the root of this package
+Optionally create a `.env` file in the root of this package:
 
-```
+```sh
 cd src/@saeon/atlas-api
 touch .env
 ```

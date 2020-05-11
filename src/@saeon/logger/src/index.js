@@ -1,5 +1,6 @@
 import format from 'date-fns/format'
 
+// eslint-disable-next-line no-global-assign
 globalThis = window || global
 const _console = globalThis.console
 
