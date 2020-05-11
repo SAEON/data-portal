@@ -16,8 +16,7 @@ module.exports = ({ entry, output = '/dist' }) => {
     },
     externals: [
       { react: 'react' },
-      // /ol\/.*$/i,
-      // 'ol'
+      /ol\/.*$/i
     ],
     module: {
       rules: [
