@@ -1,15 +1,10 @@
-# Please consider referencing an issue in this commit message!!
 
-# REFERENCE ISSUES
-# #2, #77, #432 // references issues 2, 77, and 432
 
-# ISSUE EVENTS
-# fix #xxx
-# fixes #xxx
-# fixed #xxx
-# close #xxx
-# closes #xxx
-# closed #xxx
-# resolve #xxx
-# resolves #xxx
-# resolved #xxx
+# ~~ Type your commit message above this line ~~
+#
+# TO REFERENCE ISSUES:
+# #2, #77, #432, #xxx, etc. => references issues 2, 77, 432, xxx, etc.
+#
+# TO REFERENCE ISSUE EVENTS:
+# fix #xxx, fixes #xxx, fixed #xxx, close #xxx, closes #xxx, closed #xxx, resolve #xxx, resolves #xxx, resolved #xxx
+
