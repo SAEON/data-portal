@@ -1,7 +1,12 @@
 import format from 'date-fns/format'
 
-// eslint-disable-next-line no-global-assign
-globalThis = window || global
+try {
+  // eslint-disable-next-line no-global-assign
+  globalThis = window
+} catch {
+  // eslint-disable-next-line no-global-assign
+  globalThis = global
+}
 const _console = globalThis.console
 
 var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
