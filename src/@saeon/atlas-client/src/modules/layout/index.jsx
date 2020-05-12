@@ -11,19 +11,16 @@ import {
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../package.json'
-
-const SOURCE_CODE_LINK =
-  'https://github.com/SAEONData/saeon-atlas/tree/master/src/%40saeon/atlas-client'
+import { SOURCE_CODE_URI } from '../../config'
 
 const Layout = ({ children }) => {
   const [menuAnchor, setMenuAnchor] = useState(null)
-
   const closeMenu = () => setMenuAnchor(null)
 
   return (
     <>
       <AppBar variant="outlined" position="static">
-        <Toolbar disableGutters={false} className="thin-toolbar">
+        <Toolbar disableGutters={false} variant="dense">
           <IconButton
             onClick={(e) => setMenuAnchor(e.currentTarget)}
             style={{ padding: 0 }}
@@ -54,7 +51,7 @@ const Layout = ({ children }) => {
             <NavItem label={'Search results'} icon={<ListIcon />} to="/search-results" />
 
             {/* Source code link */}
-            <NavItem label={'Source Code'} icon={<GitHubIcon />} href={SOURCE_CODE_LINK} />
+            <NavItem label={'Source Code'} icon={<GitHubIcon />} href={SOURCE_CODE_URI} />
           </Menu>
 
           {/* Title */}
@@ -65,7 +62,7 @@ const Layout = ({ children }) => {
           {/* GitHub link */}
           <IconButton
             component={'a'}
-            href={SOURCE_CODE_LINK}
+            href={SOURCE_CODE_URI}
             style={{ marginLeft: 'auto' }}
             rel={'noopener noreferrer'}
             target={'_blank'}
@@ -82,11 +79,7 @@ const Layout = ({ children }) => {
 
       {/* Footer */}
       <AppBar variant="outlined" position="fixed" style={{ bottom: 0, top: 'auto', zIndex: 1 }}>
-        <Toolbar
-          style={{ justifyContent: 'center' }}
-          disableGutters={false}
-          className="very-thin-toolbar"
-        >
+        <Toolbar style={{ justifyContent: 'center', minHeight: '24px' }} disableGutters={false}>
           <Typography variant="caption">&copy; SAEON 2020</Typography>
         </Toolbar>
       </AppBar>

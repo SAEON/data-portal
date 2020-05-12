@@ -23,6 +23,7 @@ The repository is organized as a 'monorepo', split according to the following pa
 Refer to these links for specific package documentation.
 
 # Browser support
+
 Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/atlas-client build](/src/@saeon/atlas-client/.browserslistrc). As of 11 May 2020, these include:
 
 - chrome: 80
@@ -67,6 +68,9 @@ npm run configure-git
 # Sometimes the scripts in scripts/ don't get the correct permissions set on clone,
 # and when they are adjusted. This could be related to using WSL. Fix this
 chmod +x scripts/*.sh
+
+# A global install of npm-check-updates is required to use some of the package.json scripts
+sudo npm install -g npm-check-updates
 ```
 
 ### Start the services

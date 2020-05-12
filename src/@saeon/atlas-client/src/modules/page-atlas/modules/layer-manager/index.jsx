@@ -91,7 +91,7 @@ export default class extends Component {
                               <AppBar color="secondary" position="relative" variant="outlined">
                                 <Toolbar
                                   style={{ paddingRight: 0, paddingLeft: 0 }}
-                                  className="thin-toolbar"
+                                  variant="dense"
                                 >
                                   {/* Drag icon */}
                                   <DragIndicator style={{ marginRight: 10 }} />

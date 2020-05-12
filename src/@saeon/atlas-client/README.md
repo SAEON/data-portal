@@ -1,5 +1,16 @@
 # @saeon/atlas-client
 
+# Browser support
+
+Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/atlas-client build](.browserslistrc). As of 11 May 2020, these include:
+
+- chrome: 80
+- edge: 18
+- firefox: 74
+- ios: 12.2
+- safari: 13
+- samsung: 11.1
+
 # Quick start
 
 The client needs an API - start an instance of the @saeon/atlas-api software to begin with. Then, from the root of the repository:
@@ -66,6 +77,7 @@ DEFAULT_INFO= # default info message shown on startup
 DEFAULT_SUCCESS=# default success message shown on startup
 GQL_PROVIDER=http://localhost:3000/graphql
 GQL_SUBSCRIPTIONS_PROVIDER=ws://localhost:3000/graphql
+SOURCE_CODE_URI=https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/atlas-client
 ```
 
 ## Docker deployment
