@@ -219,7 +219,6 @@ export default ({
                         <div
                           className={clsx({
                             [classes.resizing]: state.isResizing,
-                            'thin-scrollbar': true,
                           })}
                         >
                           <CardContent style={{ paddingBottom: 12 }}>
