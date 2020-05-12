@@ -5,9 +5,7 @@ import { MapContext } from '../../../../provider-map'
 import { isMobile } from 'react-device-detect'
 import Selector from './selector'
 
-// TODO - onClose ?
-// eslint-disable-next-line no-unused-vars
-export default ({ id, onClose, onDrawEnd }) => {
+export default ({ id, onDrawEnd }) => {
   return (
     <Form selectPolygonActive={false} selectRectActive={false}>
       {({ updateForm, selectPolygonActive, selectRectActive }) => (

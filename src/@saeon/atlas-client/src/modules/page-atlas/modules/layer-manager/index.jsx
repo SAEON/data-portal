@@ -160,9 +160,6 @@ export default class extends Component {
                                                 id={`${layer.get('id')}-legend`}
                                                 key={`${layer.get('id')}-legend`}
                                                 layer={layer}
-                                                onClose={() =>
-                                                  removeMenu(`${layer.get('id')}-legend`)
-                                                }
                                               />
                                             ),
                                           })

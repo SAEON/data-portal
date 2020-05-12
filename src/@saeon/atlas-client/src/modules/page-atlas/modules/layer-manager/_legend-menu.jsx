@@ -3,9 +3,7 @@ import { Typography } from '@material-ui/core'
 import { DragMenu } from '@saeon/snap-menus'
 import { isMobile } from 'react-device-detect'
 
-// TODO - onClose ?
-// eslint-disable-next-line no-unused-vars
-export default ({ id, layer, onClose }) => {
+export default ({ id, layer }) => {
   const LegendMenu =
     layer.get('LegendMenu') ||
     (() => (

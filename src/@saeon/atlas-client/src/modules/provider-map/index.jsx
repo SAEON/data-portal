@@ -6,7 +6,7 @@ export const MapContext = createContext()
 
 export default ({ children }) => {
   return (
-    <div style={{ height: 'calc(100% - 66px)', width: '100%' }}>
+    <div style={{ height: 'calc(100% - 76px)', width: '100%' }}>
       <OlReact
         viewOptions={{
           center: [32, -15],
