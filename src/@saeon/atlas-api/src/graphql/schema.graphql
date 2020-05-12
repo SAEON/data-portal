@@ -1,42 +1,89 @@
+# https://itnext.io/improve-your-graphql-schema-with-the-relay-specification-8952d06998eb
+
 scalar DateTime
 scalar JSON
 scalar Void
 
-enum Entity {
+enum Type {
   Map
   BrowserEvent
+  SearchResult
 }
 
 interface Node {
   id: ID!
-  type: Entity!
+  type: Type!
 }
+
+# Types of Nodes
 
 type Map implements Node {
   id: ID!
   name: String
-  type: Entity!
+  type: Type!
 }
 
-type Query {
-  node(id: ID!): Node
-  search(dsl: JSON!): JSON
-  nodes: [Node]!
+type BrowserEvent implements Node {
+  id: ID!
+  name: String!
+  createdAt: DateTime
+  info: JSON!
+  type: Type!
 }
 
-type Subscription {
-  onFilterChange: JSON
+type SearchResult implements Node {
+  id: ID!
+  type: Type!
 }
+
+# General Types
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type SearchEdge {
+  cursor: String!
+  node: SearchResult!
+}
+
+type SearchConnection {
+  edges: [SearchEdge!]!
+  pageInfo: PageInfo!
+}
+
+# Inputs
 
 input MapInput {
   name: String
-  type: Entity!
 }
 
 input BrowserEventInput {
   name: String!
   createdAt: DateTime!
   info: JSON!
+}
+
+# GraphQL types
+
+type Query {
+  map(id: ID!): Node
+  maps: [Node]!
+  browserEvents: [Node]!
+  search(
+    dsl: JSON! # Elasticsearch DSL query
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): SearchConnection!
+}
+
+type Subscription {
+  onFilterChange: JSON
 }
 
 type Mutation {

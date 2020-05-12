@@ -1,28 +1,29 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { debounce } from '../../lib/fns'
 
-const handler = (e) => e.stopPropagation()
+const handle = debounce(async ({ type, x, y }) => {
+  console.logToGraphQL({
+    name: type,
+    createdAt: new Date(),
+    info: {
+      x,
+      y,
+    },
+  })
+}, 20)
 
-export default ({ children }) => (
-  <div
-    onAnimationEndCapture={handler}
-    onAnimationStart={handler}
-    onMouseMove={handler}
-    onMouseOver={handler}
-    onMouseUp={handler}
-    onMouseEnter={handler}
-    onMouseLeave={handler}
-    onWheel={handler}
-    onTouchStart={handler}
-    onTouchMove={handler}
-    onTouchCancel={handler}
-    onTouchEnd={handler}
-    onKeyDown={handler}
-    onContextMenu={handler}
-    onFocus={handler}
-    onBlur={handler}
-    onClick={handler}
-    onMouseDown={handler}
-  >
-    {children}
-  </div>
-)
+export default ({ children }) => {
+  const boundary = useRef(null)
+
+  useEffect(() => {
+    boundary.current.addEventListener('mousemove', handle)
+
+    return () => boundary.current.removeEventListener('mousemove', handle)
+  }, [])
+
+  return (
+    <div style={{ width: '100%', height: '100%' }} ref={boundary}>
+      {children}
+    </div>
+  )
+}

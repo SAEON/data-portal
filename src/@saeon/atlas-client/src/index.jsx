@@ -12,6 +12,7 @@ import { ApolloClient, HttpLink, InMemoryCache, ApolloProvider, split, gql } fro
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/link-ws'
 import { CssBaseline } from '@material-ui/core'
+import { EventBoundary } from './components'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import {
   DEFAULT_ERROR,
@@ -89,61 +90,68 @@ configureLogger(() => ({
 }))
 
 const Application = () => (
-  <ApolloProvider client={client}>
-    <CssBaseline>
-      <ThemeProvider theme={createMuiTheme(theme)}>
-        <ErrorBoundary>
-          <FeedbackProvider
-            defaultError={DEFAULT_ERROR}
-            defaultWarning={DEFAULT_WARNING}
-            defaultInfo={DEFAULT_INFO}
-            defaultSuccess={DEFAULT_SUCCESS}
-          >
-            <MapProvider>
-              <Router>
-                <Layout>
-                  <Route
-                    key={'home'}
-                    path={'/'}
-                    exact={true}
-                    render={() => (
-                      <MenuProvider>
-                        <Atlas />
-                      </MenuProvider>
-                    )}
-                  />
-                  <Route key={'about'} path={'/about'} exact={true} render={() => <AboutPage />} />
-                  <Route
-                    key={'Search'}
-                    path={'/search'}
-                    exact={true}
-                    render={() => (
-                      <MenuProvider>
-                        <Search />
-                      </MenuProvider>
-                    )}
-                  />
-                  <Route
-                    key={'Search-results'}
-                    path={'/search-results'}
-                    exact={true}
-                    render={() => <SearchResults />}
-                  />
-                </Layout>
-              </Router>
-            </MapProvider>
-          </FeedbackProvider>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </CssBaseline>
-  </ApolloProvider>
+  <EventBoundary>
+    <ApolloProvider client={client}>
+      <CssBaseline>
+        <ThemeProvider theme={createMuiTheme(theme)}>
+          <ErrorBoundary>
+            <FeedbackProvider
+              defaultError={DEFAULT_ERROR}
+              defaultWarning={DEFAULT_WARNING}
+              defaultInfo={DEFAULT_INFO}
+              defaultSuccess={DEFAULT_SUCCESS}
+            >
+              <MapProvider>
+                <Router>
+                  <Layout>
+                    <Route
+                      key={'home'}
+                      path={'/'}
+                      exact={true}
+                      render={() => (
+                        <MenuProvider>
+                          <Atlas />
+                        </MenuProvider>
+                      )}
+                    />
+                    <Route
+                      key={'about'}
+                      path={'/about'}
+                      exact={true}
+                      render={() => <AboutPage />}
+                    />
+                    <Route
+                      key={'Search'}
+                      path={'/search'}
+                      exact={true}
+                      render={() => (
+                        <MenuProvider>
+                          <Search />
+                        </MenuProvider>
+                      )}
+                    />
+                    <Route
+                      key={'Search-results'}
+                      path={'/search-results'}
+                      exact={true}
+                      render={() => <SearchResults />}
+                    />
+                  </Layout>
+                </Router>
+              </MapProvider>
+            </FeedbackProvider>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </CssBaseline>
+    </ApolloProvider>
+  </EventBoundary>
 )
 
 render(<Application />, document.getElementById('root'))
 
 // Worker defined in webpack.config.js (Google Workbox)
-// if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('/service-worker.js')
-//   })
-// }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+  })
+}

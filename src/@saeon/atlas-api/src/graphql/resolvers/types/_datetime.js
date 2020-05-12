@@ -12,9 +12,9 @@ export default new GraphQLScalarType({
   },
   serialize(value) {
     try {
-      return value.toISOString()
+      return value
     } catch (error) {
-      /* TODO */
+      console.error('Failed to parse MongoDB date field. This should not occur', error)
     }
     return null
   },

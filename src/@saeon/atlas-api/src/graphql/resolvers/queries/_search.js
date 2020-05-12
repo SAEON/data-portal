@@ -16,5 +16,14 @@ export default async (self, args, ctx) => {
   const { dsl } = args
   const data = await catalog.query(dsl)
   pubsub.publish(ON_FILTER_CHANGE, { onFilterChange: { data } })
-  return { data }
+  // return { data }
+  return {
+    edges: [],
+    pageInfo: {
+      hasNextPage: true,
+      hasPreviousPage: false,
+      startCursor: '',
+      endCursor: '',
+    },
+  }
 }

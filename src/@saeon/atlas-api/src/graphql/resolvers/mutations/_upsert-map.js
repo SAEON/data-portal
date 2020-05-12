@@ -1,15 +1,15 @@
 import { ObjectID } from 'mongodb'
 
 export default async (self, args, ctx) => {
+  const { input, id = null } = args
   const { Maps } = await ctx.mongo.collections
 
-  const { input: $set, id = null } = args
   const { value: map } = await Maps.findOneAndUpdate(
     {
       _id: id || ObjectID(),
     },
     {
-      $set,
+      $set: Object.assign({ type: 'Map', input }),
     },
     {
       upsert: true,
