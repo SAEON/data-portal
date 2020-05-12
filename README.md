@@ -148,6 +148,16 @@ docker-compose up -d --force-recreate --build
 
 # NPM packages
 
+To publish packages to the public NPM registry (where all the @saeon packages are published) you need to [create an NPM account](https://docs.npmjs.com/creating-a-new-npm-user-account). This allows you to publish the packages - you will also need to make sure that you are part of the @saeon organization. To publish these packages under new names you will need to fork the repository, and then update the `name` fields in all the `package.json` files.
+
+Once you have an account you should be able to login via the CLI:
+
+```sh
+npm login
+```
+
+#### Publishing packages
+
 During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
 
 - `npm run publish:patch`
