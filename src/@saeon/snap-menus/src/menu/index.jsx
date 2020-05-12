@@ -193,10 +193,9 @@ export default ({
                       <CardContent style={{ padding: 0 }}>
                         <AppBar position="relative" variant="outlined">
                           <Toolbar
-                            style={{ cursor: 'grab' }}
+                            style={{ cursor: 'grab', minHeight: '25px' }}
                             disableGutters
                             className={clsx({
-                              'thin-header': true,
                               'drag-handle': true,
                             })}
                           >
