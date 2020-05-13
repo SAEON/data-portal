@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export default ({ height, width }) =>
-  makeStyles(() => {
+export default ({ height, width }) => {
+  height = height - 85 // TODO
+  width = width - 10 // TODO
+  return makeStyles(() => {
     return {
       ghost: {
         position: 'absolute',
@@ -10,35 +12,35 @@ export default ({ height, width }) =>
         opacity: '20%',
       },
       TopLeft: {
-        height: height / 2,
-        width: width / 2,
+        height: height / 2 - 2.5,
+        width: width / 2 - 2.5,
         left: 0,
       },
       TopRight: {
-        height: height / 2,
-        width: width / 2,
+        height: height / 2 - 2.5,
+        width: width / 2 - 2.5,
         right: 0,
       },
       BottomLeft: {
-        height: height / 2,
-        width: width / 2,
-        top: height / 2,
+        height: height / 2 - 2.5,
+        width: width / 2 - 2.5,
+        top: height / 2 + 5,
         left: 0,
       },
       BottomRight: {
-        height: height / 2,
-        width: width / 2,
-        top: height / 2,
+        height: height / 2 - 5,
+        width: width / 2 - 5,
+        top: height / 2 + 5,
         right: 0,
       },
       Left: {
         height,
-        width: width / 2,
+        width: width / 2 - 2.5,
         left: 0,
       },
       Right: {
         height,
-        width: width / 2,
+        width: width / 2 - 2.5,
         right: 0,
       },
       Top: {
@@ -48,9 +50,9 @@ export default ({ height, width }) =>
         right: 0,
       },
       Bottom: {
-        height: height / 2,
+        height: height / 2 - 2.5,
         width,
-        top: height / 2,
+        top: height / 2 + 2.5,
         left: 0,
         right: 0,
       },
@@ -78,3 +80,4 @@ export default ({ height, width }) =>
       },
     }
   })
+}

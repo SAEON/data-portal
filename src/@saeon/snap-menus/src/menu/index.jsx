@@ -98,7 +98,7 @@ export default ({
                 }
 
                 if (state.previousDimensions) {
-                  newState.position = { x: x - state.previousDimensions.width / 2, y: y - 15 }
+                  newState.position = { x: x - state.previousDimensions.width / 2, y: y - 15 - 55 } // TODO - the 55 comes from scss
                   newState.dimensions = state.previousDimensions
                   newState.previousDimensions = null
                   newState.snapZone = null
@@ -148,7 +148,7 @@ export default ({
             >
               <div
                 style={{
-                  opacity: state.snapped || fullscreen ? 0.95 : 0.8,
+                  opacity: 0.8,
                   zIndex: getMenuById(id).zIndex,
                   position: 'relative',
                 }}
