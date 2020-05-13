@@ -8,7 +8,7 @@ export default class {
     this._timer
     this._keys = []
     this._batchLoadingFn = _batchLoadingFn
-    this._interval = 5 * 1000
+    this._interval = 2 * 1000
   }
 
   load(key) {
