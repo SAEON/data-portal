@@ -16,8 +16,8 @@ import packageJson from '../../package.json'
 
 // Get the width of the page
 const container = document.getElementById('root')
-const containerHeight = container.offsetHeight
-const containerWidth = container.offsetWidth
+const containerHeight = container.offsetHeight - 85 // TODO
+const containerWidth = container.offsetWidth - 10 // TODO
 
 export default ({
   title,
