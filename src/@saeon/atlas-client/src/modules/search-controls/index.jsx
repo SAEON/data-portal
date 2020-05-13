@@ -1,5 +1,6 @@
-import React from 'react'
-import { Grid, Divider } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Grid, Divider, Button, Collapse } from '@material-ui/core'
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons'
 import { ReactCatalogue } from '@saeon/catalogue-search'
 import { Form } from '../../components'
 import { sub, format } from 'date-fns'
@@ -8,6 +9,8 @@ import TermSelector from './term-selector'
 import TextSelector from './text-selector'
 import AreaSelector from './area-selector'
 import { ATLAS_API_ADDRESS } from '../../config'
+import clsx from 'clsx'
+import useStyles from './style'
 
 const DSL_INDEX = `saeon-odp-4-2`
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
@@ -23,85 +26,11 @@ const Div = () => (
   </Grid>
 )
 
-const getQuery = (fields) => {
-  const { fixedDateRange, dateRange, textSearch, selectedTerms, polygons } = fields
-
-  const query = {
-    _source: {
-      includes: ['metadata_json.*'],
-    },
-    query: {
-      bool: {
-        must: [],
-      },
-    },
-  }
-
-  const polygon = polygons.length ? polygons[polygons.length - 1] : null
-
-  const coordinates =
-    polygon?.flatCoordinates.length > 10
-      ? polygon?.simplify(1).getCoordinates()
-      : polygon?.getCoordinates()
-
-  // Add extent to query
-  if (polygon) {
-    query.query.bool.filter = {
-      geo_shape: {
-        'metadata_json.geoLocations.geoLocationBox': {
-          shape: {
-            type: 'polygon',
-            coordinates,
-          },
-          relation: 'within',
-        },
-      },
-    }
-  }
-
-  // Add text search to query
-  if (textSearch || selectedTerms.length) {
-    query.query.bool.must = query.query.bool.must.concat([
-      {
-        match: {
-          'metadata_json.subjects.subject': {
-            query: `${textSearch}, ${selectedTerms.join(',')}`,
-            fuzziness: 'AUTO',
-          },
-        },
-      },
-    ])
-  }
-
-  // Add date range to query
-  if (fixedDateRange !== 'all') {
-    query.query.bool.must = query.query.bool.must.concat([
-      {
-        terms: {
-          'metadata_json.dates.dateType': ['valid', 'Collected'],
-        },
-      },
-      {
-        range: {
-          'metadata_json.dates.date.gte': {
-            gte: dateRange[0].split('/')[2],
-          },
-        },
-      },
-      {
-        range: {
-          'metadata_json.dates.date.lte': {
-            lte: dateRange[1].split('/')[2],
-          },
-        },
-      },
-    ])
-  }
-
-  return query
-}
-
 export default ({ type, data, children }) => {
+  const classes = useStyles()
+  const [showCurl, setShowCurl] = useState(false)
+  const [currentPage, updateCurrentPage] = useState(0)
+
   return (
     <Form
       fixedDateRange="all"
@@ -111,45 +40,139 @@ export default ({ type, data, children }) => {
       _dateRange={[maxSlider - 365, maxSlider]}
       dateRange={[getDateStringFromInt(maxSlider - 365), getDateStringFromInt(maxSlider)]}
     >
-      {({ updateForm, ...fields }) => (
-        <div style={{ padding: 20 }}>
-          <Grid container>
-            {/* Text selector */}
-            <Grid item xs={12}>
-              <TextSelector fields={fields} updateForm={updateForm} />
-            </Grid>
+      {({ updateForm, ...fields }) => {
+        const { fixedDateRange, dateRange, textSearch, selectedTerms, polygons } = fields
+        const polygon = polygons.length ? polygons[polygons.length - 1] : null
+        const coordinates =
+          polygon?.flatCoordinates.length > 10
+            ? polygon?.simplify(1).getCoordinates()
+            : polygon?.getCoordinates()
 
-            {/* Term selector */}
-            <Grid item xs={12}>
-              <TermSelector updateForm={updateForm} data={data} />
-            </Grid>
+        return (
+          <div style={{ padding: 20 }}>
+            <Grid container>
+              {/* Text selector */}
+              <Grid item xs={12}>
+                <TextSelector fields={fields} updateForm={updateForm} />
+              </Grid>
+              {/* Term selector */}
+              <Grid item xs={12}>
+                <TermSelector updateForm={updateForm} data={data} />
+              </Grid>
+              <Div />
+              {/* Area Selector */}
+              <Grid item xs={12}>
+                <AreaSelector updateForm={updateForm} {...fields} />
+              </Grid>
+              <Div />
+              {/* Date range */}
+              <DateSelector updateForm={updateForm} {...fields} />
+              <Div />
 
-            <Div />
+              {/* Toggle cURL */}
+              <Button
+                onClick={() => setShowCurl(!showCurl)}
+                aria-expanded={showCurl}
+                aria-label="Show cURL command"
+                variant="text"
+                size="small"
+                fullWidth
+                endIcon={
+                  <ExpandMoreIcon
+                    className={clsx(classes.expand, {
+                      [classes.expandOpen]: showCurl,
+                    })}
+                  />
+                }
+              >
+                Show cURL command
+              </Button>
 
-            {/* Area Selector */}
-            <Grid item xs={12}>
-              <AreaSelector updateForm={updateForm} {...fields} />
-            </Grid>
+              {/* cURL command */}
 
-            <Div />
+              <Collapse in={showCurl} timeout="auto" unmountOnExit>
+                TODO
+              </Collapse>
 
-            {/* Date range */}
-            <DateSelector updateForm={updateForm} {...fields} />
+              <Div />
 
-            <Div />
-            {type === 'GQL' ? (
-              children({ query: getQuery(fields) })
-            ) : (
-              <ReactCatalogue dslAddress={DSL_PROXY} index={DSL_INDEX}>
-                {(useCatalog) => {
-                  const { error, loading, data } = useCatalog(getQuery(fields))
-                  return children({ error, loading, data })
+              <ReactCatalogue
+                dslAddress={DSL_PROXY}
+                index={DSL_INDEX}
+                source={{
+                  includes: ['metadata_json.*'],
+                }}
+                currentPage={currentPage}
+                pageSize={5}
+                matchClauses={
+                  textSearch || selectedTerms.length
+                    ? {
+                        query: `${textSearch}, ${selectedTerms.join(',')}`,
+                        fields: ['metadata_json.subjects.subject'],
+                        fuzziness: 'AUTO',
+                      }
+                    : undefined
+                }
+                clauses={
+                  fixedDateRange !== 'all'
+                    ? [
+                        {
+                          terms: {
+                            'metadata_json.dates.dateType': ['valid', 'Collected'],
+                          },
+                        },
+                        {
+                          range: {
+                            'metadata_json.dates.date.gte': {
+                              gte: dateRange[0].split('/')[2],
+                            },
+                          },
+                        },
+                        {
+                          range: {
+                            'metadata_json.dates.date.lte': {
+                              lte: dateRange[1].split('/')[2],
+                            },
+                          },
+                        },
+                      ]
+                    : undefined
+                }
+                filter={
+                  polygon
+                    ? {
+                        geo_shape: {
+                          'metadata_json.geoLocations.geoLocationBox': {
+                            shape: {
+                              type: 'polygon',
+                              coordinates,
+                            },
+                            relation: 'within',
+                          },
+                        },
+                      }
+                    : undefined
+                }
+              >
+                {(catalog, useCatalog) => {
+                  if (type === 'GQL') {
+                    return children({ query: catalog.getQuery() })
+                  } else {
+                    const { error, loading, data } = useCatalog()
+                    return children({
+                      error,
+                      loading,
+                      data,
+                      currentPage,
+                      updateCurrentPage,
+                    })
+                  }
                 }}
               </ReactCatalogue>
-            )}
-          </Grid>
-        </div>
-      )}
+            </Grid>
+          </div>
+        )
+      }}
     </Form>
   )
 }

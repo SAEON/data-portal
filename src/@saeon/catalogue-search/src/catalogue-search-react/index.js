@@ -8,12 +8,13 @@ const defaultState = {
   data: null,
 }
 
-const createHook = ({ catalog }) => (query) => {
+const createHook = ({ catalog }) => () => {
+  const query = catalog.getQuery()
   const [state, setState] = useState(defaultState)
 
   const fetchData = async (abortFetch) => {
     try {
-      const result = await catalog.query(query, abortFetch)
+      const result = await catalog.query(null, abortFetch)
       if (result)
         setState({
           loading: false,
@@ -36,13 +37,34 @@ const createHook = ({ catalog }) => (query) => {
     return () => abortFetch.abort()
   }, [JSON.stringify(query)])
 
-  return { loading: state.loading, error: state.error, data: state.data }
+  return {
+    loading: state.loading,
+    error: state.error,
+    data: state.data,
+  }
 }
 
 let catalog
-export const ReactCatalogue = ({ dslAddress, index, children } = {}) => {
-  if (!catalog) catalog = new Catalogue({ dslAddress, index })
-  return children(createHook({ catalog }))
+export const ReactCatalogue = ({
+  currentPage = 0,
+  pageSize = 10,
+  dslAddress,
+  index,
+  source,
+  matchClauses,
+  clauses,
+  filter,
+  children,
+} = {}) => {
+  if (!catalog) catalog = new Catalogue({ dslAddress, index, pageSize })
+  if (catalog._currentPage !== currentPage) catalog._currentPage = currentPage
+
+  if (source) catalog.defineSource(source)
+  if (matchClauses) catalog.addMatchClauses(matchClauses)
+  if (clauses) catalog.addClauses(...clauses)
+  if (filter) catalog.setFilter(filter)
+
+  return children(catalog, createHook({ catalog }))
 }
 
 ReactCatalogue.propTypes = {

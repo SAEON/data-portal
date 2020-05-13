@@ -146,7 +146,7 @@ module.exports = ({ output = '/dist' }) => {
         PACKAGE_DESCRIPTION: packageJson.description,
         PACKAGE_KEYWORDS: packageJson.keywords,
       }),
-    ].filter(_ => _),
+    ].filter((_) => _),
     devServer: {
       contentBase: path.join(__dirname, output),
       historyApiFallback: true,

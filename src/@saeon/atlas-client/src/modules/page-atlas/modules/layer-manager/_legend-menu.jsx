@@ -18,7 +18,7 @@ export default ({ id, layer }) => {
       defaultPosition={{ x: 650, y: 25 }}
       defaultWidth={200}
       title={'Legend'}
-      fullscreen={isMobile}
+      defaultSnap={isMobile ? 'Top' : undefined}
     >
       {() => <LegendMenu />}
     </DragMenu>

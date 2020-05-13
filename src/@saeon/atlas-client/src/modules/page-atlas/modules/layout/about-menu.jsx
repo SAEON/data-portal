@@ -30,7 +30,11 @@ export default () => {
                     id,
                     zIndex: getActiveMenuZIndex(),
                     Component: () => (
-                      <DragMenu id={id} title={`About ${packageJson.name}`} fullscreen={isMobile}>
+                      <DragMenu
+                        id={id}
+                        title={`About ${packageJson.name}`}
+                        defaultSnap={isMobile ? 'Top' : 'Top'}
+                      >
                         {() => <AboutContent />}
                       </DragMenu>
                     ),

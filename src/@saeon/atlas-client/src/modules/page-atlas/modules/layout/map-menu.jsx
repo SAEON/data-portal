@@ -28,7 +28,11 @@ export default () => {
                   zIndex: getActiveMenuZIndex(),
                   Component: () => {
                     return (
-                      <DragMenu id={id} title={'Open layers menu'} fullscreen={isMobile}>
+                      <DragMenu
+                        id={id}
+                        title={'Open layers menu'}
+                        defaultSnap={isMobile ? 'Top' : 'BottomRight'}
+                      >
                         {() => <LayerManager layersActive={Boolean(getMenuById(id))} />}
                       </DragMenu>
                     )

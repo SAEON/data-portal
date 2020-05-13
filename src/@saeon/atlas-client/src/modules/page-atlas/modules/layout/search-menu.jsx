@@ -37,7 +37,11 @@ export default () => {
                     Component: memo(
                       ({ id }) => {
                         return (
-                          <DragMenu id={id} title={'Search HST data'} fullscreen={isMobile}>
+                          <DragMenu
+                            id={id}
+                            title={'Search HST data'}
+                            defaultSnap={isMobile ? 'Top' : 'BottomLeft'}
+                          >
                             {({ height, width }) => <HstLayers height={height} width={width} />}
                           </DragMenu>
                         )
@@ -67,10 +71,8 @@ export default () => {
                         return (
                           <DragMenu
                             id={id}
-                            // defaultWidth={800}
-                            // defaultHeight={600}
                             title={'Search SAEON data'}
-                            fullscreen={isMobile}
+                            defaultSnap={isMobile ? 'Top' : 'Left'}
                           >
                             {({ height, width }) => <SaeonSearch height={height} width={width} />}
                           </DragMenu>
@@ -99,7 +101,11 @@ export default () => {
                     Component: memo(
                       ({ id }) => {
                         return (
-                          <DragMenu id={id} title={'Search CSIR data'} fullscreen={isMobile}>
+                          <DragMenu
+                            id={id}
+                            title={'Search CSIR data'}
+                            defaultSnap={isMobile ? 'Top' : 'TopLeft'}
+                          >
                             {({ height, width }) => <CsirLayers height={height} width={width} />}
                           </DragMenu>
                         )

@@ -39,14 +39,17 @@ export default () => {
           <Grid item xs={12}>
             {/* Seach controls - this will provide a search context */}
             <SearchControls data={data}>
-              {({ error, loading, data }) => {
+              {({ error, loading, data, currentPage, updateCurrentPage }) => {
                 return (
                   <>
                     {/* Render search results if necessary */}
                     {menus
                       ?.filter((menu) => menu.id === searchListMenuId)
                       ?.map((menu) =>
-                        createPortal(<menu.Component data={data} />, menuContainerEl)
+                        createPortal(
+                          <menu.Component data={data} currentPage={currentPage} />,
+                          menuContainerEl
+                        )
                       ) || null}
 
                     {/* Render rest of page */}
@@ -71,9 +74,11 @@ export default () => {
                                   id: searchListMenuId,
                                   zIndex: getActiveMenuZIndex(),
                                   norender: true,
-                                  Component: ({ data }) => (
+                                  Component: ({ data, currentPage }) => (
                                     <SearchResults
                                       data={data}
+                                      currentPage={currentPage}
+                                      updateCurrentPage={updateCurrentPage}
                                       id={searchListMenuId}
                                       onClose={() => removeMenu(searchListMenuId)}
                                     />
@@ -85,8 +90,8 @@ export default () => {
                             {loading
                               ? 'Show results (...)'
                               : getMenuById(searchListMenuId)
-                              ? `Hide results (${data?.hits?.total})`
-                              : `Show results (${data?.hits?.total})`}
+                              ? `Hide results (${data?.results?.hits?.total})`
+                              : `Show results (${data?.results?.hits?.total})`}
                           </Button>
                         </Fade>
                       )}

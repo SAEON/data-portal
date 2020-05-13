@@ -18,7 +18,7 @@ export default ({ id, layer }) => {
       defaultPosition={{ x: 650, y: 25 }}
       defaultWidth={230}
       title={'Layer info'}
-      fullscreen={isMobile}
+      defaultSnap={isMobile ? 'Top' : undefined}
     >
       {() => <InfoMenu />}
     </DragMenu>

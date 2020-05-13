@@ -37,7 +37,7 @@ export default () => {
             >
               <PrintIcon />
             </Fab>
-            <DragMenu id={id} title={'Screenshot'} fullscreen={isMobile}>
+            <DragMenu id={id} title={'Screenshot'} defaultSnap={isMobile ? 'Top' : undefined}>
               {takeScreenshot}
             </DragMenu>
           </>

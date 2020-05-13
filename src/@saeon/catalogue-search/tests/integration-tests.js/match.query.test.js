@@ -4,37 +4,30 @@ import { API_ADDRESS } from '../config/constants'
 const dslAddress = `${API_ADDRESS}`
 const index = 'saeon-odp-4-2'
 
-const catalog = new Catalogue({ dslAddress, index })
-
 describe('MATCH QUERIES', () => {
+  let catalog
+  beforeEach(() => catalog = new Catalogue({ dslAddress, index }))
+
   test('Confirm no results for non-existent term', async () => {
-    const response = await catalog.query({
-      query: {
-        match: {
-          'metadata_json.subjects.subject': {
-            query: 'noterm',
-          },
-        },
-      },
+    catalog.addMatchClauses({
+      query: 'noterm',
+      fields: ['metadata_json.subjects.subject']
     })
+    const response = await catalog.query()
     expect(response.hits.total).toBe(0)
   })
 
   test('Query single field', async () => {
     const query = 'landcover'
-    const response = await catalog.query({
-      _source: {
-        includes: ['metadata_json.subjects.*'],
-      },
-      query: {
-        match: {
-          'metadata_json.subjects.subject': {
-            query,
-            fuzziness: 'AUTO',
-          },
-        },
-      },
+    catalog.defineSource({
+      includes: ['metadata_json.subjects.*'],
     })
+    catalog.addMatchClauses({
+      query,
+      fields: ['metadata_json.subjects.subject'],
+      fuzziness: 'AUTO'
+    })
+    const response = await catalog.query()
     response.hits.hits.forEach(({ _source }) => {
       const { metadata_json } = _source
       let exists = false
@@ -45,27 +38,48 @@ describe('MATCH QUERIES', () => {
     })
   })
 
-  test('Query term with whitespace (fuzzy search)', async () => {
-    const query = 'land-cover'
-    const response = await catalog.query({
-      _source: {
-        includes: ['metadata_json.subjects.subject'],
+  test('Query multiple matches', async () => {
+    const catalog = new Catalogue({ dslAddress, index })
+    catalog.addMatchClauses(
+      {
+        query: 'landcover',
+        fields: [
+          'metadata_json.subjects.subject',
+          'metadata_json.descriptions.desciption',
+          'metadata_json.titles.title',
+        ],
       },
-      query: {
-        fuzzy: {
-          'metadata_json.subjects.subject': {
-            value: query,
-            fuzziness: 'AUTO',
-          },
-        },
-      },
+      {
+        query: 'water',
+        fields: [
+          'metadata_json.subjects.subject',
+          'metadata_json.descriptions.desciption',
+          'metadata_json.titles.title',
+        ],
+      }
+    )
+    const response = await catalog.query()
+    expect(response.hits.total).toBe(3)
+  })
+
+  test('Query multiple fields', async () => {
+    const query = 'water'
+    catalog.defineSource({
+      includes: ['metadata_json.subjects.subject', 'metadata_json.descriptions.description'],
     })
+    catalog.addMatchClauses({
+      query,
+      fields: ['metadata_json.subjects.subject', 'metadata_json.descriptions.desciption'],
+    })
+    const response = await catalog.query()
     response.hits.hits.forEach(({ _source }) => {
       const { metadata_json } = _source
       let exists = false
       metadata_json.subjects.forEach(({ subject }) => {
-        if (subject.toLowerCase().includes(query.replace('-', '').replace(' ', '').toLowerCase()))
-          exists = true
+        if (subject.toLowerCase().includes(query.toLowerCase())) exists = true
+      })
+      metadata_json.descriptions.forEach(({ description }) => {
+        if (description.toLowerCase().includes(query.toLowerCase())) exists = true
       })
       expect(exists).toBe(true)
     })

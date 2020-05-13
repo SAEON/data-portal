@@ -19,7 +19,7 @@ export default ({ id, onDrawEnd }) => {
                 defaultHeight={143}
                 title={''}
                 resizable={false}
-                fullscreen={isMobile}
+                defaultSnap={isMobile ? 'Top' : undefined}
               >
                 <Selector
                   updateForm={updateForm}

@@ -74,28 +74,28 @@ export default ({ updateForm, ...fields }) => {
             <Grid item className={classes.dateSelect}>
               <FormControlLabel
                 value="10yr"
-                control={<Radio ize="small" />}
+                control={<Radio size="small" />}
                 label={<RadioTxt>10 Year</RadioTxt>}
               />
             </Grid>
             <Grid item className={classes.dateSelect}>
               <FormControlLabel
                 value="5yr"
-                control={<Radio ize="small" />}
+                control={<Radio size="small" />}
                 label={<RadioTxt>5 Year</RadioTxt>}
               />
             </Grid>
             <Grid item className={classes.dateSelect}>
               <FormControlLabel
                 value="1yr"
-                control={<Radio ize="small" />}
+                control={<Radio size="small" />}
                 label={<RadioTxt>1 Year</RadioTxt>}
               />
             </Grid>
             <Grid item className={classes.dateSelect}>
               <FormControlLabel
                 value="6mnth"
-                control={<Radio ize="small" />}
+                control={<Radio size="small" />}
                 label={<RadioTxt>6 Month</RadioTxt>}
               />
             </Grid>
@@ -109,14 +109,14 @@ export default ({ updateForm, ...fields }) => {
             <Grid item className={classes.dateSelect}>
               <FormControlLabel
                 value="all"
-                control={<Radio ize="small" />}
+                control={<Radio size="small" />}
                 label={<RadioTxt>All Dates</RadioTxt>}
               />
             </Grid>
             <Grid item className={classes.dateSelect}>
               <FormControlLabel
                 value="custom"
-                control={<Radio ize="small" />}
+                control={<Radio size="small" />}
                 label={<RadioTxt>custom</RadioTxt>}
               />
             </Grid>

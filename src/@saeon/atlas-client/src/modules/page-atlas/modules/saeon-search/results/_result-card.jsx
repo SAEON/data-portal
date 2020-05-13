@@ -39,7 +39,6 @@ export default ({ _source, proxy, setInfo }) => {
   const [rightsExpanded, setRightsExpanded] = useState(false)
 
   const { metadata_json } = _source
-  console.log(metadata_json)
   const {
     alternateIdentifiers,
     titles,
