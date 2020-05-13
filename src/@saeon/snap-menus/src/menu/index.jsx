@@ -7,9 +7,9 @@ import { DragIndicator, Close as CloseIcon } from '@material-ui/icons'
 import useStyles from './style'
 import debounce from '../lib/debounce'
 import EventBoundary from '../lib/event-boundary'
-import getDimensionsFromSnap from './get-dimensions'
+import getDimensions from './get-dimensions'
 import getSnapZone from './get-zone'
-import getPositionFromSnap from './get-position'
+import getPosition from './get-position'
 import clsx from 'clsx'
 import MapContext from '../provider/context'
 import packageJson from '../../package.json'
@@ -26,7 +26,7 @@ export default ({
   defaultPosition,
   defaultWidth = 450,
   defaultHeight = 400,
-  fullscreen = false,
+  defaultSnap = false,
   id,
 }) => {
   if (!id)
@@ -37,12 +37,12 @@ export default ({
   const classes = useStyles({ height: containerHeight, width: containerWidth })()
   const [state, setState] = useState({
     snapZone: null,
-    snapped: Boolean(fullscreen),
+    snapped: Boolean(defaultSnap),
     isResizing: false,
-    dimensions: fullscreen
-      ? { width: containerWidth, height: containerHeight }
+    dimensions: defaultSnap
+      ? getDimensions(defaultSnap, container)
       : { width: defaultWidth, height: defaultHeight },
-    position: fullscreen ? { x: 0, y: 0 } : null,
+    position: defaultSnap ? getPosition(defaultSnap, container) : null,
   })
 
   return (
@@ -71,11 +71,13 @@ export default ({
               axis="both"
               handle=".drag-handle"
               defaultPosition={
-                fullscreen ? { x: 0, y: 0 } : defaultPosition || getDefaultPosition()
+                defaultSnap
+                  ? getPosition(defaultSnap, container)
+                  : defaultPosition || getDefaultPosition()
               }
               bounds={{ left: 0, top: 0 }}
               position={state.position}
-              grid={[5, 5]}
+              grid={[1, 1]}
               scale={1}
               onStart={() => setActiveMenu(id)}
               onDrag={debounce((ev) => {
@@ -117,8 +119,8 @@ export default ({
               }, 5)}
               onStop={() => {
                 if (state.snapZone) {
-                  const dimensions = getDimensionsFromSnap(state.snapZone, container)
-                  const position = getPositionFromSnap(state.snapZone, container)
+                  const dimensions = getDimensions(state.snapZone, container)
+                  const position = getPosition(state.snapZone, container)
                   const previousDimensions = state.dimensions
                   setState(
                     Object.assign(
@@ -161,7 +163,7 @@ export default ({
                       height={state.dimensions.height}
                       axis={resizable ? 'both' : 'none'}
                       minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
-                      draggableOpts={{ grid: [5, 5] }}
+                      draggableOpts={{ grid: [1, 1] }}
                       onResizeStart={() => {
                         if (!resizable) return
                         setState(
