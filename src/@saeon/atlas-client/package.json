@@ -38,7 +38,7 @@
     "@saeon/catalogue-search": "^4.2.2",
     "@saeon/logger": "^3.1.4",
     "@saeon/ol-react": "^9.0.3",
-    "@saeon/snap-menus": "^2.1.5",
+    "@saeon/snap-menus": "^2.1.6",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.0",
