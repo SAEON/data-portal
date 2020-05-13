@@ -24,13 +24,13 @@ export default ({ height, width }) => {
       BottomLeft: {
         height: height / 2 - 2.5,
         width: width / 2 - 2.5,
-        top: height / 2 + 5,
+        top: height / 2 + 2.5,
         left: 0,
       },
       BottomRight: {
-        height: height / 2 - 5,
-        width: width / 2 - 5,
-        top: height / 2 + 5,
+        height: height / 2 - 2.5,
+        width: width / 2 - 2.5,
+        top: height / 2 + 2.5,
         right: 0,
       },
       Left: {

@@ -7,8 +7,9 @@ const packageJson = require('./package.json')
 const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
+const { NODE_ENV: mode } = process.env
+
 module.exports = ({ output = '/dist' }) => {
-  const { NODE_ENV: mode } = process.env
   return {
     mode,
     entry: {
@@ -137,7 +138,7 @@ module.exports = ({ output = '/dist' }) => {
           to: path.resolve(__dirname, './dist'),
         },
       ]),
-      new GenerateSW({}),
+      mode === 'production' ? new GenerateSW({}) : null,
       new HtmlWebPackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, output, 'index.html'),
@@ -145,7 +146,7 @@ module.exports = ({ output = '/dist' }) => {
         PACKAGE_DESCRIPTION: packageJson.description,
         PACKAGE_KEYWORDS: packageJson.keywords,
       }),
-    ],
+    ].filter(_ => _),
     devServer: {
       contentBase: path.join(__dirname, output),
       historyApiFallback: true,
