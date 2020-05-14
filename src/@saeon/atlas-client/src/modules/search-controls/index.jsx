@@ -154,7 +154,7 @@ export default ({ type, data, children }) => {
                     : undefined
                 }
               >
-                {(catalog, useCatalog) => {
+                {(useCatalog, catalog) => {
                   if (type === 'GQL') {
                     return children({ query: catalog.getQuery() })
                   } else {

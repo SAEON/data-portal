@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core'
 // eslint-disable-next-line no-unused-vars
 export default ({ height, width, data, currentPage, updateCurrentPage }) => {
   // eslint-disable-next-line no-unused-vars
-  const { took, timed_out, hits: _hits } = data.results
+  const { took, timed_out, hits: _hits } = data
   // eslint-disable-next-line no-unused-vars
   const { total, hits } = _hits
 

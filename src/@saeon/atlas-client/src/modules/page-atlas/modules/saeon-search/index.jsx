@@ -90,8 +90,8 @@ export default () => {
                             {loading
                               ? 'Show results (...)'
                               : getMenuById(searchListMenuId)
-                              ? `Hide results (${data?.results?.hits?.total})`
-                              : `Show results (${data?.results?.hits?.total})`}
+                              ? `Hide results (${data?.hits.total})`
+                              : `Show results (${data?.hits.total})`}
                           </Button>
                         </Fade>
                       )}

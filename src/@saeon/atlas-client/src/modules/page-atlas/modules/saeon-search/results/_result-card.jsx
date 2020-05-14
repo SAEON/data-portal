@@ -54,7 +54,7 @@ export default ({ _source, proxy, setInfo }) => {
 
   // TODO - this should be for individual, togglable layers
   let thumbnailAddress
-  if (linkedResources.length) {
+  if (linkedResources?.length) {
     const linkedResource = linkedResources.find(
       ({ linkedResourceType }) => linkedResourceType.toLowerCase() === 'query'
     )
@@ -78,11 +78,16 @@ export default ({ _source, proxy, setInfo }) => {
               <CardMedia
                 className={classes.img}
                 component="img"
-                height={140 / arr.length}
+                height={140 / arr?.length || 1}
                 src={thumbnailAddress}
               />
               <CardContent
-                style={{ position: 'absolute', top: 0, width: '100%', height: 140 / arr.length }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  width: '100%',
+                  height: 140 / arr?.length || 1,
+                }}
               >
                 <Typography style={{ lineBreak: 'anywhere' }} variant="h6">
                   {titles.map(({ title }) => title).join(', ')}

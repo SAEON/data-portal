@@ -14,7 +14,7 @@ export default ({ id, data, currentPage, updateCurrentPage }) => {
       defaultSnap={isMobile ? 'Top' : 'Right'}
     >
       {({ height, width }) =>
-        data?.results?.hits?.total ? (
+        data?.hits.total ? (
           <ResultsList
             height={height}
             width={width}
