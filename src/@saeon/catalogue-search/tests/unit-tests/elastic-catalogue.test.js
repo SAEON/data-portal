@@ -1,5 +1,26 @@
 import { Catalogue } from '../../src/catalogue-search'
 
+const expectedFunctionsOnPrototype = {
+  query: 'function',
+  getQuery: 'function',
+  setFilter: 'function',
+  defineSource: 'function',
+  addClauses: 'function',
+  addMatchClauses: 'function',
+}
+
+const expectedInstanceProperties = {
+  dslAddress: 'string',
+  index: 'string',
+  httpClient: 'function',
+  _matchClauses: 'object',
+  _clauses: 'object',
+  _filter: 'object',
+  _source: 'object',
+  _pageSize: 'number',
+  _currentPage: 'number',
+}
+
 describe('CONSTRUCTOR: ElasticCatalogue', () => {
   describe('Direct properties', () => {
     const expected = {}
@@ -18,20 +39,17 @@ describe('CONSTRUCTOR: ElasticCatalogue', () => {
   })
 
   describe('Prototoype properties', () => {
-    const expected = {
-      query: 'function',
-    }
     const classOwnProperties = Object.getOwnPropertyDescriptors(class _ {}.prototype)
     const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(Catalogue.prototype)
     test('Has expected properties', () => {
-      Object.entries(expected).forEach(([key, type]) =>
+      Object.entries(expectedFunctionsOnPrototype).forEach(([key, type]) =>
         expect(typeof ownPropertyDescriptors[key].value).toBe(type)
       )
     })
     test('Has no unexpected properties', () => {
-      expect(Object.keys(expected).length + Object.keys(classOwnProperties).length).toBe(
-        Object.keys(ownPropertyDescriptors).length
-      )
+      expect(
+        Object.keys(expectedFunctionsOnPrototype).length + Object.keys(classOwnProperties).length
+      ).toBe(Object.keys(ownPropertyDescriptors).length)
     })
   })
 })
@@ -41,20 +59,13 @@ describe('ElasticCatalogue instance', () => {
 
   describe('Direct properties', () => {
     const ownPropertyDescriptors = Object.getOwnPropertyDescriptors(catalog)
-    const expected = {
-      dslAddress: 'string',
-      index: 'string',
-      httpClient: 'function',
-    }
-
     test('Has expected properties', () => {
-      Object.entries(expected).forEach(([key, type]) =>
+      Object.entries(expectedInstanceProperties).forEach(([key, type]) =>
         expect(typeof ownPropertyDescriptors[key].value).toBe(type)
       )
     })
-
     test('Has no unexpected properties', () => {
-      expect(Object.keys(expected).length).toBe(Object.keys(catalog).length)
+      expect(Object.keys(expectedInstanceProperties).length).toBe(Object.keys(catalog).length)
     })
   })
 
@@ -65,20 +76,16 @@ describe('ElasticCatalogue instance', () => {
     const defaultClassProtoDescriptors = Object.getOwnPropertyDescriptors(
       Object.getPrototypeOf(new (class _ {})())
     )
-    const expected = {
-      query: 'function',
-    }
-
     test('Has expected properties', () => {
-      Object.entries(expected).forEach(([key, type]) =>
+      Object.entries(expectedFunctionsOnPrototype).forEach(([key, type]) =>
         expect(typeof catalogPrototypeDescriptors[key].value).toBe(type)
       )
     })
-
     test('Has no unexpected properties', () => {
-      expect(Object.keys(expected).length + Object.keys(defaultClassProtoDescriptors).length).toBe(
-        Object.keys(catalogPrototypeDescriptors).length
-      )
+      expect(
+        Object.keys(expectedFunctionsOnPrototype).length +
+          Object.keys(defaultClassProtoDescriptors).length
+      ).toBe(Object.keys(catalogPrototypeDescriptors).length)
     })
   })
 })

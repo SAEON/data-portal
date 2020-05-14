@@ -64,7 +64,7 @@ export const ReactCatalogue = ({
   if (clauses) catalog.addClauses(...clauses)
   if (filter) catalog.setFilter(filter)
 
-  return children(catalog, createHook({ catalog }))
+  return children(createHook({ catalog }), catalog)
 }
 
 ReactCatalogue.propTypes = {

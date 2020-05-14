@@ -6,21 +6,22 @@ describe('COMPONENT: ElasticCatalogueReact', () => {
   it('Renders without crashing', () => {
     const div = document.createElement('div')
     render(
-      <ReactCatalogue dslAddress="testing" index={'testing'}>
-        {(useCatalog) => {
-          const { loading, error, data } = useCatalog({
-            _source: {
-              includes: ['metadata_json.subjects.*'],
-            },
-            query: {
-              match: {
-                'metadata_json.subjects.subject': {
-                  query: 'landcover',
-                  fuzziness: 'AUTO',
-                },
-              },
-            },
-          })
+      <ReactCatalogue
+        source={{
+          includes: ['metadata_json.subjects.*'],
+        }}
+        matchClauses={[
+          {
+            query: 'landcover',
+            fields: ['metadata_json.subjects.subject'],
+            fuzziness: 'AUTO',
+          },
+        ]}
+        dslAddress="testing"
+        index={'testing'}
+      >
+        {(useCatalog, catalog) => {
+          const { loading, error, data } = useCatalog()
           return loading ? (
             <div>Loading</div>
           ) : error ? (

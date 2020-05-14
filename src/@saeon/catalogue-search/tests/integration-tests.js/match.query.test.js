@@ -6,12 +6,12 @@ const index = 'saeon-odp-4-2'
 
 describe('MATCH QUERIES', () => {
   let catalog
-  beforeEach(() => catalog = new Catalogue({ dslAddress, index }))
+  beforeEach(() => (catalog = new Catalogue({ dslAddress, index })))
 
   test('Confirm no results for non-existent term', async () => {
     catalog.addMatchClauses({
       query: 'noterm',
-      fields: ['metadata_json.subjects.subject']
+      fields: ['metadata_json.subjects.subject'],
     })
     const response = await catalog.query()
     expect(response.hits.total).toBe(0)
@@ -25,7 +25,7 @@ describe('MATCH QUERIES', () => {
     catalog.addMatchClauses({
       query,
       fields: ['metadata_json.subjects.subject'],
-      fuzziness: 'AUTO'
+      fuzziness: 'AUTO',
     })
     const response = await catalog.query()
     response.hits.hits.forEach(({ _source }) => {
