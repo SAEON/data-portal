@@ -149,7 +149,7 @@ const Application = () => (
 
 render(<Application />, document.getElementById('root'))
 
-// Worker defined in webpack.config.js (Google Workbox)
-if (process.env.NODE_ENV === 'production')
-  if ('serviceWorker' in navigator)
-    window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))
+// // Worker defined in webpack.config.js (Google Workbox)
+// if (process.env.NODE_ENV === 'production')
+//   if ('serviceWorker' in navigator)
+//     window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))

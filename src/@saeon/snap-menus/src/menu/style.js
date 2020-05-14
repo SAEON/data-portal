@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default ({ height, width }) => {
-  height = height
-  width = width
   return makeStyles(() => {
     return {
       ghost: {

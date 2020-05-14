@@ -20,7 +20,7 @@ describe('COMPONENT: ElasticCatalogueReact', () => {
         dslAddress="testing"
         index={'testing'}
       >
-        {(useCatalog, catalog) => {
+        {(useCatalog) => {
           const { loading, error, data } = useCatalog()
           return loading ? (
             <div>Loading</div>

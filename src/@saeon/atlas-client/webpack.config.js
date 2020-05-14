@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const packageJson = require('./package.json')
-const { GenerateSW } = require('workbox-webpack-plugin')
+// const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
 const { NODE_ENV: mode } = process.env
@@ -138,7 +138,7 @@ module.exports = ({ output = '/dist' }) => {
           to: path.resolve(__dirname, './dist'),
         },
       ]),
-      mode === 'production' ? new GenerateSW({}) : null,
+      // mode === 'production' ? new GenerateSW({}) : null,
       new HtmlWebPackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, output, 'index.html'),

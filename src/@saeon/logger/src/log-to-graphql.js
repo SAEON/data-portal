@@ -11,6 +11,8 @@ const createArrayFromLength = (l) => {
 
 export default ({ link, query }) => {
   const logBatch = (browserEvents) =>
+    // TODO: Better rejection handling required
+    // eslint-disable-next-line no-unused-vars
     new Promise((resolve, reject) => {
       toPromise(
         execute(link, {
