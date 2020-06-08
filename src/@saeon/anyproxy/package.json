@@ -23,19 +23,19 @@
   },
   "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/anyproxy#readme",
   "dependencies": {
-    "@babel/cli": "^7.8.4",
+    "@babel/cli": "^7.10.1",
     "@saeon/logger": "^3.1.4",
     "anyproxy": "^4.1.2",
     "babel-plugin-module-resolver": "^4.0.0",
-    "copyfiles": "^2.2.0",
-    "date-fns": "^2.13.0",
+    "copyfiles": "^2.3.0",
+    "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
     "redis": "^3.0.2",
     "rimraf": "^3.0.2",
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
   }
 }

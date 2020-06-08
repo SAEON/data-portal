@@ -132,12 +132,14 @@ module.exports = ({ output = '/dist' }) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
-      new CopyPlugin([
-        {
-          from: path.resolve(__dirname, './public'),
-          to: path.resolve(__dirname, './dist'),
-        },
-      ]),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, './public'),
+            to: path.resolve(__dirname, './dist'),
+          },
+        ],
+      }),
       // mode === 'production' ? new GenerateSW({}) : null,
       new HtmlWebPackPlugin({
         template: 'index.html',
