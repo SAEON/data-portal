@@ -66,7 +66,7 @@ export default ({ _source, proxy, setInfo }) => {
 
   return (
     <Card variant="outlined" style={{ margin: '5px 0' }}>
-      {alternateIdentifiers.map(({ alternateIdentifier }, i, arr) => (
+      {alternateIdentifiers?.map(({ alternateIdentifier }, i, arr) => (
         <Link
           href={`http://www.sasdi.net/metaview.aspx?uuid=${alternateIdentifier}`}
           key={i}
@@ -90,7 +90,7 @@ export default ({ _source, proxy, setInfo }) => {
                 }}
               >
                 <Typography style={{ lineBreak: 'anywhere' }} variant="h6">
-                  {titles.map(({ title }) => title).join(', ')}
+                  {titles?.map(({ title }) => title).join(', ')}
                 </Typography>
                 <Typography
                   style={{ lineBreak: 'anywhere' }}
@@ -108,7 +108,7 @@ export default ({ _source, proxy, setInfo }) => {
 
       {/* Subjects */}
       <CardContent>
-        {subjects.map(({ subject }, i) => (
+        {subjects?.map(({ subject }, i) => (
           <Chip
             key={i}
             style={{ margin: 5 }}
@@ -123,7 +123,7 @@ export default ({ _source, proxy, setInfo }) => {
       {/* Linked resources (map layers) */}
       <CardContent>
         <List>
-          {linkedResources.map(({ resourceURL, resourceDescription, linkedResourceType }, i) => {
+          {linkedResources?.map(({ resourceURL, resourceDescription, linkedResourceType }, i) => {
             const uri = npmUrl.parse(resourceURL, true)
             const { pathname, query, port, hostname } = uri
             const { layers } = query
@@ -299,7 +299,7 @@ export default ({ _source, proxy, setInfo }) => {
                   </ListItemAvatar>
                   <ListItemText
                     primary={name}
-                    secondary={affiliations.map(({ affiliation }) => affiliation).join(', ')}
+                    secondary={affiliations?.map(({ affiliation }) => affiliation).join(', ')}
                   />
                 </ListItem>
               )
@@ -320,7 +320,7 @@ export default ({ _source, proxy, setInfo }) => {
                   </ListItemAvatar>
                   <ListItemText
                     primary={name}
-                    secondary={affiliations.map(({ affiliation }) => affiliation).join(', ')}
+                    secondary={affiliations?.map(({ affiliation }) => affiliation).join(', ')}
                   />
                 </ListItem>
               )

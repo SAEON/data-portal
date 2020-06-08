@@ -3,7 +3,13 @@
 Install the package via the [NPM registry](https://npmjs.com/package/@saeon/atlas)
 
 ```sh
-npm install @saeon/ol-react
+npm install @saeon/ol-react ol
+```
+
+`@saeon/ol-react` references the `ol` NPM package as a peer dependency. In the entry point of your app it's necessary to load the OpenLayers CSS:
+
+```js
+import 'ol/ol.css'
 ```
 
 ## Modules
