@@ -75,7 +75,7 @@ sudo npm install -g npm-check-updates
 Make sure there is an accessible instance of MongoDB (or run using Docker)
 
 ```sh
-docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=atlas -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
+docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
 From the root of the repository:
