@@ -56,18 +56,15 @@ NOTE: This repository only support Linux/Mac development currently, since it's f
 git clone git@github.com:SAEONData/saeon-atlas.git saeon-atlas
 cd saeon-atlas
 
-# Install top level dependencies (Babel, tooling, etc)
-npm install
+# Sometimes the scripts in scripts/ don't get the correct permissions set on clone,
+# and when they are adjusted. This could be related to using WSL. Fix this
+chmod +x scripts/*.sh
 
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-package-dependencies
 
 # Update repository git configuration
 npm run configure-git
-
-# Sometimes the scripts in scripts/ don't get the correct permissions set on clone,
-# and when they are adjusted. This could be related to using WSL. Fix this
-chmod +x scripts/*.sh
 
 # A global install of npm-check-updates is required to use some of the package.json scripts
 sudo npm install -g npm-check-updates
