@@ -14,9 +14,9 @@
     "check-package-updates": "scripts/check-package-updates.sh",
     "update-package-dependencies": "scripts/update-package-dependencies.sh",
     "install-package-dependencies": "scripts/install-package-dependencies.sh",
-    "publish-all-packages:patch": "npm --prefix src/@saeon/ol-react run publish:patch && npm --prefix src/@saeon/catalogue-search run publish:patch && npm --prefix src/@saeon/snap-menus run publish:patch && npm run update-packages",
-    "publish-all-packages:minor": "npm --prefix src/@saeon/ol-react run publish:minor && npm --prefix src/@saeon/catalogue-search run publish:minor && npm --prefix src/@saeon/snap-menus run publish:minor && npm run update-packages",
-    "publish-all-packages:major": "npm --prefix src/@saeon/ol-react run publish:major && npm --prefix src/@saeon/catalogue-search run publish:major && npm --prefix src/@saeon/snap-menus run publish:major && npm run update-packages"
+    "publish-all-packages:patch": "scripts/publish-all.sh -s patch",
+    "publish-all-packages:minor": "scripts/publish-all.sh -s minor",
+    "publish-all-packages:major": "scripts/publish-all.sh -s major"
   },
   "husky": {
     "hooks": {

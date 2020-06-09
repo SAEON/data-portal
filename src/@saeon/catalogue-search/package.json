@@ -11,6 +11,7 @@
     "react-dom": ">=16.13.1"
   },
   "scripts": {
+    "watch": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist'",
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest",
     "test:watch": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --watch",
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
@@ -35,6 +36,7 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.10.1",
     "babel-loader": "^8.1.0",
     "prop-types": "^15.7.2",
     "rimraf": "^3.0.2",
@@ -46,6 +48,7 @@
     "dotenv": "^8.2.0",
     "jest": "^26.0.1",
     "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.4",
     "onchange": "^7.0.2",
     "prettier": "^2.0.5",
     "react": "^16.13.1",

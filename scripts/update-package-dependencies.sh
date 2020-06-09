@@ -1,12 +1,20 @@
 #!/bin/bash
 
+# Repository top level
 ncu -u
-npm --prefix src/@saeon/anyproxy run update-packages
-npm --prefix src/@saeon/atlas-api run update-packages
-npm --prefix src/@saeon/atlas-client run update-packages
-npm --prefix src/@saeon/catalogue-search run update-packages
-npm --prefix src/@saeon/logger run update-packages
-npm --prefix src/@saeon/ol-react run update-packages
-npm --prefix src/@saeon/snap-menus run update-packages
 
-scripts/install-package-dependencies.sh
+# @saeon packages
+for directory in src/@saeon/*;
+  do D=$(readlink -f "$directory");
+    CMD="npm --prefix $D run update-packages"
+    eval ${CMD}
+done
+
+# docs
+npm --prefix src/docs run update-packages
+
+# reporting
+npm --prefix src/reporting run update-packages
+
+# Install package dependencies
+npm run install-package-dependencies

@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# Repository top level
 ncu
-npm --prefix src/@saeon/anyproxy run check-package-updates
-npm --prefix src/@saeon/atlas-api run check-package-updates
-npm --prefix src/@saeon/atlas-client run check-package-updates
-npm --prefix src/@saeon/catalogue-search run check-package-updates
-npm --prefix src/@saeon/logger run check-package-updates
-npm --prefix src/@saeon/ol-react run check-package-updates
-npm --prefix src/@saeon/snap-menus run check-package-updates
+
+# @saeon packages
+for directory in src/@saeon/*;
+  do D=$(readlink -f "$directory");
+    CMD="npm --prefix $D run check-package-updates"
+    eval ${CMD}
+done
+
+# docs
+npm --prefix src/docs run check-package-updates
+
+# reporting
+npm --prefix src/reporting run check-package-updates

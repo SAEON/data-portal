@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Collect args
-
 while getopts "p:s:" opt; do
   case $opt in
     p) PACKAGE=$OPTARG      ;;

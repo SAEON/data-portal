@@ -7,7 +7,7 @@ GraphQL API to be paired with instances of the @saeon/atlas-client package
 Start an instance of @saeon/anyproxy (if required):
 
 ```sh
-docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=atlas -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
+docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
 Then, from the root of the repository:
