@@ -1,0 +1,37 @@
+{
+  "name": "@saeon/pkce-client",
+  "version": "0.0.1",
+  "description": "Oauth2 PKCE browser client",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",
+    "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s major",
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "check-package-updates": "ncu",
+    "update-packages": "ncu -u"
+  },
+  "keywords": [
+    "@saeon/pkce-client"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/pkce-client",
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {}
+}

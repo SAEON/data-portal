@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.95",
+  "version": "0.0.97",
   "description": "A browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
     "@saeon/atlas-client",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../catalogue-search/src/**/*.@(js|jsx)\" \"../snap-menus/src/**/*.@(js|jsx)\" \"../logger/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --open",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../catalogue-search/src/**/*.@(js|jsx)\" \"../snap-menus/src/**/*.@(js|jsx)\" \"../logger/src/**/*.@(js|jsx)\"  \"../pkce-client/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --open",
     "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
     "update-packages": "ncu -u --reject \"@date-io/date-fns\""
   },
@@ -52,6 +52,7 @@
     "graphql": "^15.1.0",
     "html-webpack-plugin": "^4.3.0",
     "html2canvas": "^1.0.0-rc.5",
+    "jso": "^4.1.1",
     "nanoid": "^3.1.9",
     "node-sass": "^4.14.1",
     "ol": "^6.3.1",
