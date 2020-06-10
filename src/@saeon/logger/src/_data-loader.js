@@ -3,6 +3,20 @@ import packageJson from '../package.json'
 /**
  * Inspired by the dataloader library
  * https://www.npmjs.com/package/dataloader
+ *
+ * The dataloader library is actually cross-platform,
+ * in that it will run in a browser or on the server.
+ *
+ * However batching GraphQL or HTTP requests that are
+ * configured at runtime, it becomes a bit more difficult
+ * to validate that the return of the batching function is
+ * a Promised array of the same length as the input of values.
+ * Also, this would dictate the design of HTTP and GraphQL
+ * endpoints for projects in which this library is used.
+ *
+ * For these reasons, the dataloader library is NOT
+ * used despite that it is certainly a better
+ * implementation of this type of batching function.
  */
 
 export default class {
@@ -25,7 +39,10 @@ export default class {
           this._keys = []
         })
       } catch (error) {
-        console.warn(`${packageJson.name} v${packageJson.version}: Unable to log to remote server`, error)
+        console.warn(
+          `${packageJson.name} v${packageJson.version}: Unable to log to remote server`,
+          error
+        )
         this._keys = []
       }
     }, this._interval)
