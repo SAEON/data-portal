@@ -4,7 +4,7 @@
   "description": "Node.js/Express.js application supporting the @saeon/atlas-client application",
   "main": "index.js",
   "scripts": {
-    "start": "npm --prefix ../catalogue-search run watch & rimraf .build && nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development babel --root-mode upward src --out-dir .build && copyfiles -u 2 \"src/graphql/schema.graphql\" .build/graphql/ && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build'",
+    "start": "rimraf .build && nodemon --ext js,graphql,json --watch ./src --exec 'npm --prefix ../catalogue-search run build & npm --prefix ../logger run build && prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development babel --root-mode upward src --out-dir .build && copyfiles -u 2 \"src/graphql/schema.graphql\" .build/graphql/ && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build'",
     "start:prod": "rimraf .build && NODE_ENV=production babel --root-mode upward src --out-dir .build && copyfiles -u 2 \"src/graphql/schema.graphql\" .build/graphql/ && copyfiles .env .build/ && NODE_ENV=production TZ=utc node .build",
     "check-package-updates": "ncu",
     "update-packages": "ncu -u"
