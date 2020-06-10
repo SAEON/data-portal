@@ -4,8 +4,8 @@
 npm install
 
 # @saeon packages
-for directory in src/@saeon/*;
-  do D=$(readlink -f "$directory");
+for directory in src/@saeon/*; do
+    D=$(readlink -f "$directory");
     CMD="npm --prefix $D install"
     eval ${CMD}
 done

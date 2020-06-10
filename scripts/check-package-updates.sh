@@ -4,10 +4,10 @@
 ncu
 
 # @saeon packages
-for directory in src/@saeon/*;
-  do D=$(readlink -f "$directory");
-    CMD="npm --prefix $D run check-package-updates"
-    eval ${CMD}
+for directory in src/@saeon/*; do
+  D=$(readlink -f "$directory");
+  CMD="npm --prefix $D run check-package-updates"
+  eval ${CMD}
 done
 
 # docs

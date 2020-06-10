@@ -2,12 +2,12 @@
 
 # Collect args
 while getopts "p:s:" opt; do
-  case $opt in
-    p) PACKAGE=$OPTARG      ;;
-    s) SEMVER=$OPTARG   ;;
-    *) echo 'error' >&2
-       exit 1
-  esac
+    case $opt in
+        p) PACKAGE=$OPTARG      ;;
+        s) SEMVER=$OPTARG   ;;
+        *) echo 'error' >&2
+            exit 1
+    esac
 done
 
 echo $PACKAGE
@@ -29,14 +29,14 @@ git add .
 git commit -m "Staging current changes. Bumping $SEMVER ($PACKAGE)" --no-verify
 
 case $SEMVER in
-  patch)
-    npm version patch -m "Increment package.json $SEMVER version ($PACKAGE)"
+    patch)
+        npm version patch -m "Increment package.json $SEMVER version ($PACKAGE)"
     ;;
-  minor)
-    npm version minor -m "Increment package.json $SEMVER version ($PACKAGE)"
+    minor)
+        npm version minor -m "Increment package.json $SEMVER version ($PACKAGE)"
     ;;
-  major)
-    npm version major -m "Increment package.json $SEMVER version ($PACKAGE)"
+    major)
+        npm version major -m "Increment package.json $SEMVER version ($PACKAGE)"
     ;;
 esac
 
