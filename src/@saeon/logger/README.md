@@ -58,10 +58,11 @@ Another potential use of this library is to extend the console object to log to 
 ```js
 import logToHttp from '@saeon/logger/log-to-http'
 const httpUri = 'https://your API address here.co.za/log'
+const batchingInterval = 2000
 
 configure(() => ({
   overwrites: {
-    logToHttp: logToHttp(httpUri),
+    logToHttp: logToHttp(httpUri, batchingInterval),
   },
 }))
 ```
@@ -74,7 +75,8 @@ Refer to the ApolloClient documentation on how to configure a GraphQL `link`
 import logToGraphQL from '@saeon/logger/log-to-graphql'
 import gql from 'graphql-tag'
 
-const link = new HttpLink({ uri: 'your graphql endpoint' }),
+const link = new HttpLink({ uri: 'your graphql endpoint' })
+const batchingInterval = 1800 // 1800 ms = 1.8 secs batching interval
 
 configure(() => ({
   overwrites: {
@@ -85,7 +87,7 @@ configure(() => ({
           logBrowserEvents(input: $input)
         }
       `,
-    }),
+    }, batchingInterval),
   },
 }))
 
@@ -99,8 +101,8 @@ configure(({ console }) => {
   return {
     overwrites: {
       error: () => console.log('hello world'),
-      logToGraphQL: logToGraphQL({ link, query }), // see above
-      logToHttp: logToHttp(httpUri), // see above
+      logToGraphQL: logToGraphQL({ link, query }, 2500), // see above
+      logToHttp: logToHttp(httpUri, 1500), // see above
     },
     formatter: 'MM/DD/YYYY', // https://date-fns.org/v2.13.0/docs/format
   }
@@ -121,7 +123,7 @@ console.logToGraphQL(msg)
 
 Both the `console.logToHttp` and `console.logToGraphQL` functions batch requests - the maximum rate at which servers are sent information is once per 5 second interval. This makes these functions suitable for logging even very many requests to the server.
 
-This is an example of logging batches of `mousemove` events every 5 seconds (debouncing events that are fired often is good practice):
+This is an example of logging batches of `mousemove` events every 2 seconds (the default batching interval). Debouncing events that are fired often is good practice:
 
 ```js
 const debounce = (cb, duration = 0) => {

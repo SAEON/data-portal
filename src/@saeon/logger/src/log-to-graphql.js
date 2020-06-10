@@ -9,11 +9,9 @@ const createArrayFromLength = (l) => {
   return arr
 }
 
-export default ({ link, query }) => {
+export default ({ link, query }, interval) => {
   const logBatch = (browserEvents) =>
-    // TODO: Better rejection handling required
-    // eslint-disable-next-line no-unused-vars
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       toPromise(
         execute(link, {
           query,
@@ -29,6 +27,6 @@ export default ({ link, query }) => {
         })
     })
 
-  const loader = new DataLoader(logBatch)
+  const loader = new DataLoader(logBatch, interval)
   return (browserEvent) => loader.load(browserEvent)
 }

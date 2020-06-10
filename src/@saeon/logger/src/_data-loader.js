@@ -1,14 +1,16 @@
+import packageJson from '../package.json'
+
 /**
  * Inspired by the dataloader library
  * https://www.npmjs.com/package/dataloader
  */
 
 export default class {
-  constructor(_batchLoadingFn) {
+  constructor(_batchLoadingFn, _interval = 2000) {
     this._timer
     this._keys = []
     this._batchLoadingFn = _batchLoadingFn
-    this._interval = 2 * 1000
+    this._interval = _interval
   }
 
   load(key) {
@@ -23,7 +25,7 @@ export default class {
           this._keys = []
         })
       } catch (error) {
-        console.error('Unable to log to remote server', error)
+        console.warn(`${packageJson.name} v${packageJson.version}: Unable to log to remote server`, error)
         this._keys = []
       }
     }, this._interval)

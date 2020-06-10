@@ -1,6 +1,6 @@
 import DataLoader from './_data-loader'
 
-export default (uri, client = fetch, opts = {}) => {
+export default (uri, client = fetch, opts = {}, interval) => {
   const logBatch = (msgs) =>
     new Promise((resolve, reject) => {
       client(
@@ -23,6 +23,6 @@ export default (uri, client = fetch, opts = {}) => {
         .catch((error) => reject(error))
     })
 
-  const loader = new DataLoader(logBatch)
+  const loader = new DataLoader(logBatch, interval)
   return (msg) => loader.load(msg)
 }
