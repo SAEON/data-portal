@@ -1,13 +1,13 @@
 {
   "name": "@saeon/pkce-client",
-  "version": "0.0.1",
-  "description": "Oauth2 PKCE browser client",
+  "version": "0.0.0",
+  "description": "Oauth2 PKCE browser client specifically for paring SPAs with SAEON's identity server",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s major",
@@ -30,8 +30,12 @@
   "license": "MIT",
   "dependencies": {
     "babel-loader": "^8.1.0",
+    "rimraf": "^3.0.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "onchange": "^7.0.2",
+    "prettier": "^2.0.5"
+  }
 }
