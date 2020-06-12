@@ -1,6 +1,6 @@
 {
   "name": "@saeon/pkce-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Oauth2 PKCE browser client specifically for paring SPAs with SAEON's identity server",
   "main": "dist/index.js",
   "files": [
