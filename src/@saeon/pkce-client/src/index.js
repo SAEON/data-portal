@@ -29,6 +29,8 @@ export default ({
   localStorage.setItem('pkce_state', STATE)
   localStorage.setItem('pkce_code_verifier', CODE_VERIFIER)
 
+  console.log('hi', STATE, CODE_VERIFIER)
+
   return {
     authenticate: authenticate({
       AUTHENTICATION_ENDPOINT,

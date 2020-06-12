@@ -5,7 +5,7 @@ import saeonElk from './_saeon-elk'
 import saeonGeoServer1 from './_saeon-geoserver-1'
 import saeonGeoServer2 from './_saeon-geoserver-2'
 
-const beforeSendRequest = async (requestDetail) => {
+const beforeSendRequest = async requestDetail => {
   const { path } = url.parse(requestDetail.url)
 
   try {

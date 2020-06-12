@@ -1,3 +1,3 @@
 export default {
-  __resolveType: async (node) => node.type,
+  __resolveType: async node => node.type,
 }

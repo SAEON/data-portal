@@ -9,7 +9,7 @@ proxy.on('ready', () => {
   console.log(`anyproxy interface ready on port ${options.webInterface.webPort}`)
 })
 
-proxy.on('error', (e) => {
+proxy.on('error', e => {
   console.error('anyproxy error', e)
 })
 

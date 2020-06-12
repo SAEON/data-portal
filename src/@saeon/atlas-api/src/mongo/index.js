@@ -19,8 +19,8 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-  .then((client) => client.db(DB))
-  .catch((error) => {
+  .then(client => client.db(DB))
+  .catch(error => {
     console.error('Unable to connect to MongoDB', error)
     process.exit(1)
   })

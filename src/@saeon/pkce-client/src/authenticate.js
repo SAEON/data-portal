@@ -46,6 +46,7 @@ export default ({
 
     console.log(result)
   } else {
+    console.log('why is this running')
     window.location = AUTHENTICATION_URL
   }
 }
