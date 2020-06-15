@@ -25,7 +25,7 @@ authenticate()
 // logout
 logout().then(({loggedIn}) => console.log(loggedIn))
 
-// TODO - getBearerToken, setApplicationState. This should be 'setRedirectUrl'
+// TODO - getBearerToken, setApplicationState. This should be 'setRedirection'
 ```
 
 ## Creating a client
