@@ -3,4 +3,4 @@ export default ({ LOGOUT_ENDPOINT }) => () =>
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
-  }).then(res => console.log(res))
+  }).then(() => ({ loggedIn: false }))

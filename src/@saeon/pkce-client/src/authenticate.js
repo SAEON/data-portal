@@ -12,7 +12,7 @@ export default ({
   REDIRECT_URL,
   VERIFICATION_KEY,
   TOKEN_ENDPOINT,
-}) => async () => {
+}) => async ({ autoLogin = true } = {}) => {
   const authenticationUrl = await buildAuthenticationUrl({
     AUTHENTICATION_ENDPOINT,
     CLIENT_ID,
@@ -49,17 +49,23 @@ export default ({
    */
 
   if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
-    window.location = authenticationUrl
+    if (autoLogin) {
+      window.location = authenticationUrl
+    } else {
+      return {
+        loggedIn: false,
+      }
+    }
   }
 
   const { error, code, state } = parseQueryString(authCallback.query)
 
   if (error) {
-    throw new Error('Authentication unsuccessful', error)
+    throw new Error('Authentication unsuccessful: ' + error.message)
   }
 
   if (getState(CACHE_KEYS.PKCE_STATE) !== state) {
-    throw new Error('PKCE flow state mismatch')
+    console.warn('PKCE flow state mismatch', 'User may have logged out')
   }
 
   /**
