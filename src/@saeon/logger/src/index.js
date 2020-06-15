@@ -1,12 +1,8 @@
+'use strict'
 import format from 'date-fns/format'
+;(typeof global !== 'undefined' ? global : self).globalThis =
+  typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : self
 
-try {
-  // eslint-disable-next-line no-global-assign
-  globalThis = window
-} catch {
-  // eslint-disable-next-line no-global-assign
-  globalThis = global
-}
 const _console = globalThis.console
 
 var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
@@ -20,7 +16,7 @@ globalThis.console = {
   error: (...args) => _console.error.call(_console, formatDate(), ...args),
 }
 
-export const configure = async (cb) => {
+export const configure = async cb => {
   const { overwrites, formatter } = cb({ console: _console, timestampFormat })
   timestampFormat = formatter || timestampFormat
   globalThis.console = Object.assign(globalThis.console, overwrites)

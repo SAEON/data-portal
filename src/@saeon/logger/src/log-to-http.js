@@ -1,7 +1,7 @@
 import DataLoader from './_data-loader'
 
 export default (uri, client = fetch, opts = {}, interval) => {
-  const logBatch = (msgs) =>
+  const logBatch = msgs =>
     new Promise((resolve, reject) => {
       client(
         uri,
@@ -18,11 +18,11 @@ export default (uri, client = fetch, opts = {}, interval) => {
           opts
         )
       )
-        .then((res) => res.text())
-        .then((json) => resolve(json))
-        .catch((error) => reject(error))
+        .then(res => res.text())
+        .then(json => resolve(json))
+        .catch(error => reject(error))
     })
 
   const loader = new DataLoader(logBatch, interval)
-  return (msg) => loader.load(msg)
+  return msg => loader.load(msg)
 }

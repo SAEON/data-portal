@@ -1,7 +1,7 @@
 import DataLoader from './_data-loader'
 import { execute, toPromise } from '@apollo/client'
 
-const createArrayFromLength = (l) => {
+const createArrayFromLength = l => {
   const arr = []
   for (let i = 0; i < l; i++) {
     arr.push(false)
@@ -10,8 +10,8 @@ const createArrayFromLength = (l) => {
 }
 
 export default ({ link, query }, interval) => {
-  const logBatch = (browserEvents) =>
-    new Promise((resolve) => {
+  const logBatch = browserEvents =>
+    new Promise(resolve => {
       toPromise(
         execute(link, {
           query,
@@ -20,13 +20,13 @@ export default ({ link, query }, interval) => {
           },
         })
       )
-        .then((json) => resolve(json))
-        .catch((error) => {
+        .then(json => resolve(json))
+        .catch(error => {
           console.error('logToGraphQL failed', error)
           resolve(createArrayFromLength(browserEvents.length))
         })
     })
 
   const loader = new DataLoader(logBatch, interval)
-  return (browserEvent) => loader.load(browserEvent)
+  return browserEvent => loader.load(browserEvent)
 }

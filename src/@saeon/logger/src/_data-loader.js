@@ -29,10 +29,10 @@ export default class {
 
   load(key) {
     clearTimeout(this._timer)
-    const promisedValue = new Promise((resolve) => this._keys.push({ key, resolve }))
+    const promisedValue = new Promise(resolve => this._keys.push({ key, resolve }))
     this._timer = setTimeout(() => {
       try {
-        this._batchLoadingFn(this._keys.map((k) => k.key)).then((values) => {
+        this._batchLoadingFn(this._keys.map(k => k.key)).then(values => {
           this._keys.forEach(({ resolve }, i) => {
             resolve(values[i])
           })

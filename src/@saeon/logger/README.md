@@ -104,7 +104,7 @@ configure(({ console }) => {
       logToGraphQL: logToGraphQL({ link, query }, 2500), // see above
       logToHttp: logToHttp(httpUri, 1500), // see above
     },
-    formatter: 'MM/DD/YYYY', // https://date-fns.org/v2.13.0/docs/format
+    formatter: 'yyyy-MM-dd', // https://date-fns.org
   }
 })
 ```
