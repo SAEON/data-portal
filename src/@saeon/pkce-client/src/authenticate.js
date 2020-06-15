@@ -12,7 +12,7 @@ export default ({
   REDIRECT_URL,
   VERIFICATION_KEY,
   TOKEN_ENDPOINT,
-}) => async ({ autoLogin = true } = {}) => {
+}) => async ({ forceLogin = true } = {}) => {
   const authenticationUrl = await buildAuthenticationUrl({
     AUTHENTICATION_ENDPOINT,
     CLIENT_ID,
@@ -49,7 +49,7 @@ export default ({
    */
 
   if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
-    if (autoLogin) {
+    if (forceLogin) {
       window.location = authenticationUrl
     } else {
       return {
