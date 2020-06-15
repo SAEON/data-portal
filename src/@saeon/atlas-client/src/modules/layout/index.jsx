@@ -15,6 +15,7 @@ import NavItem from './nav-item'
 import packageJson from '../../../package.json'
 import { SOURCE_CODE_URI } from '../../config'
 import useStyles from './style'
+import { AuthContext } from '../provider-auth'
 
 const Layout = ({ children }) => {
   const classes = useStyles()
@@ -65,89 +66,93 @@ const Layout = ({ children }) => {
           </Typography>
 
           {/* User account */}
-          <div style={{ marginLeft: 'auto' }}>
-            {/* Icon */}
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={({ currentTarget }) => setUserMenuAnchor(currentTarget)}
-              color="inherit"
-              size="small"
-            >
-              <AccountIcon
-                color={
-                  // eslint-disable-next-line no-constant-condition
-                  false ? 'secondary' : 'inherit'
-                }
-              />
-            </IconButton>
-
-            {/* User profile menu */}
-            <Menu
-              id="menu-appbar"
-              anchorEl={userMenuAnchor}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(userMenuAnchor)}
-              onClose={() => setUserMenuAnchor(null)}
-              TransitionComponent={Fade}
-            >
-              {/* Login */}
-              {/* eslint-disable-next-line no-constant-condition */}
-              {false ? null : (
-                <MenuItem
-                  to="/login"
+          <AuthContext.Consumer>
+            {({ loggedIn, login, logout }) => (
+              <div style={{ marginLeft: 'auto' }}>
+                {/* Icon */}
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={({ currentTarget }) => setUserMenuAnchor(currentTarget)}
                   color="inherit"
-                  className={classes.link}
-                  component={NavLink}
-                  onClick={() => setUserMenuAnchor(null)}
-                  dense={true}
+                  size="small"
                 >
-                  <Typography variant="overline">Login</Typography>
-                </MenuItem>
-              )}
+                  <AccountIcon
+                    color={
+                      // eslint-disable-next-line no-constant-condition
+                      loggedIn ? 'secondary' : 'inherit'
+                    }
+                  />
+                </IconButton>
 
-              {/* Signup */}
-              {/* eslint-disable-next-line no-constant-condition */}
-              {false ? null : (
-                <MenuItem
-                  to="/signup"
-                  color="inherit"
-                  className={classes.link}
-                  component={NavLink}
-                  onClick={() => setUserMenuAnchor(null)}
-                  dense={true}
-                >
-                  <Typography variant="overline">Signup</Typography>
-                </MenuItem>
-              )}
-
-              {/* Logout */}
-              {/* eslint-disable-next-line no-constant-condition */}
-              {false ? (
-                <MenuItem
-                  className={classes.link}
-                  to="/logout"
-                  color="inherit"
-                  component={NavLink}
-                  dense={true}
-                  onClick={() => {
-                    setUserMenuAnchor(null)
+                {/* User profile menu */}
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={userMenuAnchor}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(userMenuAnchor)}
+                  onClose={() => setUserMenuAnchor(null)}
+                  TransitionComponent={Fade}
                 >
-                  <Typography variant="overline">Logout</Typography>
-                </MenuItem>
-              ) : null}
-            </Menu>
-          </div>
+                  {/* Login */}
+                  {loggedIn ? null : (
+                    <MenuItem
+                      color="inherit"
+                      className={classes.link}
+                      onClick={() => {
+                        login()
+                        setUserMenuAnchor(null)
+                      }}
+                      dense={true}
+                    >
+                      <Typography variant="overline">Login</Typography>
+                    </MenuItem>
+                  )}
+
+                  {/* Signup */}
+                  {loggedIn ? null : (
+                    <MenuItem
+                      color="inherit"
+                      className={classes.link}
+                      onClick={() => {
+                        login()
+                        setUserMenuAnchor(null)
+                      }}
+                      dense={true}
+                    >
+                      <Typography variant="overline">Signup</Typography>
+                    </MenuItem>
+                  )}
+
+                  {/* Logout */}
+                  {loggedIn ? (
+                    <MenuItem
+                      className={classes.link}
+                      to="/logout"
+                      color="inherit"
+                      component={NavLink}
+                      dense={true}
+                      onClick={() => {
+                        logout()
+                        setUserMenuAnchor(null)
+                      }}
+                    >
+                      <Typography variant="overline">Logout</Typography>
+                    </MenuItem>
+                  ) : null}
+                </Menu>
+              </div>
+            )}
+          </AuthContext.Consumer>
         </Toolbar>
       </AppBar>
 
