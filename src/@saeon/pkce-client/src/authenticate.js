@@ -1,52 +1,109 @@
-import pkceChallengeFromVerifier from './lib/pkce-verifier'
 import parseQueryString from './lib/parse-query-string'
-import post from './lib/post-request'
-
-var AUTHENTICATION_URL
+import buildAuthenticationUrl from './lib/build-authentication-url'
+import { setToken } from './token-manager'
+import { parse } from 'url'
+import { setState, getState, clearState, CACHE_KEYS } from './state-manager'
 
 export default ({
   AUTHENTICATION_ENDPOINT,
   CLIENT_ID,
-  STATE,
+  STATE_KEY,
   REQUESTED_SCOPES,
   REDIRECT_URL,
-  CODE_VERIFIER,
+  VERIFICATION_KEY,
   TOKEN_ENDPOINT,
-}) => async () => {
-  AUTHENTICATION_URL =
-    AUTHENTICATION_ENDPOINT +
-    '?response_type=code' +
-    '&client_id=' +
-    encodeURIComponent(CLIENT_ID) +
-    '&state=' +
-    encodeURIComponent(STATE) +
-    '&scope=' +
-    encodeURIComponent(REQUESTED_SCOPES) +
-    '&redirect_uri=' +
-    encodeURIComponent(REDIRECT_URL) +
-    '&code_challenge=' +
-    encodeURIComponent(await pkceChallengeFromVerifier(CODE_VERIFIER)) +
-    '&code_challenge_method=S256'
+}) => async ({ forceLogin = true } = {}) => {
+  const authenticationUrl = await buildAuthenticationUrl({
+    AUTHENTICATION_ENDPOINT,
+    CLIENT_ID,
+    STATE_KEY,
+    REQUESTED_SCOPES,
+    REDIRECT_URL,
+    VERIFICATION_KEY,
+  })
 
-  const { error, code, state } = parseQueryString(window.location.search.substring(1))
+  /**
+   * Set some persistent state
+   */
+  setState(CACHE_KEYS.PKCE_STATE, STATE_KEY)
+
+  /**
+   * Authenticate user
+   *
+   * GET request to the authentication endpoint
+   *   => Failed authentication returns the URL of the login page
+   *   => Successful authentication returns a URL with params { code, scope, state }
+   */
+  const { url } = await fetch(authenticationUrl, {
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+  })
+
+  const authCallback = parse(url)
+
+  /**
+   * If the callback host is the same as
+   * the authentication server host then
+   * the user is not authenticated
+   */
+
+  if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
+    if (forceLogin) {
+      window.location = authenticationUrl
+    } else {
+      return {
+        loggedIn: false,
+      }
+    }
+  }
+
+  const { error, code, state } = parseQueryString(authCallback.query)
 
   if (error) {
-    console.error('Authentication error', error)
-  } else if (code) {
-    if (localStorage.getItem('pkce_state') != state) {
-      alert('Invalid state')
-    }
-    const result = await post(TOKEN_ENDPOINT, {
+    throw new Error('Authentication unsuccessful: ' + error.message)
+  }
+
+  if (getState(CACHE_KEYS.PKCE_STATE) !== state) {
+    console.warn('PKCE flow state mismatch', 'User may have logged out')
+  }
+
+  /**
+   * Request an access token
+   */
+  const accessToken = await fetch(TOKEN_ENDPOINT, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      Accept: 'application/json',
+    },
+    body: Object.entries({
       grant_type: 'authorization_code',
       code,
       client_id: CLIENT_ID,
       redirect_uri: REDIRECT_URL,
-      code_verifier: await pkceChallengeFromVerifier(CODE_VERIFIER),
+      code_verifier: VERIFICATION_KEY,
+    })
+      .map(([key, val]) => `${key}=${val}`)
+      .join('&'),
+  })
+    .then(res => res.json())
+    .catch(error => {
+      throw new Error('Error requesting access token', error)
     })
 
-    console.log(result)
-  } else {
-    console.log('why is this running')
-    window.location = AUTHENTICATION_URL
+  /**
+   * Cache the local token to runtime memory
+   */
+  setToken(accessToken)
+
+  // Clean up state and return application state
+  const applicationState = getState(CACHE_KEYS.APPLICATION_STATE)
+  clearState()
+  return {
+    loggedIn: true,
+    applicationState,
   }
 }

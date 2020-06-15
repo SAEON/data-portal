@@ -1,45 +1,27 @@
-import generateRandomString from './lib/generate-random-string'
+import createKey from './lib/create-key'
 import authenticate from './authenticate'
-
-// Private to this package
-var AUTHENTICATION_ENDPOINT
-var CLIENT_ID
-var STATE
-var REQUESTED_SCOPES
-var REDIRECT_URL
-var CODE_VERIFIER
-var TOKEN_ENDPOINT
+import { getToken } from './token-manager'
+import { setState, CACHE_KEYS } from './state-manager'
+import logout from './logout'
 
 export default ({
-  clientId,
-  redirectUrl,
-  authenticationEndpoint,
-  tokenEndpoint,
-  requestedScopes,
-}) => {
-  CLIENT_ID = clientId
-  REDIRECT_URL = redirectUrl
-  AUTHENTICATION_ENDPOINT = authenticationEndpoint
-  TOKEN_ENDPOINT = tokenEndpoint
-  REQUESTED_SCOPES = requestedScopes
-
-  STATE = localStorage.getItem('pkce_state') || generateRandomString()
-  CODE_VERIFIER = localStorage.getItem('pkce_code_verifier') || generateRandomString()
-
-  localStorage.setItem('pkce_state', STATE)
-  localStorage.setItem('pkce_code_verifier', CODE_VERIFIER)
-
-  console.log('hi', STATE, CODE_VERIFIER)
-
-  return {
-    authenticate: authenticate({
-      AUTHENTICATION_ENDPOINT,
-      CLIENT_ID,
-      REQUESTED_SCOPES,
-      REDIRECT_URL,
-      STATE,
-      CODE_VERIFIER,
-      TOKEN_ENDPOINT,
-    }),
-  }
-}
+  clientId: CLIENT_ID,
+  redirectUrl: REDIRECT_URL,
+  authenticationEndpoint: AUTHENTICATION_ENDPOINT,
+  tokenEndpoint: TOKEN_ENDPOINT,
+  requestedScopes: REQUESTED_SCOPES,
+  logoutEndpoint: LOGOUT_ENDPOINT,
+}) => ({
+  authenticate: authenticate({
+    AUTHENTICATION_ENDPOINT,
+    CLIENT_ID,
+    REQUESTED_SCOPES,
+    REDIRECT_URL,
+    STATE_KEY: createKey(),
+    VERIFICATION_KEY: createKey(),
+    TOKEN_ENDPOINT,
+  }),
+  logout: logout({ LOGOUT_ENDPOINT }),
+  getBearerToken: () => `Bearer ${getToken()}`,
+  setApplicationState: state => setState(CACHE_KEYS.APPLICATION_STATE, state),
+})

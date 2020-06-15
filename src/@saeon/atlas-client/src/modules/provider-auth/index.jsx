@@ -1,27 +1,43 @@
-import React, { useEffect, createContext } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import {
   CLIENT_ID as clientId,
   REDIRECT_URL as redirectUrl,
   AUTHENTICATION_ENDPOINT as authenticationEndpoint,
   TOKEN_ENDPOINT as tokenEndpoint,
   REQUESTED_SCOPES as requestedScopes,
+  LOGOUT_ENDPOINT as logoutEndpoint,
 } from '../../config'
-import pkceAuthClient from '@saeon/pkce-client'
+import authClient from '@saeon/pkce-client'
 
-const authClient = pkceAuthClient({
+const { authenticate, logout, getBearerToken, setApplicationState } = authClient({
   clientId,
   redirectUrl,
   authenticationEndpoint,
   tokenEndpoint,
   requestedScopes,
+  logoutEndpoint,
 })
-
-authClient.authenticate()
 
 export const AuthContext = createContext()
 
 export default ({ children }) => {
-  useEffect(() => {}, [])
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  return <AuthContext.Provider value={{ x: 1 }}>{children}</AuthContext.Provider>
+  useEffect(() => {
+    authenticate({ forceLogin: false }).then(({ loggedIn }) => setLoggedIn(loggedIn))
+  }, [])
+
+  return (
+    <AuthContext.Provider
+      value={{
+        login: () => authenticate().then(({ loggedIn }) => setLoggedIn(loggedIn)),
+        logout: () => logout().then(({ loggedIn }) => setLoggedIn(loggedIn)),
+        getBearerToken,
+        setApplicationState,
+        loggedIn,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }

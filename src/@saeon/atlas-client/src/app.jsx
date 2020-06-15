@@ -2,7 +2,7 @@ import React from 'react'
 import { CssBaseline } from '@material-ui/core'
 import { EventBoundary } from './components'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { DEFAULT_ERROR, DEFAULT_WARNING, DEFAULT_INFO, DEFAULT_SUCCESS } from './config'
 import { ApolloProvider } from '@apollo/client'
 
@@ -38,6 +38,12 @@ export default ({ client, theme }) => (
                 <MapProvider>
                   <Router>
                     <Layout>
+                      <Route
+                        key={'authenticated'}
+                        path={'/authenticated'}
+                        exact={true}
+                        render={() => <Redirect to={'/'} />}
+                      />
                       <Route
                         key={'home'}
                         path={'/'}
