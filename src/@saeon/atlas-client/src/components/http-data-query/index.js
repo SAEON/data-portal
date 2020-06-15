@@ -9,7 +9,7 @@ const defaultState = {
 export default ({ uri, body, method = 'GET' }) => {
   const [state, setState] = useState(defaultState)
 
-  const fetchData = async (abortController) => {
+  const fetchData = async abortController => {
     try {
       const response = await fetch(uri, {
         body: typeof body === 'string' ? body : JSON.stringify(body),

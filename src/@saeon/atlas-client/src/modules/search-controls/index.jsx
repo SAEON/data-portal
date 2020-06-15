@@ -16,9 +16,9 @@ const DSL_INDEX = `saeon-odp-4-2`
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
 
 const maxSlider = 7300
-const dateToString = (dt) => format(dt, 'dd/MM/yyyy')
-const getSubtractedDate = (days) => sub(new Date(), { days: Math.abs(days - maxSlider) })
-const getDateStringFromInt = (val) => dateToString(getSubtractedDate(val))
+const dateToString = dt => format(dt, 'dd/MM/yyyy')
+const getSubtractedDate = days => sub(new Date(), { days: Math.abs(days - maxSlider) })
+const getDateStringFromInt = val => dateToString(getSubtractedDate(val))
 
 const Div = () => (
   <Grid item xs={12}>

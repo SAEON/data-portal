@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid'
 var draw
 export default ({ updateForm, selectPolygonActive, selectRectActive, proxy, onDrawEnd }) => {
   // TODO. These should be handled in a top level provider specifically for the map.
-  const keyDown = (e) => {
+  const keyDown = e => {
     if (e.key === 'Escape') {
       proxy.removeInteraction(draw)
       updateForm({
@@ -50,7 +50,7 @@ export default ({ updateForm, selectPolygonActive, selectRectActive, proxy, onDr
                   geometryFunction: createBox(),
                 })
                 proxy.addInteraction(draw)
-                draw.on('drawend', (event) => {
+                draw.on('drawend', event => {
                   const feat = event.feature
                   const geometry = feat.getGeometry()
                   onDrawEnd(geometry)
@@ -85,7 +85,7 @@ export default ({ updateForm, selectPolygonActive, selectRectActive, proxy, onDr
                   freehand: true,
                 })
                 proxy.addInteraction(draw)
-                draw.on('drawend', (event) => {
+                draw.on('drawend', event => {
                   const feat = event.feature
                   const geometry = feat.getGeometry()
                   onDrawEnd(geometry)

@@ -17,9 +17,9 @@ import useStyles from './style'
 
 const minSlider = 1
 const maxSlider = 7300
-const dateToString = (dt) => format(dt, 'dd/MM/yyyy')
-const getSubtractedDate = (days) => sub(new Date(), { days: Math.abs(days - maxSlider) })
-const getDateStringFromInt = (val) => dateToString(getSubtractedDate(val))
+const dateToString = dt => format(dt, 'dd/MM/yyyy')
+const getSubtractedDate = days => sub(new Date(), { days: Math.abs(days - maxSlider) })
+const getDateStringFromInt = val => dateToString(getSubtractedDate(val))
 const RadioTxt = ({ children }) => <Typography variant="overline">{children}</Typography>
 
 export default ({ updateForm, ...fields }) => {
@@ -142,7 +142,7 @@ export default ({ updateForm, ...fields }) => {
                         ? parse(fields.dateRange[0], 'dd/MM/yyyy', new Date())
                         : new Date()
                     }
-                    onChange={(date) =>
+                    onChange={date =>
                       updateForm({ dateRange: [dateToString(date), fields.dateRange[1]] })
                     }
                     KeyboardButtonProps={{
@@ -164,7 +164,7 @@ export default ({ updateForm, ...fields }) => {
                         ? parse(fields.dateRange[1], 'dd/MM/yyyy', new Date())
                         : new Date()
                     }
-                    onChange={(date) =>
+                    onChange={date =>
                       updateForm({ dateRange: [fields.dateRange[0], dateToString(date)] })
                     }
                     KeyboardButtonProps={{

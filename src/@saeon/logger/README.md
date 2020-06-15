@@ -42,6 +42,7 @@ import { configure } from '@saeon/logger'
 configure(({ console, timestampFormat }) => {
   return {
     overwrites: {
+      // But note that console.log then won't have a timestamp, since you are overwriting the overwritten console.log function
       log: () => console.log('hello world'),
     },
     formatter: timestampFormat,

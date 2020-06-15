@@ -24,7 +24,7 @@ const fetchMeta = ({ uri, abortController }) =>
     headers: {
       Accept: 'application/json',
     },
-  }).then((res) => res.json())
+  }).then(res => res.json())
 
 export default ({ apiProxyAddress, servicesAddress, layers }) => {
   const [state, setState] = useState({
@@ -36,7 +36,7 @@ export default ({ apiProxyAddress, servicesAddress, layers }) => {
   useEffect(() => {
     const abortController = new AbortController()
     Promise.all(
-      layers.map((uri) =>
+      layers.map(uri =>
         Promise.all([
           uri,
           fetchMeta({
@@ -46,7 +46,7 @@ export default ({ apiProxyAddress, servicesAddress, layers }) => {
         ])
       )
     )
-      .then((esriLayers) => {
+      .then(esriLayers => {
         if (!abortController.signal.aborted) {
           setState({
             loading: false,
@@ -55,7 +55,7 @@ export default ({ apiProxyAddress, servicesAddress, layers }) => {
           })
         }
       })
-      .catch((error) => {
+      .catch(error => {
         if (!abortController.signal.aborted) {
           setState({
             loading: false,

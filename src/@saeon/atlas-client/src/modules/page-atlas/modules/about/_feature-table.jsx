@@ -19,7 +19,7 @@ const status = Object.freeze({
   complete: Symbol('complete'),
 })
 
-const createRow = (cells) => {
+const createRow = cells => {
   return {
     name: cells[0],
     status: cells[1] === status.planned ? 'planned' : status.partial ? 'partial' : 'complete',
@@ -57,7 +57,7 @@ export default function DenseTable() {
             </TableHead>
             <TableBody>
               {rows
-                .map((row) => createRow(row))
+                .map(row => createRow(row))
                 .map((row, i) => (
                   <TableRow key={i}>
                     <TableCell component="th" scope="row">

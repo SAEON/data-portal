@@ -9,7 +9,7 @@ export default ({ title, uri }) => {
     data: null,
   })
 
-  const fetchData = async (abortFetch) => {
+  const fetchData = async abortFetch => {
     try {
       setState(
         Object.assign(
@@ -18,7 +18,7 @@ export default ({ title, uri }) => {
             loading: false,
             data: await fetch(uri, {
               signal: abortFetch.signal,
-            }).then((res) => res.json()),
+            }).then(res => res.json()),
           }
         )
       )

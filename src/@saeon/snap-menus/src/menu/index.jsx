@@ -80,7 +80,7 @@ export default ({
               grid={[1, 1]}
               scale={1}
               onStart={() => setActiveMenu(id)}
-              onDrag={debounce((ev) => {
+              onDrag={debounce(ev => {
                 const newState = {}
 
                 // Get x,y from the event (could be a touch for mobile, click elsewise)

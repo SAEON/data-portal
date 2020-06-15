@@ -15,8 +15,8 @@ export default ({ updateForm, ...fields }) => {
           <>
             {/* Render the mapTools menu if necessary */}
             {menus
-              ?.filter((menu) => menu.id === id)
-              ?.map((menu) =>
+              ?.filter(menu => menu.id === id)
+              ?.map(menu =>
                 createPortal(
                   <menu.Component updateForm={updateForm} {...fields} />,
                   menuContainerEl
@@ -40,7 +40,7 @@ export default ({ updateForm, ...fields }) => {
                       norender: true,
                       Component: ({ updateForm, ...fields }) => (
                         <PolygonSelectionTool
-                          onDrawEnd={(polygon) =>
+                          onDrawEnd={polygon =>
                             updateForm({ polygons: [...fields.polygons, polygon] })
                           }
                           id={id}

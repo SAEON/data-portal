@@ -44,8 +44,8 @@ export default () => {
                   <>
                     {/* Render search results if necessary */}
                     {menus
-                      ?.filter((menu) => menu.id === searchListMenuId)
-                      ?.map((menu) =>
+                      ?.filter(menu => menu.id === searchListMenuId)
+                      ?.map(menu =>
                         createPortal(
                           <menu.Component data={data} currentPage={currentPage} />,
                           menuContainerEl

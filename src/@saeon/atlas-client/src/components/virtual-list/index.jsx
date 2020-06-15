@@ -38,7 +38,7 @@ export default class extends Component {
         height={height}
         deferredMeasurementCache={this.cache}
         rowHeight={this.cache.rowHeight}
-        rowRenderer={(args) => this.renderRow(args, Template)}
+        rowRenderer={args => this.renderRow(args, Template)}
       />
     )
   }

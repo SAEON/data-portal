@@ -12,7 +12,7 @@ const createHook = ({ catalog }) => () => {
   const query = catalog.getQuery()
   const [state, setState] = useState(defaultState)
 
-  const fetchData = async (abortFetch) => {
+  const fetchData = async abortFetch => {
     try {
       const result = await catalog.query(null, abortFetch)
       if (result)

@@ -12,15 +12,15 @@ export default class extends PureComponent {
       menus: [...this.state.menus, { id, zIndex, Component, norender, ...props }],
     })
 
-  removeMenu = (removeId) =>
+  removeMenu = removeId =>
     this.setState({
       menus: [...this.state.menus].filter(({ id }) => id !== removeId),
     })
 
-  getMenuById = (id) => this.state.menus.find((item) => item.id === id)
+  getMenuById = id => this.state.menus.find(item => item.id === id)
 
-  setActiveMenu = (id) => {
-    const newMenus = [...this.state.menus].map((m) => {
+  setActiveMenu = id => {
+    const newMenus = [...this.state.menus].map(m => {
       if (m.id === id) {
         return Object.assign({ ...m }, { zIndex: this.getActiveMenuZIndex() })
       } else {

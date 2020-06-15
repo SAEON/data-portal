@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
       <AppBar variant="outlined" position="static">
         <Toolbar disableGutters={false} variant="dense">
           <IconButton
-            onClick={(e) => setMenuAnchor(e.currentTarget)}
+            onClick={e => setMenuAnchor(e.currentTarget)}
             style={{ padding: 0 }}
             edge="start"
             color="inherit"
@@ -75,7 +75,12 @@ const Layout = ({ children }) => {
               color="inherit"
               size="small"
             >
-              <AccountIcon color={false ? 'secondary' : 'inherit'} />
+              <AccountIcon
+                color={
+                  // eslint-disable-next-line no-constant-condition
+                  false ? 'secondary' : 'inherit'
+                }
+              />
             </IconButton>
 
             {/* User profile menu */}
@@ -96,6 +101,7 @@ const Layout = ({ children }) => {
               TransitionComponent={Fade}
             >
               {/* Login */}
+              {/* eslint-disable-next-line no-constant-condition */}
               {false ? null : (
                 <MenuItem
                   to="/login"
@@ -110,6 +116,7 @@ const Layout = ({ children }) => {
               )}
 
               {/* Signup */}
+              {/* eslint-disable-next-line no-constant-condition */}
               {false ? null : (
                 <MenuItem
                   to="/signup"
@@ -124,6 +131,7 @@ const Layout = ({ children }) => {
               )}
 
               {/* Logout */}
+              {/* eslint-disable-next-line no-constant-condition */}
               {false ? (
                 <MenuItem
                   className={classes.link}

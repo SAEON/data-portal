@@ -57,7 +57,7 @@ export class Catalogue {
     if (this._matchClauses)
       dsl.query.bool.must = [
         ...dsl.query.bool.must,
-        ...this._matchClauses.map((m) => ({
+        ...this._matchClauses.map(m => ({
           multi_match: m,
         })),
       ]

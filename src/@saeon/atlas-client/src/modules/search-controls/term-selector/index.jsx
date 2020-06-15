@@ -6,7 +6,7 @@ export default ({ updateForm, data }) => {
   return (
     <Autocomplete
       getOptionSelected={(a, b) => a.key === b.key}
-      onChange={(e, value) => updateForm({ selectedTerms: value.map((v) => v.key) })}
+      onChange={(e, value) => updateForm({ selectedTerms: value.map(v => v.key) })}
       multiple
       autoHighlight
       size="small"
@@ -16,7 +16,7 @@ export default ({ updateForm, data }) => {
         key: key.trim(),
         doc_count,
       }))}
-      getOptionLabel={(option) => option.key}
+      getOptionLabel={option => option.key}
       renderTags={(value, getTagProps) =>
         value.map((option, index) => (
           <Chip
@@ -29,7 +29,7 @@ export default ({ updateForm, data }) => {
           />
         ))
       }
-      renderInput={(params) => (
+      renderInput={params => (
         <TextField
           {...params}
           label="Term search"

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-export default (props) => {
+export default props => {
   const [fields, updateAllFields] = useState(
     Object.fromEntries(
       Object.entries(props).filter(
@@ -17,13 +17,13 @@ export default (props) => {
 
   useEffect(
     () =>
-      props.effects?.forEach((effect) => {
+      props.effects?.forEach(effect => {
         effect(fields)
       }),
     Object.entries(fields).map(([, v]) => v)
   )
 
-  const updateForm = (obj) => {
+  const updateForm = obj => {
     updateAllFields(Object.assign({ ...fields }, obj))
   }
 

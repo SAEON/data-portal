@@ -21,7 +21,7 @@ global.console = new Proxy(proxyTarget, {
  *   formmater: timestampFormat // This uses the date-fns library
  * }))
  */
-export const configure = async (cb) => {
+export const configure = async cb => {
   const { overwrites, formatter } = cb({ console: globalConsole, timestampFormat })
   proxyTarget = Object.assign(proxyTarget, overwrites)
   timestampFormat = formatter || timestampFormat

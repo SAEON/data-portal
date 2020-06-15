@@ -57,7 +57,7 @@ export default class extends Component {
               proxy.getLayers().getArray().length > 0 ? (
                 <DragAndDrop
                   items={proxy.getLayers().getArray()}
-                  reorderItems={(result) => {
+                  reorderItems={result => {
                     if (!result.destination) return
                     const from = result.source.index
                     const to = result.destination.index

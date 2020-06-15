@@ -41,7 +41,7 @@ const exec = configureGql(
   ).data.repository.ref.target.history.edges
     .map(({ node }) => node)
     .filter(({ message }) => Boolean(message.match(/#\d*/)))
-    .map((row) =>
+    .map(row =>
       Object.assign(row, {
         'issue#': row.message.match(/#\d*/)[0],
       })
@@ -79,4 +79,4 @@ const exec = configureGql(
   })
     .pipe(stream)
     .on('close', () => console.log(`Finished writing repository data to ${OUTPUT_FILEPATH}`))
-})().catch((err) => console.log('Top level error caught', err))
+})().catch(err => console.log('Top level error caught', err))

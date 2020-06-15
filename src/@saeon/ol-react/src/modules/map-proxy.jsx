@@ -100,16 +100,16 @@ export default class extends PureComponent {
 
           getLayersByServerAddress: {
             ...descriptor,
-            get: () => (baseUri) =>
+            get: () => baseUri =>
               map
                 .getLayers()
                 .getArray()
-                .filter((layer) => (layer.getSource().urls || []).includes(baseUri)),
+                .filter(layer => (layer.getSource().urls || []).includes(baseUri)),
           },
 
           removeLayer: {
             ...descriptor,
-            get: () => (layer) => {
+            get: () => layer => {
               map.removeLayer(layer) || map.removeLayer(layer._self)
               reRender()
             },
@@ -117,12 +117,12 @@ export default class extends PureComponent {
 
           removeLayerById: {
             ...descriptor,
-            get: () => (id) => proxy.removeLayer(proxy.getLayerById(id)),
+            get: () => id => proxy.removeLayer(proxy.getLayerById(id)),
           },
 
           addInteraction: {
             ...descriptor,
-            get: () => (interaction) => {
+            get: () => interaction => {
               map.addInteraction(interaction)
               reRender()
             },
@@ -130,7 +130,7 @@ export default class extends PureComponent {
 
           removeInteraction: {
             ...descriptor,
-            get: () => (interaction) => {
+            get: () => interaction => {
               map.removeInteraction(interaction)
               reRender()
             },
@@ -138,11 +138,11 @@ export default class extends PureComponent {
 
           getLayerById: {
             ...descriptor,
-            get: () => (id) =>
+            get: () => id =>
               map
                 .getLayers()
                 .getArray()
-                .filter((layer) => id === layer.get('id'))[0],
+                .filter(layer => id === layer.get('id'))[0],
           },
 
           /**
@@ -150,12 +150,12 @@ export default class extends PureComponent {
            */
           addLayer: {
             ...descriptor,
-            get: () => (layer) => {
+            get: () => layer => {
               if (
                 map
                   .getLayers()
                   .getArray()
-                  .map((layer) => layer.get('id'))
+                  .map(layer => layer.get('id'))
                   .includes(layer.get('id'))
               ) {
                 throw new Error(
@@ -205,7 +205,7 @@ export default class extends PureComponent {
                             .getLayers()
                             .getArray()
                             .map(
-                              (layer) =>
+                              layer =>
                                 new Proxy(
                                   /**
                                    * OpenLayer.Layer proxy object
@@ -219,7 +219,7 @@ export default class extends PureComponent {
                                       },
                                       get: {
                                         ...descriptor,
-                                        get: () => (attribute) => layer.get(attribute),
+                                        get: () => attribute => layer.get(attribute),
                                       },
                                     }
                                   ),

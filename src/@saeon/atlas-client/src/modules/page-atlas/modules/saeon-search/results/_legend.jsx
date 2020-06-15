@@ -20,8 +20,8 @@ export default ({ title, uri }) => {
               data: await fetch(uri, {
                 signal: abortFetch.signal,
               })
-                .then((res) => res.blob())
-                .then((blob) => URL.createObjectURL(blob)),
+                .then(res => res.blob())
+                .then(blob => URL.createObjectURL(blob)),
             }
           )
         )
