@@ -82,7 +82,11 @@ export default ({
     })
       .map(([key, val]) => `${key}=${val}`)
       .join('&'),
-  }).then(res => res.json())
+  })
+    .then(res => res.json())
+    .catch(error => {
+      throw new Error('Error requesting access token', error)
+    })
 
   /**
    * Cache the local token to runtime memory
@@ -92,5 +96,8 @@ export default ({
   // Clean up state and return application state
   const applicationState = getState(CACHE_KEYS.APPLICATION_STATE)
   clearState()
-  return applicationState
+  return {
+    loggedIn: true,
+    applicationState,
+  }
 }
