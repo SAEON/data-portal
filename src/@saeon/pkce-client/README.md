@@ -33,6 +33,7 @@ It is helpful following along with this [ORY Hydra tutorial](https://www.ory.sh/
 
 ```sh
 HYDRA_DOCKER_IMAGE=
+DOCKER_NETWORK=
 CLIENT_ID=
 CLIENT_SECRET=
 GRANT_TYPE=authorization_code
@@ -43,10 +44,10 @@ LOGIN_CALLBACK=
 
 #### Add a client
 ```
-docker run -it --rm --network odp-core-net -e HYDRA_ADMIN_URL=https://hydra:4445 ${HYDRA_DOCKER_IMAGE} clients create --skip-tls-verify --id ${CLIENT_ID} --secret ${CLIENT_SECRET} --token-endpoint-auth-method none --grant-types ${GRANT_TYPE} --response-types ${RESPONSE_TYPE} --scope ${SCOPE} --callbacks ${LOGIN_CALLBACK} --allowed-cors-origins=http://localhost:3001
+docker run -it --rm --network ${DOCKER_NETWORK} -e HYDRA_ADMIN_URL=https://hydra:4445 ${HYDRA_DOCKER_IMAGE} clients create --skip-tls-verify --id ${CLIENT_ID} --secret ${CLIENT_SECRET} --token-endpoint-auth-method none --grant-types ${GRANT_TYPE} --response-types ${RESPONSE_TYPE} --scope ${SCOPE} --callbacks ${LOGIN_CALLBACK} --allowed-cors-origins=http://localhost:3001
 ```
 
 #### Remove a client
 ```sh
-docker run -it --rm --network odp-core-net -e HYDRA_ADMIN_URL=https://hydra:4445 ${HYDRA_DOCKER_IMAGE} clients delete --skip-tls-verify ${CLIENT_ID}
+docker run -it --rm --network ${DOCKER_NETWORK} -e HYDRA_ADMIN_URL=https://hydra:4445 ${HYDRA_DOCKER_IMAGE} clients delete --skip-tls-verify ${CLIENT_ID}
 ```
