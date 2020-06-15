@@ -91,8 +91,6 @@ configure(() => ({
     }, batchingInterval),
   },
 }))
-
-
 ```
 
 ### Or both HTTP, GraphQL, with formatter specified and overwriting the console.error function
