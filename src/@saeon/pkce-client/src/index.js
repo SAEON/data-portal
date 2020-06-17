@@ -17,11 +17,10 @@ export default ({
     CLIENT_ID,
     REQUESTED_SCOPES,
     REDIRECT_URL,
-    STATE_KEY: createKey(),
-    VERIFICATION_KEY: createKey(),
     TOKEN_ENDPOINT,
+    STATE: createKey(),
+    VERIFICATION_KEY: createKey(),
   }),
   logout: logout({ LOGOUT_ENDPOINT }),
   getBearerToken: () => `Bearer ${getToken()}`,
-  setApplicationState: state => setState(CACHE_KEYS.APPLICATION_STATE, state),
 })

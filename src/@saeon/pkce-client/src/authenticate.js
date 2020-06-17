@@ -7,25 +7,21 @@ import { setState, getState, clearState, CACHE_KEYS } from './state-manager'
 export default ({
   AUTHENTICATION_ENDPOINT,
   CLIENT_ID,
-  STATE_KEY,
+  STATE,
   REQUESTED_SCOPES,
   REDIRECT_URL,
   VERIFICATION_KEY,
   TOKEN_ENDPOINT,
-}) => async ({ forceLogin = true } = {}) => {
+}) => async ({ forceLogin = true, redirectToCurrentPath = false } = {}) => {
+  var _redirectToCurrentPath
   const authenticationUrl = await buildAuthenticationUrl({
     AUTHENTICATION_ENDPOINT,
     CLIENT_ID,
-    STATE_KEY,
+    STATE,
     REQUESTED_SCOPES,
     REDIRECT_URL,
     VERIFICATION_KEY,
   })
-
-  /**
-   * Set some persistent state
-   */
-  setState(CACHE_KEYS.PKCE_STATE, STATE_KEY)
 
   /**
    * Authenticate user
@@ -46,16 +42,28 @@ export default ({
    * If the callback host is the same as
    * the authentication server host then
    * the user is not authenticated
+   *
+   * In this case save the current path (if configured to do so),
+   * then login
+   *
+   * Otherwise see if redirection should be overwritten, and
+   * save to local variable. Then clear the state
    */
 
   if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
     if (forceLogin) {
+      if (redirectToCurrentPath) {
+        setState(CACHE_KEYS.OVERWRITE_REDIRECT, window.location.pathname)
+      }
       window.location = authenticationUrl
     } else {
       return {
         loggedIn: false,
       }
     }
+  } else {
+    _redirectToCurrentPath = getState(CACHE_KEYS.OVERWRITE_REDIRECT)
+    clearState()
   }
 
   const { error, code, state } = parseQueryString(authCallback.query)
@@ -64,8 +72,9 @@ export default ({
     throw new Error('Authentication unsuccessful: ' + error.message)
   }
 
-  if (getState(CACHE_KEYS.PKCE_STATE) !== state) {
+  if (STATE !== state) {
     console.warn('PKCE flow state mismatch', 'User may have logged out')
+    throw new Error('Authentication unsuccessful due to state param mismatch')
   }
 
   /**
@@ -99,11 +108,20 @@ export default ({
    */
   setToken(accessToken)
 
-  // Clean up state and return application state
-  const applicationState = getState(CACHE_KEYS.APPLICATION_STATE)
-  clearState()
-  return {
-    loggedIn: true,
-    applicationState,
+  /**
+   * If user specifies a redirect,
+   * and if a new login was required
+   * then _redirectToCurrentPath has a value
+   *
+   * if _redirectToCurrentPath exists,
+   * Then redirect to that path and start
+   * again.
+   */
+  if (_redirectToCurrentPath) {
+    window.location.pathname = _redirectToCurrentPath
+  } else {
+    return {
+      loggedIn: true,
+    }
   }
 }

@@ -1,6 +1,5 @@
 export const CACHE_KEYS = {
-  PKCE_STATE: 'PKCE_STATE',
-  APPLICATION_STATE: 'APPLICATION_STATE',
+  OVERWRITE_REDIRECT: 'OVERWRITE_REDIRECT',
 }
 
 export const setState = (key, value) => localStorage.setItem(key, value)

@@ -3,7 +3,7 @@ import createVerificationCode from './create-verification-code'
 export default async ({
   AUTHENTICATION_ENDPOINT,
   CLIENT_ID,
-  STATE_KEY,
+  STATE,
   REQUESTED_SCOPES,
   REDIRECT_URL,
   VERIFICATION_KEY,
@@ -13,7 +13,7 @@ export default async ({
   '&client_id=' +
   encodeURIComponent(CLIENT_ID) +
   '&state=' +
-  encodeURIComponent(STATE_KEY) +
+  encodeURIComponent(STATE) +
   '&scope=' +
   encodeURIComponent(REQUESTED_SCOPES) +
   '&redirect_uri=' +
