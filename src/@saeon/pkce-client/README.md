@@ -51,7 +51,7 @@ fetch(<url>, {
   ...,
   headers: {
     ...,
-    'Authorization': getBearerToken(),
+    'Authorization': getBearerToken(), // NOTE - this is still WIP
   }
 })
 ```
