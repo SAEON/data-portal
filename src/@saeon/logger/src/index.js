@@ -10,10 +10,10 @@ const formatDate = () => format(new Date(), timestampFormat)
 
 globalThis.console = {
   ..._console,
-  log: (...args) => _console.log.call(_console, formatDate(), ...args),
-  info: (...args) => _console.info.call(_console, formatDate(), ...args),
-  warn: (...args) => _console.warn.call(_console, formatDate(), ...args),
-  error: (...args) => _console.error.call(_console, formatDate(), ...args),
+  log: (...args) => _console.log.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
+  info: (...args) => _console.info.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
+  warn: (...args) => _console.warn.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
+  error: (...args) => _console.error.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
 }
 
 export const configure = async cb => {
