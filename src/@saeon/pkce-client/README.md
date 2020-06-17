@@ -1,5 +1,5 @@
 # @saeon/pkce-client
-A JavaScript browser oauth2 (PKCE) client for user-authentication/authorization against SAEON's identity service. This package is based on a [proof-of-concept PKCE implementation](https://github.com/aaronpk/pkce-vanilla-js) provided by [Aaron Parecki](https://github.com/aaronpk), maintainer of oauth.net. It seems pretty reasonable, and so has been adapted here.
+A JavaScript browser oauth2 (PKCE) client for user-authentication/authorization against SAEON's identity service, based on a [proof-of-concept PKCE implementation](https://github.com/aaronpk/pkce-vanilla-js) provided by [Aaron Parecki](https://github.com/aaronpk).
 
 ```sh
 npm install --save @saeon/pkce-client
@@ -32,13 +32,22 @@ authenticate({ forceLogin: false })
  * To redirect back to current path
  * NOTE this will actually result in TWO redirects
  *   (1) The redirect URL specified in the authClient
+ *   (2) Then the client will load, and redirect again
+ * 
+ * This is because ORY Hydra requires static redirect URLS,
+ * but from the client perspective you might want to preserve
+ * your current path, which is dynamic depending on the path
+ * that you are authenticating from
+ * 
+ * NOTE that no state is preserved - the page is reloaded on
+ * a particular path
  */
-authenticate({redirectToCurrentPath: true})
+authenticate({ redirectToCurrentPath: true })
   .then(({ loggedIn }) => console.log(loggedIn))
 
 // logout
 logout()
-  .then(({loggedIn}) => console.log(loggedIn))
+  .then(({ loggedIn }) => console.log(loggedIn))
 
 /**
  * Authenticate / authorize users on your APIs

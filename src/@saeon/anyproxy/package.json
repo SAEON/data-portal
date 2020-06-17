@@ -4,8 +4,8 @@
   "description": "A wraper for anyproxy, to deploy behind Node.js as a caching server",
   "main": "index.js",
   "scripts": {
-    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist && copyfiles .env dist/ && NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_ENV=development TZ=utc node dist'",
-    "start:prod": "rimraf dist && NODE_ENV=production babel --root-mode upward src --out-dir dist && copyfiles .env dist/ && NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_ENV=production TZ=utc node dist",
+    "start": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist && copyfiles .env dist/ && NODE_ENV=development TZ=utc node dist'",
+    "start:prod": "rimraf dist && NODE_ENV=production babel --root-mode upward src --out-dir dist && copyfiles .env dist/ && NODE_ENV=production TZ=utc node dist",
     "check-package-updates": "ncu",
     "update-packages": "ncu -u"
   },

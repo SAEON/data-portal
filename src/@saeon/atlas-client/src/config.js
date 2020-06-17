@@ -22,10 +22,4 @@ export const LOGOUT_ENDPOINT =
   process.env.LOGOUT_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/sessions/logout'
 export const TOKEN_ENDPOINT =
   process.env.TOKEN_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/token'
-//   export const AUTHENTICATION_ENDPOINT =
-//   process.env.AUTHENTICATION_ENDPOINT || `${ATLAS_API_ADDRESS}/proxy/auth/oauth2/auth`
-// export const LOGOUT_ENDPOINT =
-//   process.env.LOGOUT_ENDPOINT || `${ATLAS_API_ADDRESS}/proxy/auth/oauth2/sessions/logout`
-// export const TOKEN_ENDPOINT =
-//   process.env.TOKEN_ENDPOINT || `${ATLAS_API_ADDRESS}/proxy/auth/oauth2/token`
 export const REQUESTED_SCOPES = process.env.REQUESTED_SCOPES || ''
