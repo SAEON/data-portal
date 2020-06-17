@@ -8,12 +8,20 @@ const _console = globalThis.console
 var timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
 const formatDate = () => format(new Date(), timestampFormat)
 
+const writeToConsole = (level, ...args) => {
+  if (typeof args[0] === 'object') {
+    _console[level].call(_console, formatDate(), ...args)
+  } else {
+    _console[level].call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1))
+  }
+}
+
 globalThis.console = {
   ..._console,
-  log: (...args) => _console.log.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
-  info: (...args) => _console.info.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
-  warn: (...args) => _console.warn.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
-  error: (...args) => _console.error.call(_console, `${formatDate()} ${args[0]}`, ...args.slice(1)),
+  log: (...args) => writeToConsole('log', ...args),
+  info: (...args) => writeToConsole('info', ...args),
+  warn: (...args) => writeToConsole('warn', ...args),
+  error: (...args) => writeToConsole('error', ...args),
 }
 
 export const configure = async cb => {
