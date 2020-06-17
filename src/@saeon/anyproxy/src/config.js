@@ -20,3 +20,4 @@ export const CSIR_ESRI_PROXY =
   process.env.CSIR_ESRI_PROXY || 'https://pta-gis-2-web1.csir.co.za/server2/rest/services'
 export const HST_ESRI_PROXY =
   process.env.HST_ESRI_PROXY || 'https://gisportal.saeon.ac.za/server/rest/services'
+export const IDENTITY_PROXY = process.env.IDENTITY_PROXY || 'https://odp.saeon.dvn/auth'

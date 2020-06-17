@@ -67,13 +67,13 @@ export default ({
   }
 
   const { error, code, state } = parseQueryString(authCallback.query)
+  console.log(authCallback.query)
 
   if (error) {
     throw new Error('Authentication unsuccessful: ' + error.message)
   }
 
   if (STATE !== state) {
-    console.warn('PKCE flow state mismatch', 'User may have logged out')
     throw new Error('Authentication unsuccessful due to state param mismatch')
   }
 

@@ -4,6 +4,7 @@ import hstRule from './_hst'
 import saeonElk from './_saeon-elk'
 import saeonGeoServer1 from './_saeon-geoserver-1'
 import saeonGeoServer2 from './_saeon-geoserver-2'
+import authRule from './_auth'
 
 const beforeSendRequest = async requestDetail => {
   const { path } = url.parse(requestDetail.url)
@@ -20,6 +21,8 @@ const beforeSendRequest = async requestDetail => {
       proxiedRequest = saeonGeoServer1({ path, requestDetail })
     } else if (path.includes('/proxy/saeon-spatialdata/196.21.191.55')) {
       proxiedRequest = saeonGeoServer2({ path, requestDetail })
+    } else if (path.includes('/proxy/auth')) {
+      proxiedRequest = authRule({ path, requestDetail })
     } else {
       throw new Error('No rule found')
     }

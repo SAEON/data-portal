@@ -9,7 +9,7 @@ import {
 } from '../../config'
 import authClient from '@saeon/pkce-client'
 
-const { authenticate, logout, getBearerToken, setApplicationState } = authClient({
+const { authenticate, logout, getBearerToken } = authClient({
   clientId,
   redirectUrl,
   authenticationEndpoint,
@@ -30,10 +30,12 @@ export default ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        login: () => authenticate().then(({ loggedIn }) => setLoggedIn(loggedIn)),
+        login: ({ savePath = false } = {}) =>
+          authenticate({ redirectToCurrentPath: savePath }).then(({ loggedIn }) =>
+            setLoggedIn(loggedIn)
+          ),
         logout: () => logout().then(({ loggedIn }) => setLoggedIn(loggedIn)),
         getBearerToken,
-        setApplicationState,
         loggedIn,
       }}
     >

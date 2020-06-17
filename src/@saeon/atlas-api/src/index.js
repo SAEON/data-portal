@@ -38,6 +38,7 @@ app
       target: HTTP_PROXY,
       changeOrigin: true,
       logs: true,
+      events: {},
     })
   )
   .use(
