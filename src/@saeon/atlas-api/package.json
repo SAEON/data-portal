@@ -27,8 +27,8 @@
   "dependencies": {
     "@babel/cli": "^7.10.1",
     "@koa/router": "^9.0.1",
-    "@saeon/catalogue-search": "^5.0.4",
-    "@saeon/logger": "^3.1.10",
+    "@saeon/catalogue-search": "^5.0.5",
+    "@saeon/logger": "^3.1.11",
     "apollo-server-koa": "^2.15.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.3.0",
