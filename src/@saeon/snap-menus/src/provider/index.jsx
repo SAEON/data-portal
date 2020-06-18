@@ -2,12 +2,28 @@ import React, { PureComponent } from 'react'
 import { createPortal } from 'react-dom'
 import MenuContext from './context'
 
-const menuContainerEl = document.getElementById('menu-portal')
+const PORTAL_ID = `menu-portal-${Date.now()}`
+const PORTAL = document.createElement('div')
+const PORTAL_STYLE = document.createElement('style')
+
+PORTAL.setAttribute('id', PORTAL_ID)
+PORTAL_STYLE.innerHTML = `
+  #${PORTAL_ID} {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 55px 5px 30px;
+  }`
+
+document.getElementsByTagName('body')[0].prepend(PORTAL_STYLE)
+document.getElementsByTagName('body')[0].prepend(PORTAL)
 
 export default class extends PureComponent {
   state = { menus: [] }
 
-  addMenu = ({ id, Component, zIndex = 2, norender = false, ...props }) =>
+  addMenu = ({ id, Component, zIndex = this.getActiveMenuZIndex(), norender = false, ...props }) =>
     this.setState({
       menus: [...this.state.menus, { id, zIndex, Component, norender, ...props }],
     })
@@ -67,15 +83,15 @@ export default class extends PureComponent {
           addMenu,
           removeMenu,
           getActiveMenuZIndex,
-          menuContainerEl,
+          menuContainerEl: PORTAL,
           getDefaultPosition,
         }}
       >
-        {/* Render menus into a top level portal */}
+        {/* Render menus into the portal, unless norender is specified (user is rendering the menu somewhere in their code) */}
         {menus
           .filter(({ Component, norender = false }) => Component && !norender)
           .map((item, i) => {
-            return createPortal(<item.Component {...item} key={i} />, menuContainerEl)
+            return createPortal(<item.Component {...item} key={i} />, PORTAL)
           })}
 
         {/* Render children */}

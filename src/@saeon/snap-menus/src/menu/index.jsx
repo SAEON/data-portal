@@ -11,7 +11,7 @@ import getDimensions from './get-dimensions'
 import getSnapZone from './get-zone'
 import getPosition from './get-position'
 import clsx from 'clsx'
-import MapContext from '../provider/context'
+import MenuContext from '../provider/context'
 import packageJson from '../../package.json'
 
 // Get the width of the page
@@ -27,8 +27,10 @@ export default ({
   defaultWidth = 450,
   defaultHeight = 400,
   defaultSnap = false,
-  id,
+  ...props
 }) => {
+  const id = props.id
+
   if (!id)
     throw Error(
       `${packageJson.name} v${packageJson.version}. Must provide props.id to Menu component`
@@ -46,7 +48,7 @@ export default ({
   })
 
   return (
-    <MapContext.Consumer>
+    <MenuContext.Consumer>
       {({ setActiveMenu, getMenuById, removeMenu, getDefaultPosition }) => (
         <EventBoundary>
           {/* Snap ghost */}
@@ -241,6 +243,6 @@ export default ({
           </div>
         </EventBoundary>
       )}
-    </MapContext.Consumer>
+    </MenuContext.Consumer>
   )
 }
