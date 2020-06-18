@@ -31,7 +31,8 @@ export default ({
    *
    * GET request to the authentication endpoint
    *   => Failed authentication returns the URL of the login page
-   *   => Successful authentication returns a URL with params { code, scope, state }
+   *   => Successful authentication returns the configured redirect
+   *      URL with params { code, scope, state }
    */
   const { url } = await fetch(authenticationUrl, {
     method: 'GET',
@@ -42,9 +43,10 @@ export default ({
   const authCallback = parse(url)
 
   /**
-   * If the callback host is the same as
-   * the authentication server host then
-   * the user is not authenticated
+   *
+   * If the callback URI includes a 'state'
+   * param, that is indicative of successful
+   * login. (I think...)
    *
    * In this case save the current path (if configured to do so),
    * then login
@@ -53,25 +55,22 @@ export default ({
    * save to local variable. Then clear the state
    */
 
-  // Checking existence of parseQueryString(authCallback.query).state could also work
-  if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
+  const { error, code, state } = parseQueryString(authCallback.query)
+
+  if (!state) {
     if (forceLogin) {
-      // TODO It's possible to use the
       if (redirectToCurrentPath) {
         setState(CACHE_KEYS.OVERWRITE_REDIRECT, window.location.pathname)
       }
       window.location = authenticationUrl
-    } else {
-      return {
-        loggedIn: false,
-      }
+    }
+    return {
+      loggedIn: false,
     }
   } else {
     _redirectToCurrentPath = getState(CACHE_KEYS.OVERWRITE_REDIRECT)
     clearState()
   }
-
-  const { error, code, state } = parseQueryString(authCallback.query)
 
   if (error) {
     throw new Error('Authentication unsuccessful: ' + error.message)
