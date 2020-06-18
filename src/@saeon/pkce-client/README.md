@@ -55,12 +55,18 @@ logout()
  * Once a user has logged in via the browser client,
  * you can send auth details along with
  * network requests using the Bearer schema
+ * 
+ * NOTE
+ * 
+ * This is still WIP. I haven't checked that the token
+ * returned by getBearerToken() works yet. If not, and,
+ * if someone needs this quickly pleast let me know
  */
 fetch(<url>, {
   ...,
   headers: {
     ...,
-    'Authorization': getBearerToken(), // NOTE - this is still WIP
+    'Authorization': getBearerToken(),
   }
 })
 ```
