@@ -1,4 +1,3 @@
-import createKey from './lib/create-key'
 import authenticate from './authenticate'
 import { getToken } from './token-manager'
 import logout from './logout'
@@ -17,8 +16,6 @@ export default ({
     REQUESTED_SCOPES,
     REDIRECT_URL,
     TOKEN_ENDPOINT,
-    STATE: createKey(),
-    VERIFICATION_KEY: createKey(),
   }),
   logout: logout({ LOGOUT_ENDPOINT }),
   getBearerToken: () => `Bearer ${getToken()}`,

@@ -2,18 +2,21 @@ import parseQueryString from './lib/parse-query-string'
 import buildAuthenticationUrl from './lib/build-authentication-url'
 import { setToken } from './token-manager'
 import { parse } from 'url'
+import createKey from './lib/create-key'
 import { setState, getState, clearState, CACHE_KEYS } from './state-manager'
 
 export default ({
   AUTHENTICATION_ENDPOINT,
   CLIENT_ID,
-  STATE,
   REQUESTED_SCOPES,
   REDIRECT_URL,
-  VERIFICATION_KEY,
   TOKEN_ENDPOINT,
 }) => async ({ forceLogin = true, redirectToCurrentPath = false } = {}) => {
   var _redirectToCurrentPath
+
+  const STATE = createKey()
+  const VERIFICATION_KEY = createKey()
+
   const authenticationUrl = await buildAuthenticationUrl({
     AUTHENTICATION_ENDPOINT,
     CLIENT_ID,
@@ -53,6 +56,7 @@ export default ({
   // Checking existence of parseQueryString(authCallback.query).state could also work
   if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
     if (forceLogin) {
+      // TODO It's possible to use the
       if (redirectToCurrentPath) {
         setState(CACHE_KEYS.OVERWRITE_REDIRECT, window.location.pathname)
       }
