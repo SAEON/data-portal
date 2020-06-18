@@ -1,12 +1,2 @@
 @import './scss/layout';
 @import './scss/scrollbar';
-
-// TODO - combine into the snap-menus
-#menu-portal {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 55px 5px 30px;
-}

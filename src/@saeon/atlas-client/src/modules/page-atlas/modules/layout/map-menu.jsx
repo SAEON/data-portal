@@ -10,7 +10,7 @@ export default () => {
   const classes = useStyles()
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => {
+      {({ addMenu, removeMenu, getMenuById }) => {
         return (
           <Fab
             size="large"
@@ -25,11 +25,10 @@ export default () => {
               } else {
                 addMenu({
                   id,
-                  zIndex: getActiveMenuZIndex(),
-                  Component: () => {
+                  Component: props => {
                     return (
                       <DragMenu
-                        id={id}
+                        {...props}
                         title={'Open layers menu'}
                         defaultSnap={isMobile ? 'Top' : 'BottomRight'}
                       >

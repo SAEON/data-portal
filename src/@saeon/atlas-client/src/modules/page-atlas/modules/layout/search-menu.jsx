@@ -14,7 +14,7 @@ export default () => {
   const classes = useStyles()
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => {
+      {({ addMenu, removeMenu, getMenuById }) => {
         return (
           <DialMenu
             style={{ marginTop: 6, marginRight: 12 }}
@@ -33,12 +33,11 @@ export default () => {
                 } else {
                   addMenu({
                     id,
-                    zIndex: getActiveMenuZIndex(),
                     Component: memo(
-                      ({ id }) => {
+                      props => {
                         return (
                           <DragMenu
-                            id={id}
+                            {...props}
                             title={'Search HST data'}
                             defaultSnap={isMobile ? 'Top' : 'BottomLeft'}
                           >
@@ -65,12 +64,11 @@ export default () => {
                 } else {
                   addMenu({
                     id,
-                    zIndex: getActiveMenuZIndex(),
                     Component: memo(
-                      ({ id }) => {
+                      props => {
                         return (
                           <DragMenu
-                            id={id}
+                            {...props}
                             title={'Search SAEON data'}
                             defaultSnap={isMobile ? 'Top' : 'Left'}
                           >
@@ -97,12 +95,11 @@ export default () => {
                 } else {
                   addMenu({
                     id,
-                    zIndex: getActiveMenuZIndex(),
                     Component: memo(
-                      ({ id }) => {
+                      props => {
                         return (
                           <DragMenu
-                            id={id}
+                            {...props}
                             title={'Search CSIR data'}
                             defaultSnap={isMobile ? 'Top' : 'TopLeft'}
                           >

@@ -11,7 +11,7 @@ export default () => {
   const classes = useStyles()
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex }) => {
+      {({ addMenu, removeMenu, getMenuById }) => {
         return (
           <>
             <div style={{ clear: 'both' }} />
@@ -28,12 +28,11 @@ export default () => {
                 } else {
                   addMenu({
                     id,
-                    zIndex: getActiveMenuZIndex(),
-                    Component: () => (
+                    Component: props => (
                       <DragMenu
-                        id={id}
                         title={`About ${packageJson.name}`}
                         defaultSnap={isMobile ? 'Top' : 'Top'}
+                        {...props}
                       >
                         {() => <AboutContent />}
                       </DragMenu>

@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core'
 import { DragMenu } from '@saeon/snap-menus'
 import { isMobile } from 'react-device-detect'
 
-export default ({ id, layer }) => {
+export default ({ layer, ...props }) => {
   const LegendMenu =
     layer.get('LegendMenu') ||
     (() => (
@@ -14,7 +14,7 @@ export default ({ id, layer }) => {
 
   return (
     <DragMenu
-      id={id}
+      {...props}
       defaultPosition={{ x: 650, y: 25 }}
       defaultWidth={200}
       title={'Legend'}
