@@ -1,7 +1,6 @@
 import createKey from './lib/create-key'
 import authenticate from './authenticate'
 import { getToken } from './token-manager'
-import { setState, CACHE_KEYS } from './state-manager'
 import logout from './logout'
 
 export default ({

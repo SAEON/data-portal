@@ -19,7 +19,7 @@
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s major",
     "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "check-package-updates": "ncu",
-    "update-packages": "ncu -u"
+    "update-package-dependencies": "ncu -u"
   },
   "keywords": [
     "@saeon/snap-menus"

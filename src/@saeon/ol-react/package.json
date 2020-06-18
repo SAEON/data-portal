@@ -17,7 +17,7 @@
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s major",
     "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "check-package-updates": "ncu",
-    "update-packages": "ncu -u"
+    "update-package-dependencies": "ncu -u"
   },
   "keywords": [
     "@saeon/ol-react"

@@ -12,7 +12,7 @@
     "start": "styleguidist server --config styleguide.config.js",
     "build": "styleguidist build --config src/docs/styleguide.config.js",
     "check-package-updates": "ncu",
-    "update-packages": "ncu -u"
+    "update-package-dependencies": "ncu -u"
   },
   "repository": {
     "type": "git",

@@ -50,6 +50,7 @@ export default ({
    * save to local variable. Then clear the state
    */
 
+  // Checking existence of parseQueryString(authCallback.query).state could also work
   if (authCallback.host === parse(AUTHENTICATION_ENDPOINT).host) {
     if (forceLogin) {
       if (redirectToCurrentPath) {
@@ -67,7 +68,6 @@ export default ({
   }
 
   const { error, code, state } = parseQueryString(authCallback.query)
-  console.log(authCallback.query)
 
   if (error) {
     throw new Error('Authentication unsuccessful: ' + error.message)

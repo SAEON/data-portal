@@ -6,7 +6,7 @@ ncu -u
 # @saeon packages
 for directory in src/@saeon/*; do
   D=$(readlink -f "$directory");
-  CMD="npm --prefix $D run update-packages"
+  CMD="npm --prefix $D run update-package-dependencies"
   eval ${CMD}
 done
 

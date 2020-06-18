@@ -14,7 +14,7 @@
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../catalogue-search/src/**/*.@(js|jsx)\" \"../snap-menus/src/**/*.@(js|jsx)\" \"../logger/src/**/*.@(js|jsx)\"  \"../pkce-client/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --open",
     "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
-    "update-packages": "ncu -u --reject \"@date-io/date-fns\""
+    "update-package-dependencies": "ncu -u --reject \"@date-io/date-fns\""
   },
   "repository": {
     "type": "git",
@@ -27,16 +27,16 @@
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@apollo/client": "^3.0.0-rc.5",
+    "@apollo/client": "^3.0.0-rc.6",
     "@apollo/link-ws": "^2.0.0-beta.3",
     "@babel/preset-env": "^7.10.2",
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "4.0.0-alpha.55",
+    "@material-ui/lab": "4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "@saeon/catalogue-search": "^5.0.2",
-    "@saeon/logger": "^3.1.6",
+    "@saeon/logger": "^3.1.8",
     "@saeon/ol-react": "^9.0.4",
     "@saeon/pkce-client": "0.5.0",
     "@saeon/snap-menus": "^2.1.10",

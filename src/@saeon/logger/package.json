@@ -18,7 +18,7 @@
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s major",
     "prettier:watch": "onchange \"src/**/*.@(js)\" -- prettier --write {{changed}}",
     "check-package-updates": "ncu",
-    "update-packages": "ncu -u"
+    "update-package-dependencies": "ncu -u"
   },
   "keywords": [
     "@saeon/logger"

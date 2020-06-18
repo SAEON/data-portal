@@ -7,7 +7,7 @@
     "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=development TZ=utc node .build'",
     "start:prod": "rimraf .build && babel --root-mode upward src --out-dir .build && copyfiles .env .build/ && NODE_ENV=production TZ=utc node .build",
     "check-package-updates": "ncu",
-    "update-packages": "ncu -u"
+    "update-package-dependencies": "ncu -u"
   },
   "repository": {
     "type": "git",
