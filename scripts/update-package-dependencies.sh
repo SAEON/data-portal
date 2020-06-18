@@ -11,10 +11,10 @@ for directory in src/@saeon/*; do
 done
 
 # docs
-npm --prefix src/docs run update-packages
+npm --prefix src/docs run update-package-dependencies
 
 # reporting
-npm --prefix src/reporting run update-packages
+npm --prefix src/reporting run update-package-dependencies
 
 # Install package dependencies
 npm run install-package-dependencies

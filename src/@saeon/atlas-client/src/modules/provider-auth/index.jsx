@@ -30,7 +30,7 @@ export default ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        login: ({ savePath = false } = {}) =>
+        login: ({ savePath = true } = {}) =>
           authenticate({ redirectToCurrentPath: savePath }).then(({ loggedIn }) =>
             setLoggedIn(loggedIn)
           ),

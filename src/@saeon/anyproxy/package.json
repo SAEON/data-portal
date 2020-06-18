@@ -24,7 +24,7 @@
   "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/anyproxy#readme",
   "dependencies": {
     "@babel/cli": "^7.10.1",
-    "@saeon/logger": "^3.1.6",
+    "@saeon/logger": "^3.1.10",
     "anyproxy": "^4.1.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "copyfiles": "^2.3.0",

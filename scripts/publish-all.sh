@@ -20,6 +20,7 @@ NPM_PACKAGES=(
   "src/@saeon/logger"
   "src/@saeon/ol-react"
   "src/@saeon/snap-menus"
+  "src/@saeon/pkce-client"
 )
 
 for PACKAGE in ${NPM_PACKAGES[*]}; do
