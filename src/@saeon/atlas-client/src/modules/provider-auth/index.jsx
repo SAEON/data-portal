@@ -6,6 +6,7 @@ import {
   TOKEN_ENDPOINT as tokenEndpoint,
   REQUESTED_SCOPES as requestedScopes,
   LOGOUT_ENDPOINT as logoutEndpoint,
+  ENABLE_LOGIN,
 } from '../../config'
 import authClient from '@saeon/pkce-client'
 
@@ -24,16 +25,23 @@ export default ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
-    authenticate({ forceLogin: false }).then(({ loggedIn }) => setLoggedIn(loggedIn))
+    if (ENABLE_LOGIN) {
+      authenticate({ forceLogin: false }).then(({ loggedIn }) => setLoggedIn(loggedIn))
+    }
   }, [])
 
   return (
     <AuthContext.Provider
       value={{
-        login: ({ savePath = true } = {}) =>
-          authenticate({ redirectToCurrentPath: savePath }).then(({ loggedIn }) =>
-            setLoggedIn(loggedIn)
-          ),
+        login: ({ savePath = true } = {}) => {
+          if (ENABLE_LOGIN) {
+            authenticate({ redirectToCurrentPath: savePath }).then(({ loggedIn }) =>
+              setLoggedIn(loggedIn)
+            )
+          } else {
+            alert('This feature is only available on the SAEON network for now')
+          }
+        },
         logout: () => logout().then(({ loggedIn }) => setLoggedIn(loggedIn)),
         getBearerToken,
         loggedIn,

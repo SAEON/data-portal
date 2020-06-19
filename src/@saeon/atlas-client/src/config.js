@@ -23,3 +23,8 @@ export const LOGOUT_ENDPOINT =
 export const TOKEN_ENDPOINT =
   process.env.TOKEN_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/token'
 export const REQUESTED_SCOPES = process.env.REQUESTED_SCOPES || ''
+
+// TEMPORARY
+export const ENABLE_LOGIN = process.env.ENABLE_LOGIN
+  ? process.env.ENABLE_LOGIN.toLowerCase() === 'true'
+  : false
