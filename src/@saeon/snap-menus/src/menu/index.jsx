@@ -1,5 +1,5 @@
 import 'react-resizable/css/styles.css'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton, Fade } from '@material-ui/core'
