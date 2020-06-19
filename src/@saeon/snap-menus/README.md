@@ -81,6 +81,6 @@ render(
   <MenuProvider>
     <App />
   </MenuProvider>,
-  document.getElementById('root)
+  document.getElementById('root')
 )
 ```

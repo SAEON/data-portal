@@ -45,6 +45,7 @@ export default ({
       ? getDimensions(defaultSnap, container)
       : { width: defaultWidth, height: defaultHeight },
     position: defaultSnap ? getPosition(defaultSnap, container) : null,
+    previousDimensions: defaultSnap ? { width: defaultWidth, height: defaultHeight } : null,
   })
 
   return (
