@@ -1,9 +1,7 @@
-export default (snapZone, container) => {
-  const containerHeight = container.offsetHeight - 85 // TODO - this comes from CSS in the main package
-  const containerWidth = container.offsetWidth - 10 // TODO
+export default (snapZone, containerWidth, containerHeight) => {
   if (snapZone === 'Top') return { width: containerWidth, height: containerHeight }
   if (snapZone === 'Left' || snapZone === 'Right')
-    return { width: containerWidth / 2 - 2.5, height: containerHeight } // TODO
+    return { width: containerWidth / 2 - 2.5, height: containerHeight } // TODO 2.5 is main app css
   if (
     snapZone === 'TopLeft' ||
     snapZone === 'TopRight' ||

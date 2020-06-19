@@ -1,5 +1,5 @@
 # @saeon/snap-menus
-A react provider component that allows for adding / removing draggable, resizable menus
+A react provider component that allows for adding / removing draggable, resizable menus. (This library is still a WIP, and shouldn't be used yet)
 
 ```sh
 npm i @saeon/snap-menus

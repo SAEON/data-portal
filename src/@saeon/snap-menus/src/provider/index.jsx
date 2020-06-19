@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react'
 import { createPortal } from 'react-dom'
 import MenuContext from './context'
 
+// TODO - I think that changing the 2.5s, 85s, 55s, etc in the menu component will enable combining this with the PORTAL. which makes semantic sense
+const menuContainerForSizing = document.getElementsByTagName('body')[0]
+
 const PORTAL_ID = `menu-portal-${Date.now()}`
 const PORTAL = document.createElement('div')
 const PORTAL_STYLE = document.createElement('style')
@@ -14,8 +17,8 @@ PORTAL_STYLE.innerHTML = `
     bottom: 0;
     left: 0;
     right: 0;
-    margin: 55px 5px 30px;
-  }`
+    margin: 55px 5px;
+  }` // TODO - the margin is related to main app decisions
 
 document.getElementsByTagName('body')[0].prepend(PORTAL_STYLE)
 document.getElementsByTagName('body')[0].prepend(PORTAL)
@@ -99,7 +102,10 @@ export default class extends PureComponent {
         {menus
           .filter(({ Component, norender = false }) => Component && !norender)
           .map((item, i) => {
-            return createPortal(<item.Component {...item} key={i} />, PORTAL)
+            return createPortal(
+              <item.Component container={menuContainerForSizing} {...item} key={i} />,
+              PORTAL
+            )
           })}
 
         {/* Render children */}

@@ -1,6 +1,4 @@
-export default (x, y, container) => {
-  const containerHeight = container.offsetHeight - 85 // TODO
-  const containerWidth = container.offsetWidth - 10 - 5 // TODO
+export default (x, y, containerWidth, containerHeight) => {
   const snapZoneX = 75
   const snapZoneY = 25 + 55 // TODO. Relies on main client CSS
   const snapTop = y <= snapZoneY ? true : false

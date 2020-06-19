@@ -1,5 +1,5 @@
 import 'react-resizable/css/styles.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton, Fade } from '@material-ui/core'
@@ -14,11 +14,6 @@ import clsx from 'clsx'
 import MenuContext from '../provider/context'
 import packageJson from '../../package.json'
 
-// Get the width of the page
-const container = document.getElementById('root')
-const containerHeight = container.offsetHeight - 85 // TODO
-const containerWidth = container.offsetWidth - 10 // TODO
-
 export default ({
   title,
   children,
@@ -27,9 +22,13 @@ export default ({
   defaultWidth = 450,
   defaultHeight = 400,
   defaultSnap = false,
+  container,
   ...props
 }) => {
-  const id = props.id
+  const { id } = props
+
+  const containerHeight = container.offsetHeight - 85 // TODO
+  const containerWidth = container.offsetWidth - 10 // TODO
 
   if (!id)
     throw Error(
@@ -42,9 +41,9 @@ export default ({
     snapped: Boolean(defaultSnap),
     isResizing: false,
     dimensions: defaultSnap
-      ? getDimensions(defaultSnap, container)
+      ? getDimensions(defaultSnap, containerWidth, containerHeight)
       : { width: defaultWidth, height: defaultHeight },
-    position: defaultSnap ? getPosition(defaultSnap, container) : null,
+    position: defaultSnap ? getPosition(defaultSnap, containerWidth, containerHeight) : null,
     previousDimensions: defaultSnap ? { width: defaultWidth, height: defaultHeight } : null,
   })
 
@@ -75,7 +74,7 @@ export default ({
               handle=".drag-handle"
               defaultPosition={
                 defaultSnap
-                  ? getPosition(defaultSnap, container)
+                  ? getPosition(defaultSnap, containerWidth, containerHeight)
                   : defaultPosition || getDefaultPosition()
               }
               bounds={{ left: 0, top: 0 }}
@@ -109,7 +108,7 @@ export default ({
                   newState.snapZone = null
                 }
 
-                const snapZone = getSnapZone(x, y, container)
+                const snapZone = getSnapZone(x, y, containerWidth, containerHeight)
                 if (!state.previousDimensions) {
                   if (snapZone && snapZone !== state.snapZone) {
                     newState.snapZone = snapZone
@@ -122,8 +121,8 @@ export default ({
               }, 5)}
               onStop={() => {
                 if (state.snapZone) {
-                  const dimensions = getDimensions(state.snapZone, container)
-                  const position = getPosition(state.snapZone, container)
+                  const dimensions = getDimensions(state.snapZone, containerWidth, containerHeight)
+                  const position = getPosition(state.snapZone, containerWidth, containerHeight)
                   const previousDimensions = state.dimensions
                   setState(
                     Object.assign(
