@@ -87,7 +87,15 @@ export default class extends PureComponent {
           getDefaultPosition,
         }}
       >
-        {/* Render menus into the portal, unless norender is specified (user is rendering the menu somewhere in their code) */}
+        {/**
+         * Render menus into the portal
+         *
+         * A user may create a menu with the 'norender' flag: addMenu({Component, norender, id, etc.})
+         * This stops the menu from being rendered by the provider. In this case the user can render
+         * the menu in the React tree wherever they want. This is useful when you want a menu to be
+         * a child of another menu. Without the 'norender' flag, all menus are the same level in the
+         * tree, and can't pass props to each other
+         **/}
         {menus
           .filter(({ Component, norender = false }) => Component && !norender)
           .map((item, i) => {
