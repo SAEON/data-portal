@@ -154,11 +154,11 @@ export default class extends Component {
                                         ? removeMenu(`${layer.get('id')}-legend`)
                                         : addMenu({
                                             id: `${layer.get('id')}-legend`,
-                                            Component: () => (
+                                            Component: props => (
                                               <Legend
-                                                id={`${layer.get('id')}-legend`}
                                                 key={`${layer.get('id')}-legend`}
                                                 layer={layer}
+                                                {...props}
                                               />
                                             ),
                                           })
@@ -179,14 +179,14 @@ export default class extends Component {
                                         ? removeMenu(`${layer.get('id')}-info`)
                                         : addMenu({
                                             id: `${layer.get('id')}-info`,
-                                            Component: () => (
+                                            Component: props => (
                                               <Info
-                                                id={`${layer.get('id')}-info`}
                                                 key={`${layer.get('id')}-info`}
                                                 layer={layer}
                                                 onClose={() =>
                                                   removeMenu(`${layer.get('id')}-info`)
                                                 }
+                                                {...props}
                                               />
                                             ),
                                           })

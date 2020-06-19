@@ -4,7 +4,7 @@ import ResultsList from './_results-list'
 import { Typography } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 
-export default ({ id, data, currentPage, updateCurrentPage }) => {
+export default ({ id, data, currentPage, updateCurrentPage, ...props }) => {
   return (
     <DragMenu
       id={id}
@@ -12,6 +12,7 @@ export default ({ id, data, currentPage, updateCurrentPage }) => {
       defaultWidth={500}
       title={'Search results'}
       defaultSnap={isMobile ? 'Top' : 'Right'}
+      {...props}
     >
       {({ height, width }) =>
         data?.hits.total ? (
@@ -21,6 +22,7 @@ export default ({ id, data, currentPage, updateCurrentPage }) => {
             data={data}
             currentPage={currentPage}
             updateCurrentPage={updateCurrentPage}
+            {...props}
           />
         ) : (
           <Typography>No results...</Typography>

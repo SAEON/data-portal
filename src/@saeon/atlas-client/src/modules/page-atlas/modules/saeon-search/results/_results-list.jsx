@@ -5,7 +5,7 @@ import ResultCard from './_result-card'
 import { Button } from '@material-ui/core'
 
 // eslint-disable-next-line no-unused-vars
-export default ({ height, width, data, currentPage, updateCurrentPage }) => {
+export default ({ height, width, data, currentPage, updateCurrentPage, ...props }) => {
   // eslint-disable-next-line no-unused-vars
   const { took, timed_out, hits: _hits } = data
   // eslint-disable-next-line no-unused-vars
@@ -18,7 +18,7 @@ export default ({ height, width, data, currentPage, updateCurrentPage }) => {
           {({ proxy }) => (
             <>
               {hits.map(({ _source }, i) => (
-                <ResultCard key={i} setInfo={setInfo} _source={_source} proxy={proxy} />
+                <ResultCard key={i} setInfo={setInfo} _source={_source} proxy={proxy} {...props} />
               ))}
 
               <Button

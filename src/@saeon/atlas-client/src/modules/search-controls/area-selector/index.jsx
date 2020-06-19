@@ -10,7 +10,7 @@ const id = 'map-selection-tools'
 export default ({ updateForm, ...fields }) => {
   return (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, getActiveMenuZIndex, menus, menuContainerEl }) => {
+      {({ addMenu, removeMenu, getMenuById, menus, menuContainerEl, container }) => {
         return (
           <>
             {/* Render the mapTools menu if necessary */}
@@ -36,13 +36,13 @@ export default ({ updateForm, ...fields }) => {
                   } else {
                     addMenu({
                       id,
-                      zIndex: getActiveMenuZIndex(),
                       norender: true,
                       Component: ({ updateForm, ...fields }) => (
                         <PolygonSelectionTool
                           onDrawEnd={polygon =>
                             updateForm({ polygons: [...fields.polygons, polygon] })
                           }
+                          container={container}
                           id={id}
                           onClose={() => removeMenu(id)}
                         />

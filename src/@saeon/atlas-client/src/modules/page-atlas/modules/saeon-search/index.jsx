@@ -34,7 +34,7 @@ export default () => {
     <Alert severity="error">Unable to connect to the SAEON catalogue: {error.message}</Alert>
   ) : (
     <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, menus, menuContainerEl }) => (
+      {({ addMenu, removeMenu, getMenuById, menus, menuContainerEl, container }) => (
         <Grid container spacing={3}>
           <Grid item xs={12}>
             {/* Seach controls - this will provide a search context */}
@@ -47,7 +47,12 @@ export default () => {
                       ?.filter(menu => menu.id === searchListMenuId)
                       ?.map(menu =>
                         createPortal(
-                          <menu.Component data={data} currentPage={currentPage} />,
+                          <menu.Component
+                            container={container}
+                            data={data}
+                            currentPage={currentPage}
+                            {...menu}
+                          />,
                           menuContainerEl
                         )
                       ) || null}
@@ -73,13 +78,13 @@ export default () => {
                                 addMenu({
                                   id: searchListMenuId,
                                   norender: true,
-                                  Component: ({ data, currentPage }) => (
+                                  Component: props => (
                                     <SearchResults
-                                      data={data}
-                                      currentPage={currentPage}
+                                      data={props.data}
+                                      currentPage={props.currentPage}
                                       updateCurrentPage={updateCurrentPage}
-                                      id={searchListMenuId}
                                       onClose={() => removeMenu(searchListMenuId)}
+                                      {...props}
                                     />
                                   ),
                                 })

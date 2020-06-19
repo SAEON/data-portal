@@ -88,6 +88,7 @@ export default class extends PureComponent {
           getActiveMenuZIndex,
           menuContainerEl: PORTAL,
           getDefaultPosition,
+          container: menuContainerForSizing,
         }}
       >
         {/**
