@@ -1,0 +1,14 @@
+{
+  "name": "@saeon/generate-browser-client",
+  "version": "0.0.1",
+  "description": "Generate boiler-plate React.js application with Material UI component library",
+  "main": "index.js",
+  "scripts": {
+    "plop": "plop"
+  },
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "devDependencies": {
+    "plop": "^2.7.1"
+  }
+}

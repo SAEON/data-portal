@@ -38,7 +38,9 @@ module.exports = () => {
         // @saeon
         '@saeon/pkce-client': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/pkce-client' : '../../packages/pkce-client/src'
+          mode === 'production'
+            ? './node_modules/@saeon/pkce-client'
+            : '../../packages/pkce-client/src'
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,

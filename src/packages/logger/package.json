@@ -12,7 +12,7 @@
   },
   "scripts": {
     "watch": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist'",
-    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
+    "build": "rimraf ./dist && NODE_ENV=production webpack",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s major",

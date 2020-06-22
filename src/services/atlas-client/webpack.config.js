@@ -42,11 +42,15 @@ module.exports = ({ output = '/dist' }) => {
         // @saeon
         '@saeon/pkce-client': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/pkce-client' : '../../packages/pkce-client/src'
+          mode === 'production'
+            ? './node_modules/@saeon/pkce-client'
+            : '../../packages/pkce-client/src'
         ),
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus/src'
+          mode === 'production'
+            ? './node_modules/@saeon/snap-menus'
+            : '../../packages/snap-menus/src'
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
