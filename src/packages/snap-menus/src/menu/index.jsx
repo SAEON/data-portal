@@ -27,15 +27,15 @@ export default ({
 }) => {
   const { id } = props
 
-  const containerHeight = container.offsetHeight - 85 // TODO
-  const containerWidth = container.offsetWidth - 10 // TODO
+  const containerHeight = container.offsetHeight
+  const containerWidth = container.offsetWidth
 
   if (!id)
     throw Error(
       `${packageJson.name} v${packageJson.version}. Must provide props.id to Menu component`
     )
 
-  const classes = useStyles({ height: containerHeight, width: containerWidth })()
+  const classes = useStyles({ containerHeight, containerWidth })()
   const [state, setState] = useState({
     snapZone: null,
     snapped: Boolean(defaultSnap),
@@ -49,7 +49,7 @@ export default ({
 
   return (
     <MenuContext.Consumer>
-      {({ setActiveMenu, getMenuById, removeMenu, getDefaultPosition }) => (
+      {({ setActiveMenu, getMenuById, removeMenu, getDefaultPosition, VERTICAL_OFFSET_TOP }) => (
         <EventBoundary>
           {/* Snap ghost */}
           <div
@@ -102,13 +102,22 @@ export default ({
                 }
 
                 if (state.previousDimensions) {
-                  newState.position = { x: x - state.previousDimensions.width / 2, y: y - 15 - 55 } // TODO - the 55 comes from scss
+                  newState.position = {
+                    x: x - state.previousDimensions.width / 2,
+                    y: y - 15 - VERTICAL_OFFSET_TOP,
+                  }
                   newState.dimensions = state.previousDimensions
                   newState.previousDimensions = null
                   newState.snapZone = null
                 }
 
-                const snapZone = getSnapZone(x, y, containerWidth, containerHeight)
+                const snapZone = getSnapZone(
+                  x,
+                  y,
+                  containerWidth,
+                  containerHeight,
+                  VERTICAL_OFFSET_TOP
+                )
                 if (!state.previousDimensions) {
                   if (snapZone && snapZone !== state.snapZone) {
                     newState.snapZone = snapZone

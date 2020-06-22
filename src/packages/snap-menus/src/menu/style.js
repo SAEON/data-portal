@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export default ({ height, width }) => {
+export default ({ containerHeight, containerWidth }) => {
   return makeStyles(() => {
     return {
       ghost: {
@@ -10,47 +10,47 @@ export default ({ height, width }) => {
         opacity: '20%',
       },
       TopLeft: {
-        height: height / 2 - 2.5,
-        width: width / 2 - 2.5,
+        height: containerHeight / 2,
+        width: containerWidth / 2,
         left: 0,
       },
       TopRight: {
-        height: height / 2 - 2.5,
-        width: width / 2 - 2.5,
+        height: containerHeight / 2,
+        width: containerWidth / 2,
         right: 0,
       },
       BottomLeft: {
-        height: height / 2 - 2.5,
-        width: width / 2 - 2.5,
-        top: height / 2 + 2.5,
+        height: containerHeight / 2,
+        width: containerWidth / 2,
+        top: containerHeight / 2,
         left: 0,
       },
       BottomRight: {
-        height: height / 2 - 2.5,
-        width: width / 2 - 2.5,
-        top: height / 2 + 2.5,
+        height: containerHeight / 2,
+        width: containerWidth / 2,
+        top: containerHeight / 2,
         right: 0,
       },
       Left: {
-        height,
-        width: width / 2 - 2.5,
+        height: containerHeight,
+        width: containerWidth / 2,
         left: 0,
       },
       Right: {
-        height,
-        width: width / 2 - 2.5,
+        height: containerHeight,
+        width: containerWidth / 2,
         right: 0,
       },
       Top: {
-        height,
-        width,
+        height: containerHeight,
+        width: containerWidth,
         left: 0,
         right: 0,
       },
       Bottom: {
-        height: height / 2 - 2.5,
-        width,
-        top: height / 2 + 2.5,
+        height: containerHeight / 2,
+        width: containerWidth,
+        top: containerHeight / 2,
         left: 0,
         right: 0,
       },

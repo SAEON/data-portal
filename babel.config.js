@@ -1,5 +1,5 @@
 module.exports = {
-  babelrcRoots: ['.', 'src/@saeon/*'],
+  babelrcRoots: ['.', 'src/services/*', 'src/packages/*'],
   sourceType: 'unambiguous',
   presets: [
     [

@@ -28,7 +28,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: src/@saeon/anyproxy/Dockerfile
+      dockerfile: src/services/anyproxy/Dockerfile
     ports:
       - 8001:8001
       - 8002:8002
@@ -38,7 +38,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: src/@saeon/atlas-api/Dockerfile
+      dockerfile: src/services/atlas-api/Dockerfile
     ports:
       - 5000:3000
 
@@ -47,6 +47,6 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: src/@saeon/atlas-client/Dockerfile
+      dockerfile: src/services/atlas-client/Dockerfile
     ports:
       - 5001:80

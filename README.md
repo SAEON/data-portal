@@ -2,6 +2,9 @@
 
 ![DEV](https://github.com/SAEONData/saeon-atlas/workflows/DEV/badge.svg)
 
+TODO
+- Single .browserslistrc
+
 # @SAEON/ATLAS
 
 **_Please note that this is still in development._**
@@ -10,21 +13,23 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
 
 The repository is organized as a 'monorepo', split according to the following packages:
 
-- [@saeon/atlas-client](/src/@saeon/atlas-client)
-- [@saeon/atlas-api](/src/@saeon/atlas-api)
-- [@saeon/anyproxy](/src/@saeon/anyproxy)
-- [@saeon/catalogue-search](/src/@saeon/catalogue-search)
-- [@saeon/ol-react](/src/@saeon/ol-react)
-- [@saeon/snap-menus](/src/@saeon/snap-menus)
-- [@saeon/logger](/src/@saeon/logger)
-- [docs](/src/docs)
-- [reporting](/src/reporting)
+- [@saeon/atlas-client](/src/services/atlas-client)
+- [@saeon/atlas-api](/src/services/atlas-api)
+- [@saeon/anyproxy](/src/services/anyproxy)
+- [@saeon/catalogue-search](/src/packages/catalogue-search)
+- [@saeon/ol-react](/src/packages/ol-react)
+- [@saeon/snap-menus](/src/packages/snap-menus)
+- [@saeon/logger](/src/packages/logger)
+- [docs](/src/services/docs)
+- [reporting](/src/services/reporting)
+- [NPM package generator](/src/generators/npm-package)
+- [React client generator](/src/generators/react-client)
 
 Refer to these links for specific package documentation.
 
 # Browser support
 
-Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/atlas-client build](/src/@saeon/atlas-client/.browserslistrc). As of 11 May 2020, these include:
+Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/atlas-client build](/src/services/atlas-client/.browserslistrc). As of 11 May 2020, these include:
 
 - chrome: 80
 - edge: 18
@@ -86,22 +91,22 @@ npm start
 
 Running the atlas requires starting 3 services:
 
-- src/@saeon/atlas-client
-- src/@saeon/atlas-api
-- src/@saeon/anyproxy
+- src/services/atlas-client
+- src/services/atlas-api
+- src/services/anyproxy
 
 Running `npm start` will start these services in the same terminal window. It's useful to start these services individually for helpful log output (a terminal that allows for split screen is great for this).
 
 To start these services individually:
 
 ```
-cd src/@saeon/atlas-client
+cd src/services/atlas-client
 npm start
 
-cd src/@saeon/atlas-api
+cd src/services/atlas-api
 npm start
 
-cd src/@saeon/anyproxy
+cd src/services/anyproxy
 npm start
 ```
 
@@ -115,7 +120,7 @@ All services in this repository are dockerized - see Dockerfiles located in the 
 NOTE - Docker images are built in the context of this repository, so the Dockerfiles for individual services are NOT the root context in which Docker is executed. This can be a bit confusing, the reason being to allow for commands running in docker containers to have access to the global babel configuration. For this reason, when building images with the `docker build` CLI, this command must be run from the root of this repository, with the path to the Dockerfile provided explicitly by the `--file , -f` options. For example:
 
 ```
-docker build -t <image name> -f ./src/@saeon/<service name>/Dockerfile .
+docker build -t <image name> -f ./src/services/<service name>/Dockerfile .
 ```
 
 #### Configuration
@@ -174,3 +179,15 @@ Running one of these scripts will result in all other packages updating their de
 It's also useful to see which packages will be updated by this script. To do that, run:
 
 - `npm run check-package-updates`
+
+# Code generators
+
+#### Generate a React client
+```sh
+npm run generate-react-client
+```
+
+#### Generate an NPM package
+```sh
+npm run generate-npm-package
+```

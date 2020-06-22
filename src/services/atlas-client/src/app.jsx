@@ -49,7 +49,11 @@ export default ({ client, theme }) => (
                         path={'/'}
                         exact={true}
                         render={() => (
-                          <MenuProvider>
+                          <MenuProvider
+                            VERTICAL_OFFSET_TOP={55}
+                            VERTICAL_OFFSET_BOTTOM={30}
+                            HORIZONTAL_MARGIN={5}
+                          >
                             <Atlas />
                           </MenuProvider>
                         )}

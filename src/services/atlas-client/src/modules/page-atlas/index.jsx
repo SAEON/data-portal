@@ -10,8 +10,8 @@ export default () => (
   <Fade in={true}>
     <div style={{ position: 'relative' }}>
       <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, zIndex: 1 }}>
-        <SearchMenu />
-        <MapMenu />
+        {/* <SearchMenu /> */}
+        {/* <MapMenu /> */}
         <AboutMenu />
         {/* <ScreenshotMenu/> */}
       </div>
