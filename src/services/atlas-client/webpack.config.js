@@ -42,25 +42,25 @@ module.exports = ({ output = '/dist' }) => {
         // @saeon
         '@saeon/pkce-client': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/pkce-client' : '../pkce-client/src'
+          mode === 'production' ? './node_modules/@saeon/pkce-client' : '../../packages/pkce-client/src'
         ),
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../snap-menus/src'
+          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus/src'
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/ol-react' : '../ol-react/src'
+          mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react/src'
         ),
         '@saeon/catalogue-search': path.resolve(
           __dirname,
           mode === 'production'
             ? './node_modules/@saeon/catalogue-search/dist/catalogueReact'
-            : '../catalogue-search/src'
+            : '../../packages/catalogue-search/src'
         ),
         '@saeon/logger': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../logger/src'
+          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/src'
         ),
       },
       extensions: ['.js', '.jsx'],

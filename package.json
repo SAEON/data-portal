@@ -1,9 +1,9 @@
 {
-  "name": "@saeon/atlas",
+  "name": "@saeon/client",
   "description": "SAEON's 'Atlas' codebase (monorepo)",
   "scripts": {
-    "test": "npm --prefix src/@saeon/catalogue-search test",
-    "start": "npm --prefix src/@saeon/anyproxy start & npm --prefix src/@saeon/atlas-api start & npm --prefix src/@saeon/atlas-client start",
+    "test": "npm --prefix src/packages/catalogue-search test",
+    "start": "npm --prefix src/services/anyproxy start & npm --prefix src/services/atlas-api start & npm --prefix src/services/atlas-client start",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",

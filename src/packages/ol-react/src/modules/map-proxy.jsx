@@ -273,10 +273,7 @@ export default class extends PureComponent {
           Object.prototype.hasOwnProperty.call(target, prop)
             ? target[prop]
             : typeof map[prop] === 'function'
-            ? (...args) => {
-                map[prop].apply(map, args)
-                reRender()
-              }
+            ? (...args) => map[prop].apply(map, args)
             : map[prop],
       }
     )
