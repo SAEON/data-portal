@@ -1,7 +1,7 @@
 {
   "name": "@saeon/{{dashCase packageName}}",
   "version": "0.0.0",
-  "description": "{{dashCase packageDescription}}",
+  "description": "{{packageDescription}}",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -13,7 +13,7 @@
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/{{dashCase packageName}} -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/{{dashCase packageName}} -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/{{dashCase packageName}} -s major",
-    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write \{{changed}}",
     "check-package-updates": "ncu",
     "update-package-dependencies": "ncu -u"
   },

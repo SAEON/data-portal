@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/atlas-api#readme",
   "dependencies": {
-    "@babel/cli": "^7.10.1",
+    "@babel/cli": "^7.10.3",
     "@koa/router": "^9.0.1",
     "@saeon/catalogue-search": "^5.0.5",
     "@saeon/logger": "^3.1.11",
@@ -38,7 +38,7 @@
     "graphql": "^15.1.0",
     "graphql-tools": "^6.0.10",
     "graphql-type-json": "^0.3.2",
-    "koa": "^2.12.1",
+    "koa": "^2.13.0",
     "koa-compress": "^4.0.1",
     "koa-proxies": "^0.11.0",
     "mongodb": "^3.5.9",

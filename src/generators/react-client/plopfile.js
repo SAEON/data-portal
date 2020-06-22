@@ -1,5 +1,7 @@
 module.exports = function (plop) {
-  const templateFiles = ['templates/**/*']
+  const templateFiles = [
+    'templates/**/*'
+  ]
 
   plop.setGenerator('NPM package', {
     description: 'Creates boiler-plate project for publishing to NPM',
@@ -13,12 +15,12 @@ module.exports = function (plop) {
         type: 'input',
         name: 'packageDescription',
         message: 'Package description: ',
-      },
+      }
     ],
     actions: [
       {
         type: 'addMany',
-        destination: '../../packages/{{dashCase packageName}}',
+        destination: '../../services/{{dashCase packageName}}',
         base: 'templates',
         templateFiles,
       },
