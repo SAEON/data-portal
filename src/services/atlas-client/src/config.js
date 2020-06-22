@@ -5,7 +5,7 @@ export const DEFAULT_INFO = process.env.DEFAULT_INFO || null
 export const DEFAULT_SUCCESS = process.env.DEFAULT_SUCCESS || null
 export const SOURCE_CODE_URI =
   process.env.SOURCE_CODE_URI ||
-  'https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/atlas-client'
+  'https://github.com/SAEONData/saeon-atlas/tree/master/src/services/atlas-client'
 
 // API Configuration
 export const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'
