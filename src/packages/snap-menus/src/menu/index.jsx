@@ -118,7 +118,7 @@ export default ({
                 }
 
                 setState(Object.assign({ ...state }, newState))
-              }, 5)}
+              })}
               onStop={() => {
                 if (state.snapZone) {
                   const dimensions = getDimensions(state.snapZone, containerWidth, containerHeight)
