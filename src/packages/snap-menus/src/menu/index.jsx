@@ -43,8 +43,8 @@ export default ({
     dimensions: defaultSnap
       ? getDimensions(defaultSnap, containerWidth, containerHeight)
       : { width: defaultWidth, height: defaultHeight },
-    position: defaultSnap ? getPosition(defaultSnap, containerWidth, containerHeight) : null,
-    previousDimensions: defaultSnap ? { width: defaultWidth, height: defaultHeight } : null,
+    position: getPosition(defaultSnap, containerWidth, containerHeight),
+    previousDimensions: { width: defaultWidth, height: defaultHeight },
   })
 
   return (
