@@ -3,18 +3,20 @@
 # Repository top level
 ncu -u
 
-# @saeon packages
-for directory in src/@saeon/*; do
+# packages
+for directory in src/packages/*; do
+  D=$(readlink -f "$directory");
+  CMD="npm --prefix $D run update-package-dependencies"
+  echo $CMD
+  eval ${CMD}
+done
+
+# services
+for directory in src/services/*; do
   D=$(readlink -f "$directory");
   CMD="npm --prefix $D run update-package-dependencies"
   eval ${CMD}
 done
-
-# docs
-npm --prefix src/docs run update-package-dependencies
-
-# reporting
-npm --prefix src/reporting run update-package-dependencies
 
 # Install package dependencies
 npm run install-package-dependencies

@@ -15,15 +15,9 @@ if [ ! $SEMVER ]; then
   exit 1
 fi
 
-NPM_PACKAGES=(
-  "src/@saeon/catalogue-search"
-  "src/@saeon/logger"
-  "src/@saeon/ol-react"
-  "src/@saeon/snap-menus"
-  "src/@saeon/pkce-client"
-)
-
-for PACKAGE in ${NPM_PACKAGES[*]}; do
+# packages
+for directory in src/packages/*; do
+  D=$(readlink -f "$directory");
   CMD="npm --prefix $PACKAGE run publish:$SEMVER"
   eval ${CMD}
 done

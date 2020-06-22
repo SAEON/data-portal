@@ -1,15 +1,18 @@
 {
-  "name": "@saeon/atlas",
+  "name": "@saeon/js",
   "description": "SAEON's 'Atlas' codebase (monorepo)",
   "scripts": {
-    "test": "npm --prefix src/@saeon/catalogue-search test",
-    "start": "npm --prefix src/@saeon/anyproxy start & npm --prefix src/@saeon/atlas-api start & npm --prefix src/@saeon/atlas-client start",
+    "test": "npm --prefix src/packages/catalogue-search test",
+    "start": "npm --prefix src/services/anyproxy start & npm --prefix src/services/atlas-api start & npm --prefix src/services/atlas-client start",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
     "bump-patch": "scripts/bump-patch.sh",
     "configure-git": "git config --local include.path ../.gitconfig",
     "update-git-snapshot": "git add .",
+    "************ GENERATORS **********": "",
+    "generate-npm-package": "npm --prefix src/generators/npm-package run plop",
+    "generate-react-client": "npm --prefix src/generators/react-client run plop",
     "************ PACKAGES **********": "",
     "check-package-updates": "scripts/check-package-updates.sh",
     "update-package-dependencies": "scripts/update-package-dependencies.sh",
@@ -27,17 +30,17 @@
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.2.0",
+    "eslint": "^7.3.0",
     "eslint-plugin-react": "^7.20.0",
     "husky": "^4.2.5",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
   },
   "dependencies": {
-    "@babel/core": "^7.10.2",
+    "@babel/core": "^7.10.3",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
-    "@babel/preset-env": "^7.10.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
     "babel-plugin-transform-imports": "^2.0.0"
   },

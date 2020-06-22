@@ -1,0 +1,45 @@
+{
+  "name": "@saeon/{{dashCase packageName}}",
+  "version": "0.0.0",
+  "description": "{{packageDescription}}",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {},
+  "scripts": {
+    "watch": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist'",
+    "build": "rimraf ./dist && NODE_ENV=production webpack",
+    "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/{{dashCase packageName}} -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/{{dashCase packageName}} -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/{{dashCase packageName}} -s major",
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write \{{changed}}",
+    "check-package-updates": "ncu",
+    "update-package-dependencies": "ncu -u"
+  },
+  "keywords": [
+    "@saeon/{{dashCase packageName}}"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/{{dashCase packageName}}",
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "rimraf": "^3.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "onchange": "^7.0.2",
+    "prettier": "^2.0.5"
+  }
+}

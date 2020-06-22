@@ -1,0 +1,50 @@
+{
+  "name": "@saeon/snap-menus",
+  "version": "2.2.1",
+  "description": "Draggable, snappable menus",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16",
+    "@material-ui/core": ">=4",
+    "@material-ui/icons": ">=4"
+  },
+  "scripts": {
+    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.jsx",
+    "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s major",
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "check-package-updates": "ncu",
+    "update-package-dependencies": "ncu -u"
+  },
+  "keywords": [
+    "@saeon/snap-menus"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+  },
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/snap-menus",
+  "author": "zach@saeon.ac.za, steven@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "clsx": "^1.1.1",
+    "css-loader": "^3.6.0",
+    "node-sass": "^4.14.1",
+    "react-draggable": "^4.4.3",
+    "react-resizable": "^1.10.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {}
+}

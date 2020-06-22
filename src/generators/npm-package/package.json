@@ -1,0 +1,14 @@
+{
+  "name": "@saeon/generate-npm-package",
+  "version": "0.0.1",
+  "description": "Generate boilerplate JavaScript library for publishing to NPM",
+  "main": "index.js",
+  "scripts": {
+    "plop": "plop"
+  },
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "devDependencies": {
+    "plop": "^2.7.1"
+  }
+}
