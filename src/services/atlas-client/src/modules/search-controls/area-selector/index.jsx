@@ -1,63 +1,33 @@
 import React from 'react'
-import { createPortal } from 'react-dom'
-import { Gesture as GestureIcon } from '@material-ui/icons'
-import { PolygonSelectionTool } from '../../page-atlas/modules/map-tools'
-import { Grid, Button } from '@material-ui/core'
-import { MenuContext } from '@saeon/snap-menus'
+import { Grid } from '@material-ui/core'
+import { Form } from '../../../components'
+import { MapContext } from '../../provider-map'
+import Selector from './selector'
 
-const id = 'map-selection-tools'
-
-export default ({ updateForm, ...fields }) => {
+export default ({ updateForm: updateMainForm, ...fields }) => {
   return (
-    <MenuContext.Consumer>
-      {({ addMenu, removeMenu, getMenuById, menus, menuContainerEl, container }) => {
-        return (
-          <>
-            {/* Render the mapTools menu if necessary */}
-            {menus
-              ?.filter(menu => menu.id === id)
-              ?.map(menu =>
-                createPortal(
-                  <menu.Component updateForm={updateForm} {...fields} />,
-                  menuContainerEl
+    <>
+      <Grid item xs={12}>
+        <Form selectPolygonActive={false} selectRectActive={false}>
+          {({ updateForm, selectPolygonActive, selectRectActive, ...props }) => (
+            <MapContext.Consumer>
+              {({ proxy }) => {
+                return (
+                  <Selector
+                    updateForm={updateForm}
+                    selectPolygonActive={selectPolygonActive}
+                    selectRectActive={selectRectActive}
+                    proxy={proxy}
+                    onDrawEnd={polygon =>
+                      updateMainForm({ polygons: [...fields.polygons, polygon] })
+                    }
+                  />
                 )
-              ) || null}
-
-            <Grid item xs={12}>
-              <Button
-                fullWidth
-                color="secondary"
-                variant="contained"
-                disableElevation
-                size="small"
-                onClick={() => {
-                  if (getMenuById(id)) {
-                    removeMenu(id)
-                  } else {
-                    addMenu({
-                      id,
-                      norender: true,
-                      Component: ({ updateForm, ...fields }) => (
-                        <PolygonSelectionTool
-                          onDrawEnd={polygon =>
-                            updateForm({ polygons: [...fields.polygons, polygon] })
-                          }
-                          container={container}
-                          id={id}
-                          onClose={() => removeMenu(id)}
-                        />
-                      ),
-                    })
-                  }
-                }}
-                startIcon={<GestureIcon />}
-              >
-                Select area
-              </Button>
-            </Grid>
-          </>
-        )
-      }}
-    </MenuContext.Consumer>
+              }}
+            </MapContext.Consumer>
+          )}
+        </Form>
+      </Grid>
+    </>
   )
 }

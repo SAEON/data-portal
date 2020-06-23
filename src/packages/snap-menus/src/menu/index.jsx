@@ -1,5 +1,5 @@
 import 'react-resizable/css/styles.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import { Card, CardContent, AppBar, Toolbar, Typography, IconButton, Fade } from '@material-ui/core'
@@ -11,50 +11,54 @@ import getDimensions from './get-dimensions'
 import getSnapZone from './get-zone'
 import getPosition from './get-position'
 import clsx from 'clsx'
-import MenuContext from '../provider/context'
 import packageJson from '../../package.json'
 
-export default ({
-  title,
-  children,
-  resizable = true,
-  defaultPosition,
-  defaultWidth = 450,
-  defaultHeight = 400,
-  defaultSnap = false,
-  container,
-  ...props
-}) => {
-  const { id } = props
+export default forwardRef(
+  (
+    {
+      renderMenu,
+      getDefaultPosition,
+      containerHeight,
+      containerWidth,
+      getActiveMenuZIndex,
+      title,
+      children,
+      resizable = true,
+      defaultPosition,
+      defaultWidth = 450,
+      defaultHeight = 400,
+      defaultSnap = false,
+      VERTICAL_OFFSET_TOP,
+      open,
+      onClose,
+    },
+    ref
+  ) => {
+    const classes = useStyles({ containerHeight, containerWidth })()
+    const [state, setState] = useState({
+      initialized: true,
+      zIndex: getActiveMenuZIndex(),
+      snapZone: null,
+      snapped: Boolean(defaultSnap),
+      isResizing: false,
+      dimensions: defaultSnap
+        ? getDimensions(defaultSnap, containerWidth, containerHeight)
+        : { width: defaultWidth, height: defaultHeight },
+      position: getPosition(defaultSnap, containerWidth, containerHeight),
+      previousDimensions: { width: defaultWidth, height: defaultHeight },
+    })
 
-  const containerHeight = container.offsetHeight
-  const containerWidth = container.offsetWidth
+    useEffect(() => {
+      ref.current = state
+    })
 
-  if (!id)
-    throw Error(
-      `${packageJson.name} v${packageJson.version}. Must provide props.id to Menu component`
-    )
-
-  const classes = useStyles({ containerHeight, containerWidth })()
-  const [state, setState] = useState({
-    snapZone: null,
-    snapped: Boolean(defaultSnap),
-    isResizing: false,
-    dimensions: defaultSnap
-      ? getDimensions(defaultSnap, containerWidth, containerHeight)
-      : { width: defaultWidth, height: defaultHeight },
-    position: getPosition(defaultSnap, containerWidth, containerHeight),
-    previousDimensions: { width: defaultWidth, height: defaultHeight },
-  })
-
-  return (
-    <MenuContext.Consumer>
-      {({ setActiveMenu, getMenuById, removeMenu, getDefaultPosition, VERTICAL_OFFSET_TOP }) => (
+    return renderMenu(
+      <div style={{ display: open ? 'block' : 'none' }}>
         <EventBoundary>
           {/* Snap ghost */}
           <div
             style={{
-              zIndex: getMenuById(id).zIndex,
+              zIndex: state.zIndex,
               position: 'relative',
               display: state.snapZone ? 'block' : 'none',
             }}
@@ -81,7 +85,9 @@ export default ({
               position={state.position}
               grid={[1, 1]}
               scale={1}
-              onStart={() => setActiveMenu(id)}
+              onStart={() => {
+                setState(Object.assign({ ...state }, { zIndex: getActiveMenuZIndex() }))
+              }}
               onDrag={debounce(ev => {
                 const newState = {}
 
@@ -127,7 +133,7 @@ export default ({
                 }
 
                 setState(Object.assign({ ...state }, newState))
-              })}
+              }, 5)}
               onStop={() => {
                 if (state.snapZone) {
                   const dimensions = getDimensions(state.snapZone, containerWidth, containerHeight)
@@ -162,7 +168,7 @@ export default ({
               <div
                 style={{
                   opacity: 0.8,
-                  zIndex: getMenuById(id).zIndex,
+                  zIndex: state.zIndex,
                   position: 'relative',
                 }}
               >
@@ -216,8 +222,8 @@ export default ({
                             <Typography variant="overline">{title}</Typography>
 
                             <IconButton
-                              onTouchStart={() => removeMenu(id)}
-                              onClick={() => removeMenu(id)}
+                              onTouchStart={onClose}
+                              onClick={onClose}
                               edge="start"
                               color="inherit"
                               style={{ order: 2, marginLeft: 'auto', padding: 2 }}
@@ -251,7 +257,7 @@ export default ({
             </Draggable>
           </div>
         </EventBoundary>
-      )}
-    </MenuContext.Consumer>
-  )
-}
+      </div>
+    )
+  }
+)

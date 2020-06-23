@@ -12,15 +12,13 @@ import ErrorBoundary from './modules/error-boundary'
 // Global providers
 import AuthProvider from './modules/provider-auth'
 import MapProvider from './modules/provider-map'
-import MenuProvider from '@saeon/snap-menus'
 import FeedbackProvider from './modules/provider-feedback'
+import MenuProvider from '../../../packages/snap-menus/src/provider'
 
 // Pages
 import Layout from './modules/layout'
 import Atlas from './modules/page-atlas'
 import AboutPage from './modules/page-about'
-import Search from './modules/page-search'
-import SearchResults from './modules/page-search-results'
 
 export default ({ client, theme }) => (
   <EventBoundary>
@@ -36,52 +34,29 @@ export default ({ client, theme }) => (
             >
               <AuthProvider>
                 <MapProvider>
-                  <Router>
-                    <Layout>
-                      <Route
-                        key={'authenticated'}
-                        path={'/authenticated'}
-                        exact={true}
-                        render={() => <Redirect to={'/'} />}
-                      />
-                      <Route
-                        key={'home'}
-                        path={'/'}
-                        exact={true}
-                        render={() => (
-                          <MenuProvider
-                            VERTICAL_OFFSET_TOP={55}
-                            VERTICAL_OFFSET_BOTTOM={30}
-                            HORIZONTAL_MARGIN={5}
-                          >
-                            <Atlas />
-                          </MenuProvider>
-                        )}
-                      />
-                      <Route
-                        key={'about'}
-                        path={'/about'}
-                        exact={true}
-                        render={() => <AboutPage />}
-                      />
-                      <Route
-                        key={'Search'}
-                        path={'/search'}
-                        exact={true}
-                        render={() => (
-                          <MenuProvider>
-                            <Search />
-                          </MenuProvider>
-                        )}
-                      />
-                      <Route
-                        key={'Search-results'}
-                        path={'/search-results'}
-                        exact={true}
-                        render={() => <SearchResults />}
-                      />
-                    </Layout>
-                  </Router>
+                  <MenuProvider
+                    VERTICAL_OFFSET_TOP={55}
+                    HORIZONTAL_MARGIN={5}
+                    VERTICAL_OFFSET_BOTTOM={30}
+                  >
+                    <Router>
+                      <Layout>
+                        <Route
+                          key={'authenticated'}
+                          path={'/authenticated'}
+                          exact={true}
+                          render={() => <Redirect to={'/'} />}
+                        />
+                        <Route key={'home'} path={'/'} exact={true} render={() => <Atlas />} />
+                        <Route
+                          key={'about'}
+                          path={'/about'}
+                          exact={true}
+                          render={() => <AboutPage />}
+                        />
+                      </Layout>
+                    </Router>
+                  </MenuProvider>
                 </MapProvider>
               </AuthProvider>
             </FeedbackProvider>

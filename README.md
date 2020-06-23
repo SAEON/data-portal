@@ -3,6 +3,7 @@
 ![DEV](https://github.com/SAEONData/saeon-atlas/workflows/DEV/badge.svg)
 
 TODO
+
 - Single .browserslistrc
 
 # @SAEON/ATLAS
@@ -183,11 +184,13 @@ It's also useful to see which packages will be updated by this script. To do tha
 # Code generators
 
 #### Generate a React client
+
 ```sh
 npm run generate-react-client
 ```
 
 #### Generate an NPM package
+
 ```sh
 npm run generate-npm-package
 ```

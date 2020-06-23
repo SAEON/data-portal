@@ -53,7 +53,6 @@
     "graphql": "^15.1.0",
     "html-webpack-plugin": "^4.3.0",
     "html2canvas": "^1.0.0-rc.5",
-    "jso": "^4.1.1",
     "nanoid": "^3.1.10",
     "node-sass": "^4.14.1",
     "ol": "^6.3.1",

@@ -93,7 +93,6 @@ export default ({ type, data, children }) => {
               <Collapse in={showCurl} timeout="auto" unmountOnExit>
                 TODO
               </Collapse>
-
               <Div />
 
               <ReactCatalogue
