@@ -13,7 +13,7 @@ import ErrorBoundary from './modules/error-boundary'
 import AuthProvider from './modules/provider-auth'
 import MapProvider from './modules/provider-map'
 import FeedbackProvider from './modules/provider-feedback'
-import MenuProvider from '../../../packages/snap-menus/src/provider'
+import { Provider as MenuProvider } from '@saeon/snap-menus'
 
 // Pages
 import Layout from './modules/layout'

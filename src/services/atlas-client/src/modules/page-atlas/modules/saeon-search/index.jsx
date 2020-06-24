@@ -1,19 +1,18 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Grid, Typography, Button, Fade } from '@material-ui/core'
 import { useHttpDataQuery, Form } from '../../../../components'
 import { Alert } from '@material-ui/lab'
-import useMenu from '@saeon/snap-menus'
+import { useMenu } from '@saeon/snap-menus'
 import useStyles from './style'
 import { ATLAS_API_ADDRESS } from '../../../../config'
 import SearchControls from '../../../search-controls'
 import ResultsList from './results/_results-list'
 import { isMobile } from 'react-device-detect'
-import packageJson from '../../../../../package.json'
 
 const DSL_INDEX = `saeon-odp-4-2`
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
 
-export default () => {
+export default memo(() => {
   const SearchResultsMenu = useMenu('search-results-menu')
   const classes = useStyles()
 
@@ -47,13 +46,13 @@ export default () => {
                   return (
                     <>
                       <SearchResultsMenu
-                        title={`About ${packageJson.name}`}
+                        title={'Search results'}
                         defaultSnap={isMobile ? 'Top' : 'Right'}
                         open={open}
                         onClose={toggleSearchResultsMenu}
                       >
-                        {({ height, width }) =>
-                          data?.hits.total ? (
+                        {({ height, width }) => {
+                          return data?.hits.total ? (
                             <ResultsList
                               height={height}
                               width={width}
@@ -64,7 +63,7 @@ export default () => {
                           ) : (
                             <Typography>No results...</Typography>
                           )
-                        }
+                        }}
                       </SearchResultsMenu>
 
                       {/* Render rest of page */}
@@ -98,4 +97,4 @@ export default () => {
       </Grid>
     </Grid>
   )
-}
+})

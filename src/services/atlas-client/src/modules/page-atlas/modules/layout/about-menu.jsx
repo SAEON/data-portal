@@ -1,7 +1,7 @@
 import React from 'react'
 import { Fab } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
-import useMenu from '@saeon/snap-menus'
+import { useMenu } from '@saeon/snap-menus'
 import AboutContent from '../about'
 import packageJson from '../../../../../package.json'
 import useStyles from '../../style'

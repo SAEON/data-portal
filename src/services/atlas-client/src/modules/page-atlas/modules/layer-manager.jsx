@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import {
   Visibility,
   VisibilityOff,
@@ -25,7 +25,7 @@ import {
 import { MapContext } from '../../provider-map'
 import { Form, DragAndDrop } from '../../../components'
 import { debounce } from '../../../lib/fns'
-import useMenu from '@saeon/snap-menus'
+import { useMenu } from '@saeon/snap-menus'
 import { isMobile } from 'react-device-detect'
 
 const headerButtonProps = {
@@ -37,16 +37,11 @@ const layerButtonStyle = {
   width: '100%',
 }
 
-export default class extends Component {
+export default class extends PureComponent {
   state = {
     disableDrag: false,
   }
 
-  shouldComponentUpdate() {
-    return true
-  }
-
-  // TODO - proxy.getLayers might not be correct
   render() {
     const { state } = this
     return (
