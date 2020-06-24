@@ -42,6 +42,7 @@ export default memo(() => {
             const toggleSearchResultsMenu = () => updateForm({ open: !open })
             return (
               <SearchControls data={data}>
+                {/* eslint-disable-next-line no-unused-vars */}
                 {({ error, loading, data, currentPage, updateCurrentPage }) => {
                   return (
                     <>

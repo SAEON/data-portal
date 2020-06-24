@@ -19,6 +19,7 @@ import { Provider as MenuProvider } from '@saeon/snap-menus'
 import Layout from './modules/layout'
 import Atlas from './modules/page-atlas'
 import AboutPage from './modules/page-about'
+import HomePage from './modules/page-home'
 
 export default ({ client, theme }) => (
   <EventBoundary>
@@ -34,29 +35,37 @@ export default ({ client, theme }) => (
             >
               <AuthProvider>
                 <MapProvider>
-                  <MenuProvider
-                    VERTICAL_OFFSET_TOP={55}
-                    HORIZONTAL_MARGIN={5}
-                    VERTICAL_OFFSET_BOTTOM={30}
-                  >
-                    <Router>
-                      <Layout>
-                        <Route
-                          key={'authenticated'}
-                          path={'/authenticated'}
-                          exact={true}
-                          render={() => <Redirect to={'/'} />}
-                        />
-                        <Route key={'home'} path={'/'} exact={true} render={() => <Atlas />} />
-                        <Route
-                          key={'about'}
-                          path={'/about'}
-                          exact={true}
-                          render={() => <AboutPage />}
-                        />
-                      </Layout>
-                    </Router>
-                  </MenuProvider>
+                  <Router>
+                    <Layout>
+                      <Route
+                        key={'authenticated'}
+                        path={'/authenticated'}
+                        exact={true}
+                        render={() => <Redirect to={'/'} />}
+                      />
+                      <Route key={'home'} path={'/'} exact={true} render={() => <HomePage />} />
+                      <Route
+                        key={'atlas'}
+                        path={'/atlas'}
+                        exact={true}
+                        render={() => (
+                          <MenuProvider
+                            VERTICAL_OFFSET_TOP={55}
+                            HORIZONTAL_MARGIN={5}
+                            VERTICAL_OFFSET_BOTTOM={30}
+                          >
+                            <Atlas />
+                          </MenuProvider>
+                        )}
+                      />
+                      <Route
+                        key={'about'}
+                        path={'/about'}
+                        exact={true}
+                        render={() => <AboutPage />}
+                      />
+                    </Layout>
+                  </Router>
                 </MapProvider>
               </AuthProvider>
             </FeedbackProvider>

@@ -9,7 +9,7 @@ export default ({ updateForm: updateMainForm, ...fields }) => {
     <>
       <Grid item xs={12}>
         <Form selectPolygonActive={false} selectRectActive={false}>
-          {({ updateForm, selectPolygonActive, selectRectActive, ...props }) => (
+          {({ updateForm, selectPolygonActive, selectRectActive }) => (
             <MapContext.Consumer>
               {({ proxy }) => {
                 return (

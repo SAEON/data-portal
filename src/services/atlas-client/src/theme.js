@@ -15,10 +15,16 @@ export default {
   },
   palette: {
     primary: {
+      light: '#394982',
       main: '#002255',
+      dark: '#00002c',
+      contrastText: '#fff',
     },
     secondary: {
-      main: '#039be5',
+      light: '#ff844a',
+      main: '#f4511b',
+      dark: '#b91400',
+      contrastText: '#fff',
     },
   },
   status: {

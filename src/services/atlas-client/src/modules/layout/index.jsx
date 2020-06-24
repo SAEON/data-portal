@@ -3,6 +3,7 @@ import { Switch, withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { AppBar, Toolbar, IconButton, Typography, Menu, Fade, MenuItem } from '@material-ui/core'
 import {
+  Explore as MapIcon,
   Menu as MenuIcon,
   GitHub as GitHubIcon,
   Info as InfoIcon,
@@ -46,6 +47,9 @@ const Layout = ({ children }) => {
           >
             {/* Home page */}
             <NavItem label={'Home'} icon={<HomeIcon />} to="/" />
+
+            {/* Atlas page */}
+            <NavItem label={'Atlas'} icon={<MapIcon />} to="/atlas" />
 
             {/* About page */}
             <NavItem label={'About'} icon={<InfoIcon />} to="/about" />
