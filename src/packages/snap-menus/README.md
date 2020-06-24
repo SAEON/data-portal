@@ -9,78 +9,30 @@ npm i @saeon/snap-menus
 Create a menu provider scope somewhere in you application tree
 
 ```js
-<MenuProvider>
+import { Provider as MenuProvider } from '@saeon/snap-menus'
+
+<MenuProvider ... some config options TODO>
   ...
 </MenuProvider>
 ```
 
-To use the menu system, specify a consumer context. The context provides a number of helper functions for controlling application menus
+To use the menu system, anywhere else in the application use the `useMenu` hook:
 
 ```js
-<MenuContext.Consumer>
-  {({
-      menus,
-      getMenuById,
-      setActiveMenu,
-      addMenu,
-      removeMenu,
-      getActiveMenuZIndex,
-      PORTAL,
-      getDefaultPosition,
-    }) => (
-    ...
-  )}
-</MenuContext.Consumer>
-```
+import { useMenu } from '@saeon/snap-menus'
 
+const MenuComponent = useMenu({ id: 'some-menu-name' }) // TODO - an ID might not actually be needed
 
-# Basic working example
-```js
-import React from 'react'
-import { render } from 'react-dom'
-import MenuProvider, { MenuContext, DragMenu } from '@saeon/snap-menus'
-const menuId = 'menu'
-
-const App = () => (
-  <MenuContext.Consumer>
-    {({addMenu, removeMenu, getMenuBuId }) => (
-      <button
-        onClick={() => {
-          if (getMenuById(id)) {
-            removeMenu(id)
-          } else {
-            addMenu({
-              id,
-
-              /**
-               * The component specifies what is rendered as the 'menu'
-               * In this case, a DragMenu (provided in this package) is
-               * rendered
-               * 
-               * The component will be passed props - these are the fields
-               * of the object that is passed as an argument to the addMenu()
-               * function 
-               */
-              Component: props => (
-                <DragMenu
-                  {...props}
-                  title={'A menu'}
-                >
-                  Menu contents
-                </DragMenu>
-              ),
-            })
-          }
-        }}
-      >Toggle menu</button>
-    )}
-  </MenuContext.Consumer>
-)
-
-render(
-  <MenuProvider>
-    <App />
-  </MenuProvider>,
-  document.getElementById('root')
-)
+/**
+ * This is a controlled component
+ *  => A Boolean must be provided to the open property
+ *  => A function to toggle the open property must be provided
+ */
+<MenuComponent
+  title={"Title"}
+  open={false|true}
+  onClose={() => function that toggles the 'open' value}
+>
+  ... contents
+<MenuComponent>
 ```
