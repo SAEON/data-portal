@@ -16,6 +16,8 @@ export default memo(() => {
   const SearchResultsMenu = useMenu({ id: 'search-results-menu' })
   const classes = useStyles()
 
+  console.log('rendering saeon search')
+
   // Get terms for dropdown
   const { error, loading, data } = useHttpDataQuery({
     uri: `${DSL_PROXY}/${DSL_INDEX}`,

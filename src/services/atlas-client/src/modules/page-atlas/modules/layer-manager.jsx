@@ -69,7 +69,6 @@ class LayerManager extends PureComponent {
             >
               {(items, makeDraggable) =>
                 items.map((layer, i) => {
-                  console.log('re-rendering draggable')
                   return makeDraggable(
                     <Card
                       style={{
