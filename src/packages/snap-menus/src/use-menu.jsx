@@ -15,7 +15,7 @@ const refs = {}
  * returns the highest zIndex value + 1
  */
 const getActiveMenuZIndex = () => {
-  const zIndices = Object.entries(refs).map(([, { current }]) => (current?.zIndex || 1) + 1)
+  const zIndices = Object.entries(refs).map(([, { current: zIndex }]) => (zIndex || 1) + 1)
   const zIndex = zIndices.length ? Math.max(...zIndices) : 2
   return zIndex
 }
@@ -42,7 +42,6 @@ export default ({ id }) => {
       getActiveMenuZIndex={getActiveMenuZIndex}
       containerHeight={containerHeight}
       containerWidth={containerWidth}
-      zIndex={getActiveMenuZIndex()}
       VERTICAL_OFFSET_TOP={VERTICAL_OFFSET_TOP}
       ref={ref}
       {...props}
