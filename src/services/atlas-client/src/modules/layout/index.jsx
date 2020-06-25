@@ -54,12 +54,6 @@ const Layout = ({ children }) => {
             {/* About page */}
             <NavItem label={'About'} icon={<InfoIcon />} to="/about" />
 
-            {/* Search page */}
-            <NavItem label={'Search'} icon={<SearchIcon />} to="/search" />
-
-            {/* Search results page */}
-            <NavItem label={'Search results'} icon={<ListIcon />} to="/search-results" />
-
             {/* Source code link */}
             <NavItem label={'Source Code'} icon={<GitHubIcon />} href={SOURCE_CODE_URI} />
           </Menu>
