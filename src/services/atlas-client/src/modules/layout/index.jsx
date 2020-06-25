@@ -8,8 +8,6 @@ import {
   GitHub as GitHubIcon,
   Info as InfoIcon,
   Home as HomeIcon,
-  Search as SearchIcon,
-  List as ListIcon,
   AccountCircle as AccountIcon,
 } from '@material-ui/icons'
 import NavItem from './nav-item'

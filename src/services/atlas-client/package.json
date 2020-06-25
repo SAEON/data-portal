@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.105",
+  "version": "0.0.107",
   "description": "Browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
     "@saeon/atlas-client",
@@ -39,7 +39,7 @@
     "@saeon/logger": "^3.1.11",
     "@saeon/ol-react": "^9.0.7",
     "@saeon/pkce-client": "0.5.6",
-    "@saeon/snap-menus": "^3.0.1",
+    "@saeon/snap-menus": "^3.1.0",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.1",
