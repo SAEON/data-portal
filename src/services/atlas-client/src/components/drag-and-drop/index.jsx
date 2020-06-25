@@ -17,23 +17,25 @@ export default ({ items, listStyle, itemStyle, children, reorderItems }) => {
             ref={provided.innerRef}
             style={listStyle(snapshot.isDraggingOver, snapshot.isUsingPlaceholder)}
           >
-            {children(items, (child, i, disableDrag) => (
-              <Draggable key={i} isDragDisabled={disableDrag} draggableId={i.toString()} index={i}>
-                {(provided, snapshot) =>
-                  optionalPortal(
-                    provided.draggableProps.style,
-                    <div
-                      ref={provided.innerRef}
-                      style={itemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <div style={itemStyle(snapshot.isDragging)}>{child}</div>
-                    </div>
-                  )
-                }
-              </Draggable>
-            ))}
+            {children(items, (child, i, disableDrag, id) => {
+              return (
+                <Draggable key={id} isDragDisabled={disableDrag} draggableId={id} index={i}>
+                  {(provided, snapshot) =>
+                    optionalPortal(
+                      provided.draggableProps.style,
+                      <div
+                        ref={provided.innerRef}
+                        style={itemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <div style={itemStyle(snapshot.isDragging)}>{child}</div>
+                      </div>
+                    )
+                  }
+                </Draggable>
+              )
+            })}
             {provided.placeholder}
           </div>
         )}

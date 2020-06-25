@@ -21,9 +21,7 @@ const getActiveMenuZIndex = () => {
 }
 
 const getDefaultPosition = () => {
-  const l = Object.keys(refs).length
-  const offset = (l - 1) * 25
-  return { x: 100 + offset, y: 75 + offset }
+  return {x: 150, y: 125}
 }
 
 /**

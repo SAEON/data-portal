@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, memo } from 'react'
 import {
   Visibility,
   VisibilityOff,
@@ -37,13 +37,14 @@ const layerButtonStyle = {
   width: '100%',
 }
 
-export default class extends PureComponent {
+class LayerManager extends PureComponent {
   state = {
     disableDrag: false,
   }
 
   render() {
     const { state } = this
+    const { LegendMenu, InfoMenu } = this.props
     return (
       <MapContext.Consumer>
         {({ proxy }) => {
@@ -67,9 +68,9 @@ export default class extends PureComponent {
               })}
             >
               {(items, makeDraggable) =>
-                items.map((layer, i) =>
-                  // A single layer item
-                  makeDraggable(
+                items.map((layer, i) => {
+                  console.log('re-rendering draggable')
+                  return makeDraggable(
                     <Card
                       style={{
                         background: 'transparent',
@@ -136,7 +137,6 @@ export default class extends PureComponent {
                               {/* Legend menu */}
                               <Form open={false}>
                                 {({ updateForm, open }) => {
-                                  const LegendMenu = useMenu({ id: 'legend-menu' })
                                   const toggleMenu = () => updateForm({ open: !open })
                                   return (
                                     <>
@@ -177,7 +177,6 @@ export default class extends PureComponent {
                             <Grid item xs={6}>
                               <Form open={false}>
                                 {({ updateForm, open }) => {
-                                  const InfoMenu = useMenu({ id: 'info-menu' })
                                   const toggleMenu = () => updateForm({ open: !open })
 
                                   return (
@@ -251,9 +250,10 @@ export default class extends PureComponent {
                       </Collapse>
                     </Card>,
                     i,
-                    this.state.disableDrag
+                    state.disableDrag,
+                    layer.get('id')
                   )
-                )
+                })
               }
             </DragAndDrop>
           ) : (
@@ -264,3 +264,9 @@ export default class extends PureComponent {
     )
   }
 }
+
+export default memo(() => {
+  const LegendMenu = useMenu({ id: 'legend-menu' })
+  const InfoMenu = useMenu({ id: 'info-menu' })
+  return <LayerManager InfoMenu={InfoMenu} LegendMenu={LegendMenu} />
+})
