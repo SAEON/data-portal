@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export default ({ containerHeight, containerWidth }) => {
+export default ({ containerHeight, containerWidth, HORIZONTAL_MARGIN }) => {
+  const m = HORIZONTAL_MARGIN / 2
   return makeStyles(() => {
     return {
       ghost: {
@@ -10,35 +11,35 @@ export default ({ containerHeight, containerWidth }) => {
         opacity: '20%',
       },
       TopLeft: {
-        height: containerHeight / 2,
-        width: containerWidth / 2,
+        height: containerHeight / 2 - m,
+        width: containerWidth / 2 - m,
         left: 0,
       },
       TopRight: {
-        height: containerHeight / 2,
-        width: containerWidth / 2,
+        height: containerHeight / 2 - m,
+        width: containerWidth / 2 - m,
         right: 0,
       },
       BottomLeft: {
-        height: containerHeight / 2,
-        width: containerWidth / 2,
-        top: containerHeight / 2,
+        height: containerHeight / 2 - m,
+        width: containerWidth / 2 - m,
+        top: containerHeight / 2 + m,
         left: 0,
       },
       BottomRight: {
-        height: containerHeight / 2,
-        width: containerWidth / 2,
-        top: containerHeight / 2,
+        height: containerHeight / 2 - m,
+        width: containerWidth / 2 - m,
+        top: containerHeight / 2 + m,
         right: 0,
       },
       Left: {
         height: containerHeight,
-        width: containerWidth / 2,
+        width: containerWidth / 2 - m,
         left: 0,
       },
       Right: {
         height: containerHeight,
-        width: containerWidth / 2,
+        width: containerWidth / 2 - m,
         right: 0,
       },
       Top: {
@@ -48,9 +49,9 @@ export default ({ containerHeight, containerWidth }) => {
         right: 0,
       },
       Bottom: {
-        height: containerHeight / 2,
+        height: containerHeight / 2 - m,
         width: containerWidth,
-        top: containerHeight / 2,
+        top: containerHeight / 2 - m,
         left: 0,
         right: 0,
       },

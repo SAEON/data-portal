@@ -18,6 +18,7 @@ export default forwardRef(
       containerHeight,
       containerWidth,
       VERTICAL_OFFSET_TOP,
+      HORIZONTAL_MARGIN,
 
       // From hook
       renderMenu,
@@ -37,16 +38,16 @@ export default forwardRef(
     },
     ref
   ) => {
-    const classes = useStyles({ containerHeight, containerWidth })()
+    const classes = useStyles({ containerHeight, containerWidth, HORIZONTAL_MARGIN })()
     const [zIndex, setZIndex] = useState(null)
     const [state, setState] = useState({
       initialized: true,
       snapped: Boolean(defaultSnap),
       isResizing: false,
       dimensions: defaultSnap
-        ? getDimensions(defaultSnap, containerWidth, containerHeight)
+        ? getDimensions(defaultSnap, containerWidth, containerHeight, HORIZONTAL_MARGIN)
         : { width: defaultWidth, height: defaultHeight },
-      position: getPosition(defaultSnap, containerWidth, containerHeight),
+      position: getPosition(defaultSnap, containerWidth, containerHeight, HORIZONTAL_MARGIN),
       previousDimensions: { width: defaultWidth, height: defaultHeight },
     })
 
@@ -85,7 +86,7 @@ export default forwardRef(
                   handle=".drag-handle"
                   defaultPosition={
                     defaultSnap
-                      ? getPosition(defaultSnap, containerWidth, containerHeight)
+                      ? getPosition(defaultSnap, containerWidth, containerHeight, HORIZONTAL_MARGIN)
                       : defaultPosition || getDefaultPosition()
                   }
                   bounds={{ left: 0, top: 0 }}
@@ -134,12 +135,12 @@ export default forwardRef(
                       y,
                       containerWidth,
                       containerHeight,
-                      VERTICAL_OFFSET_TOP
+                      VERTICAL_OFFSET_TOP,
                     )
 
                     if (snapZone) {
-                      const dimensions = getDimensions(snapZone, containerWidth, containerHeight)
-                      const position = getPosition(snapZone, containerWidth, containerHeight)
+                      const dimensions = getDimensions(snapZone, containerWidth, containerHeight, HORIZONTAL_MARGIN)
+                      const position = getPosition(snapZone, containerWidth, containerHeight, HORIZONTAL_MARGIN)
                       const previousDimensions = state.dimensions
                       setState(
                         Object.assign(
