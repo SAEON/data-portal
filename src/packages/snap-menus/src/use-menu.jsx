@@ -30,10 +30,9 @@ const getDefaultPosition = () => {
  * Export a React Hook
  */
 export default ({ id }) => {
+  const { containerHeight, containerWidth, VERTICAL_OFFSET_TOP, PORTAL, HORIZONTAL_MARGIN } = useContext(context)
   const ref = useRef()
   refs[id] = ref
-
-  const { containerHeight, containerWidth, VERTICAL_OFFSET_TOP, PORTAL } = useContext(context)
 
   return props => (
     <SnapMenu
@@ -43,6 +42,7 @@ export default ({ id }) => {
       containerHeight={containerHeight}
       containerWidth={containerWidth}
       VERTICAL_OFFSET_TOP={VERTICAL_OFFSET_TOP}
+      HORIZONTAL_MARGIN={HORIZONTAL_MARGIN}
       ref={ref}
       {...props}
     />

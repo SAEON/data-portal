@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 
 /**
  * General component description in JSDoc format. Markdown is *supported*.
  */
-export default props => {
+export default memo(props => {
   const [fields, updateAllFields] = useState(
     Object.fromEntries(
       Object.entries(props).filter(
@@ -31,4 +31,4 @@ export default props => {
     updateForm,
     ...fields,
   })
-}
+})

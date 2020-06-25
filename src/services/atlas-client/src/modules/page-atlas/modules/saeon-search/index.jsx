@@ -13,7 +13,7 @@ const DSL_INDEX = `saeon-odp-4-2`
 const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
 
 export default memo(() => {
-  const SearchResultsMenu = useMenu('search-results-menu')
+  const SearchResultsMenu = useMenu({ id: 'search-results-menu' })
   const classes = useStyles()
 
   // Get terms for dropdown
@@ -44,6 +44,7 @@ export default memo(() => {
               <SearchControls data={data}>
                 {/* eslint-disable-next-line no-unused-vars */}
                 {({ error, loading, data, currentPage, updateCurrentPage }) => {
+                  console.log('rendering search controls')
                   return (
                     <>
                       <SearchResultsMenu
