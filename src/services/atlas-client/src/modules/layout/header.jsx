@@ -17,7 +17,7 @@ import { SOURCE_CODE_URI } from '../../config'
 import useStyles from './style'
 import { AuthContext } from '../provider-auth'
 
-export default withRouter(({ children }) => {
+export default withRouter(() => {
   const classes = useStyles()
   const [menuAnchor, setMenuAnchor] = useState(null)
   const [userMenuAnchor, setUserMenuAnchor] = useState(null)
@@ -46,7 +46,7 @@ export default withRouter(({ children }) => {
           {/* Home page */}
           <NavItem label={'Home'} icon={<HomeIcon />} to="/" />
 
-          {/* Atlas page */}
+          {/* Catalogue page */}
           <NavItem label={'Search catalogue'} icon={<SearchIcon />} to="/catalogue" />
 
           {/* Atlas page */}
@@ -61,7 +61,7 @@ export default withRouter(({ children }) => {
 
         {/* Title */}
         <Typography style={{ padding: '10px' }} display="block" variant="body2">
-          SAEON Atlas {packageJson.version}
+          SAEON DATA PORTAL v{packageJson.version}
         </Typography>
 
         {/* User account */}

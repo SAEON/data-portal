@@ -1,4 +1,19 @@
-export default {
+import { createMuiTheme } from '@material-ui/core/styles'
+import { lightBlue, orange } from '@material-ui/core/colors'
+
+export default createMuiTheme({
+  customSizes: {
+    thickToolbar: {
+      minHeight: 128,
+    },
+  },
+  overrides: {
+    MuiPaper: {
+      outlined: {
+        border: 'none',
+      },
+    },
+  },
   MuiTypography: {
     variantMapping: {
       h1: 'h1',
@@ -15,19 +30,15 @@ export default {
   },
   palette: {
     primary: {
-      light: '#394982',
-      main: '#002255',
-      dark: '#00002c',
+      main: lightBlue[900],
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ff844a',
-      main: '#f4511b',
-      dark: '#b91400',
+      main: orange[800],
       contrastText: '#fff',
     },
   },
   status: {
     danger: 'orange',
   },
-}
+})

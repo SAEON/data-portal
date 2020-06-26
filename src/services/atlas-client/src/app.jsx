@@ -1,7 +1,7 @@
 import React from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { CssBaseline } from '@material-ui/core'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core/styles'
 import { DEFAULT_ERROR, DEFAULT_WARNING, DEFAULT_INFO, DEFAULT_SUCCESS } from './config'
 import { ApolloProvider } from '@apollo/client'
 import ErrorBoundary from './modules/error-boundary'
@@ -20,7 +20,7 @@ export default ({ link }) => (
     }
   >
     <CssBaseline>
-      <ThemeProvider theme={createMuiTheme(theme)}>
+      <ThemeProvider theme={theme}>
         <ErrorBoundary>
           <FeedbackProvider
             defaultError={DEFAULT_ERROR}
