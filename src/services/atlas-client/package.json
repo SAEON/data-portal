@@ -1,6 +1,6 @@
 {
   "name": "@saeon/atlas-client",
-  "version": "0.0.108",
+  "version": "0.0.109",
   "description": "Browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
     "@saeon/atlas-client",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../packages/catalogue-search/src/**/*.@(js|jsx)\" \"../packages/snap-menus/src/**/*.@(js|jsx)\" \"../packages/logger/src/**/*.@(js|jsx)\"  \"../packages/pkce-client/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --open",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../../packages/catalogue-search/src/**/*.@(js|jsx)\" \"../../packages/snap-menus/src/**/*.@(js|jsx)\" \"../../packages/logger/src/**/*.@(js|jsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --env.output=dist --open",
     "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
     "update-package-dependencies": "ncu -u --reject \"@date-io/date-fns\""
   },
