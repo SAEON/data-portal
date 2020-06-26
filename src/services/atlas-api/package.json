@@ -36,7 +36,7 @@
     "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.1.0",
-    "graphql-tools": "^6.0.10",
+    "graphql-tools": "^6.0.11",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.0",
     "koa-compress": "^4.0.1",
