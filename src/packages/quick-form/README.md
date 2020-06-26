@@ -40,7 +40,7 @@ The QuickForm component will (or at least should) rerender everytime a form attr
  myBooleanValue={false}
  effects={[
    () => alert('Effect 1'),
-   () => alert('Effect 2),
+   () => alert('Effect 2'),
    ... etc.
  ]}
 >
