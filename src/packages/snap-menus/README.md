@@ -1,5 +1,5 @@
 # @saeon/snap-menus
-A react provider component that allows for adding / removing draggable, resizable menus. (This library is still a WIP, and shouldn't be used yet)
+A react provider component that allows for adding / removing draggable, resizable menus.
 
 ```sh
 npm i @saeon/snap-menus
@@ -21,6 +21,15 @@ To use the menu system, anywhere else in the application use the `useMenu` hook:
 ```js
 import { useMenu } from '@saeon/snap-menus'
 
+/**
+ * TODO
+ * After creating the MenuComponent with the hook,
+ * it's possible to use multiple instances of the componnt
+ * despite that the hook required an ID specified.
+ * 
+ * This probably needs to be rethought a little to be
+ * clearer.
+ */
 const MenuComponent = useMenu({ id: 'some-menu-name' }) // TODO - an ID might not actually be needed
 
 /**
