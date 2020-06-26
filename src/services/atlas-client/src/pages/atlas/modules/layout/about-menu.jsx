@@ -1,46 +1,50 @@
 import React from 'react'
-import LayerManager from '../layer-manager'
-import { Layers as LayersIcon } from '@material-ui/icons'
-import { useMenu } from '@saeon/snap-menus'
 import { Fab } from '@material-ui/core'
+import { Info as InfoIcon } from '@material-ui/icons'
+import { useMenu } from '@saeon/snap-menus'
+import AboutContent from '../about'
+import packageJson from '../../../../../package.json'
 import useStyles from '../../style'
 import { isMobile } from 'react-device-detect'
-import { Form } from '../../../../components'
+import QuickForm from '@saeon/quick-form'
 
 export default () => {
+  const SnapMenu = useMenu({ id: 'about-menu' })
   const classes = useStyles()
-  const SnapMenu = useMenu({ id: 'map-menu' })
 
   return (
-    <Form open={false}>
+    <QuickForm open={false}>
       {({ updateForm, open }) => {
         const toggleMenu = () => updateForm({ open: !open })
 
         return (
           <>
+            <div style={{ clear: 'both' }} />
+
             {/* Menu */}
             <SnapMenu
-              title={'Open layers menu'}
-              defaultSnap={isMobile ? 'Top' : 'BottomRight'}
+              title={`About ${packageJson.name}`}
+              defaultSnap={isMobile ? 'Top' : 'Top'}
               open={open}
               onClose={toggleMenu}
             >
-              {() => <LayerManager />}
+              <AboutContent />
             </SnapMenu>
 
+            {/* Toggle menu button */}
             <Fab
               size="large"
               color="primary"
+              style={{ float: 'right', marginTop: 12, marginRight: 12 }}
               className={classes.menuIcon}
-              style={{ float: 'right', marginTop: 6, marginRight: 12 }}
-              aria-label="toggle map menu"
+              aria-label="Toggle info menu"
               onClick={toggleMenu}
             >
-              <LayersIcon />
+              <InfoIcon />
             </Fab>
           </>
         )
       }}
-    </Form>
+    </QuickForm>
   )
 }

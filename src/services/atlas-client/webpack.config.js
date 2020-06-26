@@ -40,6 +40,12 @@ module.exports = ({ output = '/dist' }) => {
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
 
         // @saeon
+        '@saeon/quick-form': path.resolve(
+          __dirname,
+          mode === 'production'
+            ? './node_modules/@saeon/quick-form'
+            : '../../packages/quick-form/src'
+        ),
         '@saeon/pkce-client': path.resolve(
           __dirname,
           mode === 'production'

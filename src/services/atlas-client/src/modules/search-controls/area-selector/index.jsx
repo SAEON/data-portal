@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { Form } from '../../../components'
+import QuickForm from '@saeon/quick-form'
 import { MapContext } from '../../provider-map'
 import Selector from './selector'
 
@@ -8,7 +8,7 @@ export default ({ updateForm: updateMainForm, ...fields }) => {
   return (
     <>
       <Grid item xs={12}>
-        <Form selectPolygonActive={false} selectRectActive={false}>
+        <QuickForm selectPolygonActive={false} selectRectActive={false}>
           {({ updateForm, selectPolygonActive, selectRectActive }) => (
             <MapContext.Consumer>
               {({ proxy }) => {
@@ -26,7 +26,7 @@ export default ({ updateForm: updateMainForm, ...fields }) => {
               }}
             </MapContext.Consumer>
           )}
-        </Form>
+        </QuickForm>
       </Grid>
     </>
   )

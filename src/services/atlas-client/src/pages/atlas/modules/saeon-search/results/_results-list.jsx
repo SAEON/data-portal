@@ -1,6 +1,6 @@
 import React from 'react'
-import { MapContext } from '../../../../provider-map'
-import { FeedbackContext } from '../../../../provider-feedback'
+import { MapContext } from '../../../../../modules/provider-map'
+import { FeedbackContext } from '../../../../../modules/provider-feedback'
 import ResultCard from './_result-card'
 import { Button } from '@material-ui/core'
 

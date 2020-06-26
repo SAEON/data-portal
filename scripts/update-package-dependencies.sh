@@ -11,6 +11,14 @@ for directory in src/packages/*; do
   eval ${CMD}
 done
 
+# generators
+for directory in src/generators/*; do
+  D=$(readlink -f "$directory");
+  CMD="npm --prefix $D run update-package-dependencies"
+  echo $CMD
+  eval ${CMD}
+done
+
 # services
 for directory in src/services/*; do
   D=$(readlink -f "$directory");

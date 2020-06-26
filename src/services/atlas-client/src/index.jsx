@@ -3,19 +3,18 @@ import 'regenerator-runtime/runtime'
 import 'typeface-roboto'
 import './index.scss'
 import { configure as configureLogger } from '@saeon/logger'
-import logToHttp from '@saeon/logger/log-to-http'
 import logToGraphQL from '@saeon/logger/log-to-graphql'
 import React from 'react'
 import { render } from 'react-dom'
-import { ApolloClient, HttpLink, InMemoryCache, split, gql } from '@apollo/client'
+import { HttpLink, split, gql } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/link-ws'
-import theme from './theme'
-import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER, ATLAS_API_ADDRESS } from './config'
 import Application from './app'
 import { nativeExtensions } from './lib/fns'
+import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
 nativeExtensions()
 
+// Configure Apollo link
 const link = split(
   ({ query }) => {
     const definition = getMainDefinition(query)
@@ -32,16 +31,9 @@ const link = split(
   })
 )
 
-// Configure Apollo GraphQL client
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link,
-})
-
 // Configure server logs for client usage tracking
 configureLogger(() => ({
   overwrites: {
-    logToHttp: logToHttp(ATLAS_API_ADDRESS),
     logToGraphQL: logToGraphQL({
       link,
       query: gql`
@@ -53,7 +45,7 @@ configureLogger(() => ({
   },
 }))
 
-render(<Application theme={theme} client={client} />, document.getElementById('root'))
+render(<Application link={link} />, document.getElementById('root'))
 
 // // Worker defined in webpack.config.js (Google Workbox)
 // if (process.env.NODE_ENV === 'production')

@@ -3,8 +3,7 @@
 ![DEV](https://github.com/SAEONData/saeon-atlas/workflows/DEV/badge.svg)
 
 TODO
-
-- Single .browserslistrc
+- There should be a single .browserslistrc
 
 # @SAEON/ATLAS
 
@@ -84,32 +83,31 @@ Make sure there is an accessible instance of MongoDB (or run using Docker)
 docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
-From the root of the repository:
-
-```sh
-npm start
-```
-
 Running the atlas requires starting 3 services:
 
 - src/services/atlas-client
 - src/services/atlas-api
 - src/services/anyproxy
 
-Running `npm start` will start these services in the same terminal window. It's useful to start these services individually for helpful log output (a terminal that allows for split screen is great for this).
+These can be run from their respective directories (`npm start`), or from the respotiory root:
 
-To start these services individually:
-
+```sh
+npm run start:proxy
+npm run start:api
+npm run start:client
 ```
-cd src/services/atlas-client
-npm start
 
-cd src/services/atlas-api
-npm start
+# Code generatoros
+The repository includes code generators to automate setting up React clients, and NPM packages. From the root of the repository:
 
-cd src/services/anyproxy
-npm start
+```sh
+# Create a new React client
+npm run generate-react-client
+
+# Create a new NPM package
+npm run generate-npm-package
 ```
+
 
 # Deployment
 
@@ -181,16 +179,3 @@ It's also useful to see which packages will be updated by this script. To do tha
 
 - `npm run check-package-updates`
 
-# Code generators
-
-#### Generate a React client
-
-```sh
-npm run generate-react-client
-```
-
-#### Generate an NPM package
-
-```sh
-npm run generate-npm-package
-```

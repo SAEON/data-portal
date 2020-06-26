@@ -3,7 +3,8 @@ import SaeonSearch from '../saeon-search'
 import CsirLayers from '../csir'
 import HstLayers from '../health-systems-trust'
 import { Search as SearchIcon } from '@material-ui/icons'
-import { CsirIcon, NrfIcon, HstIcon, Form } from '../../../../components'
+import { CsirIcon, NrfIcon, HstIcon } from '../../../../components'
+import QuickForm from '@saeon/quick-form'
 import DialMenu from './dial-menu'
 import { useMenu } from '@saeon/snap-menus'
 import { SpeedDialAction } from '@material-ui/lab'
@@ -17,7 +18,7 @@ export default () => {
   const SaeonMenu = useMenu({ id: 'saeon-menu' })
 
   return (
-    <Form hstOpen={false} csirOpen={false} saeonOpen={false}>
+    <QuickForm hstOpen={false} csirOpen={false} saeonOpen={false}>
       {({ updateForm, hstOpen, csirOpen, saeonOpen }) => {
         const toggleHstMenu = () => updateForm({ hstOpen: !hstOpen })
         const toggleCsirMenu = () => updateForm({ csirOpen: !csirOpen })
@@ -87,6 +88,6 @@ export default () => {
           </>
         )
       }}
-    </Form>
+    </QuickForm>
   )
 }

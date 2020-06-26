@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import { Help as HelpIcon } from '@material-ui/icons'
 import useStyles from './styles'
-import { FeedbackContext } from '../../../provider-feedback'
+import { FeedbackContext } from '../../../../modules/provider-feedback'
 
 const status = Object.freeze({
   planned: Symbol('planned'),

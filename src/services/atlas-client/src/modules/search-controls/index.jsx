@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Divider, Button, Collapse } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons'
 import { ReactCatalogue } from '@saeon/catalogue-search'
-import { Form } from '../../components'
+import QuickForm from '@saeon/quick-form'
 import { sub, format } from 'date-fns'
 import DateSelector from './date-selector'
 import TermSelector from './term-selector'
@@ -32,7 +32,7 @@ export default ({ type, data, children }) => {
   const [currentPage, updateCurrentPage] = useState(0)
 
   return (
-    <Form
+    <QuickForm
       fixedDateRange="all"
       textSearch=""
       polygons={[]}
@@ -172,6 +172,6 @@ export default ({ type, data, children }) => {
           </div>
         )
       }}
-    </Form>
+    </QuickForm>
   )
 }

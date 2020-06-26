@@ -1,11 +1,12 @@
 import React, { memo } from 'react'
 import { Grid, Typography, Button, Fade } from '@material-ui/core'
-import { useHttpDataQuery, Form } from '../../../../components'
+import { useHttpDataQuery } from '../../../../components'
+import QuickForm from '@saeon/quick-form'
 import { Alert } from '@material-ui/lab'
 import { useMenu } from '@saeon/snap-menus'
 import useStyles from './style'
 import { ATLAS_API_ADDRESS } from '../../../../config'
-import SearchControls from '../../../search-controls'
+import SearchControls from '../../../../modules/search-controls'
 import ResultsList from './results/_results-list'
 import { isMobile } from 'react-device-detect'
 
@@ -15,8 +16,6 @@ const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
 export default memo(() => {
   const SearchResultsMenu = useMenu({ id: 'search-results-menu' })
   const classes = useStyles()
-
-  console.log('rendering saeon search')
 
   // Get terms for dropdown
   const { error, loading, data } = useHttpDataQuery({
@@ -39,7 +38,7 @@ export default memo(() => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         {/* Seach controls - this will provide a search context */}
-        <Form open={false}>
+        <QuickForm open={false}>
           {({ updateForm, open }) => {
             const toggleSearchResultsMenu = () => updateForm({ open: !open })
             return (
@@ -97,7 +96,7 @@ export default memo(() => {
               </SearchControls>
             )
           }}
-        </Form>
+        </QuickForm>
       </Grid>
     </Grid>
   )

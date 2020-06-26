@@ -7,11 +7,11 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": ">=16",
+    "react": ">=16.13",
     "ol": ">=6"
   },
   "scripts": {
-    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist --env.entry=src/index.js",
+    "build": "rimraf ./dist && NODE_ENV=production webpack",
     "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s patch",
     "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s minor",
     "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/ol-react -s major",

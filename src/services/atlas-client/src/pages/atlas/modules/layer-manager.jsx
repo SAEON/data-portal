@@ -22,8 +22,9 @@ import {
   Button,
   Grid,
 } from '@material-ui/core'
-import { MapContext } from '../../provider-map'
-import { Form, DragAndDrop } from '../../../components'
+import { MapContext } from '../../../modules/provider-map'
+import { DragAndDrop } from '../../../components'
+import QuickForm from '@saeon/quick-form'
 import { debounce } from '../../../lib/fns'
 import { useMenu } from '@saeon/snap-menus'
 import { isMobile } from 'react-device-detect'
@@ -134,7 +135,7 @@ class LayerManager extends PureComponent {
                           <Grid container spacing={3}>
                             <Grid item xs={6}>
                               {/* Legend menu */}
-                              <Form open={false}>
+                              <QuickForm open={false}>
                                 {({ updateForm, open }) => {
                                   const toggleMenu = () => updateForm({ open: !open })
                                   return (
@@ -171,10 +172,10 @@ class LayerManager extends PureComponent {
                                     </>
                                   )
                                 }}
-                              </Form>
+                              </QuickForm>
                             </Grid>
                             <Grid item xs={6}>
-                              <Form open={false}>
+                              <QuickForm open={false}>
                                 {({ updateForm, open }) => {
                                   const toggleMenu = () => updateForm({ open: !open })
 
@@ -212,11 +213,11 @@ class LayerManager extends PureComponent {
                                     </>
                                   )
                                 }}
-                              </Form>
+                              </QuickForm>
                             </Grid>
                           </Grid>
 
-                          <Form
+                          <QuickForm
                             effects={[debounce(({ value }) => layer.setOpacity(value / 100))]}
                             value={layer.get('opacity') * 100}
                           >
@@ -244,7 +245,7 @@ class LayerManager extends PureComponent {
                                 </div>
                               )
                             }}
-                          </Form>
+                          </QuickForm>
                         </CardContent>
                       </Collapse>
                     </Card>,

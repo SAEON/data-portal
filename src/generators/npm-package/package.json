@@ -4,7 +4,9 @@
   "description": "Generate boilerplate JavaScript library for publishing to NPM",
   "main": "index.js",
   "scripts": {
-    "plop": "plop"
+    "plop": "plop",
+    "check-package-updates": "ncu",
+    "update-package-dependencies": "ncu -u"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT",

@@ -15,7 +15,7 @@ import {
 import { createLayer, LayerTypes } from '../../../../lib/ol'
 import InfoMenu from './_info-menu'
 import LegendMenu from './_legend-menu'
-import { MapContext } from '../../../provider-map'
+import { MapContext } from '../../../../modules/provider-map'
 
 const fetchMeta = ({ uri, abortController }) =>
   fetch(`${uri}?f=pjson`, {

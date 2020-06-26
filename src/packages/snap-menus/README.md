@@ -22,7 +22,6 @@ To use the menu system, anywhere else in the application use the `useMenu` hook:
 import { useMenu } from '@saeon/snap-menus'
 
 /**
- * TODO
  * After creating the MenuComponent with the hook,
  * it's possible to use multiple instances of the componnt
  * despite that the hook required an ID specified.
@@ -30,7 +29,7 @@ import { useMenu } from '@saeon/snap-menus'
  * This probably needs to be rethought a little to be
  * clearer.
  */
-const MenuComponent = useMenu({ id: 'some-menu-name' }) // TODO - an ID might not actually be needed
+const MenuComponent = useMenu({ id: 'some-menu-name' })
 
 /**
  * This is a controlled component

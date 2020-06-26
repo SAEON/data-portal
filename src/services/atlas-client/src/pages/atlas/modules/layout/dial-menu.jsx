@@ -1,13 +1,13 @@
 import React from 'react'
 import { SpeedDial, SpeedDialIcon } from '@material-ui/lab'
-import { Form } from '../../../../components'
+import QuickForm from '@saeon/quick-form'
 import useStyles from '../../style'
 import { isMobile, isTablet } from 'react-device-detect'
 
 export default ({ children, style, icon, direction }) => {
   const classes = useStyles()
   return (
-    <Form active={false}>
+    <QuickForm active={false}>
       {({ updateForm, active }) => (
         <SpeedDial
           className={classes.menuIcon}
@@ -25,6 +25,6 @@ export default ({ children, style, icon, direction }) => {
           {children}
         </SpeedDial>
       )}
-    </Form>
+    </QuickForm>
   )
 }
