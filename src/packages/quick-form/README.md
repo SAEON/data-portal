@@ -26,7 +26,7 @@ const Component = props => (
          onClick={() => updateForm({myBooleanValue: !myBooleanValue})}
         >{fields.myBooleanValue}</div>
       )}
-    </QuickFormk>
+    </QuickForm>
     </SomeComponent>
   </div>
 )
