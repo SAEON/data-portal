@@ -7,6 +7,7 @@ import configureGql, { commits } from './gql'
 import stringify from 'csv-stringify'
 import { createWriteStream, unlinkSync } from 'fs'
 import format from 'date-fns/format'
+import parse from 'date-fns/parse'
 import { GQL_ENDPOINT, OUTPUT_FILEPATH, REPOSITORY_NAME, REPOSITORY_OWNER, SINCE } from './config'
 
 try {
@@ -28,13 +29,13 @@ const exec = configureGql(
 )
 
 ;(async () => {
-  console.log('Fetching repository data')
+  console.log('Fetching repository data', 'since', SINCE)
   const results = (
     await exec({
       variables: {
         owner: REPOSITORY_OWNER,
         name: REPOSITORY_NAME,
-        since: SINCE,
+        since: parse(SINCE, 'yyyy/MM/dd', new Date()),
       },
       query: commits,
     })
