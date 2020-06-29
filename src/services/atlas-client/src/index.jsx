@@ -47,7 +47,16 @@ configureLogger(() => ({
 
 render(<Application link={link} />, document.getElementById('root'))
 
-// // Worker defined in webpack.config.js (Google Workbox)
-// if (process.env.NODE_ENV === 'production')
-//   if ('serviceWorker' in navigator)
-//     window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))
+// Worker defined in webpack.config.js (Google Workbox)
+if (process.env.NODE_ENV === 'production') {
+  if ('serviceWorker' in navigator) {
+    // window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))
+
+    // Uninstall all service workers
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+      for (let registration of registrations) {
+        registration.unregister()
+      }
+    })
+  }
+}
