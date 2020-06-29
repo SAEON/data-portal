@@ -9,7 +9,8 @@ require('dotenv').config()
 
 const { NODE_ENV: mode } = process.env
 
-module.exports = ({ output = '/dist' }) => {
+module.exports = () => {
+  const output = 'dist'
   return {
     mode,
     entry: {
