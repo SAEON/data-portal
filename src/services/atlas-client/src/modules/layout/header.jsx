@@ -6,7 +6,7 @@ import {
   Explore as MapIcon,
   Menu as MenuIcon,
   GitHub as GitHubIcon,
-  Search as SearchIcon,
+  Storage as StorageIcon,
   Info as InfoIcon,
   Home as HomeIcon,
   AccountCircle as AccountIcon,
@@ -47,7 +47,7 @@ export default withRouter(() => {
           <NavItem label={'Home'} icon={<HomeIcon />} to="/" />
 
           {/* Catalogue page */}
-          <NavItem label={'Search catalogue'} icon={<SearchIcon />} to="/catalogue" />
+          <NavItem label={'Catalogue'} icon={<StorageIcon />} to="/catalogue" />
 
           {/* Atlas page */}
           <NavItem label={'Atlas'} icon={<MapIcon />} to="/atlas" />

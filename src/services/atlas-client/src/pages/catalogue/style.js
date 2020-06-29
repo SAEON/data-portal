@@ -2,7 +2,25 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    height: `calc(100% - 72px)`, // TODO - should tie in with theme
+    width: '100%',
+  },
+  grid: {
+    height: '100%',
+  },
+  padding: {
+    padding: 16,
+  },
+  resultsGrid: {
+    height: `calc(100% - 52px)`, // TODO - should tie in with the theme
+  },
+  catalogueContainer: {
+    height: `calc(100% - 110px)`, // TODO - should tie in with the theme
+    position: 'relative',
+  },
+  scrollContainer: {
+    height: '100%',
+    overflow: 'auto',
   },
   paper: {
     padding: theme.spacing(2),

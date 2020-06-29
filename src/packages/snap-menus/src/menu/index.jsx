@@ -163,7 +163,7 @@ export default forwardRef(
                 } else if (newSnapZone) {
                   setSnapZone(newSnapZone)
                 }
-              }, 25)}
+              }, 10)}
               onStop={ev => {
                 /**
                  * For touch devices, this event

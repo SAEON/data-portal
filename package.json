@@ -8,7 +8,7 @@
     "start:api": "npm --prefix src/services/atlas-api start",
     "start:client": "npm --prefix src/services/atlas-client start",
     "start:proxy": "npm --prefix src/services/anyproxy start",
-    "************ REPOSITORY TOOLS **********": "",
+    "************ REPOSITORY TOOLING **********": "",
     "lint": "eslint -c .eslintrc.js \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",

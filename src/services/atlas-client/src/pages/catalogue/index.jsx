@@ -11,13 +11,20 @@ import {
 } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import useStyles from './style'
+import clsx from 'clsx'
 
 export default () => {
   const classes = useStyles()
 
   return (
     <Fade in={true}>
-      <div className={classes.root}>
+      <div
+        style={{ position: 'relative' }}
+        className={clsx({
+          [classes.root]: true,
+        })}
+      >
+        {/* Search header */}
         <AppBar position="relative" variant="outlined">
           <Toolbar className={classes.toolbar}>
             <Grid style={{ alignSelf: 'center' }} container item justify="center" xs={12}>
@@ -25,6 +32,7 @@ export default () => {
                 <TextField
                   size="medium"
                   margin="normal"
+                  color="primary"
                   className={classes.textField}
                   fullWidth
                   placeholder="Enter search terms"
@@ -46,24 +54,109 @@ export default () => {
             </Grid>
           </Toolbar>
         </AppBar>
-        <div style={{ margin: '25px 25px 0px' }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              <Paper variant="outlined" style={{ height: 1200 }} className={classes.paper}>
-                Search filters
-              </Paper>
+
+        {/* Catalogue */}
+        <div
+          className={clsx({
+            [classes.catalogueContainer]: true,
+          })}
+        >
+          <Grid
+            className={clsx({
+              [classes.grid]: true,
+              [classes.padding]: true,
+            })}
+            container
+            spacing={2}
+          >
+            {/* Filters */}
+            <Grid
+              className={clsx({
+                [classes.grid]: true,
+              })}
+              item
+              xs={12}
+              md={4}
+            >
+              <div
+                className={clsx({
+                  [classes.scrollContainer]: true,
+                })}
+              >
+                <Paper
+                  variant="outlined"
+                  style={{ position: 'sticky', top: 0 }}
+                  className={classes.paper}
+                >
+                  Refine search
+                </Paper>
+                <Paper
+                  variant="outlined"
+                  style={{ height: 1200, textAlign: 'left' }}
+                  className={classes.paper}
+                >
+                  Filter 1<br />
+                  Filter 2<br />
+                  Filter 3<br />
+                  Filter 4<br />
+                  etc
+                </Paper>
+              </div>
             </Grid>
-            <Grid item xs={12} md={8}>
-              <Grid container spacing={2}>
+
+            {/* Results */}
+            <Grid
+              className={clsx({
+                [classes.grid]: true,
+              })}
+              item
+              xs={12}
+              md={8}
+            >
+              <Grid
+                container
+                spacing={2} // TODO - needs to be around
+                className={clsx({
+                  [classes.grid]: true,
+                })}
+              >
+                {/* Results header */}
                 <Grid item xs={12}>
                   <Paper variant="outlined" className={classes.paper}>
                     Sorting, pagination, etc.
                   </Paper>
                 </Grid>
-                <Grid item xs={12}>
-                  <div style={{}}>
-                    <Paper style={{ height: 1200 }} variant="outlined" className={classes.paper}>
+
+                {/* Results items */}
+                <Grid
+                  className={clsx({
+                    [classes.resultsGrid]: true,
+                  })}
+                  item
+                  xs={12}
+                >
+                  <div
+                    className={clsx({
+                      [classes.scrollContainer]: true,
+                    })}
+                  >
+                    <Paper
+                      variant="outlined"
+                      style={{ position: 'sticky', top: 0 }}
+                      className={classes.paper}
+                    >
                       Search results
+                    </Paper>
+                    <Paper
+                      variant="outlined"
+                      style={{ height: 1200, textAlign: 'left' }}
+                      className={classes.paper}
+                    >
+                      Result 1<br />
+                      Result 2<br />
+                      Result 3<br />
+                      Result 4<br />
+                      etc
                     </Paper>
                   </div>
                 </Grid>
