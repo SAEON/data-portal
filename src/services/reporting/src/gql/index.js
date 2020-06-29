@@ -1,5 +1,5 @@
-import { GITHUB_ACCESS_TOKEN } from '../config'
-export { default as commits } from './_commits'
+import { GITHUB_ACCESS_TOKEN } from '../config.js'
+export { default as commits } from './_commits.js'
 
 export default client => async ({ variables, query }) =>
   await client.query({

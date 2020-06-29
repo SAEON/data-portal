@@ -1,7 +1,7 @@
-import { config } from 'dotenv'
-import subDays from 'date-fns/subDays'
-import format from 'date-fns/format'
-config()
+import dotenv from 'dotenv'
+import subDays from 'date-fns/subDays/index.js'
+import format from 'date-fns/format/index.js'
+dotenv.config()
 
 // App configuration
 export const GQL_ENDPOINT = process.env.GQL_ENDPOINT || 'https://api.github.com/graphql'
