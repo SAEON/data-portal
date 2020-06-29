@@ -1,5 +1,5 @@
 .env
-output.csv
+**/reporting/output/**.csv
 .DS_STORE
 .build
 dist

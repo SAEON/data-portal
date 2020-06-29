@@ -2,3 +2,4 @@
 **/dist/**
 **/.build/**
 src/generators/**
+src/services/reporting/src/index.js

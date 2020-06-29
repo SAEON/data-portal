@@ -4,7 +4,7 @@
   "description": "This project generates reports on progress in terms of work done on the SAEON-Atlas repository by interacting with the Github API",
   "type": "module",
   "scripts": {
-    "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node src/index.js'",
+    "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src/index.js'",
     "check-package-updates": "ncu",
     "update-package-dependencies": "ncu -u"
   },
