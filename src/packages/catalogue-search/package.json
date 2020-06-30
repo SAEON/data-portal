@@ -1,6 +1,6 @@
 {
   "name": "@saeon/catalogue-search",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
   "main": "dist/index.js",
   "files": [
