@@ -69,11 +69,35 @@ export class Catalogue {
     return dsl
   }
 
-  async query(query, abortFetch) {
-    query = query
-      ? typeof query === 'string'
-        ? query
-        : JSON.stringify(query)
+  async getSingleRecord(id) {
+    const dsl = `
+      {
+        "size": 10,
+        "from": 0,
+        "query": {
+          "multi_match": {
+            "query": "${id}",
+            "fields": [
+              "metadata_json.alternateIdentifiers.alternateIdentifier"
+            ]
+          }
+        },
+        "_source": {
+          "includes": [
+            "metadata_json.*"
+          ]
+        }
+      }`
+
+    const result = await this.query(dsl)
+    return result?.hits.hits?.[0]?._source.metadata_json
+  }
+
+  async query(dsl, abortFetch) {
+    dsl = dsl
+      ? typeof dsl === 'string'
+        ? dsl
+        : JSON.stringify(dsl)
       : JSON.stringify(this.getQuery())
 
     try {
@@ -85,13 +109,13 @@ export class Catalogue {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: query,
+        body: dsl,
       })
       return await response.json()
     } catch (error) {
       if (error.name !== 'AbortError')
         throw new Error(
-          `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${query}. ${error}`
+          `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${dsl}. ${error}`
         )
     }
   }

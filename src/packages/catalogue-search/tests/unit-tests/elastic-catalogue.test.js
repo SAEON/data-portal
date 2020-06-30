@@ -1,6 +1,7 @@
 import { Catalogue } from '../../src/catalogue-search'
 
 const expectedFunctionsOnPrototype = {
+  getSingleRecord: 'function',
   query: 'function',
   getQuery: 'function',
   setFilter: 'function',
