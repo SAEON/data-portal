@@ -18,7 +18,7 @@ fi
 # packages
 for directory in src/packages/*; do
   D=$(readlink -f "$directory");
-  CMD="npm --prefix $PACKAGE run publish:$SEMVER"
+  CMD="npm --prefix $D run publish:$SEMVER"
   eval ${CMD}
 done
 

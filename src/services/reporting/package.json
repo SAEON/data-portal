@@ -19,8 +19,8 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@babel/cli": "^7.10.3",
-    "@saeon/logger": "^3.1.11",
+    "@babel/cli": "^7.10.4",
+    "@saeon/logger": "^3.1.12",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-fetch": "^0.7.0",

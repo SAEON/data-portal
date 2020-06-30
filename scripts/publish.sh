@@ -10,9 +10,6 @@ while getopts "p:s:" opt; do
   esac
 done
 
-echo $PACKAGE
-echo $SEMVER
-
 # Validate args
 if [ ! $PACKAGE ]; then
   echo 'Option -p missing - please provide a package name' >&2
