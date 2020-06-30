@@ -36,7 +36,7 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@babel/cli": "^7.10.3",
+    "@babel/cli": "^7.10.4",
     "babel-loader": "^8.1.0",
     "prop-types": "^15.7.2",
     "rimraf": "^3.0.2",
