@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Grid,
-  Fade,
   AppBar,
   Toolbar,
   Paper,
@@ -17,9 +16,8 @@ export default () => {
   const classes = useStyles()
 
   return (
-    <Fade in={true}>
+    <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
       <div
-        style={{ position: 'relative' }}
         className={clsx({
           [classes.root]: true,
         })}
@@ -165,6 +163,6 @@ export default () => {
           </Grid>
         </div>
       </div>
-    </Fade>
+    </div>
   )
 }

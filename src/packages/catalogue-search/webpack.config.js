@@ -1,8 +1,9 @@
 const webpack = require('webpack')
 const path = require('path')
 
-module.exports = ({ output = '/dist' }) => {
+module.exports = () => {
   const { NODE_ENV: mode } = process.env
+  const output = 'dist'
 
   return {
     mode,

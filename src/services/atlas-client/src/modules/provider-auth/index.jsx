@@ -39,7 +39,7 @@ export default ({ children }) => {
               setLoggedIn(loggedIn)
             )
           } else {
-            alert('This feature is only available on the SAEON network for now')
+            alert('This feature is only available in development environments for now')
           }
         },
         logout: () => logout().then(({ loggedIn }) => setLoggedIn(loggedIn)),

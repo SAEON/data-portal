@@ -13,6 +13,9 @@ import getPosition from './get-position'
 import clsx from 'clsx'
 import parseEventXY from './parse-event-x-y'
 
+var allowInteractions = true
+var timer
+
 export default forwardRef(
   (
     {
@@ -107,6 +110,13 @@ export default forwardRef(
               grid={[1, 1]}
               scale={1}
               onStart={ev => {
+                /**
+                 * Stop interactions with the menus for 1 second
+                 */
+                allowInteractions = false
+                clearTimeout(timer)
+                timer = setTimeout(() => (allowInteractions = true), 100)
+
                 const { x, y } = parseEventXY(ev)
                 const { target } = ev
                 const { className } = target
@@ -177,21 +187,21 @@ export default forwardRef(
                 const { x, y } = parseEventXY(ev)
 
                 /**
-                 * Reset the snapZone
+                 * Reset state.snapZone (used by the ghost component)
                  */
-                setSnapZone(null)
+                setSnapZone(undefined)
 
                 /**
                  * Check if the menu has been
                  * dropped in a snap zone
+                 *
+                 * allowInteractions is false for
+                 * 100ms after a menu is clicked
+                 * to prevent immediate snapping
                  */
-                const snapZone = getSnapZone(
-                  x,
-                  y,
-                  containerWidth,
-                  containerHeight,
-                  VERTICAL_OFFSET_TOP
-                )
+                const snapZone = allowInteractions
+                  ? getSnapZone(x, y, containerWidth, containerHeight, VERTICAL_OFFSET_TOP)
+                  : undefined
 
                 if (snapZone) {
                   setState(
@@ -221,7 +231,7 @@ export default forwardRef(
                       { ...state },
                       {
                         snapped: false,
-                        position: null,
+                        position: undefined,
                       }
                     )
                   )

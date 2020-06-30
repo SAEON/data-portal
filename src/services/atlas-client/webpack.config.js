@@ -19,6 +19,7 @@ module.exports = () => {
     output: {
       filename: '[name].js',
       path: path.join(__dirname, output),
+      publicPath: '/',
     },
     resolve: {
       alias: {

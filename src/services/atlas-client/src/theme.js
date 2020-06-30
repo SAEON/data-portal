@@ -34,7 +34,7 @@ export default createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: orange[800],
+      main: orange[700],
       contrastText: '#fff',
     },
   },

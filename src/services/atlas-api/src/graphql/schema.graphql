@@ -70,6 +70,7 @@ input BrowserEventInput {
 # GraphQL types
 
 type Query {
+  catalogue(id: String!): [JSON]!
   map(id: ID!): Node
   maps: [Node]!
   browserEvents: [Node]!
