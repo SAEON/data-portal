@@ -3,6 +3,7 @@
 ![DEV](https://github.com/SAEONData/saeon-atlas/workflows/DEV/badge.svg)
 
 TODO
+
 - There should be a single .browserslistrc
 
 # @SAEON/ATLAS
@@ -13,9 +14,9 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
 
 The repository is organized as a 'monorepo', split according to the following packages:
 
-- [@saeon/atlas-client](/src/services/atlas-client)
-- [@saeon/atlas-api](/src/services/atlas-api)
-- [@saeon/anyproxy](/src/services/anyproxy)
+- [@saeon/client](/src/services/client)
+- [@saeon/api](/src/services/api)
+- [@saeon/proxy](/src/services/proxy)
 - [@saeon/catalogue-search](/src/packages/catalogue-search)
 - [@saeon/ol-react](/src/packages/ol-react)
 - [@saeon/snap-menus](/src/packages/snap-menus)
@@ -29,7 +30,7 @@ Refer to these links for specific package documentation.
 
 # Browser support
 
-Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/atlas-client build](/src/services/atlas-client/.browserslistrc). As of 11 May 2020, these include:
+Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/client build](/src/services/client/.browserslistrc). As of 11 May 2020, these include:
 
 - chrome: 80
 - edge: 18
@@ -85,9 +86,9 @@ docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_RO
 
 Running the atlas requires starting 3 services:
 
-- src/services/atlas-client
-- src/services/atlas-api
-- src/services/anyproxy
+- src/services/client
+- src/services/api
+- src/services/proxy
 
 These can be run from their respective directories (`npm start`), or from the respotiory root:
 
@@ -98,6 +99,7 @@ npm run start:client
 ```
 
 # Code generatoros
+
 The repository includes code generators to automate setting up React clients, and NPM packages. From the root of the repository:
 
 ```sh
@@ -107,7 +109,6 @@ npm run generate-react-client
 # Create a new NPM package
 npm run generate-npm-package
 ```
-
 
 # Deployment
 
@@ -178,4 +179,3 @@ Running one of these scripts will result in all other packages updating their de
 It's also useful to see which packages will be updated by this script. To do that, run:
 
 - `npm run check-package-updates`
-

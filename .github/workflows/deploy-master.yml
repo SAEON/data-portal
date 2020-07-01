@@ -13,26 +13,26 @@ jobs:
         with:
           ref: master
 
-      - name: Configure services/anyproxy
+      - name: Configure services/proxy
         run: |
-          echo "TODO -> SAEON_SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za src/services/anyproxy/.env"
+          echo "TODO -> SAEON_SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za src/services/proxy/.env"
 
-      - name: Configure services/atlas-api
+      - name: Configure services/api
         run: |
-          echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/services/atlas-api/.env
-          echo "HTTP_PROXY=http://atlas-anyproxy-dev:8001" >> src/services/atlas-api/.env
-          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/services/atlas-api/.env
-          echo "MONGO_URL=mongodb://atlas-mongodb-dev:27017" >> src/services/atlas-api/.env
-          echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/atlas-api/.env
-          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/atlas-api/.env
+          echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/services/api/.env
+          echo "HTTP_PROXY=http://atlas-anyproxy-dev:8001" >> src/services/api/.env
+          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/services/api/.env
+          echo "MONGO_URL=mongodb://atlas-mongodb-dev:27017" >> src/services/api/.env
+          echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
+          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
 
-      - name: Configure services/atlas-client
+      - name: Configure services/client
         run: |
-          echo "ATLAS_API_ADDRESS=https://api.atlas.saeon.ac.za" > src/services/atlas-client/.env
-          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za/graphql" >> src/services/atlas-client/.env
-          echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.atlas.saeon.ac.za/graphql" >> src/services/atlas-client/.env
-          echo "REDIRECT_URL=https://atlas.saeon.ac.za/authenticated" >> src/services/atlas-client/.env
-          echo "DEFAULT_WARNING=Please note that this service, although available for general comment, is not live. For more information contact zach@saeon.ac.za" >> src/services/atlas-client/.env
+          echo "ATLAS_API_ADDRESS=https://api.atlas.saeon.ac.za" > src/services/client/.env
+          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
+          echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
+          echo "REDIRECT_URL=https://atlas.saeon.ac.za/authenticated" >> src/services/client/.env
+          echo "DEFAULT_WARNING=Please note that this service, although available for general comment, is not live. For more information contact zach@saeon.ac.za" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)
         run: |

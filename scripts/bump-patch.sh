@@ -7,8 +7,8 @@ if [[ "$BRANCH" != "master" ]]; then
   exit 0;
 fi
 
-npm --prefix src/services/atlas-api version patch -m "on-commit patch"
-npm --prefix src/services/atlas-client version patch -m "on-commit patch"
+npm --prefix src/services/api version patch -m "on-commit patch"
+npm --prefix src/services/client version patch -m "on-commit patch"
 
 # Not sure these should be bumped on commit
 # npm --prefix src/@saeon/catalogue-search version patch -m "on-commit patch"

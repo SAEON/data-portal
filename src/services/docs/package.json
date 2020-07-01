@@ -1,7 +1,7 @@
 {
   "name": "atlas-documentation",
   "version": "0.0.1",
-  "description": "Docmentation for @saeon/ol-react, @saeon/catalogue-search, @saeon/atlas-api, @saeon/atlas-client",
+  "description": "Docmentation for @saeon/ol-react, @saeon/catalogue-search, @saeon/api, @saeon/client",
   "keywords": [
     "SAEON",
     "atlas",

@@ -27,7 +27,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: require('./src/services/atlas-client/package.json').dependencies.react,
+      version: require('./src/services/client/package.json').dependencies.react,
     },
   },
 }
