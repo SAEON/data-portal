@@ -1,6 +1,6 @@
 {
   "name": "@saeon/api",
-  "version": "0.0.121",
+  "version": "0.0.122",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,8 @@
   "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/api#readme",
   "dependencies": {
     "@babel/cli": "^7.10.4",
-    "@koa/router": "^9.0.1",
-    "@saeon/catalogue-search": "^5.1.2",
+    "@koa/router": "^9.1.0",
+    "@saeon/catalogue-search": "^5.2.0",
     "@saeon/logger": "^3.1.12",
     "apollo-server-koa": "^2.15.1",
     "babel-plugin-module-resolver": "^4.0.0",

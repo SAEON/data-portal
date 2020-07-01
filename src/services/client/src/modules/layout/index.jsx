@@ -6,6 +6,7 @@ import Header from './header'
 import Footer from './footer'
 import useStyles from './style'
 import clsx from 'clsx'
+import { Fade } from '@material-ui/core'
 
 // Pages
 import AtlasPage from '../../pages/atlas'
@@ -13,7 +14,6 @@ import AboutPage from '../../pages/about'
 import HomePage from '../../pages/home'
 import CataloguePage from '../../pages/catalogue'
 import CatalogueItemPage from '../../pages/catalogue-item'
-import { Fade } from '@material-ui/core'
 
 const Transition = ({ children }) => (
   <Fade in={true}>

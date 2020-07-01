@@ -6,7 +6,7 @@ import { Alert } from '@material-ui/lab'
 import { useMenu } from '@saeon/snap-menus'
 import useStyles from './style'
 import { ATLAS_API_ADDRESS } from '../../../../config'
-import SearchControls from '../../../../modules/search-controls'
+import SearchControls from './controls'
 import ResultsList from './results/_results-list'
 import { isMobile } from 'react-device-detect'
 

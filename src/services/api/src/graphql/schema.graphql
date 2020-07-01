@@ -67,10 +67,18 @@ input BrowserEventInput {
   info: JSON!
 }
 
+type ES_Aggregation {
+  key: String!
+  doc_count: Int!
+}
+
 # GraphQL types
 
 type Query {
+  # Catalogue
   catalogue(id: String!): [JSON]!
+  catalogueThemes: [ES_Aggregation]!
+
   map(id: ID!): Node
   maps: [Node]!
   browserEvents: [Node]!

@@ -8,7 +8,7 @@ import DateSelector from './date-selector'
 import TermSelector from './term-selector'
 import TextSelector from './text-selector'
 import AreaSelector from './area-selector'
-import { ATLAS_API_ADDRESS } from '../../config'
+import { ATLAS_API_ADDRESS } from '../../../../../config'
 import clsx from 'clsx'
 import useStyles from './style'
 

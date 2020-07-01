@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import QuickForm from '@saeon/quick-form'
-import { MapContext } from '../../provider-map'
+import { MapContext } from '../../../../../../modules/provider-map'
 import Selector from './selector'
 
 export default ({ updateForm: updateMainForm, ...fields }) => {

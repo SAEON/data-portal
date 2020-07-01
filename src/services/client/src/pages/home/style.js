@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export default makeStyles(theme => ({
   textField: {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: 'rgba(110,110,110,0.7)',
+    backgroundColor: 'rgba(110,110,110,0.3)',
     '& input': {
       color: 'white',
     },
