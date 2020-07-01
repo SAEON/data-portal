@@ -69,6 +69,24 @@ export class Catalogue {
     return dsl
   }
 
+  async getDataThemes() {
+    const dsl = `
+      {
+        "_source": false,
+        "aggs": {
+          "subjects": {
+            "terms": {
+              "field": "metadata_json.subjects.subject.raw",
+              "size": 10000
+            }
+          }
+        }
+      }`
+
+    const result = await this.query(dsl)
+    return result?.aggregations.subjects.buckets
+  }
+
   async getSingleRecord(id) {
     const dsl = `
       {
