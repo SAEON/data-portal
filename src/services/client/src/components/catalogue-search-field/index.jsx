@@ -77,10 +77,14 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
   )
 })
 
+const getSearchState = () =>
+  decodeURIComponent(window.location.search.replace('?search=', ''))
+    .split(',')
+    .filter(_ => _)
+
 export default ({ options, classes, onClick }) => {
   const history = useHistory()
-  const searchString = window.location.search.replace('?search=', '')
-  const searchTerms = decodeURIComponent(searchString).split(',')
+  const searchTerms = getSearchState()
 
   return (
     <Grid container justify="center" alignItems="center">
@@ -93,7 +97,7 @@ export default ({ options, classes, onClick }) => {
               search: `?search=${encodeURIComponent(selectedValues.join(','))}`,
             })
           }}
-          value={(searchTerms || []).filter(_ => _)}
+          value={searchTerms || []}
           multiple
           fullWidth
           limitTags={8}
@@ -141,7 +145,12 @@ export default ({ options, classes, onClick }) => {
         />
       </Grid>
       <Grid container justify="center" item xs={1}>
-        <IconButton onClick={onClick} color="primary" aria-label="Search" size="medium">
+        <IconButton
+          onClick={() => onClick(searchTerms)}
+          color="primary"
+          aria-label="Search"
+          size="medium"
+        >
           <SearchIcon fontSize="large" />
         </IconButton>
       </Grid>

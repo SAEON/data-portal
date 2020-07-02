@@ -13,13 +13,7 @@ const catalog = new Catalogue({
 
 // eslint-disable-next-line no-unused-vars
 export default async (self, args, ctx) => {
-  const { id, subjects } = args
-
-  if (id) {
-    return [await catalog.getSingleRecord(id)]
-  }
-
-  if (subjects) {
-    return await catalog.searchBySubjects(...subjects)
-  }
+  const { fields, subjects } = args
+  const result = await catalog.countPivotOn({ fields, subjects })
+  return result
 }
