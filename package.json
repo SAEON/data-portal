@@ -19,6 +19,7 @@
     "generate-npm-package": "npm --prefix src/generators/npm-package run plop",
     "generate-react-client": "npm --prefix src/generators/react-client run plop",
     "************ PACKAGES **********": "",
+    "build-all-packages": "scripts/build-all-packages.sh",
     "check-package-updates": "scripts/check-package-updates.sh",
     "update-package-dependencies": "scripts/update-package-dependencies.sh",
     "install-package-dependencies": "scripts/install-package-dependencies.sh",
