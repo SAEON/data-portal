@@ -2,9 +2,10 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(
   /*theme*/ () => ({
-    grid: { position: 'fixed' },
+    grid: { position: 'absolute', height: '100%', overflowY: 'auto', marginBottom: '24px' },
     gridItem: {
-      margin: '20px',
+      marginTop: '10px',
+      marginBottom: '10px',
     },
 
     card: {
