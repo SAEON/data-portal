@@ -11,6 +11,7 @@ import GetAppIcon from '@material-ui/icons/GetApp'
  * make sure array elements have keys
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
  * verify Indentiferes.Local.  json.alternativeIdentifiers has the value but is an array
+ * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
  */
 export default ({ json, id }) => {
   const classes = useStyles()
@@ -138,7 +139,7 @@ export default ({ json, id }) => {
               Resources
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Data: Preview?
+              Data: Preview not available
               <br />
               Download:
               <a href={json.immutableResource.resourceURL}>
@@ -202,8 +203,7 @@ export default ({ json, id }) => {
         <Card className={classes.card}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              SANS 1878 ||| DEV NOTE: Should this card be removed? these values are not within the
-              metadata
+              SANS 1878
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Coverage begin date: 2005
