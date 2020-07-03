@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, IconButton, Grid, Card, CardContent, Typography } from '@material-ui/core'
+import { Button, Grid, Card, CardContent, Typography } from '@material-ui/core'
 import useStyles from './style'
 // import clsx from 'clsx'
 import GetAppIcon from '@material-ui/icons/GetApp'
@@ -39,9 +39,6 @@ export default ({ json, id }) => {
                 <Button variant="contained" color="secondary" startIcon={<GetAppIcon />}>
                   JSON
                 </Button>
-                <IconButton color="secondary">
-                  <GetAppIcon />
-                </IconButton>
               </a>
             </Typography>
             <h3>Author</h3>
