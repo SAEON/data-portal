@@ -20,12 +20,7 @@ export default ({ json, id }) => {
       <Grid item xs={9} className={classes.gridItem}>
         <Card className={classes.card}>
           <CardContent>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              // style={{ float: 'left', paddingRight: '7px' }}
-            >
+            <Typography gutterBottom variant="h5" component="h2">
               {json.titles[0].title}
 
               {/* test href in other browsers. confirm utf-8 charset is appropriate */}
@@ -178,7 +173,25 @@ export default ({ json, id }) => {
               Identifiers
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {/* Local: {json} */}
+              Local:
+              {json.alternateIdentifiers.map(ai => (
+                <>
+                  {ai.alternateIdentifier}
+                  <br />
+                </>
+              ))}
+              Identifier Type: {json.identifier.identifierType}
+              <br />
+              Identifier: {json.identifier.identifier}
+              <br />
+              URI:
+              <a
+                href={`http://www.sasdi.net/metaview.aspx?uuid=${json.alternateIdentifiers[0].alternateIdentifier}`} //verify alternateIdentifiers[0] will be consistent
+                target="_blank"
+                rel="noreferrer"
+              >
+                {`http://www.sasdi.net/metaview.aspx?uuid=${json.alternateIdentifiers[0].alternateIdentifier}`}
+              </a>
             </Typography>
           </CardContent>
         </Card>
