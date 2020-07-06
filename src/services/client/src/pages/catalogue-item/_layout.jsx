@@ -3,10 +3,10 @@ import { Button, Grid, Card, CardContent, Typography } from '@material-ui/core'
 import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
 //
-import OlMap from 'ol/Map'
-import OlView from 'ol/View'
-import OlLayerTile from 'ol/layer/Tile'
-import OlSourceOsm from 'ol/source/OSM'
+// import OlMap from 'ol/Map'
+// import OlView from 'ol/View'
+// import OlLayerTile from 'ol/layer/Tile'
+// import OlSourceOsm from 'ol/source/OSM'
 // import { MapComponent } from '@terrestris/react-geo'
 /**TO DO:
  * format strings like ContactPerson to be Contact Person
