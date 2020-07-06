@@ -1,5 +1,5 @@
-import { config } from 'dotenv'
-config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // Anyproxy configuration
 export const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8001

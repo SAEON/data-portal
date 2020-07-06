@@ -1,5 +1,5 @@
-import rule from './rules'
-import { PORT, ENABLE_WEB_INTERFACE, WEB_INTERFACE_PORT, THROTTLE } from './config'
+import rule from './rules/index.js'
+import { PORT, ENABLE_WEB_INTERFACE, WEB_INTERFACE_PORT, THROTTLE } from './config.js'
 
 export default {
   port: PORT,

@@ -1,6 +1,6 @@
 import url from 'url'
 import { normalize } from 'path'
-import { CSIR_ESRI_PROXY } from '../config'
+import { CSIR_ESRI_PROXY } from '../config.js'
 const CSIR_ESRI_PROXY_PARSED = url.parse(CSIR_ESRI_PROXY)
 
 export default ({ path, requestDetail }) => {

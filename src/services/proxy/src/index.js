@@ -1,6 +1,8 @@
 import '@saeon/logger'
-import { ProxyServer } from 'anyproxy'
-import options from './options'
+import anyproxy from 'anyproxy'
+import options from './options.js'
+
+const { ProxyServer } = anyproxy
 
 const proxy = new ProxyServer(options)
 
