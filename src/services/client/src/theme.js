@@ -9,9 +9,7 @@ export default createMuiTheme({
   },
   overrides: {
     MuiPaper: {
-      outlined: {
-        border: 'none',
-      },
+      outlined: {},
     },
   },
   MuiTypography: {

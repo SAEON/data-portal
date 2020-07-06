@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { gql } from '@apollo/client'
 import { Grid, AppBar, Toolbar, Paper } from '@material-ui/core'
 import { CatalogueSearchField, GqlDataQuery } from '../../components'
+import AggregationList from './_aggregation-list'
+import ResultsList from './_results-list'
 import useStyles from './style'
 import clsx from 'clsx'
 
-const AGGREGATION_FIELDS = ['metadata_json.publisher.raw', 'metadata_json.subjects.subject.raw']
+const AGGREGATION_FIELDS = [
+  'metadata_json.publicationYear',
+  'metadata_json.publisher.raw',
+  'metadata_json.subjects.subject.raw',
+]
 
 const getSearchState = () =>
   decodeURIComponent(window.location.search.replace('?search=', ''))
@@ -28,7 +34,7 @@ export default ({ themes }) => {
         })}
       >
         {/* Search header */}
-        <AppBar position="relative" variant="outlined">
+        <AppBar position="relative" variant="outlined" style={{ border: 'none' }}>
           <Toolbar className={classes.toolbar}>
             <Grid style={{ alignSelf: 'center' }} container item justify="center" xs={12}>
               <Grid style={{ width: '100%' }} item md={6}>
@@ -84,20 +90,7 @@ export default ({ themes }) => {
                         [classes.scrollContainer]: true,
                       })}
                     >
-                      <Paper
-                        variant="outlined"
-                        style={{ position: 'sticky', top: 0 }}
-                        className={classes.paper}
-                      >
-                        Refine search
-                      </Paper>
-                      <Paper
-                        variant="outlined"
-                        style={{ height: 1200, textAlign: 'left' }}
-                        className={classes.paper}
-                      >
-                        {JSON.stringify(catalogueFieldAggregation)}
-                      </Paper>
+                      <AggregationList results={catalogueFieldAggregation} />
                     </div>
                   </Grid>
 
@@ -112,7 +105,7 @@ export default ({ themes }) => {
                   >
                     <Grid
                       container
-                      spacing={2} // TODO - needs to be around
+                      spacing={2}
                       className={clsx({
                         [classes.grid]: true,
                       })}
@@ -137,20 +130,7 @@ export default ({ themes }) => {
                             [classes.scrollContainer]: true,
                           })}
                         >
-                          <Paper
-                            variant="outlined"
-                            style={{ position: 'sticky', top: 0 }}
-                            className={classes.paper}
-                          >
-                            Search results
-                          </Paper>
-                          <Paper
-                            variant="outlined"
-                            style={{ height: 1200, textAlign: 'left' }}
-                            className={classes.paper}
-                          >
-                            {JSON.stringify(catalogue)}
-                          </Paper>
+                          <ResultsList results={catalogue} />
                         </div>
                       </Grid>
                     </Grid>
