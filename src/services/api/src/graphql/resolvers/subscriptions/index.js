@@ -1,4 +1,4 @@
-import pubsub, { ON_FILTER_CHANGE } from '../pubsub'
+import pubsub, { ON_FILTER_CHANGE } from '../pubsub.js'
 
 export default {
   onFilterChange: {

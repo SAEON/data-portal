@@ -1,6 +1,6 @@
 import url from 'url'
 import { normalize } from 'path'
-import { SAEON_SPATIALDATA_PROXY } from '../config'
+import { SAEON_SPATIALDATA_PROXY } from '../config.js'
 const SAEON_SPATIALDATA_PROXY_PARSED = url.parse(SAEON_SPATIALDATA_PROXY)
 
 export default ({ path, requestDetail }) => {

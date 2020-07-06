@@ -1,4 +1,6 @@
-import { GraphQLScalarType } from 'graphql'
+import graphql from 'graphql/index.js'
+
+const { GraphQLScalarType } = graphql
 
 export default new GraphQLScalarType({
   description: 'Void custom scalar',

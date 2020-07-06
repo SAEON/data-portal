@@ -1,9 +1,9 @@
 import url from 'url'
-import csirRule from './_csir'
-import hstRule from './_hst'
-import saeonElk from './_saeon-elk'
-import saeonGeoServer1 from './_saeon-geoserver-1'
-import saeonGeoServer2 from './_saeon-geoserver-2'
+import csirRule from './_csir.js'
+import hstRule from './_hst.js'
+import saeonElk from './_saeon-elk.js'
+import saeonGeoServer1 from './_saeon-geoserver-1.js'
+import saeonGeoServer2 from './_saeon-geoserver-2.js'
 
 const beforeSendRequest = async requestDetail => {
   const { path } = url.parse(requestDetail.url)

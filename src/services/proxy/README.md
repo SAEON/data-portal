@@ -4,7 +4,7 @@ This package runs an instance of the MIT-licensed `anyproxy` Node.js proxy serve
 
 # Quick start
 
-From the root of the repository:
+Make sure that Node.js ^14.4 is installed. From the root of the repository:
 
 ```sh
 npm install

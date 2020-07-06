@@ -1,6 +1,6 @@
 import url from 'url'
 import { normalize } from 'path'
-import { HST_ESRI_PROXY } from '../config'
+import { HST_ESRI_PROXY } from '../config.js'
 const HST_ESRI_PROXY_PARSED = url.parse(HST_ESRI_PROXY)
 
 export default ({ path, requestDetail }) => {

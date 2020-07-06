@@ -6,7 +6,7 @@ import Layout from './_layout'
 export default ({ id }) => (
   <GqlDataQuery
     query={gql`
-      query catalogue($id: String!) {
+      query catalogue($id: String) {
         catalogue(id: $id)
       }
     `}

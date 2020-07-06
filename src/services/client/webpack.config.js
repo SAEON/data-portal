@@ -17,7 +17,7 @@ module.exports = () => {
       index: './src/index.jsx',
     },
     output: {
-      filename: '[name].js',
+      filename: '[name].[contenthash].js',
       path: path.join(__dirname, output),
       publicPath: '/',
     },

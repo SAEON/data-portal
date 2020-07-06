@@ -1,4 +1,6 @@
-import { ObjectID } from 'mongodb'
+import mongodb from 'mongodb'
+
+const { ObjectID } = mongodb
 
 export default async (self, args, ctx) => {
   const { input, id = null } = args
