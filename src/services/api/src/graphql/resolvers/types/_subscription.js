@@ -1,3 +1,3 @@
-import subscriptions from '../subscriptions'
+import subscriptions from '../subscriptions/index.js'
 
 export default { ...subscriptions }

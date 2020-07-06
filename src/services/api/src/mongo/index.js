@@ -1,7 +1,9 @@
-import { MongoClient } from 'mongodb'
-import { MONGO_DB as DB, MONGO_URL, MONGO_USER, MONGO_PSWD, NODE_ENV } from '../config'
-import getCollections from './_collections'
-import configureDataLoaders from './_data-loaders'
+import mongodb from 'mongodb'
+import { MONGO_DB as DB, MONGO_URL, MONGO_USER, MONGO_PSWD, NODE_ENV } from '../config.js'
+import getCollections from './_collections.js'
+import configureDataLoaders from './_data-loaders.js'
+
+const { MongoClient } = mongodb
 
 const CONNECTION_STRING = `${MONGO_URL}`
 
