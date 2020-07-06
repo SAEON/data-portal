@@ -76,8 +76,9 @@ type ES_Aggregation {
 
 type Query {
   # Catalogue
-  catalogue(id: String!): [JSON]!
+  catalogue(id: String, subjects: [String!]): [JSON]!
   catalogueThemes: [ES_Aggregation]!
+  catalogueFieldAggregation(fields: [String!], subjects: [String!]): JSON
 
   map(id: ID!): Node
   maps: [Node]!

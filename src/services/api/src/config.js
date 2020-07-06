@@ -1,5 +1,5 @@
-import { config } from 'dotenv'
-config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // Secret
 export const MONGO_USER = process.env.MONGO_USER || 'admin'

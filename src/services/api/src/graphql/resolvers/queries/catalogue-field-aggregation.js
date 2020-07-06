@@ -15,5 +15,7 @@ const catalog = new Catalogue({
 
 // eslint-disable-next-line no-unused-vars
 export default async (self, args, ctx) => {
-  return await catalog.getDataThemes()
+  const { fields, subjects } = args
+  const result = await catalog.countPivotOn({ fields, subjects })
+  return result
 }

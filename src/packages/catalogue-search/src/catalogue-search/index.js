@@ -1,5 +1,7 @@
 const packageJson = require('../../package.json')
 
+const errorHeader = `${packageJson.name} v${packageJson.version}`
+
 export class Catalogue {
   constructor({ dslAddress = null, index = null, httpClient = null, pageSize = 10 } = {}) {
     // Endpoint params are required
@@ -69,43 +71,95 @@ export class Catalogue {
     return dsl
   }
 
-  async getDataThemes() {
-    const dsl = `
-      {
-        "_source": false,
-        "aggs": {
-          "subjects": {
-            "terms": {
-              "field": "metadata_json.subjects.subject.raw",
-              "size": 10000
-            }
-          }
-        }
-      }`
+  async countPivotOn({ fields, subjects = null }) {
+    const size = 10000
+    const order = { _key: 'asc' }
+    const dsl = {
+      size: 0,
+      aggs: Object.fromEntries(
+        fields.map(field => [
+          field,
+          {
+            terms: {
+              field,
+              size,
+              order,
+            },
+          },
+        ])
+      ),
+    }
+
+    if (subjects)
+      dsl.query = {
+        bool: {
+          must: [
+            subjects.map(subject => ({ term: { 'metadata_json.subjects.subject.raw': subject } })),
+          ],
+        },
+      }
 
     const result = await this.query(dsl)
-    return result?.aggregations.subjects.buckets
+    return Object.entries(result.aggregations).map(([name, { buckets }]) => ({
+      [name]: buckets,
+    }))
+  }
+
+  async getDataThemes() {
+    const dsl = {
+      size: 0,
+      aggs: {
+        subjects_aggregation: {
+          terms: {
+            field: 'metadata_json.subjects.subject.raw',
+            size: 10000,
+            order: { _key: 'asc' },
+          },
+        },
+      },
+    }
+
+    const result = await this.query(dsl)
+    return result?.aggregations.subjects_aggregation.buckets
+  }
+
+  async searchBySubjects(...subjects) {
+    if (subjects.length < 1) {
+      throw new Error(`${errorHeader}: searchBySubjects requires at least one subject`)
+    }
+    const dsl = {
+      size: 10000,
+      from: 0,
+      query: {
+        bool: {
+          must: [
+            subjects.map(subject => ({ term: { 'metadata_json.subjects.subject.raw': subject } })),
+          ],
+        },
+      },
+      _source: {
+        includes: ['metadata_json.*'],
+      },
+    }
+
+    const result = await this.query(dsl)
+    return result.hits.hits.map(({ _source }) => _source.metadata_json)
   }
 
   async getSingleRecord(id) {
-    const dsl = `
-      {
-        "size": 10,
-        "from": 0,
-        "query": {
-          "multi_match": {
-            "query": "${id}",
-            "fields": [
-              "metadata_json.alternateIdentifiers.alternateIdentifier"
-            ]
-          }
+    const dsl = {
+      size: 10,
+      from: 0,
+      query: {
+        multi_match: {
+          query: id,
+          fields: ['metadata_json.alternateIdentifiers.alternateIdentifier'],
         },
-        "_source": {
-          "includes": [
-            "metadata_json.*"
-          ]
-        }
-      }`
+      },
+      _source: {
+        includes: ['metadata_json.*'],
+      },
+    }
 
     const result = await this.query(dsl)
     return result?.hits.hits?.[0]?._source.metadata_json
@@ -133,7 +187,7 @@ export class Catalogue {
     } catch (error) {
       if (error.name !== 'AbortError')
         throw new Error(
-          `${packageJson.name} v${packageJson.version}. class ElasticCatalogue. ERROR: query failed with DSL body ${dsl}. ${error}`
+          `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${dsl}. ${error}`
         )
     }
   }

@@ -1,11 +1,15 @@
-import { ApolloServer } from 'apollo-server-koa'
-import { makeExecutableSchema } from 'graphql-tools'
-import { normalize, join } from 'path'
+import apolloServerKoa from 'apollo-server-koa'
+import graphqlTools from 'graphql-tools'
+import { join } from 'path'
 import { readFileSync } from 'fs'
-import resolvers from './resolvers'
-import { GQL_PROVIDER } from '../config'
+import resolvers from './resolvers/index.js'
+import { GQL_PROVIDER } from '../config.js'
+import getCurrentDirectory from '../lib/get-current-directory.js'
 
-const typeDefsPath = normalize(join(__dirname, './schema.graphql'))
+const { ApolloServer } = apolloServerKoa
+const { makeExecutableSchema } = graphqlTools
+
+const typeDefsPath = join(getCurrentDirectory(import.meta), './schema.graphql')
 const typeDefs = readFileSync(typeDefsPath, { encoding: 'utf8' })
 
 export default () =>

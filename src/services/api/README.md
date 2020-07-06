@@ -4,15 +4,15 @@ GraphQL API to be paired with instances of the @saeon/client package
 
 # Quick start
 
-Start an instance of @saeon/proxy (if required)
-
-Start an instance of MongoDB:
+1. Make sure Node.js ^14.4 is installed
+2. Start an instance of @saeon/proxy (if required)
+3. Start an instance of MongoDB:
 
 ```sh
 docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
-Then, from the root of the repository:
+4. Then, from the root of the repository:
 
 ```sh
 npm install

@@ -1,6 +1,8 @@
 import fetch from 'node-fetch'
-import { Catalogue } from '@saeon/catalogue-search'
-import { HTTP_PROXY } from '../../../config'
+import catalogue from '@saeon/catalogue-search/dist/catalogue.js'
+import { HTTP_PROXY } from '../../../config.js'
+
+const { Catalogue } = catalogue
 
 // TODO this should be a single instance for the lifecycle of the node.js app
 const DSL_INDEX = `saeon-odp-4-2`
@@ -13,6 +15,13 @@ const catalog = new Catalogue({
 
 // eslint-disable-next-line no-unused-vars
 export default async (self, args, ctx) => {
-  const { id } = args
-  return [await catalog.getSingleRecord(id)]
+  const { id, subjects } = args
+
+  if (id) {
+    return [await catalog.getSingleRecord(id)]
+  }
+
+  if (subjects) {
+    return await catalog.searchBySubjects(...subjects)
+  }
 }

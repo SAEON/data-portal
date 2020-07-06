@@ -3,13 +3,14 @@ import { createServer } from 'http'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
 import koaCompress from 'koa-compress'
-import { createRequestContext, cors } from './middleware'
-import { home } from './http'
+import createRequestContext from './middleware/create-request-context.js'
+import cors from './middleware/cors.js'
+import home from './http/home.js'
 import zlib from 'zlib'
-import configureApolloServer from './graphql'
+import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
 
-import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config'
+import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config.js'
 
 if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   console.error(

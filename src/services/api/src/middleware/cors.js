@@ -1,4 +1,4 @@
-import { ALLOWED_ORIGINS } from '../config'
+import { ALLOWED_ORIGINS } from '../config.js'
 
 const handleCors = ALLOWED_ORIGINS => async (ctx, next) => {
   const { method, headers } = ctx.req
