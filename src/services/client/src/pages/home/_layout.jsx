@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Grid, useMediaQuery } from '@material-ui/core'
+import { Grid, useMediaQuery, Button } from '@material-ui/core'
+import { Search as SearchIcon } from '@material-ui/icons'
 import { useTheme } from '@material-ui/core/styles'
 import { CatalogueSearchField } from '../../components'
 import useStyles from './style'
@@ -27,17 +28,25 @@ export default ({ themes }) => {
       md={6}
     >
       {/* Header */}
-      <Grid container item xs={12}>
-        <CatalogueSearchField
+      <Grid item xs={12}>
+        <CatalogueSearchField options={themes} classes={classes} />
+      </Grid>
+      <Grid item xs={12}>
+        <Button
           onClick={() =>
             history.push({
               pathname: '/catalogue',
               search: window.location.search,
             })
           }
-          options={themes}
-          classes={classes}
-        />
+          variant="contained"
+          color="primary"
+          disableElevation
+          fullWidth
+          startIcon={<SearchIcon />}
+        >
+          Search our catalogue
+        </Button>
       </Grid>
     </Grid>
   )

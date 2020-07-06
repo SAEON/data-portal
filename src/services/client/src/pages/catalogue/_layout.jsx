@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { gql } from '@apollo/client'
-import { Grid, AppBar, Toolbar, Paper } from '@material-ui/core'
+import { Grid, AppBar, Toolbar, InputBase, Typography, Button } from '@material-ui/core'
+import {
+  Search as SearchIcon,
+  NavigateNext as NavigateNextIcon,
+  NavigateBefore as NavigateBeforeIcon,
+} from '@material-ui/icons'
 import { CatalogueSearchField, GqlDataQuery } from '../../components'
 import AggregationList from './_aggregation-list'
 import ResultsList from './_results-list'
@@ -19,12 +24,24 @@ const getSearchState = () =>
     .filter(_ => _)
 
 export default ({ themes }) => {
-  const classes = useStyles()
-  const [subjects, updateSubjects] = useState([])
+  const [subjects, updateSubjects] = useState(getSearchState())
 
   useEffect(() => {
     updateSubjects(getSearchState())
   }, [])
+
+  return <Layout themes={themes} subjects={subjects} updateSubjects={updateSubjects} />
+}
+
+const Layout = ({ themes, subjects, updateSubjects }) => {
+  const classes = useStyles()
+
+  useEffect(() => {
+    const newSubjects = getSearchState()
+    if (newSubjects.length !== subjects.length) {
+      updateSubjects(getSearchState())
+    }
+  })
 
   return (
     <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
@@ -39,9 +56,7 @@ export default ({ themes }) => {
             <Grid style={{ alignSelf: 'center' }} container item justify="center" xs={12}>
               <Grid style={{ width: '100%' }} item md={6}>
                 <CatalogueSearchField
-                  onClick={selectedOptions => {
-                    updateSubjects(selectedOptions)
-                  }}
+                  onChange={selectedOptions => updateSubjects(selectedOptions)}
                   options={themes}
                   classes={classes}
                 />
@@ -60,6 +75,7 @@ export default ({ themes }) => {
             }
           `}
           variables={{ subjects, fields: AGGREGATION_FIELDS }}
+          fetchPolicy="cache-first"
         >
           {({ catalogue, catalogueFieldAggregation }) => {
             return (
@@ -112,9 +128,51 @@ export default ({ themes }) => {
                     >
                       {/* Results header */}
                       <Grid item xs={12}>
-                        <Paper variant="outlined" className={classes.paper}>
-                          Sorting, pagination, etc.
-                        </Paper>
+                        <AppBar
+                          color="primary"
+                          style={{ border: 'none' }}
+                          position="relative"
+                          variant="outlined"
+                        >
+                          <Toolbar variant="dense">
+                            <Typography variant="overline" noWrap>
+                              {catalogue.length} results found
+                            </Typography>
+                            <div className={classes.search}>
+                              <div className={classes.searchIcon}>
+                                <SearchIcon />
+                              </div>
+                              <InputBase
+                                placeholder="Filter results..."
+                                classes={{
+                                  root: classes.inputRoot,
+                                  input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                              />
+                            </div>
+                            <div className={classes.grow} />
+                            <Button
+                              variant="text"
+                              style={{ marginRight: 5 }}
+                              size="small"
+                              startIcon={<NavigateBeforeIcon />}
+                              onClick={() => alert('todo')}
+                              color="inherit"
+                            >
+                              Previous
+                            </Button>
+                            <Button
+                              variant="text"
+                              size="small"
+                              endIcon={<NavigateNextIcon />}
+                              onClick={() => alert('todo')}
+                              color="inherit"
+                            >
+                              Next
+                            </Button>
+                          </Toolbar>
+                        </AppBar>
                       </Grid>
 
                       {/* Results items */}

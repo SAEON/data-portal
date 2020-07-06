@@ -1,8 +1,7 @@
 import React from 'react'
-import { TextField, IconButton, Chip, Grid, useMediaQuery, ListSubheader } from '@material-ui/core'
+import { TextField, Chip, Grid, useMediaQuery, ListSubheader } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
-import { Search as SearchIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { VariableSizeList } from 'react-window'
 import { useTheme } from '@material-ui/core/styles'
@@ -82,13 +81,13 @@ const getSearchState = () =>
     .split(',')
     .filter(_ => _)
 
-export default ({ options, classes, onClick }) => {
+export default ({ options, classes }) => {
   const history = useHistory()
   const searchTerms = getSearchState()
 
   return (
     <Grid container justify="center" alignItems="center">
-      <Grid item xs={11}>
+      <Grid item xs={12}>
         <Autocomplete
           onChange={(e, value) => {
             const selectedValues = value.map(v => v)
@@ -108,7 +107,6 @@ export default ({ options, classes, onClick }) => {
           id="catalog-search-tagged-search"
           options={options}
           getOptionLabel={option => option}
-          disableCloseOnSelect
           renderTags={(value, getTagProps) => {
             return value.map((option, index) => (
               <Chip
@@ -143,16 +141,6 @@ export default ({ options, classes, onClick }) => {
             </QuickForm>
           )}
         />
-      </Grid>
-      <Grid container justify="center" item xs={1}>
-        <IconButton
-          onClick={() => onClick(searchTerms)}
-          color="primary"
-          aria-label="Search"
-          size="medium"
-        >
-          <SearchIcon fontSize="large" />
-        </IconButton>
       </Grid>
     </Grid>
   )
