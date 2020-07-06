@@ -1,12 +1,8 @@
 import { gql } from '@apollo/client'
 import React from 'react'
 import { GqlDataQuery } from '../../components'
+import Layout from './_layout'
 
-/**
- * The entry point to the page
- * This will fetch the record
- * specified in the URL
- */
 export default ({ id }) => (
   <GqlDataQuery
     query={gql`
@@ -18,15 +14,11 @@ export default ({ id }) => (
   >
     {({ catalogue }) => {
       const record = catalogue[0]
-      return <Page json={record} />
+      return <Page json={record} id={id} />
     }}
   </GqlDataQuery>
 )
 
-/**
- * Then format the JSON
- * to look nice
- */
-const Page = ({ json }) => {
-  return JSON.stringify(json)
+const Page = ({ json, id }) => {
+  return <Layout json={json} id={id} />
 }
