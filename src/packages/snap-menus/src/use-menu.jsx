@@ -21,14 +21,20 @@ const getActiveMenuZIndex = () => {
 }
 
 const getDefaultPosition = () => {
-  return {x: 150, y: 125}
+  return { x: 150, y: 125 }
 }
 
 /**
  * Export a React Hook
  */
 export default ({ id }) => {
-  const { containerHeight, containerWidth, VERTICAL_OFFSET_TOP, PORTAL, HORIZONTAL_MARGIN } = useContext(context)
+  const {
+    containerHeight,
+    containerWidth,
+    VERTICAL_OFFSET_TOP,
+    PORTAL,
+    HORIZONTAL_MARGIN,
+  } = useContext(context)
   const ref = useRef()
   refs[id] = ref
 
