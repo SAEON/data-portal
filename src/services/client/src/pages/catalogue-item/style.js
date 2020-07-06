@@ -14,5 +14,6 @@ export default makeStyles(
       // color:  theme.palette.text.secondary,
       // backgroundColor: 'red',
     },
+    map: { height: '400px', width: '100%' },
   })
 )

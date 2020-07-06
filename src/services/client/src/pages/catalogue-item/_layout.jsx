@@ -1,9 +1,13 @@
 import React from 'react'
 import { Button, Grid, Card, CardContent, Typography } from '@material-ui/core'
 import useStyles from './style'
-// import clsx from 'clsx'
 import GetAppIcon from '@material-ui/icons/GetApp'
-
+//
+import OlMap from 'ol/Map'
+import OlView from 'ol/View'
+import OlLayerTile from 'ol/layer/Tile'
+import OlSourceOsm from 'ol/source/OSM'
+// import { MapComponent } from '@terrestris/react-geo'
 /**TO DO:
  * format strings like ContactPerson to be Contact Person
  * neaten visual spacing of Keywords
@@ -12,9 +16,17 @@ import GetAppIcon from '@material-ui/icons/GetApp'
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
  * verify Indentiferes.Local.  json.alternativeIdentifiers has the value but is an array
  * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
+ *
+ *  Layout improvements:
+ * embed OpenLayers map preview instead of linking to it
+ * replace all download links with buttons
+ *
+ * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
+ * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
  */
 export default ({ json, id }) => {
   const classes = useStyles()
+
   return (
     <Grid container justify="center" className={classes.grid}>
       {/* OVERVIEW */}
@@ -65,6 +77,20 @@ export default ({ json, id }) => {
             <Typography variant="body2" color="textSecondary" component="p">
               {`${json.publisher} : ${json.publicationYear}`}
             </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* MAP TEST */}
+      <Grid item xs={9} className={classes.gridItem}>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              MAP
+            </Typography>
+            <div id="map" className={classes.map}>
+              {/* <MapComponent map={map} /> */}
+            </div>
           </CardContent>
         </Card>
       </Grid>
