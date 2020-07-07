@@ -70,7 +70,20 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
         <GqlDataQuery
           query={gql`
             query catalogue($subjects: [String!], $fields: [String!]) {
-              catalogue(subjects: $subjects)
+              catalogue {
+                id
+                records(subjects: $subjects) {
+                  totalCount
+                  ... on CatalogueRecordConnection {
+                    nodes {
+                      ... on CatalogueRecord {
+                        target
+                      }
+                    }
+                  }
+                }
+              }
+
               catalogueFieldAggregation(fields: $fields, subjects: $subjects)
             }
           `}
@@ -136,7 +149,7 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                         >
                           <Toolbar variant="dense">
                             <Typography variant="overline" noWrap>
-                              {catalogue.length} results found
+                              {catalogue.records.totalCount} results found
                             </Typography>
                             <div className={classes.search}>
                               <div className={classes.searchIcon}>

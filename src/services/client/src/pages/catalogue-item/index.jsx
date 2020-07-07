@@ -7,13 +7,23 @@ export default ({ id }) => (
   <GqlDataQuery
     query={gql`
       query catalogue($id: String) {
-        catalogue(id: $id)
+        catalogue {
+          records(id: $id) {
+            ... on CatalogueRecordConnection {
+              nodes {
+                ... on CatalogueRecord {
+                  target
+                }
+              }
+            }
+          }
+        }
       }
     `}
     variables={{ id }}
   >
     {({ catalogue }) => {
-      const record = catalogue[0]
+      const record = catalogue.records.nodes[0].target
       return <Page json={record} id={id} />
     }}
   </GqlDataQuery>
