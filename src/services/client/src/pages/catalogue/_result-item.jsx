@@ -24,12 +24,13 @@ export default ({ doc }) => {
       <CardContent>
         <Button
           startIcon={<ViewIcon />}
+          disabled={!doc.alternateIdentifiers}
           color="primary"
           size="small"
           onClick={() =>
             history.push(
               `/catalogue/${
-                doc.alternateIdentifiers.find(
+                doc.alternateIdentifiers?.find(
                   ({ alternateIdentifierType: type }) => type === 'Plone'
                 ).alternateIdentifier
               }`
@@ -74,7 +75,11 @@ export default ({ doc }) => {
         </Button>
       </CardContent>
       <CardContent>
-        <Link uri={`https://doi.org/${doc.identifier.identifier}`} />
+        {doc.identifier ? (
+          <Link uri={`https://doi.org/${doc.identifier.identifier}`} />
+        ) : (
+          <Typography>No DOI</Typography>
+        )}
       </CardContent>
     </Card>
   )

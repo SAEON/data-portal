@@ -1,11 +1,11 @@
 {
   "name": "@saeon/api",
-  "version": "0.0.139",
+  "version": "0.0.140",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src'",
+    "start": "nodemon --ext js,graphql,json --watch ./src --watch ../../packages/catalogue-search/src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src'",
     "start:prod": "NODE_ENV=production TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src",
     "check-package-updates": "ncu",
     "update-package-dependencies": "ncu -u"

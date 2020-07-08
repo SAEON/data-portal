@@ -71,7 +71,7 @@ export class Catalogue {
     return dsl
   }
 
-  async countPivotOn({ fields, subjects = null }) {
+  async countPivotOn({ fields, subjects = [] }) {
     const size = 10000
     const order = { _key: 'asc' }
     const dsl = {
@@ -90,7 +90,7 @@ export class Catalogue {
       ),
     }
 
-    if (subjects)
+    if (subjects && subjects.length)
       dsl.query = {
         bool: {
           must: [
@@ -120,6 +120,7 @@ export class Catalogue {
         },
       },
       _source: {
+        excludes: ['metadata_json.originalMetadata'],
         includes: ['metadata_json.*'],
       },
     }
@@ -139,6 +140,7 @@ export class Catalogue {
         },
       },
       _source: {
+        excludes: ['metadata_json.originalMetadata'],
         includes: ['metadata_json.*'],
       },
     }

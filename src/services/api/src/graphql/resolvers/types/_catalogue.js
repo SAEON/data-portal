@@ -35,7 +35,7 @@ export default {
       })
     }
 
-    if (subjects) {
+    if (subjects && subjects.length) {
       const data = await catalogue.searchBySubjects(...subjects)
       return Object.assign(result, {
         totalCount: data.length,
@@ -46,9 +46,22 @@ export default {
       })
     }
 
-    console.log('I guess here the whole catalogue should be searched') // TODO
+    const data = await catalogue.query({
+      size: 10000,
+      from: 0,
+      _source: {
+        excludes: ['metadata_json.originalMetadata'],
+        includes: ['metadata_json.*'],
+      },
+    })
 
-    return {}
+    return Object.assign(result, {
+      totalCount: data.hits.hits.length,
+      resultCount: data.hits.hits.length,
+      data: data.hits.hits.map(item => item._source),
+      startCursor: undefined,
+      endCursor: undefined,
+    })
   },
 
   // eslint-disable-next-line no-unused-vars

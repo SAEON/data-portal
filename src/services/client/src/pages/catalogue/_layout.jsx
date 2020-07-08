@@ -12,6 +12,8 @@ import ResultsList from './_results-list'
 import useStyles from './style'
 import clsx from 'clsx'
 
+const PAGE_SIZE = 50
+
 const AGGREGATION_FIELDS = [
   'metadata_json.publicationYear',
   'metadata_json.publisher.raw',
@@ -34,6 +36,7 @@ export default ({ themes }) => {
 }
 
 const Layout = ({ themes, subjects, updateSubjects }) => {
+  const [currentPage, setCurrentPage] = useState(0)
   const classes = useStyles()
 
   useEffect(() => {
@@ -67,70 +70,86 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
 
         {/* Catalogue */}
 
-        <GqlDataQuery
-          query={gql`
-            query catalogue($subjects: [String!], $fields: [String!]) {
-              catalogue {
-                id
-                records(subjects: $subjects) {
-                  totalCount
-                  ... on CatalogueRecordConnection {
-                    nodes {
-                      ... on CatalogueRecord {
-                        target
+        <div
+          className={clsx({
+            [classes.catalogueContainer]: true,
+          })}
+        >
+          <Grid
+            className={clsx({
+              [classes.grid]: true,
+              [classes.padding]: true,
+            })}
+            container
+            spacing={2}
+          >
+            {/* Filters */}
+            <Grid
+              className={clsx({
+                [classes.grid]: true,
+              })}
+              item
+              xs={12}
+              md={4}
+            >
+              <div
+                className={clsx({
+                  [classes.scrollContainer]: true,
+                })}
+              >
+                <GqlDataQuery
+                  query={gql`
+                    query catalogue($filterBySubjects: [String!], $fields: [String!]) {
+                      catalogue {
+                        id
+                        summary(fields: $fields, filterBySubjects: $filterBySubjects)
+                      }
+                    }
+                  `}
+                  variables={{
+                    fields: AGGREGATION_FIELDS,
+                    filterBySubjects: subjects || [],
+                  }}
+                >
+                  {({ catalogue }) => <AggregationList results={catalogue.summary} />}
+                </GqlDataQuery>
+              </div>
+            </Grid>
+
+            {/* Results */}
+
+            <Grid
+              className={clsx({
+                [classes.grid]: true,
+              })}
+              item
+              xs={12}
+              md={8}
+            >
+              <GqlDataQuery
+                query={gql`
+                  query catalogue($subjects: [String!]) {
+                    catalogue {
+                      id
+                      records(subjects: $subjects) {
+                        totalCount
+                        ... on CatalogueRecordConnection {
+                          nodes {
+                            ... on CatalogueRecord {
+                              target
+                            }
+                          }
+                        }
                       }
                     }
                   }
-                }
-                summary(fields: $fields, filterBySubjects: $subjects)
-              }
-            }
-          `}
-          variables={{ subjects, fields: AGGREGATION_FIELDS }}
-          fetchPolicy="cache-first"
-        >
-          {({ catalogue }) => {
-            return (
-              <div
-                className={clsx({
-                  [classes.catalogueContainer]: true,
-                })}
+                `}
+                variables={{
+                  subjects: subjects || [],
+                }}
               >
-                <Grid
-                  className={clsx({
-                    [classes.grid]: true,
-                    [classes.padding]: true,
-                  })}
-                  container
-                  spacing={2}
-                >
-                  {/* Filters */}
-                  <Grid
-                    className={clsx({
-                      [classes.grid]: true,
-                    })}
-                    item
-                    xs={12}
-                    md={4}
-                  >
-                    <div
-                      className={clsx({
-                        [classes.scrollContainer]: true,
-                      })}
-                    >
-                      <AggregationList results={catalogue.summary} />
-                    </div>
-                  </Grid>
-
-                  {/* Results */}
-                  <Grid
-                    className={clsx({
-                      [classes.grid]: true,
-                    })}
-                    item
-                    xs={12}
-                    md={8}
-                  >
+                {({ catalogue }) => {
+                  return (
                     <Grid
                       container
                       spacing={2}
@@ -138,7 +157,6 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                         [classes.grid]: true,
                       })}
                     >
-                      {/* Results header */}
                       <Grid item xs={12}>
                         <AppBar
                           color="primary"
@@ -148,7 +166,13 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                         >
                           <Toolbar variant="dense">
                             <Typography variant="overline" noWrap>
-                              {catalogue.records.totalCount} results found
+                              {catalogue.records.totalCount} results found ({' '}
+                              {currentPage * PAGE_SIZE + 1} to{' '}
+                              {Math.min(
+                                currentPage * PAGE_SIZE + PAGE_SIZE,
+                                catalogue.records.totalCount
+                              )}
+                              )
                             </Typography>
                             <div className={classes.search}>
                               <div className={classes.searchIcon}>
@@ -163,13 +187,15 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                                 inputProps={{ 'aria-label': 'search' }}
                               />
                             </div>
+
                             <div className={classes.grow} />
                             <Button
                               variant="text"
+                              disabled={currentPage === 0}
                               style={{ marginRight: 5 }}
                               size="small"
                               startIcon={<NavigateBeforeIcon />}
-                              onClick={() => alert('todo')}
+                              onClick={() => setCurrentPage(currentPage - 1)}
                               color="inherit"
                             >
                               Previous
@@ -177,8 +203,11 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                             <Button
                               variant="text"
                               size="small"
+                              disabled={
+                                catalogue.records.totalCount - currentPage * PAGE_SIZE <= PAGE_SIZE
+                              }
                               endIcon={<NavigateNextIcon />}
-                              onClick={() => alert('todo')}
+                              onClick={() => setCurrentPage(currentPage + 1)}
                               color="inherit"
                             >
                               Next
@@ -187,7 +216,6 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                         </AppBar>
                       </Grid>
 
-                      {/* Results items */}
                       <Grid
                         className={clsx({
                           [classes.resultsGrid]: true,
@@ -200,16 +228,21 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                             [classes.scrollContainer]: true,
                           })}
                         >
-                          <ResultsList results={catalogue} />
+                          <ResultsList
+                            results={catalogue.records.nodes.slice(
+                              currentPage * PAGE_SIZE,
+                              currentPage * PAGE_SIZE + PAGE_SIZE
+                            )}
+                          />
                         </div>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Grid>
-              </div>
-            )
-          }}
-        </GqlDataQuery>
+                  )
+                }}
+              </GqlDataQuery>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     </div>
   )

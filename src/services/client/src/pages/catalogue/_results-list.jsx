@@ -3,7 +3,7 @@ import ResultItem from './_result-item'
 
 export default ({ results }) => (
   <div style={{ marginRight: 16 }}>
-    {results.records.nodes.map((item, i) => (
+    {results.map((item, i) => (
       <ResultItem key={i} doc={item.target} />
     ))}
   </div>
