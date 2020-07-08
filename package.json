@@ -35,8 +35,6 @@
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "eslint": "^7.4.0",
@@ -46,8 +44,10 @@
     "pretty-quick": "^2.0.1"
   },
   "dependencies": {
+    "@babel/core": "^7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-plugin-transform-imports": "^2.0.0"
   },
