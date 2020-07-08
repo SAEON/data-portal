@@ -35,7 +35,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
-    "@saeon/catalogue-search": "file:../../packages/catalogue-search",
+    "@saeon/catalogue-search": "5.2.0",
     "@saeon/logger": "^3.1.12",
     "@saeon/ol-react": "^9.0.9",
     "@saeon/pkce-client": "0.5.8",
