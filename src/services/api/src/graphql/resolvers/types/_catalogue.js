@@ -1,8 +1,6 @@
 import fetch from 'node-fetch'
-import catalogue_ from '@saeon/catalogue-search/dist/catalogue.js'
+import { Catalogue } from '../../../../../../packages/catalogue-search/src/catalogue-search/index.js'
 import { HTTP_PROXY } from '../../../config.js'
-
-const { Catalogue } = catalogue_
 
 // TODO this should be a single instance for the lifecycle of the node.js app
 const DSL_INDEX = `saeon-odp-4-2`

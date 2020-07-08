@@ -1,5 +1,5 @@
-import { Catalogue } from '../../src/catalogue-search'
-import { API_ADDRESS } from '../config/constants'
+import { Catalogue } from '../../src/catalogue-search/index.js'
+import { API_ADDRESS } from '../config/constants.js'
 
 const dslAddress = `${API_ADDRESS}`
 const index = 'saeon-odp-4-2'

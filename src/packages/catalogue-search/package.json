@@ -3,6 +3,7 @@
   "version": "5.3.0",
   "description": "Generally useful Lucene-based search for discovering SAEON's metadata records",
   "main": "dist/index.js",
+  "type": "module",
   "files": [
     "dist"
   ],

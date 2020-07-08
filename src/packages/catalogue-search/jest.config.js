@@ -1,11 +1,8 @@
-'use strict'
-const path = require('path')
+import getCurrentDirectory from './src/lib/get-current-directory.js'
+import { join } from 'path'
 
-module.exports = {
+export default {
   verbose: true,
-  setupFiles: [path.resolve(__dirname, 'tests/config/jest/jest-fetch-config.js')],
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': path.resolve(__dirname, 'tests/config/jest/jest-babel-config.js'),
-  },
+  setupFiles: [join(getCurrentDirectory(import.meta), 'tests/config/jest/jest-fetch-config.js')],
   testMatch: ['**/tests/**/*test.js?(x)'],
 }

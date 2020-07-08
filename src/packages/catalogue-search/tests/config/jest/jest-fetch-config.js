@@ -1,1 +1,2 @@
-global.fetch = require('node-fetch')
+import nodeFetch from 'node-fetch'
+global.fetch = nodeFetch

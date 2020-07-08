@@ -1,6 +1,6 @@
 {
   "name": "@saeon/api",
-  "version": "0.0.135",
+  "version": "0.0.139",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@koa/router": "^9.3.1",
-    "@saeon/catalogue-search": "^5.3.0",
     "@saeon/logger": "^3.1.12",
     "apollo-server-koa": "^2.15.1",
     "babel-plugin-module-resolver": "^4.0.0",

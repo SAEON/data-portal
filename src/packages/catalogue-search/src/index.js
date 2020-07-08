@@ -1,2 +1,2 @@
-export * from './catalogue-search'
-export * from './catalogue-search-react'
+export * from './catalogue-search/index.js'
+export * from './catalogue-search-react/index.js'

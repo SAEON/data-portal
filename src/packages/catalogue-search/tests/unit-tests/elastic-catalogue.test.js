@@ -1,4 +1,4 @@
-import { Catalogue } from '../../src/catalogue-search'
+import { Catalogue } from '../../src/catalogue-search/index.js'
 
 const expectedFunctionsOnPrototype = {
   getSingleRecord: 'function',
