@@ -54,7 +54,7 @@ type Catalogue {
     before: ID
   ): Connection!
 
-  # Get count aggregation of record fields, with optional filters
+  # Get count aggregation of records by fields, with optional filters
   summary(fields: [String!], filterBySubjects: [String!]): JSON!
 }
 
