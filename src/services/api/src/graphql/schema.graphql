@@ -37,6 +37,8 @@ interface Edge {
 
 type Catalogue {
   id: ID!
+
+  # Fetch metadata records from SAEON's data catalogue
   records(
     # Fetch a single record by ID (other arguments are ignored)
     id: String
@@ -51,6 +53,9 @@ type Catalogue {
     # Return elements in the list that come before the specified cursor
     before: ID
   ): Connection!
+
+  # Get count aggregation of record fields, with optional filters
+  summary(fields: [String!], filterBySubjects: [String!]): JSON!
 }
 
 type CatalogueRecordConnection implements Connection {
@@ -68,11 +73,6 @@ type CatalogueEdge implements Edge {
 type CatalogueRecord implements Node {
   id: ID!
   target: JSON!
-}
-
-type ES_Aggregation {
-  key: String!
-  doc_count: Int!
 }
 
 # Browser events
@@ -95,8 +95,7 @@ input BrowserEventInput {
 type Query {
   # Catalogue
   catalogue: Catalogue!
-  catalogueThemes: [ES_Aggregation]! # TODO - move to the catalogue type
-  catalogueFieldAggregation(fields: [String!], subjects: [String!]): JSON! # TODO - move to the catalogue type
+
   # Client usage tracking
   browserEvents: [Node]!
 }

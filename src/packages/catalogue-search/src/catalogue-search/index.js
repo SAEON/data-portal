@@ -105,24 +105,6 @@ export class Catalogue {
     }))
   }
 
-  async getDataThemes() {
-    const dsl = {
-      size: 0,
-      aggs: {
-        subjects_aggregation: {
-          terms: {
-            field: 'metadata_json.subjects.subject.raw',
-            size: 10000,
-            order: { _key: 'asc' },
-          },
-        },
-      },
-    }
-
-    const result = await this.query(dsl)
-    return result?.aggregations.subjects_aggregation.buckets
-  }
-
   async searchBySubjects(...subjects) {
     if (subjects.length < 1) {
       throw new Error(`${errorHeader}: searchBySubjects requires at least one subject`)

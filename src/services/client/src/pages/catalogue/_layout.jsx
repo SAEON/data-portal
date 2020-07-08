@@ -82,15 +82,14 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                     }
                   }
                 }
+                summary(fields: $fields, filterBySubjects: $subjects)
               }
-
-              catalogueFieldAggregation(fields: $fields, subjects: $subjects)
             }
           `}
           variables={{ subjects, fields: AGGREGATION_FIELDS }}
           fetchPolicy="cache-first"
         >
-          {({ catalogue, catalogueFieldAggregation }) => {
+          {({ catalogue }) => {
             return (
               <div
                 className={clsx({
@@ -119,7 +118,7 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                         [classes.scrollContainer]: true,
                       })}
                     >
-                      <AggregationList results={catalogueFieldAggregation} />
+                      <AggregationList results={catalogue.summary} />
                     </div>
                   </Grid>
 
