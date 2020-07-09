@@ -1,18 +1,37 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(
-  /*theme*/ () => ({
-    grid: { position: 'absolute', height: '100%', overflowY: 'auto', marginBottom: '24px' },
-    gridItem: {
-      marginTop: '10px',
-      marginBottom: '10px',
-    },
+export default makeStyles(theme => ({
+  rootContainer: { paddingTop: '15px' },
+  grid: {
+    height: '100%',
+    width: '100%',
+    overflowY: 'auto',
+    position: 'fixed',
+  },
+  gridItem: {},
 
-    card: {
-      // padding: '15px',
-      // textAlign: 'center',
-      // color:  theme.palette.text.secondary,
-      // backgroundColor: 'red',
-    },
-  })
-)
+  card: {
+    display: 'flex',
+  },
+  cardContentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  cardContent: {
+    flex: '1 0 auto',
+  },
+  cardControls: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
+  cardMedia: {
+    // flexDirection: 'row-reverse',
+    alignItems: 'flex-end',
+    alignContent: 'flex-end',
+    alignSelf: 'flex-end',
+  },
+  button: { margin: '5px' },
+}))
