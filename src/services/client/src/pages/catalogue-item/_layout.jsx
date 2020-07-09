@@ -91,11 +91,11 @@ export default ({ json, id }) => {
 
                 <Typography variant="body2">
                   {json.rightsList.map((rl, i) => (
-                    <Tooltip title={rl.rights} key={`rights-list-right${i}`}>
-                      <SimpleLink uri={rl.rightsURI}>
+                    <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
+                      <Tooltip title={rl.rights}>
                         <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
-                      </SimpleLink>
-                    </Tooltip>
+                      </Tooltip>
+                    </SimpleLink>
                   ))}
                 </Typography>
                 <a
