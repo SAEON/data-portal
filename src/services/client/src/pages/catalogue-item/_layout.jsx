@@ -8,10 +8,13 @@ import {
   Divider,
   Tooltip,
   CardMedia,
+  Chip,
 } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
 import LinkIcon from '@material-ui/icons/Link'
+import { Link as SimpleLink } from '../../components'
 /**TO DO:
  * download button tooltips show download extension. currently hardcoded. set them to grab file extension
  * cite button in overview with popup
@@ -39,6 +42,7 @@ const formatText = text => {
   return (text = text.replace(/([A-Z])/g, ' $1').trim())
 }
 export default ({ json, id }) => {
+  const history = useHistory()
   const classes = useStyles()
   const gridItemSize = 10
   if (!id || !json) {
@@ -64,16 +68,18 @@ export default ({ json, id }) => {
                   {json.titles[0].title}
                 </Typography>
                 <Typography variant="h6">Author</Typography>
-                <Typography variant="body2">
-                  {json.creators.map(creator => (
-                    <>
+
+                {json.creators.map(creator => (
+                  <div key={creator.name}>
+                    <Typography variant="body2">
                       {creator.name}
                       <br />
                       {creator.affiliations.map(aff => aff.affiliation)}
-                    </>
-                  ))}
-                  <br />
-                </Typography>
+                    </Typography>
+                  </div>
+                ))}
+                <br />
+
                 <br />
                 <br />
                 <Typography variant="h6">Publisher </Typography>
@@ -87,9 +93,9 @@ export default ({ json, id }) => {
                 <Typography variant="body2">
                   {json.rightsList.map((rl, i) => (
                     <Tooltip title={rl.rights} key={`rights-list-right${i}`}>
-                      <a href={rl.rightsURI} target="_blank" rel="noreferrer">
+                      <SimpleLink uri={rl.rightsURI}>
                         <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
-                      </a>
+                      </SimpleLink>
                     </Tooltip>
                   ))}
                 </Typography>
@@ -145,17 +151,15 @@ export default ({ json, id }) => {
                 Contributors
               </Typography>
               {json.contributors.map((contributor, i) => (
-                <>
-                  <Typography variant="h6" key={`contributor-type${i}`}>
-                    {formatText(contributor.contributorType)}
-                  </Typography>
-                  <Typography variant="body2" key={`contributor-name${i}`}>
+                <div key={contributor.name}>
+                  <Typography variant="h6">{formatText(contributor.contributorType)}</Typography>
+                  <Typography variant="body2">
                     {contributor.name}
                     <br />
                     {contributor.affiliations.map(aff => aff.affiliation)}
                   </Typography>
                   <br />
-                </>
+                </div>
               ))}
             </CardContent>
           </Card>
@@ -168,23 +172,15 @@ export default ({ json, id }) => {
               <Typography gutterBottom variant="h5">
                 Keywords
               </Typography>
-              {json.subjects.map((subject, i) => (
-                <a
-                  href={`http://www.sasdi.net/sresults.aspx?text=${subject.subject}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  key={`keyword-${i}`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Button
-                    variant="contained"
-                    className={classes.button}
-                    startIcon={<LinkIcon />}
-                    size="small"
-                  >
-                    {subject.subject}
-                  </Button>
-                </a>
+              {json.subjects.map(subject => (
+                <Chip
+                  size="small"
+                  clickable
+                  onClick={() => history.push(`/catalogue?search=${subject.subject}`)}
+                  key={subject.subject}
+                  className={classes.button}
+                  label={subject.subject}
+                />
               ))}
             </CardContent>
           </Card>
@@ -213,14 +209,14 @@ export default ({ json, id }) => {
                 Identifiers
               </Typography>
               <Typography variant="h6"> Local</Typography>
-              <Typography variant="body2">
-                {json.alternateIdentifiers.map(ai => (
-                  <>
+              {json.alternateIdentifiers.map(ai => (
+                <div key={ai.alternateIdentifier}>
+                  <Typography variant="body2">
                     {ai.alternateIdentifier}
                     <br />
-                  </>
-                ))}
-              </Typography>
+                  </Typography>
+                </div>
+              ))}
               <br />
               <Typography variant="h6">Identifier Type</Typography>
               <Typography variant="body2">{json.identifier.identifierType}</Typography>
@@ -230,17 +226,12 @@ export default ({ json, id }) => {
               <br />
               <Typography variant="h6">URI</Typography>
               {json.alternateIdentifiers.map((alt, i) => (
-                <>
-                  <a
-                    href={`http://www.sasdi.net/metaview.aspx?uuid=${alt.alternateIdentifier}`} //verify alternateIdentifiers[0] will be consistent
-                    target="_blank"
-                    rel="noreferrer"
-                    key={`alternate-identifier${i}`}
-                  >
-                    {`http://www.sasdi.net/metaview.aspx?uuid=${alt.alternateIdentifier}`}
-                  </a>
+                <div key={alt.alternateIdentifier}>
+                  <SimpleLink
+                    uri={`http://www.sasdi.net/metaview.aspx?uuid=${alt.alternateIdentifier}`}
+                  />
                   <br />
-                </>
+                </div>
               ))}
             </CardContent>
           </Card>

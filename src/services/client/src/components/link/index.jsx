@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import useStyles from './style'
 
-export default ({ uri, name = null }) => {
+export default forwardRef(({ uri, name = null, children = null }, ref) => {
   const classes = useStyles()
   return (
-    <a target="_blank" rel="noopener noreferrer" className={classes.link} href={uri}>
-      {name || uri}
+    <a ref={ref} target="_blank" rel="noopener noreferrer" className={classes.link} href={uri}>
+      {children || name || uri}
     </a>
   )
-}
+})
