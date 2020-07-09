@@ -13,7 +13,6 @@ import {
 import { useHistory } from 'react-router-dom'
 import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
-import LinkIcon from '@material-ui/icons/Link'
 import { Link as SimpleLink } from '../../components'
 /**TO DO:
  * download button tooltips show download extension. currently hardcoded. set them to grab file extension
@@ -150,7 +149,7 @@ export default ({ json, id }) => {
               <Typography gutterBottom variant="h5">
                 Contributors
               </Typography>
-              {json.contributors.map((contributor, i) => (
+              {json.contributors.map(contributor => (
                 <div key={contributor.name}>
                   <Typography variant="h6">{formatText(contributor.contributorType)}</Typography>
                   <Typography variant="body2">
@@ -225,7 +224,7 @@ export default ({ json, id }) => {
               <Typography variant="body2">{json.identifier.identifier}</Typography>
               <br />
               <Typography variant="h6">URI</Typography>
-              {json.alternateIdentifiers.map((alt, i) => (
+              {json.alternateIdentifiers.map(alt => (
                 <div key={alt.alternateIdentifier}>
                   <SimpleLink
                     uri={`http://www.sasdi.net/metaview.aspx?uuid=${alt.alternateIdentifier}`}
