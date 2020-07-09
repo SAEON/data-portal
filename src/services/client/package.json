@@ -1,6 +1,6 @@
 {
   "name": "@saeon/client",
-  "version": "0.0.127",
+  "version": "0.0.140",
   "description": "Browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
     "@saeon/client",
@@ -13,8 +13,8 @@
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../../packages/catalogue-search/src/**/*.@(js|jsx)\" \"../../packages/snap-menus/src/**/*.@(js|jsx)\" \"../../packages/logger/src/**/*.@(js|jsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --open",
-    "check-package-updates": "ncu --reject \"@date-io/date-fns\"",
-    "update-package-dependencies": "ncu -u --reject \"@date-io/date-fns\""
+    "check-package-updates": "ncu --reject @date-io/date-fns,@saeon/catalogue-search",
+    "update-package-dependencies": "ncu -u --reject @date-io/date-fns,@saeon/catalogue-search"
   },
   "repository": {
     "type": "git",
@@ -31,11 +31,11 @@
     "@apollo/link-ws": "^2.0.0-beta.3",
     "@babel/preset-env": "^7.10.4",
     "@date-io/date-fns": "^1.3.13",
-    "@material-ui/core": "^4.10",
+    "@material-ui/core": "^4.11",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
-    "@saeon/catalogue-search": "^5.2.0",
+    "@saeon/catalogue-search": "5.3.0",
     "@saeon/logger": "^3.1.12",
     "@saeon/ol-react": "^9.0.9",
     "@saeon/pkce-client": "0.5.8",
@@ -51,7 +51,7 @@
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^1.8.0",
     "file-loader": "^6.0.0",
-    "graphql": "^15.2.0",
+    "graphql": "^15.3.0",
     "html-webpack-plugin": "^4.3.0",
     "html2canvas": "^1.0.0-rc.5",
     "nanoid": "^3.1.10",
@@ -68,7 +68,7 @@
     "react-window": "^1.8.5",
     "react-window-infinite-loader": "^1.0.5",
     "regenerator-runtime": "^0.13.5",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^9.0.2",
     "style-loader": "^1.2.1",
     "subscriptions-transport-ws": "^0.9.16",
     "typeface-roboto": "0.0.75",

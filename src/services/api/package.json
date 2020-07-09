@@ -1,11 +1,11 @@
 {
   "name": "@saeon/api",
-  "version": "0.0.127",
+  "version": "0.0.140",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src'",
+    "start": "nodemon --ext js,graphql,json --watch ./src --watch ../../packages/catalogue-search/src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src'",
     "start:prod": "NODE_ENV=production TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src",
     "check-package-updates": "ncu",
     "update-package-dependencies": "ncu -u"
@@ -26,19 +26,18 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
-    "@koa/router": "^9.1.0",
-    "@saeon/catalogue-search": "^5.3.0",
+    "@koa/router": "^9.3.1",
     "@saeon/logger": "^3.1.12",
     "apollo-server-koa": "^2.15.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "dataloader": "^2.0.0",
     "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
-    "graphql": "^15.2.0",
+    "graphql": "^15.3.0",
     "graphql-tools": "^6.0.12",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.0",
-    "koa-compress": "^4.0.1",
+    "koa-compress": "^5.0.1",
     "koa-proxies": "^0.11.0",
     "mongodb": "^3.5.9",
     "node-fetch": "^2.6.0",

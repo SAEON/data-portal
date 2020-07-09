@@ -1,4 +1,4 @@
-const packageJson = require('../../package.json')
+import packageJson from '../../package.json'
 
 const errorHeader = `${packageJson.name} v${packageJson.version}`
 
@@ -71,7 +71,7 @@ export class Catalogue {
     return dsl
   }
 
-  async countPivotOn({ fields, subjects = null }) {
+  async countPivotOn({ fields, subjects = [] }) {
     const size = 10000
     const order = { _key: 'asc' }
     const dsl = {
@@ -90,7 +90,7 @@ export class Catalogue {
       ),
     }
 
-    if (subjects)
+    if (subjects && subjects.length)
       dsl.query = {
         bool: {
           must: [
@@ -103,24 +103,6 @@ export class Catalogue {
     return Object.entries(result.aggregations).map(([name, { buckets }]) => ({
       [name]: buckets,
     }))
-  }
-
-  async getDataThemes() {
-    const dsl = {
-      size: 0,
-      aggs: {
-        subjects_aggregation: {
-          terms: {
-            field: 'metadata_json.subjects.subject.raw',
-            size: 10000,
-            order: { _key: 'asc' },
-          },
-        },
-      },
-    }
-
-    const result = await this.query(dsl)
-    return result?.aggregations.subjects_aggregation.buckets
   }
 
   async searchBySubjects(...subjects) {
@@ -138,6 +120,7 @@ export class Catalogue {
         },
       },
       _source: {
+        excludes: ['metadata_json.originalMetadata'],
         includes: ['metadata_json.*'],
       },
     }
@@ -157,6 +140,7 @@ export class Catalogue {
         },
       },
       _source: {
+        excludes: ['metadata_json.originalMetadata'],
         includes: ['metadata_json.*'],
       },
     }

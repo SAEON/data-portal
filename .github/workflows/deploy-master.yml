@@ -32,7 +32,7 @@ jobs:
           echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
           echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
           echo "REDIRECT_URL=https://atlas.saeon.ac.za/authenticated" >> src/services/client/.env
-          echo "DEFAULT_WARNING=Please note that this service, although available for general comment, is not live. For more information contact zach@saeon.ac.za" >> src/services/client/.env
+          echo "DEFAULT_WARNING=This service is still under development - feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)
         run: |

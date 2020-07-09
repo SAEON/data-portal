@@ -4,22 +4,25 @@ import { GqlDataQuery } from '../../components'
 
 export const CatalogueContext = createContext()
 
+const SUBJECT = 'metadata_json.subjects.subject.raw'
+
 export default ({ children }) => {
   return (
     <GqlDataQuery
       query={gql`
-        query catalogueThemes {
-          catalogueThemes {
-            key
-            doc_count
+        query catalogue($fields: [String!]) {
+          catalogue {
+            id
+            summary(fields: $fields)
           }
         }
       `}
+      variables={{ fields: [SUBJECT] }}
     >
-      {({ catalogueThemes }) => {
+      {({ catalogue }) => {
         return (
           <CatalogueContext.Provider
-            value={{ themes: catalogueThemes.map(({ key }) => key).filter(_ => _) }}
+            value={{ themes: catalogue.summary[0][SUBJECT].map(({ key }) => key).filter(_ => _) }}
           >
             {children}
           </CatalogueContext.Provider>

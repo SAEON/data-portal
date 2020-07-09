@@ -4,40 +4,6 @@ scalar DateTime
 scalar JSON
 scalar Void
 
-enum Type {
-  Map
-  BrowserEvent
-  SearchResult
-}
-
-interface Node {
-  id: ID!
-  type: Type!
-}
-
-# Types of Nodes
-
-type Map implements Node {
-  id: ID!
-  name: String
-  type: Type!
-}
-
-type BrowserEvent implements Node {
-  id: ID!
-  name: String!
-  createdAt: DateTime
-  info: JSON!
-  type: Type!
-}
-
-type SearchResult implements Node {
-  id: ID!
-  type: Type!
-}
-
-# General Types
-
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -45,20 +11,77 @@ type PageInfo {
   endCursor: String
 }
 
-type SearchEdge {
-  cursor: String!
-  node: SearchResult!
+# Interfaces
+
+interface Node {
+  id: ID!
 }
 
-type SearchConnection {
-  edges: [SearchEdge!]!
+interface Connection {
+  # A list of edges
+  edges: [Edge!]!
+  # A list of nodes
+  nodes: [Node!]
+  # Information to aid in pagination
   pageInfo: PageInfo!
+  # Count of total results
+  totalCount: Int!
 }
 
-# Inputs
+interface Edge {
+  cursor: String!
+  node: Node!
+}
 
-input MapInput {
-  name: String
+# Catalogue
+
+type Catalogue {
+  id: ID!
+
+  # Fetch metadata records from SAEON's data catalogue
+  records(
+    # Fetch a single record by ID (other arguments are ignored)
+    id: String
+    # Search for intersection of subject list
+    subjects: [String!]
+    # Return the first N elements from the list
+    first: Int
+    # Return the last N elements from the list
+    last: Int
+    # Return elements in the list that come after the specified cursor
+    after: ID
+    # Return elements in the list that come before the specified cursor
+    before: ID
+  ): Connection!
+
+  # Get count aggregation of records by fields, with optional filters
+  summary(fields: [String!], filterBySubjects: [String!]): JSON!
+}
+
+type CatalogueRecordConnection implements Connection {
+  edges: [Edge!]!
+  nodes: [Node!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type CatalogueEdge implements Edge {
+  cursor: String!
+  node: Node!
+}
+
+type CatalogueRecord implements Node {
+  id: ID!
+  target: JSON!
+}
+
+# Browser events
+
+type BrowserEvent implements Node {
+  id: ID!
+  name: String!
+  createdAt: DateTime
+  info: JSON!
 }
 
 input BrowserEventInput {
@@ -67,29 +90,14 @@ input BrowserEventInput {
   info: JSON!
 }
 
-type ES_Aggregation {
-  key: String!
-  doc_count: Int!
-}
-
 # GraphQL types
 
 type Query {
   # Catalogue
-  catalogue(id: String, subjects: [String!]): [JSON]!
-  catalogueThemes: [ES_Aggregation]!
-  catalogueFieldAggregation(fields: [String!], subjects: [String!]): JSON
+  catalogue: Catalogue!
 
-  map(id: ID!): Node
-  maps: [Node]!
+  # Client usage tracking
   browserEvents: [Node]!
-  search(
-    dsl: JSON! # Elasticsearch DSL query
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): SearchConnection!
 }
 
 type Subscription {
@@ -97,6 +105,5 @@ type Subscription {
 }
 
 type Mutation {
-  upsertMap(input: MapInput!, id: ID): Node!
   logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
 }

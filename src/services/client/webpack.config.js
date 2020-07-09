@@ -64,12 +64,12 @@ module.exports = () => {
           __dirname,
           mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react/src'
         ),
-        '@saeon/catalogue-search': path.resolve(
-          __dirname,
-          mode === 'production'
-            ? './node_modules/@saeon/catalogue-search/dist/catalogueReact'
-            : '../../packages/catalogue-search/src'
-        ),
+        // '@saeon/catalogue-search': path.resolve(
+        //   __dirname,
+        //   mode === 'production'
+        //     ? './node_modules/@saeon/catalogue-search/dist/catalogueReact'
+        //     : '../../packages/catalogue-search/src'
+        // ),
         '@saeon/logger': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/src'

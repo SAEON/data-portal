@@ -8,10 +8,14 @@ export { default as Mutation } from './_mutation.js'
 export { default as Query } from './_query.js'
 export { default as Subscription } from './_subscription.js'
 
-// General types
-export { default as Node } from './_node.js'
+// Relay
+export { default as PageInfo } from './_page-info.js'
+
+// Catalogue
+export { default as Catalogue } from './_catalogue.js'
+export { default as CatalogueRecordConnection } from './_catalogue-record-connection.js'
+export { default as CatalogueEdge } from './_catalogue-edge.js'
+export { default as CatalogueRecord } from './_catalogue-record.js'
 
 // Application types
-export { default as Map } from './_map.js'
 export { default as BrowserEvent } from './_browser-event.js'
-export { default as SearchResult } from './_search-result.js'

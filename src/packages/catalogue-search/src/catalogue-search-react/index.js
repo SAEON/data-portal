@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Catalogue } from '../catalogue-search'
+import { Catalogue } from '../catalogue-search/index.js'
 import PropTypes from 'prop-types'
 
 const defaultState = {

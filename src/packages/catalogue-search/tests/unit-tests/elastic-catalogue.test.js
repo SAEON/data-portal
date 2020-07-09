@@ -1,8 +1,7 @@
-import { Catalogue } from '../../src/catalogue-search'
+import { Catalogue } from '../../src/catalogue-search/index.js'
 
 const expectedFunctionsOnPrototype = {
   getSingleRecord: 'function',
-  getDataThemes: 'function',
   searchBySubjects: 'function',
   countPivotOn: 'function',
   query: 'function',
