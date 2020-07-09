@@ -11,6 +11,13 @@ export default createMuiTheme({
     MuiPaper: {
       outlined: {},
     },
+    MuiButton: {
+      root: {
+        '&$disabled': {
+          color: 'rgba(255,255,255,0.5)',
+        },
+      },
+    },
   },
   MuiTypography: {
     variantMapping: {
