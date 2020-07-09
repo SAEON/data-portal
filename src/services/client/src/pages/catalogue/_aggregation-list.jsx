@@ -41,7 +41,7 @@ export default ({ results }) => {
                         color={getSearchState().includes(key) ? 'secondary' : 'default'}
                         style={{ margin: '5px 5px 5px 0px' }}
                         clickable
-                        variant="default"
+                        variant={getSearchState().includes(key) ? 'default' : 'outlined'}
                         onClick={() => {
                           const activeSubjects = getSearchState()
                           if (activeSubjects.includes(key)) {

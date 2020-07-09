@@ -1,27 +1,17 @@
-import fetch from 'node-fetch'
-import { Catalogue } from '../../../../../../packages/catalogue-search/src/catalogue-search/index.js'
-import { HTTP_PROXY } from '../../../config.js'
-
-// TODO this should be a single instance for the lifecycle of the node.js app
-const DSL_INDEX = `saeon-odp-4-2`
-const DSL_PROXY = `${HTTP_PROXY}/proxy/saeon-elk`
-const catalogue = new Catalogue({
-  dslAddress: DSL_PROXY,
-  index: DSL_INDEX,
-  httpClient: fetch,
-})
-
 export default {
-  // eslint-disable-next-line no-unused-vars
-  records: async (self, args, ctx) => {
-    const { id, subjects, first, last, after, before } = args
+  records: async (_, args, ctx) => {
+    const { catalogue, catalogueStart } = ctx
+
+    const { id, subjects, size = 100, before = undefined, after = undefined } = args
+    if (size > 10000) {
+      throw new Error('Maximum page size exceeded (10000)')
+    }
+    if (before && after) {
+      throw new Error('Please specify either a "before" or an "after" cursor (not both)')
+    }
 
     const result = {
       _type: 'CatalogueRecordConnection',
-      first,
-      last,
-      after,
-      before,
     }
 
     if (id) {
@@ -46,26 +36,41 @@ export default {
       })
     }
 
-    const data = await catalogue.query({
-      size: 10000,
-      from: 0,
+    const dsl = {
+      size,
+      query: {
+        bool: {
+          must: [],
+        },
+      },
+      sort: [
+        {
+          _id: before === undefined ? 'asc' : 'desc',
+        },
+      ],
       _source: {
         excludes: ['metadata_json.originalMetadata'],
         includes: ['metadata_json.*'],
       },
-    })
+    }
 
-    return Object.assign(result, {
-      totalCount: data.hits.hits.length,
-      resultCount: data.hits.hits.length,
-      data: data.hits.hits.map(item => item._source),
-      startCursor: undefined,
-      endCursor: undefined,
-    })
+    if (before || after) dsl.search_after = [before || after]
+
+    const data = await catalogue.query(dsl)
+    return {
+      _size: size,
+      _resultSize: data.hits.hits.length,
+      _type: 'CatalogueRecordConnection',
+      _firstResult: data.hits.hits[0],
+      _lastResult: data.hits.hits[data.hits.hits.length - 1],
+      _catalogueStart: catalogueStart,
+      data: data.hits.hits,
+      totalCount: data.hits.total,
+    }
   },
 
-  // eslint-disable-next-line no-unused-vars
-  summary: async (self, args, ctx) => {
+  summary: async (_, args, ctx) => {
+    const { catalogue } = ctx
     const { fields, filterBySubjects: subjects } = args
     const result = await catalogue.countPivotOn({ fields, subjects })
     return result

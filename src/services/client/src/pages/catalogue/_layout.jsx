@@ -12,7 +12,7 @@ import ResultsList from './_results-list'
 import useStyles from './style'
 import clsx from 'clsx'
 
-const PAGE_SIZE = 50
+const PAGE_SIZE = 10
 
 const AGGREGATION_FIELDS = [
   'metadata_json.publicationYear',
@@ -128,10 +128,9 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
             >
               <GqlDataQuery
                 query={gql`
-                  query catalogue($subjects: [String!]) {
+                  query catalogue($subjects: [String!], $size: Int, $after: ID) {
                     catalogue {
-                      id
-                      records(subjects: $subjects) {
+                      records(subjects: $subjects, size: $size, after: $after) {
                         totalCount
                         ... on CatalogueRecordConnection {
                           nodes {
@@ -146,6 +145,8 @@ const Layout = ({ themes, subjects, updateSubjects }) => {
                 `}
                 variables={{
                   subjects: subjects || [],
+                  size: PAGE_SIZE,
+                  after: '',
                 }}
               >
                 {({ catalogue }) => {

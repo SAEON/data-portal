@@ -1,6 +1,6 @@
 export default {
   cursor: async self => {
-    return self.id // TODO I need the ID from the elasticsearch results
+    return self._id
   },
   node: async self => {
     return Object.assign(self, {
