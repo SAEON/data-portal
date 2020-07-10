@@ -1,16 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Card, CardHeader, CardContent, Typography, Button } from '@material-ui/core'
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Button,
+  IconButton,
+  Fade,
+} from '@material-ui/core'
 import {
   Visibility as ViewIcon,
   GetApp as DownloadIcon,
   BarChart as PreviewIcon,
+  Code as CodeIcon,
 } from '@material-ui/icons'
-import { Link } from '../../components'
+import { Link } from '../../../../../../components'
 
 export default ({ doc }) => {
   const history = useHistory()
-  return (
+  const [codeView, toggleCodeView] = useState(false)
+
+  return codeView ? (
+    <Fade in={codeView}>
+      <Card style={{ marginBottom: 20 }} variant="outlined">
+        <CardHeader
+          title={<Typography variant="h6">{doc.titles?.[0]?.title || 'Title missing'}</Typography>}
+          subheader={
+            <Typography variant="overline">
+              {doc.contributors?.[0]?.name || 'Contributor info missing'}
+            </Typography>
+          }
+          action={
+            <IconButton
+              onClick={() => toggleCodeView(!codeView)}
+              color={codeView ? 'secondary' : 'primary'}
+              aria-label="Show metadata JSON object"
+            >
+              <CodeIcon />
+            </IconButton>
+          }
+        />
+        <CardContent>
+          <div style={{ maxHeight: 400, overflow: 'auto' }}>
+            <pre style={{ whiteSpace: 'break-spaces' }}>{JSON.stringify(doc, null, 2)}</pre>
+          </div>
+        </CardContent>
+      </Card>
+    </Fade>
+  ) : (
     <Card style={{ marginBottom: 20 }} variant="outlined">
       <CardHeader
         title={<Typography variant="h6">{doc.titles?.[0]?.title || 'Title missing'}</Typography>}
@@ -18,6 +56,15 @@ export default ({ doc }) => {
           <Typography variant="overline">
             {doc.contributors?.[0]?.name || 'Contributor info missing'}
           </Typography>
+        }
+        action={
+          <IconButton
+            onClick={() => toggleCodeView(!codeView)}
+            color={codeView ? 'secondary' : 'primary'}
+            aria-label="Show metadata JSON object"
+          >
+            <CodeIcon />
+          </IconButton>
         }
       />
       <CardContent>{doc.descriptions?.[0]?.description || 'No description'}</CardContent>

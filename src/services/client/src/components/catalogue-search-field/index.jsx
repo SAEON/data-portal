@@ -1,4 +1,13 @@
-import React from 'react'
+import React, {
+  Children,
+  useContext,
+  createContext,
+  cloneElement,
+  forwardRef,
+  useRef,
+  useEffect,
+  isValidElement,
+} from 'react'
 import { TextField, Chip, Grid, useMediaQuery, ListSubheader } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
@@ -10,7 +19,7 @@ const LISTBOX_PADDING = 8 // px
 
 function renderRow(props) {
   const { data, index, style } = props
-  return React.cloneElement(data[index], {
+  return cloneElement(data[index], {
     style: {
       ...style,
       top: style.top + LISTBOX_PADDING,
@@ -18,16 +27,16 @@ function renderRow(props) {
   })
 }
 
-const OuterElementContext = React.createContext({})
+const OuterElementContext = createContext({})
 
-const OuterElementType = React.forwardRef((props, ref) => {
-  const outerProps = React.useContext(OuterElementContext)
+const OuterElementType = forwardRef((props, ref) => {
+  const outerProps = useContext(OuterElementContext)
   return <div ref={ref} {...props} {...outerProps} />
 })
 
 function useResetCache(data) {
-  const ref = React.useRef(null)
-  React.useEffect(() => {
+  const ref = useRef(null)
+  useEffect(() => {
     if (ref.current != null) {
       ref.current.resetAfterIndex(0, true)
     }
@@ -35,16 +44,16 @@ function useResetCache(data) {
   return ref
 }
 
-const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) {
+const ListboxComponent = forwardRef(function ListboxComponent(props, ref) {
   const { children, ...other } = props
-  const itemData = React.Children.toArray(children)
+  const itemData = Children.toArray(children)
   const theme = useTheme()
   const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true })
   const itemCount = itemData.length
   const itemSize = smUp ? 36 : 48
 
   const getChildSize = child =>
-    React.isValidElement(child) && child.type === ListSubheader ? 48 : itemSize
+    isValidElement(child) && child.type === ListSubheader ? 48 : itemSize
 
   const getHeight = () => {
     if (itemCount > 8) {

@@ -1,39 +1,17 @@
+import graphql from 'graphql/index.js'
+
+const { GraphQLError } = graphql
+
 export default {
   records: async (_, args, ctx) => {
-    const { catalogue, catalogueStart } = ctx
+    const { catalogue } = ctx
 
     const { id, subjects, size = 100, before = undefined, after = undefined } = args
-    if (size > 10000) {
-      throw new Error('Maximum page size exceeded (10000)')
+    if (size < 1 || size > 10000) {
+      throw new GraphQLError('Size param must be between 1 and 10 000')
     }
     if (before && after) {
-      throw new Error('Please specify either a "before" or an "after" cursor (not both)')
-    }
-
-    const result = {
-      _type: 'CatalogueRecordConnection',
-    }
-
-    if (id) {
-      const data = [await catalogue.getSingleRecord(id)]
-      return Object.assign(result, {
-        totalCount: data.length,
-        resultCount: data.length,
-        data,
-        startCursor: undefined,
-        endCursor: undefined,
-      })
-    }
-
-    if (subjects && subjects.length) {
-      const data = await catalogue.searchBySubjects(...subjects)
-      return Object.assign(result, {
-        totalCount: data.length,
-        resultCount: data.length,
-        data,
-        startCursor: undefined,
-        endCursor: undefined,
-      })
+      throw new GraphQLError('Please specify either a "before" or an "after" cursor (not both)')
     }
 
     const dsl = {
@@ -54,16 +32,30 @@ export default {
       },
     }
 
-    if (before || after) dsl.search_after = [before || after]
+    if (before || after) {
+      dsl.search_after = [before || after]
+    }
+
+    if (id) {
+      dsl.query = {
+        multi_match: {
+          query: id,
+          fields: ['metadata_json.alternateIdentifiers.alternateIdentifier'],
+        },
+      }
+    } else if (subjects && subjects.length) {
+      dsl.query.bool.must = [
+        subjects.map(subject => ({ term: { 'metadata_json.subjects.subject.raw': subject } })),
+      ]
+    }
 
     const data = await catalogue.query(dsl)
+
     return {
-      _size: size,
-      _resultSize: data.hits.hits.length,
-      _type: 'CatalogueRecordConnection',
-      _firstResult: data.hits.hits[0],
-      _lastResult: data.hits.hits[data.hits.hits.length - 1],
-      _catalogueStart: catalogueStart,
+      _firstResult:
+        before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1],
+      _lastResult:
+        before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
       data: data.hits.hits,
       totalCount: data.hits.total,
     }

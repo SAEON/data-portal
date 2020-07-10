@@ -50,22 +50,22 @@ type Catalogue {
     after: ID
     # Return elements in the list that come before the specified cursor
     before: ID
-  ): Connection!
+  ): CatalogueRecordConnection!
 
   # Get count aggregation of records by fields, with optional filters
   summary(fields: [String!], filterBySubjects: [String!]): JSON!
 }
 
 type CatalogueRecordConnection implements Connection {
-  edges: [Edge!]!
-  nodes: [Node!]
+  edges: [CatalogueRecordEdge!]!
+  nodes: [CatalogueRecord!]
   pageInfo: PageInfo!
   totalCount: Int!
 }
 
 type CatalogueRecordEdge implements Edge {
   cursor: String!
-  node: Node!
+  node: CatalogueRecord!
 }
 
 type CatalogueRecord implements Node {

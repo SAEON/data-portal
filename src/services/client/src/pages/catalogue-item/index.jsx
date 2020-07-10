@@ -23,7 +23,7 @@ export default ({ id }) => (
     variables={{ id }}
   >
     {({ catalogue }) => {
-      const record = catalogue.records.nodes[0].target
+      const record = catalogue.records.nodes[0].target._source.metadata_json
       return <Page json={record} id={id} />
     }}
   </GqlDataQuery>

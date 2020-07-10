@@ -11,29 +11,8 @@ const catalogue = new Catalogue({
   httpClient: fetch,
 })
 
-const getFirstRecordId = async () => {
-  const data = await catalogue.query({
-    size: 1,
-    query: {
-      bool: {
-        must: [],
-      },
-    },
-    sort: [
-      {
-        _id: 'asc',
-      },
-    ],
-    _source: {
-      excludes: ['metadata_json.*'],
-    },
-  })
-  return data.hits.hits[0]._id
-}
-
 export default app => async (ctx, next) => {
   app.context.catalogue = catalogue
-  app.context.catalogueStart = await getFirstRecordId()
   app.context.mongo = {
     db,
     collections,
