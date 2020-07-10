@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import useStyles from '../../style'
 import clsx from 'clsx'
-import Filters from './filters/filters'
+import Filters from './filters'
 import Results from './results/index'
 
 export default ({ subjects }) => {

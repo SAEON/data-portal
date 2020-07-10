@@ -14,6 +14,7 @@ describe('MATCH QUERIES', () => {
       fields: ['metadata_json.subjects.subject'],
     })
     const response = await catalog.query()
+    console.log(response)
     expect(response.hits.total).toBe(0)
   })
 

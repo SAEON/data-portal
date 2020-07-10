@@ -72,7 +72,7 @@ export class Catalogue {
   }
 
   async query(dsl, abortFetch) {
-    dsl = dsl ? (typeof dsl === 'string' ? JSON.parse(dsl) : dsl) : JSON.stringify(this.getQuery())
+    dsl = dsl ? (typeof dsl === 'string' ? JSON.parse(dsl) : dsl) : this.getQuery()
 
     try {
       const response = await this.httpClient(`${this.dslAddress}/${this.index}/_search`, {

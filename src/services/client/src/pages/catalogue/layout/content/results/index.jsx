@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo, useRef } from 'react'
 import { gql } from '@apollo/client'
 import { Grid } from '@material-ui/core'
 import { GqlDataQuery } from '../../../../../components'
@@ -6,10 +6,11 @@ import useStyles from '../../../style'
 import clsx from 'clsx'
 import Header from './header'
 import ResultsList from './item-list'
+import { useEffect } from 'react'
 
 const PAGE_SIZE = 20
 
-export default ({ subjects }) => {
+export default memo(({ subjects }) => {
   const classes = useStyles()
   const [currentPage, setCurrentPage] = useState(0)
   const [cursors, setCursors] = useState({
@@ -17,8 +18,6 @@ export default ({ subjects }) => {
     end: undefined,
     currentPage: 0,
   })
-
-  // TODO cursors should be reset if the search changes
 
   return (
     <Grid
@@ -89,4 +88,4 @@ export default ({ subjects }) => {
       </GqlDataQuery>
     </Grid>
   )
-}
+})
