@@ -9,7 +9,6 @@ import MiniSearch from 'minisearch'
 
 export default memo(({ subjects }) => {
   const classes = useStyles()
-  const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState({
@@ -59,7 +58,7 @@ export default memo(({ subjects }) => {
         return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
       },
       searchOptions: {
-        fuzzy: 0.5,
+        fuzzy: 0.3,
       },
     })
 
@@ -94,8 +93,6 @@ export default memo(({ subjects }) => {
         {/* HEADER */}
         <Header
           cursors={cursors}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
           setCursors={setCursors}
           setPageSize={setPageSize}
           pageSize={pageSize}

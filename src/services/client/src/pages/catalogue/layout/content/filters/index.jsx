@@ -1,7 +1,7 @@
 import React from 'react'
-import AggregationList from './filter-tags'
+import AggregationList from './tag-list'
 import { gql, useQuery } from '@apollo/client'
-import { Grid } from '@material-ui/core'
+import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core'
 import useStyles from '../../../style'
 import clsx from 'clsx'
 
@@ -29,6 +29,7 @@ export default ({ subjects }) => {
       },
     }
   )
+
   return (
     <Grid
       className={clsx({
@@ -42,8 +43,82 @@ export default ({ subjects }) => {
         className={clsx({
           [classes.scrollContainer]: true,
         })}
+        style={{ paddingRight: 16 }}
       >
-        <AggregationList loading={loading} error={error} results={data?.catalogue?.summary} />
+        {/* Data tags */}
+        <AppBar
+          color="transparent"
+          style={{ border: 'none' }}
+          position="relative"
+          variant="outlined"
+        >
+          <Toolbar variant="regular">
+            <Typography style={{ margin: 'auto' }} variant="overline" noWrap>
+              Data Tags
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div style={{ margin: 30 }}>
+          <AggregationList
+            loading={loading}
+            error={error}
+            results={
+              data?.catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'metadata_json.subjects.subject.raw')
+              )['metadata_json.subjects.subject.raw']
+            }
+          />
+        </div>
+
+        {/* Publication year */}
+        <AppBar
+          color="transparent"
+          style={{ border: 'none' }}
+          position="relative"
+          variant="outlined"
+        >
+          <Toolbar variant="regular">
+            <Typography style={{ margin: 'auto' }} variant="overline" noWrap>
+              Publication Year
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div style={{ margin: 30 }}>
+          <AggregationList
+            loading={loading}
+            error={error}
+            results={
+              data?.catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'metadata_json.publicationYear')
+              )['metadata_json.publicationYear']
+            }
+          />
+        </div>
+
+        {/* Publisher */}
+        <AppBar
+          color="transparent"
+          style={{ border: 'none' }}
+          position="relative"
+          variant="outlined"
+        >
+          <Toolbar variant="regular">
+            <Typography style={{ margin: 'auto' }} variant="overline" noWrap>
+              Publisher
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div style={{ margin: 30 }}>
+          <AggregationList
+            loading={loading}
+            error={error}
+            results={
+              data?.catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'metadata_json.publisher.raw')
+              )['metadata_json.publisher.raw']
+            }
+          />
+        </div>
       </div>
     </Grid>
   )

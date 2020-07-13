@@ -74,7 +74,7 @@ export default ({
                         color="secondary"
                         value={value}
                         onChange={e => updateForm({ value: e.currentTarget.value })}
-                        placeholder="Filter current results..."
+                        placeholder="Filter current page results..."
                         variant="outlined"
                         InputProps={{
                           style: { color: 'white' },
