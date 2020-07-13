@@ -5,11 +5,13 @@ import useStyles from '../../../style'
 import clsx from 'clsx'
 import Header from './header'
 import ResultsList from './item-list'
+import MiniSearch from 'minisearch'
 
 export default memo(({ subjects }) => {
   const classes = useStyles()
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(20)
+  const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState({
     start: undefined,
     end: undefined,
@@ -45,6 +47,34 @@ export default memo(({ subjects }) => {
     }
   )
 
+  let miniSearchResults
+  if (data && textSearch) {
+    const miniSearch = new MiniSearch({
+      fields: [
+        'target._source.metadata_json.titles.0.title',
+        'target._source.metadata_json.descriptions.0.description',
+      ],
+      storeFields: ['target._id'],
+      extractField: (document, fieldName) => {
+        return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
+      },
+      searchOptions: {
+        fuzzy: 0.5,
+      },
+    })
+
+    miniSearch.addAll(
+      data?.catalogue.records.nodes.map(node => Object.assign({ ...node }, { id: node.target._id }))
+    )
+
+    miniSearchResults = miniSearch.search(textSearch).map(({ id, score }) => [id, score])
+  }
+
+  // TODO - I think that this is the OLD value of cursors.start prior to state update. Works but should reference the new value
+  const results = data?.cursors?.start
+    ? data?.catalogue.records.nodes.slice(0).reverse()
+    : data?.catalogue.records.nodes
+
   return (
     <Grid
       className={clsx({
@@ -72,6 +102,8 @@ export default memo(({ subjects }) => {
           error={error}
           loading={loading}
           catalogue={data?.catalogue}
+          setTextSearch={setTextSearch}
+          textSearch={textSearch}
         />
 
         {/* CONTENT */}
@@ -79,10 +111,11 @@ export default memo(({ subjects }) => {
           error={error}
           loading={loading}
           results={
-            // TODO - I think that this is the OLD value of cursors.start prior to state update. Works but should reference the new value
-            data?.cursors?.start
-              ? data?.catalogue.records.nodes.slice(0).reverse()
-              : data?.catalogue.records.nodes
+            miniSearchResults
+              ? miniSearchResults.map(([id, score]) =>
+                  Object.assign({ ...results.find(({ target }) => id === target._id) }, { score })
+                )
+              : results
           }
         />
       </Grid>

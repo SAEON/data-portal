@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { memo } from 'react'
 import ResultItem from './item'
 import { Grid } from '@material-ui/core'
 import useStyles from '../../../../style'
 import clsx from 'clsx'
 import LoadingErrorBlock from '../../_loading-error'
 
-export default ({ error, loading, results }) => {
+export default memo(({ error, loading, results }) => {
   const classes = useStyles()
   return (
     <Grid
@@ -24,12 +24,10 @@ export default ({ error, loading, results }) => {
           {loading || error ? (
             <LoadingErrorBlock error={error} loading={'Loading'} />
           ) : (
-            results.map(item => (
-              <ResultItem key={item.target._id} doc={item.target._source.metadata_json} />
-            ))
+            results.map(item => <ResultItem key={item.target._id} item={item} />)
           )}
         </div>
       </div>
     </Grid>
   )
-}
+})

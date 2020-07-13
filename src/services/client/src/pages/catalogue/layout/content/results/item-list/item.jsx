@@ -8,6 +8,7 @@ import {
   Button,
   IconButton,
   Fade,
+  Tooltip,
 } from '@material-ui/core'
 import {
   Visibility as ViewIcon,
@@ -17,9 +18,10 @@ import {
 } from '@material-ui/icons'
 import { Link } from '../../../../../../components'
 
-export default ({ doc }) => {
+export default ({ item }) => {
   const history = useHistory()
   const [codeView, toggleCodeView] = useState(false)
+  const doc = item.target._source.metadata_json
 
   return (
     <Card style={{ marginBottom: 20 }} variant="outlined">
@@ -31,13 +33,22 @@ export default ({ doc }) => {
           </Typography>
         }
         action={
-          <IconButton
-            onClick={() => toggleCodeView(!codeView)}
-            color={codeView ? 'secondary' : 'primary'}
-            aria-label="Show metadata JSON object"
-          >
-            <CodeIcon />
-          </IconButton>
+          <>
+            {item.score ? (
+              <Tooltip title="Relevance to text filter (higher is better)">
+                <Typography color="textSecondary" variant="overline">
+                  Score: {item.score.toFixed(3)}
+                </Typography>
+              </Tooltip>
+            ) : null}
+            <IconButton
+              onClick={() => toggleCodeView(!codeView)}
+              color={codeView ? 'secondary' : 'primary'}
+              aria-label="Show metadata JSON object"
+            >
+              <CodeIcon />
+            </IconButton>
+          </>
         }
       />
       {codeView ? (
