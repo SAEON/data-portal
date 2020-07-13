@@ -175,7 +175,7 @@ export default ({ json, id }) => {
                 <Chip
                   size="small"
                   clickable
-                  onClick={() => history.push(`/catalogue?search=${subject.subject}`)}
+                  onClick={() => history.push(`/catalogue?terms=${subject.subject}`)}
                   key={subject.subject}
                   className={classes.button}
                   label={subject.subject}

@@ -3,11 +3,12 @@ import {
   Grid,
   AppBar,
   Toolbar,
-  InputBase,
   Typography,
   Button,
   Menu,
   MenuItem,
+  TextField,
+  InputAdornment,
 } from '@material-ui/core'
 import {
   Search as SearchIcon,
@@ -26,29 +27,38 @@ export default ({ catalogue, setPageSize, loading, error, cursors, setCursors, p
   return (
     <Grid item xs={12}>
       <AppBar color="primary" style={{ border: 'none' }} position="relative" variant="outlined">
-        <Toolbar variant="dense">
+        <Toolbar variant="regular">
           <Typography variant="overline" noWrap>
             {loading || error ? null : (
               <>
-                {catalogue.records.totalCount} results found ( {cursors.currentPage * pageSize + 1}{' '}
-                to{' '}
-                {Math.min(cursors.currentPage * pageSize + pageSize, catalogue.records.totalCount)}
+                {cursors.currentPage * pageSize + 1} to{' '}
+                {Math.min(cursors.currentPage * pageSize + pageSize, catalogue.records.totalCount)}{' '}
+                of {catalogue.records.totalCount} results
               </>
             )}
           </Typography>
           {loading || error ? null : (
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Filter results..."
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
+            <div className={classes.searchBar}>
+              <Grid container spacing={1} alignItems="flex-end">
+                <Grid item style={{ flex: 1 }}>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    size="small"
+                    color="secondary"
+                    placeholder="Filter current results..."
+                    variant="outlined"
+                    InputProps={{
+                      style: { color: 'white' },
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
             </div>
           )}
 

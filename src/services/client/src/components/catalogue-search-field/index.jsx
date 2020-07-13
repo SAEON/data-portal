@@ -88,7 +88,7 @@ const ListboxComponent = forwardRef(function ListboxComponent(props, ref) {
 })
 
 const getSearchState = () =>
-  decodeURIComponent(window.location.search.replace('?search=', ''))
+  decodeURIComponent(window.location.search.replace('?terms=', ''))
     .split(',')
     .filter(_ => _)
 
@@ -120,7 +120,7 @@ export default ({ classes }) => {
                   const selectedValues = value.map(v => v)
                   history.push({
                     pathname: window.location.pathname,
-                    search: `?search=${encodeURIComponent(selectedValues.join(','))}`,
+                    search: `?terms=${encodeURIComponent(selectedValues.join(','))}`,
                   })
                 }}
                 value={searchTerms || []}

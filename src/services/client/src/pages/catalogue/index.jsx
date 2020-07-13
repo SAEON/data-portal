@@ -5,7 +5,7 @@ import useStyles from './style'
 import clsx from 'clsx'
 
 const getSearchState = () =>
-  decodeURIComponent(window.location.search.replace('?search=', ''))
+  decodeURIComponent(window.location.search.replace('?terms=', ''))
     .split(',')
     .filter(_ => _)
 

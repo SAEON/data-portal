@@ -16,7 +16,7 @@ const getTitleFromField = field => (
 )
 
 const getSearchState = () =>
-  decodeURIComponent(window.location.search.replace('?search=', ''))
+  decodeURIComponent(window.location.search.replace('?terms=', ''))
     .split(',')
     .filter(_ => _)
 
@@ -51,12 +51,12 @@ export default ({ results, error, loading }) => {
                             activeSubjects.splice(activeSubjects.indexOf(key), 1)
                             history.push({
                               pathname: window.location.pathname,
-                              search: `?search=${encodeURIComponent(activeSubjects.join(','))}`,
+                              search: `?terms=${encodeURIComponent(activeSubjects.join(','))}`,
                             })
                           } else {
                             history.push({
                               pathname: window.location.pathname,
-                              search: `?search=${encodeURIComponent(
+                              search: `?terms=${encodeURIComponent(
                                 [...new Set([...getSearchState(), key])].join(',')
                               )}`,
                             })
