@@ -53,7 +53,7 @@ type Catalogue {
   ): CatalogueRecordConnection!
 
   # Get count aggregation of records by fields, with optional filters
-  summary(fields: [String!], filterBySubjects: [String!]): JSON!
+  summary(fields: [String!], filterBySubjects: [String!], limit: Int): JSON!
 }
 
 type CatalogueRecordConnection implements Connection {

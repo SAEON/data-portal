@@ -97,9 +97,9 @@ export class Catalogue {
   /**
    * Some helper functions for general use cases
    */
-  async countPivotOn({ fields, subjects = [] }) {
-    const size = 10000
-    const order = { _key: 'asc' }
+  async countPivotOn({ fields, subjects = [], limit = 50 }) {
+    const size = limit
+    const order = { _key: 'asc', _count: 'desc' }
     const dsl = {
       size: 0,
       aggs: Object.fromEntries(

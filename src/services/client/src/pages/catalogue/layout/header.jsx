@@ -3,7 +3,7 @@ import { Grid, AppBar, Toolbar } from '@material-ui/core'
 import { CatalogueSearchField } from '../../../components'
 import useStyles from '../style'
 
-export default ({ updateSubjects, themes }) => {
+export default ({ updateSubjects }) => {
   const classes = useStyles()
   return (
     <AppBar position="relative" variant="outlined" style={{ border: 'none' }}>
@@ -12,7 +12,6 @@ export default ({ updateSubjects, themes }) => {
           <Grid style={{ width: '100%' }} item md={6}>
             <CatalogueSearchField
               onChange={selectedOptions => updateSubjects(selectedOptions)}
-              options={themes}
               classes={classes}
             />
           </Grid>

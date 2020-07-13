@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageContent from './layout/content/index'
 import Header from './layout/header'
-import { CatalogueContext } from '../../modules/provider-catalogue'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -11,7 +10,6 @@ const getSearchState = () =>
     .filter(_ => _)
 
 export default () => {
-  const { themes } = useContext(CatalogueContext)
   const classes = useStyles()
 
   const [subjects, updateSubjects] = useState(getSearchState())
@@ -30,7 +28,7 @@ export default () => {
           [classes.root]: true,
         })}
       >
-        <Header themes={themes} updateSubjects={updateSubjects} />
+        <Header updateSubjects={updateSubjects} />
         <PageContent subjects={subjects} />
       </div>
     </div>

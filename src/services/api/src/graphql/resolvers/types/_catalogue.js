@@ -63,8 +63,8 @@ export default {
 
   summary: async (_, args, ctx) => {
     const { catalogue } = ctx
-    const { fields, filterBySubjects: subjects } = args
-    const result = await catalogue.countPivotOn({ fields, subjects })
+    const { fields, filterBySubjects: subjects, limit } = args
+    const result = await catalogue.countPivotOn({ fields, subjects, limit })
     return result
   },
 }

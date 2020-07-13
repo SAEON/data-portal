@@ -1,8 +1,7 @@
 import React from 'react'
 import AggregationList from './filter-tags'
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { Grid } from '@material-ui/core'
-import { GqlDataQuery } from '../../../../../components'
 import useStyles from '../../../style'
 import clsx from 'clsx'
 
@@ -14,6 +13,22 @@ const AGGREGATION_FIELDS = [
 
 export default ({ subjects }) => {
   const classes = useStyles()
+  const { error, loading, data } = useQuery(
+    gql`
+      query catalogue($filterBySubjects: [String!], $fields: [String!]) {
+        catalogue {
+          id
+          summary(fields: $fields, filterBySubjects: $filterBySubjects)
+        }
+      }
+    `,
+    {
+      variables: {
+        fields: AGGREGATION_FIELDS,
+        filterBySubjects: subjects || [],
+      },
+    }
+  )
   return (
     <Grid
       className={clsx({
@@ -28,22 +43,7 @@ export default ({ subjects }) => {
           [classes.scrollContainer]: true,
         })}
       >
-        <GqlDataQuery
-          query={gql`
-            query catalogue($filterBySubjects: [String!], $fields: [String!]) {
-              catalogue {
-                id
-                summary(fields: $fields, filterBySubjects: $filterBySubjects)
-              }
-            }
-          `}
-          variables={{
-            fields: AGGREGATION_FIELDS,
-            filterBySubjects: subjects || [],
-          }}
-        >
-          {({ catalogue }) => <AggregationList results={catalogue.summary} />}
-        </GqlDataQuery>
+        <AggregationList loading={loading} error={error} results={data?.catalogue?.summary} />
       </div>
     </Grid>
   )

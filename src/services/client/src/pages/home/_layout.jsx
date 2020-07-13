@@ -7,7 +7,7 @@ import { CatalogueSearchField } from '../../components'
 import useStyles from './style'
 import clsx from 'clsx'
 
-export default ({ themes }) => {
+export default () => {
   const history = useHistory()
   const classes = useStyles()
   const theme = useTheme()
@@ -29,7 +29,7 @@ export default ({ themes }) => {
     >
       {/* Header */}
       <Grid item xs={12}>
-        <CatalogueSearchField options={themes} classes={classes} />
+        <CatalogueSearchField classes={classes} />
       </Grid>
       <Grid item xs={12}>
         <Button

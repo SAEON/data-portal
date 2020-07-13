@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Card, CardHeader, CardContent, Typography, Chip, Grid } from '@material-ui/core'
+import LoadingErrorBlock from '../_loading-error'
 
 const aggregationHeaders = {
   subject: 'Data Tags',
@@ -19,10 +20,12 @@ const getSearchState = () =>
     .split(',')
     .filter(_ => _)
 
-export default ({ results }) => {
+export default ({ results, error, loading }) => {
   const history = useHistory()
 
-  return (
+  return error || loading ? (
+    <LoadingErrorBlock error={error} loading={loading} />
+  ) : (
     <>
       {results
         .map(aggregationSummary =>

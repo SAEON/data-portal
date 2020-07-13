@@ -8,12 +8,14 @@ import React, {
   useEffect,
   isValidElement,
 } from 'react'
+import { gql } from '@apollo/client'
 import { TextField, Chip, Grid, useMediaQuery, ListSubheader } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import { VariableSizeList } from 'react-window'
 import { useTheme } from '@material-ui/core/styles'
+import { GqlDataQuery } from '../'
 
 const LISTBOX_PADDING = 8 // px
 
@@ -90,66 +92,85 @@ const getSearchState = () =>
     .split(',')
     .filter(_ => _)
 
-export default ({ options, classes }) => {
+const SUBJECT = 'metadata_json.subjects.subject.raw'
+const TERM_LIMIT = 10000
+
+export default ({ classes }) => {
   const history = useHistory()
   const searchTerms = getSearchState()
 
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12}>
-        <Autocomplete
-          onChange={(e, value) => {
-            const selectedValues = value.map(v => v)
-            history.push({
-              pathname: window.location.pathname,
-              search: `?search=${encodeURIComponent(selectedValues.join(','))}`,
-            })
-          }}
-          value={searchTerms || []}
-          multiple
-          fullWidth
-          limitTags={8}
-          disableListWrap
-          ListboxComponent={ListboxComponent}
-          freeSolo
-          size="small"
-          id="catalog-search-tagged-search"
-          options={options}
-          getOptionLabel={option => option}
-          renderTags={(value, getTagProps) => {
-            return value.map((option, index) => (
-              <Chip
-                key={index}
+        <GqlDataQuery
+          query={gql`
+            query catalogue($fields: [String!], $limit: Int) {
+              catalogue {
+                id
+                summary(fields: $fields, limit: $limit)
+              }
+            }
+          `}
+          variables={{ fields: [SUBJECT], limit: TERM_LIMIT }}
+        >
+          {({ catalogue }) => {
+            return (
+              <Autocomplete
+                onChange={(e, value) => {
+                  const selectedValues = value.map(v => v)
+                  history.push({
+                    pathname: window.location.pathname,
+                    search: `?search=${encodeURIComponent(selectedValues.join(','))}`,
+                  })
+                }}
+                value={searchTerms || []}
+                multiple
+                fullWidth
+                limitTags={8}
+                disableListWrap
+                ListboxComponent={ListboxComponent}
+                freeSolo
                 size="small"
-                color="secondary"
-                label={option}
-                {...getTagProps({ index })}
-                disabled={false}
+                id="catalog-search-tagged-search"
+                options={catalogue.summary[0][SUBJECT].map(({ key }) => key).filter(_ => _)}
+                getOptionLabel={option => option}
+                renderTags={(value, getTagProps) => {
+                  return value.map((option, index) => (
+                    <Chip
+                      key={index}
+                      size="small"
+                      color="secondary"
+                      label={option}
+                      {...getTagProps({ index })}
+                      disabled={false}
+                    />
+                  ))
+                }}
+                renderInput={params => (
+                  <QuickForm inputValue="">
+                    {({ updateForm, inputValue }) => {
+                      return (
+                        <TextField
+                          {...params}
+                          className={classes.textField}
+                          id="saeon-data-search"
+                          style={{ padding: 0 }}
+                          size="medium"
+                          margin="none"
+                          onChange={inputValue => updateForm({ inputValue })}
+                          value={inputValue}
+                          label="Term search"
+                          variant="outlined"
+                          autoFocus
+                        />
+                      )
+                    }}
+                  </QuickForm>
+                )}
               />
-            ))
+            )
           }}
-          renderInput={params => (
-            <QuickForm inputValue="">
-              {({ updateForm, inputValue }) => {
-                return (
-                  <TextField
-                    {...params}
-                    className={classes.textField}
-                    id="saeon-data-search"
-                    style={{ padding: 0 }}
-                    size="medium"
-                    margin="none"
-                    onChange={inputValue => updateForm({ inputValue })}
-                    value={inputValue}
-                    label="Term search"
-                    variant="outlined"
-                    autoFocus
-                  />
-                )
-              }}
-            </QuickForm>
-          )}
-        />
+        </GqlDataQuery>
       </Grid>
     </Grid>
   )
