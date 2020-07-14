@@ -7,7 +7,6 @@ import { ApolloProvider } from '@apollo/client'
 import ErrorBoundary from './modules/error-boundary'
 import AuthProvider from './modules/provider-auth'
 import FeedbackProvider from './modules/provider-feedback'
-import CatalogueProvider from './modules/provider-catalogue'
 import Layout from './modules/layout'
 import theme from './theme'
 
@@ -30,9 +29,7 @@ export default ({ link }) => (
             defaultSuccess={DEFAULT_SUCCESS}
           >
             <AuthProvider>
-              <CatalogueProvider>
-                <Layout />
-              </CatalogueProvider>
+              <Layout />
             </AuthProvider>
           </FeedbackProvider>
         </ErrorBoundary>

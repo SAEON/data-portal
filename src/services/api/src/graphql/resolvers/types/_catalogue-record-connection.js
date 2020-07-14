@@ -1,12 +1,20 @@
 export default {
   edges: async self => {
     const { data } = self
-    return data.map(edge => Object.assign(edge, { _type: 'CatalogueEdge' }))
+    return data
   },
   nodes: async self => {
     const { data } = self
-    return data.map(node => Object.assign(node, { _type: 'CatalogueRecord' }))
+    return data
   },
-  pageInfo: async self => self,
+  pageInfo: async self => {
+    const { _firstResult, _lastResult } = self
+    return {
+      hasNextPage: undefined,
+      startCursor: _firstResult._id,
+      endCursor: _lastResult._id,
+      hasPreviousPage: undefined,
+    }
+  },
   totalCount: async self => self.totalCount,
 }

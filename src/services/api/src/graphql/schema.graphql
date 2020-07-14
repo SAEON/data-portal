@@ -5,8 +5,8 @@ scalar JSON
 scalar Void
 
 type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
   startCursor: String
   endCursor: String
 }
@@ -44,30 +44,28 @@ type Catalogue {
     id: String
     # Search for intersection of subject list
     subjects: [String!]
-    # Return the first N elements from the list
-    first: Int
-    # Return the last N elements from the list
-    last: Int
+    # Page size (maximum allowed is 10 000 items per page)
+    size: Int
     # Return elements in the list that come after the specified cursor
     after: ID
     # Return elements in the list that come before the specified cursor
     before: ID
-  ): Connection!
+  ): CatalogueRecordConnection!
 
   # Get count aggregation of records by fields, with optional filters
-  summary(fields: [String!], filterBySubjects: [String!]): JSON!
+  summary(fields: [String!], filterBySubjects: [String!], limit: Int): JSON!
 }
 
 type CatalogueRecordConnection implements Connection {
-  edges: [Edge!]!
-  nodes: [Node!]
+  edges: [CatalogueRecordEdge!]!
+  nodes: [CatalogueRecord!]
   pageInfo: PageInfo!
   totalCount: Int!
 }
 
-type CatalogueEdge implements Edge {
+type CatalogueRecordEdge implements Edge {
   cursor: String!
-  node: Node!
+  node: CatalogueRecord!
 }
 
 type CatalogueRecord implements Node {

@@ -71,9 +71,35 @@ export class Catalogue {
     return dsl
   }
 
-  async countPivotOn({ fields, subjects = [] }) {
-    const size = 10000
-    const order = { _key: 'asc' }
+  async query(dsl, abortFetch) {
+    dsl = dsl ? (typeof dsl === 'string' ? JSON.parse(dsl) : dsl) : this.getQuery()
+
+    try {
+      const response = await this.httpClient(`${this.dslAddress}/${this.index}/_search`, {
+        signal: abortFetch?.signal,
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dsl),
+      })
+      return await response.json()
+    } catch (error) {
+      if (error.name !== 'AbortError')
+        throw new Error(
+          `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${dsl}. ${error}`
+        )
+    }
+  }
+
+  /**
+   * Some helper functions for general use cases
+   */
+  async countPivotOn({ fields, subjects = [], limit = 50 }) {
+    const size = limit
+    const order = { _key: 'asc', _count: 'desc' }
     const dsl = {
       size: 0,
       aggs: Object.fromEntries(
@@ -147,32 +173,5 @@ export class Catalogue {
 
     const result = await this.query(dsl)
     return result?.hits.hits?.[0]?._source.metadata_json
-  }
-
-  async query(dsl, abortFetch) {
-    dsl = dsl
-      ? typeof dsl === 'string'
-        ? dsl
-        : JSON.stringify(dsl)
-      : JSON.stringify(this.getQuery())
-
-    try {
-      const response = await this.httpClient(`${this.dslAddress}/${this.index}/_search`, {
-        signal: abortFetch?.signal,
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: dsl,
-      })
-      return await response.json()
-    } catch (error) {
-      if (error.name !== 'AbortError')
-        throw new Error(
-          `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${dsl}. ${error}`
-        )
-    }
   }
 }

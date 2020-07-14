@@ -1,73 +1,70 @@
-import fetch from 'node-fetch'
-import { Catalogue } from '../../../../../../packages/catalogue-search/src/catalogue-search/index.js'
-import { HTTP_PROXY } from '../../../config.js'
+import graphql from 'graphql/index.js'
 
-// TODO this should be a single instance for the lifecycle of the node.js app
-const DSL_INDEX = `saeon-odp-4-2`
-const DSL_PROXY = `${HTTP_PROXY}/proxy/saeon-elk`
-const catalogue = new Catalogue({
-  dslAddress: DSL_PROXY,
-  index: DSL_INDEX,
-  httpClient: fetch,
-})
+const { GraphQLError } = graphql
 
 export default {
-  // eslint-disable-next-line no-unused-vars
-  records: async (self, args, ctx) => {
-    const { id, subjects, first, last, after, before } = args
+  records: async (_, args, ctx) => {
+    const { catalogue } = ctx
 
-    const result = {
-      _type: 'CatalogueRecordConnection',
-      first,
-      last,
-      after,
-      before,
+    const { id, subjects, size = 100, before = undefined, after = undefined } = args
+    if (size < 1 || size > 10000) {
+      throw new GraphQLError('Size param must be between 1 and 10 000')
+    }
+    if (before && after) {
+      throw new GraphQLError('Please specify either a "before" or an "after" cursor (not both)')
     }
 
-    if (id) {
-      const data = [await catalogue.getSingleRecord(id)]
-      return Object.assign(result, {
-        totalCount: data.length,
-        resultCount: data.length,
-        data,
-        startCursor: undefined,
-        endCursor: undefined,
-      })
-    }
-
-    if (subjects && subjects.length) {
-      const data = await catalogue.searchBySubjects(...subjects)
-      return Object.assign(result, {
-        totalCount: data.length,
-        resultCount: data.length,
-        data,
-        startCursor: undefined,
-        endCursor: undefined,
-      })
-    }
-
-    const data = await catalogue.query({
-      size: 10000,
-      from: 0,
+    const dsl = {
+      size,
+      query: {
+        bool: {
+          must: [],
+        },
+      },
+      sort: [
+        {
+          _id: before === undefined ? 'asc' : 'desc',
+        },
+      ],
       _source: {
         excludes: ['metadata_json.originalMetadata'],
         includes: ['metadata_json.*'],
       },
-    })
+    }
 
-    return Object.assign(result, {
-      totalCount: data.hits.hits.length,
-      resultCount: data.hits.hits.length,
-      data: data.hits.hits.map(item => item._source),
-      startCursor: undefined,
-      endCursor: undefined,
-    })
+    if (before || after) {
+      dsl.search_after = [before || after]
+    }
+
+    if (id) {
+      dsl.query = {
+        multi_match: {
+          query: id,
+          fields: ['metadata_json.alternateIdentifiers.alternateIdentifier'],
+        },
+      }
+    } else if (subjects && subjects.length) {
+      dsl.query.bool.must = [
+        subjects.map(subject => ({ term: { 'metadata_json.subjects.subject.raw': subject } })),
+      ]
+    }
+
+    const data = await catalogue.query(dsl)
+
+    return {
+      _firstResult:
+        before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1],
+      _lastResult:
+        before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
+      data: data.hits.hits,
+      totalCount: data.hits.total,
+    }
   },
 
-  // eslint-disable-next-line no-unused-vars
-  summary: async (self, args, ctx) => {
-    const { fields, filterBySubjects: subjects } = args
-    const result = await catalogue.countPivotOn({ fields, subjects })
+  summary: async (_, args, ctx) => {
+    const { catalogue } = ctx
+    const { fields, filterBySubjects: subjects, limit } = args
+    const result = await catalogue.countPivotOn({ fields, subjects, limit })
     return result
   },
 }

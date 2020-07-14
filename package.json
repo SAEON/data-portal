@@ -22,6 +22,7 @@
     "build-all-packages": "scripts/build-all-packages.sh",
     "check-package-updates": "scripts/check-package-updates.sh",
     "update-package-dependencies": "scripts/update-package-dependencies.sh",
+    "update-package-dependencies-UNUSED": "TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules scripts/update-package-dependencies.js",
     "install-package-dependencies": "scripts/install-package-dependencies.sh",
     "publish-all-packages:patch": "scripts/publish-all.sh -s patch",
     "publish-all-packages:minor": "scripts/publish-all.sh -s minor",
