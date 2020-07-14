@@ -21,7 +21,7 @@ export default () => {
             {/* Menu */}
             <SnapMenu
               title={'Open layers menu'}
-              defaultSnap={isMobile ? 'Top' : 'BottomRight'}
+              defaultSnap={isMobile ? 'Top' : null}
               open={open}
               onClose={toggleMenu}
             >

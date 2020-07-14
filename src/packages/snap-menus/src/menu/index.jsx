@@ -2,8 +2,21 @@ import 'react-resizable/css/styles.css'
 import React, { useState, useEffect, forwardRef } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
-import { Card, CardContent, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
-import { DragIndicator, Close as CloseIcon } from '@material-ui/icons'
+import {
+  Card,
+  CardContent,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Tooltip,
+  Fade,
+} from '@material-ui/core'
+import {
+  Close as CloseIcon,
+  Minimize as MinimizeIcon,
+  CheckBoxOutlineBlank as MaximizeIcon,
+} from '@material-ui/icons'
 import useStyles from './style'
 import debounce from '../lib/debounce'
 import EventBoundary from '../lib/event-boundary'
@@ -15,6 +28,7 @@ import parseEventXY from './parse-event-x-y'
 
 var allowInteractions = true
 var timer
+const MENU_HEADER_HEIGHT = 31
 
 export default forwardRef(
   (
@@ -60,6 +74,8 @@ export default forwardRef(
 
     // General state
     const [state, setState] = useState({
+      minimized: false,
+      maximizedHeight: null,
       snapped: Boolean(defaultSnap),
       isResizing: false,
       dimensions: defaultSnap
@@ -147,8 +163,16 @@ export default forwardRef(
                           x: x - state.previousDimensions.width / 2,
                           y: y - 15 - VERTICAL_OFFSET_TOP,
                         },
-                        dimensions: state.previousDimensions,
+                        dimensions: Object.assign(
+                          { ...state.previousDimensions },
+                          {
+                            height: state.minimized
+                              ? MENU_HEADER_HEIGHT
+                              : state.maximizedHeight || state.previousDimensions.height,
+                          }
+                        ),
                         previousDimensions: null,
+                        maximizedHeight: defaultHeight,
                       }
                     )
                   )
@@ -208,6 +232,7 @@ export default forwardRef(
                     Object.assign(
                       { ...state },
                       {
+                        minimized: false,
                         snapped: true,
                         dimensions: getDimensions(
                           snapZone,
@@ -245,87 +270,146 @@ export default forwardRef(
                   position: 'relative',
                 }}
               >
-                <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
-                  <ResizableBox
-                    resizeHandles={resizable ? ['se'] : []}
-                    width={state.dimensions.width}
-                    height={state.dimensions.height}
-                    axis={resizable ? 'both' : 'none'}
-                    minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
-                    draggableOpts={{ grid: [1, 1] }}
-                    onResizeStart={() => {
-                      if (!resizable) return
-                      setState(
-                        Object.assign(
-                          { ...state },
-                          {
-                            isResizing: true,
-                            dimensions: { ...state.dimensions },
-                          }
+                <Fade in={open}>
+                  <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
+                    <ResizableBox
+                      resizeHandles={resizable ? ['se'] : []}
+                      width={state.dimensions.width}
+                      height={state.dimensions.height}
+                      axis={resizable ? 'both' : 'none'}
+                      minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
+                      draggableOpts={{ grid: [1, 1] }}
+                      onResizeStart={() => {
+                        if (!resizable) return
+                        setState(
+                          Object.assign(
+                            { ...state },
+                            {
+                              isResizing: true,
+                              dimensions: { ...state.dimensions },
+                            }
+                          )
                         )
-                      )
-                    }}
-                    onResizeStop={(e, { size }) => {
-                      if (!resizable) return
-                      setState(
-                        Object.assign(
-                          { ...state },
-                          {
-                            snapped: false,
-                            previousDimensions: null,
-                            dimensions: {
-                              width: size.width,
-                              height: size.height,
-                            },
-                            isResizing: false,
-                          }
+                      }}
+                      onResizeStop={(e, { size }) => {
+                        if (!resizable) return
+                        setState(
+                          Object.assign(
+                            { ...state },
+                            {
+                              snapped: false,
+                              previousDimensions: null,
+                              dimensions: {
+                                width: size.width,
+                                height: size.height,
+                              },
+                              isResizing: false,
+                            }
+                          )
                         )
-                      )
-                    }}
-                  >
-                    <CardContent style={{ padding: 0 }}>
-                      <AppBar position="relative" variant="outlined">
-                        <Toolbar
-                          style={{ cursor: 'grab', minHeight: '25px' }}
-                          disableGutters
-                          className={clsx({
-                            'drag-handle': true,
-                          })}
-                        >
-                          <DragIndicator />
-                          <Typography variant="overline">{title}</Typography>
-
-                          <IconButton
-                            onTouchStart={onClose}
-                            onClick={() => onClose()}
-                            edge="start"
-                            color="inherit"
-                            style={{ order: 2, marginLeft: 'auto', padding: 2 }}
-                            aria-label="close"
+                      }}
+                    >
+                      <CardContent style={{ padding: 0 }}>
+                        <AppBar position="relative" variant="outlined">
+                          <Toolbar
+                            style={{ cursor: 'grab', minHeight: '25px' }}
+                            disableGutters
+                            className={clsx({
+                              'drag-handle': true,
+                            })}
                           >
-                            <CloseIcon />
-                          </IconButton>
-                        </Toolbar>
-                      </AppBar>
-                    </CardContent>
-                    <div className={classes.menuContent}>
+                            <Typography style={{ margin: 'auto' }} variant="overline">
+                              {title}
+                            </Typography>
+                            <div style={{ position: 'absolute', right: 0 }}>
+                              <Tooltip title={open ? 'Collapse menu' : ''}>
+                                <IconButton
+                                  onTouchStart={onClose}
+                                  onClick={() => {
+                                    setState(
+                                      Object.assign(
+                                        { ...state },
+                                        {
+                                          minimized: !state.minimized,
+                                          maximizedHeight: state.minimized
+                                            ? null
+                                            : state.dimensions.height,
+                                          dimensions: {
+                                            width: state.dimensions.width,
+                                            height: state.minimized
+                                              ? state.maximizedHeight || defaultHeight
+                                              : MENU_HEADER_HEIGHT,
+                                          },
+                                        }
+                                      )
+                                    )
+                                  }}
+                                  edge="start"
+                                  color="inherit"
+                                  style={{
+                                    order: 2,
+                                    marginLeft: 'auto',
+                                    padding: 2,
+                                  }}
+                                  aria-label="close"
+                                >
+                                  {state.minimized ? (
+                                    <Fade in={state.minimized}>
+                                      <MaximizeIcon />
+                                    </Fade>
+                                  ) : (
+                                    <span>
+                                      <Fade in={!state.minimized}>
+                                        <MinimizeIcon />
+                                      </Fade>
+                                    </span>
+                                  )}
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title={open ? 'Close menu' : ''}>
+                                <IconButton
+                                  onTouchStart={onClose}
+                                  onClick={() => onClose()}
+                                  edge="start"
+                                  color="inherit"
+                                  style={{
+                                    order: 2,
+                                    marginLeft: 'auto',
+                                    padding: 2,
+                                  }}
+                                  aria-label="close"
+                                >
+                                  <CloseIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </div>
+                          </Toolbar>
+                        </AppBar>
+                      </CardContent>
+
                       <div
                         className={clsx({
-                          [classes.resizing]: state.isResizing,
+                          [classes.menuContent]: true,
                         })}
                       >
-                        <CardContent style={{ paddingBottom: 12 }}>
-                          {typeof children === 'function'
-                            ? children({
-                                height: state.dimensions.height - 70,
-                                width: state.dimensions.width - 32,
-                              })
-                            : children}
-                        </CardContent>
+                        <div
+                          className={clsx({
+                            [classes.resizing]: state.isResizing,
+                          })}
+                        >
+                          <CardContent style={{ paddingBottom: 12 }}>
+                            {typeof children === 'function'
+                              ? children({
+                                  height: state.dimensions.height - 70,
+                                  width: state.dimensions.width - 32,
+                                })
+                              : children}
+                          </CardContent>
+                        </div>
                       </div>
-                    </div>
-                  </ResizableBox>
-                </Card>
+                    </ResizableBox>
+                  </Card>
+                </Fade>
               </div>
             </Draggable>
           </div>

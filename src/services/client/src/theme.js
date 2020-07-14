@@ -9,7 +9,9 @@ export default createMuiTheme({
   },
   overrides: {
     MuiPaper: {
-      outlined: {},
+      outlined: {
+        border: 'none',
+      },
     },
     MuiButton: {
       root: {
