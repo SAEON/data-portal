@@ -1,5 +1,14 @@
 import React from 'react'
-import { Button, Grid, Card, CardContent, Typography, Tooltip, Chip } from '@material-ui/core'
+import {
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Tooltip,
+  Chip,
+  CardHeader,
+} from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import useStyles from './style'
@@ -31,7 +40,61 @@ export default ({ json, id }) => {
   }
 
   return (
-    <div className={classes.rootContainer}>
+    <>
+      <Grid
+        container
+        spacing={2}
+        style={{ marginTop: 10, marginBottom: 20 }}
+        item
+        xs={12}
+        justify="flex-end"
+      >
+        {/* CITATTION */}
+        <Grid item>
+          <CitationDialog json={json} />
+        </Grid>
+
+        {/* METADATA Download */}
+        <Grid item>
+          <SimpleLink
+            uri={'data:' + 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(json))}
+            download={`metadata_${id}.json`}
+          >
+            <Tooltip title="Download this page in JSON format">
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                startIcon={<GetAppIcon />}
+                disableElevation
+              >
+                Metadata
+              </Button>
+            </Tooltip>
+          </SimpleLink>
+        </Grid>
+
+        {/* DATA DOWNLOAD */}
+        <Grid item>
+          <SimpleLink download={'test'} uri={json.immutableResource.resourceURL}>
+            <Tooltip
+              title={`${
+                json.immutableResource.resourceDescription
+              } (${json.immutableResource.resourceURL.replace(/.*\./, '')})`}
+            >
+              <Button
+                disableElevation
+                variant="contained"
+                color="primary"
+                startIcon={<GetAppIcon />}
+              >
+                Data
+              </Button>
+            </Tooltip>
+          </SimpleLink>
+        </Grid>
+      </Grid>
+
       <Grid
         container
         // direction="column"
@@ -41,82 +104,57 @@ export default ({ json, id }) => {
         className={classes.grid}
       >
         {/* OVERVIEW */}
-        <Grid item xs={gridItemSize} className={classes.gridItem}>
-          <Card variant="outlined" className={classes.card}>
-            <div className={classes.cardContentContainer}>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
+        <Grid item xs={gridItemSize}>
+          <Card variant="outlined">
+            <CardHeader
+              style={{ textAlign: 'center' }}
+              disableTypography
+              title={
+                <Typography style={{ margin: 'auto' }} gutterBottom variant="h4">
                   {json.titles[0].title}
                 </Typography>
-                <Typography variant="h6">Author</Typography>
+              }
+              action={json.rightsList.map((rl, i) => (
+                <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
+                  <Tooltip title={rl.rights}>
+                    <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
+                  </Tooltip>
+                </SimpleLink>
+              ))}
+            />
+            <CardContent>
+              <Typography variant="h6">Author</Typography>
 
-                {json.creators.map(creator => (
-                  <div key={creator.name}>
-                    <Typography variant="body2">
-                      {creator.name}
-                      <br />
-                      {creator.affiliations.map(aff => aff.affiliation)}
-                    </Typography>
-                  </div>
-                ))}
-                <br />
-
-                <Typography variant="h6">Publisher </Typography>
-                <Typography variant="body2">
-                  {`${json.publisher} : ${json.publicationYear}`}
-                </Typography>
-                <br />
-                <Typography variant="h6">Resources </Typography>
-                {json.linkedResources.map((lr, i) => (
-                  <div key={`linked-resource${i}`}>
-                    <Typography variant="body2">
-                      {lr.resourceDescription}
-                      <b>
-                        <em> ({lr.linkedResourceType})</em>
-                      </b>
-                    </Typography>
-                    <SimpleLink uri={lr.resourceURL} />
+              {json.creators.map(creator => (
+                <div key={creator.name}>
+                  <Typography variant="body2">
+                    {creator.name}
                     <br />
-                  </div>
-                ))}
-              </CardContent>
-              <div id="card-controls" className={classes.cardControls}>
-                <CitationDialog json={json} />
-                {json.rightsList.map((rl, i) => (
-                  <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
-                    <Tooltip title={rl.rights}>
-                      <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
-                    </Tooltip>
-                  </SimpleLink>
-                ))}
-                <a
-                  href={
-                    'data:' + 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(json))
-                  }
-                  download={`metadata_${id}.json`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Tooltip title=".json">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}
-                      startIcon={<GetAppIcon />}
-                      disableElevation
-                    >
-                      Metadata
-                    </Button>
-                  </Tooltip>
-                </a>
-                <a href={json.immutableResource.resourceURL}>
-                  <Tooltip title=".zip">
-                    <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>
-                      Data
-                    </Button>
-                  </Tooltip>
-                </a>
-              </div>
-            </div>
+                    {creator.affiliations.map(aff => aff.affiliation)}
+                  </Typography>
+                </div>
+              ))}
+              <br />
+
+              <Typography variant="h6">Publisher </Typography>
+              <Typography variant="body2">
+                {`${json.publisher} : ${json.publicationYear}`}
+              </Typography>
+              <br />
+              <Typography variant="h6">Resources </Typography>
+              {json.linkedResources.map((lr, i) => (
+                <div key={`linked-resource${i}`}>
+                  <Typography variant="body2">
+                    {lr.resourceDescription}
+                    <b>
+                      <em> ({lr.linkedResourceType})</em>
+                    </b>
+                  </Typography>
+                  <SimpleLink uri={lr.resourceURL} />
+                  <br />
+                </div>
+              ))}
+            </CardContent>
           </Card>
         </Grid>
 
@@ -233,6 +271,6 @@ export default ({ json, id }) => {
         </Grid>
         <div style={{ height: '100px', width: '100%' }} />
       </Grid>
-    </div>
+    </>
   )
 }

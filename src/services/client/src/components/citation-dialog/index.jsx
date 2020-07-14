@@ -108,7 +108,7 @@ export default props => {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div>
+    <>
       <Button
         variant="outlined"
         color="primary"
@@ -125,6 +125,6 @@ export default props => {
         }}
         json={props.json}
       />
-    </div>
+    </>
   )
 }
