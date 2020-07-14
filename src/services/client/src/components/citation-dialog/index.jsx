@@ -1,22 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import { Typography, Tabs, Tab, Box } from '@material-ui/core'
+import { Typography, Tabs, Tab, Box, Button, Dialog } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
+import Citations from './citations'
 
 //citations array represents the would be citation. to be replaced by citations.js
-const citations = [
-  'apa cite',
-  'harvard cite',
-  'mla cite',
-  'vancouver cite',
-  'chicago cite',
-  'ieee cite',
-  'bibtex cite',
-  'ris cite',
-]
 
 function TabPanel(props) {
   const { children, value, index } = props
@@ -47,13 +34,12 @@ function TabsDialog(props) {
   const handleClose = () => {
     onClose()
   }
-
+  const citations = Citations(json)
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose} open={open} maxWidth="xl" fullWidth={true}>
       <div
         style={{
           display: 'flex',
-          width: 600,
         }}
       >
         <Tabs
@@ -76,28 +62,28 @@ function TabsDialog(props) {
           <Tab label="RIS" />
         </Tabs>
         <TabPanel value={tabValue} index={0} json={json}>
-          {citations[0]}
+          {citations.APA}
         </TabPanel>
         <TabPanel value={tabValue} index={1} json={json}>
-          {citations[1]}
+          {citations.Harvard}
         </TabPanel>
         <TabPanel value={tabValue} index={2} json={json}>
-          {citations[2]}
+          {citations.MLA}
         </TabPanel>
         <TabPanel value={tabValue} index={3} json={json}>
-          {citations[3]}
+          {citations.Vancouver}
         </TabPanel>
         <TabPanel value={tabValue} index={4} json={json}>
-          {citations[4]}
+          {citations.Chicago}
         </TabPanel>
         <TabPanel value={tabValue} index={5} json={json}>
-          {citations[5]}
+          {citations.IEEE}
         </TabPanel>
         <TabPanel value={tabValue} index={6} json={json}>
-          {citations[6]}
+          {citations.BibTeX}
         </TabPanel>
         <TabPanel value={tabValue} index={7} json={json}>
-          {citations[7]}
+          {citations.RIS}
         </TabPanel>
       </div>
     </Dialog>

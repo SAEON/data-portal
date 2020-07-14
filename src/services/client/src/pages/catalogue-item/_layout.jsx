@@ -15,6 +15,7 @@ import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
 import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../components'
 /**TO DO:
+ * citations.js needs its variables clearly defined. correct json props are to be used and error checked 
  * download button tooltips show download extension. currently hardcoded. set them to grab file extension
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
  * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
@@ -22,7 +23,7 @@ import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../co
  * figure out how to better manage citation-dialog <Dialog> size. more than 600px width causes scrollbar to appear
  * Bug Fixes:
  * bugfix: bottom of scrollbar is behind footer
- *
+ * citation-dialog sizing is breaking with long citation text. Not sure if long enough citation is realistic but best be safe
  * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
  * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
  81db479c2c9386a6cfca5bc7e83c2c50
