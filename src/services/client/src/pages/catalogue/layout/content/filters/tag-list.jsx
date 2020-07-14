@@ -2,14 +2,11 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Typography, Chip, Grid } from '@material-ui/core'
 import LoadingErrorBlock from '../_loading-error'
-
-const getSearchState = () =>
-  decodeURIComponent(window.location.search.replace('?terms=', ''))
-    .split(',')
-    .filter(_ => _)
+import { useUriState } from '../../../../../lib/uri-state'
 
 export default ({ results, error, loading }) => {
-  const history = useHistory()
+  const { getState, pushState } = useUriState(useHistory())
+  const { terms } = getState()
 
   return error || loading ? (
     <LoadingErrorBlock error={error} loading={loading} />
@@ -19,37 +16,28 @@ export default ({ results, error, loading }) => {
         <Grid style={{ flexBasis: 300, flexGrow: 0 }} key={key} item>
           <Chip
             onDelete={
-              getSearchState().includes(key)
+              terms.includes(key)
                 ? () => {
-                    const activeSubjects = getSearchState()
-                    if (activeSubjects.includes(key)) {
-                      activeSubjects.splice(activeSubjects.indexOf(key), 1)
-                      history.push({
-                        pathname: window.location.pathname,
-                        search: `?terms=${encodeURIComponent(activeSubjects.join(','))}`,
+                    if (terms.includes(key)) {
+                      pushState({
+                        terms: terms.filter(s => s !== key),
                       })
                     }
                   }
                 : null
             }
-            color={getSearchState().includes(key) ? 'secondary' : 'default'}
+            color={terms.includes(key) ? 'secondary' : 'default'}
             style={{ margin: '5px 5px 5px 0px' }}
             clickable
-            variant={getSearchState().includes(key) ? 'default' : 'outlined'}
+            variant={terms.includes(key) ? 'default' : 'outlined'}
             onClick={() => {
-              const activeSubjects = getSearchState()
-              if (activeSubjects.includes(key)) {
-                activeSubjects.splice(activeSubjects.indexOf(key), 1)
-                history.push({
-                  pathname: window.location.pathname,
-                  search: `?terms=${encodeURIComponent(activeSubjects.join(','))}`,
+              if (terms.includes(key)) {
+                pushState({
+                  terms: terms.filter(s => s !== key),
                 })
               } else {
-                history.push({
-                  pathname: window.location.pathname,
-                  search: `?terms=${encodeURIComponent(
-                    [...new Set([...getSearchState(), key])].join(',')
-                  )}`,
+                pushState({
+                  terms: [...new Set([...terms, key])],
                 })
               }
             }}

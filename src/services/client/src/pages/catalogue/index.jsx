@@ -3,21 +3,16 @@ import PageContent from './layout/content/index'
 import Header from './layout/header'
 import useStyles from './style'
 import clsx from 'clsx'
-
-const getSearchState = () =>
-  decodeURIComponent(window.location.search.replace('?terms=', ''))
-    .split(',')
-    .filter(_ => _)
+import { getStateFromUri } from '../../lib/uri-state'
 
 export default () => {
   const classes = useStyles()
-
-  const [subjects, updateSubjects] = useState(getSearchState())
+  const { terms } = getStateFromUri()
+  const [subjects, updateSubjects] = useState(terms) // TODO I think this is needed to trigger updates to children. But seems
 
   useEffect(() => {
-    const newSubjects = getSearchState()
-    if (newSubjects.length !== subjects.length) {
-      updateSubjects(getSearchState())
+    if (terms.length !== subjects.length) {
+      updateSubjects(terms)
     }
   })
 

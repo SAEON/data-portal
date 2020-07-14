@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core'
 import {
   Visibility as ViewIcon,
-  GetApp as DownloadIcon,
   BarChart as PreviewIcon,
   Code as CodeIcon,
 } from '@material-ui/icons'

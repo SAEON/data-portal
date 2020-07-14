@@ -15,6 +15,7 @@ import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import { VariableSizeList } from 'react-window'
 import { useTheme } from '@material-ui/core/styles'
+import { useUriState } from '../../lib/uri-state'
 
 const LISTBOX_PADDING = 8 // px
 
@@ -95,8 +96,8 @@ const SUBJECT = 'metadata_json.subjects.subject.raw'
 const TERM_LIMIT = 10000
 
 export default ({ classes }) => {
-  const history = useHistory()
-  const searchTerms = getSearchState()
+  const { pushState } = useUriState(useHistory())
+  const terms = getSearchState()
   const { error, loading, data } = useQuery(
     gql`
       query catalogue($fields: [String!], $limit: Int) {
@@ -121,14 +122,12 @@ export default ({ classes }) => {
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12}>
         <Autocomplete
-          onChange={(e, value) => {
-            const selectedValues = value.map(v => v)
-            history.push({
-              pathname: window.location.pathname,
-              search: `?terms=${encodeURIComponent(selectedValues.join(','))}`,
+          onChange={(e, value) =>
+            pushState({
+              terms: value.map(v => v),
             })
-          }}
-          value={searchTerms || []}
+          }
+          value={terms || []}
           multiple
           fullWidth
           limitTags={8}

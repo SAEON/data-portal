@@ -54,7 +54,7 @@ export default ({ subjects }) => {
         >
           <Toolbar variant="regular">
             <Typography style={{ margin: 'auto' }} variant="overline" noWrap>
-              Data Tags
+              Related Tags
             </Typography>
           </Toolbar>
         </AppBar>
