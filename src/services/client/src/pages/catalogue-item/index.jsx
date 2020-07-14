@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client'
 import React from 'react'
-import { GqlDataQuery } from '../../components'
+import { gql, useQuery } from '@apollo/client'
+import { Typography } from '@material-ui/core'
 import Layout from './_layout'
 
-export default ({ id }) => (
-  <GqlDataQuery
-    query={gql`
+export default ({ id }) => {
+  const { loading, error, data } = useQuery(
+    gql`
       query catalogue($id: String) {
         catalogue {
           records(id: $id) {
@@ -19,16 +19,19 @@ export default ({ id }) => (
           }
         }
       }
-    `}
-    variables={{ id }}
-  >
-    {({ catalogue }) => {
-      const record = catalogue.records.nodes[0].target._source.metadata_json
-      return <Page json={record} id={id} />
-    }}
-  </GqlDataQuery>
-)
+    `,
+    {
+      variables: { id },
+    }
+  )
 
-const Page = ({ json, id }) => {
-  return <Layout json={json} id={id} />
+  const waitMsg = error ? error.message : loading ? 'Loading' : null
+  const record = data?.catalogue?.records?.nodes?.[0]?.target?._source?.metadata_json
+  return waitMsg ? (
+    <Typography variant="overline" style={{ margin: 10, padding: 10 }}>
+      {waitMsg}
+    </Typography>
+  ) : (
+    <Layout json={record} id={id} />
+  )
 }

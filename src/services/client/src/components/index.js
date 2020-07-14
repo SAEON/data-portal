@@ -1,5 +1,4 @@
 export { default as useHttpDataQuery } from './http-data-query'
-export { default as GqlDataQuery } from './gql-data-query'
 export { default as CatalogueSearchField } from './catalogue-search-field'
 export { default as VirtualList } from './virtual-list'
 export { default as SideMenu } from './side-menu'
