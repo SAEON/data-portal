@@ -1,40 +1,21 @@
 import React from 'react'
-import {
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Divider,
-  Tooltip,
-  CardMedia,
-  Chip,
-} from '@material-ui/core'
+import { Button, Grid, Card, CardContent, Typography, Tooltip, Chip } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
-import { Link as SimpleLink } from '../../components'
+import { Link as SimpleLink, CitationDialog } from '../../components'
 /**TO DO:
  * download button tooltips show download extension. currently hardcoded. set them to grab file extension
- * cite button in overview with popup
- * overview is missing some buttons from sasdi
- * tag a git issue to all git commits
- * figure out flex positioning of overview card
- * verify validity of assumed Keyword hrefs %20 vs +
- * make sure array elements have keys
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
- * verify Indentiferes.Local.  json.alternativeIdentifiers has the value but is an array
  * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
- * iframe size should be dynamic (up to a maximum)
- * iframe is hardcoded. change it to be taken from json
- * remove div from bottom of page and sizing container better
- *
+ * remove div from bottom of page and size container better
+ * figure out how to better manage citation-dialog <Dialog> size. more than 600px width causes scrollbar to appear
  * Bug Fixes:
  * bugfix: bottom of scrollbar is behind footer
- * scrolling on map also scrolls page. Only one should scroll
  *
  * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
  * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
+ 81db479c2c9386a6cfca5bc7e83c2c50
  */
 
 const formatText = text => {
@@ -79,17 +60,28 @@ export default ({ json, id }) => {
                 ))}
                 <br />
 
-                <br />
-                <br />
                 <Typography variant="h6">Publisher </Typography>
                 <Typography variant="body2">
                   {`${json.publisher} : ${json.publicationYear}`}
                 </Typography>
+                <br />
+                <Typography variant="h6">Resources </Typography>
+                {json.linkedResources.map((lr, i) => (
+                  <div key={`linked-resource${i}`}>
+                    <Typography variant="body2">
+                      {lr.resourceDescription}
+                      <b>
+                        <em> ({lr.linkedResourceType})</em>
+                      </b>
+                    </Typography>
+                    <SimpleLink uri={lr.resourceURL} />
+                    <br />
+                  </div>
+                ))}
               </CardContent>
-              <div id="download-buttons" style={{ bottom: '0px' }} className={classes.cardControls}>
-                <Divider />
-
+              <div id="card-controls" className={classes.cardControls}>
                 <Typography variant="body2">
+                  <CitationDialog json={json} />
                   {json.rightsList.map((rl, i) => (
                     <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
                       <Tooltip title={rl.rights}>
@@ -111,6 +103,7 @@ export default ({ json, id }) => {
                       color="primary"
                       className={classes.button}
                       startIcon={<GetAppIcon />}
+                      disableElevation
                     >
                       Metadata
                     </Button>
@@ -120,25 +113,11 @@ export default ({ json, id }) => {
                   <Tooltip title=".zip">
                     <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>
                       Data
-                      {/* {
-                      json.immutableResource.resourceURL.split('/')[
-                        json.immutableResource.resourceURL.split('/').length - 1
-                      ]
-                    } */}
                     </Button>
                   </Tooltip>
                 </a>
               </div>
             </div>
-            <CardMedia className={classes.cardMedia}>
-              {json.linkedResources.map((lr, i) => (
-                <iframe
-                  src={lr.resourceURL}
-                  style={{ height: '500px', width: '600px', border: 'none' }}
-                  key={`linked-resource${i}`}
-                ></iframe>
-              ))}
-            </CardMedia>
           </Card>
         </Grid>
 
@@ -243,7 +222,7 @@ export default ({ json, id }) => {
               <Typography gutterBottom variant="h5">
                 SANS 1878
               </Typography>
-              <Typography variant="body2">Coverage begin date: 2005</Typography>
+              <Typography variant="body2"></Typography>
             </CardContent>
           </Card>
         </Grid>
