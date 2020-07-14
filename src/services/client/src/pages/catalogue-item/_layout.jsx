@@ -64,7 +64,6 @@ export default ({ json, id }) => {
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.button}
                 startIcon={<GetAppIcon />}
                 disableElevation
               >
@@ -159,8 +158,8 @@ export default ({ json, id }) => {
         </Grid>
 
         {/* CONTRIBUTORS */}
-        <Grid item xs={gridItemSize} className={classes.gridItem}>
-          <Card variant="outlined" className={classes.card}>
+        <Grid item xs={gridItemSize}>
+          <Card variant="outlined">
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Contributors
@@ -181,8 +180,8 @@ export default ({ json, id }) => {
         </Grid>
 
         {/* KEYWORDS */}
-        <Grid item xs={gridItemSize} className={classes.gridItem}>
-          <Card variant="outlined" className={classes.card}>
+        <Grid item xs={gridItemSize}>
+          <Card variant="outlined">
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Keywords
@@ -207,8 +206,8 @@ export default ({ json, id }) => {
           </Card>
         </Grid>
         {/* ABSTRACT */}
-        <Grid item xs={gridItemSize} className={classes.gridItem}>
-          <Card variant="outlined" className={classes.card}>
+        <Grid item xs={gridItemSize}>
+          <Card variant="outlined">
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Abstract
@@ -223,8 +222,8 @@ export default ({ json, id }) => {
         </Grid>
 
         {/* IDENTIFIERS */}
-        <Grid item xs={gridItemSize} className={classes.gridItem}>
-          <Card variant="outlined" className={classes.card}>
+        <Grid item xs={gridItemSize}>
+          <Card variant="outlined">
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Identifiers
@@ -259,8 +258,8 @@ export default ({ json, id }) => {
         </Grid>
 
         {/* SANS 1878? */}
-        <Grid item xs={gridItemSize} className={classes.gridItem}>
-          <Card variant="outlined" className={classes.card}>
+        <Grid item xs={gridItemSize}>
+          <Card variant="outlined">
             <CardContent>
               <Typography gutterBottom variant="h5">
                 SANS 1878
