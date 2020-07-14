@@ -16,7 +16,7 @@ import {
   BarChart as PreviewIcon,
   Code as CodeIcon,
 } from '@material-ui/icons'
-import { Link, CitationDialog } from '../../../../../../components'
+import { Link, CitationDialog, DataDownloadButton } from '../../../../../../components'
 
 export default ({ item }) => {
   const history = useHistory()
@@ -84,28 +84,33 @@ export default ({ item }) => {
               >
                 View Metadata
               </Button>
-              <Button
-                startIcon={<PreviewIcon />}
-                size="small"
-                color="primary"
-                onClick={() => alert('What should this do Leo??')}
-                style={{ marginRight: 10 }}
-                variant="contained"
+              <Tooltip title={'This has not been implemented yet'}>
+                <span>
+                  <Button
+                    startIcon={<PreviewIcon />}
+                    size="small"
+                    color="primary"
+                    disabled={true}
+                    onClick={() => null}
+                    style={{ marginRight: 10 }}
+                    variant="contained"
+                    disableElevation
+                  >
+                    Preview Dataset
+                  </Button>
+                </span>
+              </Tooltip>
+
+              <DataDownloadButton
                 disableElevation
-              >
-                Preview Dataset
-              </Button>
-              <Button
-                style={{ marginRight: 10 }}
-                startIcon={<DownloadIcon />}
-                size="small"
-                color="primary"
-                onClick={() => alert('What should this do Leo??')}
                 variant="contained"
-                disableElevation
+                color="primary"
+                style={{ marginRight: 10 }}
+                size="small"
+                immutableResource={doc.immutableResource}
               >
-                Download Dataset
-              </Button>
+                Download Data
+              </DataDownloadButton>
               <CitationDialog size="small" json={doc} />
             </CardContent>
             <CardContent>

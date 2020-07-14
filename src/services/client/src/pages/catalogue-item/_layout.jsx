@@ -13,7 +13,7 @@ import { Search as SearchIcon } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
-import { Link as SimpleLink, CitationDialog } from '../../components'
+import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../components'
 /**TO DO:
  * download button tooltips show download extension. currently hardcoded. set them to grab file extension
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
@@ -75,22 +75,14 @@ export default ({ json, id }) => {
 
         {/* DATA DOWNLOAD */}
         <Grid item>
-          <SimpleLink download={'test'} uri={json.immutableResource.resourceURL}>
-            <Tooltip
-              title={`${
-                json.immutableResource.resourceDescription
-              } (${json.immutableResource.resourceURL.replace(/.*\./, '')})`}
-            >
-              <Button
-                disableElevation
-                variant="contained"
-                color="primary"
-                startIcon={<GetAppIcon />}
-              >
-                Data
-              </Button>
-            </Tooltip>
-          </SimpleLink>
+          <DataDownloadButton
+            disableElevation
+            variant="contained"
+            color="primary"
+            immutableResource={json.immutableResource}
+          >
+            Download Data
+          </DataDownloadButton>
         </Grid>
       </Grid>
 
