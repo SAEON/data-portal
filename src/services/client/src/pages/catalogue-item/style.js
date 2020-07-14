@@ -33,5 +33,4 @@ export default makeStyles(theme => ({
     alignContent: 'flex-end',
     alignSelf: 'flex-end',
   },
-  button: { margin: '5px' },
 }))

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Grid, Card, CardContent, Typography, Tooltip, Chip } from '@material-ui/core'
+import { Search as SearchIcon } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
@@ -80,16 +81,14 @@ export default ({ json, id }) => {
                 ))}
               </CardContent>
               <div id="card-controls" className={classes.cardControls}>
-                <Typography variant="body2">
-                  <CitationDialog json={json} />
-                  {json.rightsList.map((rl, i) => (
-                    <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
-                      <Tooltip title={rl.rights}>
-                        <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
-                      </Tooltip>
-                    </SimpleLink>
-                  ))}
-                </Typography>
+                <CitationDialog json={json} />
+                {json.rightsList.map((rl, i) => (
+                  <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
+                    <Tooltip title={rl.rights}>
+                      <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
+                    </Tooltip>
+                  </SimpleLink>
+                ))}
                 <a
                   href={
                     'data:' + 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(json))
@@ -150,16 +149,22 @@ export default ({ json, id }) => {
               <Typography gutterBottom variant="h5">
                 Keywords
               </Typography>
-              {json.subjects.map(subject => (
-                <Chip
-                  size="small"
-                  clickable
-                  onClick={() => history.push(`/catalogue?terms=${subject.subject}`)}
-                  key={subject.subject}
-                  className={classes.button}
-                  label={subject.subject}
-                />
-              ))}
+              <Grid container spacing={1} justify="flex-start">
+                {json.subjects
+                  .slice(0)
+                  .sort((a, b) => (a.subject >= b.subject ? 1 : -1))
+                  .map(subject => (
+                    <Grid item key={subject.subject}>
+                      <Chip
+                        size="small"
+                        clickable
+                        icon={<SearchIcon />}
+                        onClick={() => history.push(`/catalogue?terms=${subject.subject}`)}
+                        label={subject.subject.toUpperCase()}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
             </CardContent>
           </Card>
         </Grid>
