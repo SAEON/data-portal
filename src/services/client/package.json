@@ -40,7 +40,7 @@
     "@saeon/ol-react": "^9.0.9",
     "@saeon/pkce-client": "0.5.8",
     "@saeon/quick-form": "1.0.4",
-    "@saeon/snap-menus": "^3.2.3",
+    "@saeon/snap-menus": "^3.2.4",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.1",
