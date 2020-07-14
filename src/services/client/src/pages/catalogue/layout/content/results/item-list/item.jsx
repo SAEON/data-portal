@@ -16,7 +16,7 @@ import {
   BarChart as PreviewIcon,
   Code as CodeIcon,
 } from '@material-ui/icons'
-import { Link } from '../../../../../../components'
+import { Link, CitationDialog } from '../../../../../../components'
 
 export default ({ item }) => {
   const history = useHistory()
@@ -106,15 +106,7 @@ export default ({ item }) => {
               >
                 Download Dataset
               </Button>
-              <Button
-                size="small"
-                color="primary"
-                onClick={() => alert('TODO')}
-                variant="contained"
-                disableElevation
-              >
-                “ Cite
-              </Button>
+              <CitationDialog size="small" json={doc} />
             </CardContent>
             <CardContent>
               {doc.identifier ? (

@@ -110,13 +110,15 @@ export default props => {
   return (
     <>
       <Button
-        variant="outlined"
+        variant="contained"
+        disableElevation
+        size={props.size || 'medium'}
         color="primary"
         onClick={() => {
           setOpen(true)
         }}
       >
-        Cite
+        “ Cite
       </Button>
       <TabsDialog
         open={open}
