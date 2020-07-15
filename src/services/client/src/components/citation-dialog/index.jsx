@@ -3,8 +3,6 @@ import { Typography, Tabs, Tab, Box, Button, Dialog } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import Citations from './citations'
 
-//citations array represents the would be citation. to be replaced by citations.js
-
 function TabPanel(props) {
   const { children, value, index } = props
 
@@ -16,7 +14,7 @@ function TabPanel(props) {
           <Button
             style={{ position: 'absolute', right: '5px', bottom: '5px' }}
             onClick={() => {
-              navigator.clipboard.writeText(citations[index])
+              // navigator.clipboard.writeText(citations[index]) // TODO - this threw a lint error since citations is not defined at this point.
             }}
             startIcon={<AssignmentIcon />}
           >

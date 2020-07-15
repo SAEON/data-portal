@@ -7,7 +7,7 @@ import { getStateFromUri } from '../../lib/uri-state'
 
 export default () => {
   const classes = useStyles()
-  const { terms } = getStateFromUri()
+  const { terms = [] } = getStateFromUri()
   const [subjects, updateSubjects] = useState(terms) // TODO I think this is needed to trigger updates to children. But seems
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 export default json => {
   const { publisher, publicationYear, resourceType, identifier } = json //singular objects/values
+  // eslint-disable-next-line no-unused-vars
   const { creators, dates, titles } = json //arrays
 
   const today = new Date()

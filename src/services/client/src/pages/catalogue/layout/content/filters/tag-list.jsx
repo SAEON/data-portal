@@ -10,10 +10,10 @@ const LIST_SIZE = 5
 export default ({ results, error, loading }) => {
   const [showAll, toggleShowAll] = useState(false)
   const { getState, pushState } = useUriState(useHistory())
-  const { terms } = getState()
+  const { terms = [] } = getState()
 
   const sortedResults = results
-    ? [...results].sort((a, b) => (terms.includes(a.key) ? -1 : 1))
+    ? [...results].sort(a => (terms.includes(a.key) ? -1 : 1))
     : undefined
 
   return error || loading ? (
