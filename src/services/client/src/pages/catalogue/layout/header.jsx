@@ -9,7 +9,7 @@ export default ({ updateSubjects }) => {
   const classes = useStyles()
   return (
     <AppBar position="relative" variant="outlined" style={{ border: 'none' }}>
-      <Collapse in={!collapsed} timeout="auto">
+      <Collapse collapsedHeight="30px" in={!collapsed} timeout="auto">
         <Toolbar className={classes.toolbar}>
           <Grid container justify="center">
             <Grid item xs={12} sm={8}>
@@ -24,7 +24,7 @@ export default ({ updateSubjects }) => {
 
       <IconButton
         size="small"
-        color={collapsed ? 'inherit' : 'primary'}
+        color="primary"
         onClick={() => setCollapsed(!collapsed)}
         style={{
           position: 'absolute',
