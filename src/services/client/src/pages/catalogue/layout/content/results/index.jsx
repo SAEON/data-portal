@@ -1,14 +1,11 @@
 import React, { useState, memo } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { Grid } from '@material-ui/core'
-import useStyles from '../../../style'
-import clsx from 'clsx'
 import Header from './header'
 import ResultsList from './item-list'
 import MiniSearch from 'minisearch'
 
 export default memo(({ subjects }) => {
-  const classes = useStyles()
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState({
@@ -75,47 +72,31 @@ export default memo(({ subjects }) => {
     : data?.catalogue.records.nodes
 
   return (
-    <Grid
-      className={clsx({
-        [classes.grid]: true,
-      })}
-      item
-      xs={12}
-      md={8}
-    >
-      <Grid
-        container
-        spacing={2}
-        className={clsx({
-          [classes.grid]: true,
-        })}
-      >
-        {/* HEADER */}
-        <Header
-          cursors={cursors}
-          setCursors={setCursors}
-          setPageSize={setPageSize}
-          pageSize={pageSize}
-          error={error}
-          loading={loading}
-          catalogue={data?.catalogue}
-          setTextSearch={setTextSearch}
-          textSearch={textSearch}
-        />
+    <Grid container item xs={12} md={8}>
+      <Header
+        cursors={cursors}
+        setCursors={setCursors}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
+        error={error}
+        loading={loading}
+        catalogue={data?.catalogue}
+        setTextSearch={setTextSearch}
+        textSearch={textSearch}
+      />
 
-        {/* CONTENT */}
-        <ResultsList
-          error={error}
-          loading={loading}
-          results={
-            miniSearchResults
-              ? miniSearchResults.map(([id, score]) =>
-                  Object.assign({ ...results.find(({ target }) => id === target._id) }, { score })
-                )
-              : results
-          }
-        />
-      </Grid>
+      {/* CONTENT */}
+      <ResultsList
+        error={error}
+        loading={loading}
+        results={
+          miniSearchResults
+            ? miniSearchResults.map(([id, score]) =>
+                Object.assign({ ...results.find(({ target }) => id === target._id) }, { score })
+              )
+            : results
+        }
+      />
     </Grid>
   )
 })
