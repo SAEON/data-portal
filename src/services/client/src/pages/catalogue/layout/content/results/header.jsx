@@ -17,7 +17,6 @@ import {
   NavigateBefore as NavigateBeforeIcon,
   ArrowDropDown as ArrowDropDownIcon,
 } from '@material-ui/icons'
-import useStyles from '../../../style'
 import { debounce } from '../../../../../lib/fns'
 import QuickForm from '@saeon/quick-form'
 
@@ -41,7 +40,6 @@ export default ({
   setTextSearch,
   pageSize,
 }) => {
-  const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
 
   return (
@@ -58,7 +56,7 @@ export default ({
             )}
           </Typography>
           {loading || error ? null : (
-            <div className={classes.searchBar}>
+            <div style={{ flexGrow: 10, margin: '0 20px' }}>
               <Grid container spacing={1} alignItems="flex-end">
                 <Grid item style={{ flex: 1 }}>
                   <QuickForm
@@ -92,7 +90,7 @@ export default ({
             </div>
           )}
 
-          <div className={classes.grow} />
+          <div style={{ flexGrow: 1 }} />
           <Button
             size="small"
             variant="text"

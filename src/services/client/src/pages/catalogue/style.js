@@ -1,18 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
-  grow: {
-    flexGrow: 1,
-  },
-  searchBar: {
-    flexGrow: 20,
-    margin: '0 20px',
-  },
-  root: {
-    position: 'relative',
-    height: `calc(100%)`, // TODO - should tie in with theme
-    width: '100%',
-  },
   grid: {
     height: '100%',
   },
@@ -30,17 +18,10 @@ export default makeStyles(theme => ({
     height: '100%',
     overflow: 'auto',
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+
   toolbar: {
     backgroundColor: theme.palette.grey[200],
     minHeight: theme.customSizes.thickToolbar.minHeight,
-    alignItems: 'flex-start',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
   },
   textField: {
     borderRadius: theme.shape.borderRadius,
