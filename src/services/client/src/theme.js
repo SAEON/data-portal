@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { lightBlue, orange } from '@material-ui/core/colors'
+import { blue, green } from '@material-ui/core/colors'
 
 export default createMuiTheme({
   customSizes: {
@@ -37,12 +37,10 @@ export default createMuiTheme({
   },
   palette: {
     primary: {
-      main: lightBlue[900],
-      contrastText: '#fff',
+      main: blue[700],
     },
     secondary: {
-      main: orange[700],
-      contrastText: '#fff',
+      main: green[200],
     },
   },
   status: {

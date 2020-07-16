@@ -2,7 +2,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core'
 import { getStateFromUri } from '../../../../modules/uri-state'
-import AggregationList from './tag-list'
+import Filters from './filters'
 import { isMobile, isTablet } from 'react-device-detect'
 
 console.log('isMobile', isMobile)
@@ -34,8 +34,15 @@ export default () => {
 
   return (
     <Grid item xs={12} md={4}>
+      <AppBar color="secondary" position="relative" variant="outlined">
+        <Toolbar variant="regular">
+          <Typography style={{ margin: 'auto' }} variant="overline" noWrap>
+            Filter results
+          </Typography>
+        </Toolbar>
+      </AppBar>
       {/* Data tags */}
-      <AppBar color="transparent" style={{ border: 'none' }} position="relative" variant="outlined">
+      <AppBar color="transparent" position="relative" variant="outlined">
         <Toolbar variant="regular">
           <Typography style={{ margin: 'auto' }} variant="overline" noWrap>
             Related Tags
@@ -43,7 +50,7 @@ export default () => {
         </Toolbar>
       </AppBar>
       <div style={{ margin: 30 }}>
-        <AggregationList
+        <Filters
           loading={loading}
           error={error}
           results={
@@ -63,7 +70,7 @@ export default () => {
         </Toolbar>
       </AppBar>
       <div style={{ margin: 30 }}>
-        <AggregationList
+        <Filters
           loading={loading}
           error={error}
           results={
@@ -83,7 +90,7 @@ export default () => {
         </Toolbar>
       </AppBar>
       <div style={{ margin: 30 }}>
-        <AggregationList
+        <Filters
           loading={loading}
           error={error}
           results={
