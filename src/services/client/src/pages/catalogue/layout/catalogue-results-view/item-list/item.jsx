@@ -15,7 +15,7 @@ import {
   BarChart as PreviewIcon,
   Code as CodeIcon,
 } from '@material-ui/icons'
-import { Link, CitationDialog, DataDownloadButton } from '../../../../../../components'
+import { Link, CitationDialog, DataDownloadButton } from '../../../../../components'
 
 export default ({ item }) => {
   const history = useHistory()

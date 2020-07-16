@@ -1,11 +1,13 @@
-import React, { useState, memo } from 'react'
+import React, { useState } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { Grid } from '@material-ui/core'
 import Header from './header'
 import ResultsList from './item-list'
 import MiniSearch from 'minisearch'
+import { getStateFromUri } from '../../../../modules/uri-state'
 
-export default memo(({ subjects }) => {
+export default () => {
+  const { terms = [] } = getStateFromUri()
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState({
@@ -35,7 +37,7 @@ export default memo(({ subjects }) => {
     `,
     {
       variables: {
-        subjects: subjects || [],
+        subjects: terms || [],
         size: pageSize,
         after: cursors.end,
         before: cursors.start,
@@ -99,4 +101,4 @@ export default memo(({ subjects }) => {
       />
     </Grid>
   )
-})
+}

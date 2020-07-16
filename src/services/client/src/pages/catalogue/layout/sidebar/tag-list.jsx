@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Typography, Grid, Checkbox, FormControlLabel, Button } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import LoadingErrorBlock from '../_loading-error'
-import { useUriState } from '../../../../../lib/uri-state'
+import { useUriState } from '../../../../modules/uri-state'
 
 const LIST_SIZE = 5
 
@@ -16,8 +15,14 @@ export default ({ results, error, loading }) => {
     ? [...results].sort(a => (terms.includes(a.key) ? -1 : 1))
     : undefined
 
-  return error || loading ? (
-    <LoadingErrorBlock error={error} loading={loading} />
+  return error ? (
+    <Typography variant="overline" noWrap>
+      <div>An error has occurred</div>
+    </Typography>
+  ) : loading ? (
+    <Typography variant="overline" noWrap>
+      <div>Loading</div>
+    </Typography>
   ) : (
     <Grid container>
       {(showAll ? sortedResults : sortedResults.slice(0, LIST_SIZE)).map(({ key, doc_count }) => (

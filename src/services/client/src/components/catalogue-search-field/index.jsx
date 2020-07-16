@@ -15,7 +15,7 @@ import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import { VariableSizeList } from 'react-window'
 import { useTheme } from '@material-ui/core/styles'
-import { useUriState } from '../../lib/uri-state'
+import { useUriState } from '../../modules/uri-state'
 
 const LISTBOX_PADDING = 8 // px
 

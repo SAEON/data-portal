@@ -1,9 +1,16 @@
 import React from 'react'
-import AggregationList from './tag-list'
 import { gql, useQuery } from '@apollo/client'
 import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core'
+import { getStateFromUri } from '../../../../modules/uri-state'
+import AggregationList from './tag-list'
+import { isMobile, isTablet } from 'react-device-detect'
 
-export default ({ subjects }) => {
+console.log('isMobile', isMobile)
+console.log('isTablet', isTablet)
+
+export default () => {
+  const { terms = [] } = getStateFromUri()
+
   const { error, loading, data } = useQuery(
     gql`
       query catalogue($filterBySubjects: [String!], $fields: [String!]) {
@@ -20,7 +27,7 @@ export default ({ subjects }) => {
           'metadata_json.publisher.raw',
           'metadata_json.subjects.subject.raw',
         ],
-        filterBySubjects: subjects || [],
+        filterBySubjects: terms,
       },
     }
   )

@@ -17,7 +17,7 @@ import {
   NavigateBefore as NavigateBeforeIcon,
   ArrowDropDown as ArrowDropDownIcon,
 } from '@material-ui/icons'
-import { debounce } from '../../../../../lib/fns'
+import { debounce } from '../../../../lib/fns'
 import QuickForm from '@saeon/quick-form'
 
 const pageSizes = [
