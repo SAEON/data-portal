@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { Grid } from '@material-ui/core'
-import Header from './header'
-import ResultsList from './item-list'
+import SearchHeader from './search-header'
+import Sidebar from './sidebar'
+import Items from './items'
 import MiniSearch from 'minisearch'
 import { getStateFromUri } from '../../../../modules/uri-state'
 
@@ -74,31 +75,30 @@ export default () => {
     : data?.catalogue.records.nodes
 
   return (
-    <Grid container item xs={12} md={8}>
-      <Header
-        cursors={cursors}
-        setCursors={setCursors}
-        setPageSize={setPageSize}
-        pageSize={pageSize}
-        error={error}
-        loading={loading}
-        catalogue={data?.catalogue}
-        setTextSearch={setTextSearch}
-        textSearch={textSearch}
-      />
-
-      {/* CONTENT */}
-      <ResultsList
-        error={error}
-        loading={loading}
-        results={
-          miniSearchResults
-            ? miniSearchResults.map(([id, score]) =>
-                Object.assign({ ...results.find(({ target }) => id === target._id) }, { score })
-              )
-            : results
-        }
-      />
-    </Grid>
+    <SearchHeader
+      cursors={cursors}
+      setCursors={setCursors}
+      setPageSize={setPageSize}
+      pageSize={pageSize}
+      error={error}
+      loading={loading}
+      catalogue={data?.catalogue}
+      setTextSearch={setTextSearch}
+      textSearch={textSearch}
+      Sidebar={Sidebar}
+      ResultList={() => (
+        <Items
+          error={error}
+          loading={loading}
+          results={
+            miniSearchResults
+              ? miniSearchResults.map(([id, score]) =>
+                  Object.assign({ ...results.find(({ target }) => id === target._id) }, { score })
+                )
+              : results
+          }
+        />
+      )}
+    />
   )
 }

@@ -115,7 +115,7 @@ export default ({ classes }) => {
   const waitMsg = error ? error.message : loading ? 'Loading' : null
 
   return waitMsg ? (
-    <Typography variant="overline" style={{ margin: 10, padding: 10 }}>
+    <Typography color="textPrimary" variant="overline" style={{ margin: 20 }}>
       {waitMsg}
     </Typography>
   ) : (

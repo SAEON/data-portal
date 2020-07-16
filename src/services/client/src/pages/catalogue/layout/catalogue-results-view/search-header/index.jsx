@@ -10,14 +10,17 @@ import {
   TextField,
   InputAdornment,
   Tooltip,
+  IconButton,
+  Collapse,
 } from '@material-ui/core'
 import {
   Search as SearchIcon,
   NavigateNext as NavigateNextIcon,
   NavigateBefore as NavigateBeforeIcon,
   ArrowDropDown as ArrowDropDownIcon,
+  FilterList as FilterIcon,
 } from '@material-ui/icons'
-import { debounce } from '../../../../lib/fns'
+import { debounce } from '../../../../../lib/fns'
 import QuickForm from '@saeon/quick-form'
 
 const pageSizes = [
@@ -39,56 +42,66 @@ export default ({
   textSearch,
   setTextSearch,
   pageSize,
+  Sidebar,
+  ResultList,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const [showFilters, setShowFilters] = useState(true)
 
   return (
-    <Grid item xs={12}>
-      <AppBar color="primary" style={{ border: 'none' }} position="relative" variant="outlined">
+    <>
+      <AppBar color="inherit" style={{ border: 'none' }} position="relative" variant="outlined">
         <Toolbar variant="regular">
-          <Typography variant="overline" noWrap>
-            {loading || error ? null : (
-              <>
-                {cursors.currentPage * pageSize + 1} to{' '}
-                {Math.min(cursors.currentPage * pageSize + pageSize, catalogue.records.totalCount)}{' '}
-                of {catalogue.records.totalCount} results
-              </>
-            )}
-          </Typography>
-          {loading || error ? null : (
-            <div style={{ flexGrow: 10, margin: '0 20px' }}>
-              <Grid container spacing={1} alignItems="flex-end">
-                <Grid item style={{ flex: 1 }}>
-                  <QuickForm
-                    effects={[debounce(({ value }) => setTextSearch(value), 250)]}
-                    value={textSearch}
-                  >
-                    {({ updateForm, value }) => (
-                      <TextField
-                        autoComplete="off"
-                        fullWidth
-                        id="outlined-basic"
-                        size="small"
-                        color="secondary"
-                        value={value}
-                        onChange={e => updateForm({ value: e.currentTarget.value })}
-                        placeholder="Filter current page results..."
-                        variant="outlined"
-                        InputProps={{
-                          style: { color: 'white' },
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <SearchIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                  </QuickForm>
-                </Grid>
+          <IconButton
+            onClick={() => setShowFilters(!showFilters)}
+            color={showFilters ? 'primary' : 'default'}
+          >
+            <FilterIcon />
+          </IconButton>
+
+          {/* TEXT SEARCH */}
+          <div style={{ flexGrow: 10, margin: '0 20px' }}>
+            <Grid container spacing={1} alignItems="flex-end">
+              <Grid item style={{ flex: 1 }}>
+                <QuickForm
+                  effects={[debounce(({ value }) => setTextSearch(value), 250)]}
+                  value={textSearch}
+                >
+                  {({ updateForm, value }) => (
+                    <TextField
+                      autoComplete="off"
+                      fullWidth
+                      id="outlined-basic"
+                      size="small"
+                      color="secondary"
+                      value={value}
+                      onChange={e => updateForm({ value: e.currentTarget.value })}
+                      placeholder="Filter current page results..."
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                </QuickForm>
               </Grid>
-            </div>
-          )}
+            </Grid>
+          </div>
+
+          {/* RESULT CONTEXT */}
+          <Typography variant="overline" noWrap>
+            <>
+              {cursors.currentPage * pageSize + 1} to{' '}
+              {catalogue?.records
+                ? Math.min(cursors.currentPage * pageSize + pageSize, catalogue.records.totalCount)
+                : '..'}{' '}
+              of {catalogue?.records ? catalogue.records.totalCount : '..'} results
+            </>
+          </Typography>
 
           <div style={{ flexGrow: 1 }} />
           <Button
@@ -168,6 +181,18 @@ export default ({
           </Button>
         </Toolbar>
       </AppBar>
-    </Grid>
+
+      <Grid container>
+        <Collapse orientation="horizontal" in={showFilters}>
+          <Grid item xs={4}>
+            <Sidebar />
+          </Grid>
+        </Collapse>
+
+        <Grid item xs>
+          <ResultList />
+        </Grid>
+      </Grid>
+    </>
   )
 }
