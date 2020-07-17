@@ -23,7 +23,7 @@ export default ({ item }) => {
   const doc = item.target._source.metadata_json
 
   return (
-    <Card style={{ marginBottom: 20 }} variant="outlined">
+    <Card variant="outlined" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
       <CardHeader
         title={<Typography variant="h6">{doc.titles?.[0]?.title || 'Title missing'}</Typography>}
         subheader={

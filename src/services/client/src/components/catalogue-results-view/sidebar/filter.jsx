@@ -29,7 +29,12 @@ export default ({ results, title }) => {
 
   return (
     <>
-      <AppBar color="secondary" position="relative" variant="outlined">
+      <AppBar
+        color="default"
+        position="relative"
+        variant="outlined"
+        style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+      >
         <Toolbar variant="dense">
           <Typography variant="overline" noWrap>
             {title}

@@ -9,6 +9,9 @@ export default createMuiTheme({
   },
   overrides: {
     MuiPaper: {
+      rounded: {
+        borderRadius: 0,
+      },
       outlined: {
         border: 'none',
       },

@@ -58,7 +58,12 @@ export default ({
 
   return (
     <>
-      <AppBar color={headerColor} style={{ border: 'none' }} position="relative" variant="outlined">
+      <AppBar
+        color={headerColor}
+        position="sticky"
+        style={{ zIndex: 1101, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        variant="outlined"
+      >
         <Toolbar variant="regular">
           {disableSidebar ? null : (
             <IconButton
