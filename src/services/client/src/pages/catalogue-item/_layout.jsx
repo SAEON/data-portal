@@ -101,10 +101,10 @@ export default ({ json, id }) => {
               disableTypography
               title={
                 <Typography style={{ margin: 'auto' }} gutterBottom variant="h4">
-                  {json.titles[0].title}
+                  {json.titles?.[0].title}
                 </Typography>
               }
-              action={json.rightsList.map((rl, i) => (
+              action={json.rightsList?.map((rl, i) => (
                 <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
                   <Tooltip title={rl.rights}>
                     <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
@@ -115,7 +115,7 @@ export default ({ json, id }) => {
             <CardContent>
               <Typography variant="h6">Author</Typography>
 
-              {json.creators.map(creator => (
+              {json.creators?.map(creator => (
                 <div key={creator.name}>
                   <Typography variant="body2">
                     {creator.name}
@@ -132,7 +132,7 @@ export default ({ json, id }) => {
               </Typography>
               <br />
               <Typography variant="h6">Resources </Typography>
-              {json.linkedResources.map((lr, i) => (
+              {json.linkedResources?.map((lr, i) => (
                 <div key={`linked-resource${i}`}>
                   <Typography variant="body2">
                     {lr.resourceDescription}
@@ -155,7 +155,7 @@ export default ({ json, id }) => {
               <Typography gutterBottom variant="h5">
                 Contributors
               </Typography>
-              {json.contributors.map(contributor => (
+              {json.contributors?.map(contributor => (
                 <div key={contributor.name}>
                   <Typography variant="h6">{formatText(contributor.contributorType)}</Typography>
                   <Typography variant="body2">

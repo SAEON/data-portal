@@ -46,16 +46,6 @@ export default memo(() => {
         }
       />
 
-      {/* Publication year */}
-      <Filter
-        title="Publication Year"
-        results={
-          data?.catalogue?.summary.find(obj =>
-            Object.entries(obj).find(([key]) => key === 'metadata_json.publicationYear')
-          )['metadata_json.publicationYear']
-        }
-      />
-
       {/* Publisher */}
       <Filter
         title="Publisher"
@@ -63,6 +53,16 @@ export default memo(() => {
           data?.catalogue?.summary.find(obj =>
             Object.entries(obj).find(([key]) => key === 'metadata_json.publisher.raw')
           )['metadata_json.publisher.raw']
+        }
+      />
+
+      {/* Publication year */}
+      <Filter
+        title="Publication Year"
+        results={
+          data?.catalogue?.summary.find(obj =>
+            Object.entries(obj).find(([key]) => key === 'metadata_json.publicationYear')
+          )['metadata_json.publicationYear']
         }
       />
     </Grid>

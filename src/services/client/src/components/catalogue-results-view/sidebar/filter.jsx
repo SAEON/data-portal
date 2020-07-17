@@ -61,37 +61,40 @@ export default ({ results, title }) => {
       <Collapse in={!collapsed}>
         <Grid container spacing={0}>
           {(showAll ? sortedResults : sortedResults.slice(0, LIST_SIZE)).map(
-            ({ key, doc_count }) => (
-              <Grid key={key} item xs={12} style={{ paddingLeft: 10 }}>
-                <FormControlLabel
-                  label={
-                    <Typography variant="overline">{`${
-                      typeof key === 'string' ? key.toUpperCase() : key
-                    } (${doc_count})`}</Typography>
-                  }
-                  control={
-                    <Checkbox
-                      style={{ alignSelf: 'baseline' }}
-                      size="small"
-                      color="primary"
-                      checked={terms.includes(key) ? true : false}
-                      onChange={() => {
-                        if (terms.includes(key)) {
-                          pushState({
-                            terms: terms.filter(s => s !== key),
-                          })
-                        } else {
-                          pushState({
-                            terms: [...new Set([...terms, key])],
-                          })
-                        }
-                      }}
-                      inputProps={{ 'aria-label': 'primary checkbox' }}
-                    />
-                  }
-                />
-              </Grid>
-            )
+            ({ key, doc_count }) => {
+              key = typeof key === 'number' ? `${key}` : key
+              return (
+                <Grid key={key} item xs={12} style={{ paddingLeft: 10 }}>
+                  <FormControlLabel
+                    label={
+                      <Typography variant="overline">{`${
+                        typeof key === 'string' ? key.toUpperCase() : key
+                      } (${doc_count})`}</Typography>
+                    }
+                    control={
+                      <Checkbox
+                        style={{ alignSelf: 'baseline' }}
+                        size="small"
+                        color="primary"
+                        checked={terms.includes(key) ? true : false}
+                        onChange={() => {
+                          if (terms.includes(key)) {
+                            pushState({
+                              terms: terms.filter(s => s !== key),
+                            })
+                          } else {
+                            pushState({
+                              terms: [...new Set([...terms, key])],
+                            })
+                          }
+                        }}
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
+                    }
+                  />
+                </Grid>
+              )
+            }
           )}
           {sortedResults.length < LIST_SIZE ? null : (
             <Button
