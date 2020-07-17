@@ -7,7 +7,10 @@ function TabPanel(props) {
   const { children, value, index } = props
 
   return (
-    <div hidden={value !== index} style={{ alignSelf: 'center' }}>
+    <div
+      hidden={value !== index}
+      style={{ display: 'table-cell', textAlign: 'center', verticalAlign: 'middle' }}
+    >
       {value === index && (
         <Box p={3}>
           <Typography>{children}</Typography>
@@ -34,21 +37,18 @@ function TabsDialog(props) {
   }
   const citations = Citations(json)
   return (
-    <Dialog onClose={handleClose} open={open} maxWidth="xl" fullWidth={true}>
-      <div
-        style={{
-          display: 'flex',
-        }}
-      >
+    <Dialog onClose={handleClose} open={open} maxWidth="sm" fullWidth={true}>
+      <div style={{ display: 'table' }}>
         <Tabs
           value={tabValue}
           orientation="vertical"
-          variant="scrollable"
+          // variant="scrollable"
           onChange={(event, newValue) => {
             setTabValue(newValue)
           }}
           indicatorColor="primary"
           textColor="primary"
+          style={{ borderRight: '1px solid black', float: 'left' }}
         >
           <Tab label="APA" />
           <Tab label="Harvard" />
