@@ -13,6 +13,7 @@ export default memo(
   ({ children, VERTICAL_OFFSET_TOP = '', VERTICAL_OFFSET_BOTTOM = '', HORIZONTAL_MARGIN = '' }) => {
     PORTAL_STYLE.innerHTML = `
     #${PORTAL_ID} {
+      overflow: hidden;
       position: absolute;
       top: 0;
       bottom: 0;

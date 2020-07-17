@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { useQuery, gql } from '@apollo/client'
-import { Grid } from '@material-ui/core'
-import SearchHeader from './search-header'
+import Layout from './layout'
 import Sidebar from './sidebar'
 import Items from './items'
 import MiniSearch from 'minisearch'
-import { getStateFromUri } from '../../../../modules/uri-state'
+import { getStateFromUri } from '../../modules/uri-state'
 
-export default () => {
+export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'inherit' }) => {
   const { terms = [] } = getStateFromUri()
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
@@ -75,7 +74,10 @@ export default () => {
     : data?.catalogue.records.nodes
 
   return (
-    <SearchHeader
+    <Layout
+      headerColor={headerColor}
+      hideSidebar={hideSidebar}
+      disableSidebar={disableSidebar}
       cursors={cursors}
       setCursors={setCursors}
       setPageSize={setPageSize}
@@ -85,7 +87,7 @@ export default () => {
       catalogue={data?.catalogue}
       setTextSearch={setTextSearch}
       textSearch={textSearch}
-      Sidebar={Sidebar}
+      Sidebar={() => <Sidebar />}
       ResultList={() => (
         <Items
           error={error}

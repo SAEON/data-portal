@@ -1,14 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core'
-import { getStateFromUri } from '../../../../../modules/uri-state'
+import { Grid, Typography } from '@material-ui/core'
+import { getStateFromUri } from '../../../modules/uri-state'
 import Filter from './filter'
-import { isMobile, isTablet } from 'react-device-detect'
 
-console.log('isMobile', isMobile)
-console.log('isTablet', isTablet)
-
-export default () => {
+export default memo(() => {
   const { terms = [] } = getStateFromUri()
 
   const { error, loading, data } = useQuery(
@@ -71,4 +67,4 @@ export default () => {
       />
     </Grid>
   )
-}
+})

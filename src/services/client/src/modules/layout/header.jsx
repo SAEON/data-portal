@@ -77,12 +77,7 @@ export default withRouter(() => {
                 color="inherit"
                 size="small"
               >
-                <AccountIcon
-                  color={
-                    // eslint-disable-next-line no-constant-condition
-                    loggedIn ? 'secondary' : 'inherit'
-                  }
-                />
+                <AccountIcon color={loggedIn ? 'secondary' : 'inherit'} />
               </IconButton>
 
               {/* User profile menu */}

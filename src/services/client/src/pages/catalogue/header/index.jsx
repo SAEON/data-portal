@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Grid, AppBar, Toolbar, IconButton, Collapse, Fade } from '@material-ui/core'
-import { CatalogueSearchField } from '../../../../components'
+import { CatalogueSearchField } from '../../../components'
 import useStyles from './style'
 import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons'
 
@@ -32,13 +32,15 @@ export default () => {
       >
         {collapsed ? (
           <span>
-            <Fade in={true}>
-              <ExpandMoreIcon fontSize="large" />
-            </Fade>
+            <span>
+              <Fade in={collapsed}>
+                <ExpandMoreIcon fontSize="large" />
+              </Fade>
+            </span>
           </span>
         ) : (
           <span>
-            <Fade in={true}>
+            <Fade in={!collapsed}>
               <ExpandLessIcon fontSize="large" />
             </Fade>
           </span>
