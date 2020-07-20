@@ -21,6 +21,7 @@ import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../co
  * remove div from bottom of page and size container better
  * citation-dialog styling is currently inline. Move it to a style.js file with classes
  * bibtex citation block margin-right doesn't match margin-left
+ * add error handling to citation.js. Check if value exists before adding it to string 
  * Bug Fixes:
  * Bibtex / RIS clipboard button position breaks with extremely long citations (longer than height of available page)
  * long citation text causes the citation choices border-right to not fit to the citationDialog

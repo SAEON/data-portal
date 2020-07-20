@@ -14,7 +14,7 @@ export default json => {
   const resourceDescription = resourceType.resourceTypeGeneral
   const publisherLocation = 'some publisher location' //creators[0].affiliations[0].affiliation
   const keywords = subjects.map(sub => sub.subject)
-  const copyright = rightsList.rights
+  const copyright = rightsList[0].rights
   const abstract = descriptions.map(desc =>
     desc.descriptionType === 'Abstract' ? desc.description : undefined
   )
