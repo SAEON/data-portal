@@ -1,17 +1,51 @@
 export default json => {
-  const { publisher, publicationYear, resourceType, identifier } = json //singular objects/values
+  const { publisher, publicationYear, resourceType, identifier, language } = json //singular objects/values
   // eslint-disable-next-line no-unused-vars
-  const { creators, dates, titles } = json //arrays
+  const { creators, dates, titles, subjects, rightsList, descriptions } = json //arrays
 
   const today = new Date()
   const dateViewed = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 
   const DOI = identifier.identifierType === 'DOI' ? identifier.identifier : undefined
   const url = 'some url'
-  const author = publisher
+  const author = publisher //might need to be split into first and last names
   //title could be titles[i].title OR linkedResources.resourceDescription OR immutableResource.resourceDescription.
   const title = titles[0].title
   const resourceDescription = resourceType.resourceTypeGeneral
+  const publisherLocation = 'some publisher location' //creators[0].affiliations[0].affiliation
+  const keywords = subjects.map(sub => sub.subject)
+  const copyright = rightsList.rights
+  const abstract = descriptions.map(desc =>
+    desc.descriptionType === 'Abstract' ? desc.description : undefined
+  )
+
+  const bibtex = `@misc{https://doi.org/${DOI}${DOI},
+  doi = {${DOI}},
+  url = {${url}},
+  author = {${author}},
+  keywords = {${keywords}},
+  language = {${language}},
+  title = {${title}},
+  publisher = {${publisher}},
+  year = {${publicationYear}},
+  copyright = {${copyright}}
+}`
+
+  const ris = `TY  - ${resourceDescription}
+T1  - ${title}
+AU  - ${author}
+DO  - ${DOI}
+UR  - ${url}
+AB  - ${abstract}
+${subjects
+  .map(
+    sub => `KW  - ${sub.subject.trim()}
+`
+  )
+  .join('')}PY  - ${publicationYear}
+PB  - ${publisher}
+LA  - ${language}
+ER  - `
 
   return {
     APA:
@@ -20,11 +54,19 @@ export default json => {
     Harvard:
       `${author} ${publicationYear}, ${title}, ${resourceDescription}, ${publisher}, ` +
       (DOI ? `doi: ${DOI}` : `viewed ${dateViewed}, <${url}>`), //https://libraryguides.vu.edu.au/c.php?g=386501&p=4347840
-    MLA: `MLA citation in development`,
-    Vancouver: `Vancouver citation in development`,
-    Chicago: `Chicago citation in development`,
-    IEEE: `IEEE citation in development`,
-    BibTeX: `BibTeX citation in development`,
-    RIS: `RIS citation in development`,
+    MLA:
+      `${author}. ${title}. (${resourceDescription}) ${publisherLocation}, ${publisher}, ${publicationYear} ` +
+      (DOI ? `doi: ${DOI}` : ` ${dateViewed}. ${url}`), //WIP. Not a clear cut citation
+    Vancouver:
+      `${author}. ${title} [${resourceDescription}]. ${publisher}: ${publisherLocation}; ${publicationYear}. [cited ${dateViewed}]. ` +
+      (DOI ? `doi: ${DOI}` : `Available from ${url}`), //WIP. Supplying Publisher location is iffy https://guides.library.ubc.ca/ld.php?content_id=26931563
+    Chicago:
+      `${author}. ${publicationYear}. ${title}. ${publisherLocation}: ${publisher}. ` +
+      (DOI ? `${DOI}` : ` ${url}`), //WIP. Publisher location iffy https://libguides.murdoch.edu.au/Chicago/dataset
+    IEEE:
+      `${author}, ${title}, ${publisherLocation}: ${publisher}, ${publicationYear}. [${resourceDescription}] ` +
+      (DOI ? `doi: ${DOI}` : `Available: ${url}. [Accessed: ${dateViewed}]`), //WIP. Publisher location iffy https://libguides.murdoch.edu.au/IEEE/dataset https://libraryguides.vu.edu.au/ieeereferencing/gettingstarted#s-lg-box-wrapper-10134708
+    BibTeX: bibtex,
+    RIS: ris,
   }
 }

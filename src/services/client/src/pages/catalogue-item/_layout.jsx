@@ -19,12 +19,19 @@ import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../co
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
  * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
  * remove div from bottom of page and size container better
+ * citation-dialog styling is currently inline. Move it to a style.js file with classes
+ * bibtex citation block margin-right doesn't match margin-left
  * Bug Fixes:
- * bugfix: bottom of scrollbar is behind footer
+ * Bibtex / RIS clipboard button position breaks with extremely long citations (longer than height of available page)
+ * long citation text causes the citation choices border-right to not fit to the citationDialog
+ * bottom of scrollbar is behind footer
  * citation-dialog sizing is breaking with long citation text. Not sure if long enough citation is realistic but best be safe
+ * 
  * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
  * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
- 81db479c2c9386a6cfca5bc7e83c2c50
+ * http://www.sasdi.net/metaview.aspx?uuid=81db479c2c9386a6cfca5bc7e83c2c50 another example
+ * http://www.sasdi.net/metaview.aspx?uuid=1d9fa3fd257fea3ec81b5bc6c8fde61f# citations work here
+
  */
 
 const formatText = text => {
