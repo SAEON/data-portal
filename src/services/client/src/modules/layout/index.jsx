@@ -16,8 +16,8 @@ import CataloguePage from '../../pages/catalogue'
 import CatalogueItemPage from '../../pages/catalogue-item'
 import RenderComponent from '../../pages/render'
 
-const Transition = ({ children }) => (
-  <Fade in={true}>
+const Transition = ({ children, key }) => (
+  <Fade key={key} in={true}>
     <div>{children}</div>
   </Fade>
 )
@@ -54,7 +54,7 @@ export default () => {
             exact={false}
             path={'/render'}
             render={props => (
-              <Transition>
+              <Transition key="render">
                 <RenderComponent {...props} />
               </Transition>
             )}
@@ -66,7 +66,7 @@ export default () => {
             exact={true}
             path={'/catalogue'}
             render={() => (
-              <Transition>
+              <Transition key="catalogue">
                 <CataloguePage />
               </Transition>
             )}
@@ -78,7 +78,7 @@ export default () => {
             path={'/catalogue/:id'}
             exact={false}
             render={props => (
-              <Transition>
+              <Transition key="catalogue-record">
                 <CatalogueItemPage id={props.match.params.id} {...props} />
               </Transition>
             )}
@@ -96,7 +96,7 @@ export default () => {
                   HORIZONTAL_MARGIN={5}
                   VERTICAL_OFFSET_BOTTOM={30}
                 >
-                  <Transition>
+                  <Transition key="atlas">
                     <AtlasPage />
                   </Transition>
                 </MenuProvider>
@@ -117,7 +117,7 @@ export default () => {
               path={'/about'}
               exact={true}
               render={() => (
-                <Transition>
+                <Transition key="about">
                   <AboutPage />
                 </Transition>
               )}

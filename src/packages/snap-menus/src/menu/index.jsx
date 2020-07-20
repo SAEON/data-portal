@@ -270,7 +270,7 @@ export default forwardRef(
                   position: 'relative',
                 }}
               >
-                <Fade in={open}>
+                <Fade key="menu-fade" in={open}>
                   <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
                     <ResizableBox
                       resizeHandles={resizable ? ['se'] : []}
@@ -354,12 +354,12 @@ export default forwardRef(
                                   aria-label="close"
                                 >
                                   {state.minimized ? (
-                                    <Fade in={state.minimized}>
+                                    <Fade key="menu-minimized" in={state.minimized}>
                                       <MaximizeIcon />
                                     </Fade>
                                   ) : (
                                     <span>
-                                      <Fade in={!state.minimized}>
+                                      <Fade key="menu-maximized" in={!state.minimized}>
                                         <MinimizeIcon />
                                       </Fade>
                                     </span>

@@ -52,14 +52,14 @@ export default ({ item }) => {
       />
       {codeView ? (
         <CardContent>
-          <Fade in={codeView}>
+          <Fade key="1" in={codeView}>
             <div style={{ maxHeight: 400, overflowY: 'auto', overflowX: 'hidden' }}>
               <pre style={{ whiteSpace: 'break-spaces' }}>{JSON.stringify(doc, null, 2)}</pre>
             </div>
           </Fade>
         </CardContent>
       ) : (
-        <Fade in={!codeView}>
+        <Fade key="2" in={!codeView}>
           <div>
             <CardContent>{doc.descriptions?.[0]?.description || 'No description'}</CardContent>
             <CardContent>

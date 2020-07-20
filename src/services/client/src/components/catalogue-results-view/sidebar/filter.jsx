@@ -49,13 +49,11 @@ export default ({ results, title }) => {
               size="small"
             >
               {collapsed ? (
-                <span>
-                  <Fade in={collapsed}>
-                    <ExpandMoreIcon />
-                  </Fade>
-                </span>
+                <Fade key={1} in={collapsed}>
+                  <ExpandMoreIcon />
+                </Fade>
               ) : (
-                <Fade in={!collapsed}>
+                <Fade key={2} in={!collapsed}>
                   <ExpandLessIcon />
                 </Fade>
               )}
@@ -63,7 +61,7 @@ export default ({ results, title }) => {
           </div>
         </Toolbar>
       </AppBar>
-      <Collapse in={!collapsed}>
+      <Collapse key="result-list-collapse" in={!collapsed}>
         <Grid container spacing={0}>
           {(showAll ? sortedResults : sortedResults.slice(0, LIST_SIZE)).map(
             ({ key, doc_count }) => {
