@@ -10,7 +10,7 @@ const handle = debounce(async ({ type, x, y }) => {
       y,
     },
   })
-}, 20)
+})
 
 export default ({ children }) => {
   const boundary = useRef(null)
