@@ -88,7 +88,7 @@ function TabsDialog(props) {
   )
 }
 
-export default props => {
+export default ({ json, ...props }) => {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -96,11 +96,11 @@ export default props => {
       <Button
         variant="contained"
         disableElevation
-        size={props.size || 'medium'}
         color="primary"
         onClick={() => {
           setOpen(true)
         }}
+        {...props}
       >
         “ Cite
       </Button>
@@ -109,7 +109,7 @@ export default props => {
         onClose={() => {
           setOpen(false)
         }}
-        json={props.json}
+        json={json}
       />
     </>
   )

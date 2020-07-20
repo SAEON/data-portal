@@ -3,9 +3,9 @@ import { Tooltip, Button } from '@material-ui/core'
 import { GetApp as GetAppIcon } from '@material-ui/icons'
 import SimpleLink from '../link'
 
-export default ({ immutableResource, ...props }) => {
+export default ({ immutableResource, children, ...props }) => {
   return (
-    <SimpleLink uri={immutableResource.resourceURL}>
+    <SimpleLink style={{ display: 'block' }} uri={immutableResource.resourceURL}>
       <Tooltip
         title={`${immutableResource.resourceDescription} (${immutableResource.resourceURL.replace(
           /.*\./,
@@ -13,7 +13,7 @@ export default ({ immutableResource, ...props }) => {
         )})`}
       >
         <Button {...props} startIcon={<GetAppIcon />}>
-          {props.children}
+          {children}
         </Button>
       </Tooltip>
     </SimpleLink>

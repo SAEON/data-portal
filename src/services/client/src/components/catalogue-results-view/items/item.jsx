@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
+  Grid,
   Card,
   CardHeader,
   CardContent,
@@ -63,54 +64,63 @@ export default ({ item }) => {
           <div>
             <CardContent>{doc.descriptions?.[0]?.description || 'No description'}</CardContent>
             <CardContent>
-              <Button
-                startIcon={<ViewIcon />}
-                disabled={!doc.alternateIdentifiers}
-                color="primary"
-                size="small"
-                onClick={() =>
-                  history.push(
-                    `/catalogue/${
-                      doc.alternateIdentifiers?.find(
-                        ({ alternateIdentifierType: type }) => type === 'Plone'
-                      ).alternateIdentifier
-                    }`
-                  )
-                }
-                style={{ marginRight: 10 }}
-                variant="contained"
-                disableElevation
-              >
-                View Metadata
-              </Button>
-              <Tooltip title={'This has not been implemented yet'}>
-                <span>
+              <Grid container spacing={2}>
+                <Grid item xs={6} sm={3}>
                   <Button
-                    startIcon={<PreviewIcon />}
-                    size="small"
+                    fullWidth
+                    startIcon={<ViewIcon />}
+                    disabled={!doc.alternateIdentifiers}
                     color="primary"
-                    disabled={true}
-                    onClick={() => null}
-                    style={{ marginRight: 10 }}
+                    size="small"
+                    onClick={() =>
+                      history.push(
+                        `/catalogue/${
+                          doc.alternateIdentifiers?.find(
+                            ({ alternateIdentifierType: type }) => type === 'Plone'
+                          ).alternateIdentifier
+                        }`
+                      )
+                    }
                     variant="contained"
                     disableElevation
                   >
-                    Preview Dataset
+                    Metadata
                   </Button>
-                </span>
-              </Tooltip>
-
-              <DataDownloadButton
-                disableElevation
-                variant="contained"
-                color="primary"
-                style={{ marginRight: 10 }}
-                size="small"
-                immutableResource={doc.immutableResource}
-              >
-                Download Data
-              </DataDownloadButton>
-              <CitationDialog size="small" json={doc} />
+                </Grid>
+                <Grid item xs={6} sm={3}>
+                  <Tooltip title={'This has not been implemented yet'}>
+                    <span>
+                      <Button
+                        fullWidth
+                        startIcon={<PreviewIcon />}
+                        size="small"
+                        color="primary"
+                        disabled={true}
+                        onClick={() => null}
+                        variant="contained"
+                        disableElevation
+                      >
+                        Preview
+                      </Button>
+                    </span>
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={6} sm={3}>
+                  <DataDownloadButton
+                    disableElevation
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    immutableResource={doc.immutableResource}
+                  >
+                    Download
+                  </DataDownloadButton>
+                </Grid>
+                <Grid item xs={6} sm={3}>
+                  <CitationDialog fullWidth size="small" json={doc} />
+                </Grid>
+              </Grid>
             </CardContent>
             <CardContent>
               {doc.identifier ? (
