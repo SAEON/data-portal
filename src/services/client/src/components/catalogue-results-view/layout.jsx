@@ -68,7 +68,7 @@ export default ({
           {disableSidebar ? null : (
             <IconButton
               onClick={() => setShowSidebar(!showSidebar)}
-              color={showSidebar ? 'primary' : 'default'}
+              color={showSidebar ? 'primary' : 'inherit'}
             >
               <FilterIcon />
             </IconButton>

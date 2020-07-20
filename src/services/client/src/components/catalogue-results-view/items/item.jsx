@@ -10,12 +10,16 @@ import {
   IconButton,
   Fade,
   Tooltip,
+  Collapse,
 } from '@material-ui/core'
 import {
   Visibility as ViewIcon,
   BarChart as PreviewIcon,
   Code as CodeIcon,
+  ExpandLess as ExpandLessIcon,
+  ExpandMore as ExpandMoreIcon,
 } from '@material-ui/icons'
+import QuickForm from '@saeon/quick-form'
 import { Link, CitationDialog, DataDownloadButton } from '../..'
 
 export default ({ item }) => {
@@ -24,7 +28,13 @@ export default ({ item }) => {
   const doc = item.target._source.metadata_json
 
   return (
-    <Card variant="outlined" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+    <Card
+      variant="outlined"
+      style={{
+        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+      }}
+    >
       <CardHeader
         title={<Typography variant="h6">{doc.titles?.[0]?.title || 'Title missing'}</Typography>}
         subheader={
@@ -62,7 +72,35 @@ export default ({ item }) => {
       ) : (
         <Fade key="2" in={!codeView}>
           <div>
-            <CardContent>{doc.descriptions?.[0]?.description || 'No description'}</CardContent>
+            <QuickForm collapsed={true}>
+              {({ updateForm, collapsed }) => {
+                const content = doc.descriptions?.[0]?.description || 'No description'
+                return (
+                  <Collapse in={!collapsed} collapsedSize={80}>
+                    <CardContent>
+                      {collapsed ? content.truncate(300) : content}
+                      {doc.descriptions?.[0]?.description.length > 300 ? (
+                        <IconButton
+                          style={{ padding: 0 }}
+                          onClick={() => updateForm({ collapsed: !collapsed })}
+                          color="primary"
+                        >
+                          {collapsed ? (
+                            <Fade key="expand-description-collapsed" in={collapsed}>
+                              <ExpandMoreIcon />
+                            </Fade>
+                          ) : (
+                            <Fade key="expand-description-expanded" in={!collapsed}>
+                              <ExpandLessIcon />
+                            </Fade>
+                          )}
+                        </IconButton>
+                      ) : null}
+                    </CardContent>
+                  </Collapse>
+                )
+              }}
+            </QuickForm>
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={3}>
@@ -70,7 +108,7 @@ export default ({ item }) => {
                     fullWidth
                     startIcon={<ViewIcon />}
                     disabled={!doc.alternateIdentifiers}
-                    color="primary"
+                    color="secondary"
                     size="small"
                     onClick={() =>
                       history.push(
@@ -94,7 +132,7 @@ export default ({ item }) => {
                         fullWidth
                         startIcon={<PreviewIcon />}
                         size="small"
-                        color="primary"
+                        color="secondary"
                         disabled={true}
                         onClick={() => null}
                         variant="contained"
@@ -110,7 +148,7 @@ export default ({ item }) => {
                     disableElevation
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     size="small"
                     immutableResource={doc.immutableResource}
                   >
@@ -118,7 +156,7 @@ export default ({ item }) => {
                   </DataDownloadButton>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <CitationDialog fullWidth size="small" json={doc} />
+                  <CitationDialog color="secondary" fullWidth size="small" json={doc} />
                 </Grid>
               </Grid>
             </CardContent>

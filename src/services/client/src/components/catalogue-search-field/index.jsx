@@ -92,7 +92,11 @@ const getSearchState = () =>
     .split(',')
     .filter(_ => _)
 
-const SUBJECT = 'metadata_json.subjects.subject.raw'
+const SUBJECTS = [
+  'metadata_json.publicationYear',
+  'metadata_json.publisher.raw',
+  'metadata_json.subjects.subject.raw',
+]
 const TERM_LIMIT = 10000
 
 export default ({ classes, ...props }) => {
@@ -108,7 +112,7 @@ export default ({ classes, ...props }) => {
       }
     `,
     {
-      variables: { fields: [SUBJECT], limit: TERM_LIMIT },
+      variables: { fields: SUBJECTS, limit: TERM_LIMIT },
     }
   )
 
@@ -136,8 +140,15 @@ export default ({ classes, ...props }) => {
           freeSolo
           size="small"
           id="catalog-search-tagged-search"
-          options={data.catalogue.summary[0][SUBJECT].map(({ key }) => key).filter(_ => _)}
-          getOptionLabel={option => option}
+          options={data.catalogue.summary
+            .map(summary =>
+              Object.entries(summary)
+                .map(([, values]) => values.map(({ key }) => key))
+                .flat()
+            )
+            .flat()
+            .filter(_ => _)}
+          getOptionLabel={option => `${option}`}
           renderTags={(value, getTagProps) => {
             return value.map((option, index) => (
               <Chip
