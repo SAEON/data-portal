@@ -95,7 +95,7 @@ const getSearchState = () =>
 const SUBJECT = 'metadata_json.subjects.subject.raw'
 const TERM_LIMIT = 10000
 
-export default ({ classes }) => {
+export default ({ classes, ...props }) => {
   const { pushState } = useUriState(useHistory())
   const terms = getSearchState()
   const { error, loading, data } = useQuery(
@@ -156,16 +156,15 @@ export default ({ classes }) => {
                 return (
                   <TextField
                     {...params}
-                    className={classes.textField}
+                    className={classes.textField} // TODO remove external usage of classes prop
                     id="saeon-data-search"
-                    style={{ padding: 0 }}
                     size="medium"
-                    margin="none"
                     onChange={inputValue => updateForm({ inputValue })}
                     value={inputValue}
-                    label="Term search"
+                    placeholder="Select tags"
                     variant="outlined"
                     autoFocus
+                    {...props}
                   />
                 )
               }}

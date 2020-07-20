@@ -14,7 +14,10 @@ export default () => {
         <Toolbar className={classes.toolbar}>
           <Grid container justify="center">
             <Grid item xs={12} sm={8}>
-              <CatalogueSearchField classes={classes} />
+              <CatalogueSearchField
+                style={{ visibility: collapsed ? 'hidden' : 'visible' }}
+                classes={classes}
+              />
             </Grid>
           </Grid>
         </Toolbar>
