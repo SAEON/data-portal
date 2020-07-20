@@ -45,6 +45,8 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
     }
   )
 
+  console.log('the error', error)
+
   let miniSearchResults
   if (data && textSearch) {
     const miniSearch = new MiniSearch({
@@ -62,7 +64,9 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
     })
 
     miniSearch.addAll(
-      data?.catalogue.records.nodes.map(node => Object.assign({ ...node }, { id: node.target._id }))
+      data?.catalogue.records.nodes.map(node =>
+        Object.assign({ ...node }, { id: node?.target?._id })
+      )
     )
 
     miniSearchResults = miniSearch.search(textSearch).map(({ id, score }) => [id, score])
@@ -71,7 +75,7 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
   // TODO - I think that this is the OLD value of cursors.start prior to state update. Works but should reference the new value
   const results = data?.cursors?.start
     ? data?.catalogue.records.nodes.slice(0).reverse()
-    : data?.catalogue.records.nodes
+    : data?.catalogue.records.nodes || []
 
   return (
     <Layout
@@ -95,7 +99,7 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
           results={
             miniSearchResults
               ? miniSearchResults.map(([id, score]) =>
-                  Object.assign({ ...results.find(({ target }) => id === target._id) }, { score })
+                  Object.assign({ ...results.find(({ target }) => id === target?._id) }, { score })
                 )
               : results
           }

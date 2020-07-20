@@ -11,8 +11,8 @@ export default {
     const { _firstResult, _lastResult } = self
     return {
       hasNextPage: undefined,
-      startCursor: _firstResult._id,
-      endCursor: _lastResult._id,
+      startCursor: _firstResult?._id || undefined,
+      endCursor: _lastResult?._id || undefined,
       hasPreviousPage: undefined,
     }
   },
