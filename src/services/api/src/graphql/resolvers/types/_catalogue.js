@@ -45,7 +45,22 @@ export default {
       }
     } else if (subjects && subjects.length) {
       dsl.query.bool.must = [
-        subjects.map(subject => ({ term: { 'metadata_json.subjects.subject.raw': subject } })),
+        subjects
+          .filter(_ => _)
+          .map(subject => {
+            const phrase = {
+              bool: {
+                should: parseInt(subject)
+                  ? [{ match: { 'metadata_json.publicationYear': subject } }]
+                  : [
+                      { term: { 'metadata_json.subjects.subject.raw': subject } },
+                      { match: { 'metadata_json.publisher.raw': subject } },
+                    ],
+              },
+            }
+
+            return phrase
+          }),
       ]
     }
 

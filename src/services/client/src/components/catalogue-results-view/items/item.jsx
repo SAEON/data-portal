@@ -15,7 +15,7 @@ import {
   BarChart as PreviewIcon,
   Code as CodeIcon,
 } from '@material-ui/icons'
-import { Link, CitationDialog, DataDownloadButton } from '../../../../../../components'
+import { Link, CitationDialog, DataDownloadButton } from '../..'
 
 export default ({ item }) => {
   const history = useHistory()
@@ -42,7 +42,7 @@ export default ({ item }) => {
             ) : null}
             <IconButton
               onClick={() => toggleCodeView(!codeView)}
-              color={codeView ? 'secondary' : 'primary'}
+              color={codeView ? 'primary' : 'default'}
               aria-label="Show metadata JSON object"
             >
               <CodeIcon />

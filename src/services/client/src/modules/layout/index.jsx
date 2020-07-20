@@ -14,6 +14,7 @@ import AboutPage from '../../pages/about'
 import HomePage from '../../pages/home'
 import CataloguePage from '../../pages/catalogue'
 import CatalogueItemPage from '../../pages/catalogue-item'
+import RenderComponent from '../../pages/render'
 
 const Transition = ({ children }) => (
   <Fade in={true}>
@@ -21,11 +22,19 @@ const Transition = ({ children }) => (
   </Fade>
 )
 
+const headlessPages = ['/render']
+
 export default () => {
   const classes = useStyles()
+  const { pathname } = window.location
+  // TODO: This looks like an eslint bug - the escapes are definitely required
+  // eslint-disable-next-line no-useless-escape
+  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0]
+
   return (
     <Router>
-      <Header />
+      {headlessPages.includes(currentRoute) ? null : <Header />}
+
       <div
         className={clsx({
           [classes.wrapper]: true,
@@ -37,6 +46,18 @@ export default () => {
             key={'authenticated'}
             path={'/authenticated'}
             render={() => <Redirect to={'/'} />}
+          />
+
+          {/* Render individual components */}
+          <Route
+            key={'render'}
+            exact={false}
+            path={'/render'}
+            render={props => (
+              <Transition>
+                <RenderComponent {...props} />
+              </Transition>
+            )}
           />
 
           {/* Catalogue */}
@@ -104,7 +125,7 @@ export default () => {
           </MapProvider>
         </Switch>
       </div>
-      <Footer />
+      {headlessPages.includes(currentRoute) ? null : <Footer />}
     </Router>
   )
 }

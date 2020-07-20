@@ -1,26 +1,24 @@
 {
-  "name": "@saeon/quick-form",
-  "version": "1.0.4",
-  "description": "Quickly add localised state to your component tree",
+  "name": "@saeon/jspm-webpack-plugin",
+  "version": "0.0.1",
+  "description": "Transpiles source code imports to use the jspm.dev module CDN",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
-  "peerDependencies": {
-    "react": ">=16.13"
-  },
+  "peerDependencies": {},
   "scripts": {
     "watch": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist'",
     "build": "rimraf ./dist && NODE_ENV=production webpack",
-    "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/quick-form -s patch",
-    "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/quick-form -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/quick-form -s major",
+    "publish:patch": "npm run build && ../../../scripts/publish.sh -p @saeon/jspm-webpack-plugin -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.sh -p @saeon/jspm-webpack-plugin -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.sh -p @saeon/jspm-webpack-plugin -s major",
     "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
     "check-package-updates": "ncu",
     "update-package-dependencies": "ncu -u"
   },
   "keywords": [
-    "@saeon/quick-form"
+    "@saeon/jspm-webpack-plugin"
   ],
   "repository": {
     "type": "git",
@@ -29,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/SAEONData/saeon-atlas/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/quick-form",
+  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/jspm-webpack-plugin",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {

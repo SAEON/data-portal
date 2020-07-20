@@ -15,6 +15,7 @@ export const GQL_SUBSCRIPTIONS_PROVIDER =
 
 // Client authentication / authorization
 export const CLIENT_ID = process.env.CLIENT_ID || 'saeonatlasclienttest'
+export const CLIENT_HOST_ADDRESS = process.env.CLIENT_HOST_ADDRESS || 'http://localhost:3001'
 export const REDIRECT_URL = process.env.REDIRECT_URL || 'http://localhost:3001/authenticated'
 export const AUTHENTICATION_ENDPOINT =
   process.env.AUTHENTICATION_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/auth'

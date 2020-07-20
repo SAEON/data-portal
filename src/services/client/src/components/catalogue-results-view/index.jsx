@@ -1,14 +1,13 @@
-import React, { useState, memo } from 'react'
+import React, { useState } from 'react'
 import { useQuery, gql } from '@apollo/client'
-import { Grid } from '@material-ui/core'
-import useStyles from '../../../style'
-import clsx from 'clsx'
-import Header from './header'
-import ResultsList from './item-list'
+import Layout from './layout'
+import Sidebar from './sidebar'
+import Items from './items'
 import MiniSearch from 'minisearch'
+import { getStateFromUri } from '../../modules/uri-state'
 
-export default memo(({ subjects }) => {
-  const classes = useStyles()
+export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'inherit' }) => {
+  const { terms = [] } = getStateFromUri()
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState({
@@ -38,7 +37,7 @@ export default memo(({ subjects }) => {
     `,
     {
       variables: {
-        subjects: subjects || [],
+        subjects: terms || [],
         size: pageSize,
         after: cursors.end,
         before: cursors.start,
@@ -75,36 +74,22 @@ export default memo(({ subjects }) => {
     : data?.catalogue.records.nodes
 
   return (
-    <Grid
-      className={clsx({
-        [classes.grid]: true,
-      })}
-      item
-      xs={12}
-      md={8}
-    >
-      <Grid
-        container
-        spacing={2}
-        className={clsx({
-          [classes.grid]: true,
-        })}
-      >
-        {/* HEADER */}
-        <Header
-          cursors={cursors}
-          setCursors={setCursors}
-          setPageSize={setPageSize}
-          pageSize={pageSize}
-          error={error}
-          loading={loading}
-          catalogue={data?.catalogue}
-          setTextSearch={setTextSearch}
-          textSearch={textSearch}
-        />
-
-        {/* CONTENT */}
-        <ResultsList
+    <Layout
+      headerColor={headerColor}
+      hideSidebar={hideSidebar}
+      disableSidebar={disableSidebar}
+      cursors={cursors}
+      setCursors={setCursors}
+      setPageSize={setPageSize}
+      pageSize={pageSize}
+      error={error}
+      loading={loading}
+      catalogue={data?.catalogue}
+      setTextSearch={setTextSearch}
+      textSearch={textSearch}
+      Sidebar={() => <Sidebar />}
+      ResultList={() => (
+        <Items
           error={error}
           loading={loading}
           results={
@@ -115,7 +100,7 @@ export default memo(({ subjects }) => {
               : results
           }
         />
-      </Grid>
-    </Grid>
+      )}
+    />
   )
-})
+}

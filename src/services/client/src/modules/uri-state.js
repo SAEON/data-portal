@@ -1,13 +1,15 @@
-export const getStateFromUri = () => {
+export const getStateFromUri = (splitResult = true) => {
   const url = window.location.href
   const regex = /[?&]([^=#]+)=([^&#]*)/g
   const params = {}
 
   var match
   while ((match = regex.exec(url))) {
-    params[match[1]] = decodeURIComponent(match[2])
-      .split(',')
-      .filter(_ => _)
+    params[match[1]] = splitResult
+      ? decodeURIComponent(match[2])
+          .split(',')
+          .filter(_ => _)
+      : decodeURIComponent(match[2])
   }
   return params
 }

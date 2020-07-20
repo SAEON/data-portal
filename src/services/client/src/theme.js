@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { lightBlue, orange } from '@material-ui/core/colors'
+import { blue, blueGrey } from '@material-ui/core/colors'
 
 export default createMuiTheme({
   customSizes: {
@@ -15,9 +15,7 @@ export default createMuiTheme({
     },
     MuiButton: {
       root: {
-        '&$disabled': {
-          color: 'rgba(255,255,255,0.5)',
-        },
+        '&$disabled': {},
       },
     },
   },
@@ -37,12 +35,10 @@ export default createMuiTheme({
   },
   palette: {
     primary: {
-      main: lightBlue[900],
-      contrastText: '#fff',
+      main: blue[900],
     },
     secondary: {
-      main: orange[700],
-      contrastText: '#fff',
+      main: blueGrey[200],
     },
   },
   status: {
