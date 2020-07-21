@@ -156,7 +156,7 @@ export default withRouter(() => {
                         </DialogContent>
                         <DialogActions>
                           {loading ? (
-                            <CircularProgress />
+                            <CircularProgress size={20} />
                           ) : data ? (
                             <DoneIcon color="secondary" />
                           ) : error ? (
