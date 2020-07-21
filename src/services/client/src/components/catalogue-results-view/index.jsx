@@ -45,8 +45,6 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
     }
   )
 
-  console.log('the error', error)
-
   let miniSearchResults
   if (data && textSearch) {
     const miniSearch = new MiniSearch({

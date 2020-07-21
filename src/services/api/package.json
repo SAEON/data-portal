@@ -1,6 +1,6 @@
 {
   "name": "@saeon/api",
-  "version": "0.0.156",
+  "version": "0.0.157",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
