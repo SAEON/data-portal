@@ -16,6 +16,8 @@ import {
   DialogContentText,
   DialogActions,
   TextField,
+  CircularProgress,
+  Tooltip,
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import {
@@ -27,6 +29,8 @@ import {
   Home as HomeIcon,
   AccountCircle as AccountIcon,
   Feedback as FeedbackIcon,
+  Done as DoneIcon,
+  Error as ErrorIcon,
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../package.json'
@@ -42,11 +46,6 @@ export default withRouter(() => {
   const [userMenuAnchor, setUserMenuAnchor] = useState(null)
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
   const closeMenu = () => setMenuAnchor(null)
-  const [submitFeedback] = useMutation(gql`
-    mutation submitFeedback($text: String!, $rating: Int!) {
-      submitFeedback(text: $text, rating: $rating)
-    }
-  `)
 
   return (
     <AppBar variant="outlined" position="static">
@@ -115,6 +114,11 @@ export default withRouter(() => {
               >
                 <QuickForm text="" rating={0}>
                   {({ updateForm, text, rating }) => {
+                    const [submitFeedback, { error, loading, data }] = useMutation(gql`
+                      mutation submitFeedback($text: String!, $rating: Int!) {
+                        submitFeedback(text: $text, rating: $rating)
+                      }
+                    `)
                     return (
                       <>
                         <DialogTitle>Feedback</DialogTitle>
@@ -151,17 +155,39 @@ export default withRouter(() => {
                           />
                         </DialogContent>
                         <DialogActions>
-                          <Button
-                            disabled={text.length >= 10 ? false : true}
-                            color="primary"
-                            onClick={() => {
-                              submitFeedback({ variables: { text, rating } })
-                              setFeedbackDialogueOpen(false)
-                            }}
-                            autoFocus
-                          >
-                            Send
-                          </Button>
+                          {loading ? (
+                            <CircularProgress />
+                          ) : data ? (
+                            <DoneIcon color="secondary" />
+                          ) : error ? (
+                            <Tooltip title={error.message}>
+                              <ErrorIcon color="error" />
+                            </Tooltip>
+                          ) : undefined}
+
+                          {data || error ? (
+                            <Button
+                              disabled={false}
+                              color="primary"
+                              onClick={() => {
+                                setFeedbackDialogueOpen(false)
+                              }}
+                              autoFocus
+                            >
+                              Close
+                            </Button>
+                          ) : (
+                            <Button
+                              disabled={loading || text.length >= 10 ? false : true}
+                              color="primary"
+                              onClick={() => {
+                                submitFeedback({ variables: { text, rating } })
+                              }}
+                              autoFocus
+                            >
+                              Send
+                            </Button>
+                          )}
                         </DialogActions>
                       </>
                     )

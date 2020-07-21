@@ -29,17 +29,17 @@ export default () => {
         onClick={() => setCollapsed(!collapsed)}
         style={{
           position: 'absolute',
-          bottom: -6,
+          bottom: 2,
           left: 'calc(50% - 15px)',
         }}
       >
         {collapsed ? (
           <Fade key="1" in={collapsed}>
-            <ExpandMoreIcon fontSize="large" />
+            <ExpandMoreIcon fontSize="small" />
           </Fade>
         ) : (
           <Fade key="2" in={!collapsed}>
-            <ExpandLessIcon fontSize="large" />
+            <ExpandLessIcon fontSize="small" />
           </Fade>
         )}
       </IconButton>
