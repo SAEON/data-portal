@@ -93,17 +93,19 @@ export default withRouter(() => {
           {({ loggedIn, login, logout }) => (
             <div style={{ marginLeft: 'auto' }}>
               {/* FEEDBACK BUTTON */}
-              <IconButton
-                style={{ marginRight: 10 }}
-                aria-label="Provide anonymous feedback"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={() => setFeedbackDialogueOpen(!feedbackDialogueOpen)}
-                color="inherit"
-                size="small"
-              >
-                <FeedbackIcon />
-              </IconButton>
+              <Tooltip title="Send us anonymous feedback on the site">
+                <IconButton
+                  style={{ marginRight: 10 }}
+                  aria-label="Provide anonymous feedback"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={() => setFeedbackDialogueOpen(!feedbackDialogueOpen)}
+                  color="inherit"
+                  size="small"
+                >
+                  <FeedbackIcon />
+                </IconButton>
+              </Tooltip>
 
               {/* FEEDBACK DIALOGUE */}
               <Dialog
