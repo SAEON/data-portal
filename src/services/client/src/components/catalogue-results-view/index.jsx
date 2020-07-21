@@ -51,13 +51,16 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
       fields: [
         'target._source.metadata_json.titles.0.title',
         'target._source.metadata_json.descriptions.0.description',
+        'target._source.metadata_json.creators.0.name',
+        'target._source.metadata_json.subtitle',
+        'target._source.metadata_json.contributors.0.name',
       ],
       storeFields: ['target._id'],
       extractField: (document, fieldName) => {
         return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
       },
       searchOptions: {
-        fuzzy: 0.3,
+        fuzzy: 0.5,
       },
     })
 
