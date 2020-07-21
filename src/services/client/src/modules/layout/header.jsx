@@ -1,7 +1,23 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Typography, Menu, Fade, MenuItem } from '@material-ui/core'
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button,
+  Typography,
+  Menu,
+  Fade,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
+} from '@material-ui/core'
+import { Rating } from '@material-ui/lab'
 import {
   Explore as MapIcon,
   Menu as MenuIcon,
@@ -10,18 +26,27 @@ import {
   Info as InfoIcon,
   Home as HomeIcon,
   AccountCircle as AccountIcon,
+  Feedback as FeedbackIcon,
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../package.json'
 import { SOURCE_CODE_URI } from '../../config'
 import useStyles from './style'
 import { AuthContext } from '../provider-auth'
+import QuickForm from '@saeon/quick-form'
+import { gql, useMutation } from '@apollo/client'
 
 export default withRouter(() => {
   const classes = useStyles()
   const [menuAnchor, setMenuAnchor] = useState(null)
   const [userMenuAnchor, setUserMenuAnchor] = useState(null)
+  const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
   const closeMenu = () => setMenuAnchor(null)
+  const [submitFeedback] = useMutation(gql`
+    mutation submitFeedback($text: String!, $rating: Int!) {
+      submitFeedback(text: $text, rating: $rating)
+    }
+  `)
 
   return (
     <AppBar variant="outlined" position="static">
@@ -68,7 +93,83 @@ export default withRouter(() => {
         <AuthContext.Consumer>
           {({ loggedIn, login, logout }) => (
             <div style={{ marginLeft: 'auto' }}>
-              {/* Icon */}
+              {/* FEEDBACK BUTTON */}
+              <IconButton
+                style={{ marginRight: 10 }}
+                aria-label="Provide anonymous feedback"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={() => setFeedbackDialogueOpen(!feedbackDialogueOpen)}
+                color="inherit"
+                size="small"
+              >
+                <FeedbackIcon />
+              </IconButton>
+
+              {/* FEEDBACK DIALOGUE */}
+              <Dialog
+                open={feedbackDialogueOpen}
+                onClose={() => setFeedbackDialogueOpen(false)}
+                aria-labelledby="Feedback Dialogue"
+                aria-describedby="Provide anonymous feedback"
+              >
+                <QuickForm text="" rating={0}>
+                  {({ updateForm, text, rating }) => {
+                    return (
+                      <>
+                        <DialogTitle>Feedback</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Feedback collected here is anonymous - we appreciate your effort in
+                            helping us build a service that better works and better suits your need
+                          </DialogContentText>
+                          <Rating
+                            size="small"
+                            max={5}
+                            name="simple-controlled"
+                            value={parseInt(rating, 10)}
+                            onChange={({ target }) => {
+                              updateForm({ rating: parseInt(target.value, 10) })
+                            }}
+                          />
+                          <TextField
+                            error={text.length >= 10 ? false : true}
+                            helperText={
+                              text.length >= 10
+                                ? ''
+                                : `${10 - text.length} more characters required...`
+                            }
+                            autoFocus
+                            margin="dense"
+                            multiline
+                            rows={4}
+                            value={text}
+                            onChange={({ target }) => updateForm({ text: target.value })}
+                            rowsMax={10}
+                            variant="outlined"
+                            fullWidth
+                          />
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            disabled={text.length >= 10 ? false : true}
+                            color="primary"
+                            onClick={() => {
+                              submitFeedback({ variables: { text, rating } })
+                              setFeedbackDialogueOpen(false)
+                            }}
+                            autoFocus
+                          >
+                            Send
+                          </Button>
+                        </DialogActions>
+                      </>
+                    )
+                  }}
+                </QuickForm>
+              </Dialog>
+
+              {/* USER MENU BUTTON */}
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -80,7 +181,7 @@ export default withRouter(() => {
                 <AccountIcon color={loggedIn ? 'secondary' : 'inherit'} />
               </IconButton>
 
-              {/* User profile menu */}
+              {/* USER MENU */}
               <Menu
                 id="menu-appbar"
                 anchorEl={userMenuAnchor}

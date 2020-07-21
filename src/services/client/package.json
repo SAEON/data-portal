@@ -1,6 +1,6 @@
 {
   "name": "@saeon/client",
-  "version": "0.0.158",
+  "version": "0.0.159",
   "description": "Browser-based atlas for searching OGC-compliant spatial data repositories",
   "keywords": [
     "@saeon/client",
