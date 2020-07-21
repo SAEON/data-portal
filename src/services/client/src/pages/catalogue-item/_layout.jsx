@@ -15,22 +15,22 @@ import useStyles from './style'
 import GetAppIcon from '@material-ui/icons/GetApp'
 import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../components'
 /**TO DO:
- * citations.js needs its variables clearly defined. correct json props are to be used and error checked 
  * Figure out what sasdi.net -> Related Resources -> Data: Preview is equivalent to. json.linkedResources is similar but not the same
- * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
  * remove div from bottom of page and size container better
- * citation-dialog styling is currently inline. Move it to a style.js file with classes
- * bibtex citation block margin-right doesn't match margin-left
- * add error handling to citation.js. Check if value exists before adding it to string 
- * Bug Fixes:
- * Bibtex / RIS clipboard button position breaks with extremely long citations (longer than height of available page)
- * long citation text causes the citation choices border-right to not fit to the citationDialog
+ * verify if SANS 1878 card at bottom of metaview should stay. its hardcorded currently because the values arent in metadata
+ * citation-dialog styling is currently inline. Move it to style.js
+ * add error handling to citation.js. Check if value exists before adding it to strings 
+ * citation dialog transition animation to resizing (flex grow) [recommend to not use material-ui transition but react-transition-group package]
+ * transition guides:
+ * http://reactcommunity.org/react-transition-group/css-transition
+ * https://alligator.io/react/react-transition-group/
+ * https://css-tricks.com/using-css-transitions-auto-dimensions/
+ * https://material-ui.com/components/transitions/#grow
+ *  Bug Fixes:
  * bottom of scrollbar is behind footer
- * citation-dialog sizing is breaking with long citation text. Not sure if long enough citation is realistic but best be safe
- * 
+ *  
  * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
  * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
- * http://www.sasdi.net/metaview.aspx?uuid=81db479c2c9386a6cfca5bc7e83c2c50 another example
  * http://www.sasdi.net/metaview.aspx?uuid=1d9fa3fd257fea3ec81b5bc6c8fde61f# citations work here
 
  */
@@ -263,11 +263,11 @@ export default ({ json, id }) => {
               <Typography gutterBottom variant="h5">
                 SANS 1878
               </Typography>
-              <Typography variant="body2"></Typography>
+              <Typography variant="body2">In development</Typography>
             </CardContent>
           </Card>
         </Grid>
-        <div style={{ height: '100px', width: '100%' }} />
+        <div style={{ height: '200px', width: '100%' }} />
       </Grid>
     </>
   )
