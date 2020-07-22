@@ -12,6 +12,8 @@ import { WebSocketLink } from '@apollo/link-ws'
 import Application from './app'
 import { nativeExtensions } from './lib/fns'
 import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
+
+// Some helpful functions
 nativeExtensions()
 
 // Configure Apollo link
@@ -48,15 +50,13 @@ configureLogger(() => ({
 render(<Application link={link} />, document.getElementById('root'))
 
 // Worker defined in webpack.config.js (Google Workbox)
-if (process.env.NODE_ENV === 'production') {
-  if ('serviceWorker' in navigator) {
-    // window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))
+if ('serviceWorker' in navigator) {
+  // window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))
 
-    // Uninstall all service workers
-    navigator.serviceWorker.getRegistrations().then(function (registrations) {
-      for (let registration of registrations) {
-        registration.unregister()
-      }
-    })
-  }
+  // Uninstall all service workers
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    for (let registration of registrations) {
+      registration.unregister()
+    }
+  })
 }

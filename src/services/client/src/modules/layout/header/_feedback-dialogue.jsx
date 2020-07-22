@@ -42,8 +42,8 @@ export default () => {
         <QuickForm text="" rating={0}>
           {({ updateForm, text, rating }) => {
             const [submitFeedback, { error, loading, data }] = useMutation(gql`
-              mutation submitFeedback($text: String!, $rating: Int!) {
-                submitFeedback(text: $text, rating: $rating)
+              mutation submitFeedback($text: String!, $rating: Int!, $pathname: String!) {
+                submitFeedback(text: $text, rating: $rating, pathname: $pathname)
               }
             `)
             return (
@@ -106,7 +106,9 @@ export default () => {
                       disabled={loading || text.length >= 10 ? false : true}
                       color="primary"
                       onClick={() => {
-                        submitFeedback({ variables: { text, rating } })
+                        submitFeedback({
+                          variables: { text, rating, pathname: window.location.pathname },
+                        })
                       }}
                       autoFocus
                     >

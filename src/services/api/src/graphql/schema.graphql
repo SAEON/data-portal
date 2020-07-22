@@ -104,5 +104,5 @@ type Subscription {
 
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
-  submitFeedback(text: String!, rating: Int!): Boolean!
+  submitFeedback(text: String!, rating: Int!, pathname: String!): Boolean!
 }
