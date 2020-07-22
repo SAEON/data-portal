@@ -8,5 +8,5 @@ export default async (self, args, ctx) => {
     createdAt: new Date(),
   })
 
-  return result.ok ? true : false
+  return result?.ok ? true : false
 }
