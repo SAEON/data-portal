@@ -1,41 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Typography, Tabs, Tab, Button, Dialog, Grid } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import Citations from './citations'
 import useStyles from './style'
 
-function TabPanel(props) {
-  const { children, label } = props
+function TabPanel({ children, label, copied, setCopied }) {
   var isCode = label === 'BibTeX' || label === 'RIS' ? true : false
+
   return (
     <div style={{ height: '100%' }}>
       <Grid container direction="column">
         <Grid item xs={12}>
           <div style={{ padding: 20 }}>
-            {isCode ? (
-              <pre
-                style={{
-                  textAlign: 'left',
-                  whiteSpace: 'break-spaces',
-                  wordBreak: 'break-word',
-                }}
-              >
-                <code>{children}</code>
-              </pre>
-            ) : (
-              <Typography variant="body1">{children}</Typography>
-            )}
+            <pre
+              style={{
+                textAlign: 'left',
+                whiteSpace: 'break-spaces',
+                wordBreak: 'break-word',
+              }}
+            >
+              <code>{children}</code>
+            </pre>
           </div>
         </Grid>
         <Grid item xs={12}>
           <Button
             style={{ float: 'right' }}
             onClick={() => {
-              navigator.clipboard.writeText(children) // TODO - this threw a lint error since citations is not defined at this point.
+              navigator.clipboard.writeText(children)
+              setCopied(true)
             }}
             startIcon={<AssignmentIcon />}
           >
-            Copy to clipboard
+            {copied ? 'Copied!' : 'Copy to cliboard'}
           </Button>
         </Grid>
       </Grid>
@@ -43,23 +40,18 @@ function TabPanel(props) {
   )
 }
 
+const TAB_LABELS = ['APA', 'BibTeX', 'Chicago', 'Harvard', 'IEEE', 'MLA', 'RIS', 'Vancouver']
+
 function TabsDialog(props) {
   const { onClose, open, json } = props
-
+  const [copied, setCopied] = useState(false)
   const citations = Citations(json)
-  const citationLabels = ['APA', 'BibTeX', 'Chicago', 'Harvard', 'IEEE', 'MLA', 'RIS', 'Vancouver']
-
   const [citation, setCitation] = React.useState(citations.APA)
   const [tabValue, setTabValue] = React.useState(0)
-
   const classes = useStyles()
 
-  const handleClose = () => {
-    onClose()
-  }
   return (
-    <Dialog onClose={handleClose} open={open} maxWidth="sm" fullWidth={true}>
-      {/* <Grow in={clicked} timeout={1}> */}
+    <Dialog onClose={() => onClose()} open={open} maxWidth="sm" fullWidth={true}>
       <Grid container className={classes.dialogGrid}>
         <Grid item xs={12}>
           <Tabs
@@ -69,29 +61,35 @@ function TabsDialog(props) {
             orientation="horizontal"
             onChange={(event, newValue) => {
               setTabValue(newValue)
-              setCitation(citations[citationLabels[newValue]])
+              setCitation(citations[TAB_LABELS[newValue]])
+              setCopied(false)
             }}
             indicatorColor="primary"
             textColor="primary"
             style={{ borderRight: '1px solid rgba(0, 0, 0, 0.12)' }}
           >
-            <Tab className={classes.tab} label={citationLabels[0]} />
-            <Tab className={classes.tab} label={citationLabels[1]} />
-            <Tab className={classes.tab} label={citationLabels[2]} />
-            <Tab className={classes.tab} label={citationLabels[3]} />
-            <Tab className={classes.tab} label={citationLabels[4]} />
-            <Tab className={classes.tab} label={citationLabels[5]} />
-            <Tab className={classes.tab} label={citationLabels[6]} />
-            <Tab className={classes.tab} label={citationLabels[7]} />
+            <Tab className={classes.tab} label={TAB_LABELS[0]} />
+            <Tab className={classes.tab} label={TAB_LABELS[1]} />
+            <Tab className={classes.tab} label={TAB_LABELS[2]} />
+            <Tab className={classes.tab} label={TAB_LABELS[3]} />
+            <Tab className={classes.tab} label={TAB_LABELS[4]} />
+            <Tab className={classes.tab} label={TAB_LABELS[5]} />
+            <Tab className={classes.tab} label={TAB_LABELS[6]} />
+            <Tab className={classes.tab} label={TAB_LABELS[7]} />
           </Tabs>
         </Grid>
         <Grid item xs>
-          <TabPanel value={tabValue} label={citationLabels[tabValue]} json={json}>
+          <TabPanel
+            copied={copied}
+            setCopied={setCopied}
+            value={tabValue}
+            label={TAB_LABELS[tabValue]}
+            json={json}
+          >
             {citation}
           </TabPanel>
         </Grid>
       </Grid>
-      {/* </Grow> */}
     </Dialog>
   )
 }

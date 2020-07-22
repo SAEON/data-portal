@@ -1,7 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Typography } from '@material-ui/core'
-import Layout from './_layout'
+import Layout from './layout'
 
 export default ({ id }) => {
   const { loading, error, data } = useQuery(
