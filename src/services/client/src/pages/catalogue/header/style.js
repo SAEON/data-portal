@@ -5,13 +5,4 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.grey[200],
     minHeight: theme.customSizes.thickToolbar.minHeight,
   },
-  textField: {
-    borderRadius: theme.shape.borderRadius,
-    '& input': {
-      color: theme.palette.text,
-    },
-    '& div': {
-      padding: 0,
-    },
-  },
 }))

@@ -1,91 +1,11 @@
-import React, {
-  Children,
-  useContext,
-  createContext,
-  cloneElement,
-  forwardRef,
-  useRef,
-  useEffect,
-  isValidElement,
-} from 'react'
+import React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { TextField, Chip, Grid, useMediaQuery, ListSubheader, Typography } from '@material-ui/core'
+import { TextField, Chip, Grid, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
-import { VariableSizeList } from 'react-window'
-import { useTheme } from '@material-ui/core/styles'
 import { useUriState } from '../../modules/uri-state'
-
-const LISTBOX_PADDING = 8 // px
-
-function renderRow(props) {
-  const { data, index, style } = props
-  return cloneElement(data[index], {
-    style: {
-      ...style,
-      top: style.top + LISTBOX_PADDING,
-    },
-  })
-}
-
-const OuterElementContext = createContext({})
-
-const OuterElementType = forwardRef((props, ref) => {
-  const outerProps = useContext(OuterElementContext)
-  return <div ref={ref} {...props} {...outerProps} />
-})
-
-function useResetCache(data) {
-  const ref = useRef(null)
-  useEffect(() => {
-    if (ref.current != null) {
-      ref.current.resetAfterIndex(0, true)
-    }
-  }, [data])
-  return ref
-}
-
-const ListboxComponent = forwardRef(function ListboxComponent(props, ref) {
-  const { children, ...other } = props
-  const itemData = Children.toArray(children)
-  const theme = useTheme()
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true })
-  const itemCount = itemData.length
-  const itemSize = smUp ? 36 : 48
-
-  const getChildSize = child =>
-    isValidElement(child) && child.type === ListSubheader ? 48 : itemSize
-
-  const getHeight = () => {
-    if (itemCount > 8) {
-      return 8 * itemSize
-    }
-    return itemData.map(getChildSize).reduce((a, b) => a + b, 0)
-  }
-
-  const gridRef = useResetCache(itemCount)
-
-  return (
-    <div ref={ref}>
-      <OuterElementContext.Provider value={other}>
-        <VariableSizeList
-          itemData={itemData}
-          height={getHeight() + 2 * LISTBOX_PADDING}
-          width="100%"
-          ref={gridRef}
-          outerElementType={OuterElementType}
-          innerElementType="ul"
-          itemSize={index => getChildSize(itemData[index])}
-          overscanCount={5}
-          itemCount={itemCount}
-        >
-          {renderRow}
-        </VariableSizeList>
-      </OuterElementContext.Provider>
-    </div>
-  )
-})
+import ListboxComponent from './list-box-component'
 
 const getSearchState = () =>
   decodeURIComponent(window.location.search.replace('?terms=', ''))
@@ -99,7 +19,7 @@ const SUBJECTS = [
 ]
 const TERM_LIMIT = 10000
 
-export default ({ classes, ...props }) => {
+export default ({ ...props }) => {
   const { pushState } = useUriState(useHistory())
   const terms = getSearchState()
   const { error, loading, data } = useQuery(
@@ -117,7 +37,6 @@ export default ({ classes, ...props }) => {
   )
 
   const waitMsg = error ? error.message : loading ? 'Loading' : null
-
   return waitMsg ? (
     <Typography color="textPrimary" variant="overline" style={{ margin: 20 }}>
       {waitMsg}
@@ -167,7 +86,6 @@ export default ({ classes, ...props }) => {
                 return (
                   <TextField
                     {...params}
-                    className={classes.textField} // TODO remove external usage of classes prop
                     id="saeon-data-search"
                     size="medium"
                     onChange={inputValue => updateForm({ inputValue })}

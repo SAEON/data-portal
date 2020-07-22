@@ -1,16 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 
+// eslint-disable-next-line no-unused-vars
 export default makeStyles(theme => ({
-  textField: {
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: 'rgba(110,110,110,0.3)',
-    '& input': {
-      color: 'white',
-    },
-    '& div': {
-      padding: 0,
-    },
-  },
   notMobile: {
     margin: '0 25%',
   },

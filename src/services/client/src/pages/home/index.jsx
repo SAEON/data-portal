@@ -29,7 +29,7 @@ export default () => {
     >
       {/* Header */}
       <Grid item xs={12}>
-        <CatalogueSearchField classes={classes} />
+        <CatalogueSearchField />
       </Grid>
       <Grid item xs={12}>
         <Button
