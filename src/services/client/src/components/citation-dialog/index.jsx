@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { Typography, Tabs, Tab, Button, Dialog, Grid } from '@material-ui/core'
+import { Tabs, Tab, Button, Dialog, Grid } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import Citations from './citations'
 import useStyles from './style'
 
-function TabPanel({ children, label, copied, setCopied }) {
-  var isCode = label === 'BibTeX' || label === 'RIS' ? true : false
-
+function TabPanel({ children, copied, setCopied }) {
   return (
     <div style={{ height: '100%' }}>
       <Grid container direction="column">

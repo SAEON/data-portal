@@ -1,16 +1,13 @@
-import React from 'react'
-import { GetApp as GetAppIcon, Code as CodeIcon } from '@material-ui/icons'
+import React, { forwardRef } from 'react'
 import {
-  AppBar,
-  Toolbar,
-  Button,
-  Grid,
-  Typography,
-  Tooltip,
-  Hidden,
-  IconButton,
-} from '@material-ui/core'
-import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '../../components'
+  GetApp as GetAppIcon,
+  Code as CodeIcon,
+  Share as ShareIcon,
+  Link,
+} from '@material-ui/icons'
+import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden } from '@material-ui/core'
+import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '..'
+import { CLIENT_HOST_ADDRESS } from '../../config'
 
 export default ({ record, id, toggleCodeView, codeView }) => {
   return (
@@ -23,24 +20,55 @@ export default ({ record, id, toggleCodeView, codeView }) => {
       <Toolbar variant="regular">
         <Grid container spacing={2} justify="flex-end">
           {/* PAGE TITLE */}
-          <Grid item xs>
+          <Grid item xs style={{ alignSelf: 'center' }}>
             <Typography variant="overline" component="h1">
               {`${record.identifier?.identifier || 'UNKNOWN DOI'}`}
             </Typography>
           </Grid>
 
-          {/* JSON */}
-          <Tooltip title="View raw metadata record (JSON)">
-            <IconButton onClick={toggleCodeView} color={codeView ? 'primary' : 'default'}>
-              <CodeIcon />
-            </IconButton>
-          </Tooltip>
-
-          {/* CITATTION */}
           <Hidden xsDown>
+            {/* JSON */}
+            <Grid item>
+              <Tooltip title="View raw metadata record (JSON)">
+                <Button
+                  style={{ minWidth: 120 }}
+                  variant="outlined"
+                  color={codeView ? 'secondary' : 'primary'}
+                  startIcon={<CodeIcon />}
+                  disableElevation
+                  onClick={toggleCodeView}
+                >
+                  Metadata
+                </Button>
+              </Tooltip>
+            </Grid>
+
+            {/* SHARE */}
+            <Grid item>
+              <Tooltip title="Share a link to this record">
+                <Link
+                  component={forwardRef((props, ref) => (
+                    <Button
+                      style={{ minWidth: 120 }}
+                      variant="outlined"
+                      color="primary"
+                      startIcon={<ShareIcon />}
+                      disableElevation
+                      ref={ref}
+                      href={`${CLIENT_HOST_ADDRESS}/render/catalogue-item-view?id=${id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Share
+                    </Button>
+                  ))}
+                />
+              </Tooltip>
+            </Grid>
+
+            {/* CITATTION */}
             <Grid item>
               <CitationDialog
-                size="small"
                 variant="outlined"
                 color="primary"
                 style={{ minWidth: 120 }}
@@ -59,7 +87,6 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                 <Tooltip title="Download this page in JSON format">
                   <Button
                     style={{ minWidth: 120 }}
-                    size="small"
                     variant="outlined"
                     color="primary"
                     startIcon={<GetAppIcon />}
@@ -75,7 +102,6 @@ export default ({ record, id, toggleCodeView, codeView }) => {
           {/* DATA DOWNLOAD */}
           <Grid item>
             <DataDownloadButton
-              size="small"
               style={{ minWidth: 120 }}
               disableElevation
               variant="outlined"

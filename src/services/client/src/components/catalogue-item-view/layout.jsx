@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Typography, Chip, Tooltip, Card, CardContent, Fade } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import Header from './header'
-import { Link as SimpleLink } from '../../components'
+import { Link as SimpleLink } from '..'
 /**TO DO:
  * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
  * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
