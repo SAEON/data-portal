@@ -51,22 +51,23 @@ ER  - `
     APA:
       `${author}. (${publicationYear}). ${title} [${resourceDescription}]. ` +
       (DOI ? `doi: ${DOI}` : `Retrieved from ${url}`), //https://guides.lib.umich.edu/c.php?g=439304&p=2993299 https://blog.apastyle.org/apastyle/2013/12/how-to-cite-a-data-set-in-apa-style.html
-    Harvard:
-      `${author} ${publicationYear}, ${title}, ${resourceDescription}, ${publisher}, ` +
-      (DOI ? `doi: ${DOI}` : `viewed ${dateViewed}, <${url}>`), //https://libraryguides.vu.edu.au/c.php?g=386501&p=4347840
-    MLA:
-      `${author}. ${title}. (${resourceDescription}) ${publisherLocation}, ${publisher}, ${publicationYear} ` +
-      (DOI ? `doi: ${DOI}` : ` ${dateViewed}. ${url}`), //WIP. Not a clear cut citation
-    Vancouver:
-      `${author}. ${title} [${resourceDescription}]. ${publisher}: ${publisherLocation}; ${publicationYear}. [cited ${dateViewed}]. ` +
-      (DOI ? `doi: ${DOI}` : `Available from ${url}`), //WIP. Supplying Publisher location is iffy https://guides.library.ubc.ca/ld.php?content_id=26931563
+    BibTeX: bibtex,
     Chicago:
       `${author}. ${publicationYear}. ${title}. ${publisherLocation}: ${publisher}. ` +
       (DOI ? `${DOI}` : ` ${url}`), //WIP. Publisher location iffy https://libguides.murdoch.edu.au/Chicago/dataset
+    Harvard:
+      `${author} ${publicationYear}, ${title}, ${resourceDescription}, ${publisher}, ` +
+      (DOI ? `doi: ${DOI}` : `viewed ${dateViewed}, <${url}>`), //https://libraryguides.vu.edu.au/c.php?g=386501&p=4347840
     IEEE:
       `${author}, ${title}, ${publisherLocation}: ${publisher}, ${publicationYear}. [${resourceDescription}] ` +
       (DOI ? `doi: ${DOI}` : `Available: ${url}. [Accessed: ${dateViewed}]`), //WIP. Publisher location iffy https://libguides.murdoch.edu.au/IEEE/dataset https://libraryguides.vu.edu.au/ieeereferencing/gettingstarted#s-lg-box-wrapper-10134708
-    BibTeX: bibtex,
+
+    MLA:
+      `${author}. ${title}. (${resourceDescription}) ${publisherLocation}, ${publisher}, ${publicationYear} ` +
+      (DOI ? `doi: ${DOI}` : ` ${dateViewed}. ${url}`), //WIP. Not a clear cut citation
     RIS: ris,
+    Vancouver:
+      `${author}. ${title} [${resourceDescription}]. ${publisher}: ${publisherLocation}; ${publicationYear}. [cited ${dateViewed}]. ` +
+      (DOI ? `doi: ${DOI}` : `Available from ${url}`), //WIP. Supplying Publisher location is iffy https://guides.library.ubc.ca/ld.php?content_id=26931563
   }
 }
