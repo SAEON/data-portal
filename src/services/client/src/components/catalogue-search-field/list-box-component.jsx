@@ -14,16 +14,6 @@ import { VariableSizeList } from 'react-window'
 
 const LISTBOX_PADDING = 8
 
-const renderRow = props => {
-  const { data, index, style } = props
-  return cloneElement(data[index], {
-    style: {
-      ...style,
-      top: style.top + LISTBOX_PADDING,
-    },
-  })
-}
-
 const useResetCache = data => {
   const ref = useRef(null)
   useEffect(() => {
@@ -33,11 +23,6 @@ const useResetCache = data => {
   }, [data])
   return ref
 }
-
-const OuterElementType = forwardRef((props, ref) => {
-  const outerProps = useContext(OuterElementContext)
-  return <div ref={ref} {...props} {...outerProps} />
-})
 
 const OuterElementContext = createContext({})
 
@@ -58,8 +43,6 @@ export default forwardRef(({ children, ...other }, ref) => {
     return itemData.map(getChildSize).reduce((a, b) => a + b, 0)
   }
 
-  const gridRef = useResetCache(itemCount)
-
   return (
     <div ref={ref}>
       <OuterElementContext.Provider value={other}>
@@ -67,14 +50,24 @@ export default forwardRef(({ children, ...other }, ref) => {
           itemData={itemData}
           height={getHeight() + 2 * LISTBOX_PADDING}
           width="100%"
-          ref={gridRef}
-          outerElementType={OuterElementType}
+          ref={useResetCache(itemCount)}
+          outerElementType={forwardRef((props, ref) => {
+            const outerProps = useContext(OuterElementContext)
+            return <div ref={ref} {...props} {...outerProps} />
+          })}
           innerElementType="ul"
           itemSize={index => getChildSize(itemData[index])}
           overscanCount={5}
           itemCount={itemCount}
         >
-          {renderRow}
+          {({ data, index, style }) =>
+            cloneElement(data[index], {
+              style: {
+                ...style,
+                top: style.top + LISTBOX_PADDING,
+              },
+            })
+          }
         </VariableSizeList>
       </OuterElementContext.Provider>
     </div>
