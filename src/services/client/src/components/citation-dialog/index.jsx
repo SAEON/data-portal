@@ -117,12 +117,7 @@ const TabsDialog = ({ onClose, open, json }) => {
           </Tabs>
         </Grid>
         <Grid item xs>
-          <TabPanel
-            copied={copied}
-            setCopied={setCopied}
-            value={tabValue}
-            label={CITATION_NOTATIONS[tabValue]}
-          >
+          <TabPanel copied={copied} setCopied={setCopied}>
             {citationText}
           </TabPanel>
         </Grid>

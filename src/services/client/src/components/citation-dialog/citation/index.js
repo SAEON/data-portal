@@ -25,7 +25,7 @@ export default function Citation({
 }) {
   this.DOI = DOI
   this.url = url
-  this.authors = authors
+  this.authors = authors.join(', ')
   this.keywords = keywords
   this.language = language
   this.title = title

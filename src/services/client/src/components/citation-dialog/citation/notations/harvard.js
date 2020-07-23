@@ -10,7 +10,7 @@ export default function () {
     url,
   } = this
 
-  return `${authors} ${publicationYear}, ${title}, ${resourceDescription}, ${publisher}, ${
+  return `${authors} ${publicationYear}, "${title}", ${resourceDescription}, ${publisher}, ${
     DOI ? `doi: ${DOI}` : `viewed ${dateViewed}, <${url}>`
   }`
 }
