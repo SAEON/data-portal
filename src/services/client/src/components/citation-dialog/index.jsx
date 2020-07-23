@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Tabs, Tab, Button, Dialog, Grid } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import Citations from './citations'
+import Citation from './citation'
 import useStyles from './style'
 
 function TabPanel({ children, copied, setCopied }) {
@@ -38,13 +38,52 @@ function TabPanel({ children, copied, setCopied }) {
   )
 }
 
-const TAB_LABELS = ['APA', 'BibTeX', 'Chicago', 'Harvard', 'IEEE', 'MLA', 'RIS', 'Vancouver']
+const CITATION_NOTATIONS = [
+  'APA',
+  'BibTeX',
+  'Chicago',
+  'Harvard',
+  'IEEE',
+  'MLA',
+  'RIS',
+  'Vancouver',
+]
 
-function TabsDialog(props) {
-  const { onClose, open, json } = props
+const TabsDialog = ({ onClose, open, json }) => {
+  const today = new Date()
+  const {
+    publisher,
+    publicationYear,
+    resourceType,
+    identifier,
+    language,
+    titles,
+    subjects,
+    rightsList,
+    descriptions,
+  } = json
+
+  const citation = new Citation({
+    DOI: identifier.identifierType === 'DOI' ? identifier.identifier : undefined,
+    url: '',
+    author: publisher,
+    keywords: subjects.map(sub => sub.subject),
+    language,
+    title: titles[0].title,
+    publisher,
+    publicationYear,
+    copyright: rightsList[0].rights,
+    resourceDescription: resourceType.resourceTypeGeneral,
+    abstract: descriptions.map(desc =>
+      desc.descriptionType === 'Abstract' ? desc.description : undefined
+    ),
+    subjects,
+    publisherLocation: '',
+    dateViewed: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
+  })
+
   const [copied, setCopied] = useState(false)
-  const citations = Citations(json)
-  const [citation, setCitation] = React.useState(citations.APA)
+  const [citationText, setCitationText] = React.useState(citation.APA)
   const [tabValue, setTabValue] = React.useState(0)
   const classes = useStyles()
 
@@ -59,21 +98,21 @@ function TabsDialog(props) {
             orientation="horizontal"
             onChange={(event, newValue) => {
               setTabValue(newValue)
-              setCitation(citations[TAB_LABELS[newValue]])
+              setCitationText(citation[CITATION_NOTATIONS[newValue]])
               setCopied(false)
             }}
             indicatorColor="primary"
             textColor="primary"
             style={{ borderRight: '1px solid rgba(0, 0, 0, 0.12)' }}
           >
-            <Tab className={classes.tab} label={TAB_LABELS[0]} />
-            <Tab className={classes.tab} label={TAB_LABELS[1]} />
-            <Tab className={classes.tab} label={TAB_LABELS[2]} />
-            <Tab className={classes.tab} label={TAB_LABELS[3]} />
-            <Tab className={classes.tab} label={TAB_LABELS[4]} />
-            <Tab className={classes.tab} label={TAB_LABELS[5]} />
-            <Tab className={classes.tab} label={TAB_LABELS[6]} />
-            <Tab className={classes.tab} label={TAB_LABELS[7]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[0]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[1]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[2]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[3]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[4]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[5]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[6]} />
+            <Tab className={classes.tab} label={CITATION_NOTATIONS[7]} />
           </Tabs>
         </Grid>
         <Grid item xs>
@@ -81,10 +120,9 @@ function TabsDialog(props) {
             copied={copied}
             setCopied={setCopied}
             value={tabValue}
-            label={TAB_LABELS[tabValue]}
-            json={json}
+            label={CITATION_NOTATIONS[tabValue]}
           >
-            {citation}
+            {citationText}
           </TabPanel>
         </Grid>
       </Grid>
