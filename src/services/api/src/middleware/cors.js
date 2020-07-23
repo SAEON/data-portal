@@ -1,10 +1,8 @@
 import { ALLOWED_ORIGINS } from '../config.js'
 
-const handleCors = ALLOWED_ORIGINS => async (ctx, next) => {
+export default async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
-  console.log(`Checking CORS policy`, `${origin}`, `${ALLOWED_ORIGINS.includes(origin)}`)
-
   if (ALLOWED_ORIGINS.includes(origin)) {
     ctx.set('Access-Control-Allow-Origin', origin)
   }
@@ -20,8 +18,3 @@ const handleCors = ALLOWED_ORIGINS => async (ctx, next) => {
     await next()
   }
 }
-
-export default (ALLOWED_ORIGINS => {
-  console.log('CORS configured. Origins allowed:', ALLOWED_ORIGINS)
-  return handleCors(ALLOWED_ORIGINS)
-})(ALLOWED_ORIGINS)

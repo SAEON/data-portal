@@ -11,6 +11,7 @@ import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
 
 import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config.js'
+import clientSession from './middleware/client-session.js'
 
 if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   console.error(
@@ -23,15 +24,16 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 
 // Setup App
 const app = new Koa()
-const router = new KoaRouter()
 
-// HTTP routes
+// Setup routes
+const router = new KoaRouter()
 router.get('/', home)
 router.post('/', home)
 
 // Koa HTTP handler callback
 app
   .use(cors)
+  .use(clientSession)
   .use(createRequestContext(app))
   .use(router.routes())
   .use(
