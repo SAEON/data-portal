@@ -74,14 +74,6 @@ export default ({ json, id }) => {
                     </Typography>
                   </Row>
 
-                  <Row title={'Abstract'}>
-                    <Typography variant="body1">
-                      {json.descriptions.map(desc =>
-                        desc.descriptionType === 'Abstract' ? desc.description : undefined
-                      )}
-                    </Typography>
-                  </Row>
-
                   <Row title="Author">
                     {json.creators?.map(creator => (
                       <div key={creator.name}>
@@ -94,6 +86,25 @@ export default ({ json, id }) => {
 
                   <Row title="Publisher">
                     <Typography variant="body1">{`${json.publisher} (${json.publicationYear})`}</Typography>
+                  </Row>
+
+                  <Row title="Contributors">
+                    {json.contributors?.map(contributor => (
+                      <div key={contributor.name}>
+                        <Typography variant="body1">
+                          ({contributor.contributorType.replace(/([A-Z])/g, ' $1').trim()}){' '}
+                          {contributor.name},{contributor.affiliations.map(aff => aff.affiliation)}
+                        </Typography>
+                      </div>
+                    ))}
+                  </Row>
+
+                  <Row title={'Abstract'}>
+                    <Typography variant="body1">
+                      {json.descriptions.map(desc =>
+                        desc.descriptionType === 'Abstract' ? desc.description : undefined
+                      )}
+                    </Typography>
                   </Row>
 
                   <Row title="Keywords">
@@ -112,17 +123,6 @@ export default ({ json, id }) => {
                           </Grid>
                         ))}
                     </Grid>
-                  </Row>
-
-                  <Row title="Contributors">
-                    {json.contributors?.map(contributor => (
-                      <div key={contributor.name}>
-                        <Typography variant="body1">
-                          ({contributor.contributorType.replace(/([A-Z])/g, ' $1').trim()}){' '}
-                          {contributor.name},{contributor.affiliations.map(aff => aff.affiliation)}
-                        </Typography>
-                      </div>
-                    ))}
                   </Row>
 
                   <Row title="Resources">

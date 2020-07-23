@@ -38,7 +38,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                   disableElevation
                   onClick={toggleCodeView}
                 >
-                  Metadata
+                  JSON
                 </Button>
               </Tooltip>
             </Grid>

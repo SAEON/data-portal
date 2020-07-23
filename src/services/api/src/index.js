@@ -23,9 +23,9 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 
 // Setup App
 const app = new Koa()
-const router = new KoaRouter()
 
-// HTTP routes
+// Setup routes
+const router = new KoaRouter()
 router.get('/', home)
 router.post('/', home)
 
