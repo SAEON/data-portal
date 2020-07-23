@@ -4,6 +4,7 @@ const handleCors = ALLOWED_ORIGINS => async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
   console.log(`Checking CORS policy`, `${origin}`, `${ALLOWED_ORIGINS.includes(origin)}`)
+
   if (ALLOWED_ORIGINS.includes(origin)) {
     ctx.set('Access-Control-Allow-Origin', origin)
   }
