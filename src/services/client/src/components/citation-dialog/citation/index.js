@@ -10,7 +10,7 @@ import Vancouver from './notations/vancouver'
 export default function Citation({
   DOI,
   url,
-  author,
+  authors,
   keywords,
   language,
   title,
@@ -25,7 +25,7 @@ export default function Citation({
 }) {
   this.DOI = DOI
   this.url = url
-  this.author = author
+  this.authors = authors
   this.keywords = keywords
   this.language = language
   this.title = title

@@ -61,12 +61,13 @@ const TabsDialog = ({ onClose, open, json }) => {
     subjects,
     rightsList,
     descriptions,
+    creators,
   } = json
 
   const citation = new Citation({
     DOI: identifier.identifierType === 'DOI' ? identifier.identifier : undefined,
     url: '',
-    author: publisher,
+    authors: creators.map(({ name }) => name),
     keywords: subjects.map(sub => sub.subject),
     language,
     title: titles[0].title,

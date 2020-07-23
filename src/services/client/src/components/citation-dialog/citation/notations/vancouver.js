@@ -1,7 +1,17 @@
 export default function () {
-  return `${this.author}. ${this.title} [${this.resourceDescription}]. ${this.publisher}: ${
-    this.publisherLocation
-  }; ${this.publicationYear}. [cited ${this.dateViewed}]. ${
-    this.DOI ? `doi: ${this.DOI}` : `Available from ${this.url}`
+  const {
+    authors,
+    title,
+    resourceDescription,
+    publisher,
+    publisherLocation,
+    publicationYear,
+    dateViewed,
+    DOI,
+    url,
+  } = this
+
+  return `${authors}. ${title} [${resourceDescription}]. ${publisher}: ${publisherLocation}; ${publicationYear}. [cited ${dateViewed}]. ${
+    DOI ? `doi: ${DOI}` : `Available from ${url}`
   }`
 }
