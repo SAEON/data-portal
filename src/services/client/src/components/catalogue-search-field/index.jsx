@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import { useUriState } from '../../modules/uri-state'
-import ListboxComponent from './list-box-component'
+import ListboxComponent from '../autocomplete/list-box-component'
 
 const getSearchState = () =>
   decodeURIComponent(window.location.search.replace('?terms=', ''))

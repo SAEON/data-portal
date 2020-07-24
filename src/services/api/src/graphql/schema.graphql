@@ -90,10 +90,14 @@ input BrowserEventInput {
 
 # GraphQL types
 
+# CitationStyle Enum is created at runtime
+# CitationLanguage Enum is created at runtime
+
 type Query {
   # Catalogue
   catalogue: Catalogue!
-
+  # Get citation string from DOI
+  citation(doi: String!, style: CitationStyle, language: CitationLocale): String! # TODO - move this to a the CatalogueRecord type
   # Client usage tracking
   browserEvents: [Node]!
 }

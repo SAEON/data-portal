@@ -1,136 +1,61 @@
 import React, { useState } from 'react'
-import { Tabs, Tab, Button, Dialog, Grid } from '@material-ui/core'
+import {
+  Button,
+  Dialog,
+  CircularProgress,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import Citation from './citation'
-import useStyles from './style'
+import { useQuery, gql } from '@apollo/client'
+import Autocomplete from '../../components/autocomplete/autocomplete'
 
-function TabPanel({ children, copied, setCopied }) {
-  return (
-    <div style={{ height: '100%' }}>
-      <Grid container direction="column">
-        <Grid item xs={12}>
-          <div style={{ padding: 20 }}>
-            <pre
-              style={{
-                textAlign: 'left',
-                whiteSpace: 'break-spaces',
-                wordBreak: 'break-word',
-              }}
-            >
-              <code>{children}</code>
-            </pre>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            style={{ float: 'right' }}
-            onClick={() => {
-              navigator.clipboard.writeText(children)
-              setCopied(true)
-            }}
-            startIcon={<AssignmentIcon />}
-          >
-            {copied ? 'Copied!' : 'Copy to cliboard'}
-          </Button>
-        </Grid>
-      </Grid>
-    </div>
-  )
-}
-
-const CITATION_NOTATIONS = [
-  'APA',
-  'BibTeX',
-  'Chicago',
-  'Harvard',
-  'IEEE',
-  'MLA',
-  'RIS',
-  'Vancouver',
-]
-
-const TabsDialog = ({ onClose, open, json }) => {
-  const today = new Date()
-  const {
-    publisher,
-    publicationYear,
-    resourceType,
-    identifier,
-    language,
-    titles,
-    subjects,
-    rightsList,
-    descriptions,
-    creators,
-  } = json
-
-  const citation = new Citation({
-    DOI: identifier.identifierType === 'DOI' ? identifier.identifier : undefined,
-    url: '',
-    authors: creators.map(({ name }) => name),
-    keywords: subjects.map(sub => sub.subject),
-    language,
-    title: titles[0].title,
-    publisher,
-    publicationYear,
-    copyright: rightsList[0].rights,
-    resourceDescription: resourceType.resourceTypeGeneral,
-    abstract: descriptions.map(desc =>
-      desc.descriptionType === 'Abstract' ? desc.description : undefined
-    ),
-    subjects,
-    publisherLocation: '',
-    dateViewed: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
-  })
-
-  const [copied, setCopied] = useState(false)
-  const [citationText, setCitationText] = React.useState(citation.APA)
-  const [tabValue, setTabValue] = React.useState(0)
-  const classes = useStyles()
-
-  return (
-    <Dialog onClose={() => onClose()} open={open} maxWidth="sm" fullWidth={true}>
-      <Grid container className={classes.dialogGrid}>
-        <Grid item xs={12}>
-          <Tabs
-            scrollButtons="auto"
-            variant="scrollable"
-            value={tabValue}
-            orientation="horizontal"
-            onChange={(event, newValue) => {
-              setTabValue(newValue)
-              setCitationText(citation[CITATION_NOTATIONS[newValue]])
-              setCopied(false)
-            }}
-            indicatorColor="primary"
-            textColor="primary"
-            style={{ borderRight: '1px solid rgba(0, 0, 0, 0.12)' }}
-          >
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[0]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[1]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[2]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[3]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[4]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[5]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[6]} />
-            <Tab className={classes.tab} label={CITATION_NOTATIONS[7]} />
-          </Tabs>
-        </Grid>
-        <Grid item xs>
-          <TabPanel copied={copied} setCopied={setCopied}>
-            {citationText}
-          </TabPanel>
-        </Grid>
-      </Grid>
-    </Dialog>
-  )
-}
+const DEFAULT_CITATION_STYLE = 'apa'
+const DEFAULT_CITATION_LANG = 'en_US'
 
 export default ({ json, ...props }) => {
-  const [open, setOpen] = React.useState(false)
+  const { identifier } = json
+
+  const [open, setOpen] = useState(false)
+
+  const [citationParams, setCitationParams] = useState({
+    doi: identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI',
+    style: DEFAULT_CITATION_STYLE,
+    language: DEFAULT_CITATION_LANG,
+    copied: false,
+  })
+
+  const { error, loading, data } = useQuery(
+    gql`
+      query getEnumValues($doi: String!, $style: CitationStyle, $language: CitationLocale) {
+        citation(doi: $doi, style: $style, language: $language)
+
+        citationStyles: __type(name: "CitationStyle") {
+          enumValues {
+            name
+          }
+        }
+
+        citationLocales: __type(name: "CitationLocale") {
+          enumValues {
+            name
+          }
+        }
+      }
+    `,
+    {
+      variables: {
+        doi: citationParams.doi,
+        style: citationParams.style,
+        language: citationParams.language,
+      },
+    }
+  )
 
   return (
     <>
+      {/* Toggle Dialogue */}
       <Button
         variant="contained"
         disableElevation
@@ -142,13 +67,89 @@ export default ({ json, ...props }) => {
       >
         “ Cite
       </Button>
-      <TabsDialog
-        open={open}
+
+      {/* Dialogue */}
+      <Dialog
         onClose={() => {
           setOpen(false)
         }}
-        json={json}
-      />
+        open={open}
+        maxWidth="sm"
+        fullWidth={true}
+      >
+        {/* TITLE */}
+        <DialogTitle>
+          {identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI'}
+        </DialogTitle>
+
+        {/* MARGIN */}
+        <DialogContent />
+
+        {/* SELECTION BOXES */}
+        <DialogContent>
+          <Autocomplete
+            label="Style"
+            setOption={value =>
+              setCitationParams(
+                Object.assign(
+                  { ...citationParams },
+                  { copied: false, style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE }
+                )
+              )
+            }
+            selectedOption={citationParams.style.replace(/_/g, '-')}
+            options={
+              data?.citationStyles?.enumValues?.map(v => v.name.replace(/_/g, '-')) || [
+                'Loading ...',
+              ]
+            }
+          />
+        </DialogContent>
+        <DialogContent>
+          <Autocomplete
+            label="Language"
+            setOption={value =>
+              setCitationParams(
+                Object.assign(
+                  { ...citationParams },
+                  { copied: false, language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG }
+                )
+              )
+            }
+            selectedOption={citationParams.language.replace(/_/g, '-')}
+            options={
+              data?.citationLocales?.enumValues?.map(v => v.name.replace(/_/g, '-')) || [
+                'Loading ...',
+              ]
+            }
+          />
+        </DialogContent>
+
+        {/* MARGIN */}
+        <DialogContent />
+
+        {/* CITATION TEXT */}
+        <DialogContent>
+          {error ? 'Error' : loading ? <CircularProgress /> : <samp>{data.citation}</samp>}
+        </DialogContent>
+
+        {/* MARGIN */}
+        <DialogContent />
+
+        {/* COPY Button */}
+        <DialogActions>
+          <Button
+            disabled={error || loading}
+            onClick={() => {
+              navigator.clipboard.writeText(data.citation)
+              setCitationParams(Object.assign({ ...citationParams }, { copied: true }))
+            }}
+            startIcon={<AssignmentIcon />}
+          >
+            {citationParams.copied ? 'Copied!' : 'Copy to cliboard'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }
