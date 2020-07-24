@@ -22,6 +22,8 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   process.exit(1)
 }
 
+// Register native extensions
+
 // Setup App
 const app = new Koa()
 

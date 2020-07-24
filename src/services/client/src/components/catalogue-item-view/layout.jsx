@@ -75,10 +75,20 @@ export default ({ json, id }) => {
                   </Row>
 
                   <Row title="Author">
-                    {json.creators?.map(creator => (
+                    {json.creators?.map((creator, i) => (
                       <div key={creator.name}>
                         <Typography variant="body1">
-                          {creator.name}, {creator.affiliations.map(aff => aff.affiliation)}
+                          {creator.name}&nbsp;
+                          <sup>[{i + 1}]</sup>
+                        </Typography>
+                      </div>
+                    ))}
+                    <br />
+                    {json.creators?.map((creator, i) => (
+                      <div key={creator.name}>
+                        <Typography variant="body2">
+                          <sup>[{i + 1}]</sup>&nbsp;
+                          {creator.affiliations.map(aff => aff.affiliation)}
                         </Typography>
                       </div>
                     ))}
