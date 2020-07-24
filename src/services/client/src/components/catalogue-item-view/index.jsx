@@ -6,7 +6,7 @@ import Layout from './layout'
 export default ({ id }) => {
   const { loading, error, data } = useQuery(
     gql`
-      query catalogue($id: String) {
+      query catalogue($id: ID) {
         catalogue {
           records(id: $id) {
             ... on CatalogueRecordConnection {

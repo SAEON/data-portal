@@ -73,6 +73,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                 color="primary"
                 style={{ minWidth: 120 }}
                 json={record}
+                id={id}
               />
             </Grid>
 

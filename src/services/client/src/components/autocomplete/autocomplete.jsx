@@ -22,7 +22,6 @@ export default ({ id, options, setOption, selectedOption = [], ...props }) => {
               <TextField
                 {...params}
                 id={`${id}-text-input`}
-                variant="outlined"
                 autoFocus
                 size="small"
                 onChange={inputValue => updateForm({ inputValue })}

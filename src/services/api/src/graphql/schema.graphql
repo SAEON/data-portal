@@ -41,7 +41,7 @@ type Catalogue {
   # Fetch metadata records from SAEON's data catalogue
   records(
     # Fetch a single record by ID (other arguments are ignored)
-    id: String
+    id: ID
     # Search for intersection of subject list
     subjects: [String!]
     # Page size (maximum allowed is 10 000 items per page)
@@ -71,10 +71,10 @@ type CatalogueRecordEdge implements Edge {
 type CatalogueRecord implements Node {
   id: ID!
   target: JSON!
+  citation(style: CitationStyle, language: CitationLocale): String! # CitationStyle and CitationLocale are enums defined at runtime
 }
 
 # Browser events
-
 type BrowserEvent implements Node {
   id: ID!
   name: String!
@@ -90,14 +90,9 @@ input BrowserEventInput {
 
 # GraphQL types
 
-# CitationStyle Enum is created at runtime
-# CitationLanguage Enum is created at runtime
-
 type Query {
   # Catalogue
   catalogue: Catalogue!
-  # Get citation string from DOI
-  citation(doi: String!, style: CitationStyle, language: CitationLocale): String! # TODO - move this to a the CatalogueRecord type
   # Client usage tracking
   browserEvents: [Node]!
 }

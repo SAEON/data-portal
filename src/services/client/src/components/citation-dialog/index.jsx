@@ -14,13 +14,12 @@ import Autocomplete from '../../components/autocomplete/autocomplete'
 const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'
 
-export default ({ json, ...props }) => {
+export default ({ id, json, ...props }) => {
   const { identifier } = json
 
   const [open, setOpen] = useState(false)
 
   const [citationParams, setCitationParams] = useState({
-    doi: identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI',
     style: DEFAULT_CITATION_STYLE,
     language: DEFAULT_CITATION_LANG,
     copied: false,
@@ -28,8 +27,14 @@ export default ({ json, ...props }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query getEnumValues($doi: String!, $style: CitationStyle, $language: CitationLocale) {
-        citation(doi: $doi, style: $style, language: $language)
+      query($id: ID, $style: CitationStyle, $language: CitationLocale) {
+        catalogue {
+          records(id: $id) {
+            nodes {
+              citation(style: $style, language: $language)
+            }
+          }
+        }
 
         citationStyles: __type(name: "CitationStyle") {
           enumValues {
@@ -46,7 +51,7 @@ export default ({ json, ...props }) => {
     `,
     {
       variables: {
-        doi: citationParams.doi,
+        id,
         style: citationParams.style,
         language: citationParams.language,
       },
@@ -89,6 +94,7 @@ export default ({ json, ...props }) => {
         <DialogContent>
           <Autocomplete
             label="Style"
+            variant="outlined"
             setOption={value =>
               setCitationParams(
                 Object.assign(
@@ -108,6 +114,7 @@ export default ({ json, ...props }) => {
         <DialogContent>
           <Autocomplete
             label="Language"
+            variant="outlined"
             setOption={value =>
               setCitationParams(
                 Object.assign(
@@ -130,7 +137,13 @@ export default ({ json, ...props }) => {
 
         {/* CITATION TEXT */}
         <DialogContent>
-          {error ? 'Error' : loading ? <CircularProgress /> : <samp>{data.citation}</samp>}
+          {error ? (
+            'Error'
+          ) : loading ? (
+            <CircularProgress />
+          ) : (
+            <samp>{data.catalogue.records.nodes[0].citation}</samp>
+          )}
         </DialogContent>
 
         {/* MARGIN */}
@@ -141,7 +154,7 @@ export default ({ json, ...props }) => {
           <Button
             disabled={error || loading}
             onClick={() => {
-              navigator.clipboard.writeText(data.citation)
+              navigator.clipboard.writeText(data.catalogue.records.nodes[0].citation)
               setCitationParams(Object.assign({ ...citationParams }, { copied: true }))
             }}
             startIcon={<AssignmentIcon />}
