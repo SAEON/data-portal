@@ -13,7 +13,7 @@ export default async (ctx, next) => {
       ).toString('base64'),
       {
         httpOnly: true,
-        secure: NODE_ENV === 'development' ? false : true,
+        secure: false, // NODE_ENV === 'development' ? false : true, // TODO https://github.com/pillarjs/cookies/issues/51
         sameSite: NODE_ENV === 'development' ? 'lax' : 'none',
       }
     )
