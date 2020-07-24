@@ -99,7 +99,10 @@ export default ({ id, json, ...props }) => {
               setCitationParams(
                 Object.assign(
                   { ...citationParams },
-                  { copied: false, style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE }
+                  {
+                    copied: false,
+                    style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE.replace(/_/g, '-'),
+                  }
                 )
               )
             }
@@ -119,7 +122,10 @@ export default ({ id, json, ...props }) => {
               setCitationParams(
                 Object.assign(
                   { ...citationParams },
-                  { copied: false, language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG }
+                  {
+                    copied: false,
+                    language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG.replace(/_/g, '-'),
+                  }
                 )
               )
             }

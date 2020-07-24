@@ -30,6 +30,7 @@ const link = split(
   }),
   new HttpLink({
     uri: GQL_PROVIDER,
+    credentials: 'include',
   })
 )
 

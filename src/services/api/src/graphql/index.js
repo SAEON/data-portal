@@ -11,7 +11,6 @@ const { ApolloServer } = apolloServerKoa
 const { makeExecutableSchema } = graphqlTools
 
 const typeDefsPath = join(getCurrentDirectory(import.meta), './schema.graphql')
-
 var typeDefs =
   readFileSync(typeDefsPath, { encoding: 'utf8' }) +
   `

@@ -11,6 +11,7 @@ import FeedbackProvider from './modules/provider-feedback'
 import Layout from './modules/layout'
 import theme from './theme'
 import { debounce } from './lib/fns'
+import packageJson from '../package.json'
 
 export default ({ link }) => (
   <ApolloProvider
@@ -35,7 +36,8 @@ export default ({ link }) => (
                 event={'mousemove'}
                 handle={debounce(async ({ type, x, y }) =>
                   console.logToGraphQL({
-                    name: type,
+                    clientVersion: packageJson.version,
+                    type,
                     createdAt: new Date(),
                     info: {
                       x,

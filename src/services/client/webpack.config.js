@@ -5,9 +5,19 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const packageJson = require('./package.json')
 // const { GenerateSW } = require('workbox-webpack-plugin')
+// const fs = require('fs')
 require('dotenv').config()
 
 const { NODE_ENV: mode } = process.env
+
+// const getCommitHash = () => {
+//   const rev = fs.readFileSync('../../../.git//HEAD').toString();
+//   if (rev.indexOf(':') === -1) {
+//       return rev;
+//   } else {
+//       return fs.readFileSync('../../../.git/' + rev.substring(5)).toString();
+//   }
+// }
 
 module.exports = () => {
   const output = 'dist'

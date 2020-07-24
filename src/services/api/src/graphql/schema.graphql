@@ -77,15 +77,17 @@ type CatalogueRecord implements Node {
 # Browser events
 type BrowserEvent implements Node {
   id: ID!
-  name: String!
+  type: String!
   createdAt: DateTime
   info: JSON!
+  clientVersion: String!
 }
 
 input BrowserEventInput {
-  name: String!
+  type: String!
   createdAt: DateTime!
   info: JSON!
+  clientVersion: String!
 }
 
 # GraphQL types
