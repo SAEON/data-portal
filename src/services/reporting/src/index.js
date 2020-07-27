@@ -10,6 +10,10 @@ const { createHttpLink } = apolloHttpLink
 const { InMemoryCache } = apolloCache
 const { ApolloClient } = apolloClient
 
+/**
+ * The filewriter expects that it will be passed an array of edges
+ * as returned from the GitHub GraphQL API
+ */
 const { writeToFile, setIncludeHeaderRow } = createFileWriter()
 
 console.log('Fetching Git commits since', SINCE)
@@ -28,7 +32,14 @@ let iterator = await createIterator({
 
 while (!iterator.done) {
   console.log(`Writing ${iterator.data.length} results to file`)
-  writeToFile(iterator.data)
+  writeToFile({
+    data: iterator.data,
+    filterNodes: ({ message }) => Boolean(message.match(/#\d*/)),
+    mapProperties: row =>
+      Object.assign(row, {
+        'issue#': [...new Set(row.message.match(/#\d*/g))].join(','),
+      }),
+  })
   setIncludeHeaderRow(false)
   iterator = await iterator.next()
 }

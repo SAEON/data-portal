@@ -11,16 +11,12 @@ export default () => {
     setIncludeHeaderRow: val => {
       header = val
     },
-    writeToFile: data => {
+    writeToFile: ({ data, filterNodes, mapProperties }) => {
       stringify(
         data
           .map(({ node }) => node)
-          .filter(({ message }) => Boolean(message.match(/#\d*/)))
-          .map(row =>
-            Object.assign(row, {
-              'issue#': [...new Set(row.message.match(/#\d*/g))].join(','),
-            })
-          ),
+          .filter(filterNodes)
+          .map(mapProperties),
         {
           header,
           delimiter: ',',
