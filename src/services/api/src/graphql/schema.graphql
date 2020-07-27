@@ -81,6 +81,8 @@ type BrowserEvent implements Node {
   createdAt: DateTime
   info: JSON!
   clientVersion: String!
+  # Most recent source code commit of currently executing code
+  commitHash: String!
 }
 
 input BrowserEventInput {
@@ -88,6 +90,16 @@ input BrowserEventInput {
   createdAt: DateTime!
   info: JSON!
   clientVersion: String!
+  # Most recent source code commit of currently executing code
+  commitHash: String!
+}
+
+input FeedbackInput {
+  text: String!
+  rating: Int!
+  pathname: String!
+  # Most recent source code commit of currently executing code
+  commitHash: String!
 }
 
 # GraphQL types
@@ -105,5 +117,5 @@ type Subscription {
 
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
-  submitFeedback(text: String!, rating: Int!, pathname: String!): Boolean!
+  submitFeedback(input: FeedbackInput!): Boolean!
 }

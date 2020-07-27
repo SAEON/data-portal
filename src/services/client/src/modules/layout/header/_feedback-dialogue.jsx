@@ -14,6 +14,7 @@ import {
   CircularProgress,
   Tooltip,
 } from '@material-ui/core'
+import { LATEST_COMMIT } from '../../../config'
 import { Feedback as FeedbackIcon, Done as DoneIcon, Error as ErrorIcon } from '@material-ui/icons'
 
 export default () => {
@@ -42,8 +43,8 @@ export default () => {
         <QuickForm text="" rating={0}>
           {({ updateForm, text, rating }) => {
             const [submitFeedback, { error, loading, data }] = useMutation(gql`
-              mutation submitFeedback($text: String!, $rating: Int!, $pathname: String!) {
-                submitFeedback(text: $text, rating: $rating, pathname: $pathname)
+              mutation submitFeedback($input: FeedbackInput!) {
+                submitFeedback(input: $input)
               }
             `)
             return (
@@ -107,7 +108,14 @@ export default () => {
                       color="primary"
                       onClick={() => {
                         submitFeedback({
-                          variables: { text, rating, pathname: window.location.pathname },
+                          variables: {
+                            input: {
+                              text,
+                              rating,
+                              pathname: window.location.pathname,
+                              commitHash: LATEST_COMMIT,
+                            },
+                          },
                         })
                       }}
                       autoFocus

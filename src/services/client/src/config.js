@@ -7,6 +7,7 @@ export const SOURCE_CODE_URI =
   process.env.SOURCE_CODE_URI ||
   'https://github.com/SAEONData/saeon-atlas/tree/master/src/services/client'
 export const DATA_CURATOR_CONTACT = process.env.DATA_CURATOR_CONTACT || 'leo@saeon.ac.za'
+export const LATEST_COMMIT = process.env.LATEST_COMMIT
 
 // API Configuration
 export const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'

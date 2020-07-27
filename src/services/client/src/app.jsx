@@ -2,7 +2,13 @@ import React from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
-import { DEFAULT_ERROR, DEFAULT_WARNING, DEFAULT_INFO, DEFAULT_SUCCESS } from './config'
+import {
+  DEFAULT_ERROR,
+  DEFAULT_WARNING,
+  DEFAULT_INFO,
+  DEFAULT_SUCCESS,
+  LATEST_COMMIT,
+} from './config'
 import { ApolloProvider } from '@apollo/client'
 import ErrorBoundary from './modules/error-boundary'
 import ServerLogger from './components/server-logger'
@@ -38,6 +44,7 @@ export default ({ link }) => (
                   console.logToGraphQL({
                     clientVersion: packageJson.version,
                     type,
+                    commitHash: LATEST_COMMIT,
                     createdAt: new Date(),
                     info: {
                       x,
