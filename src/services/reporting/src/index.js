@@ -23,21 +23,17 @@ let iterator = await createIterator({
   ),
   query: commits,
   pageInfoPath: 'repository.ref.target.history.pageInfo',
+  dataPath: 'repository.ref.target.history.edges',
 })
 
 while (!iterator.done) {
-  const { data } = iterator
-  const results = data.repository.ref.target.history.edges
-    .map(({ node }) => node)
-    .filter(({ message }) => Boolean(message.match(/#\d*/)))
-    .map(row =>
-      Object.assign(row, {
-        'issue#': [...new Set(row.message.match(/#\d*/g))].join(','),
-      })
-    )
-
-  writeToFile(results)
+  console.log(`Writing ${iterator.data.length} results to file`)
+  writeToFile(iterator.data)
   setIncludeHeaderRow(false)
-  console.log(`${results.length} commits found (with issue refs) and written to output`)
   iterator = await iterator.next()
 }
+
+/**
+ * Notify completion
+ */
+console.log('Complete!')

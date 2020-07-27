@@ -3,7 +3,7 @@ import { REPOSITORY_NAME, REPOSITORY_OWNER, SINCE } from '../config.js'
 
 const objectValueFromPathString = (str, obj) => str.split('.').reduce((o, k) => o[k], obj)
 
-export default async function iterate({ pageInfoPath, executor, query, after = null }) {
+export default async function iterate({ dataPath, pageInfoPath, executor, query, after = null }) {
   const { data } = await executor({
     variables: Object.assign(
       {
@@ -19,13 +19,14 @@ export default async function iterate({ pageInfoPath, executor, query, after = n
   return {
     next: async () => {
       return iterate({
+        dataPath,
         pageInfoPath,
         executor,
         query,
         after: objectValueFromPathString(`${pageInfoPath}.endCursor`, data),
       })
     },
-    data,
-    done: !objectValueFromPathString(`${pageInfoPath}.hasNextPage`, data),
+    data: objectValueFromPathString(dataPath, data),
+    done: !Boolean(objectValueFromPathString(dataPath, data).length),
   }
 }
