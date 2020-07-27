@@ -72,8 +72,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                 variant="outlined"
                 color="primary"
                 style={{ minWidth: 120 }}
-                json={record}
-                id={id}
+                record={record}
               />
             </Grid>
 

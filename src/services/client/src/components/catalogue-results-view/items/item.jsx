@@ -156,7 +156,7 @@ export default ({ item }) => {
                   </DataDownloadButton>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <CitationDialog color="secondary" fullWidth size="small" json={doc} />
+                  <CitationDialog color="secondary" fullWidth size="small" record={doc} />
                 </Grid>
               </Grid>
             </CardContent>
