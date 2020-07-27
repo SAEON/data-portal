@@ -2,7 +2,6 @@
 FROM node:14 as build
 WORKDIR /app
 COPY . .
-COPY .git/ ./.git/
 RUN npm ci --only=production
 RUN npm --prefix src/services/client ci --only=production
 RUN npm --prefix src/services/client run build 
