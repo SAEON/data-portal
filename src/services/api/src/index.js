@@ -26,6 +26,11 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 
 // Setup App
 const app = new Koa()
+
+/**
+ * This server is deployed behind an Nginx proxy, accessible only via HTTPS
+ * X-Forwarded-* headers can be trusted
+ */
 app.proxy = true
 
 // Setup routes

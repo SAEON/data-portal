@@ -25,7 +25,6 @@ import {
 import { debounce } from '../../lib/fns'
 import { CLIENT_HOST_ADDRESS } from '../../config'
 import QuickForm from '@saeon/quick-form'
-import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
 
 const pageSizes = [
@@ -265,25 +264,19 @@ export default ({
       </AppBar>
 
       <Grid container>
-        {disableSidebar ? null : (
-          // TODO - https://github.com/mui-org/material-ui/issues/10051
-          <Collapse
-            className={clsx({
-              'MuiGrid-root': true,
-              'MuiGrid-item': true,
-              'MuiGrid-grid-xs-12': isMobile ? (showSidebar ? true : false) : false,
-              'MuiGrid-grid-xs-4': isMobile ? false : showSidebar ? true : false,
-            })}
-            orientation={isMobile ? 'vertical' : 'horizontal'}
-            in={showSidebar}
-          >
-            <Grid item xs={showSidebar ? 12 : isMobile ? 12 : 4}>
+        {disableSidebar ? null : isMobile ? (
+          <Collapse orientation={'vertical'} in={showSidebar}>
+            <Grid item xs={12}>
               <Sidebar />
             </Grid>
           </Collapse>
-        )}
+        ) : showSidebar ? ( // TODO https://github.com/mui-org/material-ui/pull/20619
+          <Grid item xs={4}>
+            <Sidebar />
+          </Grid>
+        ) : null}
 
-        <Grid item xs>
+        <Grid item xs={isMobile ? 12 : showSidebar ? 8 : 12}>
           <ResultList />
         </Grid>
       </Grid>
