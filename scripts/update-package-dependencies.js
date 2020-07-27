@@ -6,7 +6,6 @@ import { join } from 'path'
 export const getCurrentDirectory = meta => dirname(fileURLToPath(meta.url))
 
 const e = async cmd => {
-  
   return new Promise((resolve, reject) => {
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
