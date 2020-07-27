@@ -8,6 +8,7 @@ export const getStateFromUri = (splitResult = true) => {
     params[match[1]] = splitResult
       ? decodeURIComponent(match[2])
           .split(',')
+          .map(item => decodeURIComponent(item))
           .filter(_ => _)
       : decodeURIComponent(match[2])
   }
@@ -19,9 +20,10 @@ export const getStateFromUri = (splitResult = true) => {
  * @param {Object} history A history object from the useHistory hook
  */
 export const setUriState = history => ({ pathname = window.location.pathname, terms }) => {
+  console.log(terms)
   history.push({
     pathname,
-    search: `?terms=${encodeURIComponent(terms.join(','))}`,
+    search: `?terms=${encodeURIComponent(terms.map(term => encodeURIComponent(term)).join(','))}`,
   })
 }
 

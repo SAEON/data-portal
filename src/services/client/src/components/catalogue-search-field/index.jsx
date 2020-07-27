@@ -4,13 +4,8 @@ import { TextField, Chip, Grid, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
-import { useUriState } from '../../modules/uri-state'
+import { useUriState, getStateFromUri } from '../../modules/uri-state'
 import ListboxComponent from '../autocomplete/list-box-component'
-
-const getSearchState = () =>
-  decodeURIComponent(window.location.search.replace('?terms=', ''))
-    .split(',')
-    .filter(_ => _)
 
 const SUBJECTS = [
   'metadata_json.publicationYear',
@@ -21,7 +16,7 @@ const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {
   const { pushState } = useUriState(useHistory())
-  const terms = getSearchState()
+  const { terms } = getStateFromUri()
   const { error, loading, data } = useQuery(
     gql`
       query catalogue($fields: [String!], $limit: Int) {
