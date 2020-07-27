@@ -4,7 +4,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { getStateFromUri } from '../../../modules/uri-state'
 import Filter from './filter'
 
-export default memo(({ setCursors }) => {
+export default memo(() => {
   const { terms = [] } = getStateFromUri()
 
   const { error, loading, data } = useQuery(
@@ -38,7 +38,6 @@ export default memo(({ setCursors }) => {
     <Grid container item xs={12}>
       {/* Data tags */}
       <Filter
-        setCursors={setCursors}
         title="Tags"
         results={
           data?.catalogue?.summary.find(obj =>
@@ -49,7 +48,6 @@ export default memo(({ setCursors }) => {
 
       {/* Publisher */}
       <Filter
-        setCursors={setCursors}
         title="Publisher"
         results={
           data?.catalogue?.summary.find(obj =>
@@ -60,7 +58,6 @@ export default memo(({ setCursors }) => {
 
       {/* Publication year */}
       <Filter
-        setCursors={setCursors}
         title="Publication Year"
         results={
           data?.catalogue?.summary.find(obj =>

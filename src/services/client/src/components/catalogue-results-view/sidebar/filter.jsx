@@ -17,7 +17,7 @@ import { useUriState } from '../../../modules/uri-state'
 
 const LIST_SIZE = 3
 
-export default ({ results, title, setCursors }) => {
+export default ({ results, title }) => {
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
   const { getState, pushState } = useUriState(useHistory())
@@ -90,11 +90,6 @@ export default ({ results, title, setCursors }) => {
                               terms: [...new Set([...terms, key])],
                             })
                           }
-                          setCursors({
-                            start: undefined,
-                            end: undefined,
-                            currentPage: 0,
-                          })
                         }}
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
