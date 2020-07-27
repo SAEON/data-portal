@@ -92,7 +92,7 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
       catalogue={data?.catalogue}
       setTextSearch={setTextSearch}
       textSearch={textSearch}
-      Sidebar={() => <Sidebar />}
+      Sidebar={() => <Sidebar setCursors={setCursors} />}
       ResultList={() => (
         <Items
           error={error}

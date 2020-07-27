@@ -20,7 +20,6 @@ export const getStateFromUri = (splitResult = true) => {
  * @param {Object} history A history object from the useHistory hook
  */
 export const setUriState = history => ({ pathname = window.location.pathname, terms }) => {
-  console.log(terms)
   history.push({
     pathname,
     search: `?terms=${encodeURIComponent(terms.map(term => encodeURIComponent(term)).join(','))}`,
