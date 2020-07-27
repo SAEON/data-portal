@@ -26,6 +26,7 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 
 // Setup App
 const app = new Koa()
+app.proxy = true
 
 // Setup routes
 const router = new KoaRouter()
