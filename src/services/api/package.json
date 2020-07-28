@@ -1,6 +1,6 @@
 {
   "name": "@saeon/api",
-  "version": "0.0.176",
+  "version": "0.0.178",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
@@ -28,7 +28,7 @@
   "dependencies": {
     "@koa/router": "^9.3.1",
     "@saeon/logger": "^3.1.12",
-    "apollo-server-koa": "^2.16.0",
+    "apollo-server-koa": "^2.16.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "cookie": "^0.4.1",
     "dataloader": "^2.0.0",
@@ -41,7 +41,7 @@
     "koa-compress": "^5.0.1",
     "koa-proxies": "^0.11.0",
     "mongodb": "^3.5.9",
-    "nanoid": "^3.1.10",
+    "nanoid": "^3.1.11",
     "node-fetch": "^2.6.0",
     "sift": "^13.2.0"
   },

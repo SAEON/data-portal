@@ -73,9 +73,9 @@ export default ({
             </IconButton>
           )}
 
-          {/* TEXT SEARCH */}
           <div style={{ flexGrow: 10, margin: '0 20px' }}>
             <Grid container spacing={1} alignItems="flex-end">
+              {/* TEXT SEARCH */}
               <Grid item style={{ flex: 1 }}>
                 <QuickForm
                   effects={[debounce(({ value }) => setTextSearch(value), 250)]}
@@ -103,6 +103,31 @@ export default ({
                   )}
                 </QuickForm>
               </Grid>
+
+              {/* SHARE LINK */}
+              <Grid item style={{ alignSelf: 'center' }}>
+                <Tooltip title="Share result list">
+                  <Link
+                    component={forwardRef((props, ref) => (
+                      <Button
+                        startIcon={<ShareIcon fontSize="small" />}
+                        ref={ref}
+                        variant="text"
+                        href={`${CLIENT_HOST_ADDRESS}/render/catalogue-results-view${
+                          window.location.search || '?terms='
+                        }&disableSidebar=true`}
+                        target="_blank"
+                        rel="noreferrer"
+                        color="primary"
+                        {...props}
+                        size="medium"
+                      >
+                        Share
+                      </Button>
+                    ))}
+                  />
+                </Tooltip>
+              </Grid>
             </Grid>
           </div>
 
@@ -120,27 +145,7 @@ export default ({
             </Typography>
           )}
 
-          {/* SHARE LINK */}
-          <div style={{ flexGrow: 1, textAlign: 'center' }}>
-            <Tooltip title="Share result list">
-              <Link
-                component={forwardRef((props, ref) => (
-                  <IconButton
-                    ref={ref}
-                    href={`${CLIENT_HOST_ADDRESS}/render/catalogue-results-view${
-                      window.location.search || '?terms='
-                    }&disableSidebar=true`}
-                    target="_blank"
-                    rel="noreferrer"
-                    color="primary"
-                    {...props}
-                  >
-                    <ShareIcon />
-                  </IconButton>
-                ))}
-              />
-            </Tooltip>
-          </div>
+          <div style={{ flexGrow: 1, textAlign: 'center' }}></div>
 
           {isMobile ? null : (
             <>

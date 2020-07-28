@@ -27,6 +27,6 @@ export default async function iterate({ dataPath, pageInfoPath, executor, query,
       })
     },
     data: objectValueFromPathString(dataPath, data),
-    done: !Boolean(objectValueFromPathString(dataPath, data).length),
+    done: !objectValueFromPathString(dataPath, data).length,
   }
 }
