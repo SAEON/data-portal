@@ -73,7 +73,7 @@ service sshd restart # service ssh restart for Ubuntu
 Your PC is now an Ansible controller. You have to configure it to know where the all your hosts are.
 
 #### Set Ansible username of host machines
-The default username that Ansible will use when connecting to your hosts is your current username of your PC (the Ansible server). This isn't always ideal, so best to explicitly configure this. But there's a way to specify this per host anyway.
+The default username that Ansible will use when connecting to your hosts is your current username of your PC (the Ansible server). This isn't always ideal, so best to explicitly configure this. But there's a way to specify this per host anyway, which is better.
 
 ```sh
 sudo mkdir /etc/ansible/group_vars
@@ -88,6 +88,10 @@ ansible_ssh_user:<name>
 sudo nano /etc/ansible/hosts
 
 # Add the following to the file
+[catalogue]
+server_name ansible_host=<ip> ansible_user=<name>
+
+# Or.. using the global user configuration
 [catalogue]
 <ip>
 ```
