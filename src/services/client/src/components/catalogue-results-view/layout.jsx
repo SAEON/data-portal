@@ -271,12 +271,12 @@ export default ({
             </Grid>
           </Collapse>
         ) : showSidebar ? ( // TODO https://github.com/mui-org/material-ui/pull/20619
-          <Grid item xs={4}>
+          <Grid item md={4}>
             <Sidebar />
           </Grid>
         ) : null}
 
-        <Grid item xs={isMobile ? 12 : showSidebar ? 8 : 12}>
+        <Grid item md={showSidebar ? 8 : 12}>
           <ResultList />
         </Grid>
       </Grid>
