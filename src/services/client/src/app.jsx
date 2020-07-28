@@ -39,8 +39,8 @@ export default ({ link }) => (
           >
             <AuthProvider>
               <ServerLogger
-                event={'mousemove'}
-                handle={debounce(async ({ type, x, y }) =>
+                event={'click'}
+                handle={async ({ type, target, x, y }) =>
                   console.logToGraphQL({
                     clientVersion: packageJson.version,
                     type,
@@ -49,11 +49,28 @@ export default ({ link }) => (
                     info: {
                       x,
                       y,
+                      target, // TODO - We should store the HTML of the DOM element
                     },
                   })
-                )}
+                }
               >
-                <Layout />
+                <ServerLogger
+                  event={'mousemove'}
+                  handle={debounce(async ({ type, x, y }) =>
+                    console.logToGraphQL({
+                      clientVersion: packageJson.version,
+                      type,
+                      commitHash: LATEST_COMMIT,
+                      createdAt: new Date(),
+                      info: {
+                        x,
+                        y,
+                      },
+                    })
+                  )}
+                >
+                  <Layout />
+                </ServerLogger>
               </ServerLogger>
             </AuthProvider>
           </FeedbackProvider>
