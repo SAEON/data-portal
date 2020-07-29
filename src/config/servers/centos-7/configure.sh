@@ -19,6 +19,9 @@ yum -y remove \
   docker-logrotate \
   docker-engine
 
+# Uninstall current docker versions if applicable
+yum -y remove docker-ce docker-ce-cli containerd.io
+
 # Install Docker
 yum -y install yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
@@ -30,6 +33,7 @@ yum -y install \
 
 # Enable Docker as a service
 systemctl enable docker
+systemctl start docker
 
 # Install Docker Compose
 curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
