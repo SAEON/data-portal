@@ -1,0 +1,8 @@
+---
+- hosts: production
+  tasks:
+  - name: Execute the configure.sh script to setup Docker environment
+    script: ./configure.sh
+  
+  - name: Restart the server so that SELinux changes take effect
+    reboot:

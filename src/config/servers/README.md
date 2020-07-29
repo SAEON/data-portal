@@ -9,17 +9,17 @@ In this case it is assumed that Ansible is installed on your own PC as the __con
 
 Essentially the ansible controller has the ability to run shell commands on hosts. This allows you to specify, for example, several thousand virtual servers and run exactly the same shell commands on each, concurrently. (Although you would have to setup users and SSH for each of these several thousand virtual machines - probably best to script this - and you would also then have to pay for several thousand virtual machines).
 
-On top of this core-functionality (running specified shell commands on a number of hosts), instead of specifying shell commands to run on servers, Ansible allows you to specify the _state_ that servers should be. And then interprets that _state_ into a series of shell commands that it runs on each host. Configuring host _state_ is done in Ansible [___Playbooks___](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html). Playbook-syntax is sufficiently complicated enough that it can be considered an orchestration language in it's own right (according to Ansible).
-
-For now, this repository uses Ansible in a very simple sense - i.e. specify a number of shell commands to run on a server, and that is all. If you can't install Ansible on your computer then you can refer to the shell scripts and just run the commands manually. But... challenge yourself! Ansible is a fun and worthwhile tool.
-
-For an example of a scenario that a Playbook is useful as opposed to simple shell scripts: setting up a server may involve appending to a configuration file. This can be done via a simple command:
+On top of this core-functionality (running specified shell commands on a number of hosts), instead of specifying shell commands to run on servers, Ansible allows you to specify the _state_ that servers should be. And then interprets that _state_ into a series of shell commands that it runs on each host. Configuring host _state_ is done in Ansible [___Playbooks___](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html). Playbook-syntax is sufficiently complicated enough that it can be considered an orchestration language in it's own right (according to Ansible). For an example of a scenario that a Playbook is useful as opposed to simple shell scripts: setting up a server may involve appending to a configuration file. This can be done via a simple command:
 
 ```sh
 sudo echo ... >> some_config_file
 ```
 
-Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be. Ansible Playbooks provide this guarantee without users having to write messy shell scripts that involve manipulating configuration file contents as strings.
+Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be. Ansible Playbooks provide this guarantee without users having to write messy shell scripts that involve manipulating configuration file contents as strings. Of course, writing such Playbooks becomes complicated...
+
+Instead, this repository uses a very simple Playbook to [execute a shell script](https://docs.ansible.com/ansible/latest/modules/script_module.html) (which is slightly better than specifying many shell commands in a Playbook).
+
+If you can't / don't want to install Ansible on your computer then you can refer to the shell scripts and just run the commands manually. But... challenge yourself! Ansible is a fun and worthwhile tool.
 
 # Install Ansible on your computer
 This assumes your development environment is Linux or similar (for example on Windows, you can use the WSL Ubuntu environment)
@@ -145,4 +145,10 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 # -a => Arguments passed to the shell module
 # sudo ls -lsa => The command to execute (an argument passed to the Ansible shell module)
 # <group-name> => The servers on which to execute the shell command
+```
+
+#### Execute an Ansible playbook
+```sh
+# Execute this command from <repo-root>/src/config/servers
+ansible-playbook centos-7/setup-server.yml
 ```
