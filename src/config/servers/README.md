@@ -1,5 +1,6 @@
 # Scripted server configuration
 Configuring servers comes down to running a number of shell commands. Together, these commands can be referred to as a script. This readme discusses how to setup an orchestration tool ([Ansible](https://www.ansible.com/)) to run simple shell scripts on virtual servers. If you don't want to use Ansible, you can still refer to this README to find the shell commands for setting up a Linux server to run the catalogue software. It's worth the read though - beautifully written, though I say so myself :)!
+
 # Ansible overview
 The best description of Ansible I have found was at [snel.com](https://www.snel.com/support/how-to-install-ansible-on-centos-7/):
 
@@ -35,12 +36,8 @@ If you are not familiar with how to setup passwordless SSH login on a Linux serv
 ```sh
 # Copy the RSA public key on your PC (the output of this command)
 cat ~/.ssh/id_rsa.pub
-```
 
-> NOTE All the servers should have the same username (`<name>`)
-
-```sh
-# Login to your shiny new server. You will probably need a password
+# Login to your shiny new server. You will probably be asked for a password
 ssh root@<ip>
 
 # Now setup a user
@@ -87,7 +84,7 @@ service sshd restart # Ubuntu: service ssh restart
 Your PC is an Ansible controller. You have to:
 
 1. Install Ansible
-2. configure it to know about the hosts
+2. Configure it to know about the hosts
 
 ## Install Ansible on your computer
 This assumes your development environment is Linux or similar (for example on Windows, you can use the WSL Ubuntu environment)
