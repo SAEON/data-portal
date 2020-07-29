@@ -1,6 +1,6 @@
 ---
 - name: Configure @saeon/catalogue
-  hosts: test
+  hosts: Catalogue
   become: yes
   tasks:
   - name: Execute the configure.sh script to setup Docker environment
