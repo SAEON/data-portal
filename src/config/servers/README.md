@@ -19,7 +19,7 @@ Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), a
 
 Instead, this repository uses a very simple Playbook to [execute a shell script](https://docs.ansible.com/ansible/latest/modules/script_module.html) (which is slightly better than specifying many shell commands in a Playbook).
 
-If you can't / don't want to install Ansible on your computer then you can refer to the shell scripts and just run the commands manually. But... challenge yourself! Ansible is a fun and worthwhile tool.
+If you can't / don't want to install Ansible on your computer then you can refer to the shell scripts and just run the commands manually (run the commands with `sudo` access). But... challenge yourself! Ansible is a fun and worthwhile tool.
 
 # Setup your virtual server(s)
 Configure your virtual servers so that passwordless login is possible from your computer (i.e. the Ansible __controller__). This means setting up SSH login on the virtual servers (__hosts__). Once this is done you should be able to login to your virtual servers via SSH.
