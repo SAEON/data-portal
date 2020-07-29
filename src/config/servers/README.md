@@ -127,6 +127,9 @@ sudo nano /etc/ansible/group_vars/servers
 ansible_ssh_user:<name>
 ```
 
+## Use Ansible!
+Basic Ansible usage, including pinging hosts, executing commands, and executing Playbooks
+
 #### Test that your Ansible configuration works with the following commands
 ```sh
 # Try pinging all the hosts in the host file
