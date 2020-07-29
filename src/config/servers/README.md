@@ -16,7 +16,7 @@ On top of this core-functionality (running specified shell commands on a number 
 sudo echo ... >> some_config_file
 ```
 
-Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be. Ansible Playbooks provide this guarantee without users having to write messy shell scripts that involve manipulating configuration file contents as strings. Of course, writing such Playbooks becomes complicated...
+Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be. Ansible Playbooks provide this guarantee without users having to write messy shell scripts that involve manipulating configuration file contents as strings. Of course, writing such Playbooks becomes complicated... Also, it's useful to be able to apply Playbooks to existing servers to update them.
 
 Instead, this repository uses a very simple Playbook to [execute a shell script](https://docs.ansible.com/ansible/latest/modules/script_module.html) (which is slightly better than specifying many shell commands in a Playbook).
 

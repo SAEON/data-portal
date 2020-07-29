@@ -34,3 +34,12 @@ systemctl enable docker
 # Install Docker Compose
 curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
+
+# Setup Nginx
+yum -y install epel-release
+yum -y install nginx
+systemctl enable nginx
+systemctl start nginx
+firewall-cmd --permanent --zone=public --add-service=http 
+firewall-cmd --permanent --zone=public --add-service=https
+firewall-cmd --reload
