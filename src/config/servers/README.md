@@ -21,23 +21,7 @@ Instead, this repository uses a very simple Playbook to [execute a shell script]
 
 If you can't / don't want to install Ansible on your computer then you can refer to the shell scripts and just run the commands manually. But... challenge yourself! Ansible is a fun and worthwhile tool.
 
-# Install Ansible on your computer
-This assumes your development environment is Linux or similar (for example on Windows, you can use the WSL Ubuntu environment)
-```sh
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-add-repository ppa:ansible/ansible
-sudo apt-get update
-sudo apt-get install ansible -y
-
-# Install python if necessary
-python --version
-
-# Check that ansible is installed
-ansible --version
-```
-
-# Configure your virtual server(s)
+# Setup your virtual server(s)
 Configure your virtual servers so that passwordless login is possible from your computer (i.e. the Ansible __controller__). This means setting up SSH login on the virtual servers (__hosts__). Once this is done you should be able to login to your virtual servers via SSH.
 
 ```sh
@@ -99,8 +83,29 @@ vi /etc/ssh/sshd_config
 service sshd restart # Ubuntu: service ssh restart
 ```
 
-# Configure your Ansible server
-Your PC is an Ansible controller. You have to configure it to know about the hosts
+# Configure your Ansible controller
+Your PC is an Ansible controller. You have to:
+
+1. Install Ansible
+2. configure it to know about the hosts
+
+## Install Ansible on your computer
+This assumes your development environment is Linux or similar (for example on Windows, you can use the WSL Ubuntu environment)
+```sh
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible -y
+
+# Install python if necessary
+python --version
+
+# Check that ansible is installed
+ansible --version
+```
+
+## Specify Ansible hosts
 
 ```sh
 sudo nano /etc/ansible/hosts # or vim. I like vim
