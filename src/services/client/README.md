@@ -70,7 +70,7 @@ touch .env
 This is a list of configuration options available (with default values indicated)
 
 ```sh
-ATLAS_API_ADDRESS=http://localhost:3000
+CATALOGUE_API_ADDRESS=http://localhost:3000
 DEFAULT_ERROR= # default error message shown on startup
 DEFAULT_WARNING= # default warning message shown on startup
 DEFAULT_INFO= # default info message shown on startup

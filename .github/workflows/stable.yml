@@ -1,9 +1,9 @@
-name: DEV
+name: deployment@stable
 
 on:
   push:
     branches:
-      - master
+      - stable
 
 jobs:
   deploy:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: master
+          ref: stable
 
       - name: Configure services/proxy
         run: |
@@ -19,20 +19,20 @@ jobs:
 
       - name: Configure services/api
         run: |
-          echo "ALLOWED_ORIGINS=https://catalogue.saeon.ac.za,https://atlas.saeon.ac.za,https://api.atlas.saeon.ac.za" > src/services/api/.env
-          echo "HTTP_PROXY=http://atlas-anyproxy-dev:8001" >> src/services/api/.env
-          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/services/api/.env
-          echo "MONGO_URL=mongodb://atlas-mongodb-dev:27017" >> src/services/api/.env
+          echo "ALLOWED_ORIGINS=https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za" > src/services/api/.env
+          echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
+          echo "GQL_PROVIDER=https://api.catalgoue.saeon.ac.za" >> src/services/api/.env
+          echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
           echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
 
       - name: Configure services/client
         run: |
-          echo "ATLAS_API_ADDRESS=https://api.atlas.saeon.ac.za" > src/services/client/.env
-          echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
-          echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
-          echo "REDIRECT_URL=https://atlas.saeon.ac.za/authenticated" >> src/services/client/.env
-          echo "CLIENT_HOST_ADDRESS=https://atlas.saeon.ac.za" >> src/services/client/.env
+          echo "CATALOGUE_API_ADDRESS=https://api.catalogue.saeon.ac.za" > src/services/client/.env
+          echo "GQL_PROVIDER=https://api.catalogue.saeon.ac.za/graphql" >> src/services/client/.env
+          echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.catalogue.saeon.ac.za/graphql" >> src/services/client/.env
+          echo "REDIRECT_URL=https://catalogue.saeon.ac.za/authenticated" >> src/services/client/.env
+          echo "CLIENT_HOST_ADDRESS=https://catalogue.saeon.ac.za" >> src/services/client/.env
           echo "DEFAULT_WARNING=This service is still under development - feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)

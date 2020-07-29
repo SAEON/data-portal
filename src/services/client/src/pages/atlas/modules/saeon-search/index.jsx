@@ -5,13 +5,13 @@ import QuickForm from '@saeon/quick-form'
 import { Alert } from '@material-ui/lab'
 import { useMenu } from '@saeon/snap-menus'
 import useStyles from './style'
-import { ATLAS_API_ADDRESS } from '../../../../config'
+import { CATALOGUE_API_ADDRESS } from '../../../../config'
 import SearchControls from './controls'
 import ResultsList from './results/_results-list'
 import { isMobile } from 'react-device-detect'
 
 const DSL_INDEX = `saeon-odp-4-2`
-const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
+const DSL_PROXY = `${CATALOGUE_API_ADDRESS}/proxy/saeon-elk`
 
 export default memo(() => {
   const SearchResultsMenu = useMenu({ id: 'search-results-menu' })

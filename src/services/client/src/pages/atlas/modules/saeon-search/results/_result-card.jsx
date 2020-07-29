@@ -28,8 +28,8 @@ import npmUrl from 'url'
 import { createLayer, LayerTypes } from '../../../../../lib/ol'
 import LegendContent from './_legend'
 
-import { ATLAS_API_ADDRESS } from '../../../../../config'
-const SPATIALDATA_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-spatialdata`
+import { CATALOGUE_API_ADDRESS } from '../../../../../config'
+const SPATIALDATA_PROXY = `${CATALOGUE_API_ADDRESS}/proxy/saeon-spatialdata`
 
 export default ({ _source, proxy, setInfo }) => {
   const classes = useStyles()

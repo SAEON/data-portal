@@ -10,7 +10,7 @@ export const DATA_CURATOR_CONTACT = process.env.DATA_CURATOR_CONTACT || 'leo@sae
 export const LATEST_COMMIT = process.env.LATEST_COMMIT
 
 // API Configuration
-export const ATLAS_API_ADDRESS = process.env.ATLAS_API_ADDRESS || 'http://localhost:3000'
+export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 export const GQL_PROVIDER = process.env.GQL_PROVIDER || 'http://localhost:3000/graphql'
 export const GQL_SUBSCRIPTIONS_PROVIDER =
   process.env.GQL_SUBSCRIPTIONS_PROVIDER || 'ws://localhost:3000/graphql'

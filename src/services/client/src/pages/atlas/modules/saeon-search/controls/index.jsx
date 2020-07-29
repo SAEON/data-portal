@@ -8,12 +8,12 @@ import DateSelector from './date-selector'
 import TermSelector from './term-selector'
 import TextSelector from './text-selector'
 import AreaSelector from './area-selector'
-import { ATLAS_API_ADDRESS } from '../../../../../config'
+import { CATALOGUE_API_ADDRESS } from '../../../../../config'
 import clsx from 'clsx'
 import useStyles from './style'
 
 const DSL_INDEX = `saeon-odp-4-2`
-const DSL_PROXY = `${ATLAS_API_ADDRESS}/proxy/saeon-elk`
+const DSL_PROXY = `${CATALOGUE_API_ADDRESS}/proxy/saeon-elk`
 
 const maxSlider = 7300
 const dateToString = dt => format(dt, 'dd/MM/yyyy')
