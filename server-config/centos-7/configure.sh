@@ -56,6 +56,7 @@ chmod +x /opt/reload-nginx.sh
 
 # Setup a github actions runner
 adduser runner
+sudo usermod -aG docker runner
 
 # TODO etc/sudoers needs the following appended. But that is not safe with shell commands that could be rerun
 # runner ALL=NOPASSWD: /home/runner/svc.sh
