@@ -29,7 +29,7 @@ The repository is organized as a 'monorepo', split according to the following pa
 Refer to these links for specific package documentation.
 
 # Browser support
-
+ 
 Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/client build](/src/services/client/.browserslistrc). As of 11 May 2020, these include:
 
 - chrome: 80
