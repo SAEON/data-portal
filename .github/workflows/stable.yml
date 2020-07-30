@@ -22,6 +22,7 @@ jobs:
           echo "ALLOWED_ORIGINS=https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za" > src/services/api/.env
           echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
           echo "GQL_PROVIDER=https://api.catalgoue.saeon.ac.za" >> src/services/api/.env
+          echo "DEPLOY_ENV=production" >> src/services/api/.env
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
           echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env

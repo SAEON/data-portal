@@ -15,24 +15,24 @@ jobs:
 
       - name: Configure services/proxy
         run: |
-          echo "TODO -> SAEON_SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za src/services/proxy/.env"
+          echo "TODO -> SAEON_SPATIALDATA_PROXY=http://spatialdata.saeon.ac.za src/services/proxy/.env"
 
       - name: Configure services/api
         run: |
-          echo "ALLOWED_ORIGINS=https://catalogue.dvn,https://api.catalogue.dvn" > src/services/api/.env
+          echo "ALLOWED_ORIGINS=http://catalogue.dvn,http://api.catalogue.dvn" > src/services/api/.env
           echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
-          echo "GQL_PROVIDER=https://api.catalogue.dvn" >> src/services/api/.env
+          echo "GQL_PROVIDER=http://api.catalogue.dvn" >> src/services/api/.env
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
           echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
 
       - name: Configure services/client
         run: |
-          echo "CATALOGUE_API_ADDRESS=https://api.catalogue.dvn" > src/services/client/.env
-          echo "GQL_PROVIDER=https://api.catalogue.dvn/graphql" >> src/services/client/.env
+          echo "CATALOGUE_API_ADDRESS=http://api.catalogue.dvn" > src/services/client/.env
+          echo "GQL_PROVIDER=http://api.catalogue.dvn/graphql" >> src/services/client/.env
           echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.catalogue.dvn/graphql" >> src/services/client/.env
-          echo "REDIRECT_URL=https://catalogue.dvn/authenticated" >> src/services/client/.env
-          echo "CLIENT_HOST_ADDRESS=https://catalogue.dvn" >> src/services/client/.env
+          echo "REDIRECT_URL=http://catalogue.dvn/authenticated" >> src/services/client/.env
+          echo "CLIENT_HOST_ADDRESS=http://catalogue.dvn" >> src/services/client/.env
           echo "DEFAULT_WARNING=This service is still under development - feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)

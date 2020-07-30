@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { NODE_ENV } from '../config.js'
+import { DEPLOY_ENV } from '../config.js'
 
 export default async (ctx, next) => {
   if (!ctx.cookies.get('ClientSession')) {
@@ -13,8 +13,8 @@ export default async (ctx, next) => {
       ).toString('base64'),
       {
         httpOnly: true,
-        secure: NODE_ENV === 'development' ? false : true,
-        sameSite: NODE_ENV === 'development' ? 'lax' : 'none',
+        secure: DEPLOY_ENV === 'development' ? false : true,
+        sameSite: DEPLOY_ENV === 'development' ? 'lax' : 'none',
       }
     )
   }

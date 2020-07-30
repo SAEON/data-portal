@@ -74,6 +74,7 @@ MONGO_URL=mongodb://localhost:27017
 MONGO_DB=atlas-api
 GQL_PROVIDER=http://localhost:3000
 PORT=3000
+DEPLOY_ENV=development
 NODE_ENV=development
 HTTP_PROXY=http://localhost:8001
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001

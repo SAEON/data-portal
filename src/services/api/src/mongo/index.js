@@ -25,7 +25,7 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
   .then(client => client.db(DB))
   .catch(error => {
     console.error('Unable to connect to MongoDB', error)
-    if (NODE_ENV === 'production') process.exit(1) // Docker can be a pain to setup and not needed to work with the client
+    if (NODE_ENV === 'production') process.exit(1) // Docker can be a pain to setup and not needed to work with the client on a local dev machine
   })
 
 export const collections = getCollections({ db, _collections })
