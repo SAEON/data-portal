@@ -157,3 +157,7 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 # Execute this command from <repo-root>/src/config/servers
 ansible-playbook centos-7/setup-server.yml
 ```
+
+# Notes
+Some gotchas that are worth writing down
+- [Nginx SSL certs must be ordered correctly](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/)
