@@ -1,7 +1,7 @@
 const { version } = require('./package.json')
 
 module.exports = {
-  title: 'SAEON Atlas Docs',
+  title: 'SAEON Catalogue Docs',
   version,
   webpackConfig: require('./webpack.config.js'),
   components: '../@saeon/client/src/components/**/*.jsx',

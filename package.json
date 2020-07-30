@@ -1,6 +1,6 @@
 {
   "name": "@saeon/js",
-  "description": "SAEON's 'Atlas' codebase (monorepo)",
+  "description": "SAEON's Catalogue software codebase",
   "scripts": {
     "************ TESTS **********": "",
     "test": "npm --prefix src/packages/catalogue-search test",
@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas"
+  "homepage": "https://github.com/SAEONData/catalogue"
 }

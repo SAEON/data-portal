@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "keywords": [
     "anyproxy"
@@ -20,9 +20,9 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/proxy#readme",
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/proxy#readme",
   "dependencies": {
     "@saeon/logger": "^3.1.12",
     "anyproxy": "^4.1.3",

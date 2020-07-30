@@ -46,9 +46,9 @@ npm run start:prod
 #### Run as a Docker container
 
 ```sh
-cd . # From the root of the the saeon-atlas repository
-docker build -t atlas-api -f ./src/@saeon/api/Dockerfile .
-docker run -p 3000:3000 -d atlas-api
+cd . # From the root of the repository
+docker build -t api -f ./src/@saeon/api/Dockerfile .
+docker run -p 3000:3000 -d api
 ```
 
 #### Check that the application is working!
@@ -71,7 +71,7 @@ This is a list of configuration options available (with default values indicated
 MONGO_USER=admin
 MONGO_PSWD=password
 MONGO_URL=mongodb://localhost:27017
-MONGO_DB=atlas-api
+MONGO_DB=catalogue
 GQL_PROVIDER=http://localhost:3000
 PORT=3000
 DEPLOY_ENV=development

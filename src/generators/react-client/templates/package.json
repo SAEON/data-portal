@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "keywords": [
     "SAEON",
@@ -19,9 +19,9 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas#readme",
+  "homepage": "https://github.com/SAEONData/catalogue#readme",
   "dependencies": {
     "@babel/preset-env": "^7.10.3",
     "@material-ui/core": "^4.10.2",

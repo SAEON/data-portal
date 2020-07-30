@@ -24,12 +24,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/ol-react",
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/ol-react",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
