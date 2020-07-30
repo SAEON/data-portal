@@ -1,16 +1,16 @@
 <!-- GitHub build -->
 
-![DEV](https://github.com/SAEONData/saeon-atlas/workflows/DEV/badge.svg)
+![DEV](https://github.com/SAEONData/catalogue/workflows/DEV/badge.svg)
 
 TODO
 
 - There should be a single .browserslistrc
 
-# @SAEON/ATLAS
+# @SAEON/CATALOGUE
 
 **_Please note that this is still in development._**
 
-This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [atlas.saeon.ac.za](https://atlas.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
+This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [catalogue.saeon.ac.za](https://catalogue.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
 
 The repository is organized as a 'monorepo', split according to the following packages:
 
@@ -55,12 +55,12 @@ Packages are mostly self-contained, in that each package includes a `package.jso
 
 ### Setup the repository for development
 
-NOTE: This repository only support Linux/Mac development currently, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/saeon-atlas/issues).
+NOTE: This repository only support Linux/Mac development currently, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues).
 
 ```sh
 # Download the source code
-git clone git@github.com:SAEONData/saeon-atlas.git saeon-atlas
-cd saeon-atlas
+git clone git@github.com:SAEONData/catalogue.git catalogue
+cd catalogue
 
 # Sometimes the scripts in scripts/ don't get the correct permissions set on clone,
 # and when they are adjusted. This could be related to using WSL. Fix this
@@ -87,7 +87,7 @@ Make sure there is an accessible instance of MongoDB (or run using Docker)
 docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
-Running the atlas requires starting 3 services:
+Running the catalogue requires starting 3 services:
 
 - src/services/client
 - src/services/api
@@ -115,7 +115,7 @@ npm run generate-npm-package
 
 # Deployment
 
-All services in this repository are dockerized - see Dockerfiles located in the root of each package. Refer to the repository's [`docker-compose.yml`](/docker-compose.yml) file to see how to deploy all services together. By default, this repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/saeon-atlas/issues)). I.e. the process should be as simple as just 2 steps to get a deployment on every push to master:
+All services in this repository are dockerized - see Dockerfiles located in the root of each package. Refer to the repository's [`docker-compose.yml`](/docker-compose.yml) file to see how to deploy all services together. By default, this repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/catalogue/issues)). I.e. the process should be as simple as just 2 steps to get a deployment on every push to master:
 
 1. Configure a self hosted GitHub actions runner on your server
 2. Adjust the `.github/workflows/deploy-master.yml` to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
@@ -141,7 +141,7 @@ To deploy this repository manually
 
 ```sh
 # Clone the repo
-git clone <...> saeon-atlas-fork
+git clone <...> catalogue-fork
 
 # Add configuration for docker-compose.yml scripts
 echo "MONGO_USERNAME=<user>" > .env

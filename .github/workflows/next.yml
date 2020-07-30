@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: catalogue.saeon.dvn
     steps:
       - uses: actions/checkout@v2
         with:
@@ -37,8 +37,9 @@ jobs:
 
       - name: Configure Nginx (server entry)
         run: |
-          sudo /opt/copy-nginx-vhosts.sh # This script contains this command: cp ./nginx/vhosts/* /etc/nginx/conf.d/
-          sudo /opt/reload-nginx.sh # This script contains this command: service nginx reload
+          sudo /opt/copy-nginx-config.sh # cp ./server-config/nginx/next/nginx.conf /etc/nginx/
+          sudo /opt/copy-nginx-server-blocks.sh # cp ./server-config/nginx/next/server-blocks/* /etc/nginx/conf.d/
+          sudo /opt/reload-nginx.sh # service nginx reload
 
       - name: Deploy services
         run: |

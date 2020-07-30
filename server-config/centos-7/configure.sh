@@ -47,3 +47,18 @@ systemctl start nginx
 firewall-cmd --permanent --zone=public --add-service=http 
 firewall-cmd --permanent --zone=public --add-service=https
 firewall-cmd --reload
+
+# GitHub actions runner needs to update Nginx configuration, which needs sudo. Allow this:
+echo cp ./server-config/nginx/next/server-blocks/* /etc/nginx/conf.d/ > /opt/copy-nginx-server-blocks.sh
+echo service nginx reload > /opt/reload-nginx.sh
+chmod +x /opt/copy-nginx-server-blocks.sh
+chmod +x /opt/reload-nginx.sh
+
+# Setup a github actions runner
+adduser runner
+
+# TODO etc/sudoers needs the following appended. But that is not safe with shell commands that could be rerun
+# runner ALL=NOPASSWD: /home/runner/svc.sh
+# runner ALL=NOPASSWD: /opt/reload-nginx.sh
+# runner ALL=NOPASSWD: /opt/copy-nginx-conf.sh
+# runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh
