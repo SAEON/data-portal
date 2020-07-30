@@ -1,5 +1,5 @@
 {
-  "name": "@saeon/proxy",
+  "name": "@catalogue/proxy",
   "version": "0.0.1",
   "description": "A wraper for anyproxy, to deploy behind Node.js as a caching server",
   "main": "index.js",

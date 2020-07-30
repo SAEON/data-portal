@@ -1,5 +1,5 @@
 {
-  "name": "@saeon/js",
+  "name": "@saeon/catalogue",
   "description": "SAEON's Catalogue software codebase",
   "scripts": {
     "************ TESTS **********": "",
