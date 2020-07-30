@@ -1,10 +1,48 @@
 ---
 - name: Configure @saeon/catalogue
-  hosts: Catalogue
+  hosts: catalogue
   become: yes
   tasks:
   - name: Execute the configure.sh script to setup Docker environment
     script: ./configure.sh
+
+  - name: Ensure SELinux is disabled
+    lineinfile:
+      path: /etc/selinux/config
+      regexp: '^SELINUX='
+      line: SELINUX=disabled
+
+  - name: GitHub Actions-runner 1/4 (sudo svc)
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%runner ALL=NOPASSWD: /home/runner/svc.sh'
+      line: 'runner ALL=NOPASSWD: /home/runner/svc.sh'
+      validate: /usr/sbin/visudo -cf %s
+
+  - name: GitHub Actions-runner 2/4 (copy Nginx config)
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
+      line: 'runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
+      validate: /usr/sbin/visudo -cf %s
+
+  - name: GitHub Actions-runner 3/4 (copy Nginx blocks)
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
+      line: 'runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
+      validate: /usr/sbin/visudo -cf %s
+
+  - name: GitHub Actions-runner 4/4 (reload Nginx)
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%runner ALL=NOPASSWD: /opt/reload-nginx.sh'
+      line: 'runner ALL=NOPASSWD: /opt/reload-nginx.sh'
+      validate: /usr/sbin/visudo -cf %s
   
-  - name: Restart the server so that SELinux changes take effect
+  - name: Finish setup by restarting the server
     reboot:

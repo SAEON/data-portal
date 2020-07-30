@@ -5,9 +5,6 @@ yum -y remove git*
 yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
 yum -y install git
 
-# Disable SELinux
-echo $'SELINUX=disabled\nSELINUXTYPE=targeted' | sudo tee /etc/selinux/config
-
 # Uninstall old docker versions
 yum -y remove \
   docker \
@@ -48,18 +45,20 @@ firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-service=https
 firewall-cmd --reload
 
+# Open DB ports
+firewall-cmd --permanent --add-port=27017/tcp # Mongo
+firewall-cmd --permanent --add-port=5432/tcp # Postgres
+firewall-cmd --permanent --add-port=3306/tcp # MySQL
+firewall-cmd --reload
+
 # GitHub actions runner needs to update Nginx configuration, which needs sudo. Allow this:
+echo cp ./server-config/nginx/next/nginx.conf /etc/nginx/ > /opt/copy-nginx-config.sh
 echo cp ./server-config/nginx/next/server-blocks/* /etc/nginx/conf.d/ > /opt/copy-nginx-server-blocks.sh
 echo service nginx reload > /opt/reload-nginx.sh
+chmod +x /opt/copy-nginx-config.sh
 chmod +x /opt/copy-nginx-server-blocks.sh
 chmod +x /opt/reload-nginx.sh
 
-# Setup a github actions runner
+# Setup a github actions runner user (The runner has to be setup manually via a GitHub respository)
 adduser runner
 sudo usermod -aG docker runner
-
-# TODO etc/sudoers needs the following appended. But that is not safe with shell commands that could be rerun
-# runner ALL=NOPASSWD: /home/runner/svc.sh
-# runner ALL=NOPASSWD: /opt/reload-nginx.sh
-# runner ALL=NOPASSWD: /opt/copy-nginx-conf.sh
-# runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh
