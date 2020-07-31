@@ -49,6 +49,15 @@ Builds are configured to support browsers with over 1% market share, excluding I
   - [OpenLayers 6](https://openlayers.org/)
   - [Material UI](https://material-ui.com/)
 
+# Deployment
+Automated deployment is supported targeting a CentOS 7 environment
+
+1. Fork the repository, and clone to your local machine
+2. Follow the [instructions](/server-configuration/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
+3. Run the command: `npm run configure-centos-7-server`
+4. Setup a Github self-hosted actions runner
+5. Push to your forked repository to trigger a deployment
+
 # Quick start
 
 Packages are mostly self-contained, in that each package includes a `package.json` file, and tracks it's own dependencies. For development purposes it's useful that packages can reference source code in other packages (instead of build output), and for this reason Babel is configured globally.
