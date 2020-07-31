@@ -1,12 +1,12 @@
 {
-  "name": "@saeon/client",
-  "version": "0.2.4",
-  "description": "Browser-based atlas for searching OGC-compliant spatial data repositories",
+  "name": "@catalogue/client",
+  "version": "0.3.1",
+  "description": "Browser-based client for searching SAEON's metadata repository, and for previewing related, OGC-compliant spatial data",
   "keywords": [
     "@saeon/client",
     "GIS",
     "OGC-compliant",
-    "Atlas",
+    "Catalogue",
     "SAEON",
     "ULWAZI"
   ],
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/client#readme",
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/client#readme",
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {

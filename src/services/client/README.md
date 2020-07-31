@@ -49,9 +49,9 @@ npm run build # output is /dist, the entry point is /dist/index.html
 #### Run as a Docker container
 
 ```sh
-cd . # From the root of the the saeon-atlas repository
-docker build -t atlas-c lient -f ./src/@saeon/api/Dockerfile .
-docker run -p 3001:3001 -d atlas-client
+cd . # From the root of the repository
+docker build -t client -f ./src/@saeon/api/Dockerfile .
+docker run -p 3001:3001 -d client
 ```
 
 #### Check that the application is working!
@@ -77,11 +77,11 @@ DEFAULT_INFO= # default info message shown on startup
 DEFAULT_SUCCESS=# default success message shown on startup
 GQL_PROVIDER=http://localhost:3000/graphql
 GQL_SUBSCRIPTIONS_PROVIDER=ws://localhost:3000/graphql
-SOURCE_CODE_URI=https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/client
+SOURCE_CODE_URI=https://github.com/SAEONData/catalogue/tree/master/src/@saeon/client
 ```
 
 ## Docker deployment
 
 ```
-docker build -t atlas-client -f ./src/@saeon/client/Dockerfile .
+docker build -t client -f ./src/services/client/Dockerfile .
 ```

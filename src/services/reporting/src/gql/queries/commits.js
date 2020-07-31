@@ -38,7 +38,7 @@ export default gql`
 
 /*
 {
-  repository(owner: "SAEONData", name: "saeon-atlas") {
+  repository(owner: "SAEONData", name: "catalogue") {
     ref(qualifiedName: "master") {
       target {
         ... on Commit {

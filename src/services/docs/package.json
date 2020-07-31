@@ -1,10 +1,10 @@
 {
-  "name": "atlas-documentation",
+  "name": "documentation",
   "version": "0.0.1",
   "description": "Docmentation for @saeon/ol-react, @saeon/catalogue-search, @saeon/api, @saeon/client",
   "keywords": [
     "SAEON",
-    "atlas",
+    "catalogue",
     "documentation",
     "docs"
   ],
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/docs",
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/docs",
   "author": "steven@saeon.ac.za,zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {

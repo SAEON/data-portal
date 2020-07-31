@@ -1,5 +1,5 @@
 {
-  "name": "@saeon/api",
+  "name": "@catalogue/api",
   "version": "0.0.182",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
@@ -15,12 +15,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/@saeon/api#readme",
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"

@@ -6,19 +6,17 @@ The best description of Ansible I have found was at [snel.com](https://www.snel.
 
 > Ansible is an open source automation software written in Python. It runs on UNIX-like systems and can provision and configure both UNIX-like and Windows systems. Unlike other automation software, Ansible does not require an agent to run on a target system. It leverages on the SSH connection and python interpreter to perform the given tasks on the target system. Ansible can be installed on a cloud server to manage other cloud servers from a central location, or it can also be configured to use on a personal system to manage cloud or on-premises systems.
 
-In this case it is assumed that Ansible is installed on your own PC as the __controller server__, and it will be used to connect to virtual machines running Linux - the __hosts__. As mentioned above, these servers (the hosts) do NOT need to have Ansible installed, but they do need Python 2 (I think - not 3). Your PC will act as an ansible controller, and the virtual server will be ansible nodes.
+In this case it is assumed that Ansible is installed on your own PC as the __controller server__, and it will be used to connect to virtual machines running Linux - the __hosts__. As mentioned above, these servers (the hosts) do NOT need to have Ansible installed, but they do need Python 2 installed (Python 3 works, with additional configuration). Your PC will act as an ansible controller, and the virtual machines are ansible nodes.
 
 Essentially the ansible controller has the ability to run shell commands on hosts. This allows you to specify, for example, several thousand virtual servers and run exactly the same shell commands on each, concurrently. (Although you would have to setup users and SSH for each of these several thousand virtual machines - which you can do with Ansible, but that is not shown here - and you would also then have to pay for several thousand virtual machines).
 
-On top of this core-functionality (running specified shell commands on a number of hosts), instead of specifying shell commands to run on servers, Ansible allows you to specify the _state_ that servers should be. And then interprets that _state_ into a series of shell commands that it runs on each host. Configuring host _state_ is done in Ansible [___Playbooks___](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html). Playbook-syntax is sufficiently complicated enough that it can be considered an orchestration language in it's own right (according to Ansible). For an example of a scenario that a Playbook is useful as opposed to simple shell scripts: setting up a server may involve appending to a configuration file. This can be done via a simple command:
+You can run shell commands on hosts using the Ansible CLI, or you can provide Ansible a configuration file that tells it what commands to run on the server. Extending this, you can specify general _tasks_ for Ansible to complete on hosts that can be as simple as a single command, or more complex. These configuration files are called [___Playbooks___](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html).Playbook syntax is sufficiently complicated enough that it can be considered an orchestration language in it's own right (according to Ansible). A scenario that a Playbook is useful as opposed to simple shell scripts is, for example, editing a configuration file. This can be done via a simple command:
 
 ```sh
 sudo echo ... >> some_config_file
 ```
 
-Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be. Ansible Playbooks provide this guarantee without users having to write messy shell scripts that involve manipulating configuration file contents as strings. Of course, writing such Playbooks becomes complicated... Also, it's useful to be able to apply Playbooks to existing servers to update them.
-
-Instead, this repository uses a very simple Playbook to [execute a shell script](https://docs.ansible.com/ansible/latest/modules/script_module.html) (which is slightly better than specifying many shell commands in a Playbook).
+Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be (especially when editing `/etc/sudoers`). Ansible Playbooks provides idempotency without users having to write messy shell scripts that involve manipulating configuration file contents as strings. In the case of editing `/etc/sudoers`, it's also possible to protect against mistakes by validating changes prior to saving.
 
 If you can't / don't want to install Ansible on your computer then you can refer to the shell scripts and just run the commands manually (run the commands with `sudo` access). But... challenge yourself! Ansible is a fun and worthwhile tool.
 
@@ -154,6 +152,10 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 
 #### Execute an Ansible playbook
 ```sh
-# Execute this command from <repo-root>/src/config/servers
-ansible-playbook centos-7/setup-server.yml
+# Execute this command from <repo-root>/src/server-configuration/ansible
+ansible-playbook playbooks/centos-7.yml
 ```
+
+# Notes
+Some gotchas that are worth writing down
+- [Nginx SSL certs must be ordered correctly](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/)

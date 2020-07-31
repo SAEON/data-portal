@@ -38,9 +38,9 @@ npm run start:prod
 #### Run as a Docker container
 
 ```sh
-cd . # From the root of the the saeon-atlas repository
-docker build -t anyproxy -f ./src/@saeon/proxy/Dockerfile .
-docker run -p 8001:8001 -p 8002:8002 -d anyproxy
+cd . # From the root of the the repository
+docker build -t proxy -f ./src/@saeon/proxy/Dockerfile .
+docker run -p 8001:8001 -p 8002:8002 -d proxy
 ```
 
 #### Check that the application is working!

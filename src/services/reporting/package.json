@@ -1,7 +1,7 @@
 {
   "name": "reporting",
   "version": "0.0.1",
-  "description": "This project generates reports on progress in terms of work done on the SAEON-Atlas repository by interacting with the Github API",
+  "description": "This project generates reports on progress in terms of work done on SAEON's Catalogue software by interacting with the Github API",
   "type": "module",
   "scripts": {
     "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-top-level-await --experimental-json-modules src/index.js'",
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/saeon-atlas.git"
+    "url": "git+https://github.com/SAEONData/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/saeon-atlas/issues"
+    "url": "https://github.com/SAEONData/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/saeon-atlas/tree/master/src/reporting",
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/reporting",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
