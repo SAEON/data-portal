@@ -55,7 +55,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                       startIcon={<ShareIcon />}
                       disableElevation
                       ref={ref}
-                      href={`${CLIENT_HOST_ADDRESS}/render/catalogue-item-view?id=${id}`}
+                      href={`${CLIENT_HOST_ADDRESS}/render/record?id=${id}`}
                       target="_blank"
                       rel="noreferrer"
                     >

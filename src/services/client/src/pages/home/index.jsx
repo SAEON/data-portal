@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Grid, useMediaQuery, Button } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { useTheme } from '@material-ui/core/styles'
-import { CatalogueSearchField } from '../../components'
+import { RecordsSearchBox } from '../../components'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -29,13 +29,13 @@ export default () => {
     >
       {/* Header */}
       <Grid item xs={12}>
-        <CatalogueSearchField />
+        <RecordsSearchBox />
       </Grid>
       <Grid item xs={12}>
         <Button
           onClick={() =>
             history.push({
-              pathname: '/catalogue',
+              pathname: '/records',
               search: window.location.search,
             })
           }

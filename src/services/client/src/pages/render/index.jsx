@@ -1,11 +1,11 @@
 import React from 'react'
-import { CatalogueResultsView, CatalogueItemView } from '../../components'
+import { Records, Record } from '../../components'
 import { getStateFromUri } from '../../modules/uri-state'
 import { Typography } from '@material-ui/core'
 
 const components = {
-  'catalogue-results-view': CatalogueResultsView,
-  'catalogue-item-view': CatalogueItemView,
+  records: Records,
+  record: Record,
 }
 
 export default ({ location }) => {

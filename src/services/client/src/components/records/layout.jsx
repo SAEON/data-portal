@@ -113,7 +113,7 @@ export default ({
                         startIcon={<ShareIcon fontSize="small" />}
                         ref={ref}
                         variant="text"
-                        href={`${CLIENT_HOST_ADDRESS}/render/catalogue-results-view${
+                        href={`${CLIENT_HOST_ADDRESS}/render/records${
                           window.location.search || '?terms='
                         }&disableSidebar=true`}
                         target="_blank"

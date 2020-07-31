@@ -8,8 +8,8 @@ import { Fade } from '@material-ui/core'
 import AtlasPage from '../../pages/atlas'
 import AboutPage from '../../pages/about'
 import HomePage from '../../pages/home'
-import CataloguePage from '../../pages/catalogue'
-import CatalogueItemPage from '../../pages/catalogue-item'
+import RecordsPage from '../../pages/records'
+import RecordPage from '../../pages/record'
 import RenderComponent from '../../pages/render'
 
 const PageTransition = ({ children, tKey }) => (
@@ -39,24 +39,24 @@ export default () => {
 
         {/* Catalogue */}
         <Route
-          key={'catalogue'}
+          key={'records'}
           exact={true}
-          path={'/catalogue'}
+          path={'/records'}
           render={() => (
-            <PageTransition tKey="catalogue">
-              <CataloguePage />
+            <PageTransition tKey="records">
+              <RecordsPage />
             </PageTransition>
           )}
         />
 
         {/* Catalogue item */}
         <Route
-          key={'catalogue-record'}
-          path={'/catalogue/:id'}
+          key={'record'}
+          path={'/records/:id'}
           exact={false}
           render={props => (
-            <PageTransition tKey="catalogue-record">
-              <CatalogueItemPage id={props.match.params.id} {...props} />
+            <PageTransition tKey="record">
+              <RecordPage id={props.match.params.id} {...props} />
             </PageTransition>
           )}
         />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Grid, AppBar, Toolbar, IconButton, Collapse, Fade } from '@material-ui/core'
-import { CatalogueSearchField } from '../../../components'
+import { RecordsSearchBox } from '../../../components'
 import useStyles from './style'
 import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons'
 
@@ -14,7 +14,7 @@ export default () => {
         <Toolbar className={classes.toolbar}>
           <Grid container justify="center">
             <Grid item xs={12} sm={8}>
-              <CatalogueSearchField style={{ visibility: collapsed ? 'hidden' : 'visible' }} />
+              <RecordsSearchBox style={{ visibility: collapsed ? 'hidden' : 'visible' }} />
             </Grid>
           </Grid>
         </Toolbar>

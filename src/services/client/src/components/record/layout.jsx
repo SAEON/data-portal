@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import Header from './header'
 import { Link as SimpleLink } from '..'
 /**TO DO:
- * http://localhost:3001/catalogue/c770a2bfa4108b82725ae1174bf881cd
+ * http://localhost:3001/records/c770a2bfa4108b82725ae1174bf881cd
  * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
  * http://www.sasdi.net/metaview.aspx?uuid=1d9fa3fd257fea3ec81b5bc6c8fde61f# citations work here
  */
@@ -127,7 +127,7 @@ export default ({ json, id }) => {
                             <Chip
                               size="small"
                               clickable
-                              onClick={() => history.push(`/catalogue?terms=${subject.subject}`)}
+                              onClick={() => history.push(`/records?terms=${subject.subject}`)}
                               label={subject.subject.toUpperCase()}
                             />
                           </Grid>

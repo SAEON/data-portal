@@ -43,7 +43,7 @@ export default withRouter(() => {
           <NavItem label={'Home'} icon={<HomeIcon />} to="/" />
 
           {/* Catalogue page */}
-          <NavItem label={'Catalogue'} icon={<StorageIcon />} to="/catalogue" />
+          <NavItem label={'records'} icon={<StorageIcon />} to="/records" />
 
           {/* Atlas page */}
           <NavItem label={'Atlas'} icon={<MapIcon />} to="/atlas" />

@@ -112,7 +112,7 @@ export default ({ item }) => {
                     size="small"
                     onClick={() =>
                       history.push(
-                        `/catalogue/${
+                        `/records/${
                           doc.alternateIdentifiers?.find(
                             ({ alternateIdentifierType: type }) => type === 'Plone'
                           ).alternateIdentifier
@@ -161,10 +161,10 @@ export default ({ item }) => {
               </Grid>
             </CardContent>
             <CardContent>
-              {doc.identifier ? (
+              {doc.identifier && doc.identifier.identifierType.toUpperCase() === 'DOI' ? (
                 <Link uri={`https://doi.org/${doc.identifier.identifier}`} />
               ) : (
-                <Typography>No DOI</Typography>
+                <Typography variant="overline">No DOI</Typography>
               )}
             </CardContent>
           </div>
