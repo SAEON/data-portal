@@ -25,6 +25,7 @@ module.exports = () => {
     },
     output: {
       filename: '[name].[contenthash].js',
+      chunkFilename: '[name].[contenthash].js',
       path: path.join(__dirname, output),
       publicPath: '/',
     },
@@ -86,21 +87,24 @@ module.exports = () => {
     },
     optimization: {
       splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        // minRemainingSize: 0, // Webpack 5 onwards
+        maxSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        automaticNameDelimiter: '~',
+        enforceSizeThreshold: 50000,
         cacheGroups: {
-          default: false,
-          vendors: false,
-          vendor: {
-            chunks: 'all',
-            test: /node_modules/,
-            priority: 20,
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
           },
-          common: {
-            name: 'common',
+          default: {
             minChunks: 2,
-            chunks: 'async',
-            priority: 10,
+            priority: -20,
             reuseExistingChunk: true,
-            enforce: true,
           },
         },
       },

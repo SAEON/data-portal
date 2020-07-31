@@ -1,20 +1,26 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
-import MapProvider from '../provider-map'
-import { Provider as MenuProvider } from '@saeon/snap-menus'
-import { Fade } from '@material-ui/core'
+import { Fade, LinearProgress } from '@material-ui/core'
+
+// Packages
+const MapProvider = lazy(() => import('../provider-map'))
+const MenuProvider = lazy(() => import('@saeon/snap-menus'))
 
 // Pages
-import AtlasPage from '../../pages/atlas'
-import AboutPage from '../../pages/about'
-import HomePage from '../../pages/home'
-import RecordsPage from '../../pages/records'
-import RecordPage from '../../pages/record'
-import RenderComponent from '../../pages/render'
+const HomePage = lazy(() => import('../../pages/home'))
+const RecordPage = lazy(() => import('../../pages/record'))
+const RecordsPage = lazy(() => import('../../pages/records'))
+const AboutPage = lazy(() => import('../../pages/about'))
+const RenderComponent = lazy(() => import('../../pages/render'))
+const AtlasPage = lazy(() => import('../../pages/atlas'))
 
 const PageTransition = ({ children, tKey }) => (
   <Fade key={tKey} in={true}>
-    <div>{children}</div>
+    <div>
+      <Suspense fallback={<LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />}>
+        {children}
+      </Suspense>
+    </div>
   </Fade>
 )
 
@@ -37,7 +43,7 @@ export default () => {
           )}
         />
 
-        {/* Catalogue */}
+        {/* RECORDS */}
         <Route
           key={'records'}
           exact={true}
@@ -49,7 +55,7 @@ export default () => {
           )}
         />
 
-        {/* Catalogue item */}
+        {/* RECORD */}
         <Route
           key={'record'}
           path={'/records/:id'}
@@ -62,44 +68,46 @@ export default () => {
         />
 
         {/* These routes have the same Background map */}
-        <MapProvider>
-          <Route
-            key={'atlas'}
-            path={'/atlas'}
-            exact={true}
-            render={() => (
-              <MenuProvider
-                VERTICAL_OFFSET_TOP={55}
-                HORIZONTAL_MARGIN={5}
-                VERTICAL_OFFSET_BOTTOM={30}
-              >
+        <Suspense fallback={<LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />}>
+          <MapProvider>
+            <Route
+              key={'atlas'}
+              path={'/atlas'}
+              exact={true}
+              render={() => (
                 <PageTransition tKey="atlas">
-                  <AtlasPage />
+                  <MenuProvider
+                    VERTICAL_OFFSET_TOP={55}
+                    HORIZONTAL_MARGIN={5}
+                    VERTICAL_OFFSET_BOTTOM={30}
+                  >
+                    <AtlasPage />
+                  </MenuProvider>
                 </PageTransition>
-              </MenuProvider>
-            )}
-          />
-          <Route
-            key={'home'}
-            path={'/'}
-            exact={true}
-            render={() => (
-              <PageTransition>
-                <HomePage />
-              </PageTransition>
-            )}
-          />
-          <Route
-            key={'about'}
-            path={'/about'}
-            exact={true}
-            render={() => (
-              <PageTransition tKey="about">
-                <AboutPage />
-              </PageTransition>
-            )}
-          />
-        </MapProvider>
+              )}
+            />
+            <Route
+              key={'home'}
+              path={'/'}
+              exact={true}
+              render={() => (
+                <PageTransition>
+                  <HomePage />
+                </PageTransition>
+              )}
+            />
+            <Route
+              key={'about'}
+              path={'/about'}
+              exact={true}
+              render={() => (
+                <PageTransition tKey="about">
+                  <AboutPage />
+                </PageTransition>
+              )}
+            />
+          </MapProvider>
+        </Suspense>
       </Switch>
     </>
   )
