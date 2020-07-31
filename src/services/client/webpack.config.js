@@ -86,20 +86,21 @@ module.exports = () => {
       extensions: ['.js', '.jsx'],
     },
     optimization: {
+      runtimeChunk: 'single',
       splitChunks: {
         chunks: 'all',
-        minSize: 20000,
-        // minRemainingSize: 0, // Webpack 5 onwards
-        maxSize: 0,
+        minSize: 0,
         minChunks: 1,
-        maxAsyncRequests: 30,
-        maxInitialRequests: 30,
+        maxInitialRequests: Infinity,
         automaticNameDelimiter: '~',
-        enforceSizeThreshold: 50000,
         cacheGroups: {
-          defaultVendors: {
+          // https://medium.com/hackernoon/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758
+          vendor: {
             test: /[\\/]node_modules[\\/]/,
-            priority: -10,
+            name(module) {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+              return `npm.${packageName.replace('@', '')}`
+            },
           },
           default: {
             minChunks: 2,
