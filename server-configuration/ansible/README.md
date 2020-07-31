@@ -152,8 +152,8 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 
 #### Execute an Ansible playbook
 ```sh
-# Execute this command from <repo-root>/src/config/servers
-ansible-playbook centos-7/setup-server.yml
+# Execute this command from <repo-root>/src/server-configuration/ansible
+ansible-playbook playbooks/centos-7.yml
 ```
 
 # Notes

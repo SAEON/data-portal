@@ -26,7 +26,9 @@
     "install-package-dependencies": "scripts/install-package-dependencies.sh",
     "publish-all-packages:patch": "scripts/publish-all.sh -s patch",
     "publish-all-packages:minor": "scripts/publish-all.sh -s minor",
-    "publish-all-packages:major": "scripts/publish-all.sh -s major"
+    "publish-all-packages:major": "scripts/publish-all.sh -s major",
+    "************ DEPLOYMENT **********": "",
+    "configure-centos-7-server": "ansible-playbook server-configuration/ansible/playbooks/centos-7.yml"
   },
   "husky": {
     "hooks": {
