@@ -41,13 +41,13 @@
     "babel-loader": "^8.1.0",
     "prop-types": "^15.7.2",
     "rimraf": "^3.0.2",
-    "webpack": "^4.44.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
-    "babel-jest": "^26.1.0",
+    "babel-jest": "^26.2.2",
     "dotenv": "^8.2.0",
-    "jest": "^26.1.0",
+    "jest": "^26.2.2",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
     "onchange": "^7.0.2",

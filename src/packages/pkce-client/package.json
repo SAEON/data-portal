@@ -31,7 +31,7 @@
   "dependencies": {
     "babel-loader": "^8.1.0",
     "rimraf": "^3.0.2",
-    "webpack": "^4.44.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
