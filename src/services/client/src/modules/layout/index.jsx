@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Header from './header'
-import Footer from './footer'
 import useStyles from './style'
 import clsx from 'clsx'
 import Routes from './routes'
+
+const Header = lazy(() => import('./header'))
+const Footer = lazy(() => import('./footer'))
 
 const headlessPages = ['/render']
 
 export default () => {
   const classes = useStyles()
   const { pathname } = window.location
-  // TODO: This looks like an eslint bug - the escapes are definitely required
   // eslint-disable-next-line no-useless-escape
   const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0]
 
   return (
     <Router>
-      {headlessPages.includes(currentRoute) ? null : <Header />}
+      {headlessPages.includes(currentRoute) ? null : (
+        <Suspense fallback={null}>
+          <Header />
+        </Suspense>
+      )}
 
       <div
         className={clsx({
@@ -26,7 +30,11 @@ export default () => {
       >
         <Routes />
       </div>
-      {headlessPages.includes(currentRoute) ? null : <Footer />}
+      {headlessPages.includes(currentRoute) ? null : (
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      )}
     </Router>
   )
 }

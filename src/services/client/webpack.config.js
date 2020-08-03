@@ -94,17 +94,15 @@ module.exports = () => {
         maxInitialRequests: Infinity,
         automaticNameDelimiter: '~',
         cacheGroups: {
-          // https://medium.com/hackernoon/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name(module) {
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-              return `npm.${packageName.replace('@', '')}`
-            },
+            name: module =>
+              `npm.${module.context
+                .match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+                .replace('@', '')}`,
           },
-          default: {
+          saeon: {
             minChunks: 2,
-            priority: -20,
             reuseExistingChunk: true,
           },
         },
