@@ -11,6 +11,6 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "plop": "^2.7.3"
+    "plop": "^2.7.4"
   }
 }

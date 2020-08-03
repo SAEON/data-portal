@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useRef } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
 import { Fade, LinearProgress } from '@material-ui/core'
 
@@ -25,8 +25,13 @@ const PageTransition = ({ children, tKey }) => (
 )
 
 export default () => {
+  const snapMenusContainer = useRef()
   return (
-    <>
+    <div
+      id="@saeon/snap-menus"
+      style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}
+      ref={snapMenusContainer}
+    >
       {/* Authentication callback */}
       <Switch key={location.pathname || '/'}>
         <Route key={'authenticated'} path={'/authenticated'} render={() => <Redirect to={'/'} />} />
@@ -74,17 +79,20 @@ export default () => {
               key={'atlas'}
               path={'/atlas'}
               exact={true}
-              render={() => (
-                <PageTransition tKey="atlas">
-                  <MenuProvider
-                    VERTICAL_OFFSET_TOP={55}
-                    HORIZONTAL_MARGIN={5}
-                    VERTICAL_OFFSET_BOTTOM={30}
-                  >
-                    <AtlasPage />
-                  </MenuProvider>
-                </PageTransition>
-              )}
+              render={() => {
+                return (
+                  <PageTransition tKey="atlas">
+                    <MenuProvider
+                      VERTICAL_OFFSET_TOP={5}
+                      HORIZONTAL_MARGIN={5}
+                      VERTICAL_OFFSET_BOTTOM={5}
+                      container={snapMenusContainer.current}
+                    >
+                      <AtlasPage />
+                    </MenuProvider>
+                  </PageTransition>
+                )
+              }}
             />
             <Route
               key={'home'}
@@ -109,6 +117,6 @@ export default () => {
           </MapProvider>
         </Suspense>
       </Switch>
-    </>
+    </div>
   )
 }

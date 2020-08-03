@@ -89,13 +89,18 @@ export default withRouter(({ children }) => {
             </Toolbar>
             <Divider />
             {/* Home page */}
-            <NavItem title="Navigate to the home page" label={'Home'} icon={<HomeIcon />} to="/" />
+            <NavItem
+              title="Navigate to the home page"
+              label={'Home'}
+              Icon={props => <HomeIcon {...props} />}
+              to="/"
+            />
 
             {/* Catalogue page */}
             <NavItem
               title="Explore SAEON's metadata catalogue"
               label={'records'}
-              icon={<StorageIcon />}
+              Icon={props => <StorageIcon {...props} />}
               to="/records"
             />
 
@@ -103,7 +108,7 @@ export default withRouter(({ children }) => {
             <NavItem
               title="Preview and explore datasets"
               label={'Atlas'}
-              icon={<MapIcon />}
+              Icon={props => <MapIcon {...props} />}
               to="/atlas"
             />
 
@@ -111,7 +116,7 @@ export default withRouter(({ children }) => {
             <NavItem
               title="Navigate to the about page"
               label={'About'}
-              icon={<InfoIcon />}
+              Icon={props => <InfoIcon {...props} />}
               to="/about"
             />
 
@@ -119,7 +124,7 @@ export default withRouter(({ children }) => {
             <NavItem
               title="MIT-licensed source code"
               label={'Source Code'}
-              icon={<GitHubIcon />}
+              Icon={() => <GitHubIcon color="secondary" />}
               href={SOURCE_CODE_URI}
             />
           </SwipeableDrawer>

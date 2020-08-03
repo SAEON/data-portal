@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react'
 import { Link, Route } from 'react-router-dom'
 import { MenuItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core'
 
-export default forwardRef(({ title, label, to, icon, exact = true, href }, ref) => (
+export default forwardRef(({ title, label, to, Icon, exact = true, href }, ref) => (
   <Route path={to} exact={exact}>
     {({ match }) => {
       return (
@@ -16,7 +16,7 @@ export default forwardRef(({ title, label, to, icon, exact = true, href }, ref) 
             to={to}
             href={href}
           >
-            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemIcon>{<Icon color={match ? 'primary' : 'default'} />}</ListItemIcon>
             <ListItemText primary={label} />
           </MenuItem>
         </Tooltip>
