@@ -76,7 +76,7 @@ export default ({ item }) => {
               {({ updateForm, collapsed }) => {
                 const content = doc.descriptions?.[0]?.description || 'No description'
                 return (
-                  <Collapse in={!collapsed} collapsedSize={80}>
+                  <Collapse in={!collapsed} collapsedHeight={80}>
                     <CardContent>
                       {collapsed ? content.truncate(300) : content}
                       {doc.descriptions?.[0]?.description.length > 300 ? (

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - next
+      - nav-drawer
 
 jobs:
   deploy:
@@ -11,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: next
+          ref: nav-drawer
 
       - name: Configure services/proxy
         run: |

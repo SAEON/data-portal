@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Typography, Menu } from '@material-ui/core'
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  SwipeableDrawer,
+  Divider,
+} from '@material-ui/core'
 import {
   Explore as MapIcon,
   Menu as MenuIcon,
@@ -8,64 +15,127 @@ import {
   Storage as StorageIcon,
   Info as InfoIcon,
   Home as HomeIcon,
+  ChevronLeft as ChevronLeftIcon,
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../../package.json'
 import { SOURCE_CODE_URI } from '../../../config'
 import FeedbackDialogue from './_feedback-dialogue'
 import AccountMenu from './_account-menu'
+import useStyles from './style'
+import clsx from 'clsx'
+import { isMobile } from 'react-device-detect'
 
-export default withRouter(() => {
-  const [menuAnchor, setMenuAnchor] = useState(null)
-  const closeMenu = () => setMenuAnchor(null)
+const headlessPages = ['/render']
+
+export default withRouter(({ children }) => {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const classes = useStyles()
+  const { pathname } = window.location
+  // eslint-disable-next-line no-useless-escape
+  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0]
 
   return (
-    <AppBar variant="outlined" position="static">
-      <Toolbar disableGutters={false} variant="dense">
-        <IconButton
-          onClick={e => setMenuAnchor(e.currentTarget)}
-          style={{ padding: 0 }}
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={menuAnchor}
-          keepMounted
-          open={Boolean(menuAnchor)}
-          onClose={closeMenu}
-          onClick={closeMenu}
-        >
-          {/* Home page */}
-          <NavItem label={'Home'} icon={<HomeIcon />} to="/" />
+    <>
+      {headlessPages.includes(currentRoute) ? null : (
+        <>
+          <AppBar
+            color="inherit"
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: isMobile ? false : drawerOpen,
+            })}
+            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+            variant="outlined"
+            position="fixed"
+          >
+            <Toolbar disableGutters={false} variant="dense">
+              {/* Title */}
+              <Typography style={{ padding: '10px' }} display="block" variant="body2">
+                SAEON DATA PORTAL v{packageJson.version}
+              </Typography>
 
-          {/* Catalogue page */}
-          <NavItem label={'records'} icon={<StorageIcon />} to="/records" />
+              {/* TOP-RIGHT ICON CONTROLS */}
+              <div style={{ marginLeft: 'auto' }}>
+                <FeedbackDialogue />
+                <AccountMenu />
+              </div>
+            </Toolbar>
+          </AppBar>
+          <SwipeableDrawer
+            className={clsx(classes.drawer, {
+              [classes.drawerOpen]: drawerOpen,
+              [classes.drawerClose]: !drawerOpen,
+            })}
+            classes={{
+              paper: clsx({
+                [classes.drawerOpen]: drawerOpen,
+                [classes.drawerClose]: !drawerOpen,
+              }),
+            }}
+            variant={isMobile ? 'temporary' : 'permanent'}
+            anchor={'left'}
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            onOpen={() => setDrawerOpen(true)}
+          >
+            <Toolbar disableGutters variant="dense" style={{ justifyContent: 'flex-end' }}>
+              <IconButton
+                style={{ marginRight: 4 }}
+                edge="start"
+                onClick={() => setDrawerOpen(!drawerOpen)}
+              >
+                {drawerOpen ? <ChevronLeftIcon /> : <MenuIcon />}
+              </IconButton>
+            </Toolbar>
+            <Divider />
+            {/* Home page */}
+            <NavItem title="Navigate to the home page" label={'Home'} icon={<HomeIcon />} to="/" />
 
-          {/* Atlas page */}
-          <NavItem label={'Atlas'} icon={<MapIcon />} to="/atlas" />
+            {/* Catalogue page */}
+            <NavItem
+              title="Explore SAEON's metadata catalogue"
+              label={'records'}
+              icon={<StorageIcon />}
+              to="/records"
+            />
 
-          {/* About page */}
-          <NavItem label={'About'} icon={<InfoIcon />} to="/about" />
+            {/* Atlas page */}
+            <NavItem
+              title="Preview and explore datasets"
+              label={'Atlas'}
+              icon={<MapIcon />}
+              to="/atlas"
+            />
 
-          {/* Source code link */}
-          <NavItem label={'Source Code'} icon={<GitHubIcon />} href={SOURCE_CODE_URI} />
-        </Menu>
+            {/* About page */}
+            <NavItem
+              title="Navigate to the about page"
+              label={'About'}
+              icon={<InfoIcon />}
+              to="/about"
+            />
 
-        {/* Title */}
-        <Typography style={{ padding: '10px' }} display="block" variant="body2">
-          SAEON DATA PORTAL v{packageJson.version}
-        </Typography>
+            {/* Source code link */}
+            <NavItem
+              title="MIT-licensed source code"
+              label={'Source Code'}
+              icon={<GitHubIcon />}
+              href={SOURCE_CODE_URI}
+            />
+          </SwipeableDrawer>
+          <div className={classes.toolbar} />
+        </>
+      )}
 
-        {/* TOP-RIGHT ICON CONTROLS */}
-        <div style={{ marginLeft: 'auto' }}>
-          <FeedbackDialogue />
-          <AccountMenu />
-        </div>
-      </Toolbar>
-    </AppBar>
+      <main
+        className={clsx({
+          [classes.content]: !headlessPages.includes(currentRoute),
+          [classes.contentShift]:
+            isMobile || headlessPages.includes(currentRoute) ? false : drawerOpen,
+        })}
+      >
+        {children}
+      </main>
+    </>
   )
 })

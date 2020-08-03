@@ -10,7 +10,7 @@ export default () => {
 
   return (
     <AppBar position="relative" variant="outlined" style={{ border: 'none' }}>
-      <Collapse key="collapse-header" collapsedSize="30px" in={!collapsed} timeout="auto">
+      <Collapse key="collapse-header" collapsedHeight="30px" in={!collapsed} timeout="auto">
         <Toolbar className={classes.toolbar}>
           <Grid container justify="center">
             <Grid item xs={12} sm={8}>

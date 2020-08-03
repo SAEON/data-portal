@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AccountCircle as AccountIcon } from '@material-ui/icons'
 import { AuthContext } from '../../provider-auth'
-import useStyles from '../style'
 import { IconButton, Typography, Menu, Fade, MenuItem } from '@material-ui/core'
 
 export default () => {
-  const classes = useStyles()
   const [userMenuAnchor, setUserMenuAnchor] = useState(null)
 
   return (
@@ -46,7 +44,6 @@ export default () => {
             {loggedIn ? null : (
               <MenuItem
                 color="inherit"
-                className={classes.link}
                 onClick={() => {
                   login()
                   setUserMenuAnchor(null)
@@ -61,7 +58,6 @@ export default () => {
             {loggedIn ? null : (
               <MenuItem
                 color="inherit"
-                className={classes.link}
                 onClick={() => {
                   login()
                   setUserMenuAnchor(null)
@@ -75,7 +71,6 @@ export default () => {
             {/* Logout */}
             {loggedIn ? (
               <MenuItem
-                className={classes.link}
                 to="/logout"
                 color="inherit"
                 component={NavLink}
