@@ -6,11 +6,14 @@ const PORTAL_STYLE = document.createElement('style')
 const PORTAL_ID = `menu-portal-${Date.now()}`
 PORTAL.setAttribute('id', PORTAL_ID)
 
-document.getElementsByTagName('body')[0].prepend(PORTAL_STYLE)
-document.getElementsByTagName('body')[0].prepend(PORTAL)
-
 export default memo(
-  ({ children, VERTICAL_OFFSET_TOP = '', VERTICAL_OFFSET_BOTTOM = '', HORIZONTAL_MARGIN = '' }) => {
+  ({
+    children,
+    VERTICAL_OFFSET_TOP = '',
+    VERTICAL_OFFSET_BOTTOM = '',
+    HORIZONTAL_MARGIN = '',
+    container = null,
+  }) => {
     PORTAL_STYLE.innerHTML = `
     #${PORTAL_ID} {
       overflow: hidden;
@@ -21,6 +24,14 @@ export default memo(
       right: 0;
       margin: ${VERTICAL_OFFSET_TOP}px ${HORIZONTAL_MARGIN}px ${VERTICAL_OFFSET_BOTTOM}px;
     }`
+
+    if (container) {
+      container.prepend(PORTAL_STYLE)
+      container.prepend(PORTAL)
+    } else {
+      document.getElementsByTagName('body')[0].prepend(PORTAL_STYLE)
+      document.getElementsByTagName('body')[0].prepend(PORTAL)
+    }
 
     const containerHeight = PORTAL.offsetHeight
     const containerWidth = PORTAL.offsetWidth

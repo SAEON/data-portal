@@ -40,6 +40,7 @@ export default ({ id }) => {
 
   return props => (
     <SnapMenu
+      PORTAL={PORTAL}
       renderMenu={C => createPortal(C, PORTAL)}
       getDefaultPosition={getDefaultPosition}
       getActiveMenuZIndex={getActiveMenuZIndex}

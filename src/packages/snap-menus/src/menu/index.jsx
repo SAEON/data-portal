@@ -26,6 +26,13 @@ import getPosition from './get-position'
 import clsx from 'clsx'
 import parseEventXY from './parse-event-x-y'
 
+function offset(el) {
+  var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+}
+
 var allowInteractions = true
 var timer
 const MENU_HEADER_HEIGHT = 31
@@ -34,9 +41,9 @@ export default forwardRef(
   (
     {
       // From Provider
+      PORTAL,
       containerHeight,
       containerWidth,
-      VERTICAL_OFFSET_TOP,
       HORIZONTAL_MARGIN,
 
       // From hook
@@ -161,7 +168,7 @@ export default forwardRef(
                       {
                         position: {
                           x: x - state.previousDimensions.width / 2,
-                          y: y - 15 - VERTICAL_OFFSET_TOP,
+                          y: y - 15 - offset(PORTAL).top,
                         },
                         dimensions: Object.assign(
                           { ...state.previousDimensions },
@@ -189,7 +196,7 @@ export default forwardRef(
                   y,
                   containerWidth,
                   containerHeight,
-                  VERTICAL_OFFSET_TOP
+                  offset(PORTAL).top
                 )
 
                 if (snapZone && !newSnapZone) {
@@ -224,7 +231,7 @@ export default forwardRef(
                  * to prevent immediate snapping
                  */
                 const snapZone = allowInteractions
-                  ? getSnapZone(x, y, containerWidth, containerHeight, VERTICAL_OFFSET_TOP)
+                  ? getSnapZone(x, y, containerWidth, containerHeight, offset(PORTAL).top)
                   : undefined
 
                 if (snapZone) {
