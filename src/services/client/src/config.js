@@ -1,8 +1,5 @@
 // Application configuration
-export const DEFAULT_ERROR = process.env.DEFAULT_ERROR || null
-export const DEFAULT_WARNING = process.env.DEFAULT_WARNING || null
-export const DEFAULT_INFO = process.env.DEFAULT_INFO || null
-export const DEFAULT_SUCCESS = process.env.DEFAULT_SUCCESS || null
+export const DEFAULT_NOTICES = process.env.DEFAULT_NOTICES || ''
 export const SOURCE_CODE_URI =
   process.env.SOURCE_CODE_URI ||
   'https://github.com/SAEONData/catalogue/tree/next/src/services/client'

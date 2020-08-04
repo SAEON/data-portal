@@ -27,11 +27,13 @@ import { ExpandMore as ExpandMoreIcon, Visibility as VisibilityIcon } from '@mat
 import npmUrl from 'url'
 import { createLayer, LayerTypes } from '../../../../../lib/ol'
 import LegendContent from './_legend'
+import { useSnackbar } from 'notistack'
 
 import { CATALOGUE_API_ADDRESS } from '../../../../../config'
 const SPATIALDATA_PROXY = `${CATALOGUE_API_ADDRESS}/proxy/saeon-spatialdata`
 
-export default ({ _source, proxy, setInfo }) => {
+export default ({ _source, proxy }) => {
+  const { enqueueSnackbar } = useSnackbar()
   const classes = useStyles()
   const [contributorsExpanded, setContributorsExpanded] = useState(false)
   const [creatorsExpanded, setCreatorsExpanded] = useState(false)
@@ -176,8 +178,9 @@ export default ({ _source, proxy, setInfo }) => {
                             proxy.removeLayerById(layerId)
                           }
                         } else {
-                          setInfo(
-                            `This layer has a URI that we don't understand yet. We are working to improve this, and it should be available soon! : ${hostname}, ${port}, ${pathname}`
+                          enqueueSnackbar(
+                            `This layer has a URI that we don't understand yet. We are working to improve this, and it should be available soon! : ${hostname}, ${port}, ${pathname}`,
+                            { variant: 'info' }
                           )
                         }
                       }}

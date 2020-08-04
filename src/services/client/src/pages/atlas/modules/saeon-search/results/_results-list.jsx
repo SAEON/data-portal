@@ -1,6 +1,5 @@
 import React from 'react'
 import { MapContext } from '../../../../../modules/provider-map'
-import { FeedbackContext } from '../../../../../modules/provider-feedback'
 import ResultCard from './_result-card'
 import { Button } from '@material-ui/core'
 
@@ -12,30 +11,26 @@ export default ({ height, width, data, currentPage, updateCurrentPage, ...props 
   const { total, hits } = _hits
 
   return (
-    <FeedbackContext.Consumer>
-      {({ setInfo }) => (
-        <MapContext.Consumer>
-          {({ proxy }) => (
-            <>
-              {hits.map(({ _source }, i) => (
-                <ResultCard key={i} setInfo={setInfo} _source={_source} proxy={proxy} {...props} />
-              ))}
+    <MapContext.Consumer>
+      {({ proxy }) => (
+        <>
+          {hits.map(({ _source }, i) => (
+            <ResultCard key={i} _source={_source} proxy={proxy} {...props} />
+          ))}
 
-              <Button
-                style={{ margin: '10px 0 0' }}
-                disableElevation
-                color="secondary"
-                size="small"
-                onClick={() => updateCurrentPage(currentPage + 1)}
-                fullWidth
-                variant="contained"
-              >
-                Load next results
-              </Button>
-            </>
-          )}
-        </MapContext.Consumer>
+          <Button
+            style={{ margin: '10px 0 0' }}
+            disableElevation
+            color="secondary"
+            size="small"
+            onClick={() => updateCurrentPage(currentPage + 1)}
+            fullWidth
+            variant="contained"
+          >
+            Load next results
+          </Button>
+        </>
       )}
-    </FeedbackContext.Consumer>
+    </MapContext.Consumer>
   )
 }

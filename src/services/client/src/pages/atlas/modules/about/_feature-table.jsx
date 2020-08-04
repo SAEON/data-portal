@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import { Help as HelpIcon } from '@material-ui/icons'
 import useStyles from './styles'
-import { FeedbackContext } from '../../../../modules/provider-feedback'
+import { useSnackbar } from 'notistack'
 
 const status = Object.freeze({
   planned: Symbol('planned'),
@@ -42,45 +42,42 @@ const rows = [
 
 export default function DenseTable() {
   const classes = useStyles()
+  const { enqueueSnackbar } = useSnackbar()
 
   return (
-    <FeedbackContext.Consumer>
-      {({ setInfo }) => (
-        <TableContainer style={{ height: '100%' }}>
-          <Table className={classes.table} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell align="center">Status</TableCell>
-                <TableCell align="center">Description</TableCell>
+    <TableContainer style={{ height: '100%' }}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Description</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows
+            .map(row => createRow(row))
+            .map((row, i) => (
+              <TableRow key={i}>
+                <TableCell component="th" scope="row">
+                  <Typography variant="overline">{row.name}</Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="overline">{row.status}</Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="overline">
+                    <IconButton
+                      onClick={() => enqueueSnackbar('Project status links not implemented yet')}
+                    >
+                      <HelpIcon />
+                    </IconButton>
+                  </Typography>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .map(row => createRow(row))
-                .map((row, i) => (
-                  <TableRow key={i}>
-                    <TableCell component="th" scope="row">
-                      <Typography variant="overline">{row.name}</Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Typography variant="overline">{row.status}</Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Typography variant="overline">
-                        <IconButton
-                          onClick={() => setInfo('Project status links not implemented yet')}
-                        >
-                          <HelpIcon />
-                        </IconButton>
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-    </FeedbackContext.Consumer>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }

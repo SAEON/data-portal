@@ -34,7 +34,7 @@ jobs:
           echo "GQL_SUBSCRIPTIONS_PROVIDER=wss://api.catalogue.saeon.ac.za/graphql" >> src/services/client/.env
           echo "REDIRECT_URL=https://catalogue.saeon.ac.za/authenticated" >> src/services/client/.env
           echo "CLIENT_HOST_ADDRESS=https://catalogue.saeon.ac.za" >> src/services/client/.env
-          echo "DEFAULT_WARNING=This service is still under development - feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information" >> src/services/client/.env
+          echo "DEFAULT_NOTICES=This service is still under development - feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information,warning" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)
         run: |

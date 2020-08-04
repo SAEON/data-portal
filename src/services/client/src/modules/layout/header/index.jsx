@@ -7,15 +7,16 @@ import {
   Typography,
   SwipeableDrawer,
   Divider,
+  Fade,
 } from '@material-ui/core'
 import {
   Explore as MapIcon,
-  Menu as MenuIcon,
   GitHub as GitHubIcon,
   Storage as StorageIcon,
   Info as InfoIcon,
-  Home as HomeIcon,
+  Search as SearchIcon,
   ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../../package.json'
@@ -79,20 +80,34 @@ export default withRouter(({ children }) => {
             onOpen={() => setDrawerOpen(true)}
           >
             <Toolbar disableGutters variant="dense" style={{ justifyContent: 'flex-end' }}>
-              <IconButton
-                style={{ marginRight: 4 }}
-                edge="start"
-                onClick={() => setDrawerOpen(!drawerOpen)}
-              >
-                {drawerOpen ? <ChevronLeftIcon /> : <MenuIcon />}
-              </IconButton>
+              {drawerOpen ? (
+                <Fade in={drawerOpen} key="drawer-open">
+                  <IconButton
+                    style={{ marginRight: 4 }}
+                    edge="start"
+                    onClick={() => setDrawerOpen(!drawerOpen)}
+                  >
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </Fade>
+              ) : (
+                <Fade in={!drawerOpen} key="drawer-closed">
+                  <IconButton
+                    style={{ marginRight: 4 }}
+                    edge="start"
+                    onClick={() => setDrawerOpen(!drawerOpen)}
+                  >
+                    <ChevronRightIcon />
+                  </IconButton>
+                </Fade>
+              )}
             </Toolbar>
             <Divider />
             {/* Home page */}
             <NavItem
               title="Navigate to the home page"
               label={'Home'}
-              Icon={props => <HomeIcon {...props} />}
+              Icon={props => <SearchIcon {...props} />}
               to="/"
             />
 

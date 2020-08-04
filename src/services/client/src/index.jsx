@@ -12,6 +12,7 @@ import { WebSocketLink } from '@apollo/link-ws'
 import Application from './app'
 import { nativeExtensions } from './lib/fns'
 import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
+import { SnackbarProvider } from 'notistack'
 
 // Some helpful functions
 nativeExtensions()
@@ -48,7 +49,12 @@ configureLogger(() => ({
   },
 }))
 
-render(<Application link={link} />, document.getElementById('root'))
+render(
+  <SnackbarProvider maxSnack={5}>
+    <Application link={link} />
+  </SnackbarProvider>,
+  document.getElementById('root')
+)
 
 // Worker defined in webpack.config.js (Google Workbox)
 if ('serviceWorker' in navigator) {

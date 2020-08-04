@@ -2,41 +2,47 @@ import React from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
-import {
-  DEFAULT_ERROR,
-  DEFAULT_WARNING,
-  DEFAULT_INFO,
-  DEFAULT_SUCCESS,
-  LATEST_COMMIT,
-} from './config'
+import { LATEST_COMMIT, DEFAULT_NOTICES } from './config'
 import { ApolloProvider } from '@apollo/client'
 import ErrorBoundary from './modules/error-boundary'
 import ServerLogger from './components/server-logger'
 import AuthProvider from './modules/provider-auth'
-import FeedbackProvider from './modules/provider-feedback'
 import Layout from './modules/layout'
 import theme from './theme'
 import { debounce } from './lib/fns'
 import packageJson from '../package.json'
+import { useSnackbar } from 'notistack'
 
-export default ({ link }) => (
-  <ApolloProvider
-    client={
-      new ApolloClient({
-        cache: new InMemoryCache(),
-        link,
-      })
-    }
-  >
-    <CssBaseline>
-      <ThemeProvider theme={theme}>
-        <ErrorBoundary>
-          <FeedbackProvider
-            defaultError={DEFAULT_ERROR}
-            defaultWarning={DEFAULT_WARNING}
-            defaultInfo={DEFAULT_INFO}
-            defaultSuccess={DEFAULT_SUCCESS}
-          >
+export default ({ link }) => {
+  const { enqueueSnackbar } = useSnackbar()
+  const notices = DEFAULT_NOTICES.split(';')
+    .filter(_ => _)
+    .map(str => {
+      const [msg, variant] = str.split(',').map(s => s.trim())
+      return {
+        msg,
+        variant,
+      }
+    })
+
+  notices.forEach(({ msg, variant }) =>
+    enqueueSnackbar(msg, {
+      variant,
+    })
+  )
+
+  return (
+    <ApolloProvider
+      client={
+        new ApolloClient({
+          cache: new InMemoryCache(),
+          link,
+        })
+      }
+    >
+      <CssBaseline>
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary>
             <AuthProvider>
               <ServerLogger
                 event={'click'}
@@ -73,9 +79,9 @@ export default ({ link }) => (
                 </ServerLogger>
               </ServerLogger>
             </AuthProvider>
-          </FeedbackProvider>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </CssBaseline>
-  </ApolloProvider>
-)
+          </ErrorBoundary>
+        </ThemeProvider>
+      </CssBaseline>
+    </ApolloProvider>
+  )
+}
