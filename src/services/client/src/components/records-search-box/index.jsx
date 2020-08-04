@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { TextField, Chip, Grid, Typography } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
-import { useUriState, getStateFromUri } from '../../modules/uri-state'
+import { UriStateContext } from '../../modules/provider-uri-state'
 import ListboxComponent from '../autocomplete/list-box-component'
 
 const SUBJECTS = [
@@ -15,8 +14,9 @@ const SUBJECTS = [
 const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {
-  const { pushState } = useUriState(useHistory())
-  const { terms } = getStateFromUri()
+  const { getUriState, setUriState } = useContext(UriStateContext)
+  const { terms } = getUriState()
+
   const { error, loading, data } = useQuery(
     gql`
       query catalogue($fields: [String!], $limit: Int) {
@@ -41,7 +41,7 @@ export default ({ ...props }) => {
       <Grid item xs={12}>
         <Autocomplete
           onChange={(e, value) =>
-            pushState({
+            setUriState({
               terms: value.map(v => v),
             })
           }

@@ -60,7 +60,7 @@ export default ({
       <AppBar
         color={headerColor}
         position="sticky"
-        style={{ zIndex: 1101, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
         variant="outlined"
       >
         <Toolbar variant="regular">
@@ -108,6 +108,7 @@ export default ({
               <Grid item style={{ alignSelf: 'center' }}>
                 <Tooltip title="Share result list">
                   <Link
+                    children=""
                     component={forwardRef((props, ref) => (
                       <Button
                         startIcon={<ShareIcon fontSize="small" />}

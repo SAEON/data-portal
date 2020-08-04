@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Records, Record } from '../../components'
-import { getStateFromUri } from '../../modules/uri-state'
 import { Typography } from '@material-ui/core'
+import { UriStateContext } from '../../modules/provider-uri-state'
 
 const components = {
   records: Records,
@@ -9,6 +9,7 @@ const components = {
 }
 
 export default ({ location }) => {
+  const { getUriState } = useContext(UriStateContext)
   const { pathname } = location
 
   /**
@@ -33,7 +34,7 @@ export default ({ location }) => {
    * Component props can be specified via URI parameters
    */
   const props = Object.fromEntries(
-    Object.entries(getStateFromUri(false)).map(([prop, value]) => {
+    Object.entries(getUriState(false)).map(([prop, value]) => {
       if (value === 'false') return [prop, false]
       if (value === 'true') return [prop, true]
       return [prop, value]

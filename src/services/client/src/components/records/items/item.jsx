@@ -53,7 +53,7 @@ export default ({ item }) => {
             ) : null}
             <IconButton
               onClick={() => toggleCodeView(!codeView)}
-              color={codeView ? 'primary' : 'default'}
+              color={codeView ? 'primary' : 'inherit'}
               aria-label="Show metadata JSON object"
             >
               <CodeIcon />

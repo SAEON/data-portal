@@ -9,7 +9,7 @@ export default () => {
   const classes = useStyles()
 
   return (
-    <AppBar position="relative" variant="outlined" style={{ border: 'none' }}>
+    <AppBar position="relative" variant="outlined" style={{ border: 'none', zIndex: 800 }}>
       <Collapse key="collapse-header" collapsedHeight="30px" in={!collapsed} timeout="auto">
         <Toolbar className={classes.toolbar}>
           <Grid container justify="center">

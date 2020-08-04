@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import Layout from './layout'
 import Sidebar from './sidebar'
 import Items from './items'
 import MiniSearch from 'minisearch'
-import { getStateFromUri } from '../../modules/uri-state'
+import { UriStateContext } from '../../modules/provider-uri-state'
 
 export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'inherit' }) => {
-  const { terms = [] } = getStateFromUri()
+  const { getUriState } = useContext(UriStateContext)
+  const { terms = [] } = getUriState()
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState({

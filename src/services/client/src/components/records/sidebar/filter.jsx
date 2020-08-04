@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
 import {
   Typography,
   Grid,
@@ -13,15 +12,15 @@ import {
   Fade,
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import { useUriState } from '../../../modules/uri-state'
+import { UriStateContext } from '../../../modules/provider-uri-state'
 
 const LIST_SIZE = 3
 
 export default ({ results, title }) => {
+  const { getUriState, setUriState } = useContext(UriStateContext)
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
-  const { getState, pushState } = useUriState(useHistory())
-  const { terms = [] } = getState()
+  const { terms = [] } = getUriState()
 
   const sortedResults = results
     ? [...results].sort(a => (terms.includes(a.key) ? -1 : 1))
@@ -33,7 +32,7 @@ export default ({ results, title }) => {
         color="default"
         position="relative"
         variant="outlined"
-        style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{ zIndex: 800, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
       >
         <Toolbar variant="dense">
           <Typography variant="overline" noWrap>
@@ -82,11 +81,11 @@ export default ({ results, title }) => {
                         checked={terms.includes(key) ? true : false}
                         onChange={() => {
                           if (terms.includes(key)) {
-                            pushState({
+                            setUriState({
                               terms: terms.filter(s => s !== key),
                             })
                           } else {
-                            pushState({
+                            setUriState({
                               terms: [...new Set([...terms, key])],
                             })
                           }

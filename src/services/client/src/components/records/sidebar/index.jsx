@@ -1,11 +1,12 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Grid, Typography } from '@material-ui/core'
-import { getStateFromUri } from '../../../modules/uri-state'
+import { UriStateContext } from '../../../modules/provider-uri-state'
 import Filter from './filter'
 
 export default memo(() => {
-  const { terms = [] } = getStateFromUri()
+  const { getUriState } = useContext(UriStateContext)
+  const { terms = [] } = getUriState()
 
   const { error, loading, data } = useQuery(
     gql`

@@ -14,7 +14,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
     <AppBar
       color="inherit"
       position="sticky"
-      style={{ zIndex: 1101, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+      style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
       variant="outlined"
     >
       <Toolbar variant="regular">

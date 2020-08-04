@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Grid, Typography, Chip, Tooltip, Card, CardContent, Fade } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
+import { UriStateContext } from '../../modules/provider-uri-state'
 import Header from './header'
 import { Link as SimpleLink } from '..'
 /**TO DO:
@@ -26,7 +26,8 @@ const Row = ({ title, children, ...props }) => (
 
 export default ({ json, id }) => {
   const [codeView, updateCodeView] = useState(false)
-  const history = useHistory()
+  const { setUriState } = useContext(UriStateContext)
+
   if (!id || !json) {
     return 'Record not found'
   }
@@ -127,7 +128,12 @@ export default ({ json, id }) => {
                             <Chip
                               size="small"
                               clickable
-                              onClick={() => history.push(`/records?terms=${subject.subject}`)}
+                              onClick={() =>
+                                setUriState({
+                                  pathname: '/records',
+                                  terms: [subject.subject],
+                                })
+                              }
                               label={subject.subject.toUpperCase()}
                             />
                           </Grid>

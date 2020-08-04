@@ -16,7 +16,7 @@ export default forwardRef(({ title, label, to, Icon, exact = true, href }, ref) 
             to={to}
             href={href}
           >
-            <ListItemIcon>{<Icon color={match ? 'primary' : 'default'} />}</ListItemIcon>
+            <ListItemIcon>{<Icon color={match ? 'primary' : 'inherit'} />}</ListItemIcon>
             <ListItemText primary={label} />
           </MenuItem>
         </Tooltip>
