@@ -17,10 +17,14 @@ import { UriStateContext } from '../../../modules/provider-uri-state'
 const LIST_SIZE = 3
 
 export default ({ results, title }) => {
-  const { getUriState, setUriState } = useContext(UriStateContext)
+  const { uriState, setUriState } = useContext(UriStateContext)
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
-  const { terms = [] } = getUriState()
+  let { terms = '' } = uriState
+  terms = terms
+    .split(',')
+    .map(item => decodeURIComponent(item))
+    .filter(_ => _)
 
   const sortedResults = results
     ? [...results].sort(a => (terms.includes(a.key) ? -1 : 1))

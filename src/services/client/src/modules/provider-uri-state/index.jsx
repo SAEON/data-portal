@@ -1,37 +1,35 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 export const UriStateContext = createContext()
 
-const getStateFromUri = splitResult => {
-  const url = window.location.href
+const getStateFromUri = () => {
+  const href = window.location.href
   const regex = /[?&]([^=#]+)=([^&#]*)/g
   const params = {}
 
   var match
-  while ((match = regex.exec(url))) {
-    params[match[1]] = splitResult
-      ? decodeURIComponent(match[2])
-          .split(',')
-          .map(item => decodeURIComponent(item))
-          .filter(_ => _)
-      : decodeURIComponent(match[2])
+  while ((match = regex.exec(href))) {
+    params[match[1]] = decodeURIComponent(match[2])
   }
   return params
 }
 
 export default ({ children }) => {
+  const location = useLocation()
   const history = useHistory()
-  const [c, setC] = useState(1)
+  const [uriState, setUriState] = useState(getStateFromUri())
 
-  const triggerRender = () => setC(c + 1)
+  useEffect(() => {
+    setUriState(getStateFromUri())
+  }, [location])
 
   return (
     <UriStateContext.Provider
       value={{
-        getUriState: (splitTerms = true) => getStateFromUri(splitTerms),
+        uriState,
         setUriState: ({ pathname = window.location.pathname, terms }) => {
-          triggerRender()
           history.push({
             pathname,
             search: `?terms=${encodeURIComponent(

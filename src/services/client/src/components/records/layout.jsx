@@ -108,7 +108,8 @@ export default ({
               <Grid item style={{ alignSelf: 'center' }}>
                 <Tooltip title="Share result list">
                   <Link
-                    children=""
+                    // eslint-disable-next-line react/no-children-prop
+                    children="" // This could be handled better by @material-ui/core
                     component={forwardRef((props, ref) => (
                       <Button
                         startIcon={<ShareIcon fontSize="small" />}

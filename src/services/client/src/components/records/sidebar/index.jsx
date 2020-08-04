@@ -5,8 +5,12 @@ import { UriStateContext } from '../../../modules/provider-uri-state'
 import Filter from './filter'
 
 export default memo(() => {
-  const { getUriState } = useContext(UriStateContext)
-  const { terms = [] } = getUriState()
+  const { uriState } = useContext(UriStateContext)
+  let { terms = '' } = uriState
+  terms = terms
+    .split(',')
+    .map(item => decodeURIComponent(item))
+    .filter(_ => _)
 
   const { error, loading, data } = useQuery(
     gql`

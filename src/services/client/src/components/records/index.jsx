@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import Layout from './layout'
 import Sidebar from './sidebar'
@@ -6,15 +6,30 @@ import Items from './items'
 import MiniSearch from 'minisearch'
 import { UriStateContext } from '../../modules/provider-uri-state'
 
+const DEFAULT_CURSORS = {
+  start: undefined,
+  end: undefined,
+  currentPage: 0,
+}
+
 export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'inherit' }) => {
-  const { getUriState } = useContext(UriStateContext)
-  const { terms = [] } = getUriState()
+  const ref = useRef()
+  const { uriState } = useContext(UriStateContext)
+  let { terms = '' } = uriState
+  terms = terms
+    .split(',')
+    .map(item => decodeURIComponent(item))
+    .filter(_ => _)
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
-  const [cursors, setCursors] = useState({
-    start: undefined,
-    end: undefined,
-    currentPage: 0,
+  const [cursors, setCursors] = useState(DEFAULT_CURSORS)
+
+  useEffect(() => {
+    if (ref.current && terms.length !== ref.current.length) {
+      setCursors(DEFAULT_CURSORS)
+    }
+
+    ref.current = terms
   })
 
   const { error, loading, data } = useQuery(
