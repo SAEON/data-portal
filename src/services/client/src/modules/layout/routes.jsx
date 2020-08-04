@@ -84,9 +84,10 @@ export default () => {
                   <PageTransition tKey="atlas">
                     <MenuProvider
                       VERTICAL_OFFSET_TOP={5}
-                      HORIZONTAL_MARGIN={5}
                       VERTICAL_OFFSET_BOTTOM={5}
-                      container={snapMenusContainer.current}
+                      HORIZONTAL_MARGIN_LEFT={5}
+                      HORIZONTAL_MARGIN_RIGHT={5}
+                      SNAP_MENUS_CONTAINER={snapMenusContainer.current}
                     >
                       <AtlasPage />
                     </MenuProvider>

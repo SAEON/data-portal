@@ -21,30 +21,22 @@ import useStyles from './style'
 import debounce from '../lib/debounce'
 import EventBoundary from '../lib/event-boundary'
 import getDimensions from './get-dimensions'
-import getSnapZone from './get-zone'
+import getSnapZone from './get-snap-zone'
 import getPosition from './get-position'
 import clsx from 'clsx'
 import parseEventXY from './parse-event-x-y'
-
-function offset(el) {
-  var rect = el.getBoundingClientRect(),
-    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-    scrollTop = window.pageYOffset || document.documentElement.scrollTop
-  return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
-}
+import offset from '../lib/offset'
 
 var allowInteractions = true
 var timer
 const MENU_HEADER_HEIGHT = 31
+const GHOST_GUTTER_SIZE = 2.5
 
 export default forwardRef(
   (
     {
       // From Provider
       PORTAL,
-      containerHeight,
-      containerWidth,
-      HORIZONTAL_MARGIN,
 
       // From hook
       renderMenu,
@@ -64,7 +56,7 @@ export default forwardRef(
     },
     ref
   ) => {
-    const classes = useStyles({ containerHeight, containerWidth, HORIZONTAL_MARGIN })()
+    const classes = useStyles({ PORTAL, MENU_HEADER_HEIGHT, GHOST_GUTTER_SIZE })
 
     /**
      * zIndex is set to the ref, and used to parse height
@@ -86,9 +78,9 @@ export default forwardRef(
       snapped: Boolean(defaultSnap),
       isResizing: false,
       dimensions: defaultSnap
-        ? getDimensions(defaultSnap, containerWidth, containerHeight, HORIZONTAL_MARGIN)
+        ? getDimensions(defaultSnap, PORTAL, GHOST_GUTTER_SIZE)
         : { width: defaultWidth, height: defaultHeight },
-      position: getPosition(defaultSnap, containerWidth, containerHeight, HORIZONTAL_MARGIN),
+      position: getPosition(defaultSnap, PORTAL, GHOST_GUTTER_SIZE),
       previousDimensions: { width: defaultWidth, height: defaultHeight },
     })
 
@@ -125,7 +117,7 @@ export default forwardRef(
               handle=".drag-handle"
               defaultPosition={
                 defaultSnap
-                  ? getPosition(defaultSnap, containerWidth, containerHeight, HORIZONTAL_MARGIN)
+                  ? getPosition(defaultSnap, PORTAL, GHOST_GUTTER_SIZE)
                   : defaultPosition || getDefaultPosition()
               }
               bounds={{ left: 0, top: 0 }}
@@ -167,7 +159,7 @@ export default forwardRef(
                       { ...state },
                       {
                         position: {
-                          x: x - state.previousDimensions.width / 2,
+                          x: x - state.previousDimensions.width / 2 - offset(PORTAL).left,
                           y: y - 15 - offset(PORTAL).top,
                         },
                         dimensions: Object.assign(
@@ -191,13 +183,7 @@ export default forwardRef(
                 /**
                  * Check if the user is hovering over a snap zone
                  */
-                const newSnapZone = getSnapZone(
-                  x,
-                  y,
-                  containerWidth,
-                  containerHeight,
-                  offset(PORTAL).top
-                )
+                const newSnapZone = getSnapZone(x, y, PORTAL)
 
                 if (snapZone && !newSnapZone) {
                   setSnapZone(null)
@@ -230,9 +216,7 @@ export default forwardRef(
                  * 100ms after a menu is clicked
                  * to prevent immediate snapping
                  */
-                const snapZone = allowInteractions
-                  ? getSnapZone(x, y, containerWidth, containerHeight, offset(PORTAL).top)
-                  : undefined
+                const snapZone = allowInteractions ? getSnapZone(x, y, PORTAL) : undefined
 
                 if (snapZone) {
                   setState(
@@ -241,18 +225,8 @@ export default forwardRef(
                       {
                         minimized: false,
                         snapped: true,
-                        dimensions: getDimensions(
-                          snapZone,
-                          containerWidth,
-                          containerHeight,
-                          HORIZONTAL_MARGIN
-                        ),
-                        position: getPosition(
-                          snapZone,
-                          containerWidth,
-                          containerHeight,
-                          HORIZONTAL_MARGIN
-                        ),
+                        dimensions: getDimensions(snapZone, PORTAL, GHOST_GUTTER_SIZE),
+                        position: getPosition(snapZone, PORTAL, GHOST_GUTTER_SIZE),
                         previousDimensions: state.dimensions,
                       }
                     )

@@ -11,8 +11,9 @@ export default memo(
     children,
     VERTICAL_OFFSET_TOP = '',
     VERTICAL_OFFSET_BOTTOM = '',
-    HORIZONTAL_MARGIN = '',
-    container = null,
+    HORIZONTAL_MARGIN_LEFT = '',
+    HORIZONTAL_MARGIN_RIGHT = '',
+    SNAP_MENUS_CONTAINER = null,
   }) => {
     PORTAL_STYLE.innerHTML = `
     #${PORTAL_ID} {
@@ -22,28 +23,20 @@ export default memo(
       bottom: 0;
       left: 0;
       right: 0;
-      margin: ${VERTICAL_OFFSET_TOP}px ${HORIZONTAL_MARGIN}px ${VERTICAL_OFFSET_BOTTOM}px;
+      margin: ${VERTICAL_OFFSET_TOP}px ${HORIZONTAL_MARGIN_RIGHT}px ${VERTICAL_OFFSET_BOTTOM}px ${HORIZONTAL_MARGIN_LEFT}px;
     }`
 
-    if (container) {
-      container.prepend(PORTAL_STYLE)
-      container.prepend(PORTAL)
+    if (SNAP_MENUS_CONTAINER) {
+      SNAP_MENUS_CONTAINER.prepend(PORTAL_STYLE)
+      SNAP_MENUS_CONTAINER.prepend(PORTAL)
     } else {
       document.getElementsByTagName('body')[0].prepend(PORTAL_STYLE)
       document.getElementsByTagName('body')[0].prepend(PORTAL)
     }
 
-    const containerHeight = PORTAL.offsetHeight
-    const containerWidth = PORTAL.offsetWidth
-
     return (
       <MenuContext.Provider
         value={{
-          containerHeight,
-          containerWidth,
-          VERTICAL_OFFSET_BOTTOM,
-          VERTICAL_OFFSET_TOP,
-          HORIZONTAL_MARGIN,
           PORTAL,
         }}
       >
