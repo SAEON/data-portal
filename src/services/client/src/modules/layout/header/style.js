@@ -1,17 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { isMobile } from 'react-device-detect'
 
 const drawerWidth = 240
 
 export default makeStyles(theme => ({
   appBar: {
-    width: `calc(100% - ${theme.spacing(7) + 1}px)`,
+    width: isMobile ? '100%' : `calc(100% - ${theme.spacing(7) + 1}px)`,
     transition: theme.transitions.create(['width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: isMobile ? '100%' : `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -47,7 +48,7 @@ export default makeStyles(theme => ({
   content: {
     height: `calc(100% - ${49}px)`,
     position: 'relative',
-    marginLeft: theme.spacing(7) + 1,
+    marginLeft: isMobile ? 0 : theme.spacing(7) + 1,
     transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

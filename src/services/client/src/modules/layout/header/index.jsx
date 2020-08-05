@@ -15,6 +15,7 @@ import {
   Storage as StorageIcon,
   Info as InfoIcon,
   Search as SearchIcon,
+  Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from '@material-ui/icons'
@@ -50,7 +51,19 @@ export default withRouter(({ children }) => {
             position="fixed"
           >
             <Toolbar disableGutters={false} variant="dense">
-              {/* Title */}
+              {/* MOBILE MENU */}
+              {isMobile ? (
+                <IconButton
+                  onClick={() => setDrawerOpen(!drawerOpen)}
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+              ) : null}
+
+              {/* TITLE */}
               <Typography style={{ padding: '10px' }} display="block" variant="body2">
                 SAEON DATA PORTAL v{packageJson.version}
               </Typography>

@@ -21,6 +21,7 @@ import {
 } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { Link, CitationDialog, DataDownloadButton } from '../..'
+import { isMobile } from 'react-device-detect'
 
 export default ({ item }) => {
   const history = useHistory()
@@ -32,7 +33,7 @@ export default ({ item }) => {
       variant="outlined"
       style={{
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+        borderLeft: isMobile ? 'none' : '1px solid rgba(0, 0, 0, 0.12)',
       }}
     >
       <CardHeader
