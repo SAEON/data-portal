@@ -20,10 +20,23 @@ export default ({ link, query }, interval) => {
           },
         })
       )
-        .then(json => resolve(json))
+        .then(json => {
+          if (json.errors) {
+            console.log('logToGraphQl failed to catch error')
+            json.errors.forEach((error, i) => {
+              console.log(`error ${i + 1}:`, error)
+            })
+            return resolve(createArrayFromLength(browserEvents.length))
+          }
+          return resolve(json)
+        })
         .catch(error => {
+          /*steven: I don't think this catch can/always fires on error.
+          If json is an object representing an error, resolve(json) fires.
+          e.g. json === {errors: [{..., message:"Cannot ..."}], data: null}
+          -mousemove logs are erroring with "Cannot destructure property 'EventLog' of '(intermediate value)' as it is undefined." at .then(resolve(json))*/
           console.error('logToGraphQL failed', error)
-          resolve(createArrayFromLength(browserEvents.length))
+          return resolve(createArrayFromLength(browserEvents.length))
         })
     })
 
