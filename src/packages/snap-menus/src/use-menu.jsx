@@ -10,13 +10,17 @@ import context from './context'
  */
 const refs = {}
 
+const INITIAL_Z_INDEX = 4000
+
 /**
  * Iterates over all current refs and
  * returns the highest zIndex value + 1
  */
 const getActiveMenuZIndex = () => {
-  const zIndices = Object.entries(refs).map(([, { current: zIndex }]) => (zIndex || 1) + 1)
-  const zIndex = zIndices.length ? Math.max(...zIndices) : 2
+  const zIndices = Object.entries(refs).map(
+    ([, { current: zIndex }]) => (zIndex || INITIAL_Z_INDEX) + 1
+  )
+  const zIndex = zIndices.length ? Math.max(...zIndices) : INITIAL_Z_INDEX
   return zIndex
 }
 
