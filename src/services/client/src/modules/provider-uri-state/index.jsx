@@ -4,14 +4,19 @@ import { useHistory } from 'react-router-dom'
 
 export const UriStateContext = createContext()
 
-const getStateFromUri = () => {
-  const href = window.location.href
+const getStateFromUri = (split = false) => {
+  const url = window.location.href
   const regex = /[?&]([^=#]+)=([^&#]*)/g
   const params = {}
 
   var match
-  while ((match = regex.exec(href))) {
-    params[match[1]] = decodeURIComponent(match[2])
+  while ((match = regex.exec(url))) {
+    params[match[1]] = split
+      ? decodeURIComponent(match[2])
+          .split(',')
+          .map(item => decodeURIComponent(item))
+          .filter(_ => _)
+      : decodeURIComponent(match[2])
   }
   return params
 }
@@ -29,12 +34,16 @@ export default ({ children }) => {
     <UriStateContext.Provider
       value={{
         uriState,
-        setUriState: ({ pathname = window.location.pathname, terms }) => {
+        setUriState: ({
+          pathname = window.location.pathname,
+          terms = getStateFromUri(true).terms || [],
+          preview = getStateFromUri(true).preview || [],
+        }) => {
           history.push({
             pathname,
             search: `?terms=${encodeURIComponent(
               terms.map(term => encodeURIComponent(term)).join(',')
-            )}`,
+            )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
           })
         },
       }}

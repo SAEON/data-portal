@@ -5,6 +5,8 @@ import Sidebar from './sidebar'
 import Items from './items'
 import MiniSearch from 'minisearch'
 import { UriStateContext } from '../../modules/provider-uri-state'
+import { useMenu } from '@saeon/snap-menus'
+import { isMobile } from 'react-device-detect'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -13,9 +15,14 @@ const DEFAULT_CURSORS = {
 }
 
 export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'inherit' }) => {
+  const PreviewDialogueMenu = useMenu({ id: 'preview-datasets' })
   const ref = useRef()
-  const { uriState } = useContext(UriStateContext)
-  let { terms = '' } = uriState
+  const { uriState, setUriState } = useContext(UriStateContext)
+  let { terms = '', preview = '' } = uriState
+  preview = preview
+    .split(',')
+    .map(item => decodeURIComponent(item))
+    .filter(_ => _)
   terms = terms
     .split(',')
     .map(item => decodeURIComponent(item))
@@ -95,33 +102,47 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
     : data?.catalogue.records.nodes || []
 
   return (
-    <Layout
-      headerColor={headerColor}
-      hideSidebar={hideSidebar}
-      disableSidebar={disableSidebar}
-      cursors={cursors}
-      setCursors={setCursors}
-      setPageSize={setPageSize}
-      pageSize={pageSize}
-      error={error}
-      loading={loading}
-      catalogue={data?.catalogue}
-      setTextSearch={setTextSearch}
-      textSearch={textSearch}
-      Sidebar={() => <Sidebar />}
-      ResultList={() => (
-        <Items
-          error={error}
-          loading={loading}
-          results={
-            miniSearchResults
-              ? miniSearchResults.map(([id, score]) =>
-                  Object.assign({ ...results.find(({ target }) => id === target?._id) }, { score })
-                )
-              : results
-          }
-        />
-      )}
-    />
+    <>
+      <PreviewDialogueMenu
+        open={preview.length}
+        onClose={() => setUriState({ preview: [] })}
+        title={'Selected datasets'}
+        defaultSnap={isMobile ? 'Top' : null}
+      >
+        hi
+      </PreviewDialogueMenu>
+
+      <Layout
+        headerColor={headerColor}
+        hideSidebar={hideSidebar}
+        disableSidebar={disableSidebar}
+        cursors={cursors}
+        setCursors={setCursors}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
+        error={error}
+        loading={loading}
+        catalogue={data?.catalogue}
+        setTextSearch={setTextSearch}
+        textSearch={textSearch}
+        Sidebar={() => <Sidebar />}
+        ResultList={() => (
+          <Items
+            error={error}
+            loading={loading}
+            results={
+              miniSearchResults
+                ? miniSearchResults.map(([id, score]) =>
+                    Object.assign(
+                      { ...results.find(({ target }) => id === target?._id) },
+                      { score }
+                    )
+                  )
+                : results
+            }
+          />
+        )}
+      />
+    </>
   )
 }

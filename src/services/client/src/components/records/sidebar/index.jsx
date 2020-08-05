@@ -2,10 +2,12 @@ import React, { memo, useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Grid, Typography } from '@material-ui/core'
 import { UriStateContext } from '../../../modules/provider-uri-state'
-import Filter from './filter'
+import TagFilter from './tag-filter'
+import AreaFilter from './area-filter'
 
 export default memo(() => {
   const { uriState } = useContext(UriStateContext)
+
   let { terms = '' } = uriState
   terms = terms
     .split(',')
@@ -41,8 +43,11 @@ export default memo(() => {
     </Typography>
   ) : (
     <Grid container item xs={12}>
+      {/* Area filter */}
+      <AreaFilter title="Extent" />
+
       {/* Data tags */}
-      <Filter
+      <TagFilter
         title="Tags"
         results={
           data?.catalogue?.summary.find(obj =>
@@ -52,7 +57,7 @@ export default memo(() => {
       />
 
       {/* Publisher */}
-      <Filter
+      <TagFilter
         title="Publisher"
         results={
           data?.catalogue?.summary.find(obj =>
@@ -62,7 +67,7 @@ export default memo(() => {
       />
 
       {/* Publication year */}
-      <Filter
+      <TagFilter
         title="Publication Year"
         results={
           data?.catalogue?.summary.find(obj =>
@@ -70,6 +75,15 @@ export default memo(() => {
           )['metadata_json.publicationYear']
         }
       />
+
+      {/* Creators */}
+      <TagFilter title="Creators" results={[{ key: 'TODO', doc_count: 0 }]} />
+
+      {/* Contributors */}
+      <TagFilter title="Contributors" results={[{ key: 'TODO', doc_count: 0 }]} />
+
+      {/* Owner */}
+      <TagFilter title="Owners" results={[{ key: 'TODO', doc_count: 0 }]} />
     </Grid>
   )
 })

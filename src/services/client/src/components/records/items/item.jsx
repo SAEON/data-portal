@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Grid,
@@ -22,11 +22,13 @@ import {
 import QuickForm from '@saeon/quick-form'
 import { Link, CitationDialog, DataDownloadButton } from '../..'
 import { isMobile } from 'react-device-detect'
+import { UriStateContext } from '../../../modules/provider-uri-state'
 
 export default ({ item }) => {
   const history = useHistory()
   const [codeView, toggleCodeView] = useState(false)
   const doc = item.target._source.metadata_json
+  const { uriState, setUriState } = useContext(UriStateContext)
 
   return (
     <Card
@@ -127,24 +129,6 @@ export default ({ item }) => {
                   </Button>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <Tooltip title={'This has not been implemented yet'}>
-                    <span>
-                      <Button
-                        fullWidth
-                        startIcon={<PreviewIcon />}
-                        size="small"
-                        color="secondary"
-                        disabled={true}
-                        onClick={() => null}
-                        variant="contained"
-                        disableElevation
-                      >
-                        Preview
-                      </Button>
-                    </span>
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={6} sm={3}>
                   <DataDownloadButton
                     disableElevation
                     fullWidth
@@ -159,6 +143,41 @@ export default ({ item }) => {
                 <Grid item xs={6} sm={3}>
                   <CitationDialog color="secondary" fullWidth size="small" record={doc} />
                 </Grid>
+
+                {doc?.linkedResources
+                  ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
+                  ?.map(({ resourceURL }) => {
+                    const preview = uriState.preview
+                      ?.split(',')
+                      ?.map(item => decodeURIComponent(item))
+                      ?.filter(_ => _)
+
+                    const added = preview?.includes(resourceURL)
+
+                    return (
+                      <Grid key={resourceURL} item xs={6} sm={3}>
+                        <Tooltip title={'Select datasets for preview'}>
+                          <Button
+                            fullWidth
+                            startIcon={<PreviewIcon />}
+                            size="small"
+                            color={added ? 'primary' : 'inherit'}
+                            onClick={() => {
+                              setUriState({
+                                preview: added
+                                  ? [...preview].filter(p => p !== resourceURL)
+                                  : [...new Set([...(preview || []), resourceURL])],
+                              })
+                            }}
+                            variant="contained"
+                            disableElevation
+                          >
+                            {added ? 'Remove from Preview' : 'Add to preview'}
+                          </Button>
+                        </Tooltip>
+                      </Grid>
+                    )
+                  })}
               </Grid>
             </CardContent>
             <CardContent>
