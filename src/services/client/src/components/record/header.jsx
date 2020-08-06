@@ -2,14 +2,22 @@ import React, { forwardRef } from 'react'
 import {
   GetApp as GetAppIcon,
   Code as CodeIcon,
-  Share as ShareIcon,
-  Link,
+  Link as ShareIcon,
+  BarChart as PreviewIcon,
 } from '@material-ui/icons'
-import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden } from '@material-ui/core'
+import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden, Link } from '@material-ui/core'
 import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '..'
 import { CLIENT_HOST_ADDRESS } from '../../config'
+import { useHistory } from 'react-router-dom'
 
 export default ({ record, id, toggleCodeView, codeView }) => {
+  const history = useHistory()
+  const { identifier } = record
+  const DOI =
+    identifier && identifier.identifierType.toUpperCase() === 'DOI'
+      ? identifier.identifier
+      : undefined
+
   return (
     <AppBar
       color="inherit"
@@ -22,11 +30,30 @@ export default ({ record, id, toggleCodeView, codeView }) => {
           {/* PAGE TITLE */}
           <Grid item xs style={{ alignSelf: 'center' }}>
             <Typography variant="overline" component="h1">
-              {`${record.identifier?.identifier || 'UNKNOWN DOI'}`}
+              {DOI || 'UNKNOWN DOI'}
             </Typography>
           </Grid>
 
           <Hidden xsDown>
+            {/* PREVIEW */}
+            <Grid item>
+              <Tooltip title="View raw metadata record (JSON)">
+                <span>
+                  <Button
+                    disabled={!DOI}
+                    style={{ minWidth: 120 }}
+                    variant="outlined"
+                    color={'primary'}
+                    startIcon={<PreviewIcon />}
+                    disableElevation
+                    onClick={() => history.push('/atlas')} // TODO - pass state
+                  >
+                    PREVIEW
+                  </Button>
+                </span>
+              </Tooltip>
+            </Grid>
+
             {/* JSON */}
             <Grid item>
               <Tooltip title="View raw metadata record (JSON)">
@@ -47,6 +74,8 @@ export default ({ record, id, toggleCodeView, codeView }) => {
             <Grid item>
               <Tooltip title="Share a link to this record">
                 <Link
+                  // eslint-disable-next-line react/no-children-prop
+                  children=""
                   component={forwardRef((props, ref) => (
                     <Button
                       style={{ minWidth: 120 }}

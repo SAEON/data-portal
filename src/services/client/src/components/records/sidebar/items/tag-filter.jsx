@@ -12,7 +12,7 @@ import {
   Fade,
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import { UriStateContext } from '../../../modules/provider-uri-state'
+import { UriStateContext } from '../../../../modules/provider-uri-state'
 
 const LIST_SIZE = 3
 
@@ -104,7 +104,7 @@ export default ({ results, title }) => {
           )}
           {sortedResults.length < LIST_SIZE ? null : (
             <Button
-              style={{ marginTop: 10, marginLeft: 5 }}
+              style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}
               disableElevation
               size="small"
               variant="text"

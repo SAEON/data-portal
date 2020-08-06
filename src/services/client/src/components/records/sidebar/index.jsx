@@ -2,8 +2,9 @@ import React, { memo, useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Grid, Typography } from '@material-ui/core'
 import { UriStateContext } from '../../../modules/provider-uri-state'
-import TagFilter from './tag-filter'
-import AreaFilter from './area-filter'
+import TagFilter from './items/tag-filter'
+import AreaFilter from './items/area-filter'
+import ResultContextSummary from './items/result-context-summary'
 
 export default memo(() => {
   const { uriState } = useContext(UriStateContext)
@@ -43,8 +44,11 @@ export default memo(() => {
     </Typography>
   ) : (
     <Grid container item xs={12}>
+      {/* Result summary */}
+      <ResultContextSummary title="Preview Basket" />
+
       {/* Area filter */}
-      <AreaFilter title="Extent" />
+      <AreaFilter title="Filter by Extent" />
 
       {/* Data tags */}
       <TagFilter

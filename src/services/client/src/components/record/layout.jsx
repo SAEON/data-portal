@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Grid, Typography, Chip, Tooltip, Card, CardContent, Fade } from '@material-ui/core'
+import { Grid, Typography, Chip, Card, CardContent, Fade } from '@material-ui/core'
 import { UriStateContext } from '../../modules/provider-uri-state'
 import Header from './header'
 import { Link as SimpleLink } from '..'
@@ -70,7 +70,7 @@ export default ({ json, id }) => {
                   spacing={3}
                 >
                   <Row title={'Title'}>
-                    <Typography variant="body1" component="h2">
+                    <Typography variant="body2" component="h2">
                       {json.titles?.[0].title}
                     </Typography>
                   </Row>
@@ -78,7 +78,7 @@ export default ({ json, id }) => {
                   <Row title="Author">
                     {json.creators?.map((creator, i) => (
                       <div key={creator.name}>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           {creator.name}&nbsp;
                           <sup>[{i + 1}]</sup>
                         </Typography>
@@ -95,14 +95,22 @@ export default ({ json, id }) => {
                     ))}
                   </Row>
 
+                  <Row title="Temporal coverage">
+                    <Typography variant="body2">
+                      LEO TODO: These are the dates I have access to. Are these correct for temporal
+                      coverage?
+                    </Typography>
+                    <pre>{JSON.stringify(json.dates, null, 2)}</pre>
+                  </Row>
+
                   <Row title="Publisher">
-                    <Typography variant="body1">{`${json.publisher} (${json.publicationYear})`}</Typography>
+                    <Typography variant="body2">{`${json.publisher} (${json.publicationYear})`}</Typography>
                   </Row>
 
                   <Row title="Contributors">
                     {json.contributors?.map(contributor => (
                       <div key={contributor.name}>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           ({contributor.contributorType.replace(/([A-Z])/g, ' $1').trim()}){' '}
                           {contributor.name},{contributor.affiliations.map(aff => aff.affiliation)}
                         </Typography>
@@ -111,7 +119,7 @@ export default ({ json, id }) => {
                   </Row>
 
                   <Row title={'Abstract'}>
-                    <Typography variant="body1">
+                    <Typography variant="body2">
                       {json.descriptions.map(desc =>
                         desc.descriptionType === 'Abstract' ? desc.description : undefined
                       )}
@@ -144,40 +152,46 @@ export default ({ json, id }) => {
                   <Row title="Resources">
                     {json.linkedResources?.map((lr, i) => (
                       <div key={`linked-resource${i}`}>
-                        <SimpleLink uri={lr.resourceURL}>{`${
-                          lr.linkedResourceType === 'Query'
-                            ? '(GeoMap)'
-                            : `(${lr.linkedResourceType})`
-                        } ${lr.resourceDescription}`}</SimpleLink>
+                        <SimpleLink uri={lr.resourceURL}>
+                          <Typography variant="body2">
+                            {`${
+                              lr.linkedResourceType === 'Query'
+                                ? '(GeoMap)'
+                                : `(${lr.linkedResourceType})`
+                            } ${lr.resourceDescription}`}
+                          </Typography>
+                        </SimpleLink>
                       </div>
                     ))}
                   </Row>
 
                   <Row title="Identifiers">
                     <div>
-                      <Typography variant="body1">
+                      <Typography variant="body2">
                         {json.identifier?.identifier || 'Missing identifier'} (
                         {json.identifier.identifierType})
                       </Typography>
                     </div>
                     {json.alternateIdentifiers.map(ai => (
                       <div key={ai.alternateIdentifier}>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           {ai.alternateIdentifier} (alternate)
                         </Typography>
                       </div>
                     ))}
                   </Row>
 
-                  <Row title="Rights">
+                  <Row title="License">
                     <div>
-                      {json.rightsList?.map((rl, i) => (
-                        <SimpleLink key={`rights-list-right${i}`} uri={rl.rightsURI}>
-                          <Tooltip title={rl.rights}>
-                            <img src="https://licensebuttons.net/l/by/4.0/88x31.png" />
-                          </Tooltip>
-                        </SimpleLink>
-                      ))}
+                      {json.rightsList?.map(rl => {
+                        return (
+                          <SimpleLink key={rl.rightsURI} uri={rl.rightsURI}>
+                            <Typography variant="body2">
+                              {rl.rights} [{rl.rightsURI}]
+                            </Typography>
+                          </SimpleLink>
+                        )
+                      })}
                     </div>
                   </Row>
                 </Grid>

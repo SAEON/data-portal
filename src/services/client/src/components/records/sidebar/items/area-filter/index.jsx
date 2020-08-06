@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { Typography, Grid, AppBar, Toolbar, IconButton, Collapse, Fade } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import { OlReact, MapProxy } from '@saeon/ol-react'
-import { terrestrisBaseMap } from '../../../../lib/ol'
+import { terrestrisBaseMap } from '../../../../../lib/ol'
 import ComingSoonDialogue from './coming-soon-dialogue'
 
 export default ({ title }) => {
-  const [collapsed, setCollapsed] = useState(true)
+  const [collapsed, setCollapsed] = useState(false)
   return (
     <>
       <AppBar
@@ -54,6 +54,7 @@ export default ({ title }) => {
             >
               {({ map }) => (
                 <MapProxy map={map}>
+                  {/* eslint-disable-next-line no-unused-vars */}
                   {({ proxy }) => (
                     <ComingSoonDialogue
                       iconProps={{

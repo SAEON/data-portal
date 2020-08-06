@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { blue, cyan, lightBlue } from '@material-ui/core/colors'
+import { blue, lightBlue } from '@material-ui/core/colors'
 
 export default createMuiTheme({
   customSizes: {

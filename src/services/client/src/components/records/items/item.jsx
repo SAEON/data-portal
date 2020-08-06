@@ -26,9 +26,33 @@ import { UriStateContext } from '../../../modules/provider-uri-state'
 
 export default ({ item }) => {
   const history = useHistory()
-  const [codeView, toggleCodeView] = useState(false)
-  const doc = item.target._source.metadata_json
+  const [codeView, setCodeView] = useState(false)
   const { uriState, setUriState } = useContext(UriStateContext)
+
+  // Get preview
+  const preview = (uriState || '').preview
+    ?.split(',')
+    ?.map(item => decodeURIComponent(item))
+    ?.filter(_ => _)
+
+  // Get record values
+  const { score, target } = item
+  const { _source } = target
+  const { metadata_json } = _source
+  const {
+    identifier,
+    titles,
+    contributors,
+    descriptions,
+    alternateIdentifiers,
+    immutableResource,
+    linkedResources,
+  } = metadata_json
+
+  const DOI =
+    identifier && identifier.identifierType.toUpperCase() === 'DOI'
+      ? identifier.identifier
+      : undefined
 
   return (
     <Card
@@ -39,23 +63,23 @@ export default ({ item }) => {
       }}
     >
       <CardHeader
-        title={<Typography variant="h6">{doc.titles?.[0]?.title || 'Title missing'}</Typography>}
+        title={<Typography variant="h6">{titles?.[0]?.title || 'Title missing'}</Typography>}
         subheader={
           <Typography variant="overline">
-            {doc.contributors?.[0]?.name || 'Contributor info missing'}
+            {contributors?.[0]?.name || 'Contributor info missing'}
           </Typography>
         }
         action={
           <>
-            {item.score ? (
+            {score ? (
               <Tooltip title="Relevance to text filter (higher is better)">
                 <Typography color="textSecondary" variant="overline">
-                  Score: {item.score.toFixed(3)}
+                  Score: {score.toFixed(3)}
                 </Typography>
               </Tooltip>
             ) : null}
             <IconButton
-              onClick={() => toggleCodeView(!codeView)}
+              onClick={() => setCodeView(!codeView)}
               color={codeView ? 'primary' : 'inherit'}
               aria-label="Show metadata JSON object"
             >
@@ -68,7 +92,9 @@ export default ({ item }) => {
         <CardContent>
           <Fade key="1" in={codeView}>
             <div style={{ maxHeight: 400, overflowY: 'auto', overflowX: 'hidden' }}>
-              <pre style={{ whiteSpace: 'break-spaces' }}>{JSON.stringify(doc, null, 2)}</pre>
+              <pre style={{ whiteSpace: 'break-spaces' }}>
+                {JSON.stringify(metadata_json, null, 2)}
+              </pre>
             </div>
           </Fade>
         </CardContent>
@@ -77,12 +103,12 @@ export default ({ item }) => {
           <div>
             <QuickForm collapsed={true}>
               {({ updateForm, collapsed }) => {
-                const content = doc.descriptions?.[0]?.description || 'No description'
+                const content = descriptions?.[0]?.description || 'No description'
                 return (
                   <Collapse in={!collapsed} collapsedHeight={80}>
                     <CardContent>
                       {collapsed ? content.truncate(300) : content}
-                      {doc.descriptions?.[0]?.description.length > 300 ? (
+                      {descriptions?.[0]?.description.length > 300 ? (
                         <IconButton
                           style={{ padding: 0 }}
                           onClick={() => updateForm({ collapsed: !collapsed })}
@@ -110,13 +136,13 @@ export default ({ item }) => {
                   <Button
                     fullWidth
                     startIcon={<ViewIcon />}
-                    disabled={!doc.alternateIdentifiers}
+                    disabled={!alternateIdentifiers}
                     color="secondary"
                     size="small"
                     onClick={() =>
                       history.push(
                         `/records/${
-                          doc.alternateIdentifiers?.find(
+                          alternateIdentifiers?.find(
                             ({ alternateIdentifierType: type }) => type === 'Plone'
                           ).alternateIdentifier
                         }`
@@ -135,54 +161,55 @@ export default ({ item }) => {
                     variant="contained"
                     color="secondary"
                     size="small"
-                    immutableResource={doc.immutableResource}
+                    immutableResource={immutableResource}
                   >
                     Download
                   </DataDownloadButton>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <CitationDialog color="secondary" fullWidth size="small" record={doc} />
+                  <CitationDialog color="secondary" fullWidth size="small" record={metadata_json} />
                 </Grid>
 
-                {doc?.linkedResources
-                  ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
-                  ?.map(({ resourceURL }) => {
-                    const preview = uriState.preview
-                      ?.split(',')
-                      ?.map(item => decodeURIComponent(item))
-                      ?.filter(_ => _)
+                {DOI &&
+                  linkedResources
+                    ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
+                    ?.map((_, i) => {
+                      /**
+                       * Selected previews are the record DOI
+                       * + the position of the item in the linkedResources array
+                       */
+                      const id = `${DOI}~link ${i + 1}`
+                      const added = preview?.includes(id)
 
-                    const added = preview?.includes(resourceURL)
-
-                    return (
-                      <Grid key={resourceURL} item xs={6} sm={3}>
-                        <Tooltip title={'Select datasets for preview'}>
-                          <Button
-                            fullWidth
-                            startIcon={<PreviewIcon />}
-                            size="small"
-                            color={added ? 'primary' : 'inherit'}
-                            onClick={() => {
-                              setUriState({
-                                preview: added
-                                  ? [...preview].filter(p => p !== resourceURL)
-                                  : [...new Set([...(preview || []), resourceURL])],
-                              })
-                            }}
-                            variant="contained"
-                            disableElevation
-                          >
-                            {added ? 'Remove from Preview' : 'Add to preview'}
-                          </Button>
-                        </Tooltip>
-                      </Grid>
-                    )
-                  })}
+                      return (
+                        <Grid key={id} item xs={6} sm={3}>
+                          <Tooltip title={'Select datasets for preview'}>
+                            <Button
+                              fullWidth
+                              startIcon={<PreviewIcon />}
+                              size="small"
+                              color={added ? 'primary' : 'inherit'}
+                              onClick={() => {
+                                setUriState({
+                                  preview: added
+                                    ? [...preview].filter(p => p !== id)
+                                    : [...new Set([...(preview || []), id])],
+                                })
+                              }}
+                              variant="contained"
+                              disableElevation
+                            >
+                              {added ? 'Remove from Preview' : 'Add to preview'}
+                            </Button>
+                          </Tooltip>
+                        </Grid>
+                      )
+                    })}
               </Grid>
             </CardContent>
             <CardContent>
-              {doc.identifier && doc.identifier.identifierType.toUpperCase() === 'DOI' ? (
-                <Link uri={`https://doi.org/${doc.identifier.identifier}`} />
+              {DOI ? (
+                <Link uri={`https://doi.org/${DOI}`} />
               ) : (
                 <Typography variant="overline">No DOI</Typography>
               )}
