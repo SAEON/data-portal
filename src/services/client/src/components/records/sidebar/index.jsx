@@ -1,12 +1,12 @@
-import React, { memo, useContext } from 'react'
+import React, { useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, LinearProgress, Fade } from '@material-ui/core'
 import { UriStateContext } from '../../../modules/provider-uri-state'
 import TagFilter from './items/tag-filter'
 import AreaFilter from './items/area-filter'
 import ResultContextSummary from './items/result-context-summary'
 
-export default memo(() => {
+export default () => {
   const { uriState } = useContext(UriStateContext)
 
   let { terms = '' } = uriState
@@ -36,58 +36,62 @@ export default memo(() => {
     }
   )
 
-  const waitMsg = error ? 'An error has occurred' : loading ? 'Loading' : null
-
-  return waitMsg ? (
+  return error ? (
     <Typography style={{ display: 'block', margin: '10px 20px' }} variant="overline" noWrap>
-      {waitMsg}
+      Error
     </Typography>
-  ) : (
-    <Grid container item xs={12}>
-      {/* Result summary */}
-      <ResultContextSummary title="Preview Basket" />
-
-      {/* Area filter */}
-      <AreaFilter title="Filter by Extent" />
-
-      {/* Data tags */}
-      <TagFilter
-        title="Tags"
-        results={
-          data?.catalogue?.summary.find(obj =>
-            Object.entries(obj).find(([key]) => key === 'metadata_json.subjects.subject.raw')
-          )['metadata_json.subjects.subject.raw']
-        }
-      />
-
-      {/* Publisher */}
-      <TagFilter
-        title="Publisher"
-        results={
-          data?.catalogue?.summary.find(obj =>
-            Object.entries(obj).find(([key]) => key === 'metadata_json.publisher.raw')
-          )['metadata_json.publisher.raw']
-        }
-      />
-
-      {/* Publication year */}
-      <TagFilter
-        title="Publication Year"
-        results={
-          data?.catalogue?.summary.find(obj =>
-            Object.entries(obj).find(([key]) => key === 'metadata_json.publicationYear')
-          )['metadata_json.publicationYear']
-        }
-      />
-
-      {/* Creators */}
-      <TagFilter title="Creators" results={[{ key: 'TODO', doc_count: 0 }]} />
-
-      {/* Contributors */}
-      <TagFilter title="Contributors" results={[{ key: 'TODO', doc_count: 0 }]} />
-
-      {/* Owner */}
-      <TagFilter title="Owners" results={[{ key: 'TODO', doc_count: 0 }]} />
+  ) : loading ? (
+    <Grid item xs={12} style={{ position: 'relative' }}>
+      <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
     </Grid>
+  ) : (
+    <Fade in={!loading}>
+      <Grid container item xs={12}>
+        {/* Result summary */}
+        <ResultContextSummary title="Preview Basket" />
+
+        {/* Area filter */}
+        <AreaFilter title="Filter by Extent" />
+
+        {/* Data tags */}
+        <TagFilter
+          title="Tags"
+          results={
+            data?.catalogue?.summary.find(obj =>
+              Object.entries(obj).find(([key]) => key === 'metadata_json.subjects.subject.raw')
+            )['metadata_json.subjects.subject.raw']
+          }
+        />
+
+        {/* Publisher */}
+        <TagFilter
+          title="Publisher"
+          results={
+            data?.catalogue?.summary.find(obj =>
+              Object.entries(obj).find(([key]) => key === 'metadata_json.publisher.raw')
+            )['metadata_json.publisher.raw']
+          }
+        />
+
+        {/* Publication year */}
+        <TagFilter
+          title="Publication Year"
+          results={
+            data?.catalogue?.summary.find(obj =>
+              Object.entries(obj).find(([key]) => key === 'metadata_json.publicationYear')
+            )['metadata_json.publicationYear']
+          }
+        />
+
+        {/* Creators */}
+        <TagFilter title="Creators" results={[{ key: 'TODO', doc_count: 0 }]} />
+
+        {/* Contributors */}
+        <TagFilter title="Contributors" results={[{ key: 'TODO', doc_count: 0 }]} />
+
+        {/* Owner */}
+        <TagFilter title="Owners" results={[{ key: 'TODO', doc_count: 0 }]} />
+      </Grid>
+    </Fade>
   )
-})
+}

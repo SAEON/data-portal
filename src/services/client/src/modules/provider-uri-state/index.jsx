@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect, createContext, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
@@ -26,26 +26,33 @@ export default ({ children }) => {
   const history = useHistory()
   const [uriState, setUriState] = useState(getStateFromUri())
 
+  const setState = useCallback(obj => setUriState(obj), [])
+
   useEffect(() => {
-    setUriState(getStateFromUri())
+    setState(getStateFromUri())
   }, [location])
+
+  const updateUriState = useCallback(
+    ({
+      pathname = window.location.pathname,
+      terms = getStateFromUri(true).terms || [],
+      preview = getStateFromUri(true).preview || [],
+    }) => {
+      history.push({
+        pathname,
+        search: `?terms=${encodeURIComponent(
+          terms.map(term => encodeURIComponent(term)).join(',')
+        )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
+      })
+    },
+    []
+  )
 
   return (
     <UriStateContext.Provider
       value={{
         uriState,
-        setUriState: ({
-          pathname = window.location.pathname,
-          terms = getStateFromUri(true).terms || [],
-          preview = getStateFromUri(true).preview || [],
-        }) => {
-          history.push({
-            pathname,
-            search: `?terms=${encodeURIComponent(
-              terms.map(term => encodeURIComponent(term)).join(',')
-            )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
-          })
-        },
+        setUriState: updateUriState,
       }}
     >
       {children}

@@ -42,7 +42,6 @@ export default ({
   catalogue,
   setPageSize,
   loading,
-  error,
   cursors,
   setCursors,
   textSearch,
@@ -50,7 +49,6 @@ export default ({
   pageSize,
   Sidebar,
   ResultList,
-  headerColor,
   hideSidebar,
   disableSidebar,
 }) => {
@@ -61,7 +59,7 @@ export default ({
   return (
     <>
       <AppBar
-        color={headerColor}
+        color="inherit"
         position="sticky"
         style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
         variant="outlined"
@@ -69,6 +67,7 @@ export default ({
         <Toolbar disableGutters variant="regular">
           {disableSidebar ? null : (
             <IconButton
+              style={{ marginLeft: 5 }}
               onClick={() => setShowSidebar(!showSidebar)}
               color={showSidebar ? 'primary' : 'inherit'}
             >
@@ -82,7 +81,7 @@ export default ({
           >
             {({ updateForm, value }) => (
               <TextField
-                style={{ minWidth: '40%', marginLeft: 10 }}
+                style={{ minWidth: '40%', marginLeft: 5 }}
                 autoComplete="off"
                 id="outlined-basic"
                 size="small"
@@ -191,7 +190,7 @@ export default ({
             )}
 
             <IconButton
-              disabled={loading || error ? true : cursors?.currentPage < 1}
+              disabled={loading ? true : cursors?.currentPage < 1}
               onClick={() => {
                 setCursors({
                   start: catalogue?.records?.pageInfo?.startCursor,
@@ -205,7 +204,7 @@ export default ({
 
             <IconButton
               disabled={
-                loading || error
+                loading
                   ? true
                   : cursors?.currentPage * pageSize + pageSize >= catalogue?.records?.totalCount
               }

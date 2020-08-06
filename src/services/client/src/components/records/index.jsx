@@ -5,6 +5,7 @@ import Sidebar from './sidebar'
 import Items from './items'
 import MiniSearch from 'minisearch'
 import { UriStateContext } from '../../modules/provider-uri-state'
+import { Typography, LinearProgress, Grid } from '@material-ui/core'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -12,7 +13,7 @@ const DEFAULT_CURSORS = {
   currentPage: 0,
 }
 
-export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'inherit' }) => {
+export default ({ hideSidebar = false, disableSidebar = false }) => {
   const ref = useRef()
   const { uriState } = useContext(UriStateContext)
   const [pageSize, setPageSize] = useState(20)
@@ -61,6 +62,8 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
     }
   )
 
+  console.log('rendering records', Boolean(error), Boolean(loading), Boolean(data))
+
   let miniSearchResults
   if (data && textSearch) {
     const miniSearch = new MiniSearch({
@@ -94,34 +97,42 @@ export default ({ hideSidebar = false, disableSidebar = false, headerColor = 'in
     ? data?.catalogue.records.nodes.slice(0).reverse()
     : data?.catalogue.records.nodes || []
 
-  return (
+  return error ? (
+    <Typography>Error</Typography>
+  ) : (
     <Header
-      headerColor={headerColor}
       hideSidebar={hideSidebar}
       disableSidebar={disableSidebar}
       cursors={cursors}
       setCursors={setCursors}
       setPageSize={setPageSize}
       pageSize={pageSize}
-      error={error}
       loading={loading}
       catalogue={data?.catalogue}
       setTextSearch={setTextSearch}
       textSearch={textSearch}
-      Sidebar={() => <Sidebar />}
-      ResultList={() => (
-        <Items
-          error={error}
-          loading={loading}
-          results={
-            miniSearchResults
-              ? miniSearchResults.map(([id, score]) =>
-                  Object.assign({ ...results.find(({ target }) => id === target?._id) }, { score })
-                )
-              : results
-          }
-        />
-      )}
+      Sidebar={Sidebar}
+      ResultList={() =>
+        loading ? (
+          <Grid item xs={12} style={{ position: 'relative' }}>
+            <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
+          </Grid>
+        ) : (
+          <Items
+            loading={loading}
+            results={
+              miniSearchResults
+                ? miniSearchResults.map(([id, score]) =>
+                    Object.assign(
+                      { ...results.find(({ target }) => id === target?._id) },
+                      { score }
+                    )
+                  )
+                : results
+            }
+          />
+        )
+      }
     />
   )
 }
