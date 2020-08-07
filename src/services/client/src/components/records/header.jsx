@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react'
+import React, { useState, forwardRef, useContext } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -26,6 +26,7 @@ import { CLIENT_HOST_ADDRESS } from '../../config'
 import QuickForm from '@saeon/quick-form'
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
+import { UriStateContext } from '../../modules/provider-uri-state'
 
 const pageSizes = [
   10,
@@ -52,6 +53,9 @@ export default ({
 }) => {
   const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
+  const { getUriState } = useContext(UriStateContext)
+
+  const selectedPreviewLength = getUriState(true).preview?.length
 
   return (
     <>
@@ -117,11 +121,16 @@ export default ({
           {/* TOOLS */}
           <div style={{ marginLeft: 'auto' }}>
             {/* PREVIEW SELECTED DATASETS */}
-            <Tooltip title="Preview selected datasets">
-              <IconButton onClick={() => history.push('/atlas')}>
-                {/* TODO pass state to atlas*/}
-                <PreviewIcon />
-              </IconButton>
+            <Tooltip title={`Preview ${selectedPreviewLength} selected datasets`}>
+              <span>
+                <IconButton
+                  disabled={!selectedPreviewLength}
+                  onClick={() => history.push('/atlas')}
+                >
+                  {/* TODO pass state to atlas*/}
+                  <PreviewIcon />
+                </IconButton>
+              </span>
             </Tooltip>
 
             {/* SHARE LINK */}

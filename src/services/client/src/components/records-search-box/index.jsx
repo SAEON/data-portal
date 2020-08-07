@@ -14,12 +14,8 @@ const SUBJECTS = [
 const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {
-  const { uriState, setUriState } = useContext(UriStateContext)
-  let { terms = '' } = uriState
-  terms = terms
-    .split(',')
-    .map(item => decodeURIComponent(item))
-    .filter(_ => _)
+  const { getUriState, setUriState } = useContext(UriStateContext)
+  const { terms } = getUriState(true)
 
   const { error, loading, data } = useQuery(
     gql`

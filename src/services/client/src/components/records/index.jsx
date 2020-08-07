@@ -17,23 +17,19 @@ const DEFAULT_CURSORS = {
 export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [showSidebar, setShowSidebar] = useState(disableSidebar === true ? false : !hideSidebar)
   const ref = useRef()
-  const { uriState } = useContext(UriStateContext)
+  const { getUriState } = useContext(UriStateContext)
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
 
-  const terms = (uriState.terms || '')
-    .split(',')
-    .map(item => decodeURIComponent(item))
-    .filter(_ => _)
+  const terms = getUriState(true).terms
 
   useEffect(() => {
-    if (ref.current && terms.length !== ref.current.length) {
+    if (ref.current && terms?.length !== ref.current.length) {
       setCursors(DEFAULT_CURSORS)
     }
-
     ref.current = terms
-  })
+  }, [terms])
 
   const { error, loading, data } = useQuery(
     gql`
@@ -113,6 +109,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       setTextSearch={setTextSearch}
       textSearch={textSearch}
     >
+      {/* TODO Add toggle sidebar collapse animation */}
       <Grid container>
         {disableSidebar ? null : isMobile ? (
           <Collapse orientation={'vertical'} in={showSidebar}>
@@ -120,13 +117,13 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
               <Sidebar />
             </Grid>
           </Collapse>
-        ) : showSidebar ? ( // TODO https://github.com/mui-org/material-ui/pull/20619
+        ) : showSidebar ? (
           <Grid item md={4}>
             <Sidebar />
           </Grid>
         ) : null}
 
-        <Grid item md={showSidebar ? 8 : 12}>
+        <Grid item md={showSidebar && !disableSidebar ? 8 : 12}>
           {loading ? (
             <Grid item xs={12} style={{ position: 'relative' }}>
               <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />

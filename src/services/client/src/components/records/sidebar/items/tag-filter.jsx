@@ -17,17 +17,13 @@ import { UriStateContext } from '../../../../modules/provider-uri-state'
 const LIST_SIZE = 3
 
 export default ({ results, title }) => {
-  const { uriState, setUriState } = useContext(UriStateContext)
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
-  let { terms = '' } = uriState
-  terms = terms
-    .split(',')
-    .map(item => decodeURIComponent(item))
-    .filter(_ => _)
+  const { getUriState, setUriState } = useContext(UriStateContext)
+  const { terms } = getUriState(true)
 
   const sortedResults = results
-    ? [...results].sort(a => (terms.includes(a.key) ? -1 : 1))
+    ? [...results].sort(a => (terms?.includes(a.key) ? -1 : 1))
     : undefined
 
   return (
@@ -82,11 +78,11 @@ export default ({ results, title }) => {
                         style={{ alignSelf: 'baseline' }}
                         size="small"
                         color="primary"
-                        checked={terms.includes(key) ? true : false}
+                        checked={terms?.includes(key) ? true : false}
                         onChange={() => {
-                          if (terms.includes(key)) {
+                          if (terms?.includes(key)) {
                             setUriState({
-                              terms: terms.filter(s => s !== key),
+                              terms: terms?.filter(s => s !== key),
                             })
                           } else {
                             setUriState({

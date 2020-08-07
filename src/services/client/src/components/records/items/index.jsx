@@ -4,13 +4,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { UriStateContext } from '../../../modules/provider-uri-state'
 
 export default ({ results }) => {
-  const { uriState, setUriState } = useContext(UriStateContext)
-
-  // Get preview
-  const preview = (uriState || '').preview
-    ?.split(',')
-    ?.map(item => decodeURIComponent(item))
-    ?.filter(_ => _)
+  const { setUriState, getUriState } = useContext(UriStateContext)
 
   return (
     <Grid item xs={12}>
@@ -41,15 +35,15 @@ export default ({ results }) => {
               ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
               ?.map((_, i) => {
                 const id = `${DOI}~link ${i + 1}`
-                const toggled = preview?.includes(id)
+                const toggled = getUriState(true).preview?.includes(id)
                 return {
                   id,
                   toggled,
                   toggle: () => {
                     setUriState({
                       preview: toggled
-                        ? [...preview].filter(p => p !== id)
-                        : [...new Set([...(preview || []), id])],
+                        ? [...getUriState(true).preview].filter(p => p !== id)
+                        : [...new Set([...(getUriState(true).preview || []), id])],
                     })
                   },
                 }

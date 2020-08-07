@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   Typography,
   Grid,
@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  Tooltip,
 } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import {
@@ -25,15 +26,17 @@ import { UriStateContext } from '../../../../modules/provider-uri-state'
  */
 export default ({ title }) => {
   const history = useHistory()
-  const { uriState, setUriState } = useContext(UriStateContext)
-  let { preview = '' } = uriState
-  preview = preview
-    .split(',')
-    .map(item => decodeURIComponent(item))
-    .filter(_ => _)
+  const { getUriState, setUriState } = useContext(UriStateContext)
+  const { preview } = getUriState(true)
 
   // eslint-disable-next-line no-extra-boolean-cast
-  const [collapsed, setCollapsed] = useState(!Boolean(preview.length))
+  const [collapsed, setCollapsed] = useState(!Boolean(preview?.length))
+
+  // TODO
+  useEffect(() => {
+    setCollapsed(!Boolean(preview?.length))
+  })
+
   return (
     <>
       <AppBar
@@ -70,7 +73,7 @@ export default ({ title }) => {
       </AppBar>
       <Collapse style={{ width: '100%' }} key="result-list-collapse" in={!collapsed}>
         <Grid container spacing={0}>
-          {preview.map(id => {
+          {preview?.map(id => {
             const added = preview.includes(id)
 
             return (
@@ -99,16 +102,21 @@ export default ({ title }) => {
               </Grid>
             )
           })}
-          <Button
-            style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}
-            disableElevation
-            size="small"
-            variant="text"
-            startIcon={<PreviewIcon />}
-            onClick={() => history.push('/atlas')} // TODO - state needs to be transferred as well
-          >
-            View on Atlas
-          </Button>
+          <Tooltip placement="right" title={`Preview ${preview?.length} selected datasets`}>
+            <span>
+              <Button
+                style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}
+                disabled={!preview?.length}
+                disableElevation
+                size="small"
+                variant="text"
+                startIcon={<PreviewIcon />}
+                onClick={() => history.push('/atlas')} // TODO - state needs to be transferred as well
+              >
+                View on Atlas
+              </Button>
+            </span>
+          </Tooltip>
         </Grid>
       </Collapse>
     </>

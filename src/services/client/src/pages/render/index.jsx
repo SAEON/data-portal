@@ -9,7 +9,7 @@ const components = {
 }
 
 export default ({ location }) => {
-  const { uriState } = useContext(UriStateContext)
+  const { getUriState } = useContext(UriStateContext)
   const { pathname } = location
 
   /**
@@ -34,7 +34,7 @@ export default ({ location }) => {
    * Component props can be specified via URI parameters
    */
   const props = Object.fromEntries(
-    Object.entries(uriState).map(([prop, value]) => {
+    Object.entries(getUriState(true)).map(([prop, value]) => {
       if (value === 'false') return [prop, false]
       if (value === 'true') return [prop, true]
       return [prop, value]

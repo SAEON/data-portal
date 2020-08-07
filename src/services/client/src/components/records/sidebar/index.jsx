@@ -7,13 +7,8 @@ import AreaFilter from './items/area-filter'
 import ResultContextSummary from './items/result-context-summary'
 
 export default () => {
-  const { uriState } = useContext(UriStateContext)
-
-  let { terms = '' } = uriState
-  terms = terms
-    .split(',')
-    .map(item => decodeURIComponent(item))
-    .filter(_ => _)
+  const { getUriState } = useContext(UriStateContext)
+  const { terms } = getUriState(true)
 
   const { error, loading, data } = useQuery(
     gql`

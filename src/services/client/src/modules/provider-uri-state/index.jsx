@@ -1,10 +1,10 @@
-import React, { useState, useEffect, createContext, useCallback } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 export const UriStateContext = createContext()
 
-const getStateFromUri = (split = false) => {
+const getUriState = (split = false) => {
   const url = window.location.href
   const regex = /[?&]([^=#]+)=([^&#]*)/g
   const params = {}
@@ -24,22 +24,21 @@ const getStateFromUri = (split = false) => {
 export default ({ children }) => {
   const location = useLocation()
   const history = useHistory()
-  const [uriState, setUriState] = useState(getStateFromUri())
-
-  const setState = useCallback(obj => setUriState(obj), [])
+  const [state, setState] = useState(getUriState())
 
   useEffect(() => {
-    setState(getStateFromUri())
+    setState(getUriState())
   }, [location])
 
   return (
     <UriStateContext.Provider
       value={{
-        uriState,
+        state,
+        getUriState,
         setUriState: ({
           pathname = window.location.pathname,
-          terms = getStateFromUri(true).terms || [],
-          preview = getStateFromUri(true).preview || [],
+          terms = getUriState(true).terms || [],
+          preview = getUriState(true).preview || [],
         }) => {
           history.push({
             pathname,
