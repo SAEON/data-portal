@@ -85,12 +85,6 @@ export default () => {
 
         {/* Creators */}
         <TagFilter title="Creators" results={[{ key: 'TODO', doc_count: 0 }]} />
-
-        {/* Contributors */}
-        <TagFilter title="Contributors" results={[{ key: 'TODO', doc_count: 0 }]} />
-
-        {/* Owner */}
-        <TagFilter title="Owners" results={[{ key: 'TODO', doc_count: 0 }]} />
       </Grid>
     </Fade>
   )
