@@ -34,7 +34,7 @@ export default ({
   immutableResource,
   selectedLinkedResources,
 }) => {
-  console.log('item rendering')
+  console.log('ITEM rendering')
   const history = useHistory()
   const [codeView, setCodeView] = useState(false)
 
