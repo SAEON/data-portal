@@ -12,14 +12,13 @@ export default ({ results }) => {
     ?.map(item => decodeURIComponent(item))
     ?.filter(_ => _)
 
-  console.log('items rendering')
   return (
     <Grid item xs={12}>
       {results.length ? (
         results.map(item => {
           // Get record values
           const { score, target } = item
-          const { _source } = target
+          const { _source, _id } = target
           const { metadata_json } = _source
           const {
             identifier,
@@ -67,7 +66,7 @@ export default ({ results }) => {
               alternateIdentifiers={alternateIdentifiers}
               immutableResource={immutableResource}
               selectedLinkedResources={selectedLinkedResources}
-              key={item.target._id}
+              key={_id}
             />
           )
         })

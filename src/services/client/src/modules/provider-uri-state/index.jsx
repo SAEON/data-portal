@@ -32,27 +32,22 @@ export default ({ children }) => {
     setState(getStateFromUri())
   }, [location])
 
-  const updateUriState = useCallback(
-    ({
-      pathname = window.location.pathname,
-      terms = getStateFromUri(true).terms || [],
-      preview = getStateFromUri(true).preview || [],
-    }) => {
-      history.push({
-        pathname,
-        search: `?terms=${encodeURIComponent(
-          terms.map(term => encodeURIComponent(term)).join(',')
-        )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
-      })
-    },
-    []
-  )
-
   return (
     <UriStateContext.Provider
       value={{
         uriState,
-        setUriState: updateUriState,
+        setUriState: ({
+          pathname = window.location.pathname,
+          terms = getStateFromUri(true).terms || [],
+          preview = getStateFromUri(true).preview || [],
+        }) => {
+          history.push({
+            pathname,
+            search: `?terms=${encodeURIComponent(
+              terms.map(term => encodeURIComponent(term)).join(',')
+            )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
+          })
+        },
       }}
     >
       {children}

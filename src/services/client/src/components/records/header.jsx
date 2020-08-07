@@ -1,6 +1,5 @@
 import React, { useState, forwardRef } from 'react'
 import {
-  Grid,
   AppBar,
   Toolbar,
   Typography,
@@ -11,7 +10,6 @@ import {
   InputAdornment,
   Tooltip,
   IconButton,
-  Collapse,
   Link,
 } from '@material-ui/core'
 import {
@@ -47,14 +45,13 @@ export default ({
   textSearch,
   setTextSearch,
   pageSize,
-  Sidebar,
-  ResultList,
-  hideSidebar,
   disableSidebar,
+  children,
+  showSidebar,
+  setShowSidebar,
 }) => {
   const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
-  const [showSidebar, setShowSidebar] = useState(disableSidebar === true ? false : !hideSidebar)
 
   return (
     <>
@@ -222,24 +219,7 @@ export default ({
           </div>
         </Toolbar>
       </AppBar>
-
-      <Grid container>
-        {disableSidebar ? null : isMobile ? (
-          <Collapse orientation={'vertical'} in={showSidebar}>
-            <Grid item xs={12}>
-              <Sidebar />
-            </Grid>
-          </Collapse>
-        ) : showSidebar ? ( // TODO https://github.com/mui-org/material-ui/pull/20619
-          <Grid item md={4}>
-            <Sidebar />
-          </Grid>
-        ) : null}
-
-        <Grid item md={showSidebar ? 8 : 12}>
-          <ResultList />
-        </Grid>
-      </Grid>
+      {children}
     </>
   )
 }

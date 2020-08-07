@@ -5,7 +5,8 @@ import Sidebar from './sidebar'
 import Items from './items'
 import MiniSearch from 'minisearch'
 import { UriStateContext } from '../../modules/provider-uri-state'
-import { Typography, LinearProgress, Grid } from '@material-ui/core'
+import { Typography, LinearProgress, Grid, Collapse } from '@material-ui/core'
+import { isMobile } from 'react-device-detect'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -14,6 +15,7 @@ const DEFAULT_CURSORS = {
 }
 
 export default ({ hideSidebar = false, disableSidebar = false }) => {
+  const [showSidebar, setShowSidebar] = useState(disableSidebar === true ? false : !hideSidebar)
   const ref = useRef()
   const { uriState } = useContext(UriStateContext)
   const [pageSize, setPageSize] = useState(20)
@@ -62,8 +64,6 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     }
   )
 
-  console.log('rendering records', Boolean(error), Boolean(loading), Boolean(data))
-
   let miniSearchResults
   if (data && textSearch) {
     const miniSearch = new MiniSearch({
@@ -98,11 +98,12 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     : data?.catalogue.records.nodes || []
 
   return error ? (
-    <Typography>Error</Typography>
+    <Typography>{JSON.stringify(error)}</Typography>
   ) : (
     <Header
-      hideSidebar={hideSidebar}
       disableSidebar={disableSidebar}
+      showSidebar={showSidebar}
+      setShowSidebar={setShowSidebar}
       cursors={cursors}
       setCursors={setCursors}
       setPageSize={setPageSize}
@@ -111,28 +112,41 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       catalogue={data?.catalogue}
       setTextSearch={setTextSearch}
       textSearch={textSearch}
-      Sidebar={Sidebar}
-      ResultList={() =>
-        loading ? (
-          <Grid item xs={12} style={{ position: 'relative' }}>
-            <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
+    >
+      <Grid container>
+        {disableSidebar ? null : isMobile ? (
+          <Collapse orientation={'vertical'} in={showSidebar}>
+            <Grid item xs={12}>
+              <Sidebar />
+            </Grid>
+          </Collapse>
+        ) : showSidebar ? ( // TODO https://github.com/mui-org/material-ui/pull/20619
+          <Grid item md={4}>
+            <Sidebar />
           </Grid>
-        ) : (
-          <Items
-            loading={loading}
-            results={
-              miniSearchResults
-                ? miniSearchResults.map(([id, score]) =>
-                    Object.assign(
-                      { ...results.find(({ target }) => id === target?._id) },
-                      { score }
+        ) : null}
+
+        <Grid item md={showSidebar ? 8 : 12}>
+          {loading ? (
+            <Grid item xs={12} style={{ position: 'relative' }}>
+              <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
+            </Grid>
+          ) : (
+            <Items
+              results={
+                miniSearchResults
+                  ? miniSearchResults.map(([id, score]) =>
+                      Object.assign(
+                        { ...results.find(({ target }) => id === target?._id) },
+                        { score }
+                      )
                     )
-                  )
-                : results
-            }
-          />
-        )
-      }
-    />
+                  : results
+              }
+            />
+          )}
+        </Grid>
+      </Grid>
+    </Header>
   )
 }
