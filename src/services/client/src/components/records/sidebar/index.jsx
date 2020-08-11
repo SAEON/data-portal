@@ -36,7 +36,7 @@ export default () => {
       Error
     </Typography>
   ) : loading ? (
-    <Grid item xs={12} style={{ position: 'relative' }}>
+    <Grid container item xs={12} style={{ position: 'relative' }}>
       <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
     </Grid>
   ) : (

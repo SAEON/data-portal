@@ -7,6 +7,8 @@ import MiniSearch from 'minisearch'
 import { UriStateContext } from '../../modules/provider-uri-state'
 import { Typography, LinearProgress, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
+// import clsx from 'clsx'
+// import useStyles from './style'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -21,6 +23,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [pageSize, setPageSize] = useState(20)
   const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
+  // const classes = useStyles()
 
   const terms = getUriState(true).terms
 
@@ -109,8 +112,17 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       setTextSearch={setTextSearch}
       textSearch={textSearch}
     >
-      {/* TODO Add toggle sidebar collapse animation */}
-      <Grid container>
+      {/**
+       * TODO: Add toggle sidebar collapse animation
+       *
+       * Although @material-ui/core adds support for
+       * horizontal collapse, the grid item has to be
+       * a direct descendant of grid container
+       *
+       * So i'm not sure how to animate changs to the
+       * flex layout
+       **/}
+      <Grid container direction="row">
         {disableSidebar ? null : isMobile ? (
           <Collapse orientation={'vertical'} in={showSidebar}>
             <Grid item xs={12}>
@@ -123,7 +135,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
           </Grid>
         ) : null}
 
-        <Grid item md={showSidebar && !disableSidebar ? 8 : 12}>
+        <Grid item xs style={{ flexGrow: 1 }}>
           {loading ? (
             <Grid item xs={12} style={{ position: 'relative' }}>
               <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
