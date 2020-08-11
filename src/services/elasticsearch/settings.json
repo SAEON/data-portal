@@ -1,0 +1,22 @@
+{
+  "index": {
+    "analysis": {
+      "filter": {
+        "vocabulary_mapping": {
+          "type": "synonym",
+          "synonyms": [
+            "term1, term2"
+          ]
+        }
+      },
+      "analyzer": {
+        "synonym_analyzer": {
+          "filter": [
+            "vocabulary_mapping"
+          ],
+          "tokenizer": "whitespace"
+        }
+      }
+    }
+  }
+}
