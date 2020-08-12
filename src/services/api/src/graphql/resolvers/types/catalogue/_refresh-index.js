@@ -1,8 +1,27 @@
 import fetch from 'node-fetch'
 import hash from 'object-hash'
-import { ES_INDEX, ES_INTEGRATION_BATCH_SIZE, ES_HOST_ADDRESS } from '../../../../config.js'
+import { Catalogue } from '../../../../../../../packages/catalogue-search/src/catalogue-search/index.js'
+import {
+  ES_INDEX,
+  ES_INTEGRATION_BATCH_SIZE,
+  ES_HOST_ADDRESS,
+  HTTP_PROXY,
+} from '../../../../config.js'
 
-const makeIterator = async (catalogue, cursor = null) => {
+/**
+ * TODO
+ * The ES source will need to be updated for this integration
+ *
+ * TODO
+ * An additional proxy rule for the new elasticsearch instance
+ */
+const oldCatalogue = new Catalogue({
+  dslAddress: `${HTTP_PROXY}/proxy/saeon-elk`,
+  index: 'saeon-odp-4-2',
+  httpClient: fetch,
+})
+
+const makeIterator = async (cursor = null) => {
   const dsl = {
     size: ES_INTEGRATION_BATCH_SIZE,
     query: {
@@ -15,11 +34,11 @@ const makeIterator = async (catalogue, cursor = null) => {
     dsl.search_after = [cursor]
   }
 
-  const response = await catalogue.query(dsl)
+  const response = await oldCatalogue.query(dsl)
   const { hits } = response.hits
 
   return {
-    next: () => makeIterator(catalogue, hits[hits.length - 1]._id),
+    next: () => makeIterator(hits[hits.length - 1]._id),
     values: hits,
     done: Boolean(!hits.length),
   }
@@ -35,8 +54,6 @@ const makeIterator = async (catalogue, cursor = null) => {
  * duplicates of this... file a ticket with the curators
  */
 export default async (_, args, ctx) => {
-  const { catalogue } = ctx
-
   const result = {
     updated: 0,
     created: 0,
@@ -44,7 +61,7 @@ export default async (_, args, ctx) => {
   }
 
   try {
-    let iterator = await makeIterator(catalogue)
+    let iterator = await makeIterator()
     while (!iterator.done) {
       const response = await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_bulk`, {
         method: 'POST',
@@ -65,7 +82,7 @@ export default async (_, args, ctx) => {
       })
         .then(res => res.json())
         .catch(error => {
-          throw new Error(`Unable to refresh ES index :: ${error}`)
+          throw new Error(`Unable to refresh ES index :: ${error.message}`)
         })
 
       console.log(`Processed ${response.items.length} docs into the ${ES_INDEX} index`)
