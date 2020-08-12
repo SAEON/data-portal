@@ -50,6 +50,7 @@
     "strings": {
       "mapping": {
         "type": "text",
+        "analyzer": "synonym_analyzer",
         "fields": {
           "raw": {
             "ignore_above": 256,
