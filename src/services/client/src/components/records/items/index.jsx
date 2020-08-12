@@ -13,7 +13,6 @@ export default ({ results }) => {
           // Get record values
           const { score, target } = item
           const { _source, _id } = target
-          const { metadata_json } = _source
           const {
             identifier,
             titles,
@@ -22,7 +21,7 @@ export default ({ results }) => {
             alternateIdentifiers,
             immutableResource,
             linkedResources,
-          } = metadata_json
+          } = _source
 
           const DOI =
             identifier && identifier.identifierType.toUpperCase() === 'DOI'
@@ -53,7 +52,7 @@ export default ({ results }) => {
             <ResultItem
               DOI={DOI}
               score={score}
-              metadata_json={metadata_json}
+              _source={_source}
               titles={titles}
               contributors={contributors}
               descriptions={descriptions}

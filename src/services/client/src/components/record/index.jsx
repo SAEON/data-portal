@@ -26,7 +26,7 @@ export default ({ id }) => {
   )
 
   const waitMsg = error ? error.message : loading ? 'Loading' : null
-  const record = data?.catalogue?.records?.nodes?.[0]?.target?._source?.metadata_json
+  const record = data?.catalogue?.records?.nodes?.[0]?.target?._source
   return waitMsg ? (
     <Typography variant="overline" style={{ margin: 10, padding: 10 }}>
       {waitMsg}

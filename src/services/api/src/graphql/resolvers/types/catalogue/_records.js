@@ -24,10 +24,6 @@ export default async (_, args, ctx) => {
         _id: before === undefined ? 'asc' : 'desc',
       },
     ],
-    _source: {
-      excludes: ['metadata_json.originalMetadata'],
-      includes: ['metadata_json.*'],
-    },
   }
 
   if (before || after) {
@@ -38,28 +34,25 @@ export default async (_, args, ctx) => {
     dsl.query = {
       multi_match: {
         query: id,
-        fields: ['metadata_json.alternateIdentifiers.alternateIdentifier'],
+        fields: ['alternateIdentifiers.alternateIdentifier'],
       },
     }
   } else if (subjects && subjects.length) {
-    dsl.query.bool.must = [
-      subjects
-        .filter(_ => _)
-        .map(subject => {
-          const phrase = {
-            bool: {
-              should: parseInt(subject)
-                ? [{ match: { 'metadata_json.publicationYear': subject } }]
-                : [
-                    { term: { 'metadata_json.subjects.subject.raw': subject } },
-                    { match: { 'metadata_json.publisher.raw': subject } },
-                  ],
-            },
-          }
-
-          return phrase
-        }),
-    ]
+    dsl.query.bool.must = subjects
+      .filter(_ => _)
+      .map(subject => {
+        const phrase = {
+          bool: {
+            should: parseInt(subject)
+              ? [{ match: { publicationYear: subject } }]
+              : [
+                  { term: { 'subjects.subject.raw': subject } },
+                  { match: { 'publisher.raw': subject } },
+                ],
+          },
+        }
+        return phrase
+      })
   }
 
   const data = await catalogue.query(dsl)
@@ -70,6 +63,6 @@ export default async (_, args, ctx) => {
     _lastResult:
       before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
     data: data.hits.hits,
-    totalCount: data.hits.total,
+    totalCount: data.hits.total.value,
   }
 }

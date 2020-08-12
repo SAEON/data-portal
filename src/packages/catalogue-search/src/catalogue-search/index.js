@@ -119,24 +119,22 @@ export class Catalogue {
     if (subjects && subjects.length)
       dsl.query = {
         bool: {
-          must: [
-            subjects
-              .filter(_ => _)
-              .map(subject => {
-                const phrase = {
-                  bool: {
-                    should: parseInt(subject)
-                      ? [{ match: { 'metadata_json.publicationYear': subject } }]
-                      : [
-                          { term: { 'metadata_json.subjects.subject.raw': subject } },
-                          { match: { 'metadata_json.publisher.raw': subject } },
-                        ],
-                  },
-                }
+          must: subjects
+            .filter(_ => _)
+            .map(subject => {
+              const phrase = {
+                bool: {
+                  should: parseInt(subject)
+                    ? [{ match: { publicationYear: subject } }]
+                    : [
+                        { term: { 'subjects.subject.raw': subject } },
+                        { match: { 'publisher.raw': subject } },
+                      ],
+                },
+              }
 
-                return phrase
-              }),
-          ],
+              return phrase
+            }),
         },
       }
 
@@ -155,19 +153,14 @@ export class Catalogue {
       from: 0,
       query: {
         bool: {
-          must: [
-            subjects.map(subject => ({ term: { 'metadata_json.subjects.subject.raw': subject } })),
-          ],
+          must: subjects.map(subject => ({ term: { 'subjects.subject.raw': subject } })),
         },
       },
-      _source: {
-        excludes: ['metadata_json.originalMetadata'],
-        includes: ['metadata_json.*'],
-      },
+      _source: {},
     }
 
     const result = await this.query(dsl)
-    return result.hits.hits.map(({ _source }) => _source.metadata_json)
+    return result.hits.hits.map(({ _source }) => _source)
   }
 
   async getSingleRecord(id) {
@@ -177,16 +170,13 @@ export class Catalogue {
       query: {
         multi_match: {
           query: id,
-          fields: ['metadata_json.alternateIdentifiers.alternateIdentifier'],
+          fields: ['alternateIdentifiers.alternateIdentifier'],
         },
       },
-      _source: {
-        excludes: ['metadata_json.originalMetadata'],
-        includes: ['metadata_json.*'],
-      },
+      _source: {},
     }
 
     const result = await this.query(dsl)
-    return result?.hits.hits?.[0]?._source.metadata_json
+    return result?.hits.hits?.[0]?._source
   }
 }

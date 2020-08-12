@@ -1,23 +1,21 @@
 import { Catalogue } from '../../src/catalogue-search/index.js'
-import { API_ADDRESS } from '../config/constants.js'
+import { API_ADDRESS, INDEX } from '../config/constants.js'
 
-const dslAddress = `${API_ADDRESS}`
-const index = 'saeon-odp-4-2'
 let catalog
 
 describe('COUNT PIVOT', () => {
-  beforeEach(() => (catalog = new Catalogue({ dslAddress, index })))
+  beforeEach(() => (catalog = new Catalogue({ dslAddress: API_ADDRESS, index: INDEX })))
 
   test('Valid fields', async () => {
     const results = await catalog.countPivotOn({
-      fields: ['metadata_json.subjects.subject.raw', 'metadata_json.publisher.raw'],
+      fields: ['subjects.subject.raw', 'publisher.raw'],
     })
     expect(typeof results).toBe('object')
   })
 
   test('Works with subjects query', async () => {
     const results = await catalog.countPivotOn({
-      fields: ['metadata_json.subjects.subject.raw', 'metadata_json.publisher.raw'],
+      fields: ['subjects.subject.raw', 'publisher.raw'],
       subjects: ['noexist'],
     })
     results.forEach(result => {

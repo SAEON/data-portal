@@ -1,12 +1,10 @@
 import { Catalogue } from '../../src/catalogue-search/index.js'
-import { API_ADDRESS } from '../config/constants.js'
+import { API_ADDRESS, INDEX } from '../config/constants.js'
 
-const dslAddress = `${API_ADDRESS}`
-const index = 'saeon-odp-4-2'
 let catalog
 
 describe('SEARCH BY SUBJECTS', () => {
-  beforeEach(() => (catalog = new Catalogue({ dslAddress, index })))
+  beforeEach(() => (catalog = new Catalogue({ dslAddress: API_ADDRESS, index: INDEX })))
 
   test('Searching for existing subjects returns results', async () => {
     const records = await catalog.searchBySubjects('Biodiversity', ' Inland')

@@ -27,7 +27,7 @@ export default memo(
   ({
     DOI,
     score,
-    metadata_json,
+    _source,
     titles,
     contributors,
     descriptions,
@@ -78,7 +78,7 @@ export default memo(
               <Fade key="1" in={codeView}>
                 <div style={{ maxHeight: 400, overflowY: 'auto', overflowX: 'hidden' }}>
                   <pre style={{ whiteSpace: 'break-spaces' }}>
-                    {JSON.stringify(metadata_json, null, 2)}
+                    {JSON.stringify(_source, null, 2)}
                   </pre>
                 </div>
               </Fade>
@@ -152,12 +152,7 @@ export default memo(
                       </DataDownloadButton>
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                      <CitationDialog
-                        color="secondary"
-                        fullWidth
-                        size="small"
-                        record={metadata_json}
-                      />
+                      <CitationDialog color="secondary" fullWidth size="small" record={_source} />
                     </Grid>
 
                     {selectedLinkedResources?.map(({ id, toggled, toggle }) => {

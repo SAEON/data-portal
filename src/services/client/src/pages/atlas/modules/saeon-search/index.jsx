@@ -24,7 +24,7 @@ export default memo(() => {
     body: {
       aggs: {
         subjects: {
-          terms: { field: 'metadata_json.subjects.subject.raw', size: 1000 },
+          terms: { field: 'subjects.subject.raw', size: 1000 },
         },
       },
     },

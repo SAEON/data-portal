@@ -5,7 +5,7 @@ POST /saeon-odp-4-2/_search
 {
   "query": {
     "range": {
-      "metadata_json.dates.date": {
+      "dates.date": {
         "gte" : "2001-01-01",
         "lte" : "20019-12-31",
         "relation" : "within"
@@ -19,12 +19,12 @@ POST /saeon-odp-4-2/_search
 {
   "_source": {
     "includes": [
-      "metadata_json.dates.*"
+      "dates.*"
     ]
   },
   "query": {
     "range": {
-      "metadata_json.dates.date.gte": {
+      "dates.date.gte": {
         "lte":  "2005"
       }
     }
@@ -36,11 +36,11 @@ POST /saeon-odp-4-2/_search
 {
   "_source": {
     "includes": [
-      "metadata_json.dates.*",
-      "metadata_json.identifier",
-      "metadata_json.alternateIdentifiers.*",
-      "metadata_json.titles.*",
-      "metadata_json.geoLocations.*"
+      "dates.*",
+      "identifier",
+      "alternateIdentifiers.*",
+      "titles.*",
+      "geoLocations.*"
     ]
   },
   "query": {
@@ -48,7 +48,7 @@ POST /saeon-odp-4-2/_search
       "must": [
         {
           "range": {
-            "metadata_json.dates.date.gte": {
+            "dates.date.gte": {
               "lte": 2012,
               "gte": 2012
             }
@@ -56,7 +56,7 @@ POST /saeon-odp-4-2/_search
         },
         {
           "range": {
-            "metadata_json.dates.date.lte": {
+            "dates.date.lte": {
               "lte": 2012,
               "gte": 2012
             }
@@ -64,7 +64,7 @@ POST /saeon-odp-4-2/_search
         },
         {
           "terms": {
-            "metadata_json.dates.dateType": [
+            "dates.dateType": [
               "valid",
               "Collected"
             ]
@@ -79,14 +79,14 @@ POST /saeon-odp-4-2/_search
 {
   "_source": {
     "includes": [
-      "metadata_json.geoLocations.*"
+      "geoLocations.*"
     ]
   },
   "query": {
     "bool": {
       "filter": {
         "geo_shape": {
-          "metadata_json.geoLocations.geoLocationBox": {
+          "geoLocations.geoLocationBox": {
             "shape": {
               "type": "polygon",
               "coordinates": [
@@ -126,12 +126,12 @@ POST /saeon-odp-4-2/_search
 {
   "_source": {
     "includes": [
-      "metadata_json.geoLocations.*"
+      "geoLocations.*"
     ]
   },
   "query": {
     "exists": {
-      "field": "metadata_json.geoLocations.geoLocationBox"
+      "field": "geoLocations.geoLocationBox"
     }
   }
 }
@@ -139,11 +139,11 @@ POST /saeon-odp-4-2/_search
 POST /saeon-odp-4-2/_search
 {
   "_source": {
-    "includes": ["metadata_json.dates.*"]
+    "includes": ["dates.*"]
   },
   "query": {
     "terms": {
-      "metadata_json.dates.dateType": ["valid", "Collected"]
+      "dates.dateType": ["valid", "Collected"]
       }
     }
   }
@@ -153,11 +153,11 @@ POST /saeon-odp-4-2/_search
 POST /saeon-odp-4-2/_search
 {
   "_source": {
-    "includes": ["metadata_json.dates.*"]
+    "includes": ["dates.*"]
   },
   "query": {
     "match": {
-      "metadata_json.dates.dateType": {
+      "dates.dateType": {
         "query": "Valid"
       }
     }
@@ -169,11 +169,11 @@ POST /saeon-odp-4-2/_search
 POST /saeon-odp-4-2/_search
 {
   "_source": {
-    "includes": ["metadata_json.dates.*"]
+    "includes": ["dates.*"]
   },
   "query": {
     "exists": {
-      "field": "metadata_json.dates.dateType*"
+      "field": "dates.dateType*"
       }
     }
   }

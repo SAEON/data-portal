@@ -21,11 +21,7 @@ export default () => {
     `,
     {
       variables: {
-        fields: [
-          'metadata_json.publicationYear',
-          'metadata_json.publisher.raw',
-          'metadata_json.subjects.subject.raw',
-        ],
+        fields: ['publicationYear.raw', 'publisher.raw', 'subjects.subject.raw'],
         filterBySubjects: terms,
       },
     }
@@ -33,7 +29,7 @@ export default () => {
 
   return error ? (
     <Typography style={{ display: 'block', margin: '10px 20px' }} variant="overline" noWrap>
-      Error
+      {JSON.stringify(error)}
     </Typography>
   ) : loading ? (
     <Grid container item xs={12} style={{ position: 'relative' }}>
@@ -53,8 +49,8 @@ export default () => {
           title="Tags"
           results={
             data?.catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'metadata_json.subjects.subject.raw')
-            )['metadata_json.subjects.subject.raw']
+              Object.entries(obj).find(([key]) => key === 'subjects.subject.raw')
+            )['subjects.subject.raw']
           }
         />
 
@@ -63,8 +59,8 @@ export default () => {
           title="Publisher"
           results={
             data?.catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'metadata_json.publisher.raw')
-            )['metadata_json.publisher.raw']
+              Object.entries(obj).find(([key]) => key === 'publisher.raw')
+            )['publisher.raw']
           }
         />
 
@@ -73,8 +69,8 @@ export default () => {
           title="Publication Year"
           results={
             data?.catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'metadata_json.publicationYear')
-            )['metadata_json.publicationYear']
+              Object.entries(obj).find(([key]) => key === 'publicationYear.raw')
+            )['publicationYear.raw']
           }
         />
 

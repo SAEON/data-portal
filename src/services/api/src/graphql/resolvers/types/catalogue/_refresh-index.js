@@ -53,7 +53,7 @@ const makeIterator = async (cursor = null) => {
  * by hashing the doc.identifier object. If there are
  * duplicates of this... file a ticket with the curators
  */
-export default async (_, args, ctx) => {
+export default async () => {
   const result = {
     updated: 0,
     created: 0,

@@ -99,7 +99,7 @@ export default ({ type, data, children }) => {
                 dslAddress={DSL_PROXY}
                 index={DSL_INDEX}
                 source={{
-                  includes: ['metadata_json.*'],
+                  includes: ['*'],
                 }}
                 currentPage={currentPage}
                 pageSize={5}
@@ -107,7 +107,7 @@ export default ({ type, data, children }) => {
                   textSearch || selectedTerms.length
                     ? {
                         query: `${textSearch}, ${selectedTerms.join(',')}`,
-                        fields: ['metadata_json.subjects.subject'],
+                        fields: ['subjects.subject'],
                         fuzziness: 'AUTO',
                       }
                     : undefined
@@ -117,19 +117,19 @@ export default ({ type, data, children }) => {
                     ? [
                         {
                           terms: {
-                            'metadata_json.dates.dateType': ['valid', 'Collected'],
+                            'dates.dateType': ['valid', 'Collected'],
                           },
                         },
                         {
                           range: {
-                            'metadata_json.dates.date.gte': {
+                            'dates.date.gte': {
                               gte: dateRange[0].split('/')[2],
                             },
                           },
                         },
                         {
                           range: {
-                            'metadata_json.dates.date.lte': {
+                            'dates.date.lte': {
                               lte: dateRange[1].split('/')[2],
                             },
                           },
@@ -141,7 +141,7 @@ export default ({ type, data, children }) => {
                   polygon
                     ? {
                         geo_shape: {
-                          'metadata_json.geoLocations.geoLocationBox': {
+                          'geoLocations.geoLocationBox': {
                             shape: {
                               type: 'polygon',
                               coordinates,

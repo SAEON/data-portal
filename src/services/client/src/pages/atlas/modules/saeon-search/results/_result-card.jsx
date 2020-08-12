@@ -40,7 +40,6 @@ export default ({ _source, proxy }) => {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false)
   const [rightsExpanded, setRightsExpanded] = useState(false)
 
-  const { metadata_json } = _source
   const {
     alternateIdentifiers,
     titles,
@@ -52,7 +51,7 @@ export default ({ _source, proxy }) => {
     subjects,
     linkedResources,
     rightsList,
-  } = metadata_json
+  } = _source
 
   // TODO - this should be for individual, togglable layers
   let thumbnailAddress

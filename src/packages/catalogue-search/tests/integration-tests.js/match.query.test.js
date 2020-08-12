@@ -1,38 +1,35 @@
 import { Catalogue } from '../../src/catalogue-search/index.js'
-import { API_ADDRESS } from '../config/constants.js'
-
-const dslAddress = `${API_ADDRESS}`
-const index = 'saeon-odp-4-2'
+import { API_ADDRESS, INDEX } from '../config/constants.js'
 
 describe('MATCH QUERIES', () => {
   let catalog
-  beforeEach(() => (catalog = new Catalogue({ dslAddress, index })))
+  beforeEach(() => (catalog = new Catalogue({ dslAddress: API_ADDRESS, index: INDEX })))
 
   test('Confirm no results for non-existent term', async () => {
     catalog.addMatchClauses({
       query: 'noterm',
-      fields: ['metadata_json.subjects.subject'],
+      fields: ['subjects.subject'],
     })
     const response = await catalog.query()
     console.log(response)
-    expect(response.hits.total).toBe(0)
+    expect(response.hits.total.value).toBe(0)
   })
 
   test('Query single field', async () => {
     const query = 'landcover'
     catalog.defineSource({
-      includes: ['metadata_json.subjects.*'],
+      includes: ['subjects.*'],
     })
     catalog.addMatchClauses({
       query,
-      fields: ['metadata_json.subjects.subject'],
+      fields: ['subjects.subject'],
       fuzziness: 'AUTO',
     })
     const response = await catalog.query()
     response.hits.hits.forEach(({ _source }) => {
-      const { metadata_json } = _source
+      const { subjects } = _source
       let exists = false
-      metadata_json.subjects.forEach(({ subject }) => {
+      subjects.forEach(({ subject }) => {
         if (subject.toLowerCase().includes(query.toLowerCase())) exists = true
       })
       expect(exists).toBe(true)
@@ -40,46 +37,38 @@ describe('MATCH QUERIES', () => {
   })
 
   test('Query multiple matches', async () => {
-    const catalog = new Catalogue({ dslAddress, index })
+    const catalog = new Catalogue({ dslAddress: API_ADDRESS, index: INDEX })
     catalog.addMatchClauses(
       {
         query: 'landcover',
-        fields: [
-          'metadata_json.subjects.subject',
-          'metadata_json.descriptions.desciption',
-          'metadata_json.titles.title',
-        ],
+        fields: ['subjects.subject', 'descriptions.desciption', 'titles.title'],
       },
       {
         query: 'water',
-        fields: [
-          'metadata_json.subjects.subject',
-          'metadata_json.descriptions.desciption',
-          'metadata_json.titles.title',
-        ],
+        fields: ['subjects.subject', 'descriptions.desciption', 'titles.title'],
       }
     )
     const response = await catalog.query()
-    expect(response.hits.total).toBe(3)
+    expect(response.hits.total.value).toBe(3)
   })
 
   test('Query multiple fields', async () => {
     const query = 'water'
     catalog.defineSource({
-      includes: ['metadata_json.subjects.subject', 'metadata_json.descriptions.description'],
+      includes: ['subjects.subject', 'descriptions.description'],
     })
     catalog.addMatchClauses({
       query,
-      fields: ['metadata_json.subjects.subject', 'metadata_json.descriptions.desciption'],
+      fields: ['subjects.subject', 'descriptions.desciption'],
     })
     const response = await catalog.query()
     response.hits.hits.forEach(({ _source }) => {
-      const { metadata_json } = _source
+      const { subjects, descriptions } = _source
       let exists = false
-      metadata_json.subjects.forEach(({ subject }) => {
+      subjects.forEach(({ subject }) => {
         if (subject.toLowerCase().includes(query.toLowerCase())) exists = true
       })
-      metadata_json.descriptions.forEach(({ description }) => {
+      descriptions.forEach(({ description }) => {
         if (description.toLowerCase().includes(query.toLowerCase())) exists = true
       })
       expect(exists).toBe(true)

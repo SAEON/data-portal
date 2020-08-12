@@ -4,7 +4,7 @@ export default {
   id: async self => self._id,
   target: async self => self,
   citation: async (self, args) => {
-    const { identifier } = self._source.metadata_json
+    const { identifier } = self._source
     const doi = identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI'
     const { style = 'apa', language = 'en-US' } = args
     return await fetch(

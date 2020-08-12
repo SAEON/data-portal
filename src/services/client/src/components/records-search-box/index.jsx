@@ -6,11 +6,7 @@ import QuickForm from '@saeon/quick-form'
 import { UriStateContext } from '../../modules/provider-uri-state'
 import ListboxComponent from '../autocomplete/list-box-component'
 
-const SUBJECTS = [
-  'metadata_json.publicationYear',
-  'metadata_json.publisher.raw',
-  'metadata_json.subjects.subject.raw',
-]
+const SUBJECTS = ['publicationYear.raw', 'publisher.raw', 'subjects.subject.raw']
 const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {

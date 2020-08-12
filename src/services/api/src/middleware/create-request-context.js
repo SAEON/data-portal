@@ -1,17 +1,15 @@
 import fetch from 'node-fetch'
 import { db, collections, getDataLoaders } from '../mongo/index.js'
 import { Catalogue } from '../../../../packages/catalogue-search/src/catalogue-search/index.js'
-import { HTTP_PROXY } from '../config.js'
+import { ES_HOST_ADDRESS, ES_INDEX } from '../config.js'
 
-const DSL_INDEX = `saeon-odp-4-2`
-const DSL_PROXY = `${HTTP_PROXY}/proxy/saeon-elk`
 const catalogue = new Catalogue({
-  dslAddress: DSL_PROXY,
-  index: DSL_INDEX,
+  dslAddress: ES_HOST_ADDRESS,
+  index: ES_INDEX,
   httpClient: fetch,
 })
 
-export default app => async (ctx, next) => {
+export default app => async (_, next) => {
   app.context.catalogue = catalogue
   app.context.mongo = {
     db,
