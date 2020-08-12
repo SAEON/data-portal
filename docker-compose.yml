@@ -3,7 +3,6 @@ version: '3.7'
 volumes:
   mongo:
     driver: local
-
   elasticsearch-data:
     driver: local  
 
@@ -70,6 +69,10 @@ services:
       dockerfile: src/services/api/Dockerfile
     ports:
       - 5000:3000
+    depends_on:
+      - proxy
+      - mongo
+      - elasticsearch
 
   client:
     container_name: client
@@ -79,3 +82,5 @@ services:
       dockerfile: src/services/client/Dockerfile
     ports:
       - 5001:80
+    depends_on:
+      - api
