@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 import hash from 'object-hash'
 import { ES_INDEX, ES_INTEGRATION_BATCH_SIZE, ES_HOST_ADDRESS } from '../../../../config.js'
 
-const makeIterator = async (cursor = null) => {
+const makeIterator = async (catalogue, cursor = null) => {
   const dsl = {
     size: ES_INTEGRATION_BATCH_SIZE,
     query: {
@@ -15,18 +15,11 @@ const makeIterator = async (cursor = null) => {
     dsl.search_after = [cursor]
   }
 
-  const response = await fetch('http://192.168.116.66:9200/saeon-odp-4-2/_search', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(dsl),
-  }).then(res => res.json())
-
+  const response = await catalogue.query(dsl)
   const { hits } = response.hits
 
   return {
-    next: () => makeIterator(hits[hits.length - 1]._id),
+    next: () => makeIterator(catalogue, hits[hits.length - 1]._id),
     values: hits,
     done: Boolean(!hits.length),
   }
@@ -41,7 +34,9 @@ const makeIterator = async (cursor = null) => {
  * by hashing the doc.identifier object. If there are
  * duplicates of this... file a ticket with the curators
  */
-export default async () => {
+export default async (_, args, ctx) => {
+  const { catalogue } = ctx
+
   const result = {
     updated: 0,
     created: 0,
@@ -49,7 +44,7 @@ export default async () => {
   }
 
   try {
-    let iterator = await makeIterator()
+    let iterator = await makeIterator(catalogue)
     while (!iterator.done) {
       const response = await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_bulk`, {
         method: 'POST',
