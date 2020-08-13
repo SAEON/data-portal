@@ -17,7 +17,7 @@ export default props => {
       props.effects?.forEach(effect => {
         effect(fields)
       }),
-    Object.entries(fields).map(([, v]) => v)
+    [fields, props.effects]
   )
 
   const updateForm = obj => {
