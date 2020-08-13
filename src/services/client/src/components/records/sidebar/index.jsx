@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Grid, Typography, LinearProgress, Fade } from '@material-ui/core'
 import { UriStateContext } from '../../../modules/provider-uri-state'
 import TagFilter from './items/tag-filter'
-import AreaFilter from './items/area-filter'
+import ExtentFilter from './items/extent-filter'
 import ResultContextSummary from './items/result-context-summary'
 
 export default () => {
@@ -47,7 +47,7 @@ export default () => {
         <ResultContextSummary title="Preview Basket" />
 
         {/* Area filter */}
-        <AreaFilter title="Filter by Extent" />
+        <ExtentFilter title="Filter by Extent" />
 
         {/* Data tags */}
         <TagFilter

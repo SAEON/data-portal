@@ -25,7 +25,7 @@ export default ({ updateForm, selectPolygonActive, selectRectActive, proxy, onDr
       proxy.removeInteraction(draw)
       body.removeEventListener('keydown', keyDown)
     }
-  })
+  }, [])
 
   return (
     <Grid container spacing={4}>

@@ -3,7 +3,7 @@ import { Typography, Grid, AppBar, Toolbar, IconButton, Collapse, Fade } from '@
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap } from '../../../../../lib/ol'
-import ComingSoonDialogue from './coming-soon-dialogue'
+import FilterControl from './filter-control'
 
 export default ({ title }) => {
   const [collapsed, setCollapsed] = useState(false)
@@ -53,18 +53,7 @@ export default ({ title }) => {
               style={{ height: '350px', position: 'relative' }}
             >
               {({ map }) => (
-                <MapProxy map={map}>
-                  {/* eslint-disable-next-line no-unused-vars */}
-                  {({ proxy }) => (
-                    <ComingSoonDialogue
-                      iconProps={{
-                        size: 'medium',
-                        color: 'secondary',
-                        style: { position: 'absolute', top: 0, right: 0, zIndex: 1 },
-                      }}
-                    />
-                  )}
-                </MapProxy>
+                <MapProxy map={map}>{({ proxy }) => <FilterControl proxy={proxy} />}</MapProxy>
               )}
             </OlReact>
           </Grid>

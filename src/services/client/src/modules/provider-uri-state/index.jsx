@@ -39,12 +39,15 @@ export default ({ children }) => {
           pathname = window.location.pathname,
           terms = getUriState(true).terms || [],
           preview = getUriState(true).preview || [],
+          extent = getUriState(false).extent || '',
         }) => {
           history.push({
             pathname,
             search: `?terms=${encodeURIComponent(
               terms.map(term => encodeURIComponent(term)).join(',')
-            )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
+            )}&extent=${encodeURIComponent(extent)}&preview=${encodeURIComponent(
+              preview.map(p => encodeURIComponent(p)).join(',')
+            )}`,
           })
         },
       }}
