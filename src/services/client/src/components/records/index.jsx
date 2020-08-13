@@ -36,9 +36,9 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue($subjects: [String!], $size: Int, $before: ID, $after: ID) {
+      query catalogue($terms: [String!], $size: Int, $before: ID, $after: ID) {
         catalogue {
-          records(subjects: $subjects, size: $size, before: $before, after: $after) {
+          records(terms: $terms, size: $size, before: $before, after: $after) {
             pageInfo {
               hasNextPage
               hasPreviousPage
@@ -55,7 +55,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     `,
     {
       variables: {
-        subjects: terms || [],
+        terms: terms || [],
         size: pageSize,
         after: cursors.end,
         before: cursors.start,

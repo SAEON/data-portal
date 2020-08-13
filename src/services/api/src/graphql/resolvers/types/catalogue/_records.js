@@ -4,7 +4,7 @@ const { GraphQLError } = graphql
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
 
-  const { id, subjects, size = 100, before = undefined, after = undefined } = args
+  const { id, terms, size = 100, before = undefined, after = undefined } = args
   if (size < 1 || size > 10000) {
     throw new GraphQLError('Size param must be between 1 and 10 000')
   }
@@ -37,17 +37,18 @@ export default async (_, args, ctx) => {
         fields: ['alternateIdentifiers.alternateIdentifier'],
       },
     }
-  } else if (subjects && subjects.length) {
-    dsl.query.bool.must = subjects
+  } else if (terms && terms.length) {
+    dsl.query.bool.must = terms
       .filter(_ => _)
-      .map(subject => {
+      .map(term => {
         const phrase = {
           bool: {
-            should: parseInt(subject)
-              ? [{ match: { publicationYear: subject } }]
+            should: parseInt(term)
+              ? [{ match: { publicationYear: term } }]
               : [
-                  { term: { 'subjects.subject.raw': subject } },
-                  { match: { 'publisher.raw': subject } },
+                  { term: { 'subjects.subject.raw': term } },
+                  { term: { 'publisher.raw': term } },
+                  { term: { 'creators.name.raw': term } },
                 ],
           },
         }

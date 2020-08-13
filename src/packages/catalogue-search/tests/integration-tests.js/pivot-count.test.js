@@ -16,7 +16,7 @@ describe('COUNT PIVOT', () => {
   test('Works with subjects query', async () => {
     const results = await catalog.countPivotOn({
       fields: ['subjects.subject.raw', 'publisher.raw'],
-      subjects: ['noexist'],
+      terms: ['noexist'],
     })
     results.forEach(result => {
       Object.entries(result).forEach(([, result]) => {

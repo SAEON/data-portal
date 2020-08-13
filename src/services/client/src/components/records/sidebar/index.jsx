@@ -12,17 +12,22 @@ export default () => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue($filterBySubjects: [String!], $fields: [String!]) {
+      query catalogue($filterByTerms: [String!], $fields: [String!]) {
         catalogue {
           id
-          summary(fields: $fields, filterBySubjects: $filterBySubjects)
+          summary(fields: $fields, filterByTerms: $filterByTerms)
         }
       }
     `,
     {
       variables: {
-        fields: ['publicationYear.raw', 'publisher.raw', 'subjects.subject.raw'],
-        filterBySubjects: terms,
+        fields: [
+          'publicationYear.raw',
+          'publisher.raw',
+          'subjects.subject.raw',
+          'creators.name.raw',
+        ],
+        filterByTerms: terms,
       },
     }
   )
@@ -75,7 +80,14 @@ export default () => {
         />
 
         {/* Creators */}
-        <TagFilter title="Creators" results={[{ key: 'TODO', doc_count: 0 }]} />
+        <TagFilter
+          title="Creators"
+          results={
+            data?.catalogue?.summary.find(obj =>
+              Object.entries(obj).find(([key]) => key === 'creators.name.raw')
+            )['creators.name.raw']
+          }
+        />
       </Grid>
     </Fade>
   )

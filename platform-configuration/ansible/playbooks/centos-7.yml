@@ -5,7 +5,7 @@
   vars_prompt:
     - name: deployment_environment
       prompt: Which deployment environment is this for? [next, stable]
-      default: "stable"
+      default: "next"
       private: no
   tasks:
   - name: Install latest Git
@@ -56,8 +56,8 @@
 
   - name: Create runner scripts (for controlling the runner, and Nginx)
     shell: |
-      echo "cp ./server-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/" > /opt/copy-nginx-config.sh
-      echo "cp ./server-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" > /opt/copy-nginx-server-blocks.sh
+      echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/" > /opt/copy-nginx-config.sh
+      echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" > /opt/copy-nginx-server-blocks.sh
       echo service nginx reload > /opt/reload-nginx.sh
       chmod +x /opt/copy-nginx-config.sh
       chmod +x /opt/copy-nginx-server-blocks.sh

@@ -97,7 +97,7 @@ export class Catalogue {
   /**
    * Some helper functions for general use cases
    */
-  async countPivotOn({ fields, subjects = [], limit = 50 }) {
+  async countPivotOn({ fields, terms = [], limit = 50 }) {
     const size = limit
     const order = { _key: 'asc', _count: 'desc' }
     const dsl = {
@@ -116,19 +116,20 @@ export class Catalogue {
       ),
     }
 
-    if (subjects && subjects.length)
+    if (terms && terms.length)
       dsl.query = {
         bool: {
-          must: subjects
+          must: terms
             .filter(_ => _)
-            .map(subject => {
+            .map(term => {
               const phrase = {
                 bool: {
-                  should: parseInt(subject)
-                    ? [{ match: { publicationYear: subject } }]
+                  should: parseInt(term)
+                    ? [{ match: { publicationYear: term } }]
                     : [
-                        { term: { 'subjects.subject.raw': subject } },
-                        { match: { 'publisher.raw': subject } },
+                        { term: { 'subjects.subject.raw': term } },
+                        { term: { 'publisher.raw': term } },
+                        { term: { 'creators.name.raw': term } },
                       ],
                 },
               }

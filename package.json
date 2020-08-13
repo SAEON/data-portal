@@ -28,7 +28,7 @@
     "publish-all-packages:minor": "scripts/publish-all.sh -s minor",
     "publish-all-packages:major": "scripts/publish-all.sh -s major",
     "************ DEPLOYMENT **********": "",
-    "configure-centos-7-server": "ansible-playbook server-configuration/ansible/playbooks/centos-7.yml"
+    "configure-centos-7-server": "ansible-playbook platform-configuration/ansible/playbooks/centos-7.yml"
   },
   "husky": {
     "hooks": {

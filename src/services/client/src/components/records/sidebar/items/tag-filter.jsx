@@ -98,7 +98,7 @@ export default ({ results, title }) => {
               )
             }
           )}
-          {sortedResults.length < LIST_SIZE ? null : (
+          {sortedResults.length <= LIST_SIZE ? null : (
             <Button
               style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}
               disableElevation
