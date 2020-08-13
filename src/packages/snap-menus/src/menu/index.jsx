@@ -89,7 +89,7 @@ export default forwardRef(
         setZIndex(getActiveMenuZIndex())
       }
       ref.current = zIndex
-    }, [open, zIndex])
+    }, [open, zIndex, ref, getActiveMenuZIndex])
 
     return renderMenu(
       <div style={{ display: open ? 'block' : 'none' }}>
