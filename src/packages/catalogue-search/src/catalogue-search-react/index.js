@@ -10,6 +10,7 @@ const defaultState = {
 
 const createHook = ({ catalog }) => () => {
   const query = catalog.getQuery()
+  const queryJson = JSON.stringify(query)
   const [state, setState] = useState(defaultState)
 
   const fetchData = async abortFetch => {
@@ -35,7 +36,7 @@ const createHook = ({ catalog }) => () => {
     const abortFetch = new AbortController()
     fetchData(abortFetch)
     return () => abortFetch.abort()
-  }, [JSON.stringify(query)])
+  }, [queryJson])
 
   return {
     loading: state.loading,

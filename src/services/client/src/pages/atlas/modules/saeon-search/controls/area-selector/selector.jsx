@@ -8,25 +8,25 @@ import { nanoid } from 'nanoid'
 
 var draw
 export default ({ updateForm, selectPolygonActive, selectRectActive, proxy, onDrawEnd }) => {
-  // TODO. These should be handled in a top level provider specifically for the map.
-  const keyDown = e => {
-    if (e.key === 'Escape') {
-      proxy.removeInteraction(draw)
-      updateForm({
-        selectRectActive: false,
-        selectPolygonActive: false,
-      })
-    }
-  }
-
   useEffect(() => {
+    const keyDown = e => {
+      if (e.key === 'Escape') {
+        proxy.removeInteraction(draw)
+        updateForm({
+          selectRectActive: false,
+          selectPolygonActive: false,
+        })
+      }
+    }
+
     const body = document.getElementsByTagName('body')[0]
     body.addEventListener('keydown', keyDown)
     return () => {
       proxy.removeInteraction(draw)
       body.removeEventListener('keydown', keyDown)
     }
-  }, [])
+  })
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} sm={6}>

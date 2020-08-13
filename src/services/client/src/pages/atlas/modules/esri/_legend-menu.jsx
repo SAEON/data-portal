@@ -41,7 +41,7 @@ export default ({ title, uri }) => {
     _()
     // Cleanup
     return () => abortFetch.abort()
-  }, [])
+  }, [state, uri])
 
   return (
     <>

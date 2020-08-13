@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import JSONTree from 'react-json-tree'
 import { Typography } from '@material-ui/core'
 
@@ -9,37 +9,40 @@ export default ({ title, uri }) => {
     data: null,
   })
 
-  const fetchData = async abortFetch => {
-    try {
-      setState(
-        Object.assign(
-          { ...state },
-          {
-            loading: false,
-            data: await fetch(uri, {
-              signal: abortFetch.signal,
-            }).then(res => res.json()),
-          }
+  const fetchData = useCallback(
+    async abortFetch => {
+      try {
+        setState(
+          Object.assign(
+            { ...state },
+            {
+              loading: false,
+              data: await fetch(uri, {
+                signal: abortFetch.signal,
+              }).then(res => res.json()),
+            }
+          )
         )
-      )
-    } catch (err) {
-      if (err.name === 'AbortError') {
-        console.log('Fetch aborted')
-      } else {
-        console.error('Error', err)
-        setState({
-          loading: false,
-          error: err.message,
-        })
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          console.log('Fetch aborted')
+        } else {
+          console.error('Error', err)
+          setState({
+            loading: false,
+            error: err.message,
+          })
+        }
       }
-    }
-  }
+    },
+    [uri, state]
+  )
 
   useEffect(() => {
     const abortFetch = new AbortController()
     fetchData(abortFetch)
     return () => abortFetch.abort()
-  }, [])
+  }, [fetchData])
 
   return (
     <>

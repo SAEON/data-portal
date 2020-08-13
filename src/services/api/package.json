@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/api",
-  "version": "0.0.205",
+  "version": "0.0.206",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
@@ -35,7 +35,7 @@
     "date-fns": "^2.15.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
-    "graphql-tools": "^6.0.15",
+    "graphql-tools": "^6.0.18",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.0",
     "koa-compress": "^5.0.1",

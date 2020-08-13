@@ -66,7 +66,7 @@ export default ({ apiProxyAddress, servicesAddress, layers }) => {
       })
 
     return () => abortController.abort()
-  }, [])
+  }, [apiProxyAddress, layers, servicesAddress])
 
   return state.loading ? (
     <Typography>Loading ...</Typography>
