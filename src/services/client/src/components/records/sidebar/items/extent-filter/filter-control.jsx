@@ -17,18 +17,25 @@ const layer = new VectorLayer({
 
 export default ({ proxy }) => {
   const [selectActive, setSelectActive] = useState(false)
-  const [geometry, setGeometry] = useState('')
-  const { getUriState, setUriState } = useContext(UriStateContext)
-  const { extent } = getUriState(false)
+  const [extent, setExtent] = useState(undefined)
+  const { setUriState } = useContext(UriStateContext)
+
+  /**
+   * Mange the extent state locally for a snappier UI
+   * And update the URI state when necessary
+   */
+  useEffect(() => {
+    setUriState({
+      extent: extent || '',
+    })
+  }, [extent])
 
   useEffect(() => {
     const keydown = e => {
       if (e.key === 'Escape') {
         proxy.removeInteraction(draw)
         setSelectActive(false)
-        setUriState({
-          extent: '',
-        })
+        setExtent(undefined)
       }
     }
 
@@ -79,9 +86,7 @@ export default ({ proxy }) => {
               draw.on('drawend', e => {
                 const feat = e.feature
                 const geometry = feat.getGeometry()
-                setUriState({
-                  extent: geometry,
-                })
+                setExtent(geometry)
               })
             } else {
               proxy.removeInteraction(draw)
@@ -99,7 +104,7 @@ export default ({ proxy }) => {
             size="small"
             color="primary"
             onClick={() => {
-              setUriState({ extent: '' })
+              setExtent(undefined)
               setSelectActive(false)
               proxy.removeInteraction(draw)
               source.clear()
