@@ -17,6 +17,7 @@ const layer = new VectorLayer({
 
 export default ({ proxy }) => {
   const [selectActive, setSelectActive] = useState(false)
+  const [geometry, setGeometry] = useState('')
   const { getUriState, setUriState } = useContext(UriStateContext)
   const { extent } = getUriState(false)
 
