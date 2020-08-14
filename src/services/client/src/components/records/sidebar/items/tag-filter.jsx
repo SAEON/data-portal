@@ -20,7 +20,7 @@ export default ({ results, title }) => {
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
   const { getUriState, setUriState } = useContext(UriStateContext)
-  const { terms } = getUriState(true)
+  const { terms } = getUriState({ splitString: true })
 
   const sortedResults = results
     ? [...results].sort(a => (terms?.includes(a.key) ? -1 : 1))

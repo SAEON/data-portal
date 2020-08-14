@@ -4,14 +4,14 @@ import { useHistory } from 'react-router-dom'
 
 export const UriStateContext = createContext()
 
-const getUriState = (split = false) => {
+const getUriState = ({ splitString = false } = {}) => {
   const url = window.location.href
   const regex = /[?&]([^=#]+)=([^&#]*)/g
   const params = {}
 
   var match
   while ((match = regex.exec(url))) {
-    params[match[1]] = split
+    params[match[1]] = splitString
       ? decodeURIComponent(match[2])
           .split(',')
           .map(item => decodeURIComponent(item))
@@ -24,10 +24,10 @@ const getUriState = (split = false) => {
 export default ({ children }) => {
   const location = useLocation()
   const history = useHistory()
-  const [state, setState] = useState(getUriState())
+  const [state, setState] = useState(getUriState({ splitString: false }))
 
   useEffect(() => {
-    setState(getUriState())
+    setState(getUriState({ splitString: false }))
   }, [location])
 
   return (
@@ -37,9 +37,9 @@ export default ({ children }) => {
         getUriState,
         setUriState: ({
           pathname = window.location.pathname,
-          terms = getUriState(true).terms || [],
-          preview = getUriState(true).preview || [],
-          extent = getUriState(false).extent || '',
+          terms = getUriState({ splitString: true }).terms || [],
+          preview = getUriState({ splitString: true }).preview || [],
+          extent = getUriState({ splitString: false }).extent || '',
         }) => {
           history.push({
             pathname,

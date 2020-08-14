@@ -55,7 +55,7 @@ export default ({
   const [anchorEl, setAnchorEl] = useState(null)
   const { getUriState } = useContext(UriStateContext)
 
-  const selectedPreviewLength = getUriState(true).preview?.length
+  const selectedPreviewLength = getUriState({ splitString: true }).preview?.length
 
   return (
     <>

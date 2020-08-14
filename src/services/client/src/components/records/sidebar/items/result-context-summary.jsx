@@ -29,7 +29,7 @@ export default ({ title }) => {
   const history = useHistory()
   const [collapsed, setCollapsed] = useState(false)
   const { getUriState, setUriState } = useContext(UriStateContext)
-  const { preview } = getUriState(true)
+  const { preview } = getUriState({ splitString: true })
 
   return (
     <>

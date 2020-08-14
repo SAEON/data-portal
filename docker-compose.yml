@@ -53,7 +53,7 @@ services:
       - mongo:/data/db/
     ports:
       - 27017:27017
-    depends_on:
+    # depends_on:
     #   - elasticsearch
 
   proxy:

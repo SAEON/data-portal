@@ -11,7 +11,7 @@ const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {
   const { getUriState, setUriState } = useContext(UriStateContext)
-  const { terms } = getUriState(true)
+  const { terms } = getUriState({ splitString: true })
 
   const { error, loading, data } = useQuery(
     gql`

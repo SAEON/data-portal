@@ -25,7 +25,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   // const classes = useStyles()
 
-  const terms = getUriState(true).terms
+  const terms = getUriState({ splitString: true }).terms
 
   useEffect(() => {
     if (ref.current && terms?.length !== ref.current.length) {

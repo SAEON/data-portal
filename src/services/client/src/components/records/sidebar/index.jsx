@@ -8,7 +8,7 @@ import ResultContextSummary from './items/result-context-summary'
 
 export default () => {
   const { getUriState } = useContext(UriStateContext)
-  const { terms } = getUriState(true)
+  const { terms } = getUriState({ splitString: true })
 
   const { error, loading, data } = useQuery(
     gql`

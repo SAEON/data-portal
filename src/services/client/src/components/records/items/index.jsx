@@ -34,15 +34,15 @@ export default ({ results }) => {
               ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
               ?.map((_, i) => {
                 const id = `${DOI}~link ${i + 1}`
-                const toggled = getUriState(true).preview?.includes(id)
+                const toggled = getUriState({ splitString: true }).preview?.includes(id)
                 return {
                   id,
                   toggled,
                   toggle: () => {
                     setUriState({
                       preview: toggled
-                        ? [...getUriState(true).preview].filter(p => p !== id)
-                        : [...new Set([...(getUriState(true).preview || []), id])],
+                        ? [...getUriState({ splitString: true }).preview].filter(p => p !== id)
+                        : [...new Set([...(getUriState({ splitString: true }).preview || []), id])],
                     })
                   },
                 }
