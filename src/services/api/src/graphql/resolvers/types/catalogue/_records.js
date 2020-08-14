@@ -1,15 +1,15 @@
-import graphql from 'graphql/index.js'
-const { GraphQLError } = graphql
+import wkt from 'wkt'
+const { parse } = wkt
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
 
-  const { id, terms, size = 100, before = undefined, after = undefined } = args
+  const { id, extent = undefined, terms, size = 100, before = undefined, after = undefined } = args
   if (size < 1 || size > 10000) {
-    throw new GraphQLError('Size param must be between 1 and 10 000')
+    throw new Error('Size param must be between 1 and 10 000')
   }
   if (before && after) {
-    throw new GraphQLError('Please specify either a "before" or an "after" cursor (not both)')
+    throw new Error('Please specify either a "before" or an "after" cursor (not both)')
   }
 
   const dsl = {
@@ -30,6 +30,24 @@ export default async (_, args, ctx) => {
     dsl.search_after = [before || after]
   }
 
+  if (extent) {
+    // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
+    const shape = parse(extent)
+    shape.coordinates = shape.coordinates.map(array => array.map(([x, y]) => [y, x]))
+
+    dsl.query.bool.must = [
+      ...dsl.query.bool.must,
+      {
+        geo_shape: {
+          'geoLocations.geoLocationBox.geo_shape': {
+            shape,
+            relation: 'within',
+          },
+        },
+      },
+    ]
+  }
+
   if (id) {
     dsl.query = {
       multi_match: {
@@ -37,23 +55,26 @@ export default async (_, args, ctx) => {
         fields: ['alternateIdentifiers.alternateIdentifier'],
       },
     }
-  } else if (terms && terms.length) {
-    dsl.query.bool.must = terms
-      .filter(_ => _)
-      .map(term => {
-        const phrase = {
-          bool: {
-            should: parseInt(term)
-              ? [{ match: { publicationYear: term } }]
-              : [
-                  { term: { 'subjects.subject.raw': term } },
-                  { term: { 'publisher.raw': term } },
-                  { term: { 'creators.name.raw': term } },
-                ],
-          },
-        }
-        return phrase
-      })
+  } else if (terms?.length) {
+    dsl.query.bool.must = [
+      ...dsl.query.bool.must,
+      ...terms
+        .filter(_ => _)
+        .map(term => {
+          const phrase = {
+            bool: {
+              should: parseInt(term)
+                ? [{ match: { publicationYear: term } }]
+                : [
+                    { term: { 'subjects.subject.raw': term } },
+                    { term: { 'publisher.raw': term } },
+                    { term: { 'creators.name.raw': term } },
+                  ],
+            },
+          }
+          return phrase
+        }),
+    ]
   }
 
   const data = await catalogue.query(dsl)

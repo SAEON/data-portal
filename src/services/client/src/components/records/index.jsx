@@ -25,20 +25,21 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   // const classes = useStyles()
 
-  const terms = getUriState({ splitString: true }).terms
+  const { terms } = getUriState({ splitString: true })
+  const { extent } = getUriState({ splitString: false })
 
   useEffect(() => {
     if (ref.current && terms?.length !== ref.current.length) {
       setCursors(DEFAULT_CURSORS)
     }
     ref.current = terms
-  }, [terms])
+  }, [terms, extent])
 
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue($terms: [String!], $size: Int, $before: ID, $after: ID) {
+      query catalogue($extent: WKT_4326, $terms: [String!], $size: Int, $before: ID, $after: ID) {
         catalogue {
-          records(terms: $terms, size: $size, before: $before, after: $after) {
+          records(extent: $extent, terms: $terms, size: $size, before: $before, after: $after) {
             pageInfo {
               hasNextPage
               hasPreviousPage
@@ -55,6 +56,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     `,
     {
       variables: {
+        extent: extent || undefined,
         terms: terms || [],
         size: pageSize,
         after: cursors.end,

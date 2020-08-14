@@ -9,13 +9,14 @@ import ResultContextSummary from './items/result-context-summary'
 export default () => {
   const { getUriState } = useContext(UriStateContext)
   const { terms } = getUriState({ splitString: true })
+  const { extent } = getUriState({ splitString: false })
 
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue($filterByTerms: [String!], $fields: [String!]) {
+      query catalogue($filterByExtent: WKT_4326, $filterByTerms: [String!], $fields: [String!]) {
         catalogue {
           id
-          summary(fields: $fields, filterByTerms: $filterByTerms)
+          summary(filterByExtent: $filterByExtent, fields: $fields, filterByTerms: $filterByTerms)
         }
       }
     `,
@@ -28,6 +29,7 @@ export default () => {
           'creators.name.raw',
         ],
         filterByTerms: terms,
+        filterByExtent: extent || undefined,
       },
     }
   )

@@ -2,6 +2,7 @@
 export { default as JSON } from 'graphql-type-json'
 export { default as DateTime } from './_datetime.js'
 export { default as Void } from './_void.js'
+export { default as WKT_4326 } from './_wkt-4326.js'
 
 // GraphQL Types
 export { default as Mutation } from './_mutation.js'

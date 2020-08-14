@@ -94,57 +94,6 @@ export class Catalogue {
     }
   }
 
-  /**
-   * Some helper functions for general use cases
-   */
-  async countPivotOn({ fields, terms = [], limit = 50 }) {
-    const size = limit
-    const order = { _key: 'asc', _count: 'desc' }
-    const dsl = {
-      size: 0,
-      aggs: Object.fromEntries(
-        fields.map(field => [
-          field,
-          {
-            terms: {
-              field,
-              size,
-              order,
-            },
-          },
-        ])
-      ),
-    }
-
-    if (terms && terms.length)
-      dsl.query = {
-        bool: {
-          must: terms
-            .filter(_ => _)
-            .map(term => {
-              const phrase = {
-                bool: {
-                  should: parseInt(term)
-                    ? [{ match: { publicationYear: term } }]
-                    : [
-                        { term: { 'subjects.subject.raw': term } },
-                        { term: { 'publisher.raw': term } },
-                        { term: { 'creators.name.raw': term } },
-                      ],
-                },
-              }
-
-              return phrase
-            }),
-        },
-      }
-
-    const result = await this.query(dsl)
-    return Object.entries(result.aggregations).map(([name, { buckets }]) => ({
-      [name]: buckets,
-    }))
-  }
-
   async searchBySubjects(...subjects) {
     if (subjects.length < 1) {
       throw new Error(`${errorHeader}: searchBySubjects requires at least one subject`)

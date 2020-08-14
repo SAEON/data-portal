@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Tooltip, IconButton, Card } from '@material-ui/core'
 import { CropSquare as CropIcon, Close as CloseIcon } from '@material-ui/icons'
-import { Vector as VectorLayer } from 'ol/layer'
-import { Vector as VectorSource } from 'ol/source'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
+import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
 import { UriStateContext } from '../../../../../modules/provider-uri-state'
 
 var draw
+var defaultZoom
+var defaultCenter
 const source = new VectorSource({ wrapX: false })
 const layer = new VectorLayer({
   id: `${nanoid()}-drawLayer`,
@@ -15,10 +18,14 @@ const layer = new VectorLayer({
   source,
 })
 
+const wkt = new WKT()
+
 export default ({ proxy }) => {
+  defaultZoom = defaultZoom || proxy.getView().getZoom()
+  defaultCenter = defaultCenter || proxy.getView().getCenter()
   const [selectActive, setSelectActive] = useState(false)
-  const [extent, setExtent] = useState(undefined)
-  const { setUriState } = useContext(UriStateContext)
+  const { getUriState, setUriState } = useContext(UriStateContext)
+  const [extent, setExtent] = useState(getUriState({ splitString: false }).extent)
 
   /**
    * Mange the extent state locally for a snappier UI
@@ -30,12 +37,36 @@ export default ({ proxy }) => {
     })
   }, [extent])
 
+  /**
+   * On first render, if there is an extent
+   * Add a feature to the map source
+   */
+  useEffect(() => {
+    if (extent) {
+      const feature = wkt.readFeature(extent)
+      source.addFeature(feature)
+
+      // Zoom into polygon
+      const view = proxy.getView()
+      view.fit(wkt.readGeometry(extent), { padding: [100, 100, 100, 100] })
+    }
+  }, [])
+
+  /**
+   * On first render configure
+   * the page to allow user to
+   * escape draw mode by pressing
+   * the escape key
+   */
   useEffect(() => {
     const keydown = e => {
       if (e.key === 'Escape') {
         proxy.removeInteraction(draw)
         setSelectActive(false)
         setExtent(undefined)
+        const view = proxy.getView()
+        view.setZoom(defaultZoom)
+        view.setCenter(defaultCenter)
       }
     }
 
@@ -86,7 +117,7 @@ export default ({ proxy }) => {
               draw.on('drawend', e => {
                 const feat = e.feature
                 const geometry = feat.getGeometry()
-                setExtent(geometry)
+                setExtent(wkt.writeGeometry(geometry))
               })
             } else {
               proxy.removeInteraction(draw)
@@ -108,6 +139,9 @@ export default ({ proxy }) => {
               setSelectActive(false)
               proxy.removeInteraction(draw)
               source.clear()
+              const view = proxy.getView()
+              view.setZoom(defaultZoom)
+              view.setCenter(defaultCenter)
             }}
           >
             <CloseIcon fontSize="small" />

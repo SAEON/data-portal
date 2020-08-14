@@ -1,6 +1,6 @@
 import graphql from 'graphql/index.js'
 
-const { GraphQLScalarType, Kind } = graphql
+const { GraphQLScalarType, GraphQLError, Kind } = graphql
 
 export default new GraphQLScalarType({
   name: 'DateTime',
@@ -8,14 +8,14 @@ export default new GraphQLScalarType({
   parseValue(value) {
     const parsed = new Date(value)
     if (isNaN(parsed.getTime()))
-      throw new Error('GraphQL scalar type (Date) error: Cannot parse value')
+      throw new GraphQLError('GraphQL scalar type (Date) error: Cannot parse value')
     return parsed.toISOString()
   },
   serialize(value) {
     try {
       return value
     } catch (error) {
-      console.error('Failed to parse MongoDB date field. This should not occur', error)
+      console.GraphQLError('Failed to parse MongoDB date field. This should not occur', error)
     }
     return null
   },

@@ -40,7 +40,12 @@
   {
     "spatial": {
       "mapping": {
-        "type": "geo_shape"
+        "type": "keyword",
+        "fields": {
+          "geo_shape": {
+            "type": "geo_shape"
+          }
+        }
       },
       "match_mapping_type": "string",
       "match": "geoLocationBox*"

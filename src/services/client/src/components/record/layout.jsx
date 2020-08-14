@@ -185,12 +185,12 @@ export default ({ json, id }) => {
                     <div>
                       {json.rightsList?.map(rl => {
                         return (
-                          <>
+                          <div key={rl.rightsURI}>
                             <Typography variant="body2">{rl.rights}</Typography>
                             <SimpleLink key={rl.rightsURI} uri={rl.rightsURI}>
                               <Typography variant="body2">{rl.rightsURI}</Typography>
                             </SimpleLink>
-                          </>
+                          </div>
                         )
                       })}
                     </div>
