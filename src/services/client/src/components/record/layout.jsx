@@ -1,13 +1,17 @@
 import React, { useState, useContext } from 'react'
 import { Grid, Typography, Chip, Card, CardContent, Fade } from '@material-ui/core'
 import { UriStateContext } from '../../modules/provider-uri-state'
+import { terrestrisBaseMap } from '../../lib/ol'
 import Header from './header'
+import { OlReact } from '@saeon/ol-react'
 import { Link as SimpleLink } from '..'
-/**TO DO:
- * http://localhost:3001/records/c770a2bfa4108b82725ae1174bf881cd
- * http://www.sasdi.net/metaview.aspx?uuid=c770a2bfa4108b82725ae1174bf881cd#downloads
- * http://www.sasdi.net/metaview.aspx?uuid=1d9fa3fd257fea3ec81b5bc6c8fde61f# citations work here
- */
+import WKT from 'ol/format/WKT'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import Feature from 'ol/Feature'
+import Polygon from 'ol/geom/Polygon'
+
+const wkt = new WKT()
 
 const Row = ({ title, children, ...props }) => (
   <Grid item {...props}>
@@ -95,6 +99,47 @@ export default ({ json, id }) => {
                     ))}
                   </Row>
 
+                  <Row title={'Spatial covereage'}>
+                    <Typography variant="body2" component="h2">
+                      <OlReact
+                        viewOptions={{
+                          smoothExtentConstraint: true,
+                          showFullExtent: true,
+                          extent: new Polygon(
+                            wkt
+                              .readGeometry(json.geoLocations[0].geoLocationBox)
+                              .getCoordinates()
+                              .map(array => array.map(([y, x]) => [x, y]))
+                          )
+                            .getExtent()
+                            .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)), // subtract for minX/minY, expand for maxX, maxY
+                        }}
+                        layers={[
+                          new VectorLayer({
+                            id: 'extent-layer',
+                            title: 'Extent',
+                            source: new VectorSource({
+                              wrapX: false,
+                              features: json.geoLocations.map(
+                                ({ geoLocationBox }) =>
+                                  new Feature({
+                                    geometry: new Polygon(
+                                      wkt
+                                        .readGeometry(geoLocationBox)
+                                        .getCoordinates()
+                                        .map(array => array.map(([y, x]) => [x, y]))
+                                    ),
+                                  })
+                              ),
+                            }),
+                          }),
+                          terrestrisBaseMap(),
+                        ]}
+                        style={{ height: '350px', position: 'relative' }}
+                      />
+                    </Typography>
+                  </Row>
+
                   <Row title="Temporal coverage">
                     <Typography variant="body2">
                       LEO TODO: These are the dates I have access to. Are these correct for temporal
@@ -108,8 +153,8 @@ export default ({ json, id }) => {
                   </Row>
 
                   <Row title="Contributors">
-                    {json.contributors?.map(contributor => (
-                      <div key={contributor.name}>
+                    {json.contributors?.map((contributor, i) => (
+                      <div key={i}>
                         <Typography variant="body2">
                           ({contributor.contributorType.replace(/([A-Z])/g, ' $1').trim()}){' '}
                           {contributor.name},{contributor.affiliations.map(aff => aff.affiliation)}
