@@ -44,7 +44,6 @@ export default memo(
           variant="outlined"
           style={{
             borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-            borderLeft: isMobile ? 'none' : '1px solid rgba(0, 0, 0, 0.12)',
           }}
         >
           <CardHeader

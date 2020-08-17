@@ -124,7 +124,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
        * So i'm not sure how to animate changs to the
        * flex layout
        **/}
-      <Grid container direction="row">
+      <Grid style={{ height: '100%' }} container direction="row">
         {disableSidebar ? null : isMobile ? (
           <Collapse orientation={'vertical'} in={showSidebar}>
             <Grid item xs={12}>
