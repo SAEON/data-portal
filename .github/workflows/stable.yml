@@ -15,14 +15,14 @@ jobs:
 
       - name: Configure services/proxy
         run: |
-          echo "TODO -> SAEON_SPATIALDATA_PROXY=https://spatialdata.saeon.ac.za src/services/proxy/.env"
+          echo "ELASTICSEARCH_PROXY=http://elasticsearch.saeon.int" > src/services/proxy/.env
 
       - name: Configure services/api
         run: |
           echo "ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za" > src/services/api/.env
           echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
           echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/services/api/.env
-          echo "ES_HOST_ADDRESS=http://elasticsearch.saeon.int" >> src/services/api/.env
+          echo "ES_HOST_ADDRESS=http://proxy:8001/proxy/elasticsearch" >> src/services/api/.env
           echo "DEPLOY_ENV=production" >> src/services/api/.env
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env

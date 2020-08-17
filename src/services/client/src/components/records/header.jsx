@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useContext } from 'react'
+import React, { useState, forwardRef, useContext, useCallback } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -43,8 +43,6 @@ export default ({
   loading,
   cursors,
   setCursors,
-  textSearch,
-  setTextSearch,
   pageSize,
   disableSidebar,
   children,
@@ -53,9 +51,17 @@ export default ({
 }) => {
   const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
-  const { getUriState } = useContext(UriStateContext)
-
+  const { getUriState, setUriState } = useContext(UriStateContext)
   const selectedPreviewLength = getUriState({ splitString: true }).preview?.length
+
+  const updateTextSearch = useCallback(
+    debounce(({ value }) => {
+      if (value !== getUriState({ splitString: false }).text) {
+        setUriState({ text: value })
+      }
+    }, 500),
+    []
+  )
 
   return (
     <>
@@ -76,10 +82,7 @@ export default ({
             </IconButton>
           )}
 
-          <QuickForm
-            effects={[debounce(({ value }) => setTextSearch(value), 250)]}
-            value={textSearch}
-          >
+          <QuickForm effects={[updateTextSearch]} value={getUriState({ splitString: false }).text}>
             {({ updateForm, value }) => (
               <TextField
                 style={{ minWidth: '40%', marginLeft: 5 }}
@@ -89,7 +92,7 @@ export default ({
                 color="secondary"
                 value={value}
                 onChange={e => updateForm({ value: e.currentTarget.value })}
-                placeholder="Filter current page results..."
+                placeholder="Filter current results..."
                 variant="outlined"
                 InputProps={{
                   startAdornment: (

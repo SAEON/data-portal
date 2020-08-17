@@ -37,6 +37,7 @@ export default ({ children }) => {
         getUriState,
         setUriState: ({
           pathname = window.location.pathname,
+          text = getUriState({ splitString: false }).text || '',
           terms = getUriState({ splitString: true }).terms || [],
           preview = getUriState({ splitString: true }).preview || [],
           extent = getUriState({ splitString: false }).extent || '',
@@ -45,9 +46,9 @@ export default ({ children }) => {
             pathname,
             search: `?terms=${encodeURIComponent(
               terms.map(term => encodeURIComponent(term)).join(',')
-            )}&extent=${encodeURIComponent(extent)}&preview=${encodeURIComponent(
-              preview.map(p => encodeURIComponent(p)).join(',')
-            )}`,
+            )}&extent=${encodeURIComponent(extent)}&text=${encodeURIComponent(
+              text
+            )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
           })
         },
       }}

@@ -102,8 +102,6 @@ export default async (_, args, ctx) => {
     }
   }
 
-  console.log(JSON.stringify(dsl))
-
   const data = await catalogue.query(dsl)
 
   return {

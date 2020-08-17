@@ -11,11 +11,11 @@ export const WEB_INTERFACE_PORT = process.env.WEB_INTERFACE_PORT
 export const THROTTLE = process.env.THROTTLE ? parseInt(process.env.THROTTLE, 10) : 10000
 
 // User configuration
+export const ELASTICSEARCH_PROXY = process.env.ELASTICSEARCH_PROXY || 'http://localhost:9200'
 export const SAEON_SPATIALDATA_PROXY =
   process.env.SAEON_SPATIALDATA_PROXY || 'http://app01.saeon.ac.za'
 export const SAEON_SPATIALDATA_PROXY2 =
   process.env.SAEON_SPATIALDATA_PROXY2 || 'http://196.21.191.55'
-export const SAEON_ELK_PROXY = process.env.SAEON_ELK_PROXY || 'http://192.168.116.66:9200'
 export const CSIR_ESRI_PROXY =
   process.env.CSIR_ESRI_PROXY || 'https://pta-gis-2-web1.csir.co.za/server2/rest/services'
 export const HST_ESRI_PROXY =

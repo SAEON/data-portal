@@ -1,30 +1,21 @@
 import { useState, useEffect } from 'react'
 
-export default props => {
-  const [fields, updateAllFields] = useState(
-    Object.fromEntries(
-      Object.entries(props).filter(
-        ([key]) =>
-          Object.prototype.hasOwnProperty.call(props, key) &&
-          key !== 'children' &&
-          key !== 'effects'
-      )
-    )
-  )
+export default ({children, effects, ...formFields}) => {
+  const [fields, updateAllFields] = useState(formFields)
 
   useEffect(
     () =>
-      props.effects?.forEach(effect => {
+      effects?.forEach(effect => {
         effect(fields)
       }),
-    [fields, props.effects]
+    [fields, effects]
   )
 
   const updateForm = obj => {
     updateAllFields(Object.assign({ ...fields }, obj))
   }
 
-  return props.children({
+  return children({
     updateForm,
     ...fields,
   })

@@ -6,8 +6,6 @@ import Items from './items'
 import { UriStateContext } from '../../modules/provider-uri-state'
 import { Typography, LinearProgress, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-// import clsx from 'clsx'
-// import useStyles from './style'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -20,19 +18,16 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const ref = useRef()
   const { getUriState } = useContext(UriStateContext)
   const [pageSize, setPageSize] = useState(20)
-  const [textSearch, setTextSearch] = useState('')
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
-  // const classes = useStyles()
-
   const { terms } = getUriState({ splitString: true })
-  const { extent } = getUriState({ splitString: false })
+  const { extent, text } = getUriState({ splitString: false })
 
   useEffect(() => {
-    if (ref.current && terms?.length !== ref.current.length) {
+    if (ref.current && (terms?.length !== ref.current.terms?.length || text !== ref.current.text)) {
       setCursors(DEFAULT_CURSORS)
     }
-    ref.current = terms
-  }, [terms, extent])
+    ref.current = { terms, text }
+  }, [terms, extent, text])
 
   const { error, loading, data } = useQuery(
     gql`
@@ -71,7 +66,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       variables: {
         extent: extent || undefined,
         terms: terms || [],
-        match: textSearch || undefined,
+        match: text || undefined,
         size: pageSize,
         after: cursors.end,
         before: cursors.start,
@@ -97,8 +92,6 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       pageSize={pageSize}
       loading={loading}
       catalogue={data?.catalogue}
-      setTextSearch={setTextSearch}
-      textSearch={textSearch}
     >
       {/**
        * TODO: Add toggle sidebar collapse animation
