@@ -198,6 +198,7 @@ export default ({
               </>
             )}
 
+            {/* Go Back a page */}
             <IconButton
               disabled={loading ? true : cursors?.currentPage < 1}
               onClick={() => {
@@ -211,6 +212,7 @@ export default ({
               <NavigateBeforeIcon />
             </IconButton>
 
+            {/* Go forward a page */}
             <IconButton
               disabled={
                 loading

@@ -25,8 +25,8 @@ import { Link, CitationDialog, DataDownloadButton } from '../..'
 export default memo(
   ({
     DOI,
-    score,
     _source,
+    _score,
     titles,
     contributors,
     descriptions,
@@ -54,10 +54,10 @@ export default memo(
             }
             action={
               <>
-                {score ? (
+                {_score ? (
                   <Tooltip title="Relevance to text filter (higher is better)">
                     <Typography color="textSecondary" variant="overline">
-                      Score: {score.toFixed(3)}
+                      Score: {_score.toFixed(3)}
                     </Typography>
                   </Tooltip>
                 ) : null}

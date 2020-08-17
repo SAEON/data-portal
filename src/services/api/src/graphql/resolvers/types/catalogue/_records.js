@@ -29,14 +29,16 @@ export default async (_, args, ctx) => {
       },
     },
     sort: [
+      { _score: before ? 'asc' : 'desc' },
       {
-        'id.raw': before === undefined ? 'asc' : 'desc',
+        'id.raw': before ? 'asc' : 'desc',
       },
     ],
   }
 
   if (before || after) {
-    dsl.search_after = [before || after]
+    const c = before || after
+    dsl.search_after = [c.score, c.id]
   }
 
   if (extent) {

@@ -36,8 +36,8 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
         $match: String
         $terms: [String!]
         $size: Int
-        $before: ID
-        $after: ID
+        $before: ES_Cursor
+        $after: ES_Cursor
       ) {
         catalogue {
           records(
@@ -74,10 +74,13 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     }
   )
 
-  // TODO - I think that this is the OLD value of cursors.start prior to state update. Works but should reference the new value
-  const results = data?.cursors?.start
+  /**
+   * cursors.start is only set when navigating BACK,
+   * data items must be reversed when paged BACK
+   */
+  const results = cursors.start
     ? data?.catalogue.records.nodes.slice(0).reverse()
-    : data?.catalogue.records.nodes || []
+    : data?.catalogue.records.nodes
 
   return error ? (
     <Typography>{JSON.stringify(error)}</Typography>

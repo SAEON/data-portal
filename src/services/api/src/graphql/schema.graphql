@@ -8,8 +8,8 @@ scalar WKT_4326
 type PageInfo {
   hasNextPage: Boolean
   hasPreviousPage: Boolean
-  startCursor: String
-  endCursor: String
+  startCursor: JSON
+  endCursor: JSON
 }
 
 # Interfaces
@@ -36,6 +36,11 @@ interface Edge {
 
 # Catalogue
 
+input ES_Cursor {
+  id: ID
+  score: Float
+}
+
 type Catalogue {
   id: ID!
 
@@ -52,9 +57,9 @@ type Catalogue {
     # Page size (maximum allowed is 10 000 items per page)
     size: Int
     # Return elements in the list that come after the specified cursor
-    after: ID
+    after: ES_Cursor
     # Return elements in the list that come before the specified cursor
-    before: ID
+    before: ES_Cursor
   ): CatalogueRecordConnection!
 
   # Get count aggregation of records by fields, with optional filters

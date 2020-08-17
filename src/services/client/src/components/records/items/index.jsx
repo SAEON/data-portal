@@ -16,8 +16,8 @@ export default ({ results }) => {
         {results.length ? (
           results.map(item => {
             // Get record values
-            const { score, target } = item
-            const { _source, _id } = target
+            const { target } = item
+            const { _source, _id, _score } = target
             const {
               identifier,
               titles,
@@ -61,8 +61,8 @@ export default ({ results }) => {
             return (
               <ResultItem
                 DOI={DOI}
-                score={score}
                 _source={_source}
+                _score={_score}
                 titles={titles}
                 contributors={contributors}
                 descriptions={descriptions}
