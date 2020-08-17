@@ -1,10 +1,19 @@
 import wkt from 'wkt'
 const { parse } = wkt
+import matchFields from './_match-fields.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
 
-  const { id, extent = undefined, terms, size = 100, before = undefined, after = undefined } = args
+  const {
+    id,
+    match = undefined,
+    extent = undefined,
+    terms,
+    size = 100,
+    before = undefined,
+    after = undefined,
+  } = args
   if (size < 1 || size > 10000) {
     throw new Error('Size param must be between 1 and 10 000')
   }
@@ -21,7 +30,7 @@ export default async (_, args, ctx) => {
     },
     sort: [
       {
-        _id: before === undefined ? 'asc' : 'desc',
+        'id.raw': before === undefined ? 'asc' : 'desc',
       },
     ],
   }
@@ -55,27 +64,43 @@ export default async (_, args, ctx) => {
         fields: ['alternateIdentifiers.alternateIdentifier'],
       },
     }
-  } else if (terms?.length) {
-    dsl.query.bool.must = [
-      ...dsl.query.bool.must,
-      ...terms
-        .filter(_ => _)
-        .map(term => {
-          const phrase = {
-            bool: {
-              should: parseInt(term)
-                ? [{ match: { publicationYear: term } }]
-                : [
-                    { term: { 'subjects.subject.raw': term } },
-                    { term: { 'publisher.raw': term } },
-                    { term: { 'creators.name.raw': term } },
-                  ],
-            },
-          }
-          return phrase
-        }),
-    ]
+  } else {
+    if (match) {
+      dsl.query.bool.must = [
+        ...dsl.query.bool.must,
+        {
+          multi_match: {
+            query: match,
+            fields: matchFields,
+          },
+        },
+      ]
+    }
+
+    if (terms?.length) {
+      dsl.query.bool.must = [
+        ...dsl.query.bool.must,
+        ...terms
+          .filter(_ => _)
+          .map(term => {
+            const phrase = {
+              bool: {
+                should: parseInt(term)
+                  ? [{ match: { publicationYear: term } }]
+                  : [
+                      { term: { 'subjects.subject.raw': term } },
+                      { term: { 'publisher.raw': term } },
+                      { term: { 'creators.name.raw': term } },
+                    ],
+              },
+            }
+            return phrase
+          }),
+      ]
+    }
   }
+
+  console.log(JSON.stringify(dsl))
 
   const data = await catalogue.query(dsl)
 

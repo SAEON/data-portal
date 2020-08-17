@@ -1,9 +1,10 @@
 import wkt from 'wkt'
 const { parse } = wkt
+import matchFields from './_match-fields.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
-  const { fields, filterByExtent, filterByTerms, limit: size } = args
+  const { fields, filterByText, filterByExtent, filterByTerms, limit: size } = args
 
   const order = { _key: 'asc', _count: 'desc' }
   const dsl = {
@@ -22,12 +23,24 @@ export default async (_, args, ctx) => {
     ),
   }
 
-  if (filterByExtent || filterByTerms?.length) {
+  if (filterByExtent || filterByTerms?.length || filterByText) {
     dsl.query = {
       bool: {
         must: [],
       },
     }
+  }
+
+  if (filterByText) {
+    dsl.query.bool.must = [
+      ...dsl.query.bool.must,
+      {
+        multi_match: {
+          query: filterByText,
+          fields: matchFields,
+        },
+      },
+    ]
   }
 
   if (filterByExtent) {

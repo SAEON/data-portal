@@ -21,7 +21,6 @@ import {
 } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { Link, CitationDialog, DataDownloadButton } from '../..'
-import { isMobile } from 'react-device-detect'
 
 export default memo(
   ({

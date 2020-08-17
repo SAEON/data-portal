@@ -43,6 +43,8 @@ type Catalogue {
   records(
     # Fetch a single record by ID (other arguments are ignored)
     id: ID
+    # Fulltext search for provided string
+    match: String
     # Search for intersection of subject list
     terms: [String!]
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
@@ -57,6 +59,8 @@ type Catalogue {
 
   # Get count aggregation of records by fields, with optional filters
   summary(
+    # Filter on full text search
+    filterByText: String
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     filterByExtent: WKT_4326
     # List of terms to filter on

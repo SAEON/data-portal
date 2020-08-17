@@ -27,7 +27,7 @@ const makeIterator = async (cursor = null) => {
     query: {
       match_all: {},
     },
-    sort: [{ _id: 'asc' }],
+    sort: [{ 'id.raw': 'asc' }],
   }
 
   if (cursor) {

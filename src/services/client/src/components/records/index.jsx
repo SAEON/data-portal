@@ -3,7 +3,6 @@ import { useQuery, gql } from '@apollo/client'
 import Header from './header'
 import Sidebar from './sidebar'
 import Items from './items'
-import MiniSearch from 'minisearch'
 import { UriStateContext } from '../../modules/provider-uri-state'
 import { Typography, LinearProgress, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
@@ -37,9 +36,23 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue($extent: WKT_4326, $terms: [String!], $size: Int, $before: ID, $after: ID) {
+      query catalogue(
+        $extent: WKT_4326
+        $match: String
+        $terms: [String!]
+        $size: Int
+        $before: ID
+        $after: ID
+      ) {
         catalogue {
-          records(extent: $extent, terms: $terms, size: $size, before: $before, after: $after) {
+          records(
+            extent: $extent
+            match: $match
+            terms: $terms
+            size: $size
+            before: $before
+            after: $after
+          ) {
             pageInfo {
               hasNextPage
               hasPreviousPage
@@ -58,40 +71,13 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       variables: {
         extent: extent || undefined,
         terms: terms || [],
+        match: textSearch || undefined,
         size: pageSize,
         after: cursors.end,
         before: cursors.start,
       },
     }
   )
-
-  let miniSearchResults
-  if (data && textSearch) {
-    const miniSearch = new MiniSearch({
-      fields: [
-        'target._source.titles.0.title',
-        'target._source.descriptions.0.description',
-        'target._source.creators.0.name',
-        'target._source.subtitle',
-        'target._source.contributors.0.name',
-      ],
-      storeFields: ['target._id'],
-      extractField: (document, fieldName) => {
-        return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
-      },
-      searchOptions: {
-        fuzzy: 0.5,
-      },
-    })
-
-    miniSearch.addAll(
-      data?.catalogue.records.nodes.map(node =>
-        Object.assign({ ...node }, { id: node?.target?._id })
-      )
-    )
-
-    miniSearchResults = miniSearch.search(textSearch).map(({ id, score }) => [id, score])
-  }
 
   // TODO - I think that this is the OLD value of cursors.start prior to state update. Works but should reference the new value
   const results = data?.cursors?.start
@@ -143,18 +129,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
               <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
             </Grid>
           ) : (
-            <Items
-              results={
-                miniSearchResults
-                  ? miniSearchResults.map(([id, score]) =>
-                      Object.assign(
-                        { ...results.find(({ target }) => id === target?._id) },
-                        { score }
-                      )
-                    )
-                  : results
-              }
-            />
+            <Items results={results} />
           )}
         </Grid>
       </Grid>
