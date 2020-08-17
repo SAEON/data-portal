@@ -71,7 +71,9 @@ export default async (_, args, ctx) => {
         {
           multi_match: {
             query: match,
+            type: 'best_fields',
             fields: matchFields,
+            fuzziness: 'AUTO',
           },
         },
       ]

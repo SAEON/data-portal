@@ -37,7 +37,9 @@ export default async (_, args, ctx) => {
       {
         multi_match: {
           query: filterByText,
+          type: 'best_fields',
           fields: matchFields,
+          fuzziness: 'AUTO',
         },
       },
     ]
