@@ -75,7 +75,7 @@ export default memo(
             <CardContent>
               <Fade key="1" in={codeView}>
                 <div style={{ maxHeight: 400, overflowY: 'auto', overflowX: 'hidden' }}>
-                  <pre style={{ whiteSpace: 'break-spaces' }}>
+                  <pre style={{ whiteSpace: 'break-spaces', wordBreak: 'break-word' }}>
                     {JSON.stringify(_source, null, 2)}
                   </pre>
                 </div>

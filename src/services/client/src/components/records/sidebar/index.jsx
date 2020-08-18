@@ -36,7 +36,7 @@ export default () => {
           'subjects.subject.raw',
           'creators.name.raw',
         ],
-        filterByTerms: getUriState({ splitString: true }).terms,
+        filterByTerms: getUriState({ splitString: true }).terms || undefined,
         filterByExtent: getUriState({ splitString: false }).extent || undefined,
         filterByText: getUriState({ splitString: false }).text || undefined,
       },

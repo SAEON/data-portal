@@ -55,7 +55,7 @@ export default ({
   const selectedPreviewLength = getUriState({ splitString: true }).preview?.length
 
   const updateTextSearch = useCallback(
-    debounce(({ value }) => {
+    debounce(({ value = '' }) => {
       if (value !== getUriState({ splitString: false }).text) {
         setUriState({ text: value })
       }

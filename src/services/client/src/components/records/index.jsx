@@ -19,8 +19,8 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const { getUriState } = useContext(UriStateContext)
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
-  const { terms } = getUriState({ splitString: true })
-  const { extent, text } = getUriState({ splitString: false })
+  const { terms = undefined } = getUriState({ splitString: true })
+  const { extent = undefined, text = undefined } = getUriState({ splitString: false })
 
   useEffect(() => {
     if (ref.current && (terms?.length !== ref.current.terms?.length || text !== ref.current.text)) {

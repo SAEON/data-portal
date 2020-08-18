@@ -9,12 +9,8 @@ export default ({ id }) => {
       query catalogue($id: ID) {
         catalogue {
           records(id: $id) {
-            ... on CatalogueRecordConnection {
-              nodes {
-                ... on CatalogueRecord {
-                  target
-                }
-              }
+            nodes {
+              target
             }
           }
         }

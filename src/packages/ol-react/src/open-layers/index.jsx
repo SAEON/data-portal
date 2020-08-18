@@ -1,20 +1,16 @@
-import React, { Component } from 'react'
+import React, { useRef, useLayoutEffect, useMemo } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control'
 import LayerGroup from 'ol/layer/Group'
 
-export default class extends Component {
-  constructor(props) {
-    super(props)
+export default ({ layers, viewOptions, children, style, className }) => {
+  const mapDomRef = useRef(null)
 
-    // DOM reference used by THIS component
-    this.mapRef = React.createRef()
-
-    // Create a map reference
-    this.map = new Map({
+  const map = useMemo(() => {
+    return new Map({
       layers: new LayerGroup({
-        layers: [...this.props.layers].map((layer, i, arr) => {
+        layers: [...layers].map((layer, i, arr) => {
           layer.setZIndex(arr.length - i)
           return layer
         }),
@@ -32,32 +28,20 @@ export default class extends Component {
             zoom: 3,
             projection: 'EPSG:4326',
           },
-          this.props.viewOptions || {}
+          viewOptions || {}
         )
       ),
     })
-  }
+  }, [])
 
-  componentDidMount() {
-    this.map.setTarget(this.mapRef.current)
-  }
+  useLayoutEffect(() => {
+    map.setTarget(mapDomRef.current)
+  }, [map])
 
-  componentWillUnmount() {
-    this.map.setTarget(null)
-  }
-
-  componentDidUpdate() {
-    this.map.updateSize()
-  }
-
-  render() {
-    const { children, style, className } = this.props
-    const { map, mapRef } = this
-    return (
-      <div className={className} style={style}>
-        {children ? children({ map }) : null}
-        <div className="ol" ref={mapRef} style={{ width: '100%', height: '100%' }} />
-      </div>
-    )
-  }
+  return (
+    <>
+      <div className={className} ref={mapDomRef} style={style} />
+      {children ? children({ map }) : null}
+    </>
+  )
 }

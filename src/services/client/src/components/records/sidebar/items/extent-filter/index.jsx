@@ -44,18 +44,22 @@ export default ({ title }) => {
       <Collapse style={{ width: '100%' }} key="result-list-collapse" in={!collapsed}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
-            <OlReact
-              viewOptions={{
-                center: [32, 5],
-                zoom: 2.5,
-              }}
-              layers={[terrestrisBaseMap()]}
-              style={{ height: '350px', position: 'relative' }}
-            >
-              {({ map }) => (
-                <MapProxy map={map}>{({ proxy }) => <FilterControl proxy={proxy} />}</MapProxy>
-              )}
-            </OlReact>
+            <div style={{ position: 'relative' }}>
+              <OlReact
+                viewOptions={{
+                  center: [32, 5],
+                  zoom: 2.5,
+                }}
+                layers={[terrestrisBaseMap()]}
+                style={{ height: '350px' }}
+              >
+                {({ map }) => {
+                  return (
+                    <MapProxy map={map}>{({ proxy }) => <FilterControl proxy={proxy} />}</MapProxy>
+                  )
+                }}
+              </OlReact>
+            </div>
           </Grid>
         </Grid>
       </Collapse>

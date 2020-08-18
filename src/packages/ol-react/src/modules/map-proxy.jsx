@@ -1,30 +1,18 @@
-import { PureComponent } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import LayerGroup from 'ol/layer/Group'
-// import WMSCapabilities  from 'ol/format/WMSCapabilities'
 const packageJson = require('../../package.json')
-
-// const wmsParser = new WMSCapabilities()
 
 const descriptor = {
   enumerable: false,
   configurable: false,
 }
 
-export default class extends PureComponent {
-  state = {
-    servers: {},
-    render: 0,
-  }
+export default ({ map, children }) => {
+  const [render, setRender] = useState()
+  const reRender = useCallback(() => setRender(render + 1), [])
 
-  constructor(props) {
-    super(props)
-    const { map } = this.props
-    const reRender = this.reRender
-
-    /**
-     * Map proxy object
-     */
-    const proxy = new Proxy(
+  const proxy = useMemo(() => {
+    return new Proxy(
       Object.defineProperties(
         {},
         {
@@ -45,58 +33,6 @@ export default class extends PureComponent {
               reRender()
             },
           },
-
-          // // NOTE: This currently isn't used, so it's commented out
-          // // TODO: Add warning for CORS, or proxy to API
-          // addServer: {
-          //   ...descriptor,
-          //   get: () => async (baseUri) =>
-          //     this.setState({
-          //       servers: Object.assign(
-          //         {
-          //           [baseUri]: await fetch(
-          //             `${baseUri}?service=wms&request=GetCapabilities&version=1.3.0`
-          //           )
-          //             .then((res) => res.text())
-          //             .then((txt) => wmsParser.read(txt))
-          //             .then(
-          //               (wms) =>
-          //                 /**
-          //                  * Server proxy object
-          //                  */
-          //                 new Proxy(
-          //                   Object.defineProperties(wms, {
-          //                     wmsAddress: {
-          //                       get: () => baseUri,
-          //                     },
-          //                     remove: {
-          //                       get: () => () => {
-          //                         // Delete layers from map
-          //                         proxy
-          //                           .getLayersByServerAddress(baseUri)
-          //                           .forEach((layer) => map.removeLayer(layer))
-
-          //                         // Then register the server as deleted
-          //                         this.setState({
-          //                           servers: Object.fromEntries(
-          //                             Object.entries(this.state.servers).filter(
-          //                               ([uri]) => uri !== baseUri
-          //                             )
-          //                           ),
-          //                         })
-          //                       },
-          //                     },
-          //                   }),
-          //                   {
-          //                     get: (target, value) => target[value],
-          //                   }
-          //                 )
-          //             ),
-          //         },
-          //         { ...this.state.servers }
-          //       ),
-          //     }),
-          // },
 
           getLayersByServerAddress: {
             ...descriptor,
@@ -277,15 +213,7 @@ export default class extends PureComponent {
             : map[prop],
       }
     )
+  }, [map])
 
-    this.proxy = proxy
-  }
-
-  reRender = () => this.setState({ render: this.state.render + 1 })
-
-  render() {
-    const { proxy } = this
-    const { servers } = this.state
-    return this.props.children({ proxy, servers })
-  }
+  return children({ proxy })
 }
