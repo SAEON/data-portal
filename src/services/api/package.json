@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@koa/router": "^9.4.0",
-    "@saeon/logger": "^3.1.12",
+    "@saeon/logger": "^3.1.14",
     "apollo-server-koa": "^2.16.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "cookie": "^0.4.1",

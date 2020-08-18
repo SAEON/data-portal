@@ -61,6 +61,7 @@ export default () => {
         )}
       />
 
+      {/* ATLAS */}
       <Route
         key={'atlas'}
         path={'/atlas'}
@@ -73,6 +74,8 @@ export default () => {
           )
         }}
       />
+
+      {/* HOME */}
       <Route
         key={'home'}
         path={'/'}
@@ -83,6 +86,8 @@ export default () => {
           </PageTransition>
         )}
       />
+
+      {/* INFO */}
       <Route
         key={'about'}
         path={'/about'}

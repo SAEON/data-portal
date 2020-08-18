@@ -11,6 +11,7 @@ import {
   Tooltip,
   IconButton,
   Link,
+  Badge,
 } from '@material-ui/core'
 import {
   Search as SearchIcon,
@@ -20,6 +21,7 @@ import {
   FilterList as FilterIcon,
   Link as ShareIcon,
   BarChart as PreviewIcon,
+  Map as MapIcon,
 } from '@material-ui/icons'
 import { debounce } from '../../lib/fns'
 import { CLIENT_HOST_ADDRESS } from '../../config'
@@ -52,7 +54,7 @@ export default ({
   const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
   const { getUriState, setUriState } = useContext(UriStateContext)
-  const selectedPreviewLength = getUriState({ splitString: true }).preview?.length
+  const layers = getUriState({ splitString: true }).layers
 
   const updateTextSearch = useCallback(
     debounce(({ value = '' }) => {
@@ -123,15 +125,52 @@ export default ({
 
           {/* TOOLS */}
           <div style={{ marginLeft: 'auto' }}>
-            {/* PREVIEW SELECTED DATASETS */}
-            <Tooltip title={`Preview ${selectedPreviewLength} selected datasets`}>
+            {/* PREVIEW ALL DATASETS */}
+            <Tooltip
+              title={`Preview layers from current search (${catalogue?.records.totalCount} datasets)`}
+            >
               <span>
                 <IconButton
-                  disabled={!selectedPreviewLength}
-                  onClick={() => history.push('/atlas')}
+                  disabled={!catalogue?.records.totalCount}
+                  onClick={() =>
+                    history.push({
+                      pathname: '/atlas',
+                      search: window.location.search.replace(/layers.*?(&|$)/, 'layersearch=true'),
+                    })
+                  }
                 >
-                  {/* TODO pass state to atlas*/}
-                  <PreviewIcon />
+                  <Badge
+                    color={catalogue?.records.totalCount ? 'secondary' : 'default'}
+                    badgeContent={catalogue?.records.totalCount || 0}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    invisible={false}
+                  >
+                    <MapIcon />
+                  </Badge>
+                </IconButton>
+              </span>
+            </Tooltip>
+
+            {/* PREVIEW SELECTED DATASETS */}
+            <Tooltip title={`Preview ${layers?.length} selected datasets`}>
+              <span>
+                <IconButton
+                  disabled={!layers?.length}
+                  onClick={() =>
+                    history.push({
+                      pathname: '/atlas',
+                      search: `layers=${layers}`,
+                    })
+                  }
+                >
+                  <Badge
+                    color={layers?.length ? 'secondary' : 'default'}
+                    badgeContent={layers?.length || 0}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    invisible={false}
+                  >
+                    <PreviewIcon />
+                  </Badge>
                 </IconButton>
               </span>
             </Tooltip>

@@ -12,11 +12,17 @@ import { useHistory } from 'react-router-dom'
 
 export default ({ record, id, toggleCodeView, codeView }) => {
   const history = useHistory()
-  const { identifier } = record
+  const { identifier, linkedResources } = record
   const DOI =
     identifier && identifier.identifierType.toUpperCase() === 'DOI'
       ? identifier.identifier
       : undefined
+
+  const mapLayers = DOI
+    ? linkedResources
+        .filter(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
+        .map((_, i) => encodeURIComponent(`${DOI}~link ${i + 1}`))
+    : undefined
 
   return (
     <AppBar
@@ -37,7 +43,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
           <Hidden xsDown>
             {/* PREVIEW */}
             <Grid item>
-              <Tooltip title="View raw metadata record (JSON)">
+              <Tooltip title={DOI ? 'Preview dataset' : 'Unable to preview this dataset'}>
                 <span>
                   <Button
                     disabled={!DOI}
@@ -46,7 +52,12 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                     color={'primary'}
                     startIcon={<PreviewIcon />}
                     disableElevation
-                    onClick={() => history.push('/atlas')} // TODO - pass state
+                    onClick={() =>
+                      history.push({
+                        pathname: '/atlas',
+                        search: `layers=${encodeURIComponent(mapLayers)}`,
+                      })
+                    }
                   >
                     PREVIEW
                   </Button>

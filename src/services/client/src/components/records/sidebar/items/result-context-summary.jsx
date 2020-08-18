@@ -29,7 +29,7 @@ export default ({ title }) => {
   const history = useHistory()
   const [collapsed, setCollapsed] = useState(false)
   const { getUriState, setUriState } = useContext(UriStateContext)
-  const { preview } = getUriState({ splitString: true })
+  const { layers } = getUriState({ splitString: true })
 
   return (
     <>
@@ -67,8 +67,8 @@ export default ({ title }) => {
       </AppBar>
       <Collapse style={{ width: '100%' }} key="result-list-collapse" in={!collapsed}>
         <Grid container spacing={0}>
-          {preview?.map(id => {
-            const added = preview.includes(id)
+          {layers?.map(id => {
+            const added = layers.includes(id)
 
             return (
               <Grid key={id} item xs={12} style={{ paddingLeft: 10 }}>
@@ -84,9 +84,9 @@ export default ({ title }) => {
                       checked={added}
                       onChange={() => {
                         setUriState({
-                          preview: added
-                            ? [...preview].filter(p => p !== id)
-                            : [...new Set([...(preview || []), id])],
+                          layers: added
+                            ? [...layers].filter(p => p !== id)
+                            : [...new Set([...(layers || []), id])],
                         })
                       }}
                       inputProps={{ 'aria-label': 'primary checkbox' }}
@@ -98,15 +98,20 @@ export default ({ title }) => {
           })}
           <Grid container justify="space-between" spacing={1} style={{ margin: 5 }}>
             <Grid item>
-              <Tooltip placement="top-end" title={`Preview ${preview?.length} selected datasets`}>
+              <Tooltip placement="top-end" title={`Preview ${layers?.length} selected datasets`}>
                 <span>
                   <Button
-                    disabled={!preview?.length}
+                    disabled={!layers?.length}
                     disableElevation
                     size="small"
                     variant="text"
                     startIcon={<PreviewIcon />}
-                    onClick={() => history.push('/atlas')} // TODO - state needs to be transferred as well
+                    onClick={() =>
+                      history.push({
+                        pathname: '/atlas',
+                        search: `layers=${layers}`,
+                      })
+                    }
                   >
                     View on Atlas
                   </Button>
@@ -116,16 +121,16 @@ export default ({ title }) => {
             <Grid item>
               <Tooltip
                 placement="top-end"
-                title={`Remove ${preview?.length} selected datasets from preview basket`}
+                title={`Remove ${layers?.length} selected datasets from preview basket`}
               >
                 <span>
                   <Button
-                    disabled={!preview?.length}
+                    disabled={!layers?.length}
                     disableElevation
                     size="small"
                     variant="text"
                     startIcon={<CloseIcon />}
-                    onClick={() => setUriState({ preview: [] })}
+                    onClick={() => setUriState({ layers: [] })}
                   >
                     Clear
                   </Button>

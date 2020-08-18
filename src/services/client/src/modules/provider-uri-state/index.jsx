@@ -39,7 +39,7 @@ export default ({ children }) => {
           pathname = window.location.pathname,
           text = getUriState({ splitString: false }).text || '',
           terms = getUriState({ splitString: true }).terms || [],
-          preview = getUriState({ splitString: true }).preview || [],
+          layers = getUriState({ splitString: true }).layers || [],
           extent = getUriState({ splitString: false }).extent || '',
         }) => {
           history.push({
@@ -48,7 +48,7 @@ export default ({ children }) => {
               terms.map(term => encodeURIComponent(term)).join(',')
             )}&extent=${encodeURIComponent(extent)}&text=${encodeURIComponent(
               text
-            )}&preview=${encodeURIComponent(preview.map(p => encodeURIComponent(p)).join(','))}`,
+            )}&layers=${encodeURIComponent(layers.map(p => encodeURIComponent(p)).join(','))}`,
           })
         },
       }}
