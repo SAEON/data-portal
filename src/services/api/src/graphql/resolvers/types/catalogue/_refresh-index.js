@@ -1,6 +1,5 @@
-import fetch from 'node-fetch'
 import hash from 'object-hash'
-import { Catalogue } from '../../../../../../../packages/catalogue-search/src/catalogue-search/index.js'
+import Catalogue from '../../../../lib/catalogue.js'
 import {
   ES_INDEX,
   ES_INTEGRATION_BATCH_SIZE,
@@ -18,7 +17,6 @@ import {
 const oldCatalogue = new Catalogue({
   dslAddress: `${HTTP_PROXY}/proxy/saeon-elk`,
   index: 'saeon-odp-4-2',
-  httpClient: fetch,
 })
 
 const makeIterator = async (cursor = null) => {

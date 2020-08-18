@@ -6,17 +6,19 @@ export default async (_, args, ctx) => {
   const { catalogue } = ctx
 
   const {
-    id,
+    size = 100,
+    id = undefined,
     match = undefined,
     extent = undefined,
-    terms,
-    size = 100,
+    terms = undefined,
     before = undefined,
     after = undefined,
   } = args
+
   if (size < 1 || size > 10000) {
     throw new Error('Size param must be between 1 and 10 000')
   }
+
   if (before && after) {
     throw new Error('Please specify either a "before" or an "after" cursor (not both)')
   }
@@ -111,7 +113,7 @@ export default async (_, args, ctx) => {
       before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1],
     _lastResult:
       before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
-    data: data.hits.hits,
+    hits: data.hits.hits,
     totalCount: data.hits.total.value,
   }
 }

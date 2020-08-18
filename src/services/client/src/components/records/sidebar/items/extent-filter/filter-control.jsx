@@ -43,9 +43,9 @@ export default ({ proxy }) => {
    */
   useEffect(() => {
     if (extent) {
+      // Add feature to source
       const feature = wkt.readFeature(extent)
       source.addFeature(feature)
-
       // Zoom into polygon
       const view = proxy.getView()
       view.fit(wkt.readGeometry(extent), { padding: [100, 100, 100, 100] })

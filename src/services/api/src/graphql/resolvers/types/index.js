@@ -14,8 +14,8 @@ export { default as PageInfo } from './_page-info.js'
 
 // Catalogue
 export { default as Catalogue } from './catalogue/index.js'
+export { default as CatalogueConnection } from './_catalogue-connection.js'
 export { default as CatalogueRecord } from './_catalogue-record.js'
-export { default as CatalogueRecordConnection } from './_catalogue-record-connection.js'
 export { default as CatalogueRecordEdge } from './_catalogue-record-edge.js'
 
 // Application types

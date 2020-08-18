@@ -1,11 +1,11 @@
 export default {
   edges: async self => {
-    const { data } = self
-    return data
+    const { hits } = self
+    return hits
   },
   nodes: async self => {
-    const { data } = self
-    return data
+    const { hits } = self
+    return hits
   },
   pageInfo: async self => {
     const { _firstResult, _lastResult } = self

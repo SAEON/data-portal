@@ -60,7 +60,7 @@ type Catalogue {
     after: ES_Cursor
     # Return elements in the list that come before the specified cursor
     before: ES_Cursor
-  ): CatalogueRecordConnection!
+  ): CatalogueConnection!
 
   # Get count aggregation of records by fields, with optional filters
   summary(
@@ -79,7 +79,7 @@ type Catalogue {
   refreshIndex: JSON!
 }
 
-type CatalogueRecordConnection implements Connection {
+type CatalogueConnection implements Connection {
   edges: [CatalogueRecordEdge!]!
   nodes: [CatalogueRecord!]
   pageInfo: PageInfo!
