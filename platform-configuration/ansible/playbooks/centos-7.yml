@@ -7,99 +7,110 @@
       prompt: Which deployment environment is this for? [next, stable]
       default: "next"
       private: no
+      
   tasks:
-  - name: Install latest Git
-    shell: |
-      yum -y remove git*
-      yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
-      yum -y install git
+    - name: Install latest Git
+      shell: |
+        yum -y remove git*
+        yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
+        yum -y install git
 
-  - name: Install Docker
-    shell: |
-      yum -y remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
-      yum -y remove docker-ce docker-ce-cli containerd.io
-      yum -y install yum-utils
-      yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-      yum -y install docker-ce docker-ce-cli containerd.io
-      systemctl enable docker
-      systemctl start docker
+    - name: Install Docker
+      shell: |
+        yum -y remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+        yum -y remove docker-ce docker-ce-cli containerd.io
+        yum -y install yum-utils
+        yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+        yum -y install docker-ce docker-ce-cli containerd.io
+        systemctl enable docker
+        systemctl start docker
 
-  - name: Install Docker Compose
-    shell: |
-      curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      chmod +x /usr/local/bin/docker-compose
+    - name: Cleanup docker files regularly
+      cron:
+        name: Prone docker system
+        minute: "0"
+        hour: "0"
+        day: "*"
+        month: "*"
+        weekday: "0"
+        job: "docker system prune -a -f >> /opt/docker-system-clean.log 2>&1"
 
-  - name: Install Nginx
-    shell: |
-      yum -y install epel-release
-      yum -y install nginx
-      systemctl enable nginx
-      systemctl start nginx
+    - name: Install Docker Compose
+      shell: |
+        curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
 
-  - name: Install and configure firewalld
-    shell: |
-      yum -y install firewalld
-      systemctl unmask firewalld
-      systemctl enable firewalld
-      systemctl start firewalld    
-      firewall-cmd --permanent --zone=public --add-service=http 
-      firewall-cmd --permanent --zone=public --add-service=https
-      firewall-cmd --permanent --add-port=27017/tcp # Mongo
-      firewall-cmd --permanent --add-port=5432/tcp # Postgres
-      firewall-cmd --permanent --add-port=3306/tcp # MySQL      
-      firewall-cmd --reload
+    - name: Install Nginx
+      shell: |
+        yum -y install epel-release
+        yum -y install nginx
+        systemctl enable nginx
+        systemctl start nginx
 
-  - name: Setup Github Actions user
-    shell: |
-      adduser runner
-      usermod -aG docker runner
+    - name: Install and configure firewalld
+      shell: |
+        yum -y install firewalld
+        systemctl unmask firewalld
+        systemctl enable firewalld
+        systemctl start firewalld    
+        firewall-cmd --permanent --zone=public --add-service=http 
+        firewall-cmd --permanent --zone=public --add-service=https
+        firewall-cmd --permanent --add-port=27017/tcp # Mongo
+        firewall-cmd --permanent --add-port=5432/tcp # Postgres
+        firewall-cmd --permanent --add-port=3306/tcp # MySQL      
+        firewall-cmd --reload
 
-  - name: Create runner scripts (for controlling the runner, and Nginx)
-    shell: |
-      echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/" > /opt/copy-nginx-config.sh
-      echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" > /opt/copy-nginx-server-blocks.sh
-      echo service nginx reload > /opt/reload-nginx.sh
-      chmod +x /opt/copy-nginx-config.sh
-      chmod +x /opt/copy-nginx-server-blocks.sh
-      chmod +x /opt/reload-nginx.sh    
+    - name: Setup Github Actions user
+      shell: |
+        adduser runner
+        usermod -aG docker runner
 
-  - name: GitHub Actions-runner 1/4 (sudo svc)
-    lineinfile:
-      path: /etc/sudoers
-      state: present
-      regexp: '^%runner ALL=NOPASSWD: /home/runner/svc.sh'
-      line: 'runner ALL=NOPASSWD: /home/runner/svc.sh'
-      validate: /usr/sbin/visudo -cf %s
+    - name: Create runner scripts (for controlling the runner, and Nginx)
+      shell: |
+        echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/" > /opt/copy-nginx-config.sh
+        echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" > /opt/copy-nginx-server-blocks.sh
+        echo service nginx reload > /opt/reload-nginx.sh
+        chmod +x /opt/copy-nginx-config.sh
+        chmod +x /opt/copy-nginx-server-blocks.sh
+        chmod +x /opt/reload-nginx.sh    
 
-  - name: GitHub Actions-runner 2/4 (copy Nginx config)
-    lineinfile:
-      path: /etc/sudoers
-      state: present
-      regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
-      line: 'runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
-      validate: /usr/sbin/visudo -cf %s
+    - name: GitHub Actions-runner 1/4 (sudo svc)
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%runner ALL=NOPASSWD: /home/runner/svc.sh'
+        line: 'runner ALL=NOPASSWD: /home/runner/svc.sh'
+        validate: /usr/sbin/visudo -cf %s
 
-  - name: GitHub Actions-runner 3/4 (copy Nginx blocks)
-    lineinfile:
-      path: /etc/sudoers
-      state: present
-      regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
-      line: 'runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
-      validate: /usr/sbin/visudo -cf %s
+    - name: GitHub Actions-runner 2/4 (copy Nginx config)
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
+        line: 'runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
+        validate: /usr/sbin/visudo -cf %s
 
-  - name: GitHub Actions-runner 4/4 (reload Nginx)
-    lineinfile:
-      path: /etc/sudoers
-      state: present
-      regexp: '^%runner ALL=NOPASSWD: /opt/reload-nginx.sh'
-      line: 'runner ALL=NOPASSWD: /opt/reload-nginx.sh'
-      validate: /usr/sbin/visudo -cf %s
-  
-  - name: Ensure SELinux is disabled
-    lineinfile:
-      path: /etc/selinux/config
-      regexp: '^SELINUX='
-      line: SELINUX=disabled
-  
-  - name: Finish setup by restarting the server
-    reboot:
+    - name: GitHub Actions-runner 3/4 (copy Nginx blocks)
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
+        line: 'runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: GitHub Actions-runner 4/4 (reload Nginx)
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%runner ALL=NOPASSWD: /opt/reload-nginx.sh'
+        line: 'runner ALL=NOPASSWD: /opt/reload-nginx.sh'
+        validate: /usr/sbin/visudo -cf %s
+    
+    - name: Ensure SELinux is disabled
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: SELINUX=disabled
+    
+    - name: Finish setup by restarting the server
+      reboot:
