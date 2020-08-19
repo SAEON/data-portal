@@ -88,39 +88,17 @@ Your PC is an Ansible controller. You have to:
 This assumes your development environment is Linux or similar (for example on Windows, you can use the WSL Ubuntu environment)
 ```sh
 sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-add-repository ppa:ansible/ansible
-sudo apt-get update
 sudo apt-get install ansible -y
-
-# Install python if necessary
-python --version
 
 # Check that ansible is installed
 ansible --version
 ```
 
+## Make sure Python is installed on the hosts
+Ansible doesn't need much... But it does need to be able to execute python2 on the host machines (i.e. Python2 must be installed on the host machines - this is usually included in the OS). It's also possible to use Python3, in which case adjust the [inventory file](inventories/centos-7) appropriately.
+
 ## Specify Ansible hosts
-
-```sh
-sudo nano /etc/ansible/hosts # or vim. I like vim
-
-# Add the following to the file (choosing appropriate group-name, server-name, etc. values)
-[<group-name>]
-<server_name> ansible_host=<ip> ansible_user=<name>
-<server_name_2> ansible_host=<ip_2> ansible_user=<name>
-```
-
-> NOTE Some tutorials mention setting the global Ansible configuration for the user that is used for host access. I think that specifying this explicitly in the hosts file is better, though I'm not sure what version of Ansible the online tutorials that I found this information in refer to. If for some reason, specifying "ansible_user" in the hosts file doesn't work, then look at the following instructions
-
-```sh
-# Set Ansible username of all host machines
-sudo mkdir /etc/ansible/group_vars
-sudo nano /etc/ansible/group_vars/servers
-
-# Add this line to that files
-ansible_ssh_user:<name>
-```
+Running `ansible-playbook` will use the default inventory at `/etc/ansible/hosts`. An inventory is inlcuded in this respository at [inventories/centos-7](inventories/centos-7). Specify this file by using the flag `-i <inventory file>` (after editing the hosts appropriately of course!).
 
 ## Use Ansible!
 Basic Ansible usage, including pinging hosts, executing commands, and executing Playbooks
@@ -153,7 +131,7 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 #### Execute an Ansible playbook
 ```sh
 # Execute this command from <repo-root>/src/platform-configuration/ansible
-ansible-playbook playbooks/centos-7.yml
+ansible-playbook playbooks/centos-7.yml -i inventories/centos-7
 ```
 
 # Notes
