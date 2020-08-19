@@ -1,6 +1,7 @@
 import url from 'url'
 import csirRule from './_csir.js'
 import hstRule from './_hst.js'
+import saeonElk from './_saeon-elk.js'
 import elasticsearch from './_elasticsearch.js'
 import saeonGeoServer1 from './_saeon-geoserver-1.js'
 import saeonGeoServer2 from './_saeon-geoserver-2.js'
@@ -14,6 +15,8 @@ const beforeSendRequest = async requestDetail => {
       proxiedRequest = csirRule({ path, requestDetail })
     } else if (path.includes('/proxy/hst')) {
       proxiedRequest = hstRule({ path, requestDetail })
+    } else if (path.includes('/proxy/saeon-elk')) {
+      proxiedRequest = saeonElk({ path, requestDetail })
     } else if (path.includes('/proxy/elasticsearch')) {
       proxiedRequest = elasticsearch({ path, requestDetail })
     } else if (path.includes('/proxy/saeon-spatialdata/app01.saeon.ac.za')) {

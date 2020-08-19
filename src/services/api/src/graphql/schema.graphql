@@ -130,8 +130,6 @@ input FeedbackInput {
 type Query {
   # Catalogue
   catalogue: Catalogue!
-  # Client usage tracking
-  browserEvents: [Node]!
 }
 
 type Subscription {

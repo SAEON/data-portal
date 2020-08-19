@@ -1,11 +1,7 @@
 import hash from 'object-hash'
 import Catalogue from '../../../../lib/catalogue.js'
-import {
-  ES_INDEX,
-  ES_INTEGRATION_BATCH_SIZE,
-  ES_HOST_ADDRESS,
-  HTTP_PROXY,
-} from '../../../../config.js'
+import fetch from 'node-fetch'
+import { ES_INDEX, ES_INTEGRATION_BATCH_SIZE, HTTP_PROXY } from '../../../../config.js'
 
 /**
  * TODO
@@ -61,7 +57,8 @@ export default async () => {
   try {
     let iterator = await makeIterator()
     while (!iterator.done) {
-      const response = await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_bulk`, {
+      // This address isn't available via the proxy, and is a temporary solution
+      const response = await fetch(`http://localhost:9200/${ES_INDEX}/_bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-ndjson',
@@ -79,6 +76,13 @@ export default async () => {
           .join(''),
       })
         .then(res => res.json())
+        .then(json => {
+          if (json.error) {
+            throw new Error(JSON.stringify(json.error))
+          } else {
+            return json
+          }
+        })
         .catch(error => {
           throw new Error(`Unable to refresh ES index :: ${error.message}`)
         })
