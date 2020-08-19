@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default ({children, effects, ...formFields}) => {
+export default ({ children, effects, ...formFields }) => {
   const [fields, updateAllFields] = useState(formFields)
 
   useEffect(

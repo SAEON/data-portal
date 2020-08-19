@@ -7,13 +7,11 @@ TODO
 - There should be a single .browserslistrc defined in the source code. Also the browser list should be built at build time
 
 # @SAEON/CATALOGUE
-
 **_Please note that this is still in development._**
 
 This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [catalogue.saeon.ac.za](https://catalogue.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
 
 # Browser support
-
 - chrome: 80
 - edge: 18
 - firefox: 74
@@ -22,7 +20,6 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
 - samsung: 11.1
 
 # Tech Stack
-
 - API
   - Node.js server
   - Proxy server ([anyproxy](http://anyproxy.io/))
@@ -31,21 +28,10 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
   - [OpenLayers 6](https://openlayers.org/)
   - [Material UI](https://material-ui.com/)
 
-# Deployment
-Automated deployment is supported targeting a CentOS 7 environment
-
-1. Fork the repository, and clone to your local machine
-2. Follow the [instructions](/platform-configuration/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
-3. Run the command: `npm run configure-centos-7-server`
-4. Setup a Github self-hosted actions runner
-5. Push to your forked repository to trigger a deployment
-
 # Quick start
-
 Packages are mostly self-contained, in that each package includes a `package.json` file, and tracks it's own dependencies. For development purposes it's useful that packages can reference source code in other packages (instead of build output), and for this reason Babel is configured globally.
 
 ### Setup the repository for development
-
 NOTE: This repository currently only supports Linux/Mac development, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues).
 
 ```sh
@@ -112,6 +98,15 @@ docker run --net=elk --name kibana --restart always -e ELASTICSEARCH_HOSTS=http:
 ```
 
 # Deployment
+Continuous deployment is supported targeting a CentOS 7 environment
+
+1. Fork the repository, and clone the new fork to your local machine
+2. Follow the [instructions](/platform-configuration/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
+3. Run the command: `npm run configure-centos-7-server` from the root of the repository
+4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
+5. Push from local to your forked repository to trigger a deployment
+
+## Deploying services
 Deploy the services in the `src/services` directory as docker containers:
 
 ```sh
@@ -132,7 +127,6 @@ _NOTE - Docker images are built in the context of this repository, so the Docker
 
 
 #### Configuration
-
 Build-time configuration essentially involves:
 
 1. Creating `.env` files with appropriate values at the beginning of the build process (overwriting existing .env files)
@@ -141,7 +135,6 @@ Build-time configuration essentially involves:
 This is achieved using GitHub actions software. The configuration is specified in the [workflow file](/.github/workflows/deploy-master.yml). Adjusting accordingly in repository forks and continuous deployment should (theoretically) work out the box if a self-hosted actions runner is configured on your server.
 
 #### Docker Compose
-
 To deploy this repository manually
 
 ```sh
@@ -181,7 +174,6 @@ npm run generate-npm-package
 ```
 
 #### Deploying packages to NPM
-
 During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
 
 - `npm run publish:patch`
