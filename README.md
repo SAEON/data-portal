@@ -64,7 +64,7 @@ Packages are mostly self-contained, in that each package includes a `package.jso
 
 ### Setup the repository for development
 
-NOTE: This repository only support Linux/Mac development currently, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues).
+NOTE: This repository currently only supports Linux/Mac development, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues).
 
 ```sh
 # Download the source code
@@ -74,6 +74,12 @@ cd catalogue
 # Sometimes the scripts in scripts/ don't get the correct permissions set on clone,
 # and when they are adjusted. This could be related to using WSL. Fix this
 chmod +x scripts/*.sh
+
+# Make sure that Node.js ^14 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Assuming an Ubuntu Linux environment
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
+sudo apt-get install -y nodejs
 
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-package-dependencies
@@ -89,51 +95,59 @@ sudo npm install -g npm-check-updates
 ```
 
 ### Start the services
+The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started. 3rd party software can be containerized for development purposes (shown below).
 
-Make sure there is an accessible instance of MongoDB (or run using Docker)
-
+#### src/sercices/client
 ```sh
-docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
-```
-
-Running the catalogue requires starting 3 services:
-
-- src/services/client
-- src/services/api
-- src/services/proxy
-
-These can be run from their respective directories (`npm start`), or from the respotiory root:
-
-```sh
-npm run start:proxy
-npm run start:api
 npm run start:client
 ```
 
-# Code generatoros
-
-The repository includes code generators to automate setting up React clients, and NPM packages. From the root of the repository:
-
+#### src/services/api
 ```sh
-# Create a new React client
-npm run generate-react-client
+npm run start:api
+```
 
-# Create a new NPM package
-npm run generate-npm-package
+#### src/services/proxy
+```sh
+npm run start:proxy
+```
+
+#### MongoDB
+```sh
+docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
+```
+
+#### Elasticsearch
+```sh
+# Setup a network so that ELK services can communicate with each other
+docker network create --driver bridge elk
+
+# Elasticsearch
+docker run --net=elk --name elasticsearch --restart always -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+
+# Kibana
+docker run --net=elk --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.8.1
 ```
 
 # Deployment
+Deploy the services in the `src/services` directory as docker containers:
 
-All services in this repository are dockerized - see Dockerfiles located in the root of each package. Refer to the repository's [`docker-compose.yml`](/docker-compose.yml) file to see how to deploy all services together. By default, this repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/catalogue/issues)). I.e. the process should be as simple as just 2 steps to get a deployment on every push to master:
+```sh
+docker build -t <image name> -f ./src/services/<service name>/Dockerfile .
+docker run <image name>
+```
+
+Use the [`docker-compose.yml`](/docker-compose.yml) file to deploy all services, along with 3rd party services. Not that compared to the `docker` CLI commands above, 3rd party services are configured slightly differently in the `docker-compose` deployment. Use the `docker-compose.yml` file to deploy the catalogue software.
+
+This repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/catalogue/issues)). 
+
+Deploying the catalogue software should be as simple as just 2 steps to get a deployment on every push to master:
 
 1. Configure a self hosted GitHub actions runner on your server
-2. Adjust the `.github/workflows/deploy-master.yml` to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
+2. Adjust the `.github/workflows/next.yml` and `.github/workflows/stable.yml` files to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
 
-NOTE - Docker images are built in the context of this repository, so the Dockerfiles for individual services are NOT the root context in which Docker is executed. This can be a bit confusing, the reason being to allow for commands running in docker containers to have access to the global babel configuration. For this reason, when building images with the `docker build` CLI, this command must be run from the root of this repository, with the path to the Dockerfile provided explicitly by the `--file , -f` options. For example:
+_NOTE - Docker images are built in the context of this repository, so the Dockerfiles for individual services are NOT the root context in which Docker is executed. This can be a bit confusing, the reason being to allow for commands running in docker containers to have access to the global babel configuration. For this reason, when building images with the `docker build` CLI, this command must be run from the root of this repository, with the path to the Dockerfile provided explicitly by the `--file , -f` options._
 
-```
-docker build -t <image name> -f ./src/services/<service name>/Dockerfile .
-```
 
 #### Configuration
 
@@ -170,7 +184,16 @@ Once you have an account you should be able to login via the CLI:
 npm login
 ```
 
-#### Publishing packages
+### Publishing packages
+
+#### Code generatoros
+The repository includes code generators to automate setting NPM package projects. From the root of the repository:
+
+```sh
+npm run generate-npm-package
+```
+
+#### Deploying packages to NPM
 
 During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
 

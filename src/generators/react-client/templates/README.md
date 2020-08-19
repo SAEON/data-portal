@@ -1,1 +1,0 @@
-# @saeon/{{ packageName }}
