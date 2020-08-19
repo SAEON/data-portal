@@ -4,7 +4,7 @@
 
 TODO
 
-- There should be a single .browserslistrc
+- There should be a single .browserslistrc defined in the source code. Also the browser list should be built at build time
 
 # @SAEON/CATALOGUE
 
@@ -12,25 +12,7 @@ TODO
 
 This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [catalogue.saeon.ac.za](https://catalogue.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
 
-The repository is organized as a 'monorepo', split according to the following packages:
-
-- [@saeon/client](/src/services/client)
-- [@saeon/api](/src/services/api)
-- [@saeon/proxy](/src/services/proxy)
-- [@saeon/catalogue-search](/src/packages/catalogue-search)
-- [@saeon/ol-react](/src/packages/ol-react)
-- [@saeon/snap-menus](/src/packages/snap-menus)
-- [@saeon/logger](/src/packages/logger)
-- [docs](/src/services/docs)
-- [reporting](/src/services/reporting)
-- [NPM package generator](/src/generators/npm-package)
-- [React client generator](/src/generators/react-client)
-
-Refer to these links for specific package documentation.
-
 # Browser support
- 
-Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/client build](/src/services/client/.browserslistrc). As of 11 May 2020, these include:
 
 - chrome: 80
 - edge: 18
@@ -97,17 +79,17 @@ sudo npm install -g npm-check-updates
 ### Start the services
 The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started. 3rd party software can be containerized for development purposes (shown below).
 
-#### src/sercices/client
+#### [@saeon/catalogue](/src/services/client)
 ```sh
 npm run start:client
 ```
 
-#### src/services/api
+#### [@saeon/api](/src/services/api)
 ```sh
 npm run start:api
 ```
 
-#### src/services/proxy
+#### [@saeon/proxy](/src/services/proxy)
 ```sh
 npm run start:proxy
 ```
@@ -175,6 +157,11 @@ docker-compose up -d --force-recreate --build
 ```
 
 # NPM packages
+This project includes some bespoke NPM package development:
+
+- [@saeon/ol-react](/src/packages/ol-react)
+- [@saeon/snap-menus](/src/packages/snap-menus)
+- [@saeon/logger](/src/packages/logger)
 
 To publish packages to the public NPM registry (where all the @saeon packages are published) you need to [create an NPM account](https://docs.npmjs.com/creating-a-new-npm-user-account). This allows you to publish the packages - you will also need to make sure that you are part of the @saeon organization. To publish these packages under new names you will need to fork the repository, and then update the `name` fields in all the `package.json` files.
 
@@ -186,8 +173,8 @@ npm login
 
 ### Publishing packages
 
-#### Code generatoros
-The repository includes code generators to automate setting NPM package projects. From the root of the repository:
+#### Code generators
+The repository includes an [NPM package generator](/src/generators/npm-package) to automate setting NPM package projects. From the root of the repository:
 
 ```sh
 npm run generate-npm-package
@@ -214,3 +201,7 @@ Running one of these scripts will result in all other packages updating their de
 It's also useful to see which packages will be updated by this script. To do that, run:
 
 - `npm run check-package-updates`
+
+# TODO
+- [docs](/src/services/docs)
+- [reporting](/src/services/reporting)
