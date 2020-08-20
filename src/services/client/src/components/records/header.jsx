@@ -20,8 +20,8 @@ import {
   ArrowDropDown as ArrowDropDownIcon,
   FilterList as FilterIcon,
   Link as ShareIcon,
-  BarChart as PreviewIcon,
   Map as MapIcon,
+  Explore as PreviewIcon,
 } from '@material-ui/icons'
 import { debounce } from '../../lib/fns'
 import { CLIENT_HOST_ADDRESS } from '../../config'
@@ -64,6 +64,11 @@ export default ({
     }, 500),
     []
   )
+
+  const resultsWithDOIs =
+    catalogue?.summary
+      .find(obj => Object.entries(obj).find(([k, v]) => k === 'identifier.identifierType.raw'))
+      ['identifier.identifierType.raw'].find(({ key }) => key === 'DOI')?.doc_count || 0
 
   return (
     <>
@@ -126,12 +131,10 @@ export default ({
           {/* TOOLS */}
           <div style={{ marginLeft: 'auto' }}>
             {/* PREVIEW ALL DATASETS */}
-            <Tooltip
-              title={`Search current results for layers to preview (${catalogue?.records.totalCount})`}
-            >
+            <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
               <span>
                 <IconButton
-                  disabled={!catalogue?.records.totalCount}
+                  disabled={!resultsWithDOIs}
                   onClick={() =>
                     history.push({
                       pathname: '/atlas',
@@ -140,8 +143,8 @@ export default ({
                   }
                 >
                   <Badge
-                    color={catalogue?.records.totalCount ? 'secondary' : 'default'}
-                    badgeContent={catalogue?.records.totalCount || 0}
+                    color={resultsWithDOIs ? 'secondary' : 'default'}
+                    badgeContent={resultsWithDOIs}
                     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                     invisible={false}
                   >
@@ -151,8 +154,8 @@ export default ({
               </span>
             </Tooltip>
 
-            {/* PREVIEW SELECTED DATASETS */}
-            <Tooltip title={`Preview ${layers?.length} selected datasets`}>
+            {/* EXPLORE SELECTED DATASETS */}
+            <Tooltip title={`Explore ${layers?.length} selected datasets`}>
               <span>
                 <IconButton
                   disabled={!layers?.length}

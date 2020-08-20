@@ -32,15 +32,22 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue(
+      query(
         $extent: WKT_4326
         $match: String
         $terms: [String!]
         $size: Int
         $before: ES_Cursor
         $after: ES_Cursor
+        $fields: [String!]
       ) {
         catalogue {
+          summary(
+            fields: $fields
+            filterByText: $match
+            filterByExtent: $extent
+            filterByTerms: $terms
+          )
           records(
             extent: $extent
             match: $match
@@ -65,6 +72,13 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     `,
     {
       variables: {
+        fields: [
+          'identifier.identifierType.raw',
+          'publicationYear.raw',
+          'publisher.raw',
+          'subjects.subject.raw',
+          'creators.name.raw',
+        ],
         extent: extent || undefined,
         terms: terms || [],
         match: text || undefined,
@@ -97,38 +111,39 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       loading={loading}
       catalogue={data?.catalogue}
     >
-      {/**
-       * TODO: Add toggle sidebar collapse animation
-       *
-       * Although @material-ui/core adds support for
-       * horizontal collapse, the grid item has to be
-       * a direct descendant of grid container
-       *
-       * So i'm not sure how to animate changs to the
-       * flex layout
-       **/}
       <Grid style={{ height: '100%' }} container direction="row">
-        {disableSidebar ? null : isMobile ? (
-          <Collapse orientation={'vertical'} in={showSidebar}>
-            <Grid item xs={12}>
-              <Sidebar />
-            </Grid>
-          </Collapse>
-        ) : showSidebar ? (
-          <Grid item md={4}>
-            <Sidebar />
+        {loading ? (
+          <Grid item xs={12} style={{ position: 'relative' }}>
+            <Loading />
           </Grid>
-        ) : null}
-
-        <Grid item xs style={{ flexGrow: 1 }}>
-          {loading ? (
-            <Grid item xs={12} style={{ position: 'relative' }}>
-              <Loading />
+        ) : (
+          <>
+            {/**
+             * TODO: Add toggle sidebar collapse animation
+             *
+             * Although @material-ui/core adds support for
+             * horizontal collapse, the grid item has to be
+             * a direct descendant of grid container
+             *
+             * So i'm not sure how to animate changs to the
+             * flex layout at this point
+             **/}
+            {disableSidebar ? null : isMobile ? (
+              <Collapse orientation={'vertical'} in={showSidebar}>
+                <Grid item xs={12}>
+                  <Sidebar catalogue={data?.catalogue} />
+                </Grid>
+              </Collapse>
+            ) : showSidebar ? (
+              <Grid item md={4}>
+                <Sidebar catalogue={data?.catalogue} />
+              </Grid>
+            ) : null}
+            <Grid item xs style={{ flexGrow: 1 }}>
+              <Items results={results} />
             </Grid>
-          ) : (
-            <Items results={results} />
-          )}
-        </Grid>
+          </>
+        )}
       </Grid>
     </Header>
   )

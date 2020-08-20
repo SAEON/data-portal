@@ -16,7 +16,7 @@ import { useHistory } from 'react-router-dom'
 import {
   ExpandMore as ExpandMoreIcon,
   ExpandLess as ExpandLessIcon,
-  BarChart as PreviewIcon,
+  Explore as PreviewIcon,
   Close as CloseIcon,
 } from '@material-ui/icons'
 import { UriStateContext } from '../../../../modules/provider-uri-state'
@@ -98,7 +98,7 @@ export default ({ title }) => {
           })}
           <Grid container justify="space-between" spacing={1} style={{ margin: 5 }}>
             <Grid item>
-              <Tooltip placement="top-end" title={`Preview ${layers?.length} selected datasets`}>
+              <Tooltip placement="top-end" title={`Explore ${layers?.length} selected datasets`}>
                 <span>
                   <Button
                     disabled={!layers?.length}

@@ -62,7 +62,7 @@ export default ({ results, title }) => {
       </AppBar>
       <Collapse key="result-list-collapse" in={!collapsed}>
         <Grid container spacing={0}>
-          {(showAll ? sortedResults : sortedResults.slice(0, LIST_SIZE)).map(
+          {(showAll ? sortedResults : sortedResults?.slice(0, LIST_SIZE))?.map(
             ({ key, doc_count }) => {
               key = typeof key === 'number' ? `${key}` : key
               return (
@@ -98,7 +98,7 @@ export default ({ results, title }) => {
               )
             }
           )}
-          {sortedResults.length <= LIST_SIZE ? null : (
+          {sortedResults?.length <= LIST_SIZE ? null : (
             <Button
               style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}
               disableElevation

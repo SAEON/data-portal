@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import {
   Visibility as ViewIcon,
-  BarChart as PreviewIcon,
+  Explore as PreviewIcon,
   Code as CodeIcon,
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon,
@@ -156,7 +156,7 @@ export default memo(
                     {selectedLinkedResources?.map(({ id, toggled, toggle }) => {
                       return (
                         <Grid key={id} item xs={6} sm={3}>
-                          <Tooltip title={'Select dataset for preview'}>
+                          <Tooltip title={'Select data for exploration'}>
                             <Button
                               fullWidth
                               startIcon={<PreviewIcon />}

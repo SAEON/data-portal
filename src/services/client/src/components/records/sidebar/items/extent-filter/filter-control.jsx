@@ -11,16 +11,16 @@ import { UriStateContext } from '../../../../../modules/provider-uri-state'
 var draw
 var defaultZoom
 var defaultCenter
-const source = new VectorSource({ wrapX: false })
-const layer = new VectorLayer({
-  id: `${nanoid()}-drawLayer`,
-  title: 'Draw layer',
-  source,
-})
-
-const wkt = new WKT()
-
 export default ({ proxy }) => {
+  const source = new VectorSource({ wrapX: false })
+  const layer = new VectorLayer({
+    id: `${nanoid()}-drawLayer`,
+    title: 'Draw layer',
+    source,
+  })
+
+  const wkt = new WKT()
+
   defaultZoom = defaultZoom || proxy.getView().getZoom()
   defaultCenter = defaultCenter || proxy.getView().getCenter()
   const [selectActive, setSelectActive] = useState(false)

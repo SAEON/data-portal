@@ -74,7 +74,9 @@ export default ({ results }) => {
             )
           })
         ) : (
-          <Typography variant="overline">No results found</Typography>
+          <Typography style={{ margin: 20, display: 'block' }} variant="overline">
+            No results found
+          </Typography>
         )}
       </Grid>
     </Card>

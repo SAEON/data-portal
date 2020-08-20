@@ -58,7 +58,7 @@ npm run configure-git
 # Build all the projects (some services in development mode reference the builds)
 npm run build-all-packages
 
-# A global install of npm-check-updates is required to use some of the package.json scripts
+# (Optional) A global install of npm-check-updates is required to use some of the package.json scripts
 sudo npm install -g npm-check-updates
 ```
 
