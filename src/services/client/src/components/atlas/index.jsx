@@ -7,9 +7,18 @@ const MapProvider = lazy(() => import('../../modules/provider-map'))
 
 export default () => {
   const snapMenusContainer = useRef()
-  const { getUriState } = useContext(UriStateContext)
 
-  console.log(getUriState({ splitString: true }).layers)
+  const { getUriState } = useContext(UriStateContext)
+  const { terms = undefined } = Object.assign(getUriState({ splitString: true }))
+  const { extent = undefined, text = undefined, layersearch = undefined } = getUriState({
+    splitString: false,
+  })
+
+  if (layersearch) {
+    console.log('search for records with terms, extent and text')
+  } else {
+    console.log('search for records by DOI value, keep a map of which resource to use per record')
+  }
 
   return (
     <Suspense fallback={<Loading />}>

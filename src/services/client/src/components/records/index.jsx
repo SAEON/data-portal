@@ -17,9 +17,10 @@ const DEFAULT_CURSORS = {
 export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [showSidebar, setShowSidebar] = useState(disableSidebar === true ? false : !hideSidebar)
   const ref = useRef()
-  const { getUriState } = useContext(UriStateContext)
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
+
+  const { getUriState } = useContext(UriStateContext)
   const { terms = undefined } = getUriState({ splitString: true })
   const { extent = undefined, text = undefined } = getUriState({ splitString: false })
 
