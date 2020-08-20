@@ -4,16 +4,12 @@
       "filter": {
         "vocabulary_mapping": {
           "type": "synonym",
-          "synonyms": [
-            "bryan, rainfall"
-          ]
+          "synonyms": ["bryan, rainfall"]
         }
       },
       "analyzer": {
         "synonym_analyzer": {
-          "filter": [
-            "vocabulary_mapping"
-          ],
+          "filter": ["vocabulary_mapping"],
           "tokenizer": "whitespace"
         }
       }

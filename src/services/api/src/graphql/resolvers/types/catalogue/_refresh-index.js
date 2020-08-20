@@ -1,7 +1,12 @@
 import hash from 'object-hash'
 import Catalogue from '../../../../lib/catalogue.js'
 import fetch from 'node-fetch'
-import { ES_INDEX, ES_INTEGRATION_BATCH_SIZE, HTTP_PROXY } from '../../../../config.js'
+import {
+  ES_INDEX,
+  ES_HOST_ADDRESS,
+  ES_INTEGRATION_BATCH_SIZE,
+  HTTP_PROXY,
+} from '../../../../config.js'
 
 /**
  * TODO
@@ -58,7 +63,7 @@ export default async () => {
     let iterator = await makeIterator()
     while (!iterator.done) {
       // This address isn't available via the proxy, and is a temporary solution
-      const response = await fetch(`http://localhost:9200/${ES_INDEX}/_bulk`, {
+      const response = await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-ndjson',

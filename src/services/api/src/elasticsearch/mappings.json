@@ -1,0 +1,71 @@
+{
+  "dynamic_templates": [
+    {
+      "booleans": {
+        "mapping": {
+          "type": "boolean"
+        },
+        "match_mapping_type": "boolean"
+      }
+    },
+    {
+      "integers": {
+        "mapping": {
+          "type": "long"
+        },
+        "match_mapping_type": "long"
+      }
+    },
+    {
+      "doubles": {
+        "mapping": {
+          "type": "double"
+        },
+        "match_mapping_type": "double"
+      }
+    },
+    {
+      "dates": {
+        "mapping": {
+          "type": "date",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword"
+            }
+          }
+        },
+        "match_mapping_type": "date"
+      }
+    },
+    {
+      "spatial": {
+        "mapping": {
+          "type": "keyword",
+          "fields": {
+            "geo_shape": {
+              "type": "geo_shape"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "geoLocationBox*"
+      }
+    },
+    {
+      "strings": {
+        "mapping": {
+          "type": "text",
+          "analyzer": "synonym_analyzer",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword"
+            }
+          }
+        },
+        "match_mapping_type": "string"
+      }
+    }
+  ]
+}

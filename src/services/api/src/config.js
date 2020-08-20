@@ -17,7 +17,7 @@ export const ALLOWED_ORIGINS =
   process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
 // Elasticsearch
-export const ES_HOST_ADDRESS = process.env.ES_HOST_ADDRESS || `${HTTP_PROXY}/proxy/elasticsearch`
+export const ES_HOST_ADDRESS = process.env.ES_HOST_ADDRESS || `http://localhost:9200`
 export const ES_INDEX = process.env.ES_INDEX || 'odp'
 export const ES_INTEGRATION_BATCH_SIZE = process.env.ES_INTEGRATION_BATCH_SIZE || 100
 

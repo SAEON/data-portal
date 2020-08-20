@@ -9,7 +9,7 @@ import home from './http/home.js'
 import zlib from 'zlib'
 import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
-
+import { configure as configureElasticsearch } from './elasticsearch/index.js'
 import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY } from './config.js'
 import clientSession from './middleware/client-session.js'
 
@@ -22,23 +22,29 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   process.exit(1)
 }
 
-// Register native extensions
-
-// Setup App
-const app = new Koa()
+// Configure Elasticsearch
+await configureElasticsearch()
 
 /**
+ * Setup HTTP server (Koa)
+ *
  * This server is deployed behind an Nginx proxy, accessible only via HTTPS
  * X-Forwarded-* headers can be trusted
  */
+const app = new Koa()
 app.proxy = true
 
-// Setup routes
+/**
+ * Setup HTTP routes
+ */
 const router = new KoaRouter()
 router.get('/', home)
 router.post('/', home)
 
-// Koa HTTP handler callback
+/**
+ * Create the Node.js HTTP server callback
+ * This is the function passed to http.createServer()
+ */
 app
   .use(cors)
   .use(clientSession)
@@ -59,15 +65,22 @@ app
     })
   )
 
-// HTTP Server
+/**
+ * Configure the HTTP server with the callback
+ * that is the Koa app function object
+ */
 const httpServer = createServer(app.callback())
 
-// GraphQL
+/**
+ * Add Apollo server to the Koa app as middleware
+ */
 const apolloServer = configureApolloServer()
 apolloServer.applyMiddleware({ app })
 apolloServer.installSubscriptionHandlers(httpServer)
 
-// Start the application
+/**
+ * Start the HTTP server
+ */
 httpServer.listen(PORT, () => {
   console.log(`Auth server ready at ${PORT}`)
   console.log(`GraphQL ready at ${GQL_PROVIDER}${apolloServer.graphqlPath}`)
