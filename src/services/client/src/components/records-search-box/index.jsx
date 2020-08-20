@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { TextField, Chip, Grid, Typography } from '@material-ui/core'
+import { TextField, Chip, Grid, Typography, CircularProgress } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import { UriStateContext } from '../../modules/provider-uri-state'
@@ -27,11 +27,12 @@ export default ({ ...props }) => {
     }
   )
 
-  const waitMsg = error ? error.message : loading ? 'Loading' : null
-  return waitMsg ? (
+  return error ? (
     <Typography color="textPrimary" variant="overline" style={{ margin: 20 }}>
-      {waitMsg}
+      {error.message}
     </Typography>
+  ) : loading ? (
+    <CircularProgress />
   ) : (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12}>

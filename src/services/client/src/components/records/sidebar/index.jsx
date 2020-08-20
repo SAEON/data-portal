@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Grid, Typography, LinearProgress, Fade } from '@material-ui/core'
+import { Grid, Typography, Fade } from '@material-ui/core'
 import { UriStateContext } from '../../../modules/provider-uri-state'
 import TagFilter from './items/tag-filter'
 import ExtentFilter from './items/extent-filter'
 import ResultContextSummary from './items/result-context-summary'
+import { Loading } from '../../../components'
 
 export default () => {
   const { getUriState } = useContext(UriStateContext)
@@ -49,7 +50,7 @@ export default () => {
     </Typography>
   ) : loading ? (
     <Grid container item xs={12} style={{ position: 'relative' }}>
-      <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
+      <Loading />
     </Grid>
   ) : (
     <Fade in={!loading}>

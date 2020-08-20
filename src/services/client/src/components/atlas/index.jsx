@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useRef, useContext } from 'react'
-import { LinearProgress } from '@material-ui/core'
+import { Loading } from '../../components'
 import { UriStateContext } from '../../modules/provider-uri-state'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus'))
@@ -12,7 +12,7 @@ export default () => {
   console.log(getUriState({ splitString: true }).layers)
 
   return (
-    <Suspense fallback={<LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />}>
+    <Suspense fallback={<Loading />}>
       <div
         ref={snapMenusContainer}
         style={{

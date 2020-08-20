@@ -127,7 +127,7 @@ export default ({
           <div style={{ marginLeft: 'auto' }}>
             {/* PREVIEW ALL DATASETS */}
             <Tooltip
-              title={`Preview layers from current search (${catalogue?.records.totalCount} datasets)`}
+              title={`Search current results for layers to preview (${catalogue?.records.totalCount})`}
             >
               <span>
                 <IconButton

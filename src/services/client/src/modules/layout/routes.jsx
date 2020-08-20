@@ -1,6 +1,7 @@
-import React, { lazy, Suspense, useRef } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
-import { Fade, LinearProgress } from '@material-ui/core'
+import { Fade } from '@material-ui/core'
+import { Loading } from '../../components'
 
 // Pages
 const HomePage = lazy(() => import('../../pages/home'))
@@ -13,9 +14,7 @@ const AtlasPage = lazy(() => import('../../pages/atlas'))
 const PageTransition = ({ children, tKey }) => (
   <Fade key={tKey} in={true}>
     <div>
-      <Suspense fallback={<LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />}>
-        {children}
-      </Suspense>
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </div>
   </Fade>
 )

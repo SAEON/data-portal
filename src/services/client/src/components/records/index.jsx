@@ -4,8 +4,9 @@ import Header from './header'
 import Sidebar from './sidebar'
 import Items from './items'
 import { UriStateContext } from '../../modules/provider-uri-state'
-import { Typography, LinearProgress, Grid, Collapse } from '@material-ui/core'
+import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
+import { Loading } from '../../components'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -122,7 +123,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
         <Grid item xs style={{ flexGrow: 1 }}>
           {loading ? (
             <Grid item xs={12} style={{ position: 'relative' }}>
-              <LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />
+              <Loading />
             </Grid>
           ) : (
             <Items results={results} />

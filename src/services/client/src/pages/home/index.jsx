@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Grid, useMediaQuery, Button, LinearProgress } from '@material-ui/core'
+import { Grid, useMediaQuery, Button } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { useTheme } from '@material-ui/core/styles'
-import { RecordsSearchBox } from '../../components'
+import { RecordsSearchBox, Loading } from '../../components'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -17,7 +17,7 @@ export default () => {
 
   return (
     <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
-      <Suspense fallback={<LinearProgress style={{ position: 'absolute', left: 0, right: 0 }} />}>
+      <Suspense fallback={<Loading />}>
         <MapProvider>
           <Grid
             container
