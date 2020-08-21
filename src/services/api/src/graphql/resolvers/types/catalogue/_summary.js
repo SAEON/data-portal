@@ -5,7 +5,6 @@ import matchFields from './_match-fields.js'
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
   const { fields, filterByText, filterByExtent, filterByTerms: terms, limit: size } = args
-  console.log(terms)
 
   const order = { _key: 'asc', _count: 'desc' }
   const dsl = {

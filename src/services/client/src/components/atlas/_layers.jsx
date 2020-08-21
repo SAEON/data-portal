@@ -1,24 +1,22 @@
-import { useContext } from 'react'
-import { UriStateContext } from '../../modules/provider-uri-state'
-import useCatalogue from '../../lib/useCatalogue'
+import React, { useContext } from 'react'
+import { AtlasContext } from './_state-provider'
+import { useMenu } from '@saeon/snap-menus'
 
-export default () => {
-  const { getUriState } = useContext(UriStateContext)
-  const { terms = undefined } = Object.assign(getUriState({ splitString: true }))
-  const { extent = undefined, text = undefined, layersearch = undefined } = getUriState({
-    splitString: false,
-  })
+export default ({ snapMenusContainer }) => {
+  const { gqlData } = useContext(AtlasContext)
+  const RecordsMenu = useMenu({ id: 'records' })
 
-  var graphQlResult
-  if (layersearch) {
-    console.log('search for records with terms, extent and text')
-    graphQlResult = useCatalogue()
-  } else {
-    console.log('search for records by DOI value, keep a map of which resource to use per record')
-  }
-
-  const { error, loading, data } = graphQlResult
-  console.log(error, loading, data)
-
-  return 'hi'
+  return (
+    <RecordsMenu
+      defaultHeight={snapMenusContainer.current?.offsetHeight - 30}
+      defaultWidth={300}
+      defaultPosition={{ x: 10, y: 10 }}
+      draggable={false}
+      resizable={false}
+      open={true}
+      title={'Data Explorer'}
+    >
+      {JSON.stringify(gqlData.data?.catalogue)}
+    </RecordsMenu>
+  )
 }

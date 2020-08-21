@@ -15,8 +15,6 @@ export default async (_, args, ctx) => {
     after = undefined,
   } = args
 
-  console.log(terms)
-
   if (size < 1 || size > 10000) {
     throw new Error('Size param must be between 1 and 10 000')
   }

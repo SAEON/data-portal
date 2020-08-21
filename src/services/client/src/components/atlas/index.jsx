@@ -4,6 +4,7 @@ import Layers from './_layers'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
+const StateProvider = lazy(() => import('./_state-provider'))
 
 export default () => {
   const snapMenusContainer = useRef()
@@ -20,19 +21,23 @@ export default () => {
           left: 0,
         }}
       >
-        <MapProvider>
-          <Suspense fallback={null}>
-            <MenuProvider
-              VERTICAL_OFFSET_TOP={5}
-              VERTICAL_OFFSET_BOTTOM={5}
-              HORIZONTAL_MARGIN_LEFT={5}
-              HORIZONTAL_MARGIN_RIGHT={5}
-              SNAP_MENUS_CONTAINER={snapMenusContainer.current}
-            >
-              <Layers />
-            </MenuProvider>
-          </Suspense>
-        </MapProvider>
+        <Suspense fallback={null}>
+          <StateProvider>
+            <MapProvider>
+              <Suspense fallback={null}>
+                <MenuProvider
+                  VERTICAL_OFFSET_TOP={5}
+                  VERTICAL_OFFSET_BOTTOM={5}
+                  HORIZONTAL_MARGIN_LEFT={5}
+                  HORIZONTAL_MARGIN_RIGHT={5}
+                  SNAP_MENUS_CONTAINER_REF={snapMenusContainer}
+                >
+                  <Layers snapMenusContainer={snapMenusContainer} />
+                </MenuProvider>
+              </Suspense>
+            </MapProvider>
+          </StateProvider>
+        </Suspense>
       </div>
     </Suspense>
   )

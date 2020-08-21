@@ -47,12 +47,13 @@ export default forwardRef(
       title,
       children,
       resizable = true,
+      draggable = true,
       defaultPosition,
       defaultWidth = 450,
       defaultHeight = 400,
       defaultSnap = false,
       open,
-      onClose,
+      onClose = undefined,
     },
     ref
   ) => {
@@ -90,6 +91,22 @@ export default forwardRef(
       }
       ref.current = zIndex
     }, [open, zIndex, ref, getActiveMenuZIndex])
+
+    const onMinify = () => {
+      setState(
+        Object.assign(
+          { ...state },
+          {
+            minimized: !state.minimized,
+            maximizedHeight: state.minimized ? null : state.dimensions.height,
+            dimensions: {
+              width: state.dimensions.width,
+              height: state.minimized ? state.maximizedHeight || defaultHeight : MENU_HEADER_HEIGHT,
+            },
+          }
+        )
+      )
+    }
 
     return renderMenu(
       <div style={{ display: open ? 'block' : 'none' }}>
@@ -293,38 +310,20 @@ export default forwardRef(
                       <CardContent style={{ padding: 0 }}>
                         <AppBar position="relative" variant="outlined">
                           <Toolbar
-                            style={{ cursor: 'grab', minHeight: '25px' }}
+                            style={{ cursor: draggable ? 'grab' : 'default', minHeight: '25px' }}
                             disableGutters
                             className={clsx({
-                              'drag-handle': true,
+                              'drag-handle': draggable ? true : false,
                             })}
                           >
                             <Typography style={{ margin: 'auto' }} variant="overline">
                               {title}
                             </Typography>
                             <div style={{ position: 'absolute', right: 0 }}>
-                              <Tooltip title={open ? 'Collapse menu' : ''}>
+                              <Tooltip title={state.minimized ? 'Expand menu' : 'Collapse menu'}>
                                 <IconButton
-                                  onTouchStart={onClose}
-                                  onClick={() => {
-                                    setState(
-                                      Object.assign(
-                                        { ...state },
-                                        {
-                                          minimized: !state.minimized,
-                                          maximizedHeight: state.minimized
-                                            ? null
-                                            : state.dimensions.height,
-                                          dimensions: {
-                                            width: state.dimensions.width,
-                                            height: state.minimized
-                                              ? state.maximizedHeight || defaultHeight
-                                              : MENU_HEADER_HEIGHT,
-                                          },
-                                        }
-                                      )
-                                    )
-                                  }}
+                                  onTouchStart={onMinify}
+                                  onClick={onMinify}
                                   edge="start"
                                   color="inherit"
                                   style={{
@@ -347,22 +346,24 @@ export default forwardRef(
                                   )}
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title={open ? 'Close menu' : ''}>
-                                <IconButton
-                                  onTouchStart={onClose}
-                                  onClick={() => onClose()}
-                                  edge="start"
-                                  color="inherit"
-                                  style={{
-                                    order: 2,
-                                    marginLeft: 'auto',
-                                    padding: 2,
-                                  }}
-                                  aria-label="close"
-                                >
-                                  <CloseIcon />
-                                </IconButton>
-                              </Tooltip>
+                              {onClose ? (
+                                <Tooltip title={open ? 'Close menu' : ''}>
+                                  <IconButton
+                                    onTouchStart={onClose}
+                                    onClick={() => onClose()}
+                                    edge="start"
+                                    color="inherit"
+                                    style={{
+                                      order: 2,
+                                      marginLeft: 'auto',
+                                      padding: 2,
+                                    }}
+                                    aria-label="close"
+                                  >
+                                    <CloseIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              ) : null}
                             </div>
                           </Toolbar>
                         </AppBar>

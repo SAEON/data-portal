@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
-import { Records, Record } from '../../components'
+import { Records, Record, Atlas } from '../../components'
 import { Typography } from '@material-ui/core'
 import { UriStateContext } from '../../modules/provider-uri-state'
 
 const components = {
   records: Records,
   record: Record,
+  atlas: Atlas,
 }
 
 export default ({ location }) => {

@@ -2,7 +2,12 @@ import { useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { UriStateContext } from '../modules/provider-uri-state'
 
-export default ({ pageSize = 20, startCursor = undefined, endCursor = undefined } = {}) => {
+export default ({
+  pageSize = 20,
+  startCursor = undefined,
+  endCursor = undefined,
+  terms = undefined,
+} = {}) => {
   const { getUriState } = useContext(UriStateContext)
 
   return useQuery(
@@ -55,7 +60,8 @@ export default ({ pageSize = 20, startCursor = undefined, endCursor = undefined 
           'creators.name.raw',
         ],
         extent: getUriState({ splitString: false }).extent || undefined,
-        terms: getUriState({ splitString: true })?.terms?.map(term => JSON.parse(term)) || [],
+        terms:
+          terms || getUriState({ splitString: true })?.terms?.map(term => JSON.parse(term)) || [],
         match: getUriState({ splitString: false }).text || undefined,
         size: pageSize,
         after: endCursor,

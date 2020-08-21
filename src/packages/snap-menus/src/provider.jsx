@@ -13,7 +13,7 @@ export default memo(
     VERTICAL_OFFSET_BOTTOM = '',
     HORIZONTAL_MARGIN_LEFT = '',
     HORIZONTAL_MARGIN_RIGHT = '',
-    SNAP_MENUS_CONTAINER = null,
+    SNAP_MENUS_CONTAINER_REF = null,
   }) => {
     PORTAL_STYLE.innerHTML = `
     #${PORTAL_ID} {
@@ -26,9 +26,9 @@ export default memo(
       margin: ${VERTICAL_OFFSET_TOP}px ${HORIZONTAL_MARGIN_RIGHT}px ${VERTICAL_OFFSET_BOTTOM}px ${HORIZONTAL_MARGIN_LEFT}px;
     }`
 
-    if (SNAP_MENUS_CONTAINER) {
-      SNAP_MENUS_CONTAINER.prepend(PORTAL_STYLE)
-      SNAP_MENUS_CONTAINER.prepend(PORTAL)
+    if (SNAP_MENUS_CONTAINER_REF?.current) {
+      SNAP_MENUS_CONTAINER_REF.current.prepend(PORTAL_STYLE)
+      SNAP_MENUS_CONTAINER_REF.current.prepend(PORTAL)
     } else {
       document.getElementsByTagName('body')[0].prepend(PORTAL_STYLE)
       document.getElementsByTagName('body')[0].prepend(PORTAL)
