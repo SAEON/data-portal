@@ -16,14 +16,16 @@ import { UriStateContext } from '../../../../modules/provider-uri-state'
 
 const LIST_SIZE = 3
 
+const FIELDS = ['publicationYear', 'publisher.raw', 'subjects.subject.raw', 'creators.name.raw']
+
 export default ({ results, title }) => {
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
   const { getUriState, setUriState } = useContext(UriStateContext)
-  const { terms } = getUriState({ splitString: true })
+  const terms = getUriState({ splitString: true }).terms?.map(term => JSON.parse(term))
 
   const sortedResults = results
-    ? [...results].sort(a => (terms?.includes(a.key) ? -1 : 1))
+    ? [...results].sort(a => (terms?.map(({ value }) => value)?.includes(a.key) ? -1 : 1))
     : undefined
 
   return (
@@ -78,15 +80,20 @@ export default ({ results, title }) => {
                         style={{ alignSelf: 'baseline' }}
                         size="small"
                         color="primary"
-                        checked={terms?.includes(key) ? true : false}
+                        checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
                         onChange={() => {
-                          if (terms?.includes(key)) {
+                          if (terms?.map(({ value }) => value)?.includes(key)) {
                             setUriState({
-                              terms: terms?.filter(s => s !== key),
+                              terms: terms?.filter(({ value }) => value !== key),
                             })
                           } else {
                             setUriState({
-                              terms: [...new Set([...terms, key])],
+                              terms: [
+                                ...new Set([
+                                  ...terms,
+                                  ...FIELDS.map(field => ({ field, value: key })),
+                                ]),
+                              ],
                             })
                           }
                         }}

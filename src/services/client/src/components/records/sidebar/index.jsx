@@ -39,8 +39,8 @@ export default ({ catalogue }) => {
           title="Publication Year"
           results={
             catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'publicationYear.raw')
-            )['publicationYear.raw']
+              Object.entries(obj).find(([key]) => key === 'publicationYear')
+            )['publicationYear']
           }
         />
 

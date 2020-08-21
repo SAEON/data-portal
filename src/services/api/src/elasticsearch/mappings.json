@@ -53,10 +53,19 @@
       }
     },
     {
+      "publicationYear_temp": {
+        "mapping": {
+          "type": "long"
+        },
+        "match_mapping_type": "string",
+        "match": "publicationYear"
+      }
+    },
+    {
       "strings": {
         "mapping": {
-          "type": "text",
           "analyzer": "synonym_analyzer",
+          "type": "text",
           "fields": {
             "raw": {
               "ignore_above": 256,
@@ -64,7 +73,8 @@
             }
           }
         },
-        "match_mapping_type": "string"
+        "match_mapping_type": "string",
+        "unmatch": "publicationYear"
       }
     }
   ]

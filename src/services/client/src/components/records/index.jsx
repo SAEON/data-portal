@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { useQuery, gql } from '@apollo/client'
 import Header from './header'
 import Sidebar from './sidebar'
 import Items from './items'
@@ -7,6 +6,7 @@ import { UriStateContext } from '../../modules/provider-uri-state'
 import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import { Loading } from '../../components'
+import useCatalogue from '../../lib/useCatalogue'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -21,74 +21,27 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
 
   const { getUriState } = useContext(UriStateContext)
-  const { terms = undefined } = getUriState({ splitString: true })
+  const terms = getUriState({ splitString: true }).terms?.map(term => JSON.parse(term)) || undefined
   const { extent = undefined, text = undefined } = getUriState({ splitString: false })
 
   useEffect(() => {
-    if (ref.current && (terms?.length !== ref.current.terms?.length || text !== ref.current.text)) {
-      setCursors(DEFAULT_CURSORS)
+    if (ref.current) {
+      if (
+        terms?.length !== ref.current.terms?.length ||
+        text !== ref.current.text ||
+        extent !== ref.current.extent
+      ) {
+        setCursors(DEFAULT_CURSORS)
+      }
     }
-    ref.current = { terms, text }
+    ref.current = { terms, text, extent }
   }, [terms, extent, text])
 
-  const { error, loading, data } = useQuery(
-    gql`
-      query(
-        $extent: WKT_4326
-        $match: String
-        $terms: [String!]
-        $size: Int
-        $before: ES_Cursor
-        $after: ES_Cursor
-        $fields: [String!]
-      ) {
-        catalogue {
-          summary(
-            fields: $fields
-            filterByText: $match
-            filterByExtent: $extent
-            filterByTerms: $terms
-          )
-          records(
-            extent: $extent
-            match: $match
-            terms: $terms
-            size: $size
-            before: $before
-            after: $after
-          ) {
-            pageInfo {
-              hasNextPage
-              hasPreviousPage
-              startCursor
-              endCursor
-            }
-            totalCount
-            nodes {
-              target
-            }
-          }
-        }
-      }
-    `,
-    {
-      variables: {
-        fields: [
-          'identifier.identifierType.raw',
-          'publicationYear.raw',
-          'publisher.raw',
-          'subjects.subject.raw',
-          'creators.name.raw',
-        ],
-        extent: extent || undefined,
-        terms: terms || [],
-        match: text || undefined,
-        size: pageSize,
-        after: cursors.end,
-        before: cursors.start,
-      },
-    }
-  )
+  const { error, loading, data } = useCatalogue({
+    pageSize,
+    startCursor: cursors.start,
+    endCursor: cursors.end,
+  })
 
   /**
    * cursors.start is only set when navigating BACK,

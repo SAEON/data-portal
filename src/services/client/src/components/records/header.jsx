@@ -67,7 +67,7 @@ export default ({
 
   const resultsWithDOIs =
     catalogue?.summary
-      .find(obj => Object.entries(obj).find(([k, v]) => k === 'identifier.identifierType.raw'))
+      .find(obj => Object.entries(obj).find(([k]) => k === 'identifier.identifierType.raw'))
       ['identifier.identifierType.raw'].find(({ key }) => key === 'DOI')?.doc_count || 0
 
   return (

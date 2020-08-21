@@ -15,6 +15,8 @@ export default async (_, args, ctx) => {
     after = undefined,
   } = args
 
+  console.log(terms)
+
   if (size < 1 || size > 10000) {
     throw new Error('Size param must be between 1 and 10 000')
   }
@@ -40,7 +42,7 @@ export default async (_, args, ctx) => {
 
   if (before || after) {
     const c = before || after
-    dsl.search_after = [c.score, c.id]
+    dsl.search_after = [c.score || 0, c.id]
   }
 
   if (extent) {
@@ -86,22 +88,15 @@ export default async (_, args, ctx) => {
     if (terms?.length) {
       dsl.query.bool.must = [
         ...dsl.query.bool.must,
-        ...terms
-          .filter(_ => _)
-          .map(term => {
-            const phrase = {
-              bool: {
-                should: parseInt(term)
-                  ? [{ match: { publicationYear: term } }]
-                  : [
-                      { term: { 'subjects.subject.raw': term } },
-                      { term: { 'publisher.raw': term } },
-                      { term: { 'creators.name.raw': term } },
-                    ],
-              },
-            }
-            return phrase
-          }),
+        {
+          bool: {
+            should: terms
+              .filter(({ field, value }) =>
+                field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
+              )
+              .map(({ field, value }) => ({ term: { [field]: value } })),
+          },
+        },
       ]
     }
   }

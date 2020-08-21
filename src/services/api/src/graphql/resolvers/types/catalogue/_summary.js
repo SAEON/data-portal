@@ -4,7 +4,8 @@ import matchFields from './_match-fields.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
-  const { fields, filterByText, filterByExtent, filterByTerms, limit: size } = args
+  const { fields, filterByText, filterByExtent, filterByTerms: terms, limit: size } = args
+  console.log(terms)
 
   const order = { _key: 'asc', _count: 'desc' }
   const dsl = {
@@ -23,7 +24,7 @@ export default async (_, args, ctx) => {
     ),
   }
 
-  if (filterByExtent || filterByTerms?.length || filterByText) {
+  if (filterByExtent || terms?.length || filterByText) {
     dsl.query = {
       bool: {
         must: [],
@@ -63,26 +64,18 @@ export default async (_, args, ctx) => {
     ]
   }
 
-  if (filterByTerms?.length) {
+  if (terms?.length) {
     dsl.query.bool.must = [
       ...dsl.query.bool.must,
-      ...filterByTerms
-        .filter(_ => _)
-        .map(term => {
-          const phrase = {
-            bool: {
-              should: parseInt(term)
-                ? [{ match: { publicationYear: term } }]
-                : [
-                    { term: { 'subjects.subject.raw': term } },
-                    { term: { 'publisher.raw': term } },
-                    { term: { 'creators.name.raw': term } },
-                  ],
-            },
-          }
-
-          return phrase
-        }),
+      {
+        bool: {
+          should: terms
+            .filter(({ field, value }) =>
+              field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
+            )
+            .map(({ field, value }) => ({ term: { [field]: value } })),
+        },
+      },
     ]
   }
 

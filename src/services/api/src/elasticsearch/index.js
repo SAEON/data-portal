@@ -20,7 +20,9 @@ export const configure = async () => {
     }),
   })
     .then(res => res.json())
-    .catch(error => error)
+    .catch(error => {
+      throw new Error(`Unable to configure Elasticsearch template: ${error.message}`)
+    })
 
-  console.log('Configured Elasticsearch index templates', response)
+  console.log(`Elasticsearch ${ES_INDEX} index template configured`, response)
 }

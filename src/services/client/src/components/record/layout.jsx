@@ -184,7 +184,9 @@ export default ({ json, id }) => {
                               onClick={() =>
                                 setUriState({
                                   pathname: '/records',
-                                  terms: [subject.subject],
+                                  terms: [
+                                    { field: 'subjects.subject.raw', value: subject.subject },
+                                  ],
                                 })
                               }
                               label={subject.subject.toUpperCase()}

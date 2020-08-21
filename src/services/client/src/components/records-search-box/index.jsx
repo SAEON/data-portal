@@ -6,7 +6,7 @@ import QuickForm from '@saeon/quick-form'
 import { UriStateContext } from '../../modules/provider-uri-state'
 import ListboxComponent from '../autocomplete/list-box-component'
 
-const SUBJECTS = ['publicationYear.raw', 'publisher.raw', 'subjects.subject.raw']
+const FIELDS = ['publicationYear', 'publisher.raw', 'subjects.subject.raw', 'creators.name.raw']
 const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {
@@ -23,7 +23,7 @@ export default ({ ...props }) => {
       }
     `,
     {
-      variables: { fields: SUBJECTS, limit: TERM_LIMIT },
+      variables: { fields: FIELDS, limit: TERM_LIMIT },
     }
   )
 
@@ -37,12 +37,21 @@ export default ({ ...props }) => {
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12}>
         <Autocomplete
-          onChange={(e, value) =>
+          onChange={(e, values) =>
             setUriState({
-              terms: value.map(v => v),
+              terms: values.map(value => FIELDS.map(field => ({ field, value }))).flat(),
             })
           }
-          value={terms || []}
+          value={
+            [
+              ...new Set(
+                terms?.map(str => {
+                  const { value } = JSON.parse(str)
+                  return value
+                })
+              ),
+            ].filter(_ => _) || []
+          }
           multiple
           fullWidth
           limitTags={8}

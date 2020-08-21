@@ -1,24 +1,12 @@
-import React, { lazy, Suspense, useRef, useContext } from 'react'
+import React, { lazy, Suspense, useRef } from 'react'
 import { Loading } from '../../components'
-import { UriStateContext } from '../../modules/provider-uri-state'
+import Layers from './_layers'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
 
 export default () => {
   const snapMenusContainer = useRef()
-
-  const { getUriState } = useContext(UriStateContext)
-  const { terms = undefined } = Object.assign(getUriState({ splitString: true }))
-  const { extent = undefined, text = undefined, layersearch = undefined } = getUriState({
-    splitString: false,
-  })
-
-  if (layersearch) {
-    console.log('search for records with terms, extent and text')
-  } else {
-    console.log('search for records by DOI value, keep a map of which resource to use per record')
-  }
 
   return (
     <Suspense fallback={<Loading />}>
@@ -40,7 +28,9 @@ export default () => {
               HORIZONTAL_MARGIN_LEFT={5}
               HORIZONTAL_MARGIN_RIGHT={5}
               SNAP_MENUS_CONTAINER={snapMenusContainer.current}
-            ></MenuProvider>
+            >
+              <Layers />
+            </MenuProvider>
           </Suspense>
         </MapProvider>
       </div>

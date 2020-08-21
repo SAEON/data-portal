@@ -38,17 +38,20 @@ export default ({ children }) => {
         setUriState: ({
           pathname = window.location.pathname,
           text = getUriState({ splitString: false }).text || '',
-          terms = getUriState({ splitString: true }).terms || [],
+          terms = getUriState({ splitString: true }).terms?.map(term => JSON.parse(term)) || [],
           layers = getUriState({ splitString: true }).layers || [],
           extent = getUriState({ splitString: false }).extent || '',
         }) => {
+          text = encodeURIComponent(text)
+          layers = encodeURIComponent(layers.map(p => encodeURIComponent(p)).join(','))
+          extent = encodeURIComponent(extent)
+          terms = encodeURIComponent(
+            terms.map(term => encodeURIComponent(JSON.stringify(term))).join(',')
+          )
+
           history.push({
             pathname,
-            search: `?terms=${encodeURIComponent(
-              terms.map(term => encodeURIComponent(term)).join(',')
-            )}&extent=${encodeURIComponent(extent)}&text=${encodeURIComponent(
-              text
-            )}&layers=${encodeURIComponent(layers.map(p => encodeURIComponent(p)).join(','))}`,
+            search: `?terms=${terms}&extent=${extent}&text=${text}&layers=${layers}`,
           })
         },
       }}

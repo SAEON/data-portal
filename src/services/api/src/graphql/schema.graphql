@@ -41,6 +41,11 @@ input ES_Cursor {
   score: Float
 }
 
+input TermInput {
+  field: String!
+  value: String!
+}
+
 type Catalogue {
   id: ID!
 
@@ -50,8 +55,8 @@ type Catalogue {
     id: ID
     # Fulltext search for provided string
     match: String
-    # Search for intersection of subject list
-    terms: [String!]
+    # Search for exact matches of field values (intersection)
+    terms: [TermInput!]
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     extent: WKT_4326
     # Page size (maximum allowed is 10 000 items per page)
@@ -69,7 +74,7 @@ type Catalogue {
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     filterByExtent: WKT_4326
     # List of terms to filter on
-    filterByTerms: [String!]
+    filterByTerms: [TermInput!]
     # A list of fields to perform term agggregation on
     fields: [String!]
     limit: Int
