@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
-import { AtlasContext } from './_state-provider'
+import React from 'react'
 import { useMenu } from '@saeon/snap-menus'
+import Tabs from './_tabs'
 
 export default ({ snapMenusContainer }) => {
-  const { gqlData } = useContext(AtlasContext)
   const RecordsMenu = useMenu({ id: 'records' })
 
   return (
@@ -12,11 +11,11 @@ export default ({ snapMenusContainer }) => {
       defaultWidth={300}
       defaultPosition={{ x: 10, y: 10 }}
       draggable={false}
-      resizable={false}
+      resizable={true}
       open={true}
       title={'Data Explorer'}
     >
-      {JSON.stringify(gqlData.data?.catalogue)}
+      <Tabs />
     </RecordsMenu>
   )
 }

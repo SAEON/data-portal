@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useRef } from 'react'
 import { Loading } from '../../components'
-import Layers from './_layers'
+import Layers from './layers'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
