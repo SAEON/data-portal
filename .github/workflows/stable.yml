@@ -24,6 +24,7 @@ jobs:
           echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/services/api/.env
           echo "ES_HOST_ADDRESS=http://elasticsearch:9200" >> src/services/api/.env
           echo "DEPLOY_ENV=production" >> src/services/api/.env
+          echo "CATALOGUE_SECRET=${{ secrets.CATALOGUE_SECRET }}" >> src/services/api/.env
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
           echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
