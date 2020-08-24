@@ -82,7 +82,9 @@ apolloServer.installSubscriptionHandlers(httpServer)
  * Start the HTTP server
  */
 httpServer.listen(PORT, () => {
-  console.log(`Auth server ready at ${PORT}`)
-  console.log(`GraphQL ready at ${GQL_PROVIDER}${apolloServer.graphqlPath}`)
-  console.log(`GraphQL subscriptions ready at ${GQL_PROVIDER}${apolloServer.subscriptionsPath}`)
+  console.log(`@saeon/catalogue API server ready at ${PORT}`)
+  console.log(`@saeon/catalogue GraphQL server ready at ${GQL_PROVIDER}${apolloServer.graphqlPath}`)
+  console.log(
+    `@saeon/catalogue GraphQL subscriptions server ready at ${GQL_PROVIDER}${apolloServer.subscriptionsPath}`
+  )
 })

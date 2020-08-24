@@ -3,4 +3,5 @@
 **/.build/**
 src/generators/**
 src/services/reporting/src/index.js
-src/services/api/src/graphql/index.js
+src/services/api/src/graphql/schema/index.js
+src/services/api/src/index.js

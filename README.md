@@ -7,11 +7,13 @@ TODO
 - There should be a single .browserslistrc defined in the source code. Also the browser list should be built at build time
 
 # @SAEON/CATALOGUE
+
 **_Please note that this is still in development._**
 
 This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [catalogue.saeon.ac.za](https://catalogue.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
 
 # Browser support
+
 - chrome: 80
 - edge: 18
 - firefox: 74
@@ -20,6 +22,7 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
 - samsung: 11.1
 
 # Tech Stack
+
 - API
   - Node.js server
   - Proxy server ([anyproxy](http://anyproxy.io/))
@@ -29,9 +32,11 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
   - [Material UI](https://material-ui.com/)
 
 # Quick start
+
 Packages are mostly self-contained, in that each package includes a `package.json` file, and tracks it's own dependencies. For development purposes it's useful that packages can reference source code in other packages (instead of build output), and for this reason Babel is configured globally.
 
 ### Setup the repository for development
+
 NOTE: This repository currently only supports Linux/Mac development, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues).
 
 ```sh
@@ -63,29 +68,17 @@ sudo npm install -g npm-check-updates
 ```
 
 ### Start the services
-The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started. 3rd party software can be containerized for development purposes (shown below).
 
-#### [@saeon/catalogue](/src/services/client)
-```sh
-npm run start:client
-```
-
-#### [@saeon/api](/src/services/api)
-```sh
-npm run start:api
-```
-
-#### [@saeon/proxy](/src/services/proxy)
-```sh
-npm run start:proxy
-```
+The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON VPN. After the first start you don't have to connect to the VPN when developing on your local machine.
 
 #### MongoDB
+
 ```sh
 docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
 #### Elasticsearch
+
 ```sh
 # Setup a network so that ELK services can communicate with each other
 docker network create --driver bridge elk
@@ -97,7 +90,26 @@ docker run --net=elk --name elasticsearch --restart always -e xpack.license.self
 docker run --net=elk --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.0
 ```
 
+#### [@saeon/api](/src/services/api)
+
+```sh
+npm run start:api
+```
+
+#### [@saeon/proxy](/src/services/proxy)
+
+```sh
+npm run start:proxy
+```
+
+#### [@saeon/catalogue](/src/services/client)
+
+```sh
+npm run start:client
+```
+
 # Deployment
+
 Continuous deployment is supported targeting a CentOS 7 environment
 
 1. Fork the repository, and clone the new fork to your local machine
@@ -107,6 +119,7 @@ Continuous deployment is supported targeting a CentOS 7 environment
 5. Push from local to your forked repository to trigger a deployment
 
 ## Deploying services
+
 Deploy the services in the `src/services` directory as docker containers:
 
 ```sh
@@ -116,7 +129,7 @@ docker run <image name>
 
 Use the [`docker-compose.yml`](/docker-compose.yml) file to deploy all services, along with 3rd party services. Not that compared to the `docker` CLI commands above, 3rd party services are configured slightly differently in the `docker-compose` deployment. Use the `docker-compose.yml` file to deploy the catalogue software.
 
-This repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/catalogue/issues)). 
+This repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/catalogue/issues)).
 
 Deploying the catalogue software should be as simple as just 2 steps to get a deployment on every push to master:
 
@@ -125,8 +138,8 @@ Deploying the catalogue software should be as simple as just 2 steps to get a de
 
 _NOTE - Docker images are built in the context of this repository, so the Dockerfiles for individual services are NOT the root context in which Docker is executed. This can be a bit confusing, the reason being to allow for commands running in docker containers to have access to the global babel configuration. For this reason, when building images with the `docker build` CLI, this command must be run from the root of this repository, with the path to the Dockerfile provided explicitly by the `--file , -f` options._
 
-
 #### Configuration
+
 Build-time configuration essentially involves:
 
 1. Creating `.env` files with appropriate values at the beginning of the build process (overwriting existing .env files)
@@ -135,6 +148,7 @@ Build-time configuration essentially involves:
 This is achieved using GitHub actions software. The configuration is specified in the [workflow file](/.github/workflows/deploy-master.yml). Adjusting accordingly in repository forks and continuous deployment should (theoretically) work out the box if a self-hosted actions runner is configured on your server.
 
 #### Docker Compose
+
 To deploy this repository manually
 
 ```sh
@@ -150,6 +164,7 @@ docker-compose up -d --force-recreate --build
 ```
 
 # NPM packages
+
 This project includes some bespoke NPM package development:
 
 - [@saeon/ol-react](/src/packages/ol-react)
@@ -167,6 +182,7 @@ npm login
 ### Publishing packages
 
 #### Code generators
+
 The repository includes an [NPM package generator](/src/generators/npm-package) to automate setting NPM package projects. From the root of the repository:
 
 ```sh
@@ -174,6 +190,7 @@ npm run generate-npm-package
 ```
 
 #### Deploying packages to NPM
+
 During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
 
 - `npm run publish:patch`
@@ -195,5 +212,6 @@ It's also useful to see which packages will be updated by this script. To do tha
 - `npm run check-package-updates`
 
 # TODO
+
 - [docs](/src/services/docs)
 - [reporting](/src/services/reporting)
