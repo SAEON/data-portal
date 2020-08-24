@@ -1,9 +1,15 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  query($owner: String!, $name: String!, $since: GitTimestamp!, $after: String) {
+  query(
+    $owner: String!
+    $name: String!
+    $since: GitTimestamp!
+    $after: String
+    $qualifiedName: String!
+  ) {
     repository(owner: $owner, name: $name) {
-      ref(qualifiedName: "master") {
+      ref(qualifiedName: $qualifiedName) {
         target {
           ... on Commit {
             history(first: 100, since: $since, after: $after) {
@@ -39,7 +45,7 @@ export default gql`
 /*
 {
   repository(owner: "SAEONData", name: "catalogue") {
-    ref(qualifiedName: "master") {
+    ref(qualifiedName: "next") {
       target {
         ... on Commit {
           history(
