@@ -1,4 +1,5 @@
 import hash from 'object-hash'
+import graphql from 'graphql'
 import Catalogue from '../../../../lib/catalogue.js'
 import fetch from 'node-fetch'
 import {
@@ -6,7 +7,10 @@ import {
   ES_HOST_ADDRESS,
   ES_INTEGRATION_BATCH_SIZE,
   HTTP_PROXY,
+  CATALOGUE_SECRET,
 } from '../../../../config.js'
+
+const { GraphQLError } = graphql
 
 /**
  * TODO
@@ -52,7 +56,12 @@ const makeIterator = async (cursor = null) => {
  * by hashing the doc.identifier object. If there are
  * duplicates of this... file a ticket with the curators
  */
-export default async () => {
+export default async (_, args) => {
+  const { authorizationCode } = args
+  if (authorizationCode !== CATALOGUE_SECRET) {
+    throw new GraphQLError('Permission denied') // TODO. 401 ?
+  }
+
   const result = {
     updated: 0,
     created: 0,

@@ -78,6 +78,7 @@ MONGO_USER=admin
 MONGO_PSWD=password
 MONGO_URL=mongodb://localhost:27017
 MONGO_DB=catalogue
+CATALOGUE_SECRET=secret-string
 GQL_PROVIDER=http://localhost:3000
 PORT=3000
 DEPLOY_ENV=development

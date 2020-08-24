@@ -1,9 +1,12 @@
 import dotenv from 'dotenv'
+import bcrypt from 'bcrypt'
 dotenv.config()
 
 // Secret
 export const MONGO_USER = process.env.MONGO_USER || 'admin'
 export const MONGO_PSWD = process.env.MONGO_PSWD || 'password'
+
+export const CATALOGUE_SECRET = bcrypt.hashSync(process.env.CATALOGUE_SECRET || 'secret-string', 10)
 
 // public
 export const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017'

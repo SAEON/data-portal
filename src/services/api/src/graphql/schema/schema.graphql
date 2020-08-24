@@ -81,7 +81,7 @@ type Catalogue {
   ): JSON!
 
   # Refreshes the Elasticsearch index from the source (currently the source is the old Elasticsearch instance)
-  refreshIndex: JSON!
+  refreshIndex(authorizationCode: String!): JSON!
 }
 
 type CatalogueConnection implements Connection {

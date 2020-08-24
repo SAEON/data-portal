@@ -30,6 +30,7 @@
     "@saeon/logger": "^3.1.14",
     "apollo-server-koa": "^2.16.1",
     "babel-plugin-module-resolver": "^4.0.0",
+    "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
     "dataloader": "^2.0.0",
     "date-fns": "^2.15.0",

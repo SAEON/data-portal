@@ -1,6 +1,6 @@
 import graphql from 'graphql'
 import fetch from 'node-fetch'
-import { ES_HOST_ADDRESS, ES_INDEX, NODE_ENV } from '../config.js'
+import { ES_HOST_ADDRESS, ES_INDEX, NODE_ENV, CATALOGUE_SECRET } from '../config.js'
 import mappings from './mappings.json'
 import settings from './settings.json'
 import schema from '../graphql/schema/index.js'
@@ -54,19 +54,25 @@ export const configure = async () => {
    */
   execute(
     schema,
-    `
-      {
-        catalogue {
-          refreshIndex
-        }
+    ` query ($authorizationCode: String!) {
+      catalogue {
+        refreshIndex(authorizationCode: $authorizationCode)
       }
-    `
+    }
+    `,
+    null,
+    null,
+    {
+      authorizationCode: CATALOGUE_SECRET,
+    }
   )
-    .then(({ data }) => {
+    .then(({ data, errors }) => {
       const { refreshIndex } = data.catalogue
-      if (refreshIndex.error) {
+      if (errors || refreshIndex.error) {
         throw new Error(
-          `Unable to update the Elasticsearch integration on API startup. This is fine for development but NOT for production. ${refreshIndex.error}`
+          `Unable to update the Elasticsearch integration on API startup. This is fine for development but NOT for production. ${
+            errors ? JSON.stringify(errors) : refreshIndex.error
+          }`
         )
       } else {
         console.log('Elasticsearch integration updated', refreshIndex)
