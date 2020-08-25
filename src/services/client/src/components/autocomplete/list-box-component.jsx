@@ -55,7 +55,9 @@ export default forwardRef(({ children, ...other }, ref) => {
             const outerProps = useContext(OuterElementContext)
             return <div ref={ref} {...props} {...outerProps} />
           })}
-          innerElementType="ul"
+          innerElementType={forwardRef((props, ref) => {
+            return <ul ref={ref} {...props} />
+          })}
           itemSize={index => getChildSize(itemData[index])}
           overscanCount={5}
           itemCount={itemCount}

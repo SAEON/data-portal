@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import { useMenu } from '@saeon/snap-menus'
-import Tabs from './_tabs'
+import Tabs from './tabs'
+
+export const SideMenuContext = createContext()
 
 export default ({ snapMenusContainer }) => {
   const RecordsMenu = useMenu({ id: 'records' })
@@ -11,11 +13,17 @@ export default ({ snapMenusContainer }) => {
       defaultWidth={300}
       defaultPosition={{ x: 10, y: 10 }}
       draggable={false}
-      resizable={true}
+      resizable={false}
       open={true}
       title={'Data Explorer'}
     >
-      <Tabs />
+      {({ width, height }) => {
+        return (
+          <SideMenuContext.Provider value={{ width, height }}>
+            <Tabs />
+          </SideMenuContext.Provider>
+        )
+      }}
     </RecordsMenu>
   )
 }

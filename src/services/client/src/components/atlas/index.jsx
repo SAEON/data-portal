@@ -1,10 +1,10 @@
 import React, { lazy, Suspense, useRef } from 'react'
 import { Loading } from '../../components'
-import Layers from './layers'
+import SideMenu from './side-menu'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
-const StateProvider = lazy(() => import('./_state-provider'))
+const StateProvider = lazy(() => import('./state'))
 
 export default () => {
   const snapMenusContainer = useRef()
@@ -32,7 +32,7 @@ export default () => {
                   HORIZONTAL_MARGIN_RIGHT={5}
                   SNAP_MENUS_CONTAINER_REF={snapMenusContainer}
                 >
-                  <Layers snapMenusContainer={snapMenusContainer} />
+                  <SideMenu snapMenusContainer={snapMenusContainer} />
                 </MenuProvider>
               </Suspense>
             </MapProvider>

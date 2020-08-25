@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react'
-import { UriStateContext } from '../../modules/provider-uri-state'
-import useCatalogue from '../../lib/useCatalogue'
+import { UriStateContext } from '../../../modules/provider-uri-state'
+import useCatalogue from '../../../lib/useCatalogue'
 
 export const AtlasContext = createContext()
 
@@ -37,7 +37,7 @@ export default ({ children }) => {
   var gqlData
   if (layersearch) {
     // TODO - some kind of pagination will be required
-    gqlData = useCatalogue()
+    gqlData = useCatalogue({ pageSize: 5000 })
   } else {
     gqlData = useCatalogue({
       /**
@@ -52,6 +52,7 @@ export default ({ children }) => {
         field: 'identifier.identifier.raw',
         value: k,
       })),
+      pageSize: 5000,
     })
   }
 

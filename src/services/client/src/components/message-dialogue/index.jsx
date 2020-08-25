@@ -14,20 +14,31 @@ export default ({
   tooltipTitle = 'Tooltip title missing',
   title = 'Title missing',
   text = 'Text missing',
+  children = undefined,
+  dialogueContentProps,
+  dialogueProps,
+  paperProps,
 }) => {
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
 
   return (
     <>
-      <Tooltip title={tooltipTitle}>
+      <Tooltip placement="right-end" title={tooltipTitle}>
         <IconButton onClick={() => setFeedbackDialogueOpen(!feedbackDialogueOpen)} {...iconProps}>
-          <InfoIcon />
+          <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
         </IconButton>
       </Tooltip>
-      <Dialog open={feedbackDialogueOpen} onClose={() => setFeedbackDialogueOpen(false)}>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{text}</DialogContentText>
+      <Dialog
+        {...dialogueProps}
+        open={feedbackDialogueOpen}
+        onClose={() => setFeedbackDialogueOpen(false)}
+        PaperProps={paperProps}
+      >
+        <DialogContent {...dialogueContentProps}>
+          <DialogTitle>
+            {typeof title === 'function' ? title(() => setFeedbackDialogueOpen(false)) : title}
+          </DialogTitle>
+          {children || <DialogContentText>{text}</DialogContentText>}
         </DialogContent>
       </Dialog>
     </>

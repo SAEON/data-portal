@@ -4,14 +4,15 @@ import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
 
-export default ({ id, options, setOption, selectedOption = [], ...props }) => {
+export default ({ id, options, setOption, selectedOptions = [], ...props }) => {
   return (
     <Autocomplete
+      style={{ zIndex: 5000 }}
       fullWidth
       ListboxComponent={ListboxComponent}
       size="small"
       id={id}
-      value={selectedOption}
+      value={selectedOptions}
       options={options}
       onChange={(ev, newVal) => setOption(newVal)}
       getOptionLabel={option => `${option}`}
