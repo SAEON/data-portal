@@ -24,7 +24,13 @@ export default ({
   return (
     <>
       <Tooltip placement="right-end" title={tooltipTitle}>
-        <IconButton onClick={() => setFeedbackDialogueOpen(!feedbackDialogueOpen)} {...iconProps}>
+        <IconButton
+          onClick={e => {
+            e.stopPropagation()
+            setFeedbackDialogueOpen(!feedbackDialogueOpen)
+          }}
+          {...iconProps}
+        >
           <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
         </IconButton>
       </Tooltip>

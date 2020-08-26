@@ -38,7 +38,7 @@ export default ({ results }) => {
               linkedResources
                 ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
                 ?.map((_, i) => {
-                  const id = `${DOI}~link ${i + 1}`
+                  const id = `${DOI}~${i}`
                   const toggled = getUriState({ splitString: true }).layers?.includes(id)
                   return {
                     id,

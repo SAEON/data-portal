@@ -21,7 +21,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
   const mapLayers = DOI
     ? linkedResources
         .filter(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-        .map((_, i) => encodeURIComponent(`${DOI}~link ${i + 1}`))
+        .map((_, i) => encodeURIComponent(`${DOI}~${i}`))
     : undefined
 
   return (

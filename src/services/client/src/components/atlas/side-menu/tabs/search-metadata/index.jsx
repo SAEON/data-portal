@@ -8,13 +8,16 @@ import { MessageDialogue, Record } from '../../../../'
 import Minisearch from 'minisearch'
 import QuickForm from '@saeon/quick-form'
 import { debounce } from '../../../../../lib/fns'
+import useStyles from './style'
+import clsx from 'clsx'
 
 const LIST_PADDING_SIZE = 0
-const ITEM_SIZE = 32
+const ITEM_SIZE = 116
 const ITEM_Y_PADDING = 4
 const ITEM_X_PADDING = 2
 
 export default () => {
+  const classes = useStyles()
   const [textSearch, setTextSearch] = useState('')
   const { gqlData } = useContext(AtlasContext)
   const { width, height } = useContext(SideMenuContext)
@@ -56,6 +59,10 @@ export default () => {
   return (
     <>
       <Box m={1}>
+        <Typography
+          style={{ float: 'right' }}
+          variant="overline"
+        >{`${searchResults?.length} records`}</Typography>
         <QuickForm value={''} effects={[debounce(({ value }) => setTextSearch(value), 250)]}>
           {({ updateForm, value }) => (
             <TextField
@@ -65,7 +72,7 @@ export default () => {
               size="small"
               value={value}
               onChange={e => updateForm({ value: e.target.value })}
-              placeholder="Search layers..."
+              placeholder="Sort layers..."
               variant="outlined"
               autoFocus
               InputProps={{
@@ -82,7 +89,7 @@ export default () => {
       <Box m={1}>
         <List
           width={width - 16}
-          height={height - 48 - 28 - 36}
+          height={height - 48 - 28 - 71}
           innerElementType={forwardRef(({ style, ...otherProps }, ref) => (
             <div
               ref={ref}
@@ -94,7 +101,7 @@ export default () => {
           itemSize={ITEM_SIZE + 2 * ITEM_Y_PADDING}
         >
           {({ index, style }) => {
-            const id = searchResults[index][0]
+            const [id, score] = searchResults[index]
             const isSelected = selectedRecords.includes(id)
             const record = records.find(({ target }) => {
               return target._source.id === id
@@ -105,38 +112,35 @@ export default () => {
                 style={{
                   ...style,
                   top: `${parseFloat(style.top) + LIST_PADDING_SIZE}px`,
-                  padding: `${index && ITEM_Y_PADDING}px ${
-                    ITEM_X_PADDING + 6
-                  }px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING}px`,
+                  padding: `${
+                    index && ITEM_Y_PADDING
+                  }px ${ITEM_X_PADDING}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING}px`,
                 }}
               >
                 <Card
-                  style={{
-                    backgroundColor: isSelected ? 'rgb(0 255 215 / 22%)' : 'rgb(0 0 0 / 5%)',
-                    border: isSelected ? '1px solid rgb(0 255 215 / 50%)' : 'inherit',
-                    height: '100%',
-                    width: '100%',
-                    display: 'flex',
-                    cursor: 'pointer',
-                  }}
+                  className={clsx({
+                    [classes['record-card']]: true,
+                    [classes.isSelected]: isSelected,
+                  })}
+                  variant="outlined"
+                  onClick={() =>
+                    selectedRecords.includes(id)
+                      ? setSelectedRecords(
+                          [...selectedRecords].filter(selectedId => selectedId !== id)
+                        )
+                      : setSelectedRecords([...selectedRecords, id])
+                  }
                 >
-                  {/* Title */}
-                  <Typography
-                    onClick={() =>
-                      selectedRecords.includes(id)
-                        ? setSelectedRecords(
-                            [...selectedRecords].filter(selectedId => selectedId !== id)
-                          )
-                        : setSelectedRecords([...selectedRecords, id])
-                    }
-                    variant="caption"
-                    style={{ paddingLeft: 8, alignSelf: 'center' }}
-                  >
-                    {record.titles[0]?.title.truncate(35)}
-                  </Typography>
-
                   {/* Metadata item controls */}
-                  <div style={{ marginLeft: 'auto', alignSelf: 'center' }}>
+                  <Box m={1} style={{ display: 'flex' }}>
+                    <Typography
+                      style={{ marginRight: 'auto', alignSelf: 'center' }}
+                      variant="overline"
+                    >
+                      {record.identifier.identifierType === 'DOI'
+                        ? record.identifier.identifier
+                        : 'INVALID_DOI'}
+                    </Typography>
                     <MessageDialogue
                       title={onClose => (
                         <div style={{ display: 'flex' }}>
@@ -152,7 +156,7 @@ export default () => {
                         </div>
                       )}
                       tooltipTitle={`${record.titles[0]?.title} (score: ${
-                        searchResults[index][1]?.toFixed(2) || 'NA'
+                        score?.toFixed(2) || 'NA'
                       })`}
                       iconProps={{ size: 'small', fontSize: 'small' }}
                       dialogueContentProps={{ style: { padding: 0 } }}
@@ -168,7 +172,20 @@ export default () => {
                         }
                       />
                     </MessageDialogue>
-                  </div>
+                  </Box>
+
+                  {/* Title */}
+                  <Box m={1}>
+                    <Typography variant="caption">
+                      {record.titles[0]?.title.truncate(95)}
+                    </Typography>
+                    <Typography
+                      style={{ position: 'absolute', right: 12, bottom: 0 }}
+                      variant="overline"
+                    >
+                      Score: {score?.toFixed(2) || 'NA'}
+                    </Typography>
+                  </Box>
                 </Card>
               </div>
             )
