@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/proxy#readme",
   "dependencies": {
-    "@saeon/logger": "^3.1.14",
+    "@saeon/logger": "^3.1.16",
     "anyproxy": "^4.1.3",
     "date-fns": "^2.15.0",
     "dotenv": "^8.2.0",
