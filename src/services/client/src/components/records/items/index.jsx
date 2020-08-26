@@ -35,28 +35,26 @@ export default ({ results }) => {
 
             const selectedLinkedResources =
               DOI &&
-              linkedResources
-                ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
-                ?.map((_, i) => {
-                  const id = `${DOI}~${i}`
-                  const toggled = getUriState({ splitString: true }).layers?.includes(id)
-                  return {
-                    id,
-                    toggled,
-                    toggle: () => {
-                      setUriState({
-                        layers: toggled
-                          ? [...getUriState({ splitString: true }).layers].filter(p => p !== id)
-                          : [
-                              ...new Set([
-                                ...(getUriState({ splitString: true }).layers || []),
-                                id,
-                              ]),
-                            ],
-                      })
-                    },
-                  }
-                })
+              [
+                ...new Set(
+                  linkedResources
+                    ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
+                    ?.map(() => DOI)
+                ),
+              ]?.map(() => {
+                const toggled = getUriState({ splitString: true }).layers?.includes(DOI)
+                return {
+                  id: DOI,
+                  toggled,
+                  toggle: () => {
+                    setUriState({
+                      layers: toggled
+                        ? [...getUriState({ splitString: true }).layers].filter(p => p !== DOI)
+                        : [...new Set([...(getUriState({ splitString: true }).layers || []), DOI])],
+                    })
+                  },
+                }
+              })
 
             return (
               <ResultItem

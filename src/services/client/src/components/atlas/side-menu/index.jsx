@@ -5,6 +5,7 @@ import Tabs from './tabs'
 export const SideMenuContext = createContext()
 
 export default ({ snapMenusContainer }) => {
+  console.log('rendering side menu')
   const RecordsMenu = useMenu({ id: 'records' })
 
   return (

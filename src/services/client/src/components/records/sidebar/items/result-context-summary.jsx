@@ -67,15 +67,13 @@ export default ({ title }) => {
       </AppBar>
       <Collapse style={{ width: '100%' }} key="result-list-collapse" in={!collapsed}>
         <Grid container spacing={0}>
-          {layers?.map(id => {
-            const added = layers.includes(id)
+          {layers?.map(DOI => {
+            const added = layers.includes(DOI)
 
             return (
-              <Grid key={id} item xs={12} style={{ paddingLeft: 10 }}>
+              <Grid key={DOI} item xs={12} style={{ paddingLeft: 10 }}>
                 <FormControlLabel
-                  label={
-                    <Typography variant="overline">{`${id.split('~').join(' (')})`}</Typography>
-                  }
+                  label={<Typography variant="overline">{DOI}</Typography>}
                   control={
                     <Checkbox
                       style={{ alignSelf: 'baseline' }}
@@ -85,8 +83,8 @@ export default ({ title }) => {
                       onChange={() => {
                         setUriState({
                           layers: added
-                            ? [...layers].filter(p => p !== id)
-                            : [...new Set([...(layers || []), id])],
+                            ? [...layers].filter(p => p !== DOI)
+                            : [...new Set([...(layers || []), DOI])],
                         })
                       }}
                       inputProps={{ 'aria-label': 'primary checkbox' }}
