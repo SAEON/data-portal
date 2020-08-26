@@ -379,14 +379,12 @@ export default forwardRef(
                             [classes.resizing]: state.isResizing,
                           })}
                         >
-                          <CardContent style={{ paddingBottom: 12 }}>
-                            {typeof children === 'function'
-                              ? children({
-                                  height: state.dimensions.height - 70,
-                                  width: state.dimensions.width - 32,
-                                })
-                              : children}
-                          </CardContent>
+                          {typeof children === 'function'
+                            ? children({
+                                height: state.dimensions.height - 31,
+                                width: state.dimensions.width,
+                              })
+                            : children}
                         </div>
                       </div>
                     </ResizableBox>

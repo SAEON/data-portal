@@ -36,7 +36,9 @@ Catalogue.prototype.query = async function (dsl, abortFetch) {
   } catch (error) {
     if (error.name !== 'AbortError')
       throw new Error(
-        `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${dsl}. ${error}`
+        `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${JSON.stringify(
+          dsl
+        )}. ${error}`
       )
   }
 }

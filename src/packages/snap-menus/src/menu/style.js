@@ -67,7 +67,6 @@ export default makeStyles(() => ({
   },
   menuContent: ({ MENU_HEADER_HEIGHT }) => ({
     height: `calc(100% - ${MENU_HEADER_HEIGHT}px)`,
-    padding: '2px',
     '& > div': {
       height: '100%',
       overflowY: 'auto',

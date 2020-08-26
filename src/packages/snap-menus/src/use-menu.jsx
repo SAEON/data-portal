@@ -10,7 +10,7 @@ import context from './context'
  */
 const refs = {}
 
-const INITIAL_Z_INDEX = 4000
+const INITIAL_Z_INDEX = 1
 
 /**
  * Iterates over all current refs and
