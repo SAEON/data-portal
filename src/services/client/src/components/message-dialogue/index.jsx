@@ -22,7 +22,7 @@ export default ({
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
 
   return (
-    <>
+    <div onClick={e => e.stopPropagation()}>
       <Tooltip placement="right-end" title={tooltipTitle}>
         <IconButton
           onClick={e => {
@@ -47,6 +47,6 @@ export default ({
           {children || <DialogContentText>{text}</DialogContentText>}
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   )
 }

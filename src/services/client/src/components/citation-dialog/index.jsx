@@ -35,7 +35,8 @@ export default ({ record, ...props }) => {
         variant="contained"
         disableElevation
         color="primary"
-        onClick={() => {
+        onClick={e => {
+          e.stopPropagation()
           setOpen(true)
         }}
         {...props}

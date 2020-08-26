@@ -8,8 +8,10 @@ import { MessageDialogue, Record } from '../../../../'
 import Minisearch from 'minisearch'
 import QuickForm from '@saeon/quick-form'
 import { debounce } from '../../../../../lib/fns'
+import { MapContext } from '../../../../../modules/provider-map'
 import useStyles from './style'
 import clsx from 'clsx'
+import { createLayer, LayerTypes } from '../../../../../lib/ol'
 
 const LIST_PADDING_SIZE = 0
 const ITEM_SIZE = 116
@@ -19,42 +21,28 @@ const ITEM_X_PADDING = 2
 export default () => {
   const classes = useStyles()
   const [textSearch, setTextSearch] = useState('')
-  const { gqlData } = useContext(AtlasContext)
+  const { layers } = useContext(AtlasContext)
+  const { proxy } = useContext(MapContext)
   const { width, height } = useContext(SideMenuContext)
-  const [selectedRecords, setSelectedRecords] = useState([])
-
-  const records = gqlData.data?.catalogue.records.nodes
 
   const minisearch = useMemo(() => {
     const minisearch = new Minisearch({
-      fields: [
-        'titles.0.title',
-        'descriptions.0.description',
-        'creators.0.name',
-        'subtitle',
-        'contributors.0.name',
-      ],
+      fields: ['uri', 'description', 'doi'],
       storeFields: ['id'],
-      extractField: (document, fieldName) => {
-        return fieldName.split('.').reduce((doc, key) => doc && doc[key], document)
-      },
+      extractField: (document, fieldName) =>
+        fieldName.split('.').reduce((doc, key) => doc && doc[key], document),
       searchOptions: {
-        fuzzy: 0.7,
+        fuzzy: 0.5,
       },
     })
 
-    if (records) {
-      minisearch.addAll(records.map(({ target }) => target._source))
-    }
-
+    minisearch.addAll(layers)
     return minisearch
-  }, [records])
+  }, [layers])
 
-  const searchResults = useMemo(() => {
-    return textSearch
-      ? minisearch.search(textSearch).map(({ id, score }) => [id, score])
-      : records?.map(node => [node.target._source.id, undefined]) || []
-  }, [records, textSearch, minisearch])
+  const searchResults = textSearch
+    ? minisearch.search(textSearch).map(({ id, score }) => [id, score])
+    : layers.map(({ id }) => [id, undefined])
 
   return (
     <>
@@ -102,10 +90,9 @@ export default () => {
         >
           {({ index, style }) => {
             const [id, score] = searchResults[index]
-            const isSelected = selectedRecords.includes(id)
-            const record = records.find(({ target }) => {
-              return target._source.id === id
-            }).target._source
+            const { DOI, description, ploneId, layerId, LAYERS, uri } = layers.find(
+              ({ id: layerId }) => layerId === id
+            )
 
             return (
               <div
@@ -120,15 +107,21 @@ export default () => {
                 <Card
                   className={clsx({
                     [classes['record-card']]: true,
-                    [classes.isSelected]: isSelected,
+                    [classes.isSelected]: Boolean(proxy.getLayerById(layerId)),
                   })}
                   variant="outlined"
                   onClick={() =>
-                    selectedRecords.includes(id)
-                      ? setSelectedRecords(
-                          [...selectedRecords].filter(selectedId => selectedId !== id)
+                    proxy.getLayerById(layerId)
+                      ? proxy.removeLayerById(layerId)
+                      : proxy.addLayer(
+                          createLayer({
+                            layerType: LayerTypes.TileWMS,
+                            id: layerId,
+                            title: description,
+                            uri,
+                            LAYERS,
+                          })
                         )
-                      : setSelectedRecords([...selectedRecords, id])
                   }
                 >
                   {/* Metadata item controls */}
@@ -137,48 +130,39 @@ export default () => {
                       style={{ marginRight: 'auto', alignSelf: 'center' }}
                       variant="overline"
                     >
-                      {record.identifier.identifierType === 'DOI'
-                        ? record.identifier.identifier
-                        : 'INVALID_DOI'}
+                      {DOI}
                     </Typography>
                     <MessageDialogue
+                      onClick
                       title={onClose => (
                         <div style={{ display: 'flex' }}>
                           <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
                             METADATA RECORD
                           </Typography>
                           <IconButton
-                            onClick={onClose}
+                            onClick={e => {
+                              e.stopPropagation()
+                              onClose()
+                            }}
                             style={{ marginLeft: 'auto', alignSelf: 'center' }}
                           >
                             <CloseIcon />
                           </IconButton>
                         </div>
                       )}
-                      tooltipTitle={`${record.titles[0]?.title} (score: ${
-                        score?.toFixed(2) || 'NA'
-                      })`}
+                      tooltipTitle={`${description} (score: ${score?.toFixed(2) || 'NA'})`}
                       iconProps={{ size: 'small', fontSize: 'small' }}
                       dialogueContentProps={{ style: { padding: 0 } }}
                       dialogueProps={{ fullWidth: true }}
-                      paperProps={{ style: { maxWidth: 'none' } }}
+                      paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
                     >
-                      <Record
-                        id={
-                          record.alternateIdentifiers?.find(
-                            ({ alternateIdentifierType }) =>
-                              alternateIdentifierType.toLowerCase() === 'plone'
-                          ).alternateIdentifier
-                        }
-                      />
+                      <Record id={ploneId} />
                     </MessageDialogue>
                   </Box>
 
                   {/* Title */}
                   <Box m={1}>
-                    <Typography variant="caption">
-                      {record.titles[0]?.title.truncate(95)}
-                    </Typography>
+                    <Typography variant="caption">{description.truncate(95)}</Typography>
                     <Typography
                       style={{ position: 'absolute', right: 12, bottom: 0 }}
                       variant="overline"

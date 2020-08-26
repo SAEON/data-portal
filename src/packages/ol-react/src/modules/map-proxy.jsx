@@ -8,8 +8,7 @@ const descriptor = {
 }
 
 export default ({ map, children }) => {
-  const [render, setRender] = useState()
-  const reRender = useCallback(() => setRender(render + 1), [])
+  const [render, setRender] = useState(0)
 
   const proxy = useMemo(() => {
     return new Proxy(
@@ -30,7 +29,7 @@ export default ({ map, children }) => {
                   }),
                 })
               )
-              reRender()
+              setRender(r => r + 1)
             },
           },
 
@@ -47,7 +46,7 @@ export default ({ map, children }) => {
             ...descriptor,
             get: () => layer => {
               map.removeLayer(layer) || map.removeLayer(layer._self)
-              reRender()
+              setRender(r => r + 1)
             },
           },
 
@@ -60,7 +59,7 @@ export default ({ map, children }) => {
             ...descriptor,
             get: () => interaction => {
               map.addInteraction(interaction)
-              reRender()
+              setRender(r => r + 1)
             },
           },
 
@@ -68,7 +67,7 @@ export default ({ map, children }) => {
             ...descriptor,
             get: () => interaction => {
               map.removeInteraction(interaction)
-              reRender()
+              setRender(r => r + 1)
             },
           },
 
@@ -79,6 +78,42 @@ export default ({ map, children }) => {
                 .getLayers()
                 .getArray()
                 .filter(layer => id === layer.get('id'))[0],
+          },
+
+          addLayers: {
+            ...descriptor,
+            get: () => ({ layers, rerender }) => {
+              for (let layer of layers) {
+                if (
+                  map
+                    .getLayers()
+                    .getArray()
+                    .map(layer => layer.get('id'))
+                    .includes(layer.get('id'))
+                ) {
+                  throw new Error(
+                    `${packageJson.name} v${
+                      packageJson.version
+                    } ERROR: Cannot add layer with ID ${layer.get(
+                      'id'
+                    )} to the atlas since a layer with that ID already exists`
+                  )
+                } else {
+                  map.setLayerGroup(
+                    new LayerGroup({
+                      layers: [layer, ...map.getLayerGroup().getLayers().getArray()].map(
+                        (layer, i, arr) => {
+                          layer.setZIndex(arr.length - i)
+                          return layer
+                        }
+                      ),
+                    })
+                  )
+                }
+              }
+
+              if (rerender) setRender(r => r + 1)
+            },
           },
 
           /**
@@ -112,7 +147,7 @@ export default ({ map, children }) => {
                     ),
                   })
                 )
-                reRender()
+                setRender(r => r + 1)
               }
             },
           },
@@ -169,7 +204,7 @@ export default ({ map, children }) => {
                                               proxiedTarget._self,
                                               args
                                             )
-                                            reRender()
+                                            setRender(r => r + 1)
                                           }
                                         : proxiedTarget._self[prop],
                                   }
@@ -194,7 +229,7 @@ export default ({ map, children }) => {
                       : typeof proxiedTarget[prop] === 'function'
                       ? (...args) => {
                           proxiedTarget._self[prop].apply(proxiedTarget._self, args)
-                          reRender()
+                          setRender(r => r + 1)
                         }
                       : proxiedTarget._self[prop],
                 }
@@ -215,5 +250,5 @@ export default ({ map, children }) => {
     )
   }, [map])
 
-  return children({ proxy })
+  return children({ proxy, render })
 }

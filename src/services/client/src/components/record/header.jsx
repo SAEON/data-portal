@@ -56,12 +56,13 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                     color={'primary'}
                     startIcon={<PreviewIcon />}
                     disableElevation
-                    onClick={() =>
+                    onClick={e => {
+                      e.stopPropagation()
                       history.push({
                         pathname: '/atlas',
                         search: `layers=${encodeURIComponent(mapLayers)}`,
                       })
-                    }
+                    }}
                   >
                     PREVIEW
                   </Button>
@@ -78,7 +79,10 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                   color={codeView ? 'secondary' : 'primary'}
                   startIcon={<CodeIcon />}
                   disableElevation
-                  onClick={toggleCodeView}
+                  onClick={e => {
+                    e.stopPropagation()
+                    toggleCodeView()
+                  }}
                 >
                   JSON
                 </Button>
@@ -93,6 +97,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                   children=""
                   component={forwardRef((props, ref) => (
                     <Button
+                      onClick={e => e.stopPropagation()}
                       style={{ minWidth: 120 }}
                       variant="outlined"
                       color="primary"
