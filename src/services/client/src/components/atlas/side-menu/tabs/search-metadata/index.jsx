@@ -1,4 +1,4 @@
-import React, { useContext, forwardRef, useState, useMemo } from 'react'
+import React, { useContext, forwardRef, useState, useMemo, useEffect } from 'react'
 import { AtlasContext } from '../../../state'
 import { SideMenuContext } from '../../index'
 import { FixedSizeList as List } from 'react-window'
@@ -18,12 +18,18 @@ const ITEM_SIZE = 116
 const ITEM_Y_PADDING = 4
 const ITEM_X_PADDING = 2
 
+var cachedSearch
+
 export default () => {
   const classes = useStyles()
-  const [textSearch, setTextSearch] = useState('')
+  const [textSearch, setTextSearch] = useState(cachedSearch || '')
   const { layers } = useContext(AtlasContext)
   const { proxy } = useContext(MapContext)
   const { width, height } = useContext(SideMenuContext)
+
+  useEffect(() => {
+    return () => (cachedSearch = textSearch)
+  })
 
   const minisearch = useMemo(() => {
     const minisearch = new Minisearch({
@@ -51,7 +57,10 @@ export default () => {
           style={{ float: 'right' }}
           variant="overline"
         >{`${searchResults?.length} records`}</Typography>
-        <QuickForm value={''} effects={[debounce(({ value }) => setTextSearch(value), 250)]}>
+        <QuickForm
+          value={textSearch}
+          effects={[debounce(({ value }) => setTextSearch(value), 250)]}
+        >
           {({ updateForm, value }) => (
             <TextField
               autoComplete="off"
@@ -109,7 +118,7 @@ export default () => {
                     [classes['record-card']]: true,
                     [classes.isSelected]: Boolean(proxy.getLayerById(layerId)),
                   })}
-                  variant="outlined"
+                  variant="elevation"
                   onClick={() =>
                     proxy.getLayerById(layerId)
                       ? proxy.removeLayerById(layerId)

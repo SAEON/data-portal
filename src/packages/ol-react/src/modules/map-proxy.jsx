@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import LayerGroup from 'ol/layer/Group'
 const packageJson = require('../../package.json')
 

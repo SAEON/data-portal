@@ -8,7 +8,7 @@ export default ({ children, effects, ...formFields }) => {
       effects?.forEach(effect => {
         effect(fields)
       }),
-    [fields, effects]
+    [fields]
   )
 
   const updateForm = obj => {

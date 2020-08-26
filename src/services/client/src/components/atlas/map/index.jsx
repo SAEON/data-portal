@@ -26,7 +26,7 @@ export default () => {
             LAYERS,
           })
         }),
-        rerender: false,
+        rerender: true,
       })
     }
   }, [layers, proxy])

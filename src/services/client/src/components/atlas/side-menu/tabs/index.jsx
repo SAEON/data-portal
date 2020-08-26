@@ -3,6 +3,7 @@ import { Tabs, Tab, AppBar, Box, Fade } from '@material-ui/core'
 import { Search as SearchIcon, Layers as LayersIcon } from '@material-ui/icons'
 
 // Tab panels
+import LayerList from './layer-list'
 import SearchMetadata from './search-metadata'
 
 const a11yProps = index => ({
@@ -42,7 +43,7 @@ export default () => {
         </Tabs>
       </AppBar>
       <TabPanel value={activeTabIndex} index={0}>
-        <Box p={1}>layer list</Box>
+        <LayerList />
       </TabPanel>
       <TabPanel value={activeTabIndex} index={1}>
         <SearchMetadata />
