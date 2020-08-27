@@ -22,6 +22,8 @@ export const ALLOWED_ORIGINS =
 export const ES_HOST_ADDRESS = process.env.ES_HOST_ADDRESS || `http://localhost:9200`
 export const ES_INDEX = process.env.ES_INDEX || 'odp'
 export const ES_INTEGRATION_BATCH_SIZE = process.env.ES_INTEGRATION_BATCH_SIZE || 100
+export const ES_TEMPLATE_INTEGRATION_ENABLED = process.env.ES_TEMPLATE_INTEGRATION_ENABLED || 'false'
+export const ES_INDEX_INTEGRATION_ENABLED = process.env.ES_INDEX_INTEGRATION_ENABLED || 'true'
 
 console.log('Configuration', {
   MONGO_DB,
@@ -29,6 +31,8 @@ console.log('Configuration', {
   GQL_PROVIDER,
   ES_INDEX,
   ES_INTEGRATION_BATCH_SIZE,
+  ES_TEMPLATE_INTEGRATION_ENABLED,
+  ES_INDEX_INTEGRATION_ENABLED,
   PORT,
   NODE_ENV,
   DEPLOY_ENV,

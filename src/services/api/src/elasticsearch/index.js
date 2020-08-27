@@ -1,6 +1,13 @@
 import graphql from 'graphql'
 import fetch from 'node-fetch'
-import { ES_HOST_ADDRESS, ES_INDEX, NODE_ENV, CATALOGUE_SECRET } from '../config.js'
+import {
+  ES_HOST_ADDRESS,
+  ES_INDEX,
+  NODE_ENV,
+  CATALOGUE_SECRET,
+  ES_TEMPLATE_INTEGRATION_ENABLED,
+  ES_INDEX_INTEGRATION_ENABLED,
+} from '../config.js'
 import mappings from './mappings.json'
 import settings from './settings.json'
 import schema from '../graphql/schema/index.js'
@@ -14,25 +21,27 @@ export const configure = async () => {
    * allowed to fail, since it indicates that
    * elasticsearch is unavailable
    */
-  const response = await fetch(TEMPLATE_URI, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      index_patterns: [ES_INDEX],
-      template: {
-        settings,
-        mappings,
+  if (ES_TEMPLATE_INTEGRATION_ENABLED === 'true') {
+    const response = await fetch(TEMPLATE_URI, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    }),
-  })
-    .then(res => res.json())
-    .catch(error => {
-      throw new Error(`Unable to configure Elasticsearch template: ${error.message}`)
+      body: JSON.stringify({
+        index_patterns: [ES_INDEX],
+        template: {
+          settings,
+          mappings,
+        },
+      }),
     })
+      .then(res => res.json())
+      .catch(error => {
+        throw new Error(`Unable to configure Elasticsearch template: ${error.message}`)
+      })
 
-  console.log(`Elasticsearch ${ES_INDEX} index template configured`, response)
+    console.log(`Elasticsearch ${ES_INDEX} index template configured`, response)
+  }
 
   /**
    * Try to re-integrate the Elasticsearch documents
@@ -52,37 +61,39 @@ export const configure = async () => {
    * don't have to wait for it to fail before you
    * can use the API
    */
-  execute(
-    schema,
-    ` query ($authorizationCode: String!) {
-      catalogue {
-        refreshIndex(authorizationCode: $authorizationCode)
+  if (ES_INDEX_INTEGRATION_ENABLED === 'true') {
+    execute(
+      schema,
+      ` query ($authorizationCode: String!) {
+        catalogue {
+          refreshIndex(authorizationCode: $authorizationCode)
+        }
       }
-    }
-    `,
-    null,
-    null,
-    {
-      authorizationCode: CATALOGUE_SECRET,
-    }
-  )
-    .then(({ data, errors }) => {
-      const { refreshIndex } = data.catalogue
-      if (errors || refreshIndex.error) {
-        throw new Error(
-          `Unable to update the Elasticsearch integration on API startup. This is fine for development but NOT for production. ${
-            errors ? JSON.stringify(errors) : refreshIndex.error
-          }`
-        )
-      } else {
-        console.log('Elasticsearch integration updated', refreshIndex)
+      `,
+      null,
+      null,
+      {
+        authorizationCode: CATALOGUE_SECRET,
       }
-    })
-    .catch(error => {
-      if (NODE_ENV === 'production') {
-        throw error
-      } else {
-        console.error(error)
-      }
-    })
+    )
+      .then(({ data, errors }) => {
+        const { refreshIndex } = data.catalogue
+        if (errors || refreshIndex.error) {
+          throw new Error(
+            `Unable to update the Elasticsearch integration on API startup. This is fine for development but NOT for production. ${
+              errors ? JSON.stringify(errors) : refreshIndex.error
+            }`
+          )
+        } else {
+          console.log('Elasticsearch integration updated', refreshIndex)
+        }
+      })
+      .catch(error => {
+        if (NODE_ENV === 'production') {
+          throw error
+        } else {
+          console.error(error)
+        }
+      })
+  }
 }
