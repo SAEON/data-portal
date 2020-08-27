@@ -100,7 +100,7 @@ export default () => {
           {({ index, style }) => {
             const [id, score] = searchResults[index]
             const { DOI, description, ploneId, layerId, LAYERS, uri } = layers.find(
-              ({ id: layerId }) => layerId === id
+              ({ id: _id }) => _id === id
             )
 
             return (

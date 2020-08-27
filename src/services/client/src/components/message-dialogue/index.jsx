@@ -18,11 +18,12 @@ export default ({
   dialogueContentProps,
   dialogueProps,
   paperProps,
+  style = {},
 }) => {
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
 
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div style={{ ...style }} onClick={e => e.stopPropagation()}>
       <Tooltip placement="right-end" title={tooltipTitle}>
         <IconButton
           onClick={e => {
