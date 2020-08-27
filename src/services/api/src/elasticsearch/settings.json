@@ -4,7 +4,7 @@
       "filter": {
         "vocabulary_mapping": {
           "type": "synonym",
-          "synonyms": ["bryan, mark, kyle, leo, zach, rainfall"]
+          "synonyms": ["bryan, rainfall", "mark, rainfall", "kyle, rainfall", "leo, rainfall", "zach, rainfall"]
         }
       },
       "analyzer": {
