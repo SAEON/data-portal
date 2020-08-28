@@ -12,7 +12,7 @@ import {
   CardContent,
   IconButton,
 } from '@material-ui/core'
-import { DragIndicator, Close as CloseIcon } from '@material-ui/icons'
+import { DragIndicator, Close as CloseIcon, ZoomIn as ZoomInIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { MessageDialogue, Record, Slider } from '../../../../../'
 import {
@@ -39,11 +39,11 @@ export default () => {
         .map(layer => {
           const id = layer.get('id')
           const title = layer.get('title')
-          const visible = layer.get('visible')
+          const visible = layer.getVisible()
 
           if (id === 'terrestrisBaseMap') return undefined
 
-          const { ploneId } = layers.find(({ layerId }) => layerId === id)
+          const { ploneId, geoExtent } = layers.find(({ layerId }) => layerId === id)
 
           return (
             <div key={id}>
@@ -83,6 +83,19 @@ export default () => {
                     {/* Content */}
                     <Collapse in={expanded}>
                       <CardContent style={{ display: 'flex' }}>
+                        {/* Zoom to layer extent */}
+                        <Tooltip placement="top" title="Zoom to layer extent">
+                          <IconButton
+                            style={{ marginLeft: 'auto', alignSelf: 'center' }}
+                            size="small"
+                            onClick={() => {
+                              proxy.getView().fit(geoExtent, { duration: 1000 })
+                            }}
+                          >
+                            <ZoomInIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+
                         {/* Toggle layer visibility */}
                         <ToggleVisibility
                           visible={visible}
@@ -108,7 +121,10 @@ export default () => {
                               </IconButton>
                             </div>
                           )}
-                          tooltipTitle={'Show layer metadata and download links'}
+                          tooltipProps={{
+                            placement: 'top',
+                            title: 'Show layer metadata and download links',
+                          }}
                           iconProps={{ size: 'small', fontSize: 'small' }}
                           dialogueContentProps={{ style: { padding: 0 } }}
                           dialogueProps={{ fullWidth: true }}

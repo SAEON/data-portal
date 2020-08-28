@@ -26,8 +26,5 @@ for directory in src/services/*; do
   eval ${CMD}
 done
 
-echo "Giving NPM a chance to reflect pushed packages..."
-sleep 30
-
 # Install package dependencies
 npm run install-package-dependencies

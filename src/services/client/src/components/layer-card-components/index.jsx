@@ -11,7 +11,7 @@ import {
 
 export const AddLayer = ({ onClick }) => {
   return (
-    <Tooltip title="Add data layer to map">
+    <Tooltip placement="right" title="Add data layer to map">
       <IconButton onClick={onClick} style={{ marginLeft: 'auto' }} size="small">
         <AddIcon fontSize="small" />
       </IconButton>
@@ -21,7 +21,7 @@ export const AddLayer = ({ onClick }) => {
 
 export const DeleteLayer = ({ onClick }) => {
   return (
-    <Tooltip title="Remove layer from the map (re-add via the search tab)">
+    <Tooltip placement="top" title="Remove layer from the map (re-add via the search tab)">
       <IconButton size="small" onClick={onClick}>
         <DeleteIcon fontSize="small" />
       </IconButton>
@@ -39,14 +39,10 @@ export const ExpandLayer = ({ expanded, toggleExpanded }) => {
   )
 }
 
-export const ToggleVisibility = ({ visible, toggleVisible }) => {
+export const ToggleVisibility = ({ visible, toggleVisible, ...props }) => {
   return (
-    <Tooltip title="Show/hide layer">
-      <IconButton
-        style={{ marginLeft: 'auto', alignSelf: 'center' }}
-        size="small"
-        onClick={toggleVisible}
-      >
+    <Tooltip placement="top" title="Show/hide layer">
+      <IconButton {...props} size="small" onClick={toggleVisible}>
         {visible ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}
       </IconButton>
     </Tooltip>

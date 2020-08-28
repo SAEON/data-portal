@@ -77,6 +77,7 @@ export default () => {
                       <CardContent style={{ display: 'flex' }}>
                         {/* Toggle layer visibility */}
                         <ToggleVisibility
+                          style={{ marginLeft: 'auto', alignSelf: 'center' }}
                           visible={visible}
                           toggleVisible={() => layer.setVisible(!visible)}
                         />

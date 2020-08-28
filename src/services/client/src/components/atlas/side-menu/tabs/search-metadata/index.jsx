@@ -159,7 +159,10 @@ export default () => {
                           </IconButton>
                         </div>
                       )}
-                      tooltipTitle={`${description} (score: ${score?.toFixed(2) || 'NA'})`}
+                      tooltipProps={{
+                        placement: 'right',
+                        title: `${description} (score: ${score?.toFixed(2) || 'NA'})`,
+                      }}
                       iconProps={{ size: 'small', fontSize: 'small' }}
                       dialogueContentProps={{ style: { padding: 0 } }}
                       dialogueProps={{ fullWidth: true }}

@@ -22,5 +22,8 @@ for directory in src/packages/*; do
   eval ${CMD}
 done
 
+echo "Giving NPM a chance to reflect pushed packages..."
+sleep 30
+
 # Update all packages
 npm run update-package-dependencies

@@ -16,8 +16,8 @@ export default () => {
    */
   useEffect(() => {
     if (layers.length <= MAX_AUTO_LAYERS) {
-      proxy.addLayers({
-        layers: layers.map(({ uri, description: title, layerId, LAYERS }) => {
+      proxy.addLayers(
+        layers.map(({ uri, description: title, layerId, LAYERS }) => {
           return createLayer({
             layerType: LayerTypes.TileWMS,
             id: layerId,
@@ -25,9 +25,8 @@ export default () => {
             uri,
             LAYERS,
           })
-        }),
-        rerender: true,
-      })
+        })
+      )
     }
   }, [layers, proxy])
 

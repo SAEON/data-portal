@@ -11,7 +11,7 @@ import { Info as InfoIcon } from '@material-ui/icons'
 
 export default ({
   iconProps,
-  tooltipTitle = 'Tooltip title missing',
+  tooltipProps,
   title = 'Title missing',
   text = 'Text missing',
   children = undefined,
@@ -24,7 +24,7 @@ export default ({
 
   return (
     <div style={{ ...style }} onClick={e => e.stopPropagation()}>
-      <Tooltip placement="right-end" title={tooltipTitle}>
+      <Tooltip placement="right-end" {...tooltipProps}>
         <IconButton
           onClick={e => {
             e.stopPropagation()
