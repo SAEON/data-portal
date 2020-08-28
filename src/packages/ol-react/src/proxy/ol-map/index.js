@@ -22,7 +22,7 @@ export default ({ map, rerender }) => {
       _self,
 
       /**
-       * ol/Map proxy properties
+       * ol/Map proxy target properties
        */
       {
         addLayer: addLayer(_self),

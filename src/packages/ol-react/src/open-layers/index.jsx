@@ -32,7 +32,7 @@ export default ({ layers, viewOptions, children, style, className }) => {
         )
       ),
     })
-  }, [])
+  }, [layers, viewOptions])
 
   useLayoutEffect(() => {
     map.setTarget(mapDomRef.current)
