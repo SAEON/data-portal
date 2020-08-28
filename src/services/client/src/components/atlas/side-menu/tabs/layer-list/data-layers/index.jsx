@@ -1,6 +1,5 @@
 import React, { useContext, forwardRef } from 'react'
 import { MapContext } from '../../../../../../modules/provider-map'
-import { debounce } from '../../../../../../lib/fns'
 import {
   Box,
   Card,
@@ -13,25 +12,27 @@ import {
   CardContent,
   IconButton,
 } from '@material-ui/core'
-import {
-  DragIndicator,
-  ExpandLess,
-  ExpandMore,
-  Delete as DeleteIcon,
-  Visibility,
-  VisibilityOff,
-  Close as CloseIcon,
-} from '@material-ui/icons'
+import { DragIndicator, Close as CloseIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { MessageDialogue, Record, Slider } from '../../../../../'
+import {
+  ToggleVisibility,
+  DeleteLayer,
+  ExpandLayer,
+  AddLayer,
+} from '../../../../../layer-card-components'
 import { AtlasContext } from '../../../../state'
+import { TabsContext } from '../../../'
+
+const LAYER_SELECTION_TAB_INDEX = 1
 
 export default () => {
   const { proxy } = useContext(MapContext)
   const { layers } = useContext(AtlasContext)
+  const { setActiveTabIndex } = useContext(TabsContext)
 
   return (
-    <Box m={1}>
+    <Box style={{ display: 'flex', flexDirection: 'column' }}>
       {proxy
         .getLayers()
         .getArray()
@@ -70,16 +71,10 @@ export default () => {
                             </Tooltip>
 
                             {/* Expand layer info */}
-                            <IconButton
-                              style={{ marginLeft: 'auto' }}
-                              onClick={() => updateForm({ expanded: !expanded })}
-                            >
-                              {expanded ? (
-                                <ExpandLess fontSize="small" />
-                              ) : (
-                                <ExpandMore fontSize="small" />
-                              )}
-                            </IconButton>
+                            <ExpandLayer
+                              expanded={expanded}
+                              toggleExpanded={() => updateForm({ expanded: !expanded })}
+                            />
                           </Toolbar>
                         </AppBar>
                       ))}
@@ -89,17 +84,10 @@ export default () => {
                     <Collapse in={expanded}>
                       <CardContent style={{ display: 'flex' }}>
                         {/* Toggle layer visibility */}
-                        <IconButton
-                          style={{ marginLeft: 'auto', alignSelf: 'center' }}
-                          size="small"
-                          onClick={() => layer.setVisible(!visible)}
-                        >
-                          {visible ? (
-                            <Visibility fontSize="small" />
-                          ) : (
-                            <VisibilityOff fontSize="small" />
-                          )}
-                        </IconButton>
+                        <ToggleVisibility
+                          visible={visible}
+                          toggleVisible={() => layer.setVisible(!visible)}
+                        />
 
                         {/* Layer info */}
                         <MessageDialogue
@@ -120,7 +108,7 @@ export default () => {
                               </IconButton>
                             </div>
                           )}
-                          tooltipTitle={'Show full layer info'}
+                          tooltipTitle={'Show layer metadata and download links'}
                           iconProps={{ size: 'small', fontSize: 'small' }}
                           dialogueContentProps={{ style: { padding: 0 } }}
                           dialogueProps={{ fullWidth: true }}
@@ -130,9 +118,7 @@ export default () => {
                         </MessageDialogue>
 
                         {/* Delete layer */}
-                        <IconButton size="small" onClick={() => proxy.removeLayer(layer)}>
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
+                        <DeleteLayer onClick={() => proxy.removeLayer(layer)} />
                       </CardContent>
                       <CardContent>
                         <Slider
@@ -149,6 +135,7 @@ export default () => {
           )
         })
         .filter(_ => _)}
+      <AddLayer onClick={() => setActiveTabIndex(LAYER_SELECTION_TAB_INDEX)} />
     </Box>
   )
 }

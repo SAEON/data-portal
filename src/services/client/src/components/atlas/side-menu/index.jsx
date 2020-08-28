@@ -1,8 +1,18 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 import { useMenu } from '@saeon/snap-menus'
 import Tabs from './tabs'
 
 export const SideMenuContext = createContext()
+export const TabsContext = createContext()
+
+const TabContextProvider = ({ children }) => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  return (
+    <TabsContext.Provider value={{ activeTabIndex, setActiveTabIndex }}>
+      {children}
+    </TabsContext.Provider>
+  )
+}
 
 export default ({ snapMenusContainer }) => {
   const RecordsMenu = useMenu({ id: 'records' })
@@ -20,7 +30,9 @@ export default ({ snapMenusContainer }) => {
       {({ width, height }) => {
         return (
           <SideMenuContext.Provider value={{ width, height }}>
-            <Tabs />
+            <TabContextProvider>
+              <Tabs />
+            </TabContextProvider>
           </SideMenuContext.Provider>
         )
       }}

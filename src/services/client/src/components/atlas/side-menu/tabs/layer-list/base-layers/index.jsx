@@ -1,34 +1,32 @@
 import React, { useContext, forwardRef } from 'react'
 import { MapContext } from '../../../../../../modules/provider-map'
-import { debounce } from '../../../../../../lib/fns'
 import {
   Box,
   Card,
   CardHeader,
   AppBar,
   Toolbar,
-  Icon as IconButton,
+  IconButton,
   Typography,
   Tooltip,
   Collapse,
   CardContent,
 } from '@material-ui/core'
-import {
-  DragIndicator,
-  ExpandLess,
-  ExpandMore,
-  Delete as DeleteIcon,
-  Visibility,
-  VisibilityOff,
-} from '@material-ui/icons'
+import { DragIndicator, Info as InfoIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { Slider } from '../../../../../'
+import {
+  ToggleVisibility,
+  DeleteLayer,
+  ExpandLayer,
+  AddLayer,
+} from '../../../../../layer-card-components'
 
 export default () => {
   const { proxy } = useContext(MapContext)
 
   return (
-    <Box m={1}>
+    <Box style={{ display: 'flex', flexDirection: 'column' }}>
       {proxy
         .getLayers()
         .getArray()
@@ -65,33 +63,10 @@ export default () => {
                             </Tooltip>
 
                             {/* Expand layer info */}
-                            <IconButton
-                              style={{ marginLeft: 'auto' }}
-                              onClick={() => updateForm({ expanded: !expanded })}
-                            >
-                              {expanded ? (
-                                <ExpandLess fontSize="small" />
-                              ) : (
-                                <ExpandMore fontSize="small" />
-                              )}
-                            </IconButton>
-
-                            {/* Toggle layer visibility */}
-                            <IconButton onClick={() => layer.setVisible(!visible)}>
-                              {visible ? (
-                                <Visibility fontSize="small" />
-                              ) : (
-                                <VisibilityOff fontSize="small" />
-                              )}
-                            </IconButton>
-
-                            {/* Delete layer */}
-                            <IconButton
-                              onClick={() => proxy.removeLayer(layer)}
-                              style={{ marginRight: 10 }}
-                            >
-                              <DeleteIcon fontSize="small" />
-                            </IconButton>
+                            <ExpandLayer
+                              expanded={expanded}
+                              toggleExpanded={() => updateForm({ expanded: !expanded })}
+                            />
                           </Toolbar>
                         </AppBar>
                       ))}
@@ -99,6 +74,24 @@ export default () => {
 
                     {/* Content */}
                     <Collapse in={expanded}>
+                      <CardContent style={{ display: 'flex' }}>
+                        {/* Toggle layer visibility */}
+                        <ToggleVisibility
+                          visible={visible}
+                          toggleVisible={() => layer.setVisible(!visible)}
+                        />
+
+                        {/* Show layer info */}
+                        <IconButton
+                          size="small"
+                          onClick={() => alert('TODO - Add GeoServer/ESRI/Base layer info')}
+                        >
+                          <InfoIcon fontSize="small" />
+                        </IconButton>
+
+                        {/* Delete layer */}
+                        <DeleteLayer onClick={() => proxy.removeLayer(layer)} />
+                      </CardContent>
                       <CardContent>
                         <Slider
                           defaultValue={layer.get('opacity') * 100}
@@ -114,6 +107,7 @@ export default () => {
           )
         })
         .filter(_ => _)}
+      <AddLayer onClick={() => alert('TODO - Allow adding base layers')} />
     </Box>
   )
 }

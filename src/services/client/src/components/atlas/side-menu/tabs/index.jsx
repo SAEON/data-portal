@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { Tabs, Tab, AppBar, Box, Fade } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { Tabs, Tab, AppBar, Fade } from '@material-ui/core'
 import { Search as SearchIcon, Layers as LayersIcon } from '@material-ui/icons'
+import { TabsContext } from '../'
 
 // Tab panels
 import LayerList from './layer-list'
@@ -25,7 +26,7 @@ const TabPanel = ({ children, value, index }) => (
 )
 
 export default () => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const { activeTabIndex, setActiveTabIndex } = useContext(TabsContext)
 
   return (
     <div>
