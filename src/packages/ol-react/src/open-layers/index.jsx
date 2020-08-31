@@ -32,7 +32,7 @@ export default ({ layers, viewOptions, children, style, className }) => {
         )
       ),
     })
-  }, [layers, viewOptions])
+  }, []) // TODO - this renders to often, which is why the ES-LINT fix breaks the code
 
   useLayoutEffect(() => {
     map.setTarget(mapDomRef.current)
