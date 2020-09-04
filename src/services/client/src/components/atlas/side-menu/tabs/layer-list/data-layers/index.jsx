@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import { DragIndicator, Close as CloseIcon, ZoomIn as ZoomInIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { MessageDialogue, Record, Slider } from '../../../../../'
+import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../'
 import {
   ToggleVisibility,
   DeleteLayer,
@@ -43,7 +43,9 @@ export default () => {
 
           if (id === 'terrestrisBaseMap') return undefined
 
-          const { ploneId, geoExtent } = layers.find(({ layerId }) => layerId === id)
+          const { ploneId, geoExtent, immutableResource } = layers.find(
+            ({ layerId }) => layerId === id
+          )
 
           return (
             <div key={id}>
@@ -82,26 +84,8 @@ export default () => {
 
                     {/* Content */}
                     <Collapse in={expanded}>
-                      <CardContent style={{ display: 'flex' }}>
-                        {/* Zoom to layer extent */}
-                        <Tooltip placement="top" title="Zoom to layer extent">
-                          <IconButton
-                            style={{ marginLeft: 'auto', alignSelf: 'center' }}
-                            size="small"
-                            onClick={() => {
-                              proxy.getView().fit(geoExtent, { duration: 1000 })
-                            }}
-                          >
-                            <ZoomInIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-
-                        {/* Toggle layer visibility */}
-                        <ToggleVisibility
-                          visible={visible}
-                          toggleVisible={() => layer.setVisible(!visible)}
-                        />
-
+                      {/* LAYER CONTROLS */}
+                      <CardContent style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         {/* Layer info */}
                         <MessageDialogue
                           onClick
@@ -123,7 +107,7 @@ export default () => {
                           )}
                           tooltipProps={{
                             placement: 'top',
-                            title: 'Show layer metadata and download links',
+                            title: 'Show layer metadata',
                           }}
                           iconProps={{ size: 'small', fontSize: 'small' }}
                           dialogueContentProps={{ style: { padding: 0 } }}
@@ -133,9 +117,38 @@ export default () => {
                           <Record id={ploneId} />
                         </MessageDialogue>
 
+                        {/* Data Download */}
+                        <DataDownloadButton
+                          style={{ alignSelf: 'center', marginRight: 16 }}
+                          size="small"
+                          fontSize="small"
+                          immutableResource={immutableResource}
+                        />
+
+                        {/* Zoom to layer extent */}
+                        <Tooltip placement="top" title="Zoom to layer extent">
+                          <IconButton
+                            style={{ alignSelf: 'center' }}
+                            size="small"
+                            onClick={() => {
+                              proxy.getView().fit(geoExtent, { duration: 1000 })
+                            }}
+                          >
+                            <ZoomInIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+
+                        {/* Toggle layer visibility */}
+                        <ToggleVisibility
+                          visible={visible}
+                          toggleVisible={() => layer.setVisible(!visible)}
+                        />
+
                         {/* Delete layer */}
                         <DeleteLayer onClick={() => proxy.removeLayer(layer)} />
                       </CardContent>
+
+                      {/* MAP CONTROLS */}
                       <CardContent>
                         <Slider
                           defaultValue={layer.get('opacity') * 100}

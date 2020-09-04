@@ -1,4 +1,3 @@
-import hash from 'object-hash'
 import graphql from 'graphql'
 import Catalogue from '../../../../lib/catalogue.js'
 import fetch from 'node-fetch'
@@ -17,7 +16,8 @@ const { GraphQLError } = graphql
  * The ES source will need to be updated for this integration
  *
  * TODO
- * An additional proxy rule for the new elasticsearch instance
+ * This should either be made available by username / password
+ * or it should be removed from GraphQL
  */
 const oldCatalogue = new Catalogue({
   dslAddress: `${HTTP_PROXY}/proxy/saeon-elk`,
@@ -69,6 +69,26 @@ export default async (_, args) => {
   }
 
   try {
+    /**
+     * For now, just delete and recreate the index on app start
+     * Updating documents doesn't seem to update the mapping
+     */
+    await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_delete_by_query`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: { match_all: {} } }),
+    })
+      .then(res => res.json())
+      .then(json => console.log(`${ES_INDEX} data deleted on refresh`, json))
+      .catch(error => {
+        throw error
+      })
+
+    /**
+     * Fetch from the source, and push to the destination in batches
+     */
     let iterator = await makeIterator()
     while (!iterator.done) {
       // This address isn't available via the proxy, and is a temporary solution
@@ -83,7 +103,7 @@ export default async (_, args) => {
               Object.fromEntries(
                 Object.entries(_source.metadata_json).filter(([k]) => k !== 'originalMetadata')
               ),
-              { id: hash(_source.metadata_json.identifier) }
+              { id: _source.record_id }
             )
           )
           .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)

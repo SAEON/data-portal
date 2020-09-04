@@ -2,9 +2,6 @@ import React, { createContext, useMemo } from 'react'
 import npmUrl from 'url'
 import { CATALOGUE_API_ADDRESS } from '../../../config'
 import WKT from 'ol/format/WKT'
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 
 const SPATIALDATA_PROXY = `${CATALOGUE_API_ADDRESS}/proxy/saeon-spatialdata`
@@ -19,7 +16,7 @@ export default ({ children, gqlData }) => {
       gqlData.data.catalogue.records.nodes
         .map(({ target }) => {
           const { _source } = target
-          const { id, identifier, alternateIdentifiers, geoLocations } = _source
+          const { id, identifier, alternateIdentifiers, geoLocations, immutableResource } = _source
           const DOI =
             identifier && identifier.identifierType.toUpperCase() === 'DOI'
               ? identifier.identifier
@@ -54,6 +51,7 @@ export default ({ children, gqlData }) => {
                 layerId,
                 LAYERS,
                 geoExtent,
+                immutableResource,
               }
             })
         })

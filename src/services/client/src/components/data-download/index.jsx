@@ -1,9 +1,9 @@
 import React from 'react'
-import { Tooltip, Button } from '@material-ui/core'
+import { Tooltip, Button, IconButton } from '@material-ui/core'
 import { GetApp as GetAppIcon } from '@material-ui/icons'
 import SimpleLink from '../link'
 
-export default ({ immutableResource, children, ...props }) => {
+export default ({ immutableResource, children, fontSize = 'default', ...props }) => {
   return (
     <SimpleLink style={{ display: 'block' }} uri={immutableResource.resourceURL}>
       <Tooltip
@@ -12,9 +12,15 @@ export default ({ immutableResource, children, ...props }) => {
           ''
         )})`}
       >
-        <Button {...props} startIcon={<GetAppIcon />}>
-          {children}
-        </Button>
+        {children ? (
+          <Button {...props} startIcon={<GetAppIcon />}>
+            {children}
+          </Button>
+        ) : (
+          <IconButton {...props}>
+            <GetAppIcon fontSize={fontSize} />
+          </IconButton>
+        )}
       </Tooltip>
     </SimpleLink>
   )
