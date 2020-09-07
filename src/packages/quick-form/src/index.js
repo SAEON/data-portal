@@ -15,8 +15,8 @@ export default ({ children, effects, ...formFields }) => {
     updateAllFields(Object.assign({ ...fields }, obj))
   }
 
-  return children({
-    updateForm,
+  return children(
+    updateForm, {
     ...fields,
   })
 }

@@ -21,10 +21,10 @@ const Component = props => (
     <SomeComponent>
     {/* Specify form fields as attributes */}
     <QuickForm myBooleanValue={false}>
-      {({updateForm, ...fields}) => (
+      {(updateForm, { myBooleanValue }) => (
         <div
          onClick={() => updateForm({myBooleanValue: !myBooleanValue})}
-        >{fields.myBooleanValue}</div>
+        >{myBooleanValue}</div>
       )}
     </QuickForm>
     </SomeComponent>
@@ -44,7 +44,7 @@ The QuickForm component will (or at least should) rerender everytime a form attr
    ... etc.
  ]}
 >
-  {({updateForm, ...fields}) => (
+  {(updateForm, { ...fields }) => (
     <div
       onClick={() => updateForm({myBooleanValue: !myBooleanValue})}
     >{fields.myBooleanValue}</div>

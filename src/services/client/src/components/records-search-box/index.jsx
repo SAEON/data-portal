@@ -3,15 +3,15 @@ import { gql, useQuery } from '@apollo/client'
 import { TextField, Chip, Grid, Typography, CircularProgress } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
-import { UriStateContext } from '../../modules/provider-uri-state'
+import { GlobalContext } from '../../modules/provider-uri-state'
 import ListboxComponent from '../autocomplete/list-box-component'
 
 const FIELDS = ['publicationYear', 'publisher.raw', 'subjects.subject.raw', 'creators.name.raw']
 const TERM_LIMIT = 10000
 
 export default ({ ...props }) => {
-  const { getUriState, setUriState } = useContext(UriStateContext)
-  const { terms } = getUriState({ splitString: true })
+  const { global, setGlobal } = useContext(GlobalContext)
+  const { terms } = global
 
   const { error, loading, data } = useQuery(
     gql`
@@ -38,15 +38,15 @@ export default ({ ...props }) => {
       <Grid item xs={12}>
         <Autocomplete
           onChange={(e, values) =>
-            setUriState({
+            setGlobal({
               terms: values.map(value => FIELDS.map(field => ({ field, value }))).flat(),
             })
           }
           value={
             [
               ...new Set(
-                terms?.map(str => {
-                  const { value } = JSON.parse(str)
+                terms?.map(term => {
+                  const { value } = term
                   return value
                 })
               ),
