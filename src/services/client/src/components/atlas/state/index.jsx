@@ -16,7 +16,17 @@ export default ({ children, gqlData }) => {
       gqlData.data.catalogue.records.nodes
         .map(({ target }) => {
           const { _source } = target
-          const { id, identifier, alternateIdentifiers, geoLocations, immutableResource } = _source
+          const {
+            id,
+            identifier,
+            alternateIdentifiers,
+            geoLocations,
+            immutableResource,
+            linkedResources,
+          } = _source
+
+          if (!linkedResources) return undefined
+
           const DOI =
             identifier && identifier.identifierType.toUpperCase() === 'DOI'
               ? identifier.identifier
@@ -25,17 +35,22 @@ export default ({ children, gqlData }) => {
             ({ alternateIdentifierType }) => alternateIdentifierType.toLowerCase() === 'plone'
           ).alternateIdentifier
 
-          const geoExtent = new Polygon(
-            wkt
-              .readGeometry(geoLocations[0].geoLocationBox)
-              .getCoordinates()
-              .map(array => array.map(([y, x]) => [x, y]))
-          )
-            .getExtent()
-            .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)) // subtract for minX/minY, expand for maxX, maxY
+          let geoExtent
+          try {
+            geoExtent = new Polygon(
+              wkt
+                .readGeometry(geoLocations[0].geoLocationBox)
+                .getCoordinates()
+                .map(array => array.map(([y, x]) => [x, y]))
+            )
+              .getExtent()
+              .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)) // subtract for minX/minY, expand for maxX, maxY
+          } catch {
+            geoExtent = undefined
+          }
 
-          return target._source.linkedResources
-            .filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
+          return linkedResources
+            ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
             .map(({ resourceURL, resourceDescription: description }) => {
               const { pathname, query, port, hostname } = npmUrl.parse(resourceURL, true)
               const { layers: LAYERS } = query
@@ -55,6 +70,7 @@ export default ({ children, gqlData }) => {
               }
             })
         })
+        .filter(_ => _)
         .flat(),
     [gqlData]
   )
