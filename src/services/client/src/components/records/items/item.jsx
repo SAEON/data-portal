@@ -85,7 +85,7 @@ export default memo(
             <Fade key="2" in={!codeView}>
               <div>
                 <QuickForm collapsed={true}>
-                  {({ updateForm, collapsed }) => {
+                  {(update, { collapsed }) => {
                     const content = descriptions?.[0]?.description || 'No description'
                     return (
                       <Collapse in={!collapsed} collapsedHeight={80}>
@@ -94,7 +94,7 @@ export default memo(
                           {descriptions?.[0]?.description.length > 300 ? (
                             <IconButton
                               style={{ padding: 0 }}
-                              onClick={() => updateForm({ collapsed: !collapsed })}
+                              onClick={() => update({ collapsed: !collapsed })}
                               color="primary"
                             >
                               {collapsed ? (

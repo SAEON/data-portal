@@ -12,7 +12,7 @@ import {
   Fade,
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import { UriStateContext } from '../../../../modules/provider-uri-state'
+import { GlobalContext } from '../../../../modules/provider-global'
 
 const LIST_SIZE = 3
 
@@ -21,8 +21,8 @@ const FIELDS = ['publicationYear', 'publisher.raw', 'subjects.subject.raw', 'cre
 export default ({ results, title }) => {
   const [showAll, toggleShowAll] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
-  const { getUriState, setUriState } = useContext(UriStateContext)
-  const terms = getUriState({ splitString: true }).terms?.map(term => JSON.parse(term))
+  const { global, setGlobal } = useContext(GlobalContext)
+  const { terms } = global
 
   const sortedResults = results
     ? [...results].sort(a => (terms?.map(({ value }) => value)?.includes(a.key) ? -1 : 1))
@@ -83,11 +83,11 @@ export default ({ results, title }) => {
                         checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
                         onChange={() => {
                           if (terms?.map(({ value }) => value)?.includes(key)) {
-                            setUriState({
+                            setGlobal({
                               terms: terms?.filter(({ value }) => value !== key),
                             })
                           } else {
-                            setUriState({
+                            setGlobal({
                               terms: [
                                 ...new Set([
                                   ...terms,

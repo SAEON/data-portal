@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import ResultItem from './item'
 import { Grid, Typography, Card } from '@material-ui/core'
-import { UriStateContext } from '../../../modules/provider-uri-state'
+import { GlobalContext } from '../../../modules/provider-global'
 import { isMobile } from 'react-device-detect'
 
 export default ({ results }) => {
-  const { setUriState, getUriState } = useContext(UriStateContext)
+  const { global, setGlobal } = useContext(GlobalContext)
 
   return (
     <Card
@@ -42,15 +42,15 @@ export default ({ results }) => {
                     ?.map(() => DOI)
                 ),
               ]?.map(() => {
-                const toggled = getUriState({ splitString: true }).layers?.includes(DOI)
+                const toggled = global.layers?.includes(DOI)
                 return {
                   id: DOI,
                   toggled,
                   toggle: () => {
-                    setUriState({
+                    setGlobal({
                       layers: toggled
-                        ? [...getUriState({ splitString: true }).layers].filter(p => p !== DOI)
-                        : [...new Set([...(getUriState({ splitString: true }).layers || []), DOI])],
+                        ? [...global.layers].filter(p => p !== DOI)
+                        : [...new Set([...(global.layers || []), DOI])],
                     })
                   },
                 }

@@ -6,13 +6,13 @@ import { debounce } from '../../lib/fns'
 export default ({ defaultValue, updateValue, title }) => {
   return (
     <QuickForm effects={[debounce(updateValue)]} value={defaultValue}>
-      {({ updateForm, value }) => (
+      {(update, { value }) => (
         <div>
           <Typography variant="inherit">{title}</Typography>
           <Slider
             style={{ padding: 0 }}
             value={value}
-            onChange={(e, v) => updateForm({ value: v })}
+            onChange={(e, v) => update({ value: v })}
             step={0.00001}
             marks={false}
             min={1}

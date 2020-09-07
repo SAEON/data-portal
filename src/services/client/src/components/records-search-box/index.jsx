@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import { TextField, Chip, Grid, Typography, CircularProgress } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
-import { GlobalContext } from '../../modules/provider-uri-state'
+import { GlobalContext } from '../../modules/provider-global'
 import ListboxComponent from '../autocomplete/list-box-component'
 
 const FIELDS = ['publicationYear', 'publisher.raw', 'subjects.subject.raw', 'creators.name.raw']
@@ -42,16 +42,7 @@ export default ({ ...props }) => {
               terms: values.map(value => FIELDS.map(field => ({ field, value }))).flat(),
             })
           }
-          value={
-            [
-              ...new Set(
-                terms?.map(term => {
-                  const { value } = term
-                  return value
-                })
-              ),
-            ].filter(_ => _) || []
-          }
+          value={[...new Set(terms.map(({ value }) => value))].filter(_ => _) || []}
           multiple
           fullWidth
           limitTags={8}
@@ -83,13 +74,13 @@ export default ({ ...props }) => {
           }}
           renderInput={params => (
             <QuickForm inputValue="">
-              {({ updateForm, inputValue }) => {
+              {(update, { inputValue }) => {
                 return (
                   <TextField
                     {...params}
                     id="saeon-data-search"
                     size="medium"
-                    onChange={inputValue => updateForm({ inputValue })}
+                    onChange={inputValue => update({ inputValue })}
                     value={inputValue}
                     placeholder="Select tags"
                     variant="outlined"

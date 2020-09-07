@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
-import { UriStateContext } from '../modules/provider-uri-state'
+import { GlobalContext } from '../modules/provider-global'
 
 export default ({
   pageSize = 20,
@@ -8,7 +8,8 @@ export default ({
   endCursor = undefined,
   terms = undefined,
 } = {}) => {
-  const { getUriState } = useContext(UriStateContext)
+  const { global } = useContext(GlobalContext)
+  const { extent, terms: _terms, text } = global
 
   return useQuery(
     gql`
@@ -59,10 +60,9 @@ export default ({
           'subjects.subject.raw',
           'creators.name.raw',
         ],
-        extent: getUriState({ splitString: false }).extent || undefined,
-        terms:
-          terms || getUriState({ splitString: true })?.terms?.map(term => JSON.parse(term)) || [],
-        match: getUriState({ splitString: false }).text || undefined,
+        extent,
+        terms: terms || _terms,
+        match: text,
         size: pageSize,
         after: endCursor,
         before: startCursor,

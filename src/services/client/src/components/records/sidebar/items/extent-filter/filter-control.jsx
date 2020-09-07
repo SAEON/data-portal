@@ -6,7 +6,9 @@ import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
-import { UriStateContext } from '../../../../../modules/provider-uri-state'
+import { GlobalContext } from '../../../../../modules/provider-global'
+
+const wkt = new WKT()
 
 var draw
 var defaultZoom
@@ -19,21 +21,19 @@ export default ({ proxy }) => {
     source,
   })
 
-  const wkt = new WKT()
-
   defaultZoom = defaultZoom || proxy.getView().getZoom()
   defaultCenter = defaultCenter || proxy.getView().getCenter()
   const [selectActive, setSelectActive] = useState(false)
-  const { getUriState, setUriState } = useContext(UriStateContext)
-  const [extent, setExtent] = useState(getUriState({ splitString: false }).extent)
+  const { global, setGlobal } = useContext(GlobalContext)
+  const [extent, setExtent] = useState(global.extent)
 
   /**
-   * Mange the extent state locally for a snappier UI
+   * Manage the extent state locally for a snappier UI
    * And update the URI state when necessary
    */
   useEffect(() => {
-    setUriState({
-      extent: extent || '',
+    setGlobal({
+      extent: extent || undefined,
     })
   }, [extent])
 

@@ -45,7 +45,7 @@ export default () => {
           return (
             <div key={id}>
               <QuickForm>
-                {({ updateForm, expanded }) => (
+                {(update, { expanded }) => (
                   <Card style={{ marginBottom: 10 }}>
                     <CardHeader
                       title={
@@ -70,7 +70,7 @@ export default () => {
                             {/* Expand layer info */}
                             <ExpandLayer
                               expanded={expanded}
-                              toggleExpanded={() => updateForm({ expanded: !expanded })}
+                              toggleExpanded={() => update({ expanded: !expanded })}
                             />
                           </Toolbar>
                         </AppBar>

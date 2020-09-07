@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import Header from './header'
 import Sidebar from './sidebar'
 import Items from './items'
-import { UriStateContext } from '../../modules/provider-uri-state'
+import { GlobalContext } from '../../modules/provider-global'
 import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import { Loading } from '../../components'
@@ -20,9 +20,8 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
 
-  const { getUriState } = useContext(UriStateContext)
-  const terms = getUriState({ splitString: true }).terms?.map(term => JSON.parse(term)) || undefined
-  const { extent = undefined, text = undefined } = getUriState({ splitString: false })
+  const { global } = useContext(GlobalContext)
+  const { terms, extent = undefined, text = undefined } = global
 
   useEffect(() => {
     if (ref.current) {

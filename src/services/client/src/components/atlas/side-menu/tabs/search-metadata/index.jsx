@@ -61,14 +61,14 @@ export default () => {
           value={textSearch}
           effects={[debounce(({ value }) => setTextSearch(value), 250)]}
         >
-          {({ updateForm, value }) => (
+          {(update, { value }) => (
             <TextField
               autoComplete="off"
               fullWidth
               id="filter-available-layers"
               size="small"
               value={value}
-              onChange={e => updateForm({ value: e.target.value })}
+              onChange={e => update({ value: e.target.value })}
               placeholder="Sort layers..."
               variant="outlined"
               autoFocus

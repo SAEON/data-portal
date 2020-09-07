@@ -19,7 +19,7 @@ import {
   Explore as PreviewIcon,
   Close as CloseIcon,
 } from '@material-ui/icons'
-import { UriStateContext } from '../../../../modules/provider-uri-state'
+import { GlobalContext } from '../../../../modules/provider-global'
 
 /**
  * Selected previews are the record DOI
@@ -28,8 +28,8 @@ import { UriStateContext } from '../../../../modules/provider-uri-state'
 export default ({ title }) => {
   const history = useHistory()
   const [collapsed, setCollapsed] = useState(false)
-  const { getUriState, setUriState } = useContext(UriStateContext)
-  const { layers } = getUriState({ splitString: true })
+  const { global, setGlobal } = useContext(GlobalContext)
+  const { layers } = global
 
   return (
     <>
@@ -81,7 +81,7 @@ export default ({ title }) => {
                       color="primary"
                       checked={added}
                       onChange={() => {
-                        setUriState({
+                        setGlobal({
                           layers: added
                             ? [...layers].filter(p => p !== DOI)
                             : [...new Set([...(layers || []), DOI])],
@@ -128,7 +128,7 @@ export default ({ title }) => {
                     size="small"
                     variant="text"
                     startIcon={<CloseIcon />}
-                    onClick={() => setUriState({ layers: [] })}
+                    onClick={() => setGlobal({ layers: [] })}
                   >
                     Clear
                   </Button>

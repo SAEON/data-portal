@@ -41,7 +41,7 @@ export default () => {
         aria-describedby="Provide anonymous feedback"
       >
         <QuickForm text="" rating={0}>
-          {({ updateForm, text, rating }) => {
+          {(update, { text, rating }) => {
             const [submitFeedback, { error, loading, data }] = useMutation(gql`
               mutation submitFeedback($input: FeedbackInput!) {
                 submitFeedback(input: $input)
@@ -61,7 +61,7 @@ export default () => {
                     name="simple-controlled"
                     value={parseInt(rating, 10)}
                     onChange={({ target }) => {
-                      updateForm({ rating: parseInt(target.value, 10) })
+                      update({ rating: parseInt(target.value, 10) })
                     }}
                   />
                   <TextField
@@ -74,7 +74,7 @@ export default () => {
                     multiline
                     rows={4}
                     value={text}
-                    onChange={({ target }) => updateForm({ text: target.value })}
+                    onChange={({ target }) => update({ text: target.value })}
                     rowsMax={10}
                     variant="outlined"
                     fullWidth

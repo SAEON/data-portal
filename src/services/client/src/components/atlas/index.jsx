@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useRef, useContext } from 'react'
 import { Loading } from '../../components'
 import SideMenu from './side-menu'
-import { UriStateContext } from '../../modules/provider-uri-state'
+import { GlobalContext } from '../../modules/provider-global'
 import useCatalogue from '../../lib/useCatalogue'
 import { Typography } from '@material-ui/core'
 
@@ -22,13 +22,9 @@ const Map = lazy(() => import('./map'))
  *
  */
 export default () => {
-  console.log('rendering page')
   const snapMenusContainer = useRef()
-  const { getUriState } = useContext(UriStateContext)
-  let { layers: dois = undefined } = getUriState({ splitString: true })
-  const { layersearch = undefined } = getUriState({
-    splitString: false,
-  })
+  const { global } = useContext(GlobalContext)
+  const { layers: dois, layersearch } = global
 
   var gqlData = layersearch
     ? useCatalogue({ pageSize: 5000 })

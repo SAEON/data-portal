@@ -28,7 +28,7 @@ import { CLIENT_HOST_ADDRESS } from '../../config'
 import QuickForm from '@saeon/quick-form'
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
-import { UriStateContext } from '../../modules/provider-uri-state'
+import { GlobalContext } from '../../modules/provider-global'
 
 const pageSizes = [
   10,
@@ -53,13 +53,13 @@ export default ({
 }) => {
   const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
-  const { getUriState, setUriState } = useContext(UriStateContext)
-  const layers = getUriState({ splitString: true }).layers
+  const { global, setGlobal } = useContext(GlobalContext)
+  const { layers } = global
 
   const updateTextSearch = useCallback(
     debounce(({ value = '' }) => {
-      if (value !== getUriState({ splitString: false }).text) {
-        setUriState({ text: value })
+      if (value !== global.text) {
+        setGlobal({ text: value })
       }
     }, 500),
     []
@@ -89,8 +89,8 @@ export default ({
             </IconButton>
           )}
 
-          <QuickForm effects={[updateTextSearch]} value={getUriState({ splitString: false }).text}>
-            {({ updateForm, value }) => (
+          <QuickForm effects={[updateTextSearch]} value={global.text}>
+            {(update, { value }) => (
               <TextField
                 style={{ minWidth: '40%', marginLeft: 5 }}
                 autoComplete="off"
@@ -98,7 +98,7 @@ export default ({
                 size="small"
                 color="secondary"
                 value={value}
-                onChange={e => updateForm({ value: e.currentTarget.value })}
+                onChange={e => update({ value: e.currentTarget.value })}
                 placeholder="Filter current results..."
                 variant="outlined"
                 InputProps={{
@@ -136,9 +136,8 @@ export default ({
                 <IconButton
                   disabled={!resultsWithDOIs}
                   onClick={() =>
-                    history.push({
-                      pathname: '/atlas',
-                      search: window.location.search.replace(/layers.*?(&|$)/, 'layersearch=true'),
+                    setGlobal({ layersearch: true }, false, () => {
+                      history.push('/atlas')
                     })
                   }
                 >
@@ -162,7 +161,6 @@ export default ({
                   onClick={() =>
                     history.push({
                       pathname: '/atlas',
-                      search: `layers=${layers}`,
                     })
                   }
                 >

@@ -18,14 +18,14 @@ export default ({ id, options, setOption, selectedOptions = [], ...props }) => {
       getOptionLabel={option => `${option}`}
       renderInput={params => (
         <QuickForm inputValue="">
-          {({ updateForm, inputValue }) => {
+          {(update, { inputValue }) => {
             return (
               <TextField
                 {...params}
                 id={`${id}-text-input`}
                 autoFocus
                 size="small"
-                onChange={inputValue => updateForm({ inputValue })}
+                onChange={inputValue => update({ inputValue })}
                 value={inputValue}
                 {...props}
               />

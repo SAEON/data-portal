@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Grid, Typography, Chip, Card, CardContent, Fade } from '@material-ui/core'
-import { UriStateContext } from '../../modules/provider-uri-state'
+import { GlobalContext } from '../../modules/provider-global'
 import { terrestrisBaseMap } from '../../lib/ol'
+import { useHistory } from 'react-router-dom'
 import Header from './header'
 import { OlReact } from '@saeon/ol-react'
 import { Link as SimpleLink } from '..'
@@ -30,7 +31,8 @@ const Row = ({ title, children, ...props }) => (
 
 export default ({ json, id }) => {
   const [codeView, updateCodeView] = useState(false)
-  const { setUriState } = useContext(UriStateContext)
+  const { setGlobal } = useContext(GlobalContext)
+  const history = useHistory()
 
   if (!id || !json) {
     return 'Record not found'
@@ -181,14 +183,17 @@ export default ({ json, id }) => {
                             <Chip
                               size="small"
                               clickable
-                              onClick={() =>
-                                setUriState({
-                                  pathname: '/records',
-                                  terms: [
-                                    { field: 'subjects.subject.raw', value: subject.subject },
-                                  ],
-                                })
-                              }
+                              onClick={() => {
+                                setGlobal(
+                                  {
+                                    terms: [
+                                      { field: 'subjects.subject.raw', value: subject.subject },
+                                    ],
+                                  },
+                                  true
+                                )
+                                history.push('/records')
+                              }}
                               label={subject.subject.toUpperCase()}
                             />
                           </Grid>
