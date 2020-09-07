@@ -15,12 +15,7 @@ import {
 import { DragIndicator, Close as CloseIcon, ZoomIn as ZoomInIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../'
-import {
-  ToggleVisibility,
-  DeleteLayer,
-  ExpandLayer,
-  AddLayer,
-} from '../../../../../layer-card-components'
+import { ToggleVisibility, DeleteLayer, ExpandLayer, AddLayer } from '../../../../components'
 import { AtlasContext } from '../../../../state'
 import { TabsContext } from '../../../'
 
@@ -122,6 +117,7 @@ export default () => {
                           style={{ alignSelf: 'center', marginRight: 16 }}
                           size="small"
                           fontSize="small"
+                          tooltipPlacement="top"
                           immutableResource={immutableResource}
                         />
 

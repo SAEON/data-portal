@@ -15,12 +15,7 @@ import {
 import { DragIndicator, Info as InfoIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { Slider } from '../../../../../'
-import {
-  ToggleVisibility,
-  DeleteLayer,
-  ExpandLayer,
-  AddLayer,
-} from '../../../../../layer-card-components'
+import { ToggleVisibility, DeleteLayer, ExpandLayer, AddLayer } from '../../../../components'
 
 export default () => {
   const { proxy } = useContext(MapContext)
