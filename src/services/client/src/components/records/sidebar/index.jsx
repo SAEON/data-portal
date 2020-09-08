@@ -9,7 +9,7 @@ export default ({ catalogue }) => {
     <Fade in={Boolean(catalogue)}>
       <Grid container item xs={12}>
         {/* Result summary */}
-        <ResultContextSummary title="Preview Basket" />
+        <ResultContextSummary title="Selected Records" />
 
         {/* Area filter */}
         <ExtentFilter title="Filter by Extent" />

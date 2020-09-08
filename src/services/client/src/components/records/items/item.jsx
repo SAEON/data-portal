@@ -9,6 +9,7 @@ import {
   Tooltip,
   Toolbar,
   Checkbox,
+  Divider,
 } from '@material-ui/core'
 import {
   Visibility as ViewIcon,
@@ -93,7 +94,6 @@ export default ({
           {/* Link to /record/:id */}
           <Tooltip title="View full record" placement="left-start">
             <IconButton
-              style={{ marginRight: 16 }}
               className={clsx(classes['small-icon-button'])}
               size="small"
               disabled={!alternateIdentifiers}
@@ -110,6 +110,8 @@ export default ({
               <ViewIcon />
             </IconButton>
           </Tooltip>
+
+          <Divider orientation="vertical" style={{ height: 16, margin: 16 }} />
 
           {/* View raw metadata record */}
           <Tooltip title="View record JSON" placement="left-start">
@@ -142,25 +144,28 @@ export default ({
         </Toolbar>
 
         {/* Item content */}
-        <CardContent>
-          <Typography variant="h6">{titles?.[0]?.title || 'Title missing'}</Typography>
-          <Typography variant="overline">
-            {contributors?.[0]?.name || 'Contributor info missing'}
-          </Typography>
-        </CardContent>
         {codeView ? (
-          <CardContent>
-            <Fade key="1" in={codeView}>
+          <Fade key="1" in={codeView}>
+            <CardContent>
               <div style={{ maxHeight: 400, overflowY: 'auto', overflowX: 'hidden' }}>
                 <pre style={{ whiteSpace: 'break-spaces', wordBreak: 'break-word' }}>
                   {JSON.stringify(_source, null, 2)}
                 </pre>
               </div>
-            </Fade>
-          </CardContent>
+            </CardContent>
+          </Fade>
         ) : (
           <Fade key="2" in={!codeView}>
             <div>
+              {/* Title and author */}
+              <CardContent>
+                <Typography variant="h6">{titles?.[0]?.title || 'Title missing'}</Typography>
+                <Typography variant="overline">
+                  {contributors?.[0]?.name || 'Contributor info missing'}
+                </Typography>
+              </CardContent>
+
+              {/* Description */}
               <CardContent>{descriptions?.[0]?.description || 'No description'}</CardContent>
 
               <CardContent>

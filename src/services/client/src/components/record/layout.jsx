@@ -144,10 +144,13 @@ export default ({ json, id }) => {
 
                   <Row title="Temporal coverage">
                     <Typography variant="body2">
+                      {2013} - {2018}
+                    </Typography>
+                    {/* <Typography variant="body2">
                       LEO TODO: These are the dates I have access to. Are these correct for temporal
                       coverage?
                     </Typography>
-                    <pre>{JSON.stringify(json.dates, null, 2)}</pre>
+                    <pre>{JSON.stringify(json.dates, null, 2)}</pre> */}
                   </Row>
 
                   <Row title="Publisher">

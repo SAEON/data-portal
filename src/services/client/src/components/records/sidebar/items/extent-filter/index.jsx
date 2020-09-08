@@ -47,8 +47,8 @@ export default ({ title }) => {
             <div style={{ position: 'relative' }}>
               <OlReact
                 viewOptions={{
-                  center: [32, 5],
-                  zoom: 2.5,
+                  center: [28, -29],
+                  zoom: 4,
                 }}
                 layers={[terrestrisBaseMap()]}
                 style={{ height: '350px' }}

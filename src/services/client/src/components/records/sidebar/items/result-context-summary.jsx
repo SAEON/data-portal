@@ -117,10 +117,7 @@ export default ({ title }) => {
               </Tooltip>
             </Grid>
             <Grid item>
-              <Tooltip
-                placement="top-end"
-                title={`Remove ${layers?.length} selected datasets from preview basket`}
-              >
+              <Tooltip placement="top-end" title={`Deselect ${layers?.length} selected datasets`}>
                 <span>
                   <Button
                     disabled={!layers?.length}
