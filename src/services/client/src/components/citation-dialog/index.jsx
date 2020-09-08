@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, CircularProgress } from '@material-ui/core'
+import { FormatQuote as CitationIcon } from '@material-ui/icons'
 import { useQuery, gql } from '@apollo/client'
 import Dialogue from './dialogue'
 
@@ -42,6 +43,7 @@ export default ({ record, children, ...props }) => {
           disabled={error || loading}
           variant="contained"
           disableElevation
+          startIcon={<CitationIcon />}
           color="primary"
           onClick={e => {
             e.stopPropagation()
@@ -49,7 +51,7 @@ export default ({ record, children, ...props }) => {
           }}
           {...props}
         >
-          {error || loading ? <CircularProgress size={24} /> : '“ Cite'}
+          {error || loading ? <CircularProgress size={24} /> : 'Cite'}
         </Button>
       )}
       {open ? (
