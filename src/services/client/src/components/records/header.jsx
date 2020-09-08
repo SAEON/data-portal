@@ -56,15 +56,6 @@ export default ({
   const { global, setGlobal } = useContext(GlobalContext)
   const { layers } = global
 
-  const updateTextSearch = useCallback(
-    debounce(({ value = '' }) => {
-      if (value !== global.text) {
-        setGlobal({ text: value })
-      }
-    }, 500),
-    []
-  )
-
   const resultsWithDOIs =
     catalogue?.summary
       .find(obj => Object.entries(obj).find(([k]) => k === 'identifier.identifierType.raw'))
@@ -89,7 +80,16 @@ export default ({
             </IconButton>
           )}
 
-          <QuickForm effects={[updateTextSearch]} value={global.text}>
+          <QuickForm
+            effects={[
+              debounce(({ value = '' }) => {
+                if (value !== (global.text || '')) {
+                  setGlobal({ text: value })
+                }
+              }, 500),
+            ]}
+            value={global.text || ''}
+          >
             {(update, { value }) => (
               <TextField
                 style={{ minWidth: '40%', marginLeft: 5 }}
