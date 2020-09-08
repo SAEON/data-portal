@@ -65,7 +65,7 @@ export default async (_, args, ctx) => {
     dsl.query = {
       multi_match: {
         query: id,
-        fields: ['alternateIdentifiers.alternateIdentifier'],
+        fields: ['id'],
       },
     }
   } else {

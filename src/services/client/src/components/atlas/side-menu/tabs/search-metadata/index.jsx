@@ -99,7 +99,7 @@ export default () => {
         >
           {({ index, style }) => {
             const [id, score] = searchResults[index]
-            const { DOI, description, ploneId, layerId, LAYERS, uri } = layers.find(
+            const { DOI, description, id: record_id, layerId, LAYERS, uri } = layers.find(
               ({ id: _id }) => _id === id
             )
 
@@ -168,7 +168,7 @@ export default () => {
                       dialogueProps={{ fullWidth: true }}
                       paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
                     >
-                      <Record id={ploneId} />
+                      <Record id={record_id} />
                     </MessageDialogue>
                   </Box>
 

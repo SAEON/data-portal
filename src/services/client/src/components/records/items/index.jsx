@@ -17,15 +17,14 @@ export default ({ results }) => {
           results.map(item => {
             // Get record values
             const { target } = item
-            const { _source, _id, _score } = target
+            const { _source, _score } = target
             const {
               identifier,
               titles,
               contributors,
               descriptions,
-              alternateIdentifiers,
               immutableResource,
-              linkedResources,
+              id,
             } = _source
 
             const DOI =
@@ -41,9 +40,9 @@ export default ({ results }) => {
                 titles={titles}
                 contributors={contributors}
                 descriptions={descriptions}
-                alternateIdentifiers={alternateIdentifiers}
                 immutableResource={immutableResource}
-                key={_id}
+                key={id}
+                id={id}
               />
             )
           })

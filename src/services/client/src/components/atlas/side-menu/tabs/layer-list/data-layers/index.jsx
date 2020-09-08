@@ -38,7 +38,7 @@ export default () => {
 
           if (id === 'terrestrisBaseMap') return undefined
 
-          const { ploneId, geoExtent, immutableResource } = layers.find(
+          const { id: record_id, geoExtent, immutableResource } = layers.find(
             ({ layerId }) => layerId === id
           )
 
@@ -109,7 +109,7 @@ export default () => {
                           dialogueProps={{ fullWidth: true }}
                           paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
                         >
-                          <Record id={ploneId} />
+                          <Record id={record_id} />
                         </MessageDialogue>
 
                         {/* Data Download */}

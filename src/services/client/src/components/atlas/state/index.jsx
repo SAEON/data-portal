@@ -16,14 +16,7 @@ export default ({ children, gqlData }) => {
       gqlData.data.catalogue.records.nodes
         .map(({ target }) => {
           const { _source } = target
-          const {
-            id,
-            identifier,
-            alternateIdentifiers,
-            geoLocations,
-            immutableResource,
-            linkedResources,
-          } = _source
+          const { id, identifier, geoLocations, immutableResource, linkedResources } = _source
 
           if (!linkedResources) return undefined
 
@@ -31,9 +24,6 @@ export default ({ children, gqlData }) => {
             identifier && identifier.identifierType.toUpperCase() === 'DOI'
               ? identifier.identifier
               : undefined
-          const ploneId = alternateIdentifiers?.find(
-            ({ alternateIdentifierType }) => alternateIdentifierType.toLowerCase() === 'plone'
-          ).alternateIdentifier
 
           let geoExtent
           try {
@@ -62,7 +52,6 @@ export default ({ children, gqlData }) => {
                 description,
                 id,
                 DOI,
-                ploneId,
                 layerId,
                 LAYERS,
                 geoExtent,

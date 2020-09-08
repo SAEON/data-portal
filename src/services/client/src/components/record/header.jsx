@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useContext } from 'react'
 import {
   GetApp as GetAppIcon,
   Code as CodeIcon,
@@ -9,9 +9,11 @@ import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden, Link } from
 import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '..'
 import { CLIENT_HOST_ADDRESS } from '../../config'
 import { useHistory } from 'react-router-dom'
+import { GlobalContext } from '../../modules/provider-global'
 
 export default ({ record, id, toggleCodeView, codeView }) => {
   const history = useHistory()
+  const { setGlobal } = useContext(GlobalContext)
   const { identifier, linkedResources } = record
   const DOI =
     identifier && identifier.identifierType.toUpperCase() === 'DOI'
@@ -25,7 +27,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
             ?.filter(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
             ?.map(() => DOI)
         ),
-      ]?.map(DOI => encodeURIComponent(DOI))
+      ]
     : undefined
 
   return (
@@ -58,10 +60,10 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                     disableElevation
                     onClick={e => {
                       e.stopPropagation()
-                      history.push({
-                        pathname: '/atlas',
-                        search: `layers=${encodeURIComponent(mapLayers)}`,
+                      setGlobal({
+                        layers: mapLayers,
                       })
+                      history.push('/atlas')
                     }}
                   >
                     PREVIEW

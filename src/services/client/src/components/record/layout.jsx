@@ -143,14 +143,18 @@ export default ({ json, id }) => {
                   </Row>
 
                   <Row title="Temporal coverage">
+                    {/* TODO These dates are not correct - waiting on updating the plone => ckan integration */}
                     <Typography variant="body2">
-                      {2013} - {2018}
+                      {`${Math.min(
+                        ...json.dates
+                          .map(({ date }) => [parseInt(date.lte, 10), parseInt(date.gte, 10)])
+                          .flat()
+                      )} - ${Math.max(
+                        ...json.dates
+                          .map(({ date }) => [parseInt(date.lte, 10), parseInt(date.gte, 10)])
+                          .flat()
+                      )}`}
                     </Typography>
-                    {/* <Typography variant="body2">
-                      LEO TODO: These are the dates I have access to. Are these correct for temporal
-                      coverage?
-                    </Typography>
-                    <pre>{JSON.stringify(json.dates, null, 2)}</pre> */}
                   </Row>
 
                   <Row title="Publisher">
@@ -230,7 +234,7 @@ export default ({ json, id }) => {
                     {json.alternateIdentifiers.map(ai => (
                       <div key={ai.alternateIdentifier}>
                         <Typography variant="body2">
-                          {ai.alternateIdentifier} (alternate)
+                          {ai.alternateIdentifier} ({ai.alternateIdentifierType})
                         </Typography>
                       </div>
                     ))}

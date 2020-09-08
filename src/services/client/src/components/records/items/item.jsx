@@ -28,7 +28,7 @@ export default ({
   titles,
   contributors,
   descriptions,
-  alternateIdentifiers,
+  id,
   immutableResource,
 }) => {
   const history = useHistory()
@@ -65,6 +65,26 @@ export default ({
             </Tooltip>
           ) : null}
 
+          {/* Download Data */}
+          <DataDownloadButton
+            tooltipPlacement="left-start"
+            className={clsx(classes['small-icon-button'])}
+            size="small"
+            immutableResource={immutableResource}
+          />
+
+          {/* Link to /record/:id */}
+          <Tooltip title="View full record" placement="left-start">
+            <IconButton
+              className={clsx(classes['small-icon-button'])}
+              size="small"
+              disabled={!id}
+              onClick={() => history.push(`/records/${id}`)}
+            >
+              <ViewIcon />
+            </IconButton>
+          </Tooltip>
+
           {/* Citation */}
           <CitationDialog record={_source}>
             {({ disabled, onClick }) => (
@@ -82,34 +102,6 @@ export default ({
               </Tooltip>
             )}
           </CitationDialog>
-
-          {/* Download Data */}
-          <DataDownloadButton
-            tooltipPlacement="left-start"
-            className={clsx(classes['small-icon-button'])}
-            size="small"
-            immutableResource={immutableResource}
-          />
-
-          {/* Link to /record/:id */}
-          <Tooltip title="View full record" placement="left-start">
-            <IconButton
-              className={clsx(classes['small-icon-button'])}
-              size="small"
-              disabled={!alternateIdentifiers}
-              onClick={() =>
-                history.push(
-                  `/records/${
-                    alternateIdentifiers?.find(
-                      ({ alternateIdentifierType: type }) => type === 'Plone'
-                    ).alternateIdentifier
-                  }`
-                )
-              }
-            >
-              <ViewIcon />
-            </IconButton>
-          </Tooltip>
 
           <Divider orientation="vertical" style={{ height: 16, margin: 16 }} />
 

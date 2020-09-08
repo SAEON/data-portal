@@ -16,11 +16,10 @@ const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'
 
 export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
-  const { identifier, alternateIdentifiers } = record
+  const { identifier, id } = record
   const DOI = identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI'
-  const saeonId = alternateIdentifiers[0].alternateIdentifier
 
-  if (!saeonId)
+  if (!id)
     throw new Error(
       `This metadata record has no identifier. Please contact ${DATA_CURATOR_CONTACT} with a screenshot of this page, or a copy of the current URL`
     )
@@ -45,7 +44,7 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
     `,
     {
       variables: {
-        id: saeonId,
+        id: id,
         style: citationParams.style,
         language: citationParams.language,
       },

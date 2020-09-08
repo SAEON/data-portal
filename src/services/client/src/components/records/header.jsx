@@ -135,11 +135,10 @@ export default ({
               <span>
                 <IconButton
                   disabled={!resultsWithDOIs}
-                  onClick={() =>
-                    setGlobal({ layersearch: true }, false, () => {
-                      history.push('/atlas')
-                    })
-                  }
+                  onClick={() => {
+                    setGlobal({ layersearch: true })
+                    history.push('/atlas')
+                  }}
                 >
                   <Badge
                     color={resultsWithDOIs ? 'secondary' : 'default'}
