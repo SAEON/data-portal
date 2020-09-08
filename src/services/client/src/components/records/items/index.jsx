@@ -33,29 +33,6 @@ export default ({ results }) => {
                 ? identifier.identifier
                 : undefined
 
-            const selectedLinkedResources =
-              DOI &&
-              [
-                ...new Set(
-                  linkedResources
-                    ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
-                    ?.map(() => DOI)
-                ),
-              ]?.map(() => {
-                const toggled = global.layers?.includes(DOI)
-                return {
-                  id: DOI,
-                  toggled,
-                  toggle: () => {
-                    setGlobal({
-                      layers: toggled
-                        ? [...global.layers].filter(p => p !== DOI)
-                        : [...new Set([...(global.layers || []), DOI])],
-                    })
-                  },
-                }
-              })
-
             return (
               <ResultItem
                 DOI={DOI}
@@ -66,7 +43,6 @@ export default ({ results }) => {
                 descriptions={descriptions}
                 alternateIdentifiers={alternateIdentifiers}
                 immutableResource={immutableResource}
-                selectedLinkedResources={selectedLinkedResources}
                 key={_id}
               />
             )
