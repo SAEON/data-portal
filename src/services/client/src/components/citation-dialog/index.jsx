@@ -3,7 +3,7 @@ import { Button, CircularProgress } from '@material-ui/core'
 import { useQuery, gql } from '@apollo/client'
 import Dialogue from './dialogue'
 
-export default ({ record, ...props }) => {
+export default ({ record, children, ...props }) => {
   const [open, setOpen] = useState(false)
 
   const { error, loading, data } = useQuery(
@@ -29,20 +29,29 @@ export default ({ record, ...props }) => {
 
   return (
     <>
-      {/* Toggle Dialogue */}
-      <Button
-        disabled={error || loading}
-        variant="contained"
-        disableElevation
-        color="primary"
-        onClick={e => {
-          e.stopPropagation()
-          setOpen(true)
-        }}
-        {...props}
-      >
-        {error || loading ? <CircularProgress size={24} /> : '“ Cite'}
-      </Button>
+      {typeof children === 'function' ? (
+        children({
+          disabled: error || loading,
+          onClick: e => {
+            e.stopPropagation()
+            setOpen(true)
+          },
+        })
+      ) : (
+        <Button
+          disabled={error || loading}
+          variant="contained"
+          disableElevation
+          color="primary"
+          onClick={e => {
+            e.stopPropagation()
+            setOpen(true)
+          }}
+          {...props}
+        >
+          {error || loading ? <CircularProgress size={24} /> : '“ Cite'}
+        </Button>
+      )}
       {open ? (
         <Dialogue
           record={record}
