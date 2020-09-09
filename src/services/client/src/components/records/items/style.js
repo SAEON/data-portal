@@ -6,5 +6,8 @@ export default makeStyles(theme => {
     'small-icon-button': {
       padding: 3,
     },
+    tools: {
+      backgroundColor: theme.palette.grey[100],
+    },
   }
 })

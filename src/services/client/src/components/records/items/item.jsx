@@ -1,4 +1,4 @@
-import React, { useState, useContext, memo } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Card,
@@ -65,74 +65,78 @@ export default ({
             </Tooltip>
           ) : null}
 
-          {/* Download Data */}
-          <DataDownloadButton
-            tooltipPlacement="left-start"
-            className={clsx(classes['small-icon-button'])}
-            size="small"
-            immutableResource={immutableResource}
-          />
-
-          {/* Link to /record/:id */}
-          <Tooltip title="View full record" placement="left-start">
-            <IconButton
+          {/* TOOLS */}
+          <div style={{ display: 'flex', alignItems: 'center' }} className={clsx(classes.tools)}>
+            {/* Download Data */}
+            <DataDownloadButton
+              style={{ marginLeft: 8 }}
+              tooltipPlacement="left-start"
               className={clsx(classes['small-icon-button'])}
               size="small"
-              disabled={!id}
-              onClick={() => history.push(`/records/${id}`)}
-            >
-              <ViewIcon />
-            </IconButton>
-          </Tooltip>
-
-          {/* Citation */}
-          <CitationDialog record={_source}>
-            {({ disabled, onClick }) => (
-              <Tooltip placement="left-start" title="Cite this record">
-                <span>
-                  <IconButton
-                    className={clsx(classes['small-icon-button'])}
-                    size="small"
-                    disabled={disabled}
-                    onClick={onClick}
-                  >
-                    <CitationIcon />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            )}
-          </CitationDialog>
-
-          <Divider orientation="vertical" style={{ height: 16, margin: 16 }} />
-
-          {/* View raw metadata record */}
-          <Tooltip title="View record JSON" placement="left-start">
-            <IconButton
-              size="small"
-              className={clsx(classes['small-icon-button'])}
-              onClick={() => setCodeView(!codeView)}
-              color={codeView ? 'primary' : 'default'}
-              aria-label="Show metadata JSON object"
-            >
-              <CodeIcon />
-            </IconButton>
-          </Tooltip>
-
-          {/* Toggle Item select */}
-          <Tooltip title={'Select data for exploration'} placement="left-start">
-            <Checkbox
-              style={{ marginRight: 4 }}
-              size="small"
-              checked={layers.includes(DOI)}
-              onChange={(e, checked) => {
-                if (checked) {
-                  setGlobal({ layers: [...layers, DOI] })
-                } else {
-                  setGlobal({ layers: layers.filter(layer => layer !== DOI) })
-                }
-              }}
+              immutableResource={immutableResource}
             />
-          </Tooltip>
+
+            {/* Link to /record/:id */}
+            <Tooltip title="View full record" placement="left-start">
+              <IconButton
+                className={clsx(classes['small-icon-button'])}
+                size="small"
+                disabled={!id}
+                onClick={() => history.push(`/records/${id}`)}
+              >
+                <ViewIcon />
+              </IconButton>
+            </Tooltip>
+
+            {/* Citation */}
+            <CitationDialog record={_source}>
+              {({ disabled, onClick }) => (
+                <Tooltip placement="left-start" title="Cite this record">
+                  <span>
+                    <IconButton
+                      className={clsx(classes['small-icon-button'])}
+                      size="small"
+                      disabled={disabled}
+                      onClick={onClick}
+                    >
+                      <CitationIcon />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              )}
+            </CitationDialog>
+
+            <Divider orientation="vertical" style={{ height: 16, margin: 16 }} />
+
+            {/* View raw metadata record */}
+            <Tooltip title="View record JSON" placement="left-start">
+              <IconButton
+                size="small"
+                className={clsx(classes['small-icon-button'])}
+                onClick={() => setCodeView(!codeView)}
+                color={codeView ? 'primary' : 'default'}
+                aria-label="Show metadata JSON object"
+              >
+                <CodeIcon />
+              </IconButton>
+            </Tooltip>
+
+            {/* Toggle Item select */}
+            <Tooltip title={'Select data for exploration'} placement="left-start">
+              <Checkbox
+                style={{ marginRight: 4 }}
+                size="small"
+                checked={layers.includes(DOI)}
+                onChange={(e, checked) => {
+                  if (checked) {
+                    setGlobal({ layers: [...layers, DOI] })
+                  } else {
+                    setGlobal({ layers: layers.filter(layer => layer !== DOI) })
+                  }
+                }}
+              />
+            </Tooltip>
+          </div>
         </Toolbar>
 
         {/* Item content */}

@@ -30,6 +30,8 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
     copied: false,
   })
 
+  console.log(citationParams)
+
   const { error, loading, data } = useQuery(
     gql`
       query($id: ID, $style: CitationStyle, $language: CitationLocale) {
@@ -77,12 +79,12 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
                   { ...citationParams },
                   {
                     copied: false,
-                    style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE.replace(/_/g, '-'),
+                    style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE,
                   }
                 )
               )
             }
-            selectedOption={citationParams.style.replace(/_/g, '-')}
+            selectedOptions={citationParams.style.replace(/_/g, '-')}
             options={citationStyles?.enumValues?.map(v => v.name.replace(/_/g, '-'))}
           />
 
@@ -98,12 +100,12 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
                   { ...citationParams },
                   {
                     copied: false,
-                    language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG.replace(/_/g, '-'),
+                    language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG,
                   }
                 )
               )
             }
-            selectedOption={citationParams.language.replace(/_/g, '-')}
+            selectedOptions={citationParams.language.replace(/_/g, '-')}
             options={citationLocales?.enumValues?.map(v => v.name.replace(/_/g, '-'))}
           />
 
