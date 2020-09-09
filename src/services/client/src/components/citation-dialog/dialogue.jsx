@@ -30,8 +30,6 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
     copied: false,
   })
 
-  console.log(citationParams)
-
   const { error, loading, data } = useQuery(
     gql`
       query($id: ID, $style: CitationStyle, $language: CitationLocale) {
