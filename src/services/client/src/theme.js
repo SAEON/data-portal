@@ -8,6 +8,15 @@ export default createMuiTheme({
     },
   },
   overrides: {
+    MuiToolbar: {
+      gutters: {
+        // TODO - this should be dynamic
+        '@media (min-width: 600px)': {
+          paddingLeft: 16,
+          paddingRight: 16,
+        },
+      },
+    },
     MuiPaper: {
       rounded: {
         borderRadius: 0,

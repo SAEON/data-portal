@@ -26,7 +26,6 @@ import FeedbackDialogue from './_feedback-dialogue'
 import AccountMenu from './_account-menu'
 import useStyles from './style'
 import clsx from 'clsx'
-import { isMobile } from 'react-device-detect'
 
 const headlessPages = ['/render']
 
@@ -42,26 +41,23 @@ export default withRouter(({ children }) => {
       {headlessPages.includes(currentRoute) ? null : (
         <>
           <AppBar
-            color="inherit"
+            color="primary"
             className={clsx(classes.appBar, {
-              [classes.appBarShift]: isMobile ? false : drawerOpen,
+              [classes.appBarShift]: false,
             })}
             style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
             variant="outlined"
             position="fixed"
           >
             <Toolbar disableGutters={false} variant="dense">
-              {/* MOBILE MENU */}
-              {isMobile ? (
-                <IconButton
-                  onClick={() => setDrawerOpen(!drawerOpen)}
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                >
-                  <MenuIcon />
-                </IconButton>
-              ) : null}
+              <IconButton
+                onClick={() => setDrawerOpen(!drawerOpen)}
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
 
               {/* TITLE */}
               <Typography style={{ padding: '10px' }} display="block" variant="body2">
@@ -86,7 +82,7 @@ export default withRouter(({ children }) => {
                 [classes.drawerClose]: !drawerOpen,
               }),
             }}
-            variant={isMobile ? 'temporary' : 'permanent'}
+            variant={'temporary'}
             anchor={'left'}
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
@@ -163,8 +159,6 @@ export default withRouter(({ children }) => {
       <main
         className={clsx({
           [classes.content]: !headlessPages.includes(currentRoute),
-          [classes.contentShift]:
-            isMobile || headlessPages.includes(currentRoute) ? false : drawerOpen,
         })}
       >
         {children}
