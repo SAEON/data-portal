@@ -5,7 +5,14 @@ export const GlobalContext = createContext()
 
 export default ({ children }) => {
   return (
-    <QuickForm layersearch={undefined} layers={[]} text={undefined} extent={undefined} terms={[]}>
+    <QuickForm
+      textSort={undefined}
+      layersearch={undefined}
+      layers={[]}
+      text={undefined}
+      extent={undefined}
+      terms={[]}
+    >
       {(setGlobal, global) => (
         <GlobalContext.Provider
           value={{

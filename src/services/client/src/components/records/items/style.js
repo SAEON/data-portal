@@ -7,7 +7,8 @@ export default makeStyles(theme => {
       padding: 3,
     },
     tools: {
-      backgroundColor: theme.palette.grey[100],
+      margin: 6,
+      backgroundColor: theme.palette.secondary.light,
     },
   }
 })

@@ -9,7 +9,7 @@ export default ({
   terms = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
-  const { extent, terms: _terms, text } = global
+  const { extent, terms: _terms, text, textSort } = global
 
   return useQuery(
     gql`
@@ -21,6 +21,7 @@ export default ({
         $before: ES_Cursor
         $after: ES_Cursor
         $fields: [String!]
+        $textSort: String
       ) {
         catalogue {
           summary(
@@ -28,6 +29,7 @@ export default ({
             filterByText: $match
             filterByExtent: $extent
             filterByTerms: $terms
+            textSort: $textSort
           )
           records(
             extent: $extent
@@ -36,6 +38,7 @@ export default ({
             size: $size
             before: $before
             after: $after
+            textSort: $textSort
           ) {
             pageInfo {
               hasNextPage
@@ -66,6 +69,7 @@ export default ({
         size: pageSize,
         after: endCursor,
         before: startCursor,
+        textSort,
       },
     }
   )

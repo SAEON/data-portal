@@ -14,9 +14,9 @@
         }
       },
       "analyzer": {
-        "synonym_analyzer": {
+        "saeon_text_fields": {
           "filter": ["vocabulary_mapping"],
-          "tokenizer": "whitespace"
+          "tokenizer": "lowercase"
         }
       }
     }

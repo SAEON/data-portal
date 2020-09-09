@@ -13,6 +13,7 @@ export default async (_, args, ctx) => {
     terms = undefined,
     before = undefined,
     after = undefined,
+    textSort = undefined,
   } = args
 
   if (size < 1 || size > 10000) {
@@ -74,9 +75,9 @@ export default async (_, args, ctx) => {
         ...dsl.query.bool.must,
         {
           multi_match: {
-            query: match,
-            type: 'best_fields',
+            query: match.toLowerCase(),
             fields: matchFields,
+            type: 'best_fields',
             fuzziness: 'AUTO',
           },
         },
@@ -93,6 +94,19 @@ export default async (_, args, ctx) => {
                 field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
               )
               .map(({ field, value }) => ({ term: { [field]: value } })),
+          },
+        },
+      ]
+    }
+
+    if (textSort) {
+      dsl.query.bool.should = [
+        {
+          multi_match: {
+            query: textSort.toLowerCase(),
+            fields: matchFields,
+            type: 'best_fields',
+            fuzziness: 'AUTO',
           },
         },
       ]

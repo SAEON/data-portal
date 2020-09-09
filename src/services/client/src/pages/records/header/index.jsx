@@ -16,6 +16,14 @@ export default () => {
   const [hovered, setHovered] = useState(false)
 
   useEffect(() => {
+    const scrollHandler = () => setCollapsed(true)
+    window.addEventListener('scroll', scrollHandler)
+    return () => {
+      window.removeEventListener('scroll', scrollHandler)
+    }
+  }, [])
+
+  useEffect(() => {
     if (terms.length === 0) setCollapsed(true)
     else setCollapsed(false)
   }, [terms])

@@ -126,6 +126,7 @@ export default ({
               <Checkbox
                 style={{ marginRight: 4 }}
                 size="small"
+                color="primary"
                 checked={layers.includes(DOI)}
                 onChange={(e, checked) => {
                   if (checked) {

@@ -4,6 +4,6 @@ export default [
   'creators.name',
   'subtitle',
   'contributors.name',
-  'subject.subject',
+  'subjects.subject',
   'creators.name',
 ]

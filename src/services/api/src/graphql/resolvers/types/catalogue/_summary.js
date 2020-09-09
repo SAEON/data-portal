@@ -4,7 +4,14 @@ import matchFields from './_match-fields.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
-  const { fields, filterByText, filterByExtent, filterByTerms: terms, limit: size } = args
+  const {
+    fields,
+    filterByText = undefined,
+    filterByExtent = undefined,
+    filterByTerms: terms = undefined,
+    limit: size,
+    textSort = undefined,
+  } = args
 
   const order = { _key: 'asc', _count: 'desc' }
   const dsl = {
@@ -23,7 +30,7 @@ export default async (_, args, ctx) => {
     ),
   }
 
-  if (filterByExtent || terms?.length || filterByText) {
+  if (filterByExtent || terms?.length || filterByText || textSort) {
     dsl.query = {
       bool: {
         must: [],
@@ -36,9 +43,9 @@ export default async (_, args, ctx) => {
       ...dsl.query.bool.must,
       {
         multi_match: {
-          query: filterByText,
-          type: 'best_fields',
+          query: filterByText.toLowerCase(),
           fields: matchFields,
+          type: 'best_fields',
           fuzziness: 'AUTO',
         },
       },
@@ -73,6 +80,19 @@ export default async (_, args, ctx) => {
               field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
             )
             .map(({ field, value }) => ({ term: { [field]: value } })),
+        },
+      },
+    ]
+  }
+
+  if (textSort) {
+    dsl.query.bool.should = [
+      {
+        multi_match: {
+          query: textSort.toLowerCase(),
+          fields: matchFields,
+          type: 'best_fields',
+          fuzziness: 'AUTO',
         },
       },
     ]

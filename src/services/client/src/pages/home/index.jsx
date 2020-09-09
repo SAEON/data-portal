@@ -50,7 +50,7 @@ export default () => {
           >
             {/* Header */}
             <Grid item xs={12}>
-              <RecordsSearchBox autofocus={true} />
+              <RecordsSearchBox resetGlobalStateOnSearch={true} autofocus={true} />
               {error ? (
                 <Typography>{error.message}</Typography>
               ) : loading ? undefined : (

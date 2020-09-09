@@ -6,7 +6,7 @@ import QuickForm from '@saeon/quick-form'
 import { GlobalContext } from '../../modules/provider-global'
 import { debounce } from '../../lib/fns'
 
-export default ({ autofocus, onFocus, onBlur, ...props }) => {
+export default ({ autofocus, onFocus, onBlur, resetGlobalStateOnSearch = false, ...props }) => {
   const history = useHistory()
   const { global, setGlobal } = useContext(GlobalContext)
 
@@ -46,7 +46,7 @@ export default ({ autofocus, onFocus, onBlur, ...props }) => {
                   variant="outlined"
                   onKeyDown={({ key }) => {
                     if (key === 'Enter') {
-                      setGlobal({ text })
+                      setGlobal({ text }, resetGlobalStateOnSearch)
                       history.push('/records')
                     }
                   }}

@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useContext, useCallback } from 'react'
+import React, { useState, forwardRef, useContext } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -7,14 +7,12 @@ import {
   Menu,
   MenuItem,
   TextField,
-  InputAdornment,
   Tooltip,
   IconButton,
   Link,
   Badge,
 } from '@material-ui/core'
 import {
-  Search as SearchIcon,
   NavigateNext as NavigateNextIcon,
   NavigateBefore as NavigateBeforeIcon,
   ArrowDropDown as ArrowDropDownIcon,
@@ -85,23 +83,23 @@ export default ({
 
           <QuickForm
             effects={[
-              debounce(({ value = '' }) => {
-                if (value !== (global.text || '')) {
-                  setGlobal({ text: value })
+              debounce(({ text = '' }) => {
+                if (text !== (global.textSort || '')) {
+                  setGlobal({ textSort: text })
                 }
               }, 500),
             ]}
-            value={global.text || ''}
+            text={global.textSort || ''}
           >
-            {(update, { value }) => (
+            {(update, { text }) => (
               <TextField
                 style={{ minWidth: '40%', marginLeft: 5 }}
                 autoComplete="off"
                 id="outlined-basic"
                 size="small"
                 color="secondary"
-                value={value}
-                onChange={e => update({ value: e.currentTarget.value })}
+                value={text}
+                onChange={e => update({ text: e.currentTarget.value })}
                 placeholder="Sort results via text"
                 variant="outlined"
               />

@@ -64,7 +64,7 @@
     {
       "strings": {
         "mapping": {
-          "analyzer": "synonym_analyzer",
+          "analyzer": "saeon_text_fields",
           "type": "text",
           "fields": {
             "raw": {
