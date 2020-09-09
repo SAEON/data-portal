@@ -307,50 +307,24 @@ export default forwardRef(
                         )
                       }}
                     >
-                      <CardContent style={{ padding: 0 }}>
-                        <AppBar position="relative" variant="outlined">
-                          <Toolbar
-                            style={{ cursor: draggable ? 'grab' : 'default', minHeight: '25px' }}
-                            disableGutters
-                            className={clsx({
-                              'drag-handle': draggable ? true : false,
-                            })}
-                          >
-                            <Typography style={{ margin: 'auto' }} variant="overline">
-                              {title}
-                            </Typography>
-                            <div style={{ position: 'absolute', right: 0 }}>
-                              <Tooltip title={state.minimized ? 'Expand menu' : 'Collapse menu'}>
-                                <IconButton
-                                  onTouchStart={onMinify}
-                                  onClick={onMinify}
-                                  edge="start"
-                                  color="inherit"
-                                  style={{
-                                    order: 2,
-                                    marginLeft: 'auto',
-                                    padding: 2,
-                                  }}
-                                  aria-label="close"
-                                >
-                                  {state.minimized ? (
-                                    <Fade key="menu-minimized" in={state.minimized}>
-                                      <MaximizeIcon />
-                                    </Fade>
-                                  ) : (
-                                    <span>
-                                      <Fade key="menu-maximized" in={!state.minimized}>
-                                        <MinimizeIcon />
-                                      </Fade>
-                                    </span>
-                                  )}
-                                </IconButton>
-                              </Tooltip>
-                              {onClose ? (
-                                <Tooltip title={open ? 'Close menu' : ''}>
+                      <div>
+                        <CardContent style={{ padding: 0 }}>
+                          <AppBar position="relative" variant="outlined">
+                            <Toolbar
+                              style={{ cursor: draggable ? 'grab' : 'default', minHeight: '25px' }}
+                              disableGutters
+                              className={clsx({
+                                'drag-handle': draggable ? true : false,
+                              })}
+                            >
+                              <Typography style={{ margin: 'auto' }} variant="overline">
+                                {title}
+                              </Typography>
+                              <div style={{ position: 'absolute', right: 0 }}>
+                                <Tooltip title={state.minimized ? 'Expand menu' : 'Collapse menu'}>
                                   <IconButton
-                                    onTouchStart={onClose}
-                                    onClick={() => onClose()}
+                                    onTouchStart={onMinify}
+                                    onClick={onMinify}
                                     edge="start"
                                     color="inherit"
                                     style={{
@@ -360,31 +334,59 @@ export default forwardRef(
                                     }}
                                     aria-label="close"
                                   >
-                                    <CloseIcon />
+                                    {state.minimized ? (
+                                      <Fade key="menu-minimized" in={state.minimized}>
+                                        <MaximizeIcon />
+                                      </Fade>
+                                    ) : (
+                                      <span>
+                                        <Fade key="menu-maximized" in={!state.minimized}>
+                                          <MinimizeIcon />
+                                        </Fade>
+                                      </span>
+                                    )}
                                   </IconButton>
                                 </Tooltip>
-                              ) : null}
-                            </div>
-                          </Toolbar>
-                        </AppBar>
-                      </CardContent>
+                                {onClose ? (
+                                  <Tooltip title={open ? 'Close menu' : ''}>
+                                    <IconButton
+                                      onTouchStart={onClose}
+                                      onClick={() => onClose()}
+                                      edge="start"
+                                      color="inherit"
+                                      style={{
+                                        order: 2,
+                                        marginLeft: 'auto',
+                                        padding: 2,
+                                      }}
+                                      aria-label="close"
+                                    >
+                                      <CloseIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                ) : null}
+                              </div>
+                            </Toolbar>
+                          </AppBar>
+                        </CardContent>
 
-                      <div
-                        className={clsx({
-                          [classes.menuContent]: true,
-                        })}
-                      >
                         <div
                           className={clsx({
-                            [classes.resizing]: state.isResizing,
+                            [classes.menuContent]: true,
                           })}
                         >
-                          {typeof children === 'function'
-                            ? children({
-                                height: state.dimensions.height - 31,
-                                width: state.dimensions.width,
-                              })
-                            : children}
+                          <div
+                            className={clsx({
+                              [classes.resizing]: state.isResizing,
+                            })}
+                          >
+                            {typeof children === 'function'
+                              ? children({
+                                  height: state.dimensions.height - 31,
+                                  width: state.dimensions.width,
+                                })
+                              : children}
+                          </div>
                         </div>
                       </div>
                     </ResizableBox>
