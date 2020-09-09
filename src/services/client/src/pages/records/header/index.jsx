@@ -1,45 +1,88 @@
-import React, { useState } from 'react'
-import { Grid, AppBar, Toolbar, IconButton, Collapse, Fade } from '@material-ui/core'
+import React, { useState, useContext, useEffect } from 'react'
+import { Grid, Toolbar, IconButton, Collapse, Chip } from '@material-ui/core'
 import { RecordsSearchBox } from '../../../components'
+import { debounce } from '../../../lib/fns'
 import useStyles from './style'
-import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons'
+import { GlobalContext } from '../../../modules/provider-global'
+import { MoreHoriz } from '@material-ui/icons'
+
+const TIMEOUT = 500
 
 export default () => {
-  const [collapsed, setCollapsed] = useState(false)
   const classes = useStyles()
+  const { global, setGlobal } = useContext(GlobalContext)
+  const { terms } = global
+  const [collapsed, setCollapsed] = useState(!terms.length)
+  const [hovered, setHovered] = useState(false)
+
+  useEffect(() => {
+    if (terms.length === 0) setCollapsed(true)
+    else setCollapsed(false)
+  }, [terms])
 
   return (
-    <AppBar position="relative" variant="outlined" style={{ border: 'none', zIndex: 800 }}>
-      <Collapse key="collapse-header" collapsedHeight="30px" in={!collapsed} timeout="auto">
-        <Toolbar className={classes.toolbar}>
-          <Grid container justify="center">
+    <div style={{ position: 'relative' }}>
+      <Collapse
+        key="collapse-header"
+        collapsedHeight="30px"
+        in={!collapsed || hovered}
+        timeout={TIMEOUT}
+      >
+        <Toolbar
+          onMouseEnter={debounce(() => {
+            if (!collapsed) {
+              setCollapsed(true)
+            }
+            if (!hovered) {
+              setHovered(true)
+            }
+          })}
+          onMouseLeave={() => setHovered(false)}
+          className={classes.toolbar}
+        >
+          <Grid style={{ marginBottom: 48, marginTop: 48 }} container spacing={1} justify="center">
             <Grid item xs={12} sm={8}>
-              <RecordsSearchBox style={{ visibility: collapsed ? 'hidden' : 'visible' }} />
+              <RecordsSearchBox autofocus={false} onFocus={() => setCollapsed(false)} />
+            </Grid>
+            <Grid
+              style={{ minHeight: 40 }}
+              container
+              item
+              spacing={1}
+              justify="flex-start"
+              xs={12}
+              sm={8}
+            >
+              {[...new Set(terms.map(({ value }) => value))].map(term => (
+                <Grid item key={term}>
+                  <Chip
+                    color="primary"
+                    onDelete={() =>
+                      setGlobal({
+                        terms: terms.filter(({ value }) => value !== term),
+                      })
+                    }
+                    size="small"
+                    label={term.toUpperCase()}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </Toolbar>
       </Collapse>
-
       <IconButton
         size="small"
-        color="primary"
-        onClick={() => setCollapsed(!collapsed)}
+        tabIndex={999}
         style={{
           position: 'absolute',
           bottom: 2,
           left: 'calc(50% - 15px)',
+          pointerEvents: 'none',
         }}
       >
-        {collapsed ? (
-          <Fade key="1" in={collapsed}>
-            <ExpandMoreIcon fontSize="small" />
-          </Fade>
-        ) : (
-          <Fade key="2" in={!collapsed}>
-            <ExpandLessIcon fontSize="small" />
-          </Fade>
-        )}
+        <MoreHoriz fontSize="small" />
       </IconButton>
-    </AppBar>
+    </div>
   )
 }

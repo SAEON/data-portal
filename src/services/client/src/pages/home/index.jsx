@@ -1,22 +1,38 @@
-import React, { lazy, Suspense } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Grid, useMediaQuery, Button } from '@material-ui/core'
-import { Search as SearchIcon } from '@material-ui/icons'
+import React, { lazy, Suspense, useContext } from 'react'
+import { Grid, useMediaQuery, Typography, Fade } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
+import { gql, useQuery } from '@apollo/client'
 import { RecordsSearchBox, Loading } from '../../components'
+import { GlobalContext } from '../../modules/provider-global'
 import useStyles from './style'
 import clsx from 'clsx'
 
 const MapProvider = lazy(() => import('../../modules/provider-map'))
 
 export default () => {
-  const history = useHistory()
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
+  const { global } = useContext(GlobalContext)
+
+  const { error, loading, data } = useQuery(
+    gql`
+      query catalogue($match: String!) {
+        catalogue {
+          records(match: $match) {
+            totalCount
+          }
+        }
+      }
+    `,
+    {
+      variables: { match: global.text || '' },
+    }
+  )
 
   return (
     <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
+      {loading ? <Loading /> : undefined}
       <Suspense fallback={<Loading />}>
         <MapProvider>
           <Grid
@@ -34,24 +50,16 @@ export default () => {
           >
             {/* Header */}
             <Grid item xs={12}>
-              <RecordsSearchBox />
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                onClick={() =>
-                  history.push({
-                    pathname: '/records',
-                    search: window.location.search,
-                  })
-                }
-                variant="contained"
-                color="primary"
-                disableElevation
-                fullWidth
-                startIcon={<SearchIcon />}
-              >
-                Search our catalogue
-              </Button>
+              <RecordsSearchBox autofocus={true} />
+              {error ? (
+                <Typography>{error.message}</Typography>
+              ) : loading ? undefined : (
+                <Fade key="results" in={!loading}>
+                  <Typography variant="overline">
+                    {data?.catalogue.records.totalCount} records
+                  </Typography>
+                </Fade>
+              )}
             </Grid>
           </Grid>
         </MapProvider>

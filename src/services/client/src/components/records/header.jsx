@@ -66,7 +66,10 @@ export default ({
       <AppBar
         color="inherit"
         position="sticky"
-        style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{
+          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+        }}
         variant="outlined"
       >
         <Toolbar disableGutters variant="regular">
@@ -99,15 +102,8 @@ export default ({
                 color="secondary"
                 value={value}
                 onChange={e => update({ value: e.currentTarget.value })}
-                placeholder="Filter current results..."
+                placeholder="Sort results via text"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
               />
             )}
           </QuickForm>
