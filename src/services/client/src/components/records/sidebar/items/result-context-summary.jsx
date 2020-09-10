@@ -20,6 +20,8 @@ import {
   Close as CloseIcon,
 } from '@material-ui/icons'
 import { GlobalContext } from '../../../../modules/provider-global'
+import useStyles from './style'
+import clsx from 'clsx'
 
 /**
  * Selected previews are the record DOI
@@ -30,16 +32,17 @@ export default ({ title }) => {
   const [collapsed, setCollapsed] = useState(false)
   const { global, setGlobal } = useContext(GlobalContext)
   const { layers } = global
+  const classes = useStyles()
 
   return (
     <>
       <AppBar
-        color="default"
+        className={clsx(classes.appbar)}
         position="relative"
         variant="outlined"
-        style={{ zIndex: 800, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{ zIndex: 800 }}
       >
-        <Toolbar variant="dense">
+        <Toolbar className={clsx(classes.toolbar)} variant="dense">
           <Typography variant="overline" noWrap>
             {title}
           </Typography>

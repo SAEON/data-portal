@@ -4,18 +4,22 @@ import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mat
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap } from '../../../../../lib/ol'
 import FilterControl from './filter-control'
+import useStyles from '../style'
+import clsx from 'clsx'
 
 export default ({ title }) => {
   const [collapsed, setCollapsed] = useState(false)
+  const classes = useStyles()
+
   return (
     <>
       <AppBar
-        color="default"
         position="relative"
         variant="outlined"
-        style={{ zIndex: 800, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        className={clsx(classes.appbar)}
+        style={{ zIndex: 800 }}
       >
-        <Toolbar variant="dense">
+        <Toolbar className={clsx(classes.toolbar)} variant="dense">
           <Typography variant="overline" noWrap>
             {title}
           </Typography>

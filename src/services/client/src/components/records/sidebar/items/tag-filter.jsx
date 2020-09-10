@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import { GlobalContext } from '../../../../modules/provider-global'
+import useStyles from './style'
+import clsx from 'clsx'
 
 const LIST_SIZE = 3
 
@@ -23,6 +25,7 @@ export default ({ results, title }) => {
   const [collapsed, setCollapsed] = useState(false)
   const { global, setGlobal } = useContext(GlobalContext)
   const { terms } = global
+  const classes = useStyles()
 
   const sortedResults = results
     ? [...results].sort(a => (terms?.map(({ value }) => value)?.includes(a.key) ? -1 : 1))
@@ -31,12 +34,12 @@ export default ({ results, title }) => {
   return (
     <>
       <AppBar
-        color="default"
+        className={clsx(classes.appbar)}
         position="relative"
         variant="outlined"
-        style={{ zIndex: 800, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{ zIndex: 800 }}
       >
-        <Toolbar variant="dense">
+        <Toolbar className={clsx(classes.toolbar)} variant="dense">
           <Typography variant="overline" noWrap>
             {title}
           </Typography>
