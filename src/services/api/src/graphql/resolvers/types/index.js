@@ -12,6 +12,9 @@ export { default as Subscription } from './_subscription.js'
 // Relay
 export { default as PageInfo } from './_page-info.js'
 
+// BrowserClient
+export { default as BrowserClient } from './browser-client/index.js'
+
 // Catalogue
 export { default as Catalogue } from './catalogue/index.js'
 export { default as CatalogueConnection } from './_catalogue-connection.js'

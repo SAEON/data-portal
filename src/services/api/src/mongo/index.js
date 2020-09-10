@@ -11,6 +11,7 @@ export const _collections = {
   Maps: 'maps',
   EventLog: 'eventLog',
   Feedback: 'feedback',
+  SavedSearches: 'savedSearches',
 }
 
 export const db = MongoClient.connect(CONNECTION_STRING, {

@@ -1,7 +1,7 @@
-import logBrowserEvents from './_log-browser-events.js'
-import submitFeedback from './_submit-feedback.js'
+const _import = p => import(p).then(({ default: fn }) => fn)
 
 export default {
-  logBrowserEvents,
-  submitFeedback,
+  logBrowserEvents: await _import('./_log-browser-events.js'),
+  submitFeedback: await _import('./_submit-feedback.js'),
+  browserClient: await _import('./_browser-client.js'),
 }

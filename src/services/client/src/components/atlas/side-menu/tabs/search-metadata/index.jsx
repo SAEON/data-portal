@@ -161,7 +161,7 @@ export default () => {
                       )}
                       tooltipProps={{
                         placement: 'right',
-                        title: `${description} (score: ${score?.toFixed(2) || 'NA'})`,
+                        title: `${description} (Relevance: ${score?.toFixed(2) || 'NA'})`,
                       }}
                       iconProps={{ size: 'small', fontSize: 'small' }}
                       dialogueContentProps={{ style: { padding: 0 } }}
@@ -179,7 +179,7 @@ export default () => {
                       style={{ position: 'absolute', right: 12, bottom: 0 }}
                       variant="overline"
                     >
-                      Score: {score?.toFixed(2) || 'NA'}
+                      Relevance: {score?.toFixed(2) || 'NA'}
                     </Typography>
                   </Box>
                 </Card>

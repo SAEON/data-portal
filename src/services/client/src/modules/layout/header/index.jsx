@@ -23,6 +23,7 @@ import NavItem from './nav-item'
 import packageJson from '../../../../package.json'
 import { SOURCE_CODE_URI } from '../../../config'
 import FeedbackDialogue from './_feedback-dialogue'
+import ShareOrEmbedMenu from './_share-or-embed'
 import AccountMenu from './_account-menu'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -49,7 +50,7 @@ export default withRouter(({ children }) => {
             variant="outlined"
             position="fixed"
           >
-            <Toolbar disableGutters={false} variant="dense">
+            <Toolbar style={{ display: 'flex' }} disableGutters={false} variant="dense">
               <IconButton
                 onClick={() => setDrawerOpen(!drawerOpen)}
                 edge="start"
@@ -65,10 +66,9 @@ export default withRouter(({ children }) => {
               </Typography>
 
               {/* TOP-RIGHT ICON CONTROLS */}
-              <div style={{ marginLeft: 'auto' }}>
-                <FeedbackDialogue />
-                <AccountMenu />
-              </div>
+              <ShareOrEmbedMenu style={{ marginLeft: 'auto', marginRight: 10 }} />
+              <FeedbackDialogue style={{ marginRight: 10 }} />
+              <AccountMenu />
             </Toolbar>
           </AppBar>
           <SwipeableDrawer
@@ -123,7 +123,7 @@ export default withRouter(({ children }) => {
             {/* Catalogue page */}
             <NavItem
               title="Explore SAEON's metadata catalogue"
-              label={'records'}
+              label={'Records'}
               Icon={props => <StorageIcon {...props} />}
               to="/records"
             />

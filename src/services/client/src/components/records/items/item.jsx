@@ -60,7 +60,7 @@ export default ({
                 color="textSecondary"
                 variant="overline"
               >
-                Score: {_score.toFixed(3)}
+                Relevance: {_score.toFixed(3)}
               </Typography>
             </Tooltip>
           ) : null}

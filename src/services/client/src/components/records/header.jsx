@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -9,7 +9,6 @@ import {
   TextField,
   Tooltip,
   IconButton,
-  Link,
   Badge,
 } from '@material-ui/core'
 import {
@@ -17,12 +16,10 @@ import {
   NavigateBefore as NavigateBeforeIcon,
   ArrowDropDown as ArrowDropDownIcon,
   FilterList as FilterIcon,
-  Link as ShareIcon,
   Map as MapIcon,
   Explore as PreviewIcon,
 } from '@material-ui/icons'
 import { debounce } from '../../lib/fns'
-import { CLIENT_HOST_ADDRESS } from '../../config'
 import QuickForm from '@saeon/quick-form'
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
@@ -128,6 +125,7 @@ export default ({
             <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
               <span>
                 <IconButton
+                  style={{ marginRight: 10 }}
                   disabled={!resultsWithDOIs}
                   onClick={() => {
                     setGlobal({ layersearch: true })
@@ -151,6 +149,7 @@ export default ({
               <span>
                 <IconButton
                   disabled={!layers?.length}
+                  style={{ marginRight: 10 }}
                   onClick={() =>
                     history.push({
                       pathname: '/atlas',
@@ -167,27 +166,6 @@ export default ({
                   </Badge>
                 </IconButton>
               </span>
-            </Tooltip>
-
-            {/* SHARE LINK */}
-            <Tooltip title="Share result list">
-              <Link
-                // eslint-disable-next-line react/no-children-prop
-                children=""
-                component={forwardRef((props, ref) => (
-                  <IconButton
-                    ref={ref}
-                    href={`${CLIENT_HOST_ADDRESS}/render/records${
-                      window.location.search || '?terms='
-                    }&disableSidebar=true`}
-                    target="_blank"
-                    rel="noreferrer"
-                    {...props}
-                  >
-                    <ShareIcon />
-                  </IconButton>
-                ))}
-              />
             </Tooltip>
 
             {/* PAGINATION CONFIG */}

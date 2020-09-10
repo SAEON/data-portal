@@ -34,6 +34,13 @@ interface Edge {
   node: Node!
 }
 
+# Client
+
+type BrowserClient {
+  # Save a web-browser's search context for retrieving
+  persistSearchState(state: JSON!): ID!
+}
+
 # Catalogue
 
 input ES_Cursor {
@@ -137,8 +144,10 @@ input FeedbackInput {
 # GraphQL types
 
 type Query {
-  # Catalogue
+  # Return the Catalogue entity
   catalogue: Catalogue!
+  # Return the BrowserClient entity
+  browserClient: BrowserClient!
 }
 
 type Subscription {
@@ -148,4 +157,6 @@ type Subscription {
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
   submitFeedback(input: FeedbackInput!): Boolean!
+  # Return the BrowserClient entity
+  browserClient: BrowserClient!
 }

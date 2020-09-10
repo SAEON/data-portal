@@ -2,19 +2,21 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AccountCircle as AccountIcon } from '@material-ui/icons'
 import { AuthContext } from '../../provider-auth'
-import { IconButton, Typography, Menu, Fade, MenuItem } from '@material-ui/core'
+import { IconButton, Typography, Menu, MenuItem } from '@material-ui/core'
 
-export default () => {
+const ID = 'menu-appbar'
+
+export default ({ style = {} }) => {
   const [userMenuAnchor, setUserMenuAnchor] = useState(null)
 
   return (
     <AuthContext.Consumer>
       {({ loggedIn, login, logout }) => (
-        <>
+        <div style={style}>
           {/* USER MENU BUTTON */}
           <IconButton
             aria-label="account of current user"
-            aria-controls="menu-appbar"
+            aria-controls={ID}
             aria-haspopup="true"
             onClick={({ currentTarget }) => setUserMenuAnchor(currentTarget)}
             color="inherit"
@@ -25,25 +27,22 @@ export default () => {
 
           {/* USER MENU */}
           <Menu
-            id="menu-appbar"
+            id={ID}
             anchorEl={userMenuAnchor}
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'right',
             }}
-            keepMounted
             transformOrigin={{
               vertical: 'top',
               horizontal: 'right',
             }}
             open={Boolean(userMenuAnchor)}
             onClose={() => setUserMenuAnchor(null)}
-            TransitionComponent={Fade}
           >
             {/* Login */}
             {loggedIn ? null : (
               <MenuItem
-                color="inherit"
                 onClick={() => {
                   login()
                   setUserMenuAnchor(null)
@@ -57,7 +56,6 @@ export default () => {
             {/* Signup */}
             {loggedIn ? null : (
               <MenuItem
-                color="inherit"
                 onClick={() => {
                   login()
                   setUserMenuAnchor(null)
@@ -72,7 +70,6 @@ export default () => {
             {loggedIn ? (
               <MenuItem
                 to="/logout"
-                color="inherit"
                 component={NavLink}
                 dense={true}
                 onClick={() => {
@@ -84,7 +81,7 @@ export default () => {
               </MenuItem>
             ) : null}
           </Menu>
-        </>
+        </div>
       )}
     </AuthContext.Consumer>
   )

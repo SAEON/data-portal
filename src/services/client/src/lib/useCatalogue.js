@@ -7,6 +7,7 @@ export default ({
   startCursor = undefined,
   endCursor = undefined,
   terms = undefined,
+  summaryLimit = 50,
 } = {}) => {
   const { global } = useContext(GlobalContext)
   const { extent, terms: _terms, text, textSort } = global
@@ -22,6 +23,7 @@ export default ({
         $after: ES_Cursor
         $fields: [String!]
         $textSort: String
+        $summaryLimit: Int
       ) {
         catalogue {
           summary(
@@ -30,6 +32,7 @@ export default ({
             filterByExtent: $extent
             filterByTerms: $terms
             textSort: $textSort
+            limit: $summaryLimit
           )
           records(
             extent: $extent
@@ -70,6 +73,7 @@ export default ({
         after: endCursor,
         before: startCursor,
         textSort,
+        summaryLimit,
       },
     }
   )
