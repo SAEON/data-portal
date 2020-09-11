@@ -1,13 +1,7 @@
-import React, { forwardRef, useContext } from 'react'
-import {
-  GetApp as GetAppIcon,
-  Code as CodeIcon,
-  Link as ShareIcon,
-  BarChart as PreviewIcon,
-} from '@material-ui/icons'
-import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden, Link } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { GetApp as GetAppIcon, Code as CodeIcon, BarChart as PreviewIcon } from '@material-ui/icons'
+import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden } from '@material-ui/core'
 import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '..'
-import { CLIENT_HOST_ADDRESS } from '../../config'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
 
@@ -88,32 +82,6 @@ export default ({ record, id, toggleCodeView, codeView }) => {
                 >
                   JSON
                 </Button>
-              </Tooltip>
-            </Grid>
-
-            {/* SHARE */}
-            <Grid item>
-              <Tooltip title="Share a link to this record">
-                <Link
-                  // eslint-disable-next-line react/no-children-prop
-                  children=""
-                  component={forwardRef((props, ref) => (
-                    <Button
-                      onClick={e => e.stopPropagation()}
-                      style={{ minWidth: 120 }}
-                      variant="outlined"
-                      color="primary"
-                      startIcon={<ShareIcon />}
-                      disableElevation
-                      ref={ref}
-                      href={`${CLIENT_HOST_ADDRESS}/render/record?id=${id}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Share
-                    </Button>
-                  ))}
-                />
               </Tooltip>
             </Grid>
 

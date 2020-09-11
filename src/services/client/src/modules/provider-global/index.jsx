@@ -1,24 +1,9 @@
 import React, { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
-import { gql, useMutation } from '@apollo/client'
 
 export const GlobalContext = createContext()
 
 export default ({ children }) => {
-  const [persistSearchState] = useMutation(gql`
-    mutation($state: JSON!) {
-      browserClient {
-        persistSearchState(state: $state)
-      }
-    }
-  `)
-
-  const saveGlobalState = state => {
-    return persistSearchState({ variables: { state } }).then(
-      ({ data }) => data.browserClient.persistSearchState
-    )
-  }
-
   return (
     <QuickForm
       textSort={undefined}
@@ -48,7 +33,6 @@ export default ({ children }) => {
               )
               if (cb) cb()
             },
-            saveGlobalState: () => saveGlobalState({}),
           }}
         >
           {children}
