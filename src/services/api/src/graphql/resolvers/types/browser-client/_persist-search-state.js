@@ -12,7 +12,7 @@ export default async (self, args, ctx) => {
     },
     {
       $setOnInsert: {
-        id: ObjectID(),
+        _id: ObjectID(),
         hashedState: hash(state),
         state,
         createdAt: new Date(),

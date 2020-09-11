@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Records, Record, Atlas } from '../../components'
+import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'
-import { GlobalContext } from '../../modules/provider-global'
 
 const components = {
   records: Records,
@@ -10,8 +10,9 @@ const components = {
 }
 
 export default ({ location }) => {
-  const { global } = useContext(GlobalContext)
   const { pathname } = location
+  const uriSearchParams = getUriState()
+  console.log(uriSearchParams)
 
   /**
    * First get the name of the component. This
@@ -35,7 +36,7 @@ export default ({ location }) => {
    * Component props can be specified via URI parameters
    */
   const props = Object.fromEntries(
-    Object.entries(global).map(([prop, value]) => {
+    Object.entries(uriSearchParams).map(([prop, value]) => {
       if (value === 'false') return [prop, false]
       if (value === 'true') return [prop, true]
       return [prop, value]

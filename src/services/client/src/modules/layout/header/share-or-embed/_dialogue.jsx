@@ -36,9 +36,27 @@ const TabPanel = props => {
 }
 
 const makeShareURI = searchId => {
-  return `${CLIENT_HOST_ADDRESS}/render${window.location.pathname}?search=${encodeURIComponent(
-    searchId
-  )}`
+  const currentPath = window.location.pathname
+
+  if (['/', '/atlas'].includes(currentPath)) {
+    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
+  }
+
+  /**
+   * /records
+   */
+  if (currentPath === '/records') {
+    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?hideSidebar=true&disableSidebar=true&search=${searchId}`
+  }
+
+  /**
+   * /records/:id
+   */
+  if (currentPath.match(/\/records\/.*/)) {
+    return `${CLIENT_HOST_ADDRESS}/render/record?id=${window.location.href.substring(
+      window.location.href.lastIndexOf('/') + 1
+    )}`
+  }
 }
 
 const Panels = ({ tabIndex }) => {
@@ -67,7 +85,7 @@ const Panels = ({ tabIndex }) => {
       </div>
     </Fade>
   ) : (
-    <Fade in={data} key="data">
+    <Fade in={Boolean(data)} key="data">
       <div>
         <TabPanel value={tabIndex} index={0}>
           <Link uri={makeShareURI(searchId)} />

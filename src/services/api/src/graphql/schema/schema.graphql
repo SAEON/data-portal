@@ -39,6 +39,7 @@ interface Edge {
 type BrowserClient {
   # Save a web-browser's search context for retrieving
   persistSearchState(state: JSON!): ID!
+  findSearchState(id: ID!): JSON
 }
 
 # Catalogue

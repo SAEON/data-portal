@@ -10,6 +10,7 @@ import {
   Toolbar,
   Checkbox,
   Divider,
+  Link as MuiLink,
 } from '@material-ui/core'
 import {
   Visibility as ViewIcon,
@@ -156,7 +157,17 @@ export default ({
             <div>
               {/* Title and author */}
               <CardContent>
-                <Typography variant="h6">{titles?.[0]?.title || 'Title missing'}</Typography>
+                <Typography
+                  component={MuiLink}
+                  onClick={() => history.push(`/records/${id}`)}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  variant="h6"
+                >
+                  {titles?.[0]?.title || 'Title missing'}
+                </Typography>
+                <br />
                 <Typography variant="overline">
                   {contributors?.[0]?.name || 'Contributor info missing'}
                 </Typography>
@@ -174,7 +185,18 @@ export default ({
 
               <CardContent>
                 {DOI ? (
-                  <Link uri={`https://doi.org/${DOI}`} />
+                  <Typography
+                    component={MuiLink}
+                    href={`https://doi.org/${DOI}`}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                    variant="body2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {`https://doi.org/${DOI}`}
+                  </Typography>
                 ) : (
                   <Typography variant="overline">No DOI</Typography>
                 )}
