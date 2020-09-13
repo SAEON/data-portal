@@ -37,7 +37,7 @@ jobs:
           echo "GQL_SUBSCRIPTIONS_PROVIDER=ws://api.catalogue.saeon.dvn/graphql" >> src/services/client/.env
           echo "REDIRECT_URL=http://catalogue.saeon.dvn/authenticated" >> src/services/client/.env
           echo "CLIENT_HOST_ADDRESS=http://catalogue.saeon.dvn" >> src/services/client/.env
-          echo "DEPLOYMENT_ENVIRONMENT=development" >> src/services/client/.env
+          echo "DEPLOYMENT_ENV=development" >> src/services/client/.env
           echo "DEFAULT_NOTICES=This is the catalogue DEVELOPMENT deployment. Feedback is welcome!" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)
