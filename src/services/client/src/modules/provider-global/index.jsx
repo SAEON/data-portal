@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
 import { getUriState } from '../../lib/fns'
 import { Loading } from '../../components'
@@ -9,12 +9,11 @@ export const GlobalContext = createContext()
 const GlobaProvider = ({ children, ...props }) => {
   return (
     <QuickForm
-      textSort={props.textSort || undefined}
       layersearch={undefined}
-      layers={[]}
-      text={props.text || undefined}
-      extent={undefined}
-      terms={[]}
+      layers={props?.layers || []}
+      text={props?.text || undefined}
+      extent={props?.extent || undefined}
+      terms={props?.terms || []}
     >
       {(setGlobal, global) => (
         <GlobalContext.Provider

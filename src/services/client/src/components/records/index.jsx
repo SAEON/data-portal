@@ -71,30 +71,34 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
           </Grid>
         ) : (
           <>
-            {/**
-             * TODO: Add toggle sidebar collapse animation
-             *
-             * Although @material-ui/core adds support for
-             * horizontal collapse, the grid item has to be
-             * a direct descendant of grid container
-             *
-             * So i'm not sure how to animate changs to the
-             * flex layout at this point
-             **/}
-            {disableSidebar ? null : isMobile ? (
-              <Collapse orientation={'vertical'} in={showSidebar}>
-                <Grid item xs={12}>
-                  <Sidebar catalogue={data?.catalogue} />
+            {isMobile ? (
+              <>
+                {disableSidebar ? null : (
+                  <Collapse orientation={'vertical'} in={showSidebar}>
+                    <Grid item xs={12}>
+                      <Sidebar catalogue={data?.catalogue} />
+                    </Grid>
+                  </Collapse>
+                )}
+
+                <Grid item xs style={{ flexGrow: 1 }}>
+                  <Items results={results} />
                 </Grid>
-              </Collapse>
-            ) : showSidebar ? (
-              <Grid item md={4}>
-                <Sidebar catalogue={data?.catalogue} />
+              </>
+            ) : (
+              <Grid container item style={{ margin: '48px 0px 48px' }} justify="center">
+                <Grid container item lg={10} xl={8} spacing={2}>
+                  {showSidebar ? (
+                    <Grid item md={4}>
+                      <Sidebar catalogue={data?.catalogue} />
+                    </Grid>
+                  ) : null}
+                  <Grid item xs style={{ flexGrow: 1 }}>
+                    <Items results={results} />
+                  </Grid>
+                </Grid>
               </Grid>
-            ) : null}
-            <Grid item xs style={{ flexGrow: 1 }}>
-              <Items results={results} />
-            </Grid>
+            )}
           </>
         )}
       </Grid>

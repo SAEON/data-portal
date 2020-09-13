@@ -31,7 +31,7 @@ export default ({ record, id, toggleCodeView, codeView }) => {
       style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
       variant="outlined"
     >
-      <Toolbar variant="regular">
+      <Toolbar variant="dense">
         <Grid container spacing={2} justify="flex-end">
           {/* PAGE TITLE */}
           <Grid item xs style={{ alignSelf: 'center' }}>

@@ -5,6 +5,6 @@ export default makeStyles(theme => ({
     color: theme.palette.secondary.contrastText,
   },
   appbar: {
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: theme.palette.common.white,
   },
 }))

@@ -6,9 +6,5 @@ export default makeStyles(theme => {
     'small-icon-button': {
       padding: 3,
     },
-    tools: {
-      margin: 6,
-      backgroundColor: theme.palette.secondary.light,
-    },
   }
 })

@@ -7,6 +7,11 @@ export default createMuiTheme({
     },
   },
   overrides: {
+    MuiTypography: {
+      h6: {
+        fontSize: '1rem',
+      },
+    },
     MuiToolbar: {
       gutters: {
         // TODO - this should be dynamic
@@ -54,7 +59,7 @@ export default createMuiTheme({
     },
     secondary: {
       // light calculated from main
-      main: '#adb5c080',
+      main: '#dee1e5',
       // dark calculated from main
     },
   },

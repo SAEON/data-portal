@@ -50,9 +50,9 @@ export default ({ json, id }) => {
         record={json}
       />
 
-      <div style={{ margin: '24px 0px 48px' }}>
+      <div style={{ margin: '48px 0px 48px' }}>
         <Grid container justify="center">
-          <Grid item xs={11} sm={8}>
+          <Grid item lg={10} xl={8}>
             {codeView ? (
               <Fade key="1" in={codeView}>
                 <Grid
