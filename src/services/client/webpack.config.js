@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
+const fs = require('fs')
 const packageJson = require('./package.json')
 // const { GenerateSW } = require('workbox-webpack-plugin')
 const { execSync } = require('child_process')
@@ -159,6 +160,12 @@ module.exports = () => {
         'process.env.NODE_ENV': JSON.stringify(mode),
         'process.env.LATEST_COMMIT': JSON.stringify(LATEST_COMMIT),
         'process.env.DEPLOYMENT_ENV': JSON.stringify(DEPLOYMENT_ENV),
+        'process.env.BACKGROUNDS': JSON.stringify(
+          fs
+            .readdirSync('public/bg')
+            .filter(f => ['.jpg', '.jpeg'].includes(f.match(/\.[0-9a-z]{1,5}$/i)?.[0] || undefined))
+            .join(',')
+        ),
       }),
       new CopyPlugin({
         patterns: [

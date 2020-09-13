@@ -21,14 +21,12 @@ import {
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../../package.json'
-import { SOURCE_CODE_URI, DEPLOYMENT_ENV } from '../../../config'
+import { SOURCE_CODE_URI, DEPLOYMENT_ENV, HEADLESS_PAGES } from '../../../config'
 import FeedbackDialogue from './_feedback-dialogue'
 import ShareOrEmbedMenu from './share-or-embed'
 import AccountMenu from './_account-menu'
 import useStyles from './style'
 import clsx from 'clsx'
-
-const headlessPages = ['/render']
 
 export default withRouter(({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -39,7 +37,7 @@ export default withRouter(({ children }) => {
 
   return (
     <>
-      {headlessPages.includes(currentRoute) ? null : (
+      {HEADLESS_PAGES.includes(currentRoute) ? null : (
         <>
           <AppBar
             className={clsx(classes.appBar)}
@@ -74,12 +72,10 @@ export default withRouter(({ children }) => {
           <SwipeableDrawer
             className={clsx(classes.drawer, {
               [classes.drawerOpen]: drawerOpen,
-              [classes.drawerClose]: !drawerOpen,
             })}
             classes={{
               paper: clsx({
                 [classes.drawerOpen]: drawerOpen,
-                [classes.drawerClose]: !drawerOpen,
               }),
             }}
             variant={'temporary'}
@@ -156,9 +152,10 @@ export default withRouter(({ children }) => {
         </>
       )}
 
+      {/* Main content */}
       <main
         className={clsx({
-          [classes.content]: !headlessPages.includes(currentRoute),
+          [classes.content]: !HEADLESS_PAGES.includes(currentRoute),
         })}
       >
         {children}

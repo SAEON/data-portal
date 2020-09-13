@@ -5,7 +5,7 @@ import Items from './items'
 import { GlobalContext } from '../../modules/provider-global'
 import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-import { Loading } from '../../components'
+import { Footer, Loading } from '../../components'
 import useCatalogue from '../../lib/useCatalogue'
 
 const DEFAULT_CURSORS = {
@@ -98,6 +98,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
           </>
         )}
       </Grid>
+      {loading ? undefined : <Footer />}
     </Header>
   )
 }

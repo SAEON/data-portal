@@ -4,6 +4,7 @@ import { GlobalContext } from '../../modules/provider-global'
 import { terrestrisBaseMap } from '../../lib/ol'
 import { useHistory } from 'react-router-dom'
 import Header from './header'
+import { Footer } from '../'
 import { OlReact } from '@saeon/ol-react'
 import { Link as SimpleLink } from '..'
 import WKT from 'ol/format/WKT'
@@ -12,11 +13,13 @@ import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 
+const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
+
 const wkt = new WKT()
 
 const Row = ({ title, children, ...props }) => (
   <Grid item {...props}>
-    <Card variant="outlined">
+    <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
       <CardContent>
         {
           <Typography gutterBottom variant="overline">
@@ -102,44 +105,42 @@ export default ({ json, id }) => {
                   </Row>
 
                   <Row title={'Spatial covereage'}>
-                    <Typography variant="body2" component="h2">
-                      <OlReact
-                        viewOptions={{
-                          smoothExtentConstraint: true,
-                          showFullExtent: true,
-                          extent: new Polygon(
-                            wkt
-                              .readGeometry(json.geoLocations[0].geoLocationBox)
-                              .getCoordinates()
-                              .map(array => array.map(([y, x]) => [x, y]))
-                          )
-                            .getExtent()
-                            .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)), // subtract for minX/minY, expand for maxX, maxY
-                        }}
-                        layers={[
-                          new VectorLayer({
-                            id: 'extent-layer',
-                            title: 'Extent',
-                            source: new VectorSource({
-                              wrapX: false,
-                              features: json.geoLocations.map(
-                                ({ geoLocationBox }) =>
-                                  new Feature({
-                                    geometry: new Polygon(
-                                      wkt
-                                        .readGeometry(geoLocationBox)
-                                        .getCoordinates()
-                                        .map(array => array.map(([y, x]) => [x, y]))
-                                    ),
-                                  })
-                              ),
-                            }),
+                    <OlReact
+                      viewOptions={{
+                        smoothExtentConstraint: true,
+                        showFullExtent: true,
+                        extent: new Polygon(
+                          wkt
+                            .readGeometry(json.geoLocations[0].geoLocationBox)
+                            .getCoordinates()
+                            .map(array => array.map(([y, x]) => [x, y]))
+                        )
+                          .getExtent()
+                          .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)), // subtract for minX/minY, expand for maxX, maxY
+                      }}
+                      layers={[
+                        new VectorLayer({
+                          id: 'extent-layer',
+                          title: 'Extent',
+                          source: new VectorSource({
+                            wrapX: false,
+                            features: json.geoLocations.map(
+                              ({ geoLocationBox }) =>
+                                new Feature({
+                                  geometry: new Polygon(
+                                    wkt
+                                      .readGeometry(geoLocationBox)
+                                      .getCoordinates()
+                                      .map(array => array.map(([y, x]) => [x, y]))
+                                  ),
+                                })
+                            ),
                           }),
-                          terrestrisBaseMap(),
-                        ]}
-                        style={{ height: '350px', position: 'relative' }}
-                      />
-                    </Typography>
+                        }),
+                        terrestrisBaseMap(),
+                      ]}
+                      style={{ height: '350px', position: 'relative' }}
+                    />
                   </Row>
 
                   <Row title="Temporal coverage">
@@ -260,6 +261,7 @@ export default ({ json, id }) => {
           </Grid>
         </Grid>
       </div>
+      <Footer />
     </>
   )
 }

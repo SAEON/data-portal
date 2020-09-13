@@ -33,7 +33,7 @@
         day: "*"
         month: "*"
         weekday: "0"
-        job: "docker system prune -a -f >> /opt/docker-system-clean.log 2>&1"
+        job: "docker system prune -f >> /opt/docker-system-clean.log 2>&1"
 
     - name: Install Docker Compose
       shell: |

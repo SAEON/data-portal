@@ -6,10 +6,6 @@ export default makeStyles(theme => ({
   appBar: {
     backgroundColor: theme.palette.primary.main,
     width: '100%',
-    transition: theme.transitions.create(['width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
   },
   drawer: {
     width: drawerWidth,
@@ -18,17 +14,6 @@ export default makeStyles(theme => ({
   },
   drawerOpen: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
   },
   toolbar: {
     display: 'flex',
@@ -40,10 +25,5 @@ export default makeStyles(theme => ({
   content: {
     height: `calc(100% - ${49}px)`,
     position: 'relative',
-    marginLeft: 0,
-    transition: theme.transitions.create(['margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
   },
 }))

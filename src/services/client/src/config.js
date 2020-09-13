@@ -1,4 +1,6 @@
 // Application configuration
+export const HEADLESS_PAGES = ['/render']
+export const BACKGROUNDS = process.env.BACKGROUNDS || ''
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'local'
 export const DEFAULT_NOTICES = process.env.DEFAULT_NOTICES || ''
 export const SOURCE_CODE_URI =
