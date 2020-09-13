@@ -1,9 +1,11 @@
-import React, { useContext } from 'react'
-import { Records, Record, Atlas } from '../../components'
+import React from 'react'
+import { Records, Record, Atlas, Home } from '../../components'
 import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'
 
 const components = {
+  '': Home,
+  home: Home,
   records: Records,
   record: Record,
   atlas: Atlas,
@@ -12,13 +14,12 @@ const components = {
 export default ({ location }) => {
   const { pathname } = location
   const uriSearchParams = getUriState()
-  console.log(uriSearchParams)
 
   /**
    * First get the name of the component. This
    * is the last part of the page's URI path
    */
-  const componentName = pathname.replace(/.*\//, '')
+  const componentName = pathname.replace('/render', '').replace(/.*\//, '')
   const Component = components[componentName]
 
   /**

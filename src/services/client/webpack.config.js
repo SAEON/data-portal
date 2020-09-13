@@ -8,7 +8,7 @@ const packageJson = require('./package.json')
 const { execSync } = require('child_process')
 require('dotenv').config()
 
-const { NODE_ENV: mode } = process.env
+const { NODE_ENV: mode, DEPLOYMENT_ENVIRONMENT } = process.env
 var LATEST_COMMIT
 try {
   LATEST_COMMIT = execSync('git rev-parse HEAD').toString().trim()
@@ -158,6 +158,7 @@ module.exports = () => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode),
         'process.env.LATEST_COMMIT': JSON.stringify(LATEST_COMMIT),
+        'process.env.DEPLOYMENT_ENVIRONMENT': JSON.stringify(DEPLOYMENT_ENVIRONMENT),
       }),
       new CopyPlugin({
         patterns: [
