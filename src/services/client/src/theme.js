@@ -1,5 +1,4 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { blue, blueGrey } from '@material-ui/core/colors'
 
 export default createMuiTheme({
   customSizes: {
@@ -46,11 +45,17 @@ export default createMuiTheme({
     },
   },
   palette: {
+    type: 'light',
+    contrastThreshold: 3,
     primary: {
-      main: blue[900],
+      // light calculated from main
+      main: '#051d40e6',
+      // dark calculated from main
     },
     secondary: {
-      main: blueGrey[100],
+      // light calculated from main
+      main: '#adb5c080',
+      // dark calculated from main
     },
   },
   status: {

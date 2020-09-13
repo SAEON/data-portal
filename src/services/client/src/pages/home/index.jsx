@@ -62,6 +62,10 @@ export default () => {
               )}
             </Grid>
           </Grid>
+          <img
+            style={{ position: 'absolute', bottom: 16, right: 16, height: 80 }}
+            src="/saeon-logo.png"
+          />
         </MapProvider>
       </Suspense>
     </div>

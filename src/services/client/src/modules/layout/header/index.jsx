@@ -21,7 +21,7 @@ import {
 } from '@material-ui/icons'
 import NavItem from './nav-item'
 import packageJson from '../../../../package.json'
-import { SOURCE_CODE_URI } from '../../../config'
+import { SOURCE_CODE_URI, DEPLOYMENT_ENV } from '../../../config'
 import FeedbackDialogue from './_feedback-dialogue'
 import ShareOrEmbedMenu from './share-or-embed'
 import AccountMenu from './_account-menu'
@@ -42,10 +42,7 @@ export default withRouter(({ children }) => {
       {headlessPages.includes(currentRoute) ? null : (
         <>
           <AppBar
-            color="primary"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: false,
-            })}
+            className={clsx(classes.appBar)}
             style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
             variant="outlined"
             position="fixed"
@@ -62,7 +59,10 @@ export default withRouter(({ children }) => {
 
               {/* TITLE */}
               <Typography style={{ padding: '10px' }} display="block" variant="body2">
-                SAEON DATA PORTAL v{packageJson.version}
+                SAEON DATA PORTAL{' '}
+                {DEPLOYMENT_ENV === 'production'
+                  ? undefined
+                  : `${DEPLOYMENT_ENV}.${packageJson.version}`}
               </Typography>
 
               {/* TOP-RIGHT ICON CONTROLS */}

@@ -4,6 +4,7 @@ const drawerWidth = 240
 
 export default makeStyles(theme => ({
   appBar: {
+    backgroundColor: theme.palette.primary.main,
     width: '100%',
     transition: theme.transitions.create(['width'], {
       easing: theme.transitions.easing.sharp,
@@ -28,7 +29,6 @@ export default makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
   },
   toolbar: {
     display: 'flex',
