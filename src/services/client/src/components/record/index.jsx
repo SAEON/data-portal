@@ -5,7 +5,6 @@ import { Loading } from '../../components'
 import Layout from './layout'
 
 export default ({ id }) => {
-  console.log('id', id)
   const { loading, error, data } = useQuery(
     gql`
       query catalogue($id: ID) {

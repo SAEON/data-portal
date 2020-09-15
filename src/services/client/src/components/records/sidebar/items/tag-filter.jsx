@@ -28,6 +28,7 @@ export default ({ results, title }) => {
   const { terms } = global
   const classes = useStyles()
 
+  // TODO Change sort order
   const sortedResults = results
     ? [...results].sort(a => (terms?.map(({ value }) => value)?.includes(a.key) ? -1 : 1))
     : undefined
