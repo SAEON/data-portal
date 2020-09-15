@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/client",
-  "version": "0.4.33",
+  "version": "5.0.0",
   "description": "Browser-based client for searching SAEON's metadata repository, and for previewing related, OGC-compliant spatial data",
   "keywords": [
     "@saeon/client",
