@@ -1,6 +1,20 @@
 import React, { useContext } from 'react'
-import { GetApp as GetAppIcon, Code as CodeIcon, BarChart as PreviewIcon } from '@material-ui/icons'
-import { AppBar, Toolbar, Button, Grid, Typography, Tooltip, Hidden } from '@material-ui/core'
+import {
+  FormatQuote as CitationIcon,
+  GetApp as GetAppIcon,
+  Code as CodeIcon,
+  BarChart as PreviewIcon,
+} from '@material-ui/icons'
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Grid,
+  Typography,
+  Tooltip,
+  Hidden,
+  IconButton,
+} from '@material-ui/core'
 import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '..'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
@@ -42,94 +56,53 @@ export default ({ record, id, toggleCodeView, codeView }) => {
 
           <Hidden xsDown>
             {/* PREVIEW */}
-            <Grid item>
-              <Tooltip title={DOI ? 'Preview dataset' : 'Unable to preview this dataset'}>
-                <span>
-                  <Button
-                    disabled={!DOI}
-                    style={{ minWidth: 120 }}
-                    variant="outlined"
-                    color={'primary'}
-                    startIcon={<PreviewIcon />}
-                    disableElevation
-                    onClick={e => {
-                      e.stopPropagation()
-                      setGlobal({
-                        layers: mapLayers,
-                      })
-                      history.push('/atlas')
-                    }}
-                  >
-                    PREVIEW
-                  </Button>
-                </span>
-              </Tooltip>
-            </Grid>
-
-            {/* JSON */}
-            <Grid item>
-              <Tooltip title="View raw metadata record (JSON)">
-                <Button
-                  style={{ minWidth: 120 }}
-                  variant="outlined"
-                  color={codeView ? 'secondary' : 'primary'}
-                  startIcon={<CodeIcon />}
-                  disableElevation
+            <Tooltip title={DOI ? 'Preview dataset' : 'Unable to preview this dataset'}>
+              <span>
+                <IconButton
+                  disabled={!DOI}
+                  color={'primary'}
                   onClick={e => {
                     e.stopPropagation()
-                    toggleCodeView()
+                    setGlobal({
+                      layers: mapLayers,
+                    })
+                    history.push('/atlas')
                   }}
                 >
-                  JSON
-                </Button>
-              </Tooltip>
-            </Grid>
+                  <PreviewIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
+
+            {/* JSON */}
+            <Tooltip title="View raw metadata record (JSON)">
+              <IconButton
+                color={codeView ? 'primary' : 'default'}
+                onClick={e => {
+                  e.stopPropagation()
+                  toggleCodeView()
+                }}
+              >
+                <CodeIcon />
+              </IconButton>
+            </Tooltip>
 
             {/* CITATTION */}
-            <Grid item>
-              <CitationDialog
-                variant="outlined"
-                color="primary"
-                style={{ minWidth: 120 }}
-                record={record}
-              />
-            </Grid>
-
-            {/* METADATA Download */}
-            <Grid item>
-              <SimpleLink
-                uri={
-                  'data:' + 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(record))
-                }
-                download={`metadata_${id}.json`}
-              >
-                <Tooltip title="Download this page in JSON format">
-                  <Button
-                    style={{ minWidth: 120 }}
-                    variant="outlined"
-                    color="primary"
-                    startIcon={<GetAppIcon />}
-                    disableElevation
-                  >
-                    Metadata
-                  </Button>
+            <CitationDialog record={record}>
+              {({ disabled, onClick }) => (
+                <Tooltip placement="left-start" title="Cite this record">
+                  <span>
+                    <IconButton color="primary" disabled={disabled} onClick={onClick}>
+                      <CitationIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
-              </SimpleLink>
-            </Grid>
+              )}
+            </CitationDialog>
           </Hidden>
 
           {/* DATA DOWNLOAD */}
-          <Grid item>
-            <DataDownloadButton
-              style={{ minWidth: 120 }}
-              disableElevation
-              variant="outlined"
-              color="primary"
-              immutableResource={record.immutableResource}
-            >
-              Data
-            </DataDownloadButton>
-          </Grid>
+          <DataDownloadButton color="primary" immutableResource={record.immutableResource} />
         </Grid>
       </Toolbar>
     </AppBar>

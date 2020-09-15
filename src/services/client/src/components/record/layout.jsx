@@ -63,7 +63,7 @@ export default ({ json, id }) => {
                   spacing={3}
                 >
                   <Row style={{ width: '100%' }} title={'Metadata Source JSON'}>
-                    <pre style={{ whiteSpace: 'break-spaces' }}>
+                    <pre style={{ whiteSpace: 'break-spaces', wordBreak: 'break-word' }}>
                       {JSON.stringify(json, null, 2)}
                     </pre>
                   </Row>
@@ -166,7 +166,12 @@ export default ({ json, id }) => {
                     {json.contributors?.map((contributor, i) => (
                       <div key={i}>
                         <Typography variant="body2">
-                          ({contributor.contributorType.replace(/([A-Z])/g, ' $1').trim()}){' '}
+                          <b>
+                            {contributor.contributorType
+                              .replace(/([A-Z])/g, ' $1')
+                              .trim()
+                              .toUpperCase()}{' '}
+                          </b>{' '}
                           {contributor.name},{contributor.affiliations.map(aff => aff.affiliation)}
                         </Typography>
                       </div>
@@ -190,6 +195,7 @@ export default ({ json, id }) => {
                           <Grid item key={subject.subject}>
                             <Chip
                               size="small"
+                              color="primary"
                               clickable
                               onClick={() => {
                                 setGlobal(
@@ -212,15 +218,18 @@ export default ({ json, id }) => {
                   <Row title="Resources">
                     {json.linkedResources?.map((lr, i) => (
                       <div key={`linked-resource${i}`}>
-                        <SimpleLink uri={lr.resourceURL}>
-                          <Typography variant="body2">
+                        <Typography variant="body2">
+                          <b>
                             {`${
                               lr.linkedResourceType === 'Query'
-                                ? '(GeoMap)'
-                                : `(${lr.linkedResourceType})`
-                            } ${lr.resourceDescription}`}
-                          </Typography>
-                        </SimpleLink>
+                                ? 'GeoMap'
+                                : `${lr.linkedResourceType}`
+                            }`.toUpperCase()}
+                          </b>{' '}
+                          <SimpleLink uri={lr.resourceURL}>
+                            {`${lr.resourceDescription}`}
+                          </SimpleLink>
+                        </Typography>
                       </div>
                     ))}
                   </Row>
@@ -228,14 +237,23 @@ export default ({ json, id }) => {
                   <Row title="Identifiers">
                     <div>
                       <Typography variant="body2">
-                        {json.identifier?.identifier || 'Missing identifier'} (
-                        {json.identifier.identifierType})
+                        <b>
+                          {json.identifier.identifierType.toUpperCase() === 'PLONE'
+                            ? 'SAEON'
+                            : json.identifier.identifierType.toUpperCase()}
+                        </b>{' '}
+                        {json.identifier?.identifier || 'Missing identifier'}
                       </Typography>
                     </div>
                     {json.alternateIdentifiers.map(ai => (
                       <div key={ai.alternateIdentifier}>
                         <Typography variant="body2">
-                          {ai.alternateIdentifier} ({ai.alternateIdentifierType})
+                          <b>
+                            {ai.alternateIdentifierType.toUpperCase() === 'PLONE'
+                              ? 'SAEON'
+                              : ai.alternateIdentifierType.toUpperCase()}
+                          </b>{' '}
+                          {ai.alternateIdentifier}
                         </Typography>
                       </div>
                     ))}
