@@ -20,7 +20,6 @@ export default ({
   paperProps,
   icon = undefined,
   onOpenEffect = undefined,
-  style = {},
 }) => {
   const [open, setOpen] = useState(false)
 

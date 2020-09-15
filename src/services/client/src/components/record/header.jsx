@@ -9,7 +9,7 @@ import { CitationDialog, DataDownloadButton } from '..'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
 
-export default ({ record, id, toggleCodeView, codeView }) => {
+export default ({ record, toggleCodeView, codeView }) => {
   const history = useHistory()
   const { setGlobal } = useContext(GlobalContext)
   const { identifier, linkedResources } = record

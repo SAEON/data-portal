@@ -35,7 +35,7 @@ export default ({ proxy }) => {
     setGlobal({
       extent: extent || undefined,
     })
-  }, [extent])
+  }, [extent]) // TODO - the suggested eslint fix breaks the code
 
   /**
    * On first render, if there is an extent
@@ -50,7 +50,7 @@ export default ({ proxy }) => {
       const view = proxy.getView()
       view.fit(wkt.readGeometry(extent), { padding: [100, 100, 100, 100] })
     }
-  }, [])
+  }, []) // TODO - the suggested eslint fix breaks the code
 
   /**
    * On first render configure
@@ -78,7 +78,7 @@ export default ({ proxy }) => {
       proxy.removeLayer(layer)
       body.removeEventListener('keydown', keydown)
     }
-  }, [])
+  }, []) // TODO - the suggested eslint fix breaks the code
 
   return (
     <Card

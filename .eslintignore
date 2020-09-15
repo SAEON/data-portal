@@ -3,7 +3,11 @@
 **/.build/**
 src/generators/**
 
-// Ignored because of top-level await. Not ideal
+// TODO Ignored because of top-level await. Not ideal
 src/services/reporting/src/index.js
 src/services/api/src/graphql/schema/index.js
 src/services/api/src/index.js
+src/services/api/src/graphql/resolvers/types/catalogue/index.js
+src/services/api/src/graphql/resolvers/types/browser-client/index.js
+src/services/api/src/graphql/resolvers/mutations/index.js
+src/services/api/src/graphql/resolvers/queries/index.js

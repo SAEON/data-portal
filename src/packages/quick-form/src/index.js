@@ -8,7 +8,7 @@ export default ({ children, effects, ...formFields }) => {
       effects?.forEach(effect => {
         effect(fields)
       }),
-    [fields]
+    [fields] // TODO - The suggested fix by eslint breaks the code
   )
 
   const updateForm = obj => {
