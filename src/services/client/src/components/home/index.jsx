@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Grid, useMediaQuery, Typography, Fade } from '@material-ui/core'
+import { Grid, useMediaQuery, Typography, Fade, Divider } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { gql, useQuery } from '@apollo/client'
 import { RecordsSearch, Loading } from '../../components'
@@ -7,7 +7,7 @@ import { GlobalContext } from '../../modules/provider-global'
 import useStyles from './style'
 import clsx from 'clsx'
 
-const CARD_BG_COLOUR = 'rgba(255,255,255,0.6)'
+const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
 
 export default () => {
   const classes = useStyles()
@@ -47,45 +47,45 @@ export default () => {
         xs={12}
         md={6}
       >
-        <Grid item xs={12} style={{}}>
-          <RecordsSearch
-            style={{
-              backgroundColor: CARD_BG_COLOUR,
-              // borderRadius: theme.shape.borderRadius,
-              // margin: 20,
-              padding: 16,
-            }}
-            resetGlobalStateOnSearch={true}
-            autofocus={true}
-          >
-            <Typography variant="overline">
-              {error ? (
-                error.message
-              ) : loading ? (
-                <Fade key="waiting" in={loading}>
-                  <span>...</span>
-                </Fade>
-              ) : (
-                <Fade key="results" in={!loading}>
-                  <span>{data?.catalogue.records.totalCount} records</span>
-                </Fade>
-              )}
-            </Typography>
-          </RecordsSearch>
+        <Grid
+          container
+          item
+          xs={12}
+          style={{
+            backgroundColor: CARD_BG_COLOUR,
+            padding: 16,
+          }}
+        >
+          <Grid alignItems="center" style={{ display: 'flex' }} item>
+            <img
+              style={{
+                height: 56,
+              }}
+              src="/saeon-logo.png"
+            />
+          </Grid>
+          <Grid alignItems="center" style={{ display: 'flex' }} item>
+            <Divider variant="middle" orientation="vertical" />
+          </Grid>
+          <Grid item style={{ flexGrow: 2 }}>
+            <RecordsSearch resetGlobalStateOnSearch={true} autofocus={true}>
+              <Typography variant="overline">
+                {error ? (
+                  error.message
+                ) : loading ? (
+                  <Fade key="waiting" in={loading}>
+                    <span>...</span>
+                  </Fade>
+                ) : (
+                  <Fade key="results" in={!loading}>
+                    <span>{data?.catalogue.records.totalCount} records</span>
+                  </Fade>
+                )}
+              </Typography>
+            </RecordsSearch>
+          </Grid>
         </Grid>
       </Grid>
-
-      <img
-        style={{
-          position: 'absolute',
-          bottom: 16,
-          right: 16,
-          height: 80,
-          padding: 10,
-          backgroundColor: CARD_BG_COLOUR,
-        }}
-        src="/saeon-logo.png"
-      />
     </div>
   )
 }

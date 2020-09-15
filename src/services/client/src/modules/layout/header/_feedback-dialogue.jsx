@@ -21,7 +21,7 @@ export default () => {
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
   return (
     <span>
-      <Tooltip title="Send us anonymous feedback on the site">
+      <Tooltip placement="left" title="Send us anonymous feedback on the site">
         <IconButton
           aria-label="Provide anonymous feedback"
           aria-controls="menu-appbar"
