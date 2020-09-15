@@ -2,10 +2,12 @@ import React, { useContext } from 'react'
 import { Grid, useMediaQuery, Typography, Fade } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { gql, useQuery } from '@apollo/client'
-import { RecordsSearchBox, Loading } from '../../components'
+import { RecordsSearch, Loading } from '../../components'
 import { GlobalContext } from '../../modules/provider-global'
 import useStyles from './style'
 import clsx from 'clsx'
+
+const CARD_BG_COLOUR = 'rgba(255,255,255,0.6)'
 
 export default () => {
   const classes = useStyles()
@@ -45,21 +47,39 @@ export default () => {
         xs={12}
         md={6}
       >
-        <Grid item xs={12}>
-          <RecordsSearchBox resetGlobalStateOnSearch={true} autofocus={true} />
-          {error ? (
-            <Typography>{error.message}</Typography>
-          ) : loading ? undefined : (
-            <Fade key="results" in={!loading}>
-              <Typography variant="overline">
-                {data?.catalogue.records.totalCount} records
-              </Typography>
-            </Fade>
-          )}
+        <Grid item xs={12} style={{}}>
+          <RecordsSearch
+            style={{
+              backgroundColor: CARD_BG_COLOUR,
+              // borderRadius: theme.shape.borderRadius,
+              // margin: 20,
+              padding: 16,
+            }}
+            resetGlobalStateOnSearch={true}
+            autofocus={true}
+          >
+            {error ? (
+              <Typography>{error.message}</Typography>
+            ) : loading ? undefined : (
+              <Fade key="results" in={!loading}>
+                <Typography variant="overline">
+                  {data?.catalogue.records.totalCount} records
+                </Typography>
+              </Fade>
+            )}
+          </RecordsSearch>
         </Grid>
       </Grid>
+
       <img
-        style={{ position: 'absolute', bottom: 16, right: 16, height: 80 }}
+        style={{
+          position: 'absolute',
+          bottom: 16,
+          right: 16,
+          height: 80,
+          padding: 10,
+          backgroundColor: CARD_BG_COLOUR,
+        }}
         src="/saeon-logo.png"
       />
     </div>

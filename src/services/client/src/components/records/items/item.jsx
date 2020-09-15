@@ -22,7 +22,7 @@ import { CitationDialog, DataDownloadButton } from '../..'
 import useStyles from './style'
 import clsx from 'clsx'
 
-const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
+const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
 export default ({ DOI, _source, titles, contributors, descriptions, id, immutableResource }) => {
   const history = useHistory()

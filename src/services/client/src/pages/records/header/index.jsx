@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Toolbar } from '@material-ui/core'
-import { RecordsSearchBox } from '../../../components'
+import { RecordsSearch } from '../../../components'
 import useStyles from './style'
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
       <Toolbar className={classes.toolbar}>
         <Grid container spacing={1} justify="center">
           <Grid item xs={12} sm={8}>
-            <RecordsSearchBox autofocus={true} />
+            <RecordsSearch autofocus={true} />
           </Grid>
         </Grid>
       </Toolbar>

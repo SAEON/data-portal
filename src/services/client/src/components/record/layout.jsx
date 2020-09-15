@@ -13,7 +13,7 @@ import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 
-const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
+const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
 const wkt = new WKT()
 
