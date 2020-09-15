@@ -17,10 +17,10 @@ import {
 import { LATEST_COMMIT } from '../../../config'
 import { Feedback as FeedbackIcon, Done as DoneIcon, Error as ErrorIcon } from '@material-ui/icons'
 
-export default ({ style = {} }) => {
+export default () => {
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
   return (
-    <div style={style}>
+    <span>
       <Tooltip title="Send us anonymous feedback on the site">
         <IconButton
           aria-label="Provide anonymous feedback"
@@ -28,7 +28,6 @@ export default ({ style = {} }) => {
           aria-haspopup="true"
           onClick={() => setFeedbackDialogueOpen(!feedbackDialogueOpen)}
           color="inherit"
-          size="small"
         >
           <FeedbackIcon />
         </IconButton>
@@ -128,6 +127,6 @@ export default ({ style = {} }) => {
           }}
         </QuickForm>
       </Dialog>
-    </div>
+    </span>
   )
 }

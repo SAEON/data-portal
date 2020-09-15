@@ -58,15 +58,19 @@ export default () => {
             resetGlobalStateOnSearch={true}
             autofocus={true}
           >
-            {error ? (
-              <Typography>{error.message}</Typography>
-            ) : loading ? undefined : (
-              <Fade key="results" in={!loading}>
-                <Typography variant="overline">
-                  {data?.catalogue.records.totalCount} records
-                </Typography>
-              </Fade>
-            )}
+            <Typography variant="overline">
+              {error ? (
+                error.message
+              ) : loading ? (
+                <Fade key="waiting" in={loading}>
+                  <span>...</span>
+                </Fade>
+              ) : (
+                <Fade key="results" in={!loading}>
+                  <span>{data?.catalogue.records.totalCount} records</span>
+                </Fade>
+              )}
+            </Typography>
           </RecordsSearch>
         </Grid>
       </Grid>

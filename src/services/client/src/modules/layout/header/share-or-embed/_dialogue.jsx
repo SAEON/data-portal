@@ -111,7 +111,6 @@ export default () => {
       }}
       title={undefined}
       iconProps={{
-        size: 'small',
         color: 'inherit',
       }}
       icon={<ShareIcon />}

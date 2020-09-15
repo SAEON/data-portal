@@ -31,7 +31,7 @@ export default ({
   }, [open, onOpenEffect])
 
   return (
-    <div style={{ ...style }} onClick={e => e.stopPropagation()}>
+    <span onClick={e => e.stopPropagation()}>
       <Tooltip placement="right-end" {...tooltipProps}>
         <IconButton
           onClick={e => {
@@ -55,6 +55,6 @@ export default ({
           </DialogContent>
         )}
       </Dialog>
-    </div>
+    </span>
   )
 }

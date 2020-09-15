@@ -1,21 +1,11 @@
 import React, { useContext } from 'react'
 import {
   FormatQuote as CitationIcon,
-  GetApp as GetAppIcon,
   Code as CodeIcon,
   BarChart as PreviewIcon,
 } from '@material-ui/icons'
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Grid,
-  Typography,
-  Tooltip,
-  Hidden,
-  IconButton,
-} from '@material-ui/core'
-import { Link as SimpleLink, CitationDialog, DataDownloadButton } from '..'
+import { AppBar, Toolbar, Grid, Typography, Tooltip, Hidden, IconButton } from '@material-ui/core'
+import { CitationDialog, DataDownloadButton } from '..'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
 
