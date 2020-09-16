@@ -27,10 +27,10 @@ export default withRouter(({ children }) => {
           >
             <Toolbar disableGutters={true} variant="dense">
               <Grid container>
-                <Grid item xs={4}></Grid>
+                <Grid item xs={12} sm={4}></Grid>
 
                 {/* MIDDLE */}
-                <Grid container justify="center" alignItems="center" item xs={4}>
+                <Grid container justify="center" alignItems="center" item xs={6} sm={4}>
                   <Typography
                     component={Link}
                     style={{ color: 'white', cursor: 'pointer' }}
@@ -46,7 +46,7 @@ export default withRouter(({ children }) => {
                 </Grid>
 
                 {/* TOP-RIGHT */}
-                <Grid container justify="flex-end" alignItems="center" item xs={4}>
+                <Grid container justify="flex-end" alignItems="center" item xs>
                   <Tooltip placement="left" title="MIT-licensed source code">
                     <IconButton onClick={() => window.open(SOURCE_CODE_URI)} color="inherit">
                       <GitHubIcon color="inherit" />

@@ -54,7 +54,7 @@ export default createMuiTheme({
     contrastThreshold: 3,
     primary: {
       // light calculated from main
-      main: '#051d40e6',
+      main: '#051d40',
       // dark calculated from main
     },
     secondary: {

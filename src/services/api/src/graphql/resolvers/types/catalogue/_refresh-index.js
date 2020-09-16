@@ -73,15 +73,14 @@ export default async (_, args) => {
      * For now, just delete and recreate the index on app start
      * Updating documents doesn't seem to update the mapping
      */
-    await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_delete_by_query`, {
-      method: 'POST',
+    await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query: { match_all: {} } }),
     })
       .then(res => res.json())
-      .then(json => console.log(`${ES_INDEX} data deleted on refresh`, json))
+      .then(json => console.log(`${ES_INDEX} deleted on refresh`, json))
       .catch(error => {
         throw error
       })

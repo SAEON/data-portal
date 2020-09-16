@@ -67,8 +67,8 @@ export default ({
       >
         <Toolbar disableGutters variant="dense" style={{ display: 'flex' }}>
           <Grid container>
-            <Grid item md={4}>
-              {disableSidebar ? null : (
+            <Grid item xs={1} sm={4}>
+              {isMobile && !disableSidebar ? (
                 <IconButton
                   style={{ marginLeft: 5 }}
                   onClick={() => setShowSidebar(!showSidebar)}
@@ -76,11 +76,11 @@ export default ({
                 >
                   <FilterIcon />
                 </IconButton>
-              )}
+              ) : undefined}
             </Grid>
 
             {/* RESULT CONTEXT */}
-            <Grid item md={4} container justify="center" alignContent="center">
+            <Grid item xs={5} sm={4} container justify="center" alignContent="center">
               {isMobile ? null : (
                 <Typography component="div" variant="overline" noWrap style={{ display: 'flex' }}>
                   {catalogue?.records ? `${catalogue.records.totalCount}` : '...'} Records
@@ -89,7 +89,7 @@ export default ({
             </Grid>
 
             {/* TOOLS */}
-            <Grid item md={4} container justify="flex-end" alignItems="center">
+            <Grid item xs={6} sm={4} container justify="flex-end" alignItems="center">
               {/* PREVIEW ALL DATASETS */}
               <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
                 <span>
@@ -102,7 +102,7 @@ export default ({
                     }}
                   >
                     <Badge
-                      color={resultsWithDOIs ? 'secondary' : 'default'}
+                      color={resultsWithDOIs ? 'primary' : 'default'}
                       badgeContent={resultsWithDOIs}
                       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                       invisible={false}
@@ -126,7 +126,7 @@ export default ({
                     }
                   >
                     <Badge
-                      color={layers?.length ? 'secondary' : 'default'}
+                      color={layers?.length ? 'primary' : 'default'}
                       badgeContent={layers?.length || 0}
                       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                       invisible={false}

@@ -21,7 +21,7 @@ export const configure = async () => {
    * allowed to fail, since it indicates that
    * elasticsearch is unavailable
    */
-  if (ES_TEMPLATE_INTEGRATION_ENABLED === 'true') {
+  if (ES_TEMPLATE_INTEGRATION_ENABLED === 'enabled') {
     const response = await fetch(TEMPLATE_URI, {
       method: 'PUT',
       headers: {
@@ -61,7 +61,7 @@ export const configure = async () => {
    * don't have to wait for it to fail before you
    * can use the API
    */
-  if (ES_INDEX_INTEGRATION_ENABLED === 'true') {
+  if (ES_INDEX_INTEGRATION_ENABLED === 'enabled') {
     execute(
       schema,
       ` query ($authorizationCode: String!) {

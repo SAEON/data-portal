@@ -19,7 +19,12 @@ export default ({ results }) => {
               : undefined
 
           return (
-            <Grid key={id} item xs={12} style={isMobile ? { padding: isMobile ? 16 : 0 } : {}}>
+            <Grid
+              key={id}
+              item
+              xs={12}
+              style={isMobile ? { padding: isMobile ? '16px 16px 0 16px' : 0 } : {}}
+            >
               <ResultItem
                 DOI={DOI}
                 _source={_source}

@@ -12,6 +12,7 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
+import { isMobile } from 'react-device-detect'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
@@ -19,7 +20,10 @@ const wkt = new WKT()
 
 const Row = ({ title, children, ...props }) => (
   <Grid item {...props}>
-    <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
+    <Card
+      style={{ backgroundColor: CARD_BG_COLOUR, margin: isMobile ? '0 16px' : '' }}
+      variant="outlined"
+    >
       <CardContent>
         {
           <Typography gutterBottom variant="overline">
@@ -50,18 +54,12 @@ export default ({ json, id }) => {
         record={json}
       />
 
-      <div style={{ margin: '48px 0px 48px' }}>
+      <div style={{ margin: isMobile ? '16px 0 16px' : '48px 0px 48px' }}>
         <Grid container justify="center">
           <Grid item lg={10} xl={8}>
             {codeView ? (
               <Fade key="1" in={codeView}>
-                <Grid
-                  container
-                  direction="column"
-                  justify="space-evenly"
-                  alignItems="stretch"
-                  spacing={3}
-                >
+                <Grid container direction="column" justify="space-evenly" alignItems="stretch">
                   <Row style={{ width: '100%' }} title={'Metadata Source JSON'}>
                     <pre style={{ whiteSpace: 'break-spaces', wordBreak: 'break-word' }}>
                       {JSON.stringify(json, null, 2)}
@@ -76,7 +74,7 @@ export default ({ json, id }) => {
                   direction="column"
                   justify="space-evenly"
                   alignItems="stretch"
-                  spacing={3}
+                  spacing={isMobile ? 2 : 3}
                 >
                   <Row title={'Title'}>
                     <Typography variant="body2" component="h2">

@@ -20,6 +20,7 @@ import {
 import { GlobalContext } from '../../../modules/provider-global'
 import { CitationDialog, DataDownloadButton } from '../..'
 import useStyles from './style'
+import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
@@ -42,7 +43,7 @@ export default ({ DOI, _source, titles, contributors, descriptions, id, immutabl
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           {/* DOI */}
-          {DOI ? (
+          {isMobile ? undefined : DOI ? (
             <Typography
               component={MuiLink}
               variant="overline"

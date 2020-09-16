@@ -6,6 +6,7 @@ import { RecordsSearch, Loading } from '../../components'
 import { GlobalContext } from '../../modules/provider-global'
 import useStyles from './style'
 import clsx from 'clsx'
+import { isMobile } from 'react-device-detect'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
 
@@ -36,7 +37,6 @@ export default () => {
 
       <Grid
         container
-        spacing={2}
         style={{ position: 'absolute', top: 'calc(50% - 120px)', zIndex: 1 }}
         alignItems="stretch"
         item
@@ -49,6 +49,7 @@ export default () => {
       >
         <Grid
           container
+          direction={isMobile ? 'column' : 'row'}
           item
           xs={12}
           style={{
@@ -56,16 +57,18 @@ export default () => {
             padding: 16,
           }}
         >
-          <Grid alignItems="center" style={{ display: 'flex' }} item>
+          <Grid style={{ display: 'flex' }} item>
             <img
               style={{
                 height: 56,
+                display: 'block',
+                margin: 'auto',
               }}
               src="/saeon-logo.png"
             />
           </Grid>
-          <Grid alignItems="center" style={{ display: 'flex' }} item>
-            <Divider variant="middle" orientation="vertical" />
+          <Grid style={{ display: 'flex' }} item>
+            <Divider variant="middle" orientation={isMobile ? 'horizontal' : 'vertical'} />
           </Grid>
           <Grid item style={{ flexGrow: 2 }}>
             <RecordsSearch resetGlobalStateOnSearch={true} autofocus={true}>

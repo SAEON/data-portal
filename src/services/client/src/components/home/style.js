@@ -6,6 +6,6 @@ export default makeStyles(theme => ({
     margin: '0 25%',
   },
   mobile: {
-    margin: 'auto',
+    padding: '20px',
   },
 }))

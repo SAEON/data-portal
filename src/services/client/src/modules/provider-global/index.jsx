@@ -45,22 +45,26 @@ const GlobaProvider = ({ children, ...props }) => {
 }
 
 export default props => {
-  const { search } = getUriState()
-  const { error, loading, data } = useQuery(
-    gql`
-      query($id: ID!) {
-        browserClient {
-          findSearchState(id: $id)
-        }
-      }
-    `,
-    {
-      variables: {
-        id: search,
-      },
-    }
-  )
+  const { search, text = undefined } = getUriState()
+  let gqlResponse = {}
 
+  if (search) {
+    gqlResponse = useQuery(
+      gql`
+        query($id: ID!) {
+          browserClient {
+            findSearchState(id: $id)
+          }
+        }
+      `,
+      {
+        variables: {
+          id: search,
+        },
+      }
+    )
+  }
+  const { error, loading, data } = gqlResponse
   if (error) {
     console.warn(
       'Error loading initial app state. This is most probably because no initial app state was specified',
@@ -71,6 +75,6 @@ export default props => {
   return loading ? (
     <Loading />
   ) : (
-    <GlobaProvider {...props} {...data?.browserClient.findSearchState} />
+    <GlobaProvider text={text} {...props} {...data?.browserClient.findSearchState} />
   )
 }
