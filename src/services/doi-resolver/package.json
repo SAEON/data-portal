@@ -1,0 +1,25 @@
+{
+  "name": "@saeon/doi-resolver",
+  "version": "0.0.1",
+  "description": "A web service for resolving DOI redirects from DataCite to SAEON's metadata landing page",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-json-modules src'",
+    "start:prod": "NODE_ENV=production TZ=utc node --no-warnings --experimental-json-modules src",
+    "check-package-updates": "ncu",
+    "update-package-dependencies": "ncu -u"
+  },
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^9.4.0",
+    "@saeon/logger": "^3.1.16",
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2"
+  }
+}

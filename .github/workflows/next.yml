@@ -13,6 +13,11 @@ jobs:
         with:
           ref: next
 
+      - name: Configure services/doi-resolver
+        run: |
+        echo "PORT=3002" > src/services/doi-resolver/.env
+        echo "REDIRECT_TARGET=http://catalogue.saeon.dvn/records/" >> src/services/doi-resolver/.env
+
       - name: Configure services/proxy
         run: |
           echo "ELASTICSEARCH_PROXY=http://elasticsearch.saeon.dvn" > src/services/proxy/.env

@@ -65,7 +65,16 @@ services:
       - 8001:8001
       - 8002:8002
     depends_on:
-      - elasticsearch      
+      - elasticsearch
+
+  doi-resolver:
+    container_name: doi-resolver
+    restart: always
+    build:
+      context: .
+      dockerfile: src/services/doi-resolver/Dockerfile
+    ports:
+      - 5002:3002
 
   api:
     container_name: api
