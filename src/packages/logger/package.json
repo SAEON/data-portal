@@ -1,5 +1,5 @@
 {
-  "name": "@saeon/logger",
+  "name": "@single-sign-on/logger",
   "version": "4.0.3",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
@@ -19,6 +19,7 @@
     }
   },
   "files": [
+    "src",
     "dist"
   ],
   "peerDependencies": {
