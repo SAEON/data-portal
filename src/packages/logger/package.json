@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
+  "Main": "",
   "exports": {
     ".": {
       "import": "./src/index.js",
