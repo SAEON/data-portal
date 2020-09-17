@@ -1,6 +1,6 @@
 {
   "name": "@saeon/logger",
-  "version": "3.1.16",
+  "version": "4.0.0",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
   "exports": {
@@ -15,7 +15,7 @@
     "./log-to-http": {
       "import": "./src/log-to-http.js",
       "require": "./dist/log-to-http.js"
-    }    
+    }
   },
   "files": [
     "dist"
