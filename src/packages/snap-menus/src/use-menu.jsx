@@ -1,7 +1,7 @@
 import React, { useRef, useContext } from 'react'
 import { createPortal } from 'react-dom'
-import SnapMenu from './menu'
-import context from './context'
+import SnapMenu from './menu/index.jsx'
+import context from './context.js'
 
 /**
  * Module level cache of refs

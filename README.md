@@ -44,27 +44,17 @@ NOTE: This repository currently only supports Linux/Mac development, since it's 
 git clone git@github.com:SAEONData/catalogue.git catalogue
 cd catalogue
 
-# Sometimes the scripts in scripts/ don't get the correct permissions set on clone,
-# and when they are adjusted. This could be related to using WSL. Fix this
-chmod +x scripts/*.sh
-
-# Make sure that Node.js ^14 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^14.10 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
 sudo apt-get install -y nodejs
 
 # Install package dependencies (this might take several minutes on the first run)
-npm run install-package-dependencies
+npm run install-dependencies
 
 # Update repository git configuration
 npm run configure-git
-
-# Build all the projects (some services in development mode reference the builds)
-npm run build-all-packages
-
-# (Optional) A global install of npm-check-updates is required to use some of the package.json scripts
-sudo npm install -g npm-check-updates
 ```
 
 ### Start the services
@@ -179,17 +169,7 @@ Once you have an account you should be able to login via the CLI:
 npm login
 ```
 
-### Publishing packages
-
-#### Code generators
-
-The repository includes an [NPM package generator](/src/generators/npm-package) to automate setting NPM package projects. From the root of the repository:
-
-```sh
-npm run generate-npm-package
-```
-
-#### Deploying packages to NPM
+### Publishing packages to NPM
 
 During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
 

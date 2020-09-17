@@ -3,15 +3,22 @@
   "version": "0.5.11",
   "description": "Oauth2 PKCE browser client specifically for paring SPAs with SAEON's identity server",
   "main": "dist/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "files": [
+    "src",
     "dist"
   ],
   "scripts": {
-    "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
-    "publish:patch": "npm run build && ../../../scripts/publish.js -p  @saeon/pkce-client -s patch",
-    "publish:minor": "npm run build && ../../../scripts/publish.js -p  @saeon/pkce-client -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.js -p  @saeon/pkce-client -s major",
-    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "build": "rimraf ./dist && rollup --config rollup.config.js",
+    "publish:patch": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/pkce-client -s patch",
+    "publish:minor": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/pkce-client -s minor",
+    "publish:major": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/pkce-client -s major",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
@@ -28,14 +35,11 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/pkce-client",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {
-    "babel-loader": "^8.1.0",
-    "rimraf": "^3.0.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "onchange": "^7.0.2",
-    "prettier": "^2.1.1"
+    "@rollup/plugin-json": "^4.1.0",
+    "npm-check-updates": "^9.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.27.1"
   }
 }

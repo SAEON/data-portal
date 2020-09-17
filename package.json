@@ -12,7 +12,7 @@
     "************ REPOSITORY TOOLING **********": "",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|graphql)\"",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|cjs|graphql)\"",
     "bump-patch": "TC=utc node scripts/bump-patch.js",
     "configure-git": "git config --local include.path ../.gitconfig",
     "update-git-snapshot": "git add .",
@@ -22,7 +22,7 @@
     "generate-npm-package": "npm --prefix src/generators/npm-package run plop",
     "generate-react-client": "npm --prefix src/generators/react-client run plop",
     "************ PACKAGES **********": "",
-    "build-all-packages": "scripts/build-all-packages.sh",
+    "build-all-packages": "TC=utc node scripts/build-all-packages.js",
     "check-dependency-updates": "TC=utc node scripts/manage-dependencies.js",
     "update-dependencies": "TC=utc node scripts/manage-dependencies.js -u && TC=utc node scripts/install-dependencies.js",
     "install-dependencies": "TC=utc node scripts/install-dependencies.js",
@@ -46,16 +46,12 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
     "husky": "^4.3.0",
-    "prettier": "^2.1.1",
+    "npm-check-updates": "^9.0.1",
+    "prettier": "^2.1.2",
     "pretty-quick": "^3.0.2"
   },
   "dependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
-    "babel-plugin-transform-imports": "^2.0.0"
+    "@babel/plugin-proposal-class-properties": "^7.10.4"
   },
   "repository": {
     "type": "git",

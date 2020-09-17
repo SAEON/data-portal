@@ -1,1 +1,0 @@
-# NPM package generator

@@ -5,7 +5,7 @@ import { GlobalContext } from '../../modules/provider-global'
 import useCatalogue from '../../lib/useCatalogue'
 import { Typography } from '@material-ui/core'
 
-const MenuProvider = lazy(() => import('@saeon/snap-menus'))
+const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
 const StateProvider = lazy(() => import('./state'))
 const Map = lazy(() => import('./map'))

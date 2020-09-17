@@ -5,9 +5,32 @@ module.exports = {
     [
       '@babel/preset-env',
       {
+        debug: false,
         useBuiltIns: 'usage',
         corejs: { version: 3, proposals: true },
       },
     ],
+    ['@babel/preset-react'],
+  ],
+  plugins: [
+    [
+      'babel-plugin-transform-imports',
+      {
+        '@material-ui/core': {
+          transform: '@material-ui/core/${member}',
+          preventFullImport: true,
+        },
+        '@material-ui/icons': {
+          transform: '@material-ui/icons/${member}',
+          preventFullImport: true,
+        },
+        '@material-ui/lab': {
+          transform: '@material-ui/lab/${member}',
+          preventFullImport: true,
+        },
+      },
+    ],
+    ['@babel/plugin-proposal-optional-chaining'],
+    // ['@babel/plugin-proposal-class-properties'],
   ],
 }

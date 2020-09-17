@@ -39,6 +39,9 @@ module.exports = () => {
         'ol/View': path.resolve(__dirname, './node_modules/ol/View'),
         'ol/Map': path.resolve(__dirname, './node_modules/ol/Map'),
 
+        // clsx
+        'clsx': path.resolve(__dirname, './node_modules/clsx'),
+
         // Apollo
         '@apollo/client': path.resolve(__dirname, './node_modules/@apollo/client'),
 
@@ -67,7 +70,7 @@ module.exports = () => {
           __dirname,
           mode === 'production'
             ? './node_modules/@saeon/snap-menus'
-            : '../../packages/snap-menus/src'
+            : '../../packages/snap-menus'
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
@@ -117,7 +120,6 @@ module.exports = () => {
           use: {
             loader: 'babel-loader',
             options: {
-              rootMode: 'upward',
               envName: mode,
             },
           },

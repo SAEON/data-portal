@@ -2,20 +2,27 @@
   "name": "@saeon/ol-react",
   "version": "9.2.2",
   "description": "React wrapper for the open-source OpenLayers JavaScript library, envisioned as a generally useful, opinionated means of interacting with OpenLayers within a React.js application",
-  "main": "dist/index.js",
+  "main": "src/index.js",
+  "type": "module",
   "files": [
+    "src",
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "peerDependencies": {
     "react": ">=16.13",
     "ol": ">=6"
   },
   "scripts": {
-    "build": "rimraf ./dist && NODE_ENV=production webpack",
-    "publish:patch": "npm run build && ../../../scripts/publish.js -p  @saeon/ol-react -s patch",
-    "publish:minor": "npm run build && ../../../scripts/publish.js -p  @saeon/ol-react -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.js -p  @saeon/ol-react -s major",
-    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "build": "rimraf ./dist && rollup --config rollup.config.js",
+    "publish:patch": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/ol-react -s patch",
+    "publish:minor": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/ol-react -s minor",
+    "publish:major": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/ol-react -s major",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
@@ -32,14 +39,16 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/ol-react",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {
-    "babel-loader": "^8.1.0",
-    "css-loader": "^4.3.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@rollup/plugin-babel": "^5.2.1",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "npm-check-updates": "^9.0.1",
     "ol": "^6.3.1",
-    "sass-loader": "^10.0.2",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
-  },
-  "devDependencies": {}
+    "react": "^16.13.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.27.1"
+  }
 }

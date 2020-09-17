@@ -17,15 +17,15 @@ import {
   Minimize as MinimizeIcon,
   CheckBoxOutlineBlank as MaximizeIcon,
 } from '@material-ui/icons'
-import useStyles from './style'
-import debounce from '../lib/debounce'
-import EventBoundary from '../lib/event-boundary'
-import getDimensions from './get-dimensions'
-import getSnapZone from './get-snap-zone'
-import getPosition from './get-position'
+import useStyles from './style.js'
+import debounce from '../lib/debounce.js'
+import EventBoundary from '../lib/event-boundary.jsx'
+import getDimensions from './get-dimensions.js'
+import getSnapZone from './get-snap-zone.js'
+import getPosition from './get-position.js'
 import clsx from 'clsx'
-import parseEventXY from './parse-event-x-y'
-import offset from '../lib/offset'
+import parseEventXY from './parse-event-x-y.js'
+import offset from '../lib/offset.js'
 
 var allowInteractions = true
 var timer
