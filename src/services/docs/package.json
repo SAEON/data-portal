@@ -11,8 +11,8 @@
   "scripts": {
     "start": "styleguidist server --config styleguide.config.js",
     "build": "styleguidist build --config src/docs/styleguide.config.js",
-    "check-package-updates": "ncu",
-    "update-package-dependencies": "ncu -u"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "repository": {
     "type": "git",

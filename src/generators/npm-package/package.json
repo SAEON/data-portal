@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "plop": "plop",
-    "check-package-updates": "ncu",
-    "update-package-dependencies": "ncu -u"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT",

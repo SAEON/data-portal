@@ -13,12 +13,12 @@
   "scripts": {
     "watch": "rimraf dist && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development babel --root-mode upward src --out-dir dist'",
     "build": "rimraf ./dist && NODE_ENV=production webpack",
-    "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s patch",
-    "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/logger -s major",
+    "publish:patch": "npm run build && ../../../scripts/publish.js -p  @saeon/logger -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.js -p  @saeon/logger -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.js -p  @saeon/logger -s major",
     "prettier:watch": "onchange \"src/**/*.@(js)\" -- prettier --write {{changed}}",
-    "check-package-updates": "ncu",
-    "update-package-dependencies": "ncu -u"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "keywords": [
     "@saeon/logger"

@@ -8,12 +8,12 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --env.output=dist",
-    "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s patch",
-    "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/pkce-client -s major",
+    "publish:patch": "npm run build && ../../../scripts/publish.js -p  @saeon/pkce-client -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.js -p  @saeon/pkce-client -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.js -p  @saeon/pkce-client -s major",
     "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "check-package-updates": "ncu",
-    "update-package-dependencies": "ncu -u"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "keywords": [
     "@saeon/pkce-client"

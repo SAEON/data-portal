@@ -14,12 +14,12 @@
   },
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",
-    "publish:patch": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s patch",
-    "publish:minor": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s minor",
-    "publish:major": "npm run build && ../../../scripts/publish.sh -p  @saeon/snap-menus -s major",
+    "publish:patch": "npm run build && ../../../scripts/publish.js -p  @saeon/snap-menus -s patch",
+    "publish:minor": "npm run build && ../../../scripts/publish.js -p  @saeon/snap-menus -s minor",
+    "publish:major": "npm run build && ../../../scripts/publish.js -p  @saeon/snap-menus -s major",
     "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "check-package-updates": "ncu",
-    "update-package-dependencies": "ncu -u"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "keywords": [
     "@saeon/snap-menus"

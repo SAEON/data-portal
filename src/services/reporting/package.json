@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-json-modules src/index.js'",
-    "check-package-updates": "ncu",
-    "update-package-dependencies": "ncu -u"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "repository": {
     "type": "git",

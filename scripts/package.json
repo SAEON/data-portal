@@ -1,7 +1,0 @@
-{
-  "name": "@saeon/scripts",
-  "version": "0.0.1",
-  "description": "Repository tooling",
-  "type": "module",
-  "license": "MIT"
-}
