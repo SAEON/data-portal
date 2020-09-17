@@ -80,7 +80,7 @@ export default ({
             </Grid>
 
             {/* RESULT CONTEXT */}
-            <Grid item xs={5} sm={4} container justify="center" alignContent="center">
+            <Grid item xs={3} sm={4} container justify="center" alignContent="center">
               {isMobile ? null : (
                 <Typography component="div" variant="overline" noWrap style={{ display: 'flex' }}>
                   {catalogue?.records ? `${catalogue.records.totalCount}` : '...'} Records
@@ -89,7 +89,7 @@ export default ({
             </Grid>
 
             {/* TOOLS */}
-            <Grid item xs={6} sm={4} container justify="flex-end" alignItems="center">
+            <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
               {/* PREVIEW ALL DATASETS */}
               <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
                 <span>

@@ -29,11 +29,11 @@ export default withRouter(({ children }) => {
               <Grid container>
                 <Grid item xs={12} sm={4}></Grid>
 
-                {/* MIDDLE */}
+                {/* MIDDLE (or Left, Mobile) */}
                 <Grid container justify="center" alignItems="center" item xs={6} sm={4}>
                   <Typography
                     component={Link}
-                    style={{ color: 'white', cursor: 'pointer' }}
+                    style={{ color: 'white', cursor: 'pointer', margin: '0 8px' }}
                     href="/"
                     display="block"
                     variant="body2"

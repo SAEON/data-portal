@@ -7,6 +7,7 @@ import { GlobalContext } from '../../modules/provider-global'
 import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
+import { CLIENT_HOST_ADDRESS } from '../../config'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
 
@@ -58,17 +59,21 @@ export default () => {
           }}
         >
           <Grid style={{ display: 'flex' }} item>
-            <img
-              style={{
-                height: 56,
-                display: 'block',
-                margin: 'auto',
-              }}
-              src="/saeon-logo.png"
-            />
+            <a style={{ display: 'block', margin: 'auto' }} href={CLIENT_HOST_ADDRESS}>
+              <img
+                style={{
+                  height: 56,
+                }}
+                src="/saeon-logo.png"
+              />
+            </a>
           </Grid>
           <Grid style={{ display: 'flex' }} item>
-            <Divider variant="middle" orientation={isMobile ? 'horizontal' : 'vertical'} />
+            {isMobile ? (
+              <div style={{ margin: 4 }} />
+            ) : (
+              <Divider variant="middle" orientation={'vertical'} />
+            )}
           </Grid>
           <Grid item style={{ flexGrow: 2 }}>
             <RecordsSearch resetGlobalStateOnSearch={true} autofocus={true}>
