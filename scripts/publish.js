@@ -37,7 +37,7 @@ exec('git add .')
 exec(`git commit -m "Bumped ${PACKAGE} ${SEMVER}" --no-verify`)
 
 // Publish to NPM
-exec('npm init --scope=@single-sign-on')
+exec('npm init --scope=@saeon')
 exec('npm publish --access public')
 
 console.log(`Complete! See your package at https://npmjs.com/package/${PACKAGE}`)

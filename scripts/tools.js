@@ -32,7 +32,7 @@ export const apply = ({ PATH, script, args = undefined, debug = false, ignore = 
   readdirSync(PATH)
     .filter(name => !ignore.includes(name))
     .forEach(name => {
-      print(`Installing ${name} dependencies`)
+      print(`${name} dependencies`)
       const P = normalize(join(PATH, name))
       NPM_NATIVE_SCRIPTS.includes(script)
         ? exec(`npm --prefix ${P} ${script}`, debug)

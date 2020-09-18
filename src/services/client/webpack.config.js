@@ -40,7 +40,7 @@ module.exports = () => {
         'ol/Map': path.resolve(__dirname, './node_modules/ol/Map'),
 
         // clsx
-        'clsx': path.resolve(__dirname, './node_modules/clsx'),
+        clsx: path.resolve(__dirname, './node_modules/clsx'),
 
         // Apollo
         '@apollo/client': path.resolve(__dirname, './node_modules/@apollo/client'),
@@ -68,9 +68,7 @@ module.exports = () => {
         ),
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production'
-            ? './node_modules/@saeon/snap-menus'
-            : '../../packages/snap-menus'
+          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus'
         ),
         '@saeon/ol-react': path.resolve(
           __dirname,
