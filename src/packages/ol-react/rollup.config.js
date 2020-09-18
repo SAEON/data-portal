@@ -15,7 +15,13 @@ export default {
     babel({
       babelHelpers: 'bundled',
       exclude: 'node_modules/**',
-      presets: ["@babel/preset-react"],
+      presets: [['@babel/env', { 
+        debug: false,
+        modules: false,
+        targets: {
+          esmodules: true
+        } 
+      }], ["@babel/preset-react"]],
       plugins: ['@babel/plugin-proposal-class-properties']
     }),
     commonjs(),

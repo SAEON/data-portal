@@ -1,5 +1,5 @@
 {
-  "name": "@saeon/ol-react",
+  "name": "@single-sign-on/ol-react",
   "version": "10.0.0",
   "description": "React wrapper for the open-source OpenLayers JavaScript library, envisioned as a generally useful, opinionated means of interacting with OpenLayers within a React.js application",
   "main": "src/index.js",
@@ -43,6 +43,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^15.0.0",
