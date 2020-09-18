@@ -1,4 +1,5 @@
 import json from '@rollup/plugin-json'
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default {
   input: ['src/index.js', 'src/log-to-graphql.js', 'src/log-to-http.js'],
@@ -10,6 +11,9 @@ export default {
     },
   ],
   plugins: [
+    nodeResolve({
+      preferBuiltins: true,
+    }),
     json({
       compact: true,
     }),

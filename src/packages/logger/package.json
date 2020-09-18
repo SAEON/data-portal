@@ -23,7 +23,6 @@
     "dist"
   ],
   "peerDependencies": {
-    "date-fns": ">=2",
     "@apollo/client": ">=3"
   },
   "scripts": {
@@ -50,6 +49,7 @@
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "date-fns": "^2.12.0",
     "nodemon": "^2.0.4",
     "npm-check-updates": "^9.0.1",
