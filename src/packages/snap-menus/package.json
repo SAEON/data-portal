@@ -1,5 +1,5 @@
 {
-  "name": "@single-sign-on/snap-menus",
+  "name": "@saeon/snap-menus",
   "version": "5.0.1",
   "description": "Draggable, snappable menus",
   "main": "src/index.js",
