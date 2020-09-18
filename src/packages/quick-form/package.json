@@ -1,5 +1,5 @@
 {
-  "name": "@single-sign-on/quick-form",
+  "name": "@saeon/quick-form",
   "version": "3.0.1",
   "description": "Quickly add localised state to your component tree",
   "main": "dist/index.js",
