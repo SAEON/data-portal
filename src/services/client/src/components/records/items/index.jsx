@@ -1,7 +1,9 @@
 import React from 'react'
 import ResultItem from './item'
-import { Grid, Typography } from '@material-ui/core'
+import { Card, Grid, Typography } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
+
+const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
 export default ({ results }) => {
   return (
@@ -39,9 +41,18 @@ export default ({ results }) => {
           )
         })
       ) : (
-        <Typography style={{ margin: 20, display: 'block' }} variant="overline">
-          No results found
-        </Typography>
+        <Grid container item spacing={isMobile ? 0 : 2}>
+          <Grid item xs={12} style={isMobile ? { padding: isMobile ? '16px 16px 0 16px' : 0 } : {}}>
+            <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
+              <Typography
+                style={{ margin: 20, display: 'block', textAlign: 'center' }}
+                variant="overline"
+              >
+                No results found
+              </Typography>
+            </Card>
+          </Grid>
+        </Grid>
       )}
     </Grid>
   )

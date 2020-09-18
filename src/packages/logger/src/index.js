@@ -1,5 +1,5 @@
 'use strict'
-import format from 'date-fns/format.js'
+import format from 'date-fns/format/index.js'
 ;(typeof global !== 'undefined' ? global : self).globalThis =
   typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : self
 

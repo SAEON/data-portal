@@ -24,11 +24,11 @@
   "devDependencies": {
     "nodemon": "^2.0.4",
     "npm-check-updates": "^9.0.1",
-    "prettier": "^2.1.1"
+    "prettier": "^2.1.2"
   },
   "dependencies": {
     "@koa/router": "^9.4.0",
-    "@saeon/logger": "file:../../packages/logger",
+    "@saeon/logger": "^5.0.4",
     "apollo-server-koa": "^2.17.0",
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",

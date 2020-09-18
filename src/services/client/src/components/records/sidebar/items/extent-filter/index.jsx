@@ -67,7 +67,7 @@ export default ({ title }) => {
                     zoom: 4,
                   }}
                   layers={[terrestrisBaseMap()]}
-                  style={{ height: '350px' }}
+                  style={{ height: '300px' }}
                 >
                   {({ map }) => {
                     return (
