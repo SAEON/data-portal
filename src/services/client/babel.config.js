@@ -6,7 +6,7 @@ module.exports = {
       '@babel/preset-env',
       {
         debug: false,
-        useBuiltIns: 'usage',
+        useBuiltIns: 'entry',
         corejs: { version: 3, proposals: true },
       },
     ],
@@ -31,6 +31,6 @@ module.exports = {
       },
     ],
     ['@babel/plugin-proposal-optional-chaining'],
-    // ['@babel/plugin-proposal-class-properties'],
+    ['@babel/plugin-proposal-class-properties'],
   ],
 }

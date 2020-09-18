@@ -116,7 +116,7 @@ module.exports = () => {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
+          exclude: mode === 'production' ? undefined : /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
