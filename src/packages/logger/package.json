@@ -1,6 +1,6 @@
 {
   "name": "@single-sign-on/logger",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
   "main": "src/index.js",
