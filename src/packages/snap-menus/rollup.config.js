@@ -1,7 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import json from '@rollup/plugin-json'
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import postcss from 'rollup-plugin-postcss'
 
 export default {
@@ -16,7 +16,7 @@ export default {
   plugins: [
     nodeResolve(),
     postcss({
-      plugins: []
+      plugins: [],
     }),
     babel({
       babelHelpers: 'bundled',

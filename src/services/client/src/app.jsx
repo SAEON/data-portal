@@ -59,7 +59,7 @@ export default ({ link }) => {
                 event={'click'}
                 handle={async ({ type, target, x, y }) =>
                   // console.log('target', target)
-                  console.logToGraphQL({
+                  console.gql({
                     clientVersion: packageJson.version,
                     type,
                     commitHash: LATEST_COMMIT,
@@ -75,7 +75,7 @@ export default ({ link }) => {
                 <ServerLogger
                   event={'mousemove'}
                   handle={debounce(async ({ type, x, y }) =>
-                    console.logToGraphQL({
+                    console.gql({
                       clientVersion: packageJson.version,
                       type,
                       commitHash: LATEST_COMMIT,

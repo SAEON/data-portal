@@ -23,20 +23,20 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
     "nodemon": "^2.0.4",
-    "npm-check-updates": "^9.0.1",
+    "npm-check-updates": "^9.0.2",
     "prettier": "^2.1.2"
   },
   "dependencies": {
     "@koa/router": "^9.4.0",
-    "@saeon/logger": "^5.0.4",
-    "apollo-server-koa": "^2.17.0",
+    "@saeon/logger": "^6.0.5",
+    "apollo-server-koa": "^2.18.1",
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
     "dataloader": "^2.0.0",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
-    "graphql-tools": "^6.2.2",
+    "graphql-tools": "^6.2.3",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.0",
     "koa-compress": "^5.0.1",
@@ -45,7 +45,7 @@
     "nanoid": "^3.1.12",
     "node-fetch": "^2.6.1",
     "object-hash": "^2.0.3",
-    "sift": "^13.3.1",
+    "sift": "^13.3.5",
     "wkt": "^0.1.1"
   },
   "author": "zach@saeon.ac.za, steven@saeon.ac.za",

@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime'
 import 'typeface-roboto'
 import './index.scss'
 import { configure as configureLogger } from '@saeon/logger'
-import logToGraphQL from '@saeon/logger/log-to-graphql'
+import { logToGql } from '@saeon/logger/log-to-graphql'
 import React from 'react'
 import { render } from 'react-dom'
 import { HttpLink, split, gql } from '@apollo/client'
@@ -38,7 +38,7 @@ const link = split(
 // Configure server logs for client usage tracking
 configureLogger(() => ({
   overwrites: {
-    logToGraphQL: logToGraphQL({
+    gql: logToGql({
       link,
       query: gql`
         mutation logBrowserEvents($input: [BrowserEventInput]!) {
