@@ -1,19 +1,20 @@
 import json from '@rollup/plugin-json'
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 
 export default {
+  external: ['date-fns/format/index.js', '@apollo/client'],
   input: ['src/index.js', 'src/log-to-graphql.js', 'src/log-to-http.js'],
   output: [
     {
-      exports: 'auto',
       dir: 'dist',
       format: 'cjs',
+      compact: true,
     },
   ],
   plugins: [
-    nodeResolve({
-      preferBuiltins: true,
-    }),
+    resolve(),
+    commonjs(),
     json({
       compact: true,
     }),

@@ -1,6 +1,6 @@
 import DataLoader from './_data-loader'
 
-export default (uri, client = fetch, opts = {}, interval) => {
+export const logToHttp = (uri, client = fetch, opts = {}, interval) => {
   const logBatch = msgs =>
     new Promise((resolve, reject) => {
       client(
