@@ -73,7 +73,7 @@ configure(() => ({
 Refer to the ApolloClient documentation on how to configure a GraphQL `link`
 
 ```js
-import logToGql from '@saeon/logger/log-to-graphql'
+import { logToGql } from '@saeon/logger/log-to-graphql'
 import gql from 'graphql-tag'
 
 const link = new HttpLink({ uri: 'your graphql endpoint' })
