@@ -5,8 +5,7 @@ A tiny package that adds timestamps to the `info`, `log`, `warn`, and `error` fu
 ### Installation
 
 ```sh
-# @apollo/client is only required if the logToGql export is used
-npm install -s @saeon/logger date-fns @apollo/client
+npm install -s @saeon/logger date-fns
 ```
 
 ### Basic usage
@@ -56,8 +55,12 @@ configure(({ console, timestampFormat }) => {
 Another potential use of this library is to extend the console object to log to a URL endpoint - there is built-in support for logging to HTTP endpoints as well as GraphQL endpoints (using the @apollo/client library)
 
 #### Configure HTTP logging
+```sh
+npm install node-fetch # // If NOT a browser environment
+```
 
 ```js
+import fetch from 'node-fetch' // If NOT a browser environment
 import { logToHttp } from '@saeon/logger/log-to-http'
 const httpUri = 'https://your API address here.co.za/log'
 const batchingInterval = 2000
@@ -70,9 +73,12 @@ configure(() => ({
 ```
 
 #### Configure GraphQL logging
+First install `@apollo/client`
+```sh
+npm install @apollo/client
+```
 
-Refer to the ApolloClient documentation on how to configure a GraphQL `link`
-
+Then configure a `link` object (Refer to the ApolloClient documentation on how to configure a GraphQL `link`)
 ```js
 import { logToGql } from '@saeon/logger/log-to-graphql'
 import gql from 'graphql-tag'
