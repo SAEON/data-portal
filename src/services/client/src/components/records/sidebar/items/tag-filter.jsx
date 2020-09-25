@@ -32,7 +32,6 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
     const sortedResults = results
       ? [...results]
           .filter(({ key, doc_count }) => {
-            console.log('termValues', termValues, key)
             if (termValues.includes(key.toString())) {
               currentContext.push({ key, doc_count })
               return false
