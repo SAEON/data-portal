@@ -57,13 +57,13 @@ Another potential use of this library is to extend the console object to log to 
 #### Configure HTTP logging
 
 ```js
-import logToHttp from '@saeon/logger/log-to-http'
+import { logToHttp } from '@saeon/logger/log-to-http'
 const httpUri = 'https://your API address here.co.za/log'
 const batchingInterval = 2000
 
 configure(() => ({
   overwrites: {
-    logToHttp: logToHttp(httpUri, batchingInterval),
+    http: logToHttp(httpUri, batchingInterval),
   },
 }))
 ```
@@ -73,7 +73,7 @@ configure(() => ({
 Refer to the ApolloClient documentation on how to configure a GraphQL `link`
 
 ```js
-import logToGraphQL from '@saeon/logger/log-to-graphql'
+import logToGql from '@saeon/logger/log-to-graphql'
 import gql from 'graphql-tag'
 
 const link = new HttpLink({ uri: 'your graphql endpoint' })
@@ -81,7 +81,7 @@ const batchingInterval = 1800 // 1800 ms = 1.8 secs batching interval
 
 configure(() => ({
   overwrites: {
-    logToGraphQL: logToGraphQL({
+    gql: logToGql({
       link,
       query: gql`
         mutation logBrowserEvents($input: [BrowserEventInput]!) {
@@ -100,8 +100,8 @@ configure(({ console }) => {
   return {
     overwrites: {
       error: () => console.log('hello world'),
-      logToGraphQL: logToGraphQL({ link, query }, 2500), // see above
-      logToHttp: logToHttp(httpUri, 1500), // see above
+      gql: logToGql({ link, query }, 2500), // see above
+      http: logToHttp(httpUri, 1500), // see above
     },
     formatter: 'yyyy-MM-dd', // https://date-fns.org
   }
@@ -114,13 +114,13 @@ And now you have the following console.\* methods available in your browser or i
 console.log(msg)
 console.info(msg)
 console.error() // always prints 'hello world'
-console.logToHttp(msg)
-console.logToGraphQL(msg)
+console.http(msg)
+console.gql(msg)
 ```
 
 ### Batching network requests
 
-Both the `console.logToHttp` and `console.logToGraphQL` functions batch requests - the maximum rate at which servers are sent information is once per 5 second interval. This makes these functions suitable for logging even very many requests to the server.
+Both the `console.http` and `console.gql` functions batch requests - the maximum rate at which servers are sent information is once per 5 second interval. This makes these functions suitable for logging even very many requests to the server.
 
 This is an example of logging batches of `mousemove` events every 2 seconds (the default batching interval). Debouncing events that are fired often is good practice:
 
@@ -134,6 +134,6 @@ const debounce = (cb, duration = 0) => {
 }
 
 document.getElementsByTagName('body')[0].onmousemove = debounce(({ x, y }) =>
-  console.logToHttp({ x, y, etc })
+  console.http({ x, y, etc })
 )
 ```
