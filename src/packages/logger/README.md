@@ -5,6 +5,7 @@ A tiny package that adds timestamps to the `info`, `log`, `warn`, and `error` fu
 ### Installation
 
 ```sh
+# @apollo/client is only required if the logToGql export is used
 npm install -s @saeon/logger date-fns @apollo/client
 ```
 
