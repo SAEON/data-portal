@@ -5,7 +5,7 @@ A tiny package that adds timestamps to the `info`, `log`, `warn`, and `error` fu
 ### Installation
 
 ```sh
-npm install -s @saeon/logger
+npm install -s @saeon/logger date-fns @apollo/client
 ```
 
 ### Basic usage
