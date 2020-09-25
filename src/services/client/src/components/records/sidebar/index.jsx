@@ -1,78 +1,71 @@
-import React, { useContext } from 'react'
-import { Grid, Fade, Chip } from '@material-ui/core'
+import React from 'react'
+import { Grid, Fade } from '@material-ui/core'
 import TagFilter from './items/tag-filter'
 import ExtentFilter from './items/extent-filter'
-import { GlobalContext } from '../../../modules/provider-global'
 
 export default ({ catalogue }) => {
-  const { global, setGlobal } = useContext(GlobalContext)
-  const { terms } = global
-
   return (
     <Fade in={Boolean(catalogue)}>
-      <Grid container item xs={12}>
+      <Grid container item xs={12} spacing={0}>
         {/* Area filter */}
-        <ExtentFilter title="Extent Filter" />
+        <Grid item xs={12}>
+          <ExtentFilter title="Extent Filter" />
+        </Grid>
 
         {/* Keywords */}
-        <TagFilter
-          title="Keywords"
-          results={
-            catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'subjects.subject.raw')
-            )['subjects.subject.raw']
-          }
-        />
+        <Grid item xs={12}>
+          <TagFilter
+            sortBy="doc_count"
+            sortOrder="desc"
+            field="subjects.subject.raw"
+            title="Keywords"
+            results={
+              catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'subjects.subject.raw')
+              )['subjects.subject.raw']
+            }
+          />
+        </Grid>
 
         {/* Publisher */}
-        <TagFilter
-          title="Publisher"
-          results={
-            catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'publisher.raw')
-            )['publisher.raw']
-          }
-        />
+        <Grid item xs={12}>
+          <TagFilter
+            field="publisher.raw"
+            title="Publisher"
+            results={
+              catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'publisher.raw')
+              )['publisher.raw']
+            }
+          />
+        </Grid>
 
         {/* Publication year */}
-        <TagFilter
-          title="Publication Year"
-          results={
-            catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'publicationYear')
-            )['publicationYear']
-          }
-        />
+        <Grid item xs={12}>
+          <TagFilter
+            sortOrder="desc"
+            field="publicationYear"
+            title="Publication Year"
+            results={
+              catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'publicationYear')
+              )['publicationYear']
+            }
+          />
+        </Grid>
 
         {/* Creators */}
-        <TagFilter
-          title="Creators"
-          results={
-            catalogue?.summary.find(obj =>
-              Object.entries(obj).find(([key]) => key === 'creators.name.raw')
-            )['creators.name.raw']
-          }
-        />
-
-        {/* Selected terms */}
-        <div style={{ padding: '8px 0', position: 'relative', maxWidth: '100%' }}>
-          <Grid item container spacing={1}>
-            {[...new Set(terms.map(({ value }) => value))].map(term => (
-              <Grid item xs={12} key={term}>
-                <Chip
-                  color="secondary"
-                  onDelete={() =>
-                    setGlobal({
-                      terms: terms.filter(({ value }) => value !== term),
-                    })
-                  }
-                  style={{ maxWidth: '100%' }}
-                  label={term.toUpperCase()}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </div>
+        <Grid item xs={12}>
+          <TagFilter
+            field="creators.name.raw"
+            title="Creators"
+            results={
+              catalogue?.summary.find(obj =>
+                Object.entries(obj).find(([key]) => key === 'creators.name.raw')
+              )['creators.name.raw']
+            }
+          />
+        </Grid>
       </Grid>
     </Fade>
   )
