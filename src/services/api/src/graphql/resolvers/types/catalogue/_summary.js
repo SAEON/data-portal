@@ -73,15 +73,11 @@ export default async (_, args, ctx) => {
   if (terms?.length) {
     dsl.query.bool.must = [
       ...dsl.query.bool.must,
-      {
-        bool: {
-          should: terms
-            .filter(({ field, value }) =>
-              field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
-            )
-            .map(({ field, value }) => ({ term: { [field]: value } })),
-        },
-      },
+      ...terms
+        .filter(({ field, value }) =>
+          field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
+        )
+        .map(({ field, value }) => ({ term: { [field]: value } })),
     ]
   }
 

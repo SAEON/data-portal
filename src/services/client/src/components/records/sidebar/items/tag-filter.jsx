@@ -96,7 +96,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
           <Grid container item xs={12} spacing={0}>
             {currentContext
               .sort(({ key: a }, { key: b }) => (a > b ? -1 : b > a ? 1 : 0))
-              .map(({ key, doc_count }) => {
+              .map(({ key }) => {
                 key = typeof key === 'number' ? `${key}` : key
                 return (
                   <Grid key={key} item xs={12} style={{ paddingLeft: 10 }}>
@@ -104,7 +104,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
                       label={
                         <Typography variant="overline">{`${
                           typeof key === 'string' ? key.toUpperCase() : key
-                        } (${doc_count})`}</Typography>
+                        }`}</Typography>
                       }
                       control={
                         <Checkbox
@@ -134,6 +134,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
               <Grid container item xs={12} spacing={0}>
                 <Grid item xs>
                   {/* Add spacing between selected and unselected terms here */}
+                  <div style={{ margin: 8 }} />
                 </Grid>
               </Grid>
             ) : undefined}
