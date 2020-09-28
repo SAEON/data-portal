@@ -57,7 +57,7 @@
     "graphql": "^15.3.0",
     "html-webpack-plugin": "^4.5.0",
     "html2canvas": "^1.0.0-rc.7",
-    "minisearch": "^2.6.2",
+    "minisearch": "^3.0.0",
     "nanoid": "^3.1.12",
     "node-sass": "^4.14.1",
     "notistack": "^1.0.0",
