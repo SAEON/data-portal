@@ -32,12 +32,7 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
   - [Material UI](https://material-ui.com/)
 
 # Quick start
-
-Packages are mostly self-contained, in that each package includes a `package.json` file, and tracks it's own dependencies. For development purposes it's useful that packages can reference source code in other packages (instead of build output), and for this reason Babel is configured globally.
-
-### Setup the repository for development
-
-NOTE: This repository currently only supports Linux/Mac development, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues).
+Setup the repository for development (NOTE: This repository currently only supports Linux/Mac development, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues))
 
 ```sh
 # Download the source code
@@ -108,8 +103,6 @@ Continuous deployment is supported targeting a CentOS 7 environment
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
 5. Adjust the `.github/workflows/next.yml` and `.github/workflows/stable.yml` files to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
 6. Push from local to your forked repository to trigger a deployment
-
-TODO - change context of Dockerfiles to be per service and NOT the repository root
 
 ## SAEON's Deployment context
 As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compose`. Endpoints of SAEON's development and production deployment are listed below.

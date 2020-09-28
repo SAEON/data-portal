@@ -58,9 +58,7 @@ services:
   proxy:
     container_name: proxy
     restart: always
-    build:
-      context: src/services/proxy/Dockerfile
-      dockerfile: src/services/proxy/Dockerfile
+    build: src/services/proxy
     ports:
       - 8001:8001
       - 8002:8002
@@ -70,18 +68,14 @@ services:
   doi-resolver:
     container_name: doi-resolver
     restart: always
-    build:
-      context: src/services/doi-resolver/Dockerfile
-      dockerfile: src/services/doi-resolver/Dockerfile
+    build: src/services/doi-resolver
     ports:
       - 5002:3002
 
   api:
     container_name: api
     restart: always
-    build:
-      context: src/services/api/Dockerfile
-      dockerfile: src/services/api/Dockerfile
+    build: src/services/api
     ports:
       - 5000:3000
     depends_on:
@@ -92,9 +86,7 @@ services:
   client:
     container_name: client
     restart: always
-    build:
-      context: src/services/client/Dockerfile
-      dockerfile: src/services/client/Dockerfile
+    build: src/services/client
     ports:
       - 5001:80
     depends_on:
