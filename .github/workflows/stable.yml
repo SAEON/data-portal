@@ -28,8 +28,8 @@ jobs:
           echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
           echo "GQL_PROVIDER=https://api.atlas.saeon.ac.za" >> src/services/api/.env
           echo "ES_HOST_ADDRESS=http://elasticsearch:9200" >> src/services/api/.env
-          echo "ES_TEMPLATE_INTEGRATION_ENABLED=disabled" >> src/services/api/.env
-          echo "ES_INDEX_INTEGRATION_ENABLED=disabled" >> src/services/api/.env
+          echo "ES_TEMPLATE_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
+          echo "ES_INDEX_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
           echo "DEPLOY_ENV=production" >> src/services/api/.env
           echo "CATALOGUE_SECRET=${{ secrets.CATALOGUE_SECRET }}" >> src/services/api/.env
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
