@@ -98,7 +98,7 @@ module.exports = () => {
             chunks: 'all',
             minChunks: 1,
             reuseExistingChunk: true,
-            test:  /[\\/]node_modules[\\/](react|react-dom|@material-ui|ol|@apollo|react-beautiful-dnd|@mapbox|core-js|graphql)/,
+            test: /[\\/]node_modules[\\/](react|react-dom|@material-ui|ol|@apollo|react-beautiful-dnd|@mapbox|core-js|graphql)/,
             name: module =>
               `npm.${module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]}`,
           },
