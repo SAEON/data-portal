@@ -106,7 +106,10 @@ Continuous deployment is supported targeting a CentOS 7 environment
 2. Follow the [instructions](/platform-configuration/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
 3. Run the command: `npm run configure-centos-7-server` from the root of the repository
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
-5. Push from local to your forked repository to trigger a deployment
+5. Adjust the `.github/workflows/next.yml` and `.github/workflows/stable.yml` files to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
+6. Push from local to your forked repository to trigger a deployment
+
+TODO - change context of Dockerfiles to be per service and NOT the repository root
 
 ## SAEON's Deployment context
 As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compose`. Endpoints of SAEON's development and production deployment are listed below.
@@ -139,27 +142,13 @@ elasticsearch.saeon.int (available publicly via api.catalogue.saeon.ac.za/proxy)
 kibana.saeon.int
 ```
 
-
-
-## Deploying services
-
-Deploy the services in the `src/services` directory as docker containers:
+## Deploying individual services
+Deploy services in the `src/services` directory individually as docker containers via the `docker` CLI. Note that compared to the `docker` CLI commands above, 3rd party services are configured slightly differently in the `docker-compose` deployment. 
 
 ```sh
 docker build -t <image name> -f ./src/services/<service name>/Dockerfile .
 docker run <image name>
 ```
-
-Use the [`docker-compose.yml`](/docker-compose.yml) file to deploy all services, along with 3rd party services. Not that compared to the `docker` CLI commands above, 3rd party services are configured slightly differently in the `docker-compose` deployment. Use the `docker-compose.yml` file to deploy the catalogue software.
-
-This repository supports continuous deployment (CD) using a self hosted GitHub actions-runner. This is easy to setup - once you have forked the repository follow the instructions provided by GitHub to install a self hosted actions runner on a Linux server (if Windows Server deployments are required please [request this](https://github.com/SAEONData/catalogue/issues)).
-
-Deploying the catalogue software should be as simple as just 2 steps to get a deployment on every push to master:
-
-1. Configure a self hosted GitHub actions runner on your server
-2. Adjust the `.github/workflows/next.yml` and `.github/workflows/stable.yml` files to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
-
-_NOTE - Docker images are built in the context of this repository, so the Dockerfiles for individual services are NOT the root context in which Docker is executed. This can be a bit confusing, the reason being to allow for commands running in docker containers to have access to the global babel configuration. For this reason, when building images with the `docker build` CLI, this command must be run from the root of this repository, with the path to the Dockerfile provided explicitly by the `--file , -f` options._
 
 #### Configuration
 
