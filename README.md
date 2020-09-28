@@ -109,7 +109,7 @@ Continuous deployment is supported targeting a CentOS 7 environment
 5. Push from local to your forked repository to trigger a deployment
 
 ## SAEON's Deployment context
-As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compse`. Endpoints of SAEON's development and production deployment are listed below.
+As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compose`. Endpoints of SAEON's development and production deployment are listed below.
 
 ```sh
 # Clone the repo
