@@ -109,7 +109,7 @@ Continuous deployment is supported targeting a CentOS 7 environment
 5. Push from local to your forked repository to trigger a deployment
 
 ## SAEON's Deployment context
-As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compse`:
+As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compse`. Endpoints of SAEON's development and production deployment are listed below.
 
 ```sh
 # Clone the repo
@@ -123,9 +123,7 @@ echo "MONGO_PASSWORD=<pswd>" >> .env
 docker-compose up -d --force-recreate --build
 ```
 
-Endpoints of SAEON's development and production deployment are listed below:
-
-#### Development
+#### SAEON development endpoints
 ```
 catalogue.saeon.dvn
 api.catalogue.saeon.dvn (/graphql & /proxy)
@@ -133,7 +131,7 @@ elasticsearch.saeon.dvn
 kibana.saeon.dvn
 ```
 
-#### Production
+#### SAEON production endpoints
 ```
 catalogue.saeon.ac.za
 api.catalogue.saeon.ac.za (/graphql & /proxy)
