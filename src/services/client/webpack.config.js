@@ -90,20 +90,20 @@ module.exports = () => {
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {
-        chunks: 'all',
         minSize: 0,
-        minChunks: 1,
         maxInitialRequests: Infinity,
         automaticNameDelimiter: '~',
         cacheGroups: {
           vendor: {
-            test: /[\\/]node_modules[\\/]/,
+            chunks: 'all',
+            minChunks: 1,
+            reuseExistingChunk: true,
+            test:  /[\\/]node_modules[\\/](react|react-dom|@material-ui|ol|@apollo|react-beautiful-dnd|@mapbox|core-js|graphql)/,
             name: module =>
-              `npm.${module.context
-                .match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-                .replace('@', '')}`,
+              `npm.${module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]}`,
           },
           saeon: {
+            chunks: 'all',
             minChunks: 2,
             reuseExistingChunk: true,
           },
