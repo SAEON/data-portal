@@ -11,3 +11,4 @@ src/services/api/src/graphql/resolvers/types/catalogue/index.js
 src/services/api/src/graphql/resolvers/types/browser-client/index.js
 src/services/api/src/graphql/resolvers/mutations/index.js
 src/services/api/src/graphql/resolvers/queries/index.js
+src/services/doi-resolver/src/graphql-client/index.js

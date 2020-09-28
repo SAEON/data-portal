@@ -1,0 +1,30 @@
+import { REPOSITORY_ID, LOAD_BATCH_SIZE } from '../config.js'
+
+const objectValueFromPathString = (str, obj) => str.split('.').reduce((o, k) => o[k], obj)
+
+export default async function iterate({ dataPath, pageInfoPath, executor, query, after = null }) {
+  const { data } = await executor({
+    variables: Object.assign(
+      {
+        id: REPOSITORY_ID,
+        first: LOAD_BATCH_SIZE,
+      },
+      { after }
+    ),
+    query,
+  })
+
+  return {
+    next: async () => {
+      return iterate({
+        dataPath,
+        pageInfoPath,
+        executor,
+        query,
+        after: objectValueFromPathString(`${pageInfoPath}.endCursor`, data),
+      })
+    },
+    data: objectValueFromPathString(dataPath, data),
+    done: !objectValueFromPathString(dataPath, data).length,
+  }
+}

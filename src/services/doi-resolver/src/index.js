@@ -6,6 +6,11 @@ import { NODE_ENV, PORT } from './config.js'
 import home from './http/home.js'
 import resolve from './http/resolve.js'
 
+/**
+ * Populate database on application startup
+ */
+import './datacite/index.js'
+
 if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   console.error(
     new Error(
