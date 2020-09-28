@@ -109,7 +109,21 @@ Continuous deployment is supported targeting a CentOS 7 environment
 5. Push from local to your forked repository to trigger a deployment
 
 ## SAEON's Deployment context
-As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). Endpoints of the deployment are listed below:
+As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compse`:
+
+```sh
+# Clone the repo
+git clone <...> catalogue-fork
+
+# Add configuration for docker-compose.yml scripts
+echo "MONGO_USERNAME=<user>" > .env
+echo "MONGO_PASSWORD=<pswd>" >> .env
+
+# Build and run the images
+docker-compose up -d --force-recreate --build
+```
+
+Endpoints of SAEON's development and production deployment are listed below:
 
 #### Development
 ```
@@ -126,6 +140,8 @@ api.catalogue.saeon.ac.za (/graphql & /proxy)
 elasticsearch.saeon.int (available publicly via api.catalogue.saeon.ac.za/proxy)
 kibana.saeon.int
 ```
+
+
 
 ## Deploying services
 
@@ -155,22 +171,6 @@ Build-time configuration essentially involves:
 2. Copying these `.env` files along with source code into the Docker build context, so that they are accessible during container runtime
 
 This is achieved using GitHub actions software. The configuration is specified in the [workflow file](/.github/workflows/deploy-master.yml). Adjusting accordingly in repository forks and continuous deployment should (theoretically) work out the box if a self-hosted actions runner is configured on your server.
-
-#### Docker Compose
-
-To deploy this repository manually
-
-```sh
-# Clone the repo
-git clone <...> catalogue-fork
-
-# Add configuration for docker-compose.yml scripts
-echo "MONGO_USERNAME=<user>" > .env
-echo "MONGO_PASSWORD=<pswd>" >> .env
-
-# Build and run the images
-docker-compose up -d --force-recreate --build
-```
 
 # NPM packages
 
