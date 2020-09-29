@@ -9,7 +9,7 @@ import resolve from './http/resolve.js'
 /**
  * Populate database on application startup
  */
-import './datacite/index.js'
+// import './datacite/index.js'
 
 if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   console.error(

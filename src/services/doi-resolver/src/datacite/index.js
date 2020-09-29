@@ -5,6 +5,10 @@ import apolloCache from 'apollo-cache-inmemory'
 import createExecutor from './_create-executor.js'
 import createIterator from './_create-iterator.js'
 import query from './_query.js'
+import jsBase64 from 'js-base64'
+import { DATACITE_USERNAME, DATACITE_PASSWORD } from '../config.js'
+
+const { encode } = jsBase64
 
 const { createHttpLink } = apolloHttpLink
 const { InMemoryCache } = apolloCache
@@ -24,18 +28,25 @@ let iterator = await createIterator({
   dataPath: 'repository.datasets.edges',
 })
 
-// while (!iterator.done) {
-//   console.log('hi', iterator.data)
+while (!iterator.done) {
+  const dois = iterator.data.reduce((acc, { node }) => [...acc, node.doi], [])
 
-//   /**
-//    * The point of this exercise is to pair dois with ids
-//    */
-//   const data = iterator.data.reduce(
-//     (acc, { node }) => [...acc, { doi: node.doi, id: node.url.match(/(?<=\?guid=).*$/)[0] }],
-//     []
-//   )
+  /**
+   * For every DOI register the URL
+   * https://support.datacite.org/docs/mds-api-guide#register-the-url
+   */
+  const result = await Promise.allSettled(
+    dois.map(doi =>
+      fetch(`https://mds.datacite.org/doi/${doi}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Basic ${encode(`${DATACITE_USERNAME}:${DATACITE_PASSWORD}`)}`,
+        },
+      }).then(res => res.text())
+    )
+  )
 
-//   console.log(data)
+  console.log(dois, result)
 
-//   iterator = await iterator.next()
-// }
+  iterator = await iterator.next()
+}
