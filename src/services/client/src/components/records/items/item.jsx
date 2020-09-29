@@ -149,7 +149,7 @@ export default ({ DOI, _source, titles, contributors, descriptions, id, immutabl
           </Tooltip>
         </Toolbar>
 
-        <div style={{ maxHeight: 156, overflowY: 'auto', margin: '8px' }}>
+        <div style={{ maxHeight: 156, overflowY: 'auto', margin: '8px 8px 8px 0' }}>
           {/* Item content */}
           {codeView ? (
             <Fade key="1" in={codeView}>
