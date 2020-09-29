@@ -12,6 +12,9 @@ export default ({
   onFocus,
   onBlur,
   resetGlobalStateOnSearch = false,
+  iconProps,
+  inputProps,
+  color,
   ...props
 }) => {
   const history = useHistory()
@@ -36,14 +39,16 @@ export default ({
               onBlur={onBlur || undefined}
               autoComplete="off"
               fullWidth
-              color="primary"
               id="saeon-data-search"
               size="medium"
+              color={color}
               onChange={e => update({ text: e.target.value })}
               InputProps={{
+                ...inputProps,
+
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon />
+                    <SearchIcon {...iconProps} />
                   </InputAdornment>
                 ),
               }}
