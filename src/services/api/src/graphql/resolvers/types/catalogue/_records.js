@@ -47,7 +47,6 @@ export default async (_, args, ctx) => {
   if (extent) {
     // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
     const shape = parse(extent)
-    shape.coordinates = shape.coordinates.map(array => array.map(([x, y]) => [y, x]))
 
     dsl.query.bool.must = [
       ...dsl.query.bool.must,

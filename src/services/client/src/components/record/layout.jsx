@@ -108,10 +108,7 @@ export default ({ json, id }) => {
                         smoothExtentConstraint: true,
                         showFullExtent: true,
                         extent: new Polygon(
-                          wkt
-                            .readGeometry(json.geoLocations[0].geoLocationBox)
-                            .getCoordinates()
-                            .map(array => array.map(([y, x]) => [x, y]))
+                          wkt.readGeometry(json.geoLocations[0].geoLocationBox).getCoordinates()
                         )
                           .getExtent()
                           .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)), // subtract for minX/minY, expand for maxX, maxY
@@ -126,10 +123,7 @@ export default ({ json, id }) => {
                               ({ geoLocationBox }) =>
                                 new Feature({
                                   geometry: new Polygon(
-                                    wkt
-                                      .readGeometry(geoLocationBox)
-                                      .getCoordinates()
-                                      .map(array => array.map(([y, x]) => [x, y]))
+                                    wkt.readGeometry(geoLocationBox).getCoordinates()
                                   ),
                                 })
                             ),
@@ -142,17 +136,16 @@ export default ({ json, id }) => {
                   </Row>
 
                   <Row title="Temporal coverage">
-                    {/* TODO These dates are not correct - waiting on updating the plone => ckan integration */}
                     <Typography variant="body2">
-                      {`${Math.min(
-                        ...json.dates
-                          .map(({ date }) => [parseInt(date.lte, 10), parseInt(date.gte, 10)])
-                          .flat()
-                      )} - ${Math.max(
-                        ...json.dates
-                          .map(({ date }) => [parseInt(date.lte, 10), parseInt(date.gte, 10)])
-                          .flat()
-                      )}`}
+                      {[
+                        ...new Set(
+                          Object.entries(
+                            json.dates.find(({ dateType: t }) => t.toUpperCase() === 'VALID').date
+                          )
+                            .sort(([k]) => (k === 'gte' ? -1 : 1))
+                            .map(([, v]) => parseInt(v, 10)) // NOTE - dates in the form 2015-01-01 are just "2015" on the client
+                        ),
+                      ].join(' - ')}
                     </Typography>
                   </Row>
 

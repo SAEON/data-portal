@@ -28,10 +28,7 @@ export default ({ children, gqlData }) => {
           let geoExtent
           try {
             geoExtent = new Polygon(
-              wkt
-                .readGeometry(geoLocations[0].geoLocationBox)
-                .getCoordinates()
-                .map(array => array.map(([y, x]) => [x, y]))
+              wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates()
             )
               .getExtent()
               .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1)) // subtract for minX/minY, expand for maxX, maxY
