@@ -41,7 +41,7 @@ export default ({ results }) => {
           )
         })
       ) : (
-        <Grid item xs={12} style={isMobile ? { padding: isMobile ? '16px 16px 0 16px' : 0 } : {}}>
+        <Grid item xs={12} style={isMobile ? { padding: '16px 16px 0 16px' } : {}}>
           <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
             <Typography
               style={{ margin: 20, display: 'block', textAlign: 'center' }}

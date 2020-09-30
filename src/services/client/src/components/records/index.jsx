@@ -95,6 +95,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
               // Tablet +
               <Grid
                 item
+                xs={12}
                 style={{ justifyContent: 'center', display: 'flex', margin: '32px 0 16px 0' }}
               >
                 <Grid container item lg={10} xl={8}>
