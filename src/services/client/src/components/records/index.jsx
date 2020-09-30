@@ -64,7 +64,11 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       loading={loading}
       catalogue={data?.catalogue}
     >
-      <Grid style={{ height: '100%' }} container direction="row">
+      <Grid
+        style={{ minHeight: window.innerHeight - 50 - 128 - 49 - 48 }}
+        container
+        direction="row"
+      >
         {loading ? (
           <Grid item xs={12} style={{ position: 'relative' }}>
             <Loading />
@@ -72,9 +76,10 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
         ) : (
           <>
             {isMobile ? (
+              // Mobile
               <>
                 {disableSidebar ? null : (
-                  <Collapse orientation={'vertical'} in={showSidebar}>
+                  <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
                     <Grid item xs={12}>
                       <Sidebar catalogue={data?.catalogue} />
                     </Grid>
@@ -86,7 +91,9 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
                 </Grid>
               </>
             ) : (
-              <Grid container item style={{ margin: '48px 0px 48px' }} justify="center">
+              // Tablet +
+
+              <Grid container item style={{ margin: '24px 0px 12px' }} justify="center">
                 <Grid container item lg={10} xl={8} spacing={2}>
                   {showSidebar ? (
                     <Grid item md={4}>

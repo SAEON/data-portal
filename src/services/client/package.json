@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/client",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "description": "Browser-based client for searching SAEON's metadata repository, and for previewing related, OGC-compliant spatial data",
   "keywords": [
     "@saeon/client",
@@ -30,6 +30,7 @@
     "@apollo/client": "^3.2.1",
     "@apollo/link-ws": "^2.0.0-beta.3",
     "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
@@ -56,7 +57,6 @@
     "file-loader": "^6.1.0",
     "graphql": "^15.3.0",
     "html-webpack-plugin": "^4.5.0",
-    "html2canvas": "^1.0.0-rc.7",
     "minisearch": "^3.0.0",
     "nanoid": "^3.1.12",
     "node-sass": "^4.14.1",
@@ -66,12 +66,10 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-device-detect": "^1.13.1",
     "react-dom": "^16.13.1",
-    "react-json-tree": "^0.13.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-virtualized": "^9.22.2",
+    "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
-    "react-window-infinite-loader": "^1.0.5",
     "regenerator-runtime": "^0.13.7",
     "sass-loader": "^10.0.2",
     "style-loader": "^1.2.1",
@@ -85,7 +83,6 @@
     "workbox-webpack-plugin": "^5.1.4"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
     "npm-check-updates": "^9.0.2",
     "onchange": "^7.0.2",
     "prettier": "^2.1.2",

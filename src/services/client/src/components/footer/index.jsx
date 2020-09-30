@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Typography } from '@material-ui/core'
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 
 export default () => {
   return (
@@ -14,9 +14,9 @@ export default () => {
         position="relative"
         color="primary"
       >
-        <div style={{ margin: 20 }}>
+        <Toolbar variant="dense">
           <Typography variant="overline">© SAEON 2020</Typography>
-        </div>
+        </Toolbar>
       </AppBar>
     </div>
   )
