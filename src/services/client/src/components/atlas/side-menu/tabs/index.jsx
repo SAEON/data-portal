@@ -1,11 +1,8 @@
 import React, { useContext } from 'react'
 import { Tabs, Tab, AppBar, Fade } from '@material-ui/core'
-import { Search as SearchIcon, Layers as LayersIcon } from '@material-ui/icons'
+import { FilterList as FilterIcon, Layers as LayersIcon } from '@material-ui/icons'
 import { TabsContext } from '../'
-
-// Tab panels
-import LayerList from './layer-list'
-import SearchMetadata from './search-metadata'
+import Layers from './layers'
 
 const a11yProps = index => ({
   id: `full-width-tab-${index}`,
@@ -15,6 +12,7 @@ const a11yProps = index => ({
 const TabPanel = ({ children, value, index }) => (
   <Fade in={value === index}>
     <div
+      style={{ height: 'calc(100% - 48px)', position: 'relative' }}
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -29,7 +27,7 @@ export default () => {
   const { activeTabIndex, setActiveTabIndex } = useContext(TabsContext)
 
   return (
-    <div>
+    <div style={{ height: '100%', position: 'relative' }}>
       <AppBar color="secondary" variant="outlined" position="static">
         <Tabs
           value={activeTabIndex}
@@ -40,14 +38,15 @@ export default () => {
           aria-label="Tabs - select mode on atlas menu"
         >
           <Tab icon={<LayersIcon fontSize="small" />} {...a11yProps(0)} />
-          <Tab icon={<SearchIcon fontSize="small" />} {...a11yProps(1)} />
+          <Tab icon={<FilterIcon fontSize="small" />} {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={activeTabIndex} index={0}>
-        <LayerList />
+        <Layers />
       </TabPanel>
       <TabPanel value={activeTabIndex} index={1}>
-        <SearchMetadata />
+        TODO - this panel will allow for specifying filters to the map. all layer-data will be
+        filtered
       </TabPanel>
     </div>
   )

@@ -1,5 +1,5 @@
 import React, { useContext, forwardRef } from 'react'
-import { MapContext } from '../../../../../../modules/provider-map'
+import { MapContext } from '../../../../../../../modules/provider-map'
 import {
   Box,
   Card,
@@ -12,21 +12,23 @@ import {
   CardContent,
   IconButton,
 } from '@material-ui/core'
-import { DragIndicator, Close as CloseIcon, ZoomIn as ZoomInIcon } from '@material-ui/icons'
+import {
+  DragIndicator,
+  Close as CloseIcon,
+  ZoomIn as ZoomInIcon,
+  Info as InfoIcon,
+} from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../'
-import { ToggleVisibility, DeleteLayer, ExpandLayer, AddLayer } from '../../../../components'
-import { AtlasContext } from '../../../../state'
-import { TabsContext } from '../../../'
-
-const LAYER_SELECTION_TAB_INDEX = 1
+import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../..'
+import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../components'
+import { AtlasContext } from '../../../../../state'
 
 export default () => {
   const { proxy } = useContext(MapContext)
   const { layers } = useContext(AtlasContext)
-  const { setActiveTabIndex } = useContext(TabsContext)
 
   return (
+    // data layers
     <Box style={{ display: 'flex', flexDirection: 'column' }}>
       {proxy
         .getLayers()
@@ -36,13 +38,11 @@ export default () => {
           const title = layer.get('title')
           const visible = layer.getVisible()
 
-          if (id === 'terrestrisBaseMap') return undefined
+          const { id: record_id, geoExtent, immutableResource } =
+            layers.find(({ layerId }) => layerId === id) || {}
 
-          const { id: record_id, geoExtent, immutableResource } = layers.find(
-            ({ layerId }) => layerId === id
-          )
-
-          return (
+          return record_id ? (
+            // This is a SAEON dataset
             <div key={id}>
               <QuickForm>
                 {(update, { expanded }) => (
@@ -157,10 +157,78 @@ export default () => {
                 )}
               </QuickForm>
             </div>
+          ) : (
+            // This is a base layer (or external dataset to SAEON)
+            <div key={id}>
+              <QuickForm>
+                {(update, { expanded }) => (
+                  <Card style={{ marginBottom: 10 }}>
+                    <CardHeader
+                      title={
+                        <Typography style={{ wordBreak: 'break-word' }} variant="caption">
+                          {title.truncate(55)}
+                        </Typography>
+                      }
+                      component={forwardRef(({ children }, ref) => (
+                        <AppBar ref={ref} color="default" position="relative" variant="outlined">
+                          <Toolbar
+                            style={{ paddingRight: 0, paddingLeft: 0, display: 'flex' }}
+                            variant="dense"
+                          >
+                            {/* Drag Icon */}
+                            <DragIndicator fontSize="small" style={{ marginRight: 10 }} />
+
+                            {/* Title (comes from CardHeader.title prop) */}
+                            <Tooltip placement="right-end" title={title}>
+                              <div>{children}</div>
+                            </Tooltip>
+
+                            {/* Expand layer info */}
+                            <ExpandLayer
+                              expanded={expanded}
+                              toggleExpanded={() => update({ expanded: !expanded })}
+                            />
+                          </Toolbar>
+                        </AppBar>
+                      ))}
+                    />
+
+                    {/* Content */}
+                    <Collapse in={expanded}>
+                      <CardContent style={{ display: 'flex' }}>
+                        {/* Toggle layer visibility */}
+                        <ToggleVisibility
+                          style={{ marginLeft: 'auto', alignSelf: 'center' }}
+                          visible={visible}
+                          toggleVisible={() => layer.setVisible(!visible)}
+                        />
+
+                        {/* Show layer info */}
+                        <IconButton
+                          size="small"
+                          onClick={() => alert('TODO - Add GeoServer/ESRI/Base layer info')}
+                        >
+                          <InfoIcon fontSize="small" />
+                        </IconButton>
+
+                        {/* Delete layer */}
+                        <DeleteLayer onClick={() => proxy.removeLayer(layer)} />
+                      </CardContent>
+                      <CardContent>
+                        <Slider
+                          defaultValue={layer.get('opacity') * 100}
+                          title={'Opacity'}
+                          updateValue={({ value }) => layer.setOpacity(value / 100)}
+                        />
+                      </CardContent>
+                    </Collapse>
+                  </Card>
+                )}
+              </QuickForm>
+            </div>
           )
         })
         .filter(_ => _)}
-      <AddLayer onClick={() => setActiveTabIndex(LAYER_SELECTION_TAB_INDEX)} />
     </Box>
   )
 }

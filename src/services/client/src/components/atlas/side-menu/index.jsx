@@ -31,7 +31,9 @@ export default ({ snapMenusContainer }) => {
         return (
           <SideMenuContext.Provider value={{ width, height }}>
             <TabContextProvider>
-              <Tabs />
+              <div style={{ height: '100%' }}>
+                <Tabs />
+              </div>
             </TabContextProvider>
           </SideMenuContext.Provider>
         )

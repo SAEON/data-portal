@@ -5,19 +5,8 @@ import {
   ExpandMore,
   Visibility,
   VisibilityOff,
-  Add as AddIcon,
   Delete as DeleteIcon,
 } from '@material-ui/icons'
-
-export const AddLayer = ({ onClick }) => {
-  return (
-    <Tooltip placement="right" title="Add data layer to map">
-      <IconButton onClick={onClick} style={{ marginLeft: 'auto' }} size="small">
-        <AddIcon fontSize="small" />
-      </IconButton>
-    </Tooltip>
-  )
-}
 
 export const DeleteLayer = ({ onClick }) => {
   return (

@@ -13,7 +13,15 @@ export default ({ results }) => {
           // Get record values
           const { target } = item
           const { _source, _score } = target
-          const { identifier, titles, contributors, descriptions, immutableResource, id } = _source
+          const {
+            identifier,
+            titles,
+            contributors,
+            descriptions,
+            immutableResource,
+            id,
+            linkedResources,
+          } = _source
 
           const DOI =
             identifier && identifier.identifierType.toUpperCase() === 'DOI'
@@ -35,6 +43,7 @@ export default ({ results }) => {
                 contributors={contributors}
                 descriptions={descriptions}
                 immutableResource={immutableResource}
+                linkedResources={linkedResources}
                 id={id}
               />
             </Grid>

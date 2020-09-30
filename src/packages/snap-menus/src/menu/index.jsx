@@ -307,7 +307,7 @@ export default forwardRef(
                         )
                       }}
                     >
-                      <div>
+                      <div style={{ height: '100%', position: 'relative' }}>
                         <CardContent style={{ padding: 0 }}>
                           <AppBar position="relative" variant="outlined">
                             <Toolbar

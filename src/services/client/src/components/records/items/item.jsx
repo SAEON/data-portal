@@ -13,7 +13,7 @@ import {
   Link as MuiLink,
 } from '@material-ui/core'
 import {
-  Visibility as ViewIcon,
+  BarChart as ViewIcon,
   Code as CodeIcon,
   FormatQuote as CitationIcon,
 } from '@material-ui/icons'
@@ -25,12 +25,31 @@ import clsx from 'clsx'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
-export default ({ DOI, _source, titles, contributors, descriptions, id, immutableResource }) => {
+export default ({
+  DOI,
+  _source,
+  titles,
+  contributors,
+  descriptions,
+  id,
+  immutableResource,
+  linkedResources,
+}) => {
   const history = useHistory()
   const [codeView, setCodeView] = useState(false)
   const classes = useStyles()
   const { global, setGlobal } = useContext(GlobalContext)
   const { layers } = global
+
+  const mapLayers = DOI
+    ? [
+        ...new Set(
+          linkedResources
+            ?.filter(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
+            ?.map(() => DOI)
+        ),
+      ]
+    : undefined
 
   return (
     <Fade in={true} key={DOI}>
@@ -86,16 +105,27 @@ export default ({ DOI, _source, titles, contributors, descriptions, id, immutabl
             immutableResource={immutableResource}
           />
 
-          {/* Link to /record/:id */}
-          <Tooltip title="View full record" placement="left-start">
-            <IconButton
-              className={clsx(classes['small-icon-button'])}
-              size="small"
-              disabled={!id}
-              onClick={() => history.push(`/records/${id}`)}
-            >
-              <ViewIcon />
-            </IconButton>
+          {/* PREVIEW */}
+          <Tooltip
+            title={DOI ? 'Preview dataset' : 'Unable to preview this dataset'}
+            placement="left-start"
+          >
+            <span>
+              <IconButton
+                className={clsx(classes['small-icon-button'])}
+                size="small"
+                disabled={!DOI}
+                onClick={e => {
+                  e.stopPropagation()
+                  setGlobal({
+                    layers: mapLayers,
+                  })
+                  history.push('/atlas')
+                }}
+              >
+                <ViewIcon />
+              </IconButton>
+            </span>
           </Tooltip>
 
           {/* Citation */}
