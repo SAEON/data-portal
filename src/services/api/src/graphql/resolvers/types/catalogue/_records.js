@@ -62,6 +62,7 @@ export default async (_, args, ctx) => {
   }
 
   if (id) {
+    dsl.size = 1
     dsl.query = {
       multi_match: {
         query: id,
