@@ -20,6 +20,7 @@ export default () => {
                 <img
                   style={{
                     height: 80,
+                    display: isMobile ? 'none' : 'inherit',
                   }}
                   src="/saeon-logo-white.png"
                 />

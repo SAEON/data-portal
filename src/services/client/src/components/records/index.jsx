@@ -68,6 +68,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
         style={{ minHeight: window.innerHeight - 50 - 128 - 49 - 48 }}
         container
         direction="row"
+        justify="center"
       >
         {loading ? (
           <Grid item xs={12} style={{ position: 'relative' }}>
@@ -92,11 +93,13 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
               </>
             ) : (
               // Tablet +
-
-              <Grid container item style={{ margin: '24px 0px 12px' }} justify="center">
-                <Grid container item lg={10} xl={8} spacing={2}>
+              <Grid
+                item
+                style={{ justifyContent: 'center', display: 'flex', margin: '32px 0 16px 0' }}
+              >
+                <Grid container item lg={10} xl={8}>
                   {showSidebar ? (
-                    <Grid item md={4}>
+                    <Grid style={{ paddingRight: 16 }} item md={4}>
                       <Sidebar catalogue={data?.catalogue} />
                     </Grid>
                   ) : null}

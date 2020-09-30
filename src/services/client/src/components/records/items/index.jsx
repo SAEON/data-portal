@@ -7,7 +7,7 @@ const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
 export default ({ results }) => {
   return (
-    <Grid container item xs={12} spacing={isMobile ? 0 : 2}>
+    <Grid container item xs={12}>
       {results.length ? (
         results.map(item => {
           // Get record values
@@ -25,7 +25,7 @@ export default ({ results }) => {
               key={id}
               item
               xs={12}
-              style={isMobile ? { padding: isMobile ? '16px 16px 0 16px' : 0 } : {}}
+              style={isMobile ? { padding: '16px 16px 0 16px' } : { marginBottom: 16 }}
             >
               <ResultItem
                 DOI={DOI}
@@ -41,17 +41,15 @@ export default ({ results }) => {
           )
         })
       ) : (
-        <Grid container item spacing={isMobile ? 0 : 2}>
-          <Grid item xs={12} style={isMobile ? { padding: isMobile ? '16px 16px 0 16px' : 0 } : {}}>
-            <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
-              <Typography
-                style={{ margin: 20, display: 'block', textAlign: 'center' }}
-                variant="overline"
-              >
-                No results found
-              </Typography>
-            </Card>
-          </Grid>
+        <Grid item xs={12} style={isMobile ? { padding: isMobile ? '16px 16px 0 16px' : 0 } : {}}>
+          <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
+            <Typography
+              style={{ margin: 20, display: 'block', textAlign: 'center' }}
+              variant="overline"
+            >
+              No results found
+            </Typography>
+          </Card>
         </Grid>
       )}
     </Grid>
