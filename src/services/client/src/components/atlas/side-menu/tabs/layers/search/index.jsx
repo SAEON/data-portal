@@ -89,117 +89,128 @@ export default () => {
         </QuickForm>
       </Box>
 
-      <Box style={{ height: 'calc(100% - 90px)' }} m={1}>
-        <AutoSizer>
-          {({ width }) => (
-            <List
-              width={width}
-              height={layers?.length * 124 > 1000 ? 1000 : layers?.length * 124}
-              innerElementType={forwardRef(({ style, ...otherProps }, ref) => (
-                <div
-                  ref={ref}
-                  style={{
-                    ...style,
-                    height: `${parseFloat(style.height) + LIST_PADDING_SIZE * 2}px`,
-                  }}
-                  {...otherProps}
-                />
-              ))}
-              itemCount={searchResults?.length}
-              itemSize={ITEM_SIZE + 2 * ITEM_Y_PADDING}
-            >
-              {({ index, style }) => {
-                const [id, score] = searchResults[index]
-                const { DOI, description, id: record_id, layerId, LAYERS, uri } = layers.find(
-                  ({ id: _id }) => _id === id
-                )
-
-                return (
+      <Box
+        className={clsx(classes.sortList)}
+        style={{
+          height: searchResults?.length * 124 > 1000 ? 1000 : searchResults?.length * 124,
+          minHeight: 38,
+        }}
+        m={1}
+      >
+        {searchResults.length ? (
+          <AutoSizer>
+            {({ width, height }) => (
+              <List
+                width={width}
+                height={height}
+                innerElementType={forwardRef(({ style, ...otherProps }, ref) => (
                   <div
+                    ref={ref}
                     style={{
                       ...style,
-                      top: `${parseFloat(style.top) + LIST_PADDING_SIZE}px`,
-                      padding: `${
-                        index && ITEM_Y_PADDING
-                      }px ${ITEM_X_PADDING}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING}px`,
+                      height: `${parseFloat(style.height) + LIST_PADDING_SIZE * 2}px`,
                     }}
-                  >
-                    <Card
-                      className={clsx({
-                        [classes['record-card']]: true,
-                        [classes.isSelected]: Boolean(proxy.getLayerById(layerId)),
-                      })}
-                      variant="elevation"
-                      onClick={() =>
-                        proxy.getLayerById(layerId)
-                          ? proxy.removeLayerById(layerId)
-                          : proxy.addLayer(
-                              createLayer({
-                                layerType: LayerTypes.TileWMS,
-                                id: layerId,
-                                title: description,
-                                uri,
-                                LAYERS,
-                              })
-                            )
-                      }
-                    >
-                      {/* Metadata item controls */}
-                      <Box m={1} style={{ display: 'flex' }}>
-                        <Typography
-                          style={{ marginRight: 'auto', alignSelf: 'center' }}
-                          variant="overline"
-                        >
-                          {DOI}
-                        </Typography>
-                        <MessageDialogue
-                          onClick
-                          title={onClose => (
-                            <div style={{ display: 'flex' }}>
-                              <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
-                                METADATA RECORD
-                              </Typography>
-                              <IconButton
-                                onClick={e => {
-                                  e.stopPropagation()
-                                  onClose()
-                                }}
-                                style={{ marginLeft: 'auto', alignSelf: 'center' }}
-                              >
-                                <CloseIcon />
-                              </IconButton>
-                            </div>
-                          )}
-                          tooltipProps={{
-                            placement: 'right',
-                            title: `${description} (Relevance: ${score?.toFixed(2) || 'NA'})`,
-                          }}
-                          iconProps={{ size: 'small', fontSize: 'small' }}
-                          dialogueContentProps={{ style: { padding: 0 } }}
-                          dialogueProps={{ fullWidth: true }}
-                          paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
-                        >
-                          <Record id={record_id} />
-                        </MessageDialogue>
-                      </Box>
+                    {...otherProps}
+                  />
+                ))}
+                itemCount={searchResults?.length}
+                itemSize={ITEM_SIZE + 2 * ITEM_Y_PADDING}
+              >
+                {({ index, style }) => {
+                  const [id, score] = searchResults[index]
+                  const { DOI, description, id: record_id, layerId, LAYERS, uri } = layers.find(
+                    ({ id: _id }) => _id === id
+                  )
 
-                      {/* Title */}
-                      <Box m={1}>
-                        <Typography variant="caption">{description.truncate(95)}</Typography>
-                        <Typography
-                          style={{ position: 'absolute', right: 12, bottom: 0 }}
-                          variant="overline"
-                        >
-                          Relevance: {score?.toFixed(2) || 'NA'}
-                        </Typography>
-                      </Box>
-                    </Card>
-                  </div>
-                )
-              }}
-            </List>
-          )}
-        </AutoSizer>
+                  return (
+                    <div
+                      style={{
+                        ...style,
+                        top: `${parseFloat(style.top) + LIST_PADDING_SIZE}px`,
+                        padding: `${
+                          index && ITEM_Y_PADDING
+                        }px ${ITEM_X_PADDING}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING}px`,
+                      }}
+                    >
+                      <Card
+                        className={clsx({
+                          [classes['record-card']]: true,
+                          [classes.isSelected]: Boolean(proxy.getLayerById(layerId)),
+                        })}
+                        variant="elevation"
+                        onClick={() =>
+                          proxy.getLayerById(layerId)
+                            ? proxy.removeLayerById(layerId)
+                            : proxy.addLayer(
+                                createLayer({
+                                  layerType: LayerTypes.TileWMS,
+                                  id: layerId,
+                                  title: description,
+                                  uri,
+                                  LAYERS,
+                                })
+                              )
+                        }
+                      >
+                        {/* Metadata item controls */}
+                        <Box m={1} style={{ display: 'flex' }}>
+                          <Typography
+                            style={{ marginRight: 'auto', alignSelf: 'center' }}
+                            variant="overline"
+                          >
+                            {DOI.truncate(30)}
+                          </Typography>
+                          <MessageDialogue
+                            onClick
+                            title={onClose => (
+                              <div style={{ display: 'flex' }}>
+                                <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
+                                  METADATA RECORD
+                                </Typography>
+                                <IconButton
+                                  onClick={e => {
+                                    e.stopPropagation()
+                                    onClose()
+                                  }}
+                                  style={{ marginLeft: 'auto', alignSelf: 'center' }}
+                                >
+                                  <CloseIcon />
+                                </IconButton>
+                              </div>
+                            )}
+                            tooltipProps={{
+                              placement: 'right',
+                              title: `${description}`,
+                            }}
+                            iconProps={{ size: 'small', fontSize: 'small' }}
+                            dialogueContentProps={{ style: { padding: 0 } }}
+                            dialogueProps={{ fullWidth: true }}
+                            paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
+                          >
+                            <Record id={record_id} />
+                          </MessageDialogue>
+                        </Box>
+
+                        {/* Title */}
+                        <Box m={1}>
+                          <Typography variant="caption">{description.truncate(95)}</Typography>
+                          <Typography
+                            style={{ position: 'absolute', right: 12, bottom: 0 }}
+                            variant="overline"
+                          >
+                            Sort score: {score?.toFixed(2) || 'NA'}
+                          </Typography>
+                        </Box>
+                      </Card>
+                    </div>
+                  )
+                }}
+              </List>
+            )}
+          </AutoSizer>
+        ) : (
+          <Typography variant="body2">No results</Typography>
+        )}
       </Box>
       <Box m={1}>
         <Tooltip placement="right" title="Add layer via server address">
