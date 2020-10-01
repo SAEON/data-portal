@@ -1,8 +1,8 @@
 import React from 'react'
-import { Divider, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 // Tab panels
-import LayerList from './layer-list'
+import Layers from './layers'
 import Search from './search'
 
 export default () => {
@@ -10,7 +10,7 @@ export default () => {
     <div style={{ height: '100%', position: 'relative' }}>
       <Grid container direction="column" style={{ flexFlow: 'column', height: '100%' }}>
         <Grid item xs={12} style={{ flexBasis: 'unset' }}>
-          <LayerList />
+          <Layers />
         </Grid>
         <Grid item xs={12} style={{ flexBasis: 'unset' }}>
           <div style={{ margin: '32px' }} />

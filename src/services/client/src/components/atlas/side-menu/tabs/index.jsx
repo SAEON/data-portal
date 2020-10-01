@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { Tabs, Tab, AppBar, Fade } from '@material-ui/core'
 import { FilterList as FilterIcon, Layers as LayersIcon } from '@material-ui/icons'
 import { TabsContext } from '../'
-import Layers from './layers'
+import Data from './data'
+import Filters from './filters'
 
 const a11yProps = index => ({
   id: `full-width-tab-${index}`,
@@ -42,11 +43,10 @@ export default () => {
         </Tabs>
       </AppBar>
       <TabPanel value={activeTabIndex} index={0}>
-        <Layers />
+        <Data />
       </TabPanel>
       <TabPanel value={activeTabIndex} index={1}>
-        TODO - this panel will allow for specifying filters to the map. all layer-data will be
-        filtered
+        <Filters />
       </TabPanel>
     </div>
   )
