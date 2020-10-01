@@ -62,7 +62,7 @@ export default () => {
   return (
     <>
       <Box m={1}>
-        <Typography variant="overline">{`Active datasets (${searchResults?.length})`}</Typography>
+        <Typography variant="overline">{`Available datasets (${searchResults?.length})`}</Typography>
         <QuickForm
           value={textSearch}
           effects={[debounce(({ value }) => setTextSearch(value), 250)]}
@@ -101,6 +101,7 @@ export default () => {
           <AutoSizer>
             {({ width, height }) => (
               <List
+                style={{ overflowY: 'scroll' }}
                 width={width}
                 height={height}
                 innerElementType={forwardRef(({ style, ...otherProps }, ref) => (

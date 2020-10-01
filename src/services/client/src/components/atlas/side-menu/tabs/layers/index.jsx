@@ -13,7 +13,7 @@ export default () => {
           <LayerList />
         </Grid>
         <Grid item xs={12} style={{ flexBasis: 'unset' }}>
-          <Divider variant="middle" style={{ margin: 16 }} />
+          <div style={{ margin: '32px' }} />
         </Grid>
         <Grid item xs={12}>
           <Search />

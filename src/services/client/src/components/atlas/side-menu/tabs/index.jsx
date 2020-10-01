@@ -12,7 +12,7 @@ const a11yProps = index => ({
 const TabPanel = ({ children, value, index }) => (
   <Fade in={value === index}>
     <div
-      style={{ height: 'calc(100% - 48px)', position: 'relative' }}
+      style={{ height: 'calc(100% - 49px)', position: 'relative' }}
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
