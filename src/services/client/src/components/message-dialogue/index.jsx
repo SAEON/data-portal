@@ -48,11 +48,13 @@ export default ({
             {typeof title === 'function' ? title(() => setOpen(false)) : title}
           </DialogTitle>
         ) : undefined}
-        {children || (
-          <DialogContent {...dialogueContentProps}>
-            <DialogContentText>{text}</DialogContentText>
-          </DialogContent>
-        )}
+        <div style={{ position: 'relative' }}>
+          {children || (
+            <DialogContent {...dialogueContentProps}>
+              <DialogContentText>{text}</DialogContentText>
+            </DialogContent>
+          )}
+        </div>
       </Dialog>
     </span>
   )

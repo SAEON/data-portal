@@ -25,6 +25,7 @@ export default ({ snapMenusContainer }) => {
       draggable={false}
       resizable={false}
       open={true}
+      opacity={1}
       title={'Data Explorer'}
     >
       {({ width, height }) => {
