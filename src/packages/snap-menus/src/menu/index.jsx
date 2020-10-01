@@ -29,7 +29,7 @@ import offset from '../lib/offset.js'
 
 var allowInteractions = true
 var timer
-const MENU_HEADER_HEIGHT = 31
+const MENU_HEADER_HEIGHT = 25
 const GHOST_GUTTER_SIZE = 2.5
 
 export default forwardRef(
@@ -55,6 +55,7 @@ export default forwardRef(
       open,
       onClose = undefined,
       opacity = 0.8,
+      style = {},
     },
     ref
   ) => {
@@ -100,8 +101,11 @@ export default forwardRef(
           {
             minimized: !state.minimized,
             maximizedHeight: state.minimized ? null : state.dimensions.height,
+            maximizedWidth: state.minimized ? null : state.dimensions.width,
             dimensions: {
-              width: state.dimensions.width,
+              width: state.minimized
+                ? state.minimizedWidth || defaultWidth
+                : MENU_HEADER_HEIGHT - 1,
               height: state.minimized ? state.maximizedHeight || defaultHeight : MENU_HEADER_HEIGHT,
             },
           }
@@ -263,11 +267,11 @@ export default forwardRef(
               }}
             >
               <div
-                style={{
+                style={Object.assign(style, {
                   opacity,
                   zIndex,
                   position: 'relative',
-                }}
+                })}
               >
                 <Fade key="menu-fade" in={open}>
                   <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
@@ -318,11 +322,18 @@ export default forwardRef(
                                 'drag-handle': draggable ? true : false,
                               })}
                             >
-                              <Typography style={{ margin: 'auto' }} variant="overline">
-                                {title}
-                              </Typography>
+                              {state.minimized ? undefined : (
+                                <Typography
+                                  style={{ margin: 'auto', fontSize: '0.7em' }}
+                                  variant="overline"
+                                >
+                                  {title}
+                                </Typography>
+                              )}
                               <div style={{ position: 'absolute', right: 0 }}>
-                                <Tooltip title={state.minimized ? 'Expand menu' : 'Collapse menu'}>
+                                <Tooltip
+                                  title={state.minimized ? `Expand ${title}` : `Collapse ${title}`}
+                                >
                                   <IconButton
                                     onTouchStart={onMinify}
                                     onClick={onMinify}
@@ -333,16 +344,17 @@ export default forwardRef(
                                       marginLeft: 'auto',
                                       padding: 2,
                                     }}
+                                    size="small"
                                     aria-label="close"
                                   >
                                     {state.minimized ? (
                                       <Fade key="menu-minimized" in={state.minimized}>
-                                        <MaximizeIcon />
+                                        <MaximizeIcon fontSize="small" />
                                       </Fade>
                                     ) : (
                                       <span>
                                         <Fade key="menu-maximized" in={!state.minimized}>
-                                          <MinimizeIcon />
+                                          <MinimizeIcon fontSize="small" />
                                         </Fade>
                                       </span>
                                     )}
