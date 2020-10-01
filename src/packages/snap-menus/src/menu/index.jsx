@@ -54,6 +54,7 @@ export default forwardRef(
       defaultSnap = false,
       open,
       onClose = undefined,
+      opacity = 0.8,
     },
     ref
   ) => {
@@ -263,7 +264,7 @@ export default forwardRef(
             >
               <div
                 style={{
-                  opacity: 0.8,
+                  opacity,
                   zIndex,
                   position: 'relative',
                 }}
