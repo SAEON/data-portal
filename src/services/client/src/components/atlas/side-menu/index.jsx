@@ -19,14 +19,15 @@ export default ({ snapMenusContainer }) => {
 
   return (
     <RecordsMenu
-      defaultHeight={snapMenusContainer.current?.offsetHeight - 30}
+      defaultHeight={snapMenusContainer.current?.offsetHeight}
       defaultWidth={300}
-      defaultPosition={{ x: 10, y: 10 }}
+      defaultPosition={{ x: 0, y: 0 }}
       draggable={false}
       resizable={false}
       open={true}
       opacity={1}
       title={'Data Explorer'}
+      style={{ borderTop: '1px solid rgba(0, 0, 0, 0.12)' }}
     >
       {({ width, height }) => {
         return (
