@@ -4,8 +4,8 @@ export default makeStyles(() => ({
   sortList: {
     borderTop: '1px solid rgba(0, 0, 0, 0.12)',
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 16,
+    paddingBottom: 16,
   },
   'record-card': {
     height: '100%',

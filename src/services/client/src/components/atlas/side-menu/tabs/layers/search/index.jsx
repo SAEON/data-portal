@@ -24,7 +24,8 @@ import { createLayer, LayerTypes } from '../../../../../../lib/ol'
 const LIST_PADDING_SIZE = 0
 const ITEM_SIZE = 116
 const ITEM_Y_PADDING = 4
-const ITEM_X_PADDING = 2
+const ITEM_X_PADDING_LEFT = 2
+const ITEM_X_PADDING_RIGHT = 8
 
 var cachedSearch
 
@@ -128,7 +129,7 @@ export default () => {
                         top: `${parseFloat(style.top) + LIST_PADDING_SIZE}px`,
                         padding: `${
                           index && ITEM_Y_PADDING
-                        }px ${ITEM_X_PADDING}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING}px`,
+                        }px ${ITEM_X_PADDING_RIGHT}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING_LEFT}px`,
                       }}
                     >
                       <Card
