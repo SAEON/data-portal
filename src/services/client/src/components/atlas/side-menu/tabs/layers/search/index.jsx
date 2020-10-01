@@ -92,8 +92,7 @@ export default () => {
       <Box
         className={clsx(classes.sortList)}
         style={{
-          height: searchResults?.length * 124 > 1000 ? 1000 : searchResults?.length * 124,
-          minHeight: 38,
+          height: 'calc(100% - 71px - 26px - 32px)',
         }}
         m={1}
       >
