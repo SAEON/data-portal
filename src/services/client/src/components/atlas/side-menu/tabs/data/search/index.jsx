@@ -20,6 +20,7 @@ import { MapContext } from '../../../../../../modules/provider-map'
 import useStyles from './style'
 import clsx from 'clsx'
 import { createLayer, LayerTypes } from '../../../../../../lib/ol'
+import SaeonGeoServerLegend from '../layers/layer-types/saeon-geoserver/legend'
 
 const LIST_PADDING_SIZE = 0
 const ITEM_SIZE = 116
@@ -119,9 +120,15 @@ export default () => {
               >
                 {({ index, style }) => {
                   const [id, score] = searchResults[index]
-                  const { DOI, description, id: record_id, layerId, LAYERS, uri } = layers.find(
-                    ({ id: _id }) => _id === id
-                  )
+                  const {
+                    DOI,
+                    title,
+                    description,
+                    id: record_id,
+                    layerId,
+                    LAYERS,
+                    uri,
+                  } = layers.find(({ id: _id }) => _id === id)
 
                   return (
                     <div
@@ -144,6 +151,12 @@ export default () => {
                             ? proxy.removeLayerById(layerId)
                             : proxy.addLayer(
                                 createLayer({
+                                  LegendMenu: () => (
+                                    <SaeonGeoServerLegend
+                                      uri={`${uri}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${LAYERS}&LEGEND_OPTIONS=forceLabels:on`}
+                                      title={title}
+                                    />
+                                  ),
                                   layerType: LayerTypes.TileWMS,
                                   id: layerId,
                                   title: description,

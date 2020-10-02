@@ -56,6 +56,7 @@ export default forwardRef(
       onClose = undefined,
       opacity = 0.8,
       style = {},
+      disableMinify = false,
     },
     ref
   ) => {
@@ -102,12 +103,12 @@ export default forwardRef(
             minimized: !state.minimized,
             maximizedHeight: state.minimized ? null : state.dimensions.height,
             maximizedWidth: state.minimized ? null : state.dimensions.width,
-            dimensions: {
-              width: state.minimized
-                ? state.minimizedWidth || defaultWidth
-                : MENU_HEADER_HEIGHT - 1,
-              height: state.minimized ? state.maximizedHeight || defaultHeight : MENU_HEADER_HEIGHT,
-            },
+            dimensions: state.minimized
+              ? {
+                  width: state.maximizedWidth || defaultWidth,
+                  height: state.maximizedHeight || defaultHeight,
+                }
+              : { width: MENU_HEADER_HEIGHT + (onClose ? 25 : 0), height: MENU_HEADER_HEIGHT },
           }
         )
       )
@@ -175,7 +176,7 @@ export default forwardRef(
                  * previousDimensions is only set when
                  * a menu is 'snapped'
                  */
-                if (state.previousDimensions) {
+                if (state.previousDimensions && !state.minimized) {
                   setState(
                     Object.assign(
                       { ...state },
@@ -331,37 +332,42 @@ export default forwardRef(
                                 </Typography>
                               )}
                               <div style={{ position: 'absolute', right: 0 }}>
-                                <Tooltip
-                                  title={state.minimized ? `Expand ${title}` : `Collapse ${title}`}
-                                >
-                                  <IconButton
-                                    onTouchStart={onMinify}
-                                    onClick={onMinify}
-                                    edge="start"
-                                    color="inherit"
-                                    style={{
-                                      order: 2,
-                                      marginLeft: 'auto',
-                                      padding: 2,
-                                    }}
-                                    size="small"
-                                    aria-label="close"
+                                {disableMinify ? undefined : (
+                                  <Tooltip
+                                    title={
+                                      state.minimized ? `Expand ${title}` : `Collapse ${title}`
+                                    }
                                   >
-                                    {state.minimized ? (
-                                      <Fade key="menu-minimized" in={state.minimized}>
-                                        <MaximizeIcon fontSize="small" />
-                                      </Fade>
-                                    ) : (
-                                      <span>
-                                        <Fade key="menu-maximized" in={!state.minimized}>
-                                          <MinimizeIcon fontSize="small" />
+                                    <IconButton
+                                      onTouchStart={onMinify}
+                                      onClick={onMinify}
+                                      edge="start"
+                                      color="inherit"
+                                      style={{
+                                        order: 2,
+                                        marginLeft: 'auto',
+                                        padding: 2,
+                                      }}
+                                      size="small"
+                                      aria-label="close"
+                                    >
+                                      {state.minimized ? (
+                                        <Fade key="menu-minimized" in={state.minimized}>
+                                          <MaximizeIcon fontSize="small" />
                                         </Fade>
-                                      </span>
-                                    )}
-                                  </IconButton>
-                                </Tooltip>
+                                      ) : (
+                                        <span>
+                                          <Fade key="menu-maximized" in={!state.minimized}>
+                                            <MinimizeIcon fontSize="small" />
+                                          </Fade>
+                                        </span>
+                                      )}
+                                    </IconButton>
+                                  </Tooltip>
+                                )}
+
                                 {onClose ? (
-                                  <Tooltip title={open ? 'Close menu' : ''}>
+                                  <Tooltip title={open ? `Close ${title}` : ''}>
                                     <IconButton
                                       onTouchStart={onClose}
                                       onClick={() => onClose()}
@@ -373,8 +379,9 @@ export default forwardRef(
                                         padding: 2,
                                       }}
                                       aria-label="close"
+                                      size="small"
                                     >
-                                      <CloseIcon />
+                                      <CloseIcon fontSize="small" />
                                     </IconButton>
                                   </Tooltip>
                                 ) : null}

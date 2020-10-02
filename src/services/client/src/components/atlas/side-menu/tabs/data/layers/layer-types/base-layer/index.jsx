@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core'
 import { DragIndicator, Info as InfoIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { Slider } from '../../../../../..'
-import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../components'
+import { Slider } from '../../../../../../..'
+import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 
 export default ({ layer, proxy }) => {
   const title = layer.get('title')

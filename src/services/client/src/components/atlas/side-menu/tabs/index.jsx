@@ -24,7 +24,7 @@ const TabPanel = ({ children, value, index }) => (
   </Fade>
 )
 
-export default () => {
+export default ({ LegendMenu, DataMenu }) => {
   const { activeTabIndex, setActiveTabIndex } = useContext(TabsContext)
 
   return (
@@ -43,7 +43,7 @@ export default () => {
         </Tabs>
       </AppBar>
       <TabPanel value={activeTabIndex} index={0}>
-        <Data />
+        <Data DataMenu={DataMenu} LegendMenu={LegendMenu} />
       </TabPanel>
       <TabPanel value={activeTabIndex} index={1}>
         <Filters />

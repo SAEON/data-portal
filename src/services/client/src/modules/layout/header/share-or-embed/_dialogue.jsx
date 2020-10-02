@@ -80,7 +80,14 @@ const Panels = ({ tabIndex }) => {
     'Error'
   ) : loading ? (
     <Fade key="loading" in={loading}>
-      <div style={{ width: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div
+        style={{
+          margin: 24,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <CircularProgress />
       </div>
     </Fade>

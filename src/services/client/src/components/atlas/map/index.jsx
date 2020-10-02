@@ -1,9 +1,10 @@
-import { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { MapContext } from '../../../modules/provider-map'
 import { AtlasContext } from '../state'
 import { createLayer, LayerTypes } from '../../../lib/ol'
+import SaeonGeoServerLegend from '../side-menu/tabs/data/layers/layer-types/saeon-geoserver/legend'
 
-const MAX_AUTO_LAYERS = 5
+const MAX_AUTO_LAYERS = 1
 
 export default () => {
   const { proxy } = useContext(MapContext)
@@ -17,11 +18,18 @@ export default () => {
   useEffect(() => {
     if (layers.length <= MAX_AUTO_LAYERS) {
       proxy.addLayers(
-        layers.map(({ uri, description: title, layerId, LAYERS }) => {
+        layers.map(({ uri, title, description: layerTitle, layerId, LAYERS }) => {
+          console.log(title)
           return createLayer({
+            LegendMenu: () => (
+              <SaeonGeoServerLegend
+                uri={`${uri}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image%2Fpng&TRANSPARENT=true&LAYER=${LAYERS}&LEGEND_OPTIONS=forceLabels:on`}
+                title={title}
+              />
+            ),
             layerType: LayerTypes.TileWMS,
             id: layerId,
-            title,
+            title: layerTitle,
             uri,
             LAYERS,
           })

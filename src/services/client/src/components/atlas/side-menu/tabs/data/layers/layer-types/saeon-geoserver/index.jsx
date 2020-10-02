@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
 import {
   Card,
   CardHeader,
@@ -10,18 +10,61 @@ import {
   CardContent,
   IconButton,
 } from '@material-ui/core'
-import { DragIndicator, Close as CloseIcon, ZoomIn as ZoomInIcon } from '@material-ui/icons'
+import {
+  DragIndicator,
+  Close as CloseIcon,
+  ZoomIn as ZoomInIcon,
+  VpnKey as KeyIcon,
+  BarChart as ViewDataIcon,
+} from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../..'
-import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../components'
+import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../../..'
+import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 
-export default ({ layer, record_id, geoExtent, immutableResource, proxy }) => {
+export default ({
+  layer,
+  record_id,
+  geoExtent,
+  immutableResource,
+  proxy,
+  LegendMenu,
+  DataMenu,
+}) => {
+  console.log('rendering saeon layer')
   const title = layer.get('title')
   const visible = layer.getVisible()
+  const [legendOpen, setLegendOpen] = useState(false)
+  const [dataTableOpen, setDataTableOpen] = useState(false)
 
   return (
-    <div>
-      <QuickForm>
+    <>
+      <DataMenu
+        defaultPosition={{ x: 800, y: 200 }}
+        defaultWidth={300}
+        title="Data"
+        defaultSnap={undefined}
+        onClose={() => setDataTableOpen(false)}
+        open={dataTableOpen}
+      >
+        Implementation coming soon
+      </DataMenu>
+      <LegendMenu
+        defaultPosition={{ x: 650, y: 25 }}
+        defaultWidth={200}
+        title={'Legend'}
+        defaultSnap={undefined}
+        open={legendOpen}
+        disableMinify
+        onClose={() => setLegendOpen(false)}
+      >
+        {layer.get('LegendMenu') ||
+          (() => (
+            <div style={{ marginBottom: 10 }}>
+              <Typography>No component specified for {layer.get('title')}</Typography>
+            </div>
+          ))}
+      </LegendMenu>
+      <QuickForm expanded={false}>
         {(update, { expanded }) => (
           <Card style={{ marginBottom: 10 }}>
             <CardHeader
@@ -98,6 +141,28 @@ export default ({ layer, record_id, geoExtent, immutableResource, proxy }) => {
                   immutableResource={immutableResource}
                 />
 
+                {/* Show layer legend */}
+                <Tooltip placement="top" title="Show layer legend">
+                  <IconButton
+                    style={{ alignSelf: 'center' }}
+                    size="small"
+                    onClick={() => setLegendOpen(!legendOpen)}
+                  >
+                    <KeyIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+
+                {/* Show layer data */}
+                <Tooltip placement="top" title="Show layer data">
+                  <IconButton
+                    style={{ alignSelf: 'center' }}
+                    size="small"
+                    onClick={() => setDataTableOpen(!dataTableOpen)}
+                  >
+                    <ViewDataIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+
                 {/* Zoom to layer extent */}
                 <Tooltip placement="top" title="Zoom to layer extent">
                   <IconButton
@@ -121,7 +186,7 @@ export default ({ layer, record_id, geoExtent, immutableResource, proxy }) => {
                 <DeleteLayer onClick={() => proxy.removeLayer(layer)} />
               </CardContent>
 
-              {/* MAP CONTROLS */}
+              {/* Opacity Slider */}
               <CardContent>
                 <Slider
                   defaultValue={layer.get('opacity') * 100}
@@ -133,6 +198,6 @@ export default ({ layer, record_id, geoExtent, immutableResource, proxy }) => {
           </Card>
         )}
       </QuickForm>
-    </div>
+    </>
   )
 }

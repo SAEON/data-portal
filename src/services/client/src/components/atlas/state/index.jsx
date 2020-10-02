@@ -16,7 +16,14 @@ export default ({ children, gqlData }) => {
       gqlData.data.catalogue.records.nodes
         .map(({ target }) => {
           const { _source } = target
-          const { id, identifier, geoLocations, immutableResource, linkedResources } = _source
+          const {
+            id,
+            identifier,
+            geoLocations,
+            immutableResource,
+            linkedResources,
+            titles,
+          } = _source
 
           if (!linkedResources) return undefined
 
@@ -47,6 +54,7 @@ export default ({ children, gqlData }) => {
               return {
                 uri,
                 description,
+                title: titles[0]?.title,
                 id,
                 DOI,
                 layerId,

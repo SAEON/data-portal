@@ -16,6 +16,8 @@ const TabContextProvider = ({ children }) => {
 
 export default ({ snapMenusContainer }) => {
   const RecordsMenu = useMenu({ id: 'records' })
+  const LegendMenu = useMenu({ id: 'legend' })
+  const DataMenu = useMenu({ id: 'data' })
 
   return (
     <RecordsMenu
@@ -34,7 +36,7 @@ export default ({ snapMenusContainer }) => {
           <SideMenuContext.Provider value={{ width, height }}>
             <TabContextProvider>
               <div style={{ height: '100%' }}>
-                <Tabs />
+                <Tabs DataMenu={DataMenu} LegendMenu={LegendMenu} />
               </div>
             </TabContextProvider>
           </SideMenuContext.Provider>
