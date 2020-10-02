@@ -21,7 +21,7 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
 
   const { global } = useContext(GlobalContext)
-  const { terms, extent = undefined, text = undefined } = global
+  const { terms, extent = undefined, text = undefined, dois } = global
 
   useEffect(() => {
     if (ref.current) {
@@ -36,10 +36,13 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     ref.current = { terms, text, extent }
   }, [terms, extent, text])
 
+  console.log(dois)
+
   const { error, loading, data } = useCatalogue({
     pageSize,
     startCursor: cursors.start,
     endCursor: cursors.end,
+    dois,
   })
 
   /**

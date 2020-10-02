@@ -7,9 +7,9 @@ import Layout from './layout'
 export default ({ id }) => {
   const { loading, error, data } = useQuery(
     gql`
-      query catalogue($id: ID) {
+      query catalogue($ids: [ID!]) {
         catalogue {
-          records(id: $id) {
+          records(ids: $ids) {
             nodes {
               target
             }
@@ -18,7 +18,7 @@ export default ({ id }) => {
       }
     `,
     {
-      variables: { id },
+      variables: { ids: [id] },
     }
   )
 

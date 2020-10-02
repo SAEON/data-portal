@@ -17,11 +17,12 @@ import {
   ArrowDropDown as ArrowDropDownIcon,
   FilterList as FilterIcon,
   Map as MapIcon,
-  Explore as PreviewIcon,
+  List as ListIcon,
 } from '@material-ui/icons'
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
+import ShareOrEmbed from '../../modules/layout/header/share-or-embed'
 
 const pageSizes = [
   10,
@@ -47,7 +48,7 @@ export default ({
   const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
   const { global, setGlobal } = useContext(GlobalContext)
-  const { layers } = global
+  const { layers } = global // layers is an array of dois
 
   const resultsWithDOIs =
     catalogue?.summary
@@ -113,29 +114,27 @@ export default ({
                 </span>
               </Tooltip>
 
-              {/* EXPLORE SELECTED DATASETS */}
-              <Tooltip title={`Explore ${layers?.length} selected datasets`}>
-                <span>
-                  <IconButton
-                    disabled={!layers?.length}
-                    style={{ marginRight: 10 }}
-                    onClick={() =>
-                      history.push({
-                        pathname: '/atlas',
-                      })
-                    }
-                  >
-                    <Badge
-                      color={layers?.length ? 'primary' : 'default'}
-                      badgeContent={layers?.length || 0}
-                      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                      invisible={false}
-                    >
-                      <PreviewIcon />
-                    </Badge>
-                  </IconButton>
-                </span>
-              </Tooltip>
+              {/* SHOW SELECTED DATASETS */}
+
+              <ShareOrEmbed
+                state={{ dois: layers }}
+                icon={<ListIcon />}
+                iconProps={{
+                  color: 'default',
+                  disabled: !layers?.length,
+                  style: { marginRight: 10 },
+                }}
+                tooltipProps={{
+                  title: `Show ${layers?.length} selected datasets`,
+                  placement: 'bottom',
+                }}
+                badgeProps={{
+                  color: layers?.length ? 'primary' : 'default',
+                  badgeContent: layers?.length || 0,
+                  anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                  invisible: false,
+                }}
+              />
 
               {/* PAGINATION CONFIG */}
               {isMobile ? null : (

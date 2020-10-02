@@ -59,8 +59,10 @@ type Catalogue {
 
   # Fetch metadata records from SAEON's data catalogue
   records(
-    # Fetch a single record by ID (other arguments are ignored)
-    id: ID
+    # Fetch a single record by SAEON IDs (other arguments are ignored)
+    ids: [ID!]
+    # Fetch a single record by DOIs (other arguments are ignored)
+    dois: [String!]
     # Fulltext search for provided string
     match: String
     # Search for exact matches of field values (intersection)
@@ -79,12 +81,16 @@ type Catalogue {
 
   # Get count aggregation of records by fields, with optional filters
   summary(
+    filterByIds: [ID!]
+    # Fetch a single record by DOIs (other arguments are ignored)
+    filterByDois: [String!]
     # Filter on full text search
     filterByText: String
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     filterByExtent: WKT_4326
     # List of terms to filter on
     filterByTerms: [TermInput!]
+    # Provide IDs that should be filtered on
     # Sort results by text (sorts by match score)
     textSort: String
     # A list of fields to perform term agggregation on

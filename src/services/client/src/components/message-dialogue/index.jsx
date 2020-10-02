@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   Tooltip,
+  Badge,
 } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
 
@@ -20,6 +21,7 @@ export default ({
   paperProps,
   icon = undefined,
   onOpenEffect = undefined,
+  badgeProps = undefined,
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -32,15 +34,23 @@ export default ({
   return (
     <span onClick={e => e.stopPropagation()}>
       <Tooltip placement="right-end" {...tooltipProps}>
-        <IconButton
-          onClick={e => {
-            e.stopPropagation()
-            setOpen(!open)
-          }}
-          {...iconProps}
-        >
-          {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
-        </IconButton>
+        <span>
+          <IconButton
+            onClick={e => {
+              e.stopPropagation()
+              setOpen(!open)
+            }}
+            {...iconProps}
+          >
+            {badgeProps ? (
+              <Badge {...badgeProps}>
+                {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
+              </Badge>
+            ) : (
+              icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
+            )}
+          </IconButton>
+        </span>
       </Tooltip>
       <Dialog {...dialogueProps} open={open} onClose={() => setOpen(false)} PaperProps={paperProps}>
         {title ? (

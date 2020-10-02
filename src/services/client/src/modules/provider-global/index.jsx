@@ -14,6 +14,8 @@ const GlobaProvider = ({ children, ...props }) => {
       text={props?.text || undefined}
       extent={props?.extent || undefined}
       terms={props?.terms || []}
+      ids={props?.ids || []}
+      dois={props?.dois || []}
     >
       {(setGlobal, global) => (
         <GlobalContext.Provider

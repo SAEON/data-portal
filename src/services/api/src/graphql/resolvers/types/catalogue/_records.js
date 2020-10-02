@@ -7,7 +7,8 @@ export default async (_, args, ctx) => {
 
   const {
     size = 100,
-    id = undefined,
+    ids = undefined,
+    dois = undefined,
     match = undefined,
     extent = undefined,
     terms = undefined,
@@ -44,32 +45,42 @@ export default async (_, args, ctx) => {
     dsl.search_after = [c.score || 0, c.id]
   }
 
-  if (extent) {
-    // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
-    const shape = parse(extent)
-
+  if (ids && ids.length) {
+    dsl.size = ids.length
     dsl.query.bool.must = [
-      ...dsl.query.bool.must,
       {
-        geo_shape: {
-          'geoLocations.geoLocationBox.geo_shape': {
-            shape,
-            relation: 'within',
-          },
+        terms: {
+          'id.raw': ids,
         },
       },
     ]
-  }
-
-  if (id) {
-    dsl.size = 1
-    dsl.query = {
-      multi_match: {
-        query: id,
-        fields: ['id'],
+  } else if (dois && dois.length) {
+    dsl.size = dois.length
+    dsl.query.bool.must = [
+      {
+        terms: {
+          'identifier.identifier.raw': dois,
+        },
       },
-    }
+    ]
   } else {
+    if (extent) {
+      // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
+      const shape = parse(extent)
+
+      dsl.query.bool.must = [
+        ...dsl.query.bool.must,
+        {
+          geo_shape: {
+            'geoLocations.geoLocationBox.geo_shape': {
+              shape,
+              relation: 'within',
+            },
+          },
+        },
+      ]
+    }
+
     if (match) {
       dsl.query.bool.must = [
         ...dsl.query.bool.must,

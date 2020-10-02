@@ -8,6 +8,8 @@ export default ({
   endCursor = undefined,
   terms = undefined,
   summaryLimit = 50,
+  ids = undefined,
+  dois = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
   const { extent, terms: _terms, text } = global
@@ -23,6 +25,8 @@ export default ({
         $after: ES_Cursor
         $fields: [String!]
         $summaryLimit: Int
+        $ids: [ID!]
+        $dois: [String!]
       ) {
         catalogue {
           summary(
@@ -31,6 +35,8 @@ export default ({
             filterByExtent: $extent
             filterByTerms: $terms
             limit: $summaryLimit
+            filterByIds: $ids
+            filterByDois: $dois
           )
           records(
             extent: $extent
@@ -39,6 +45,8 @@ export default ({
             size: $size
             before: $before
             after: $after
+            ids: $ids
+            dois: $dois
           ) {
             pageInfo {
               hasNextPage
@@ -63,6 +71,8 @@ export default ({
           'subjects.subject.raw',
           'creators.name.raw',
         ],
+        ids,
+        dois,
         extent,
         terms: terms || _terms,
         match: text,

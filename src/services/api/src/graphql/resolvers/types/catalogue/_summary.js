@@ -8,6 +8,8 @@ export default async (_, args, ctx) => {
     fields,
     filterByText = undefined,
     filterByExtent = undefined,
+    filterByIds: ids = undefined,
+    filterByDois: dois = undefined,
     filterByTerms: terms = undefined,
     limit: size,
     textSort = undefined,
@@ -30,7 +32,14 @@ export default async (_, args, ctx) => {
     ),
   }
 
-  if (filterByExtent || terms?.length || filterByText || textSort) {
+  if (
+    filterByExtent ||
+    terms?.length ||
+    filterByText ||
+    textSort ||
+    (ids && ids.length) ||
+    (dois && dois.length)
+  ) {
     dsl.query = {
       bool: {
         must: [],
@@ -38,46 +47,64 @@ export default async (_, args, ctx) => {
     }
   }
 
-  if (filterByText) {
+  if (ids && ids.length) {
     dsl.query.bool.must = [
-      ...dsl.query.bool.must,
       {
-        multi_match: {
-          query: filterByText.toLowerCase(),
-          fields: matchFields,
-          type: 'best_fields',
-          fuzziness: 'AUTO',
+        terms: {
+          'id.raw': ids,
         },
       },
     ]
-  }
-
-  if (filterByExtent) {
-    // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
-    const shape = parse(filterByExtent)
-
+  } else if (dois && dois.length) {
     dsl.query.bool.must = [
-      ...dsl.query.bool.must,
       {
-        geo_shape: {
-          'geoLocations.geoLocationBox.geo_shape': {
-            shape,
-            relation: 'within',
+        terms: {
+          'identifier.identifier.raw': dois,
+        },
+      },
+    ]
+  } else {
+    if (filterByText) {
+      dsl.query.bool.must = [
+        ...dsl.query.bool.must,
+        {
+          multi_match: {
+            query: filterByText.toLowerCase(),
+            fields: matchFields,
+            type: 'best_fields',
+            fuzziness: 'AUTO',
           },
         },
-      },
-    ]
-  }
+      ]
+    }
 
-  if (terms?.length) {
-    dsl.query.bool.must = [
-      ...dsl.query.bool.must,
-      ...terms
-        .filter(({ field, value }) =>
-          field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
-        )
-        .map(({ field, value }) => ({ term: { [field]: value } })),
-    ]
+    if (filterByExtent) {
+      // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
+      const shape = parse(filterByExtent)
+
+      dsl.query.bool.must = [
+        ...dsl.query.bool.must,
+        {
+          geo_shape: {
+            'geoLocations.geoLocationBox.geo_shape': {
+              shape,
+              relation: 'within',
+            },
+          },
+        },
+      ]
+    }
+
+    if (terms?.length) {
+      dsl.query.bool.must = [
+        ...dsl.query.bool.must,
+        ...terms
+          .filter(({ field, value }) =>
+            field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
+          )
+          .map(({ field, value }) => ({ term: { [field]: value } })),
+      ]
+    }
   }
 
   if (textSort) {
