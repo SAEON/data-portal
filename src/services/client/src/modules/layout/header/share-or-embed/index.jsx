@@ -1,11 +1,8 @@
-import React, { useState, useContext } from 'react'
-import { MessageDialogue, Link } from '../../../../components'
-import { GlobalContext } from '../../../provider-global'
-import { CLIENT_HOST_ADDRESS } from '../../../../config'
-import { Tabs, Tab, Box, Typography, Fade, CircularProgress } from '@material-ui/core'
+import React, { useState } from 'react'
+import { MessageDialogue } from '../../../../components'
+import { Tabs, Tab } from '@material-ui/core'
 import { Share as ShareIcon } from '@material-ui/icons'
-import { gql, useMutation } from '@apollo/client'
-import { useEffect } from 'react'
+import DialogueContents from './_dialogue-contents'
 
 function a11yProps(index) {
   return {
@@ -13,101 +10,8 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   }
 }
-const TabPanel = props => {
-  const { children, value, index, ...other } = props
 
-  return (
-    <Fade in={value === index}>
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box p={3}>
-            <Typography style={{ wordBreak: 'break-all' }}>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    </Fade>
-  )
-}
-
-const makeShareURI = searchId => {
-  const currentPath = window.location.pathname
-
-  if (['/', '/atlas'].includes(currentPath)) {
-    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
-  }
-
-  /**
-   * /records
-   */
-  if (currentPath === '/records' || currentPath === '/render/records') {
-    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?hideSidebar=true&disableSidebar=true&search=${searchId}`
-  }
-
-  /**
-   * /records/:id
-   */
-  if (currentPath.match(/\/records\/.*/)) {
-    return `${CLIENT_HOST_ADDRESS}/render/record?id=${window.location.href.substring(
-      window.location.href.lastIndexOf('/') + 1
-    )}`
-  }
-}
-
-const Panels = ({ tabIndex, state = undefined }) => {
-  const { global } = useContext(GlobalContext)
-
-  const [persistSearchState, { loading, error, data }] = useMutation(gql`
-    mutation($state: JSON!) {
-      browserClient {
-        persistSearchState(state: $state)
-      }
-    }
-  `)
-
-  useEffect(() => {
-    persistSearchState({ variables: { state: state || global } })
-  }, [global, persistSearchState, state])
-
-  const searchId = data?.browserClient.persistSearchState
-
-  return error ? (
-    'Error'
-  ) : loading ? (
-    <Fade key="loading" in={loading}>
-      <div
-        style={{
-          margin: 24,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <CircularProgress />
-      </div>
-    </Fade>
-  ) : (
-    <Fade in={Boolean(data)} key="data">
-      <div>
-        <TabPanel value={tabIndex} index={0}>
-          <Link uri={makeShareURI(searchId)} />
-        </TabPanel>
-        <TabPanel value={tabIndex} index={1}>
-          {`<iframe width="100%" height="100%" src="${makeShareURI(
-            searchId
-          )}" frameborder="0" allowfullscreen></iframe>`}
-        </TabPanel>
-      </div>
-    </Fade>
-  )
-}
-
-export default ({ icon, iconProps, tooltipProps, badgeProps, state }) => {
+export default ({ icon, iconProps, tooltipProps, badgeProps, state, shareType }) => {
   const [tabIndex, setTabIndex] = useState(0)
 
   return (
@@ -131,7 +35,7 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, state }) => {
         <Tab label="Share" {...a11yProps(0)} />
         <Tab label="Embed" {...a11yProps(1)} />
       </Tabs>
-      <Panels tabIndex={tabIndex} state={state} />
+      <DialogueContents shareType={shareType} tabIndex={tabIndex} state={state} />
     </MessageDialogue>
   )
 }

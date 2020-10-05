@@ -1,0 +1,41 @@
+import { CLIENT_HOST_ADDRESS } from '../../../../config'
+
+export default ({ searchId, shareType }) => {
+  const currentPath = window.location.pathname
+
+  if (['/', '/atlas'].includes(currentPath)) {
+    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
+  }
+
+  /**
+   * /records (fullpage)
+   */
+  if (currentPath === '/records' && shareType === 'fullpage') {
+    return `${CLIENT_HOST_ADDRESS}/render/recordspage?${
+      shareType === 'component' ? 'hideSidebar=true&disableSidebar=true&' : ''
+    }search=${searchId}`
+  }
+
+  /**
+   * /records (component)
+   */
+  if (
+    currentPath === '/records' ||
+    currentPath === '/recordspage' ||
+    currentPath === '/render/recordspage' ||
+    currentPath === '/render/records'
+  ) {
+    return `${CLIENT_HOST_ADDRESS}/render/records?${
+      shareType === 'component' ? 'hideSidebar=true&disableSidebar=true&' : ''
+    }search=${searchId}`
+  }
+
+  /**
+   * /records/:id
+   */
+  if (currentPath.match(/\/records\/.*/)) {
+    return `${CLIENT_HOST_ADDRESS}/render/record?id=${window.location.href.substring(
+      window.location.href.lastIndexOf('/') + 1
+    )}`
+  }
+}

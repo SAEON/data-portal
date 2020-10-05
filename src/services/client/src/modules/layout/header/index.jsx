@@ -52,7 +52,7 @@ export default withRouter(({ children }) => {
                       <GitHubIcon color="inherit" />
                     </IconButton>
                   </Tooltip>
-                  <ShareOrEmbedMenu />
+                  <ShareOrEmbedMenu shareType="fullpage" />
                   <FeedbackDialogue />
                 </Grid>
               </Grid>
