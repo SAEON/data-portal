@@ -44,7 +44,7 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
     `,
     {
       variables: {
-        id: [id],
+        ids: [id],
         style: citationParams.style,
         language: citationParams.language,
       },

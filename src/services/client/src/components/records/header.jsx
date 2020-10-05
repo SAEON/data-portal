@@ -120,16 +120,16 @@ export default ({
                 icon={<ListIcon />}
                 iconProps={{
                   color: 'default',
-                  disabled: !layers?.length,
+                  disabled: !(layers?.length || resultsWithDOIs),
                   style: { marginRight: 10 },
                 }}
                 tooltipProps={{
-                  title: `Show ${layers?.length} selected datasets`,
+                  title: `Show ${layers?.length || resultsWithDOIs} selected datasets`,
                   placement: 'bottom',
                 }}
                 badgeProps={{
-                  color: layers?.length ? 'primary' : 'default',
-                  badgeContent: layers?.length || 0,
+                  color: layers?.length || resultsWithDOIs ? 'primary' : 'default',
+                  badgeContent: layers?.length || resultsWithDOIs || 0,
                   anchorOrigin: { vertical: 'top', horizontal: 'right' },
                   invisible: false,
                 }}
