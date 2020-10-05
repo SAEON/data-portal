@@ -57,10 +57,10 @@ export default () => {
             <StateProvider gqlData={gqlData}>
               <Suspense fallback={null}>
                 <MenuProvider
-                  VERTICAL_OFFSET_TOP={0}
-                  VERTICAL_OFFSET_BOTTOM={0}
-                  HORIZONTAL_MARGIN_LEFT={0}
-                  HORIZONTAL_MARGIN_RIGHT={0}
+                  MARGIN_TOP={5}
+                  MARGIN_RIGHT={5}
+                  MARGIN_BOTTOM={5}
+                  MARGIN_LEFT={5}
                   SNAP_MENUS_CONTAINER_REF={snapMenusContainer}
                 >
                   <SideMenu snapMenusContainer={snapMenusContainer} />

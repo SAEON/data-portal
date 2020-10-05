@@ -28,6 +28,9 @@ const ITEM_Y_PADDING = 4
 const ITEM_X_PADDING_LEFT = 2
 const ITEM_X_PADDING_RIGHT = 8
 
+const SEARCH_BOX_HEIGHT = 71
+const ADD_DATASET_BUTTON_HEIGHT = 26
+
 var cachedSearch
 
 export default () => {
@@ -35,7 +38,6 @@ export default () => {
   const [textSearch, setTextSearch] = useState(cachedSearch || '')
   const { layers } = useContext(AtlasContext)
   const { proxy } = useContext(MapContext)
-  // const { width, height } = useContext(SideMenuContext) // TODO - use the dynamic height thing
 
   useEffect(() => {
     return () => (cachedSearch = textSearch)
@@ -94,7 +96,7 @@ export default () => {
       <Box
         className={clsx(classes.sortList)}
         style={{
-          height: 'calc(100% - 71px - 26px - 32px)',
+          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${ADD_DATASET_BUTTON_HEIGHT}px - 40px)`,
         }}
         m={1}
       >

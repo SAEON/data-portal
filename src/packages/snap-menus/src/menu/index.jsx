@@ -30,13 +30,16 @@ import offset from '../lib/offset.js'
 var allowInteractions = true
 var timer
 const MENU_HEADER_HEIGHT = 25
-const GHOST_GUTTER_SIZE = 2.5
 
 export default forwardRef(
   (
     {
       // From Provider
       PORTAL,
+      PORTAL_MARGIN_TOP,
+      PORTAL_MARGIN_RIGHT,
+      PORTAL_MARGIN_BOTTOM,
+      PORTAL_MARGIN_LEFT,
 
       // From hook
       renderMenu,
@@ -57,10 +60,18 @@ export default forwardRef(
       opacity = 0.8,
       style = {},
       disableMinify = false,
+      marginTop,
+      marginRight,
+      marginBottom,
+      marginLeft,
     },
     ref
   ) => {
-    const classes = useStyles({ PORTAL, MENU_HEADER_HEIGHT, GHOST_GUTTER_SIZE })
+    const GHOST_GUTTER_X =
+      ((marginRight || PORTAL_MARGIN_RIGHT) + (marginLeft || PORTAL_MARGIN_LEFT)) / 4
+    const GHOST_GUTTER_Y =
+      ((marginTop || PORTAL_MARGIN_TOP) + (marginBottom || PORTAL_MARGIN_BOTTOM)) / 4
+    const classes = useStyles({ PORTAL, MENU_HEADER_HEIGHT, GHOST_GUTTER_X, GHOST_GUTTER_Y })
 
     /**
      * zIndex is set to the ref, and used to parse height
@@ -82,9 +93,9 @@ export default forwardRef(
       snapped: Boolean(defaultSnap),
       isResizing: false,
       dimensions: defaultSnap
-        ? getDimensions(defaultSnap, PORTAL, GHOST_GUTTER_SIZE)
+        ? getDimensions(defaultSnap, PORTAL, GHOST_GUTTER_X)
         : { width: defaultWidth, height: defaultHeight },
-      position: getPosition(defaultSnap, PORTAL, GHOST_GUTTER_SIZE),
+      position: getPosition(defaultSnap, PORTAL, GHOST_GUTTER_X),
       previousDimensions: { width: defaultWidth, height: defaultHeight },
     })
 
@@ -140,7 +151,7 @@ export default forwardRef(
               handle=".drag-handle"
               defaultPosition={
                 defaultSnap
-                  ? getPosition(defaultSnap, PORTAL, GHOST_GUTTER_SIZE)
+                  ? getPosition(defaultSnap, PORTAL, GHOST_GUTTER_X)
                   : defaultPosition || getDefaultPosition()
               }
               bounds={{ left: 0, top: 0 }}
@@ -248,8 +259,8 @@ export default forwardRef(
                       {
                         minimized: false,
                         snapped: true,
-                        dimensions: getDimensions(snapZone, PORTAL, GHOST_GUTTER_SIZE),
-                        position: getPosition(snapZone, PORTAL, GHOST_GUTTER_SIZE),
+                        dimensions: getDimensions(snapZone, PORTAL, GHOST_GUTTER_X),
+                        position: getPosition(snapZone, PORTAL, GHOST_GUTTER_X),
                         previousDimensions: state.dimensions,
                       }
                     )

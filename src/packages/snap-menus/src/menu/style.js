@@ -7,36 +7,36 @@ export default makeStyles(() => ({
     backgroundColor: 'black',
     opacity: '20%',
   },
-  TopLeft: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
-    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_SIZE,
-    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_SIZE,
+  TopLeft: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
     left: 0,
   }),
-  TopRight: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
-    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_SIZE,
-    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_SIZE,
+  TopRight: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
     right: 0,
   }),
-  BottomLeft: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
-    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_SIZE,
-    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_SIZE,
-    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_SIZE,
+  BottomLeft: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
     left: 0,
   }),
-  BottomRight: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
-    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_SIZE,
-    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_SIZE,
-    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_SIZE,
+  BottomRight: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
     right: 0,
   }),
-  Left: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
+  Left: ({ PORTAL, GHOST_GUTTER_X }) => ({
     height: PORTAL.offsetHeight,
-    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_SIZE,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
     left: 0,
   }),
-  Right: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
+  Right: ({ PORTAL, GHOST_GUTTER_X }) => ({
     height: PORTAL.offsetHeight,
-    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_SIZE,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
     right: 0,
   }),
   Top: ({ PORTAL }) => ({
@@ -45,10 +45,10 @@ export default makeStyles(() => ({
     left: 0,
     right: 0,
   }),
-  Bottom: ({ PORTAL, GHOST_GUTTER_SIZE }) => ({
-    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_SIZE,
+  Bottom: ({ PORTAL, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
     width: PORTAL.offsetWidth,
-    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_SIZE,
+    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
     left: 0,
     right: 0,
   }),

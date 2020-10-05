@@ -1,7 +1,5 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-
-// Tab panels
 import Layers from './layers'
 import Search from './search'
 

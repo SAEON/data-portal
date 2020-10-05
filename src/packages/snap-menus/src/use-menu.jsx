@@ -33,26 +33,29 @@ const getDefaultPosition = () => {
  */
 export default ({ id }) => {
   const {
-    containerHeight,
-    containerWidth,
-    VERTICAL_OFFSET_TOP,
     PORTAL,
-    HORIZONTAL_MARGIN,
+    PORTAL_MARGIN_TOP,
+    PORTAL_MARGIN_RIGHT,
+    PORTAL_MARGIN_BOTTOM,
+    PORTAL_MARGIN_LEFT,
   } = useContext(context)
   const ref = useRef()
   refs[id] = ref
 
   return props => (
     <SnapMenu
+      // From Provider
       PORTAL={PORTAL}
+      PORTAL_MARGIN_TOP={PORTAL_MARGIN_TOP}
+      PORTAL_MARGIN_RIGHT={PORTAL_MARGIN_RIGHT}
+      PORTAL_MARGIN_BOTTOM={PORTAL_MARGIN_BOTTOM}
+      PORTAL_MARGIN_LEFT={PORTAL_MARGIN_LEFT}
+      // This hook
       renderMenu={C => createPortal(C, PORTAL)}
       getDefaultPosition={getDefaultPosition}
       getActiveMenuZIndex={getActiveMenuZIndex}
-      containerHeight={containerHeight}
-      containerWidth={containerWidth}
-      VERTICAL_OFFSET_TOP={VERTICAL_OFFSET_TOP}
-      HORIZONTAL_MARGIN={HORIZONTAL_MARGIN}
       ref={ref}
+      // User props
       {...props}
     />
   )
