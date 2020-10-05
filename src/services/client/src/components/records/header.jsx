@@ -92,7 +92,7 @@ export default ({
             {/* TOOLS */}
             <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
               {/* PREVIEW ALL DATASETS */}
-              <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
+              {/* <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
                 <span>
                   <IconButton
                     style={{ marginRight: 10 }}
@@ -112,10 +112,9 @@ export default ({
                     </Badge>
                   </IconButton>
                 </span>
-              </Tooltip>
+              </Tooltip> */}
 
-              {/* SHOW SELECTED DATASETS */}
-
+              {/* SHOW SELECTED DATASETS AS LIST */}
               <ShareOrEmbed
                 state={{ dois: layers }}
                 icon={<ListIcon />}

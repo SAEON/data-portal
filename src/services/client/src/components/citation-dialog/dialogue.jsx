@@ -32,9 +32,9 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query($id: ID, $style: CitationStyle, $language: CitationLocale) {
+      query($ids: [ID!], $style: CitationStyle, $language: CitationLocale) {
         catalogue {
-          records(id: $id) {
+          records(ids: $ids) {
             nodes {
               citation(style: $style, language: $language)
             }
@@ -44,7 +44,7 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
     `,
     {
       variables: {
-        id: id,
+        id: [id],
         style: citationParams.style,
         language: citationParams.language,
       },

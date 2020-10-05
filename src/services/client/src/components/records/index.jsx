@@ -36,8 +36,6 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
     ref.current = { terms, text, extent }
   }, [terms, extent, text])
 
-  console.log(dois)
-
   const { error, loading, data } = useCatalogue({
     pageSize,
     startCursor: cursors.start,
@@ -67,55 +65,52 @@ export default ({ hideSidebar = false, disableSidebar = false }) => {
       loading={loading}
       catalogue={data?.catalogue}
     >
-      <Grid
-        style={{ minHeight: window.innerHeight - 50 - 128 - 49 - 48 }}
-        container
-        direction="row"
-        justify="center"
-      >
-        {loading ? (
-          <Grid item xs={12} style={{ position: 'relative' }}>
-            <Loading />
-          </Grid>
-        ) : (
-          <>
-            {isMobile ? (
-              // Mobile
-              <>
-                {disableSidebar ? null : (
-                  <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
-                    <Grid item xs={12}>
-                      <Sidebar catalogue={data?.catalogue} />
-                    </Grid>
-                  </Collapse>
-                )}
+      <div style={{ minHeight: 'calc(100% - 49px - 49px)' }}>
+        <Grid container direction="row" justify="center">
+          {loading ? (
+            <Grid item xs={12} style={{ position: 'relative' }}>
+              <Loading />
+            </Grid>
+          ) : (
+            <>
+              {isMobile ? (
+                // Mobile
+                <>
+                  {disableSidebar ? null : (
+                    <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
+                      <Grid item xs={12}>
+                        <Sidebar catalogue={data?.catalogue} />
+                      </Grid>
+                    </Collapse>
+                  )}
 
-                <Grid item xs style={{ flexGrow: 1 }}>
-                  <Items results={results} />
-                </Grid>
-              </>
-            ) : (
-              // Tablet +
-              <Grid
-                item
-                xs={12}
-                style={{ justifyContent: 'center', display: 'flex', margin: '32px 0 16px 0' }}
-              >
-                <Grid container item lg={10} xl={8}>
-                  {showSidebar ? (
-                    <Grid style={{ paddingRight: 16 }} item md={4}>
-                      <Sidebar catalogue={data?.catalogue} />
-                    </Grid>
-                  ) : null}
                   <Grid item xs style={{ flexGrow: 1 }}>
                     <Items results={results} />
                   </Grid>
+                </>
+              ) : (
+                // Tablet +
+                <Grid
+                  item
+                  xs={12}
+                  style={{ justifyContent: 'center', display: 'flex', margin: '32px 0 16px 0' }}
+                >
+                  <Grid container item lg={10} xl={8}>
+                    {showSidebar ? (
+                      <Grid style={{ paddingRight: 16 }} item md={4}>
+                        <Sidebar catalogue={data?.catalogue} />
+                      </Grid>
+                    ) : null}
+                    <Grid item xs style={{ flexGrow: 1 }}>
+                      <Items results={results} />
+                    </Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-            )}
-          </>
-        )}
-      </Grid>
+              )}
+            </>
+          )}
+        </Grid>
+      </div>
       {loading ? undefined : <Footer />}
     </Header>
   )
