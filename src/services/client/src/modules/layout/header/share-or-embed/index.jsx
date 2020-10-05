@@ -45,7 +45,7 @@ const makeShareURI = searchId => {
   /**
    * /records
    */
-  if (currentPath === '/records') {
+  if (currentPath === '/records' || currentPath === '/render/records') {
     return `${CLIENT_HOST_ADDRESS}/render${currentPath}?hideSidebar=true&disableSidebar=true&search=${searchId}`
   }
 

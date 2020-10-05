@@ -45,9 +45,8 @@ export default ({
   showSidebar,
   setShowSidebar,
 }) => {
-  const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global } = useContext(GlobalContext)
   const { layers } = global // layers is an array of dois
 
   const resultsWithDOIs =
@@ -116,7 +115,7 @@ export default ({
 
               {/* SHOW SELECTED DATASETS AS LIST */}
               <ShareOrEmbed
-                state={{ dois: layers }}
+                state={layers.length ? { dois: layers } : global}
                 icon={<ListIcon />}
                 iconProps={{
                   color: 'default',
