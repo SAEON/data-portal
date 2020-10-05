@@ -12,7 +12,7 @@ export default ({ searchId, shareType }) => {
    */
   if (currentPath === '/records' && shareType === 'fullpage') {
     return `${CLIENT_HOST_ADDRESS}/render/recordspage?${
-      shareType === 'component' ? 'hideSidebar=true&disableSidebar=true&' : ''
+      shareType === 'component' ? 'disableSidebar=true&' : ''
     }search=${searchId}`
   }
 
@@ -26,7 +26,7 @@ export default ({ searchId, shareType }) => {
     currentPath === '/render/records'
   ) {
     return `${CLIENT_HOST_ADDRESS}/render/records?${
-      shareType === 'component' ? 'hideSidebar=true&disableSidebar=true&' : ''
+      shareType === 'component' ? 'disableSidebar=true&' : ''
     }search=${searchId}`
   }
 

@@ -14,8 +14,8 @@ const DEFAULT_CURSORS = {
   currentPage: 0,
 }
 
-export default ({ hideSidebar = false, disableSidebar = false }) => {
-  const [showSidebar, setShowSidebar] = useState(disableSidebar === true ? false : !hideSidebar)
+export default ({ disableSidebar = false }) => {
+  const [showSidebar, setShowSidebar] = useState(!disableSidebar)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
