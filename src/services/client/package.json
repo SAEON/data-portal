@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/client",
-  "version": "5.0.16",
+  "version": "5.0.17",
   "description": "Browser-based client for searching SAEON's metadata repository, and for previewing related, OGC-compliant spatial data",
   "keywords": [
     "@saeon/client",
@@ -43,7 +43,7 @@
     "@saeon/ol-react": "^10.0.2",
     "@saeon/pkce-client": "0.5.12",
     "@saeon/quick-form": "3.0.2",
-    "@saeon/snap-menus": "^5.0.5",
+    "@saeon/snap-menus": "^5.0.6",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-imports": "^2.0.0",
@@ -83,7 +83,7 @@
     "workbox-webpack-plugin": "^5.1.4"
   },
   "devDependencies": {
-    "npm-check-updates": "^9.0.3",
+    "npm-check-updates": "^9.0.4",
     "onchange": "^7.0.2",
     "prettier": "^2.1.2",
     "webpack-dev-server": "^3.11.0"

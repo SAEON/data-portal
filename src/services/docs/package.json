@@ -38,7 +38,7 @@
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
-    "npm-check-updates": "^9.0.3",
+    "npm-check-updates": "^9.0.4",
     "webpack-dev-server": "^3.11.0"
   }
 }

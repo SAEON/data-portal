@@ -32,7 +32,7 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
   - [Material UI](https://material-ui.com/)
 
 # Quick start
-Setup the repository for development (NOTE: This repository currently only supports Linux/Mac development, since it's farily straightforward to configure a Linux development environment using WSL on Windows (or similar). If there is interest in further cross platform support please [request this](https://github.com/SAEONData/catalogue/issues))
+Setup the repository for development. The repository _should_ be supported cross-platform - on any platform that `Node.js` can be installed. However, this workflow has only been tested on Ubuntu.
 
 ```sh
 # Download the source code
@@ -45,11 +45,11 @@ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
 sudo apt-get install -y nodejs
 
-# Install package dependencies (this might take several minutes on the first run)
-npm run install-dependencies
-
 # Update repository git configuration
 npm run configure-git
+
+# Install package dependencies (this might take several minutes on the first run)
+npm run install-dependencies
 ```
 
 ### Start the services
