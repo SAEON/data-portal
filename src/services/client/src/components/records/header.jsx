@@ -20,6 +20,7 @@ import {
   FilterList as FilterIcon,
   Map as MapIcon,
   List as ListIcon,
+  Refresh as RefreshIcon,
 } from '@material-ui/icons'
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
@@ -49,7 +50,7 @@ export default ({
   setShowSidebar,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
-  const { global } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(GlobalContext)
   const { layers } = global // layers is an array of dois
 
   const resultsWithDOIs =
@@ -93,6 +94,20 @@ export default ({
 
             {/* TOOLS */}
             <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
+              {/* REFRESH DATA SELECTION */}
+              <Tooltip title={`Unselect all datasets`}>
+                <span style={{ display: 'flex', alignContent: 'center' }}>
+                  <IconButton
+                    disabled={!layers?.length}
+                    onClick={() => {
+                      setGlobal({ layers: [] })
+                    }}
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+
               {/* PREVIEW ALL DATASETS */}
               <Tooltip title={`Configure atlas from ${resultsWithDOIs} datasets`}>
                 <span style={{ display: 'flex', alignContent: 'center' }}>
