@@ -66,7 +66,7 @@ export default ({
     {
       variables: {
         fields: [
-          'identifier.identifierType.raw',
+          'linkedResources.linkedResourceType.raw',
           'publicationYear',
           'publisher.raw',
           'subjects.subject.raw',

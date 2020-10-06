@@ -11,6 +11,7 @@ import {
   Checkbox,
   Divider,
   Link as MuiLink,
+  CircularProgress,
 } from '@material-ui/core'
 import {
   BarChart as ViewIcon,
@@ -22,6 +23,7 @@ import { CitationDialog, DataDownloadButton } from '../..'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
+import { usePersistSearch as WithPersistSearch } from '../../../hooks'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
@@ -41,7 +43,8 @@ export default ({
   const { global, setGlobal } = useContext(GlobalContext)
   const { selectedDois } = global
 
-  const recordDois = DOI
+  // TODO - this could be clearer
+  const geoResourceDois = DOI
     ? [
         ...new Set(
           linkedResources
@@ -107,24 +110,51 @@ export default ({
 
           {/* PREVIEW */}
           <Tooltip
-            title={DOI ? 'Preview dataset' : 'Unable to preview this dataset'}
+            title={geoResourceDois.length ? 'Preview dataset' : 'Preview not available'}
             placement="left-start"
           >
             <span>
-              <IconButton
-                className={clsx(classes['small-icon-button'])}
-                size="small"
-                disabled={!DOI}
-                onClick={e => {
-                  e.stopPropagation()
-                  setGlobal({
-                    selectedDois: recordDois,
-                  })
-                  history.push('/atlas')
+              <WithPersistSearch>
+                {([persistSearchState, { loading, error, data }]) => {
+                  if (error) {
+                    throw new Error('Error persiting search state', error)
+                  }
+
+                  if (data) {
+                    const searchId = data.browserClient.persistSearchState
+                    history.push({
+                      pathname: 'atlas',
+                      search: `?search=${searchId}`,
+                    })
+                  }
+
+                  if (loading || data) {
+                    return (
+                      <Fade in={true}>
+                        <CircularProgress thickness={2} size={12} style={{ margin: '0 6px' }} />
+                      </Fade>
+                    )
+                  }
+
+                  return (
+                    <IconButton
+                      className={clsx(classes['small-icon-button'])}
+                      size="small"
+                      disabled={!geoResourceDois.length}
+                      onClick={e => {
+                        e.stopPropagation()
+                        persistSearchState({
+                          variables: {
+                            state: { selectedDois: geoResourceDois },
+                          },
+                        })
+                      }}
+                    >
+                      <ViewIcon />
+                    </IconButton>
+                  )
                 }}
-              >
-                <ViewIcon />
-              </IconButton>
+              </WithPersistSearch>
             </span>
           </Tooltip>
 

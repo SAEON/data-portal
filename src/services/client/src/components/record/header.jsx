@@ -1,32 +1,35 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
   FormatQuote as CitationIcon,
   Code as CodeIcon,
   BarChart as PreviewIcon,
 } from '@material-ui/icons'
-import { AppBar, Toolbar, Grid, Typography, Tooltip, Hidden, IconButton } from '@material-ui/core'
+import {
+  AppBar,
+  Toolbar,
+  Grid,
+  Typography,
+  Tooltip,
+  Hidden,
+  IconButton,
+  Fade,
+  CircularProgress,
+} from '@material-ui/core'
 import { CitationDialog, DataDownloadButton } from '..'
 import { useHistory } from 'react-router-dom'
-import { GlobalContext } from '../../modules/provider-global'
+import { usePersistSearch as WithPersistSearch } from '../../hooks'
 
 export default ({ record, toggleCodeView, codeView }) => {
   const history = useHistory()
-  const { setGlobal } = useContext(GlobalContext)
   const { identifier, linkedResources } = record
   const DOI =
     identifier && identifier.identifierType.toUpperCase() === 'DOI'
       ? identifier.identifier
       : undefined
 
-  const mapLayers = DOI
-    ? [
-        ...new Set(
-          linkedResources
-            ?.filter(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-            ?.map(() => DOI)
-        ),
-      ]
-    : undefined
+  const hasLayers = Boolean(
+    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
+  )
 
   return (
     <AppBar color="inherit" position="sticky" variant="outlined">
@@ -41,21 +44,48 @@ export default ({ record, toggleCodeView, codeView }) => {
 
           <Hidden xsDown>
             {/* PREVIEW */}
-            <Tooltip title={DOI ? 'Preview dataset' : 'Unable to preview this dataset'}>
+            <Tooltip title={hasLayers ? 'Preview dataset' : 'Unable to preview this dataset'}>
               <span>
-                <IconButton
-                  disabled={!DOI}
-                  color={'primary'}
-                  onClick={e => {
-                    e.stopPropagation()
-                    setGlobal({
-                      layers: mapLayers,
-                    })
-                    history.push('/atlas')
+                <WithPersistSearch>
+                  {([persistSearchState, { loading, error, data }]) => {
+                    if (error) {
+                      throw new Error('Error persiting search state', error)
+                    }
+
+                    if (data) {
+                      const searchId = data.browserClient.persistSearchState
+                      history.push({
+                        pathname: '/atlas',
+                        search: `?search=${searchId}`,
+                      })
+                    }
+
+                    if (loading || data) {
+                      return (
+                        <Fade in={true}>
+                          <CircularProgress thickness={2} size={12} style={{ margin: '0 6px' }} />
+                        </Fade>
+                      )
+                    }
+
+                    return (
+                      <IconButton
+                        disabled={!hasLayers}
+                        color={'primary'}
+                        onClick={e => {
+                          e.stopPropagation()
+                          persistSearchState({
+                            variables: {
+                              state: { selectedDois: [DOI] },
+                            },
+                          })
+                        }}
+                      >
+                        <PreviewIcon />
+                      </IconButton>
+                    )
                   }}
-                >
-                  <PreviewIcon />
-                </IconButton>
+                </WithPersistSearch>
               </span>
             </Tooltip>
 

@@ -4,6 +4,7 @@ import SideMenu from './side-menu'
 import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
+import { CLIENT_HOST_ADDRESS } from '../../config'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
@@ -16,7 +17,9 @@ export default () => {
   const snapMenusContainer = useRef()
   const searchId = getUriState().search
   if (!searchId) {
-    throw new Error('The ATLAS requires prior-configuration of what layers to show')
+    throw new Error(
+      `The ATLAS requires prior-configuration of what layers to show. This is done at ${CLIENT_HOST_ADDRESS}/records`
+    )
   }
 
   return (
@@ -38,7 +41,13 @@ export default () => {
         return loading ? (
           <Loading />
         ) : (
-          <WithCatalogue {...data.browserClient.findSearchState} pageSize={MAX_DATASETS}>
+          <WithCatalogue
+            {...Object.assign(
+              { ...(data?.browserClient.findSearchState || {}) },
+              { dois: [...(data?.browserClient.findSearchState.selectedDois || [])] }
+            )}
+            pageSize={MAX_DATASETS}
+          >
             {({ error, loading, data }) => {
               if (error) {
                 throw new Error('Error searching catalogue')

@@ -26,7 +26,7 @@ import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
 import ShareOrEmbed from '../share-or-embed'
-import WithPersistSearch from '../../hooks/_persist-search'
+import { usePersistSearch as WithPersistSearch } from '../../hooks'
 
 const pageSizes = [
   10,
@@ -52,11 +52,12 @@ export default ({
   const [anchorEl, setAnchorEl] = useState(null)
   const { global, setGlobal } = useContext(GlobalContext)
   const { selectedDois } = global
+  const resultCount = catalogue?.records.totalCount
 
-  const resultsWithDOIs =
-    catalogue?.summary
-      .find(obj => Object.entries(obj).find(([k]) => k === 'identifier.identifierType.raw'))
-      ['identifier.identifierType.raw'].find(({ key }) => key === 'DOI')?.doc_count || 0
+  const atlasLayersCount = catalogue?.summary
+    .find(summary => summary['linkedResources.linkedResourceType.raw'])
+    ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
+    .doc_count
 
   return (
     <>
@@ -90,9 +91,9 @@ export default ({
               <Tooltip title={`Unselect all datasets`}>
                 <span style={{ display: 'flex', alignContent: 'center' }}>
                   <IconButton
-                    disabled={!selectedDois?.length}
+                    disabled={!(selectedDois?.length || global.dois?.length)}
                     onClick={() => {
-                      setGlobal({ selectedDois: [] })
+                      setGlobal({ selectedDois: [], dois: [] })
                     }}
                   >
                     <RefreshIcon />
@@ -101,7 +102,7 @@ export default ({
               </Tooltip>
 
               {/* PREVIEW ALL DATASETS */}
-              <Tooltip title={`Configure atlas from ${resultsWithDOIs} datasets`}>
+              <Tooltip title={`Configure atlas from ${atlasLayersCount} datasets`}>
                 <span style={{ display: 'flex', alignContent: 'center' }}>
                   <WithPersistSearch>
                     {([persistSearchState, { loading, error, data }]) => {
@@ -130,20 +131,18 @@ export default ({
                       return (
                         <Fade in={!loading && !error}>
                           <IconButton
-                            disabled={!(selectedDois?.length || resultsWithDOIs)}
+                            disabled={!(selectedDois?.length || resultCount)}
                             onClick={() => {
                               persistSearchState({
                                 variables: {
-                                  state: selectedDois.length ? { dois: selectedDois } : global,
+                                  state: selectedDois.length ? { selectedDois } : global,
                                 },
                               })
                             }}
                           >
                             <Badge
-                              color={
-                                selectedDois?.length || resultsWithDOIs ? 'primary' : 'default'
-                              }
-                              badgeContent={selectedDois?.length || resultsWithDOIs || 0}
+                              color={selectedDois?.length || resultCount ? 'primary' : 'default'}
+                              badgeContent={selectedDois?.length || resultCount || 0}
                               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                               invisible={false}
                             >
@@ -163,18 +162,16 @@ export default ({
                 icon={<ListIcon />}
                 iconProps={{
                   color: 'default',
-                  disabled: !(selectedDois?.length || resultsWithDOIs),
+                  disabled: !(selectedDois?.length || resultCount),
                   style: { marginRight: 10 },
                 }}
                 tooltipProps={{
-                  title: `Share list of ${
-                    selectedDois?.length || resultsWithDOIs
-                  } selected datasets`,
+                  title: `Share list of ${selectedDois?.length || resultCount} selected datasets`,
                   placement: 'bottom',
                 }}
                 badgeProps={{
-                  color: selectedDois?.length || resultsWithDOIs ? 'primary' : 'default',
-                  badgeContent: selectedDois?.length || resultsWithDOIs || 0,
+                  color: selectedDois?.length || resultCount ? 'primary' : 'default',
+                  badgeContent: selectedDois?.length || resultCount || 0,
                   anchorOrigin: { vertical: 'top', horizontal: 'right' },
                   invisible: false,
                 }}
