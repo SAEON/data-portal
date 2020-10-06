@@ -10,6 +10,8 @@ import {
   IconButton,
   Badge,
   Grid,
+  CircularProgress,
+  Fade,
 } from '@material-ui/core'
 import {
   NavigateNext as NavigateNextIcon,
@@ -22,7 +24,8 @@ import {
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
-import ShareOrEmbed from '../../modules/layout/header/share-or-embed'
+import ShareOrEmbed from '../share-or-embed'
+import WithPersistSearch from '../../hooks/_persist-search'
 
 const pageSizes = [
   10,
@@ -91,27 +94,57 @@ export default ({
             {/* TOOLS */}
             <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
               {/* PREVIEW ALL DATASETS */}
-              {/* <Tooltip title={`Explore all ${resultsWithDOIs} (mappable) results`}>
-                <span>
-                  <IconButton
-                    style={{ marginRight: 10 }}
-                    disabled={!resultsWithDOIs}
-                    onClick={() => {
-                      setGlobal({ layersearch: true })
-                      history.push('/atlas')
+              <Tooltip title={`Configure atlas from ${resultsWithDOIs} datasets`}>
+                <span style={{ display: 'flex', alignContent: 'center' }}>
+                  <WithPersistSearch>
+                    {([persistSearchState, { loading, error, data }]) => {
+                      const history = useHistory()
+
+                      if (error) {
+                        throw new Error('Error persiting search state', error)
+                      }
+
+                      if (data) {
+                        const searchId = data.browserClient.persistSearchState
+                        history.push({
+                          pathname: 'atlas',
+                          search: `?search=${searchId}`,
+                        })
+                      }
+
+                      if (loading || data) {
+                        return (
+                          <Fade in={loading || data}>
+                            <CircularProgress thickness={2} size={16} style={{ marginRight: 8 }} />
+                          </Fade>
+                        )
+                      }
+
+                      return (
+                        <Fade in={!loading && !error}>
+                          <IconButton
+                            disabled={!(layers?.length || resultsWithDOIs)}
+                            onClick={() => {
+                              persistSearchState({
+                                variables: { state: layers.length ? { dois: layers } : global },
+                              })
+                            }}
+                          >
+                            <Badge
+                              color={layers?.length || resultsWithDOIs ? 'primary' : 'default'}
+                              badgeContent={layers?.length || resultsWithDOIs || 0}
+                              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                              invisible={false}
+                            >
+                              <MapIcon />
+                            </Badge>
+                          </IconButton>
+                        </Fade>
+                      )
                     }}
-                  >
-                    <Badge
-                      color={resultsWithDOIs ? 'primary' : 'default'}
-                      badgeContent={resultsWithDOIs}
-                      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                      invisible={false}
-                    >
-                      <MapIcon />
-                    </Badge>
-                  </IconButton>
+                  </WithPersistSearch>
                 </span>
-              </Tooltip> */}
+              </Tooltip>
 
               {/* SHOW SELECTED DATASETS AS LIST */}
               <ShareOrEmbed
@@ -123,7 +156,7 @@ export default ({
                   style: { marginRight: 10 },
                 }}
                 tooltipProps={{
-                  title: `Show ${layers?.length || resultsWithDOIs} selected datasets`,
+                  title: `Share list of ${layers?.length || resultsWithDOIs} selected datasets`,
                   placement: 'bottom',
                 }}
                 badgeProps={{

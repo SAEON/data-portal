@@ -5,7 +5,7 @@ import { GitHub as GitHubIcon } from '@material-ui/icons'
 import packageJson from '../../../../package.json'
 import { SOURCE_CODE_URI, DEPLOYMENT_ENV, HEADLESS_PAGES } from '../../../config'
 import FeedbackDialogue from './_feedback-dialogue'
-import ShareOrEmbedMenu from './share-or-embed'
+import { ShareOrEmbed } from '../../../components'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -52,7 +52,7 @@ export default withRouter(({ children }) => {
                       <GitHubIcon color="inherit" />
                     </IconButton>
                   </Tooltip>
-                  <ShareOrEmbedMenu shareType="fullpage" />
+                  <ShareOrEmbed shareType="fullpage" />
                   <FeedbackDialogue />
                 </Grid>
               </Grid>

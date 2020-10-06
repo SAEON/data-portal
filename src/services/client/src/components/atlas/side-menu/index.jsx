@@ -29,7 +29,6 @@ export default ({ snapMenusContainer }) => {
       open={true}
       opacity={1}
       title={'Data Explorer'}
-      style={{ borderTop: '1px solid rgba(0, 0, 0, 0.12)' }}
     >
       {({ width, height }) => {
         return (

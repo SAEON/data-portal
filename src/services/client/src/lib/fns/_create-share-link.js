@@ -1,4 +1,4 @@
-import { CLIENT_HOST_ADDRESS } from '../../../../config'
+import { CLIENT_HOST_ADDRESS } from '../../config'
 
 export default ({ searchId, shareType }) => {
   const currentPath = window.location.pathname

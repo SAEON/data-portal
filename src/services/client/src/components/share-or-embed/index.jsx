@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import { MessageDialogue } from '../../../../components'
+import { MessageDialogue } from '..'
 import { Tabs, Tab } from '@material-ui/core'
 import { Share as ShareIcon } from '@material-ui/icons'
 import DialogueContents from './_dialogue-contents'
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
 
 export default ({ icon, iconProps, tooltipProps, badgeProps, state, shareType }) => {
   const [tabIndex, setTabIndex] = useState(0)
@@ -32,8 +25,8 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, state, shareType })
       badgeProps={badgeProps}
     >
       <Tabs value={tabIndex} onChange={(e, i) => setTabIndex(i)}>
-        <Tab label="Share" {...a11yProps(0)} />
-        <Tab label="Embed" {...a11yProps(1)} />
+        <Tab label="Share" />
+        <Tab label="Embed" />
       </Tabs>
       <DialogueContents shareType={shareType} tabIndex={tabIndex} state={state} />
     </MessageDialogue>
