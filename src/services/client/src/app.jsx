@@ -12,7 +12,6 @@ import theme from './theme'
 import { debounce } from './lib/fns'
 import packageJson from '../package.json'
 import { useSnackbar } from 'notistack'
-// import { ConsoleView } from 'react-device-detect'
 
 /*this should probably be an imported function. target has circular references that cause errors when storing target.
 This function is to remove circular references. 

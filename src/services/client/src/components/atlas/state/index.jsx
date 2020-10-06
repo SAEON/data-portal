@@ -10,10 +10,10 @@ export const AtlasContext = createContext()
 
 const wkt = new WKT()
 
-export default ({ children, gqlData }) => {
+export default ({ children, data }) => {
   const layers = useMemo(
     () =>
-      gqlData.data.catalogue.records.nodes
+      data.catalogue.records.nodes
         .map(({ target }) => {
           const { _source } = target
           const {
@@ -66,8 +66,8 @@ export default ({ children, gqlData }) => {
         })
         .filter(_ => _)
         .flat(),
-    [gqlData]
+    [data]
   )
 
-  return <AtlasContext.Provider value={{ layers, gqlData }}>{children}</AtlasContext.Provider>
+  return <AtlasContext.Provider value={{ layers, data }}>{children}</AtlasContext.Provider>
 }

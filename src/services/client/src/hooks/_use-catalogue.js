@@ -3,6 +3,7 @@ import { useQuery, gql } from '@apollo/client'
 import { GlobalContext } from '../modules/provider-global'
 
 export default ({
+  children = undefined,
   pageSize = 20,
   startCursor = undefined,
   endCursor = undefined,
@@ -14,7 +15,7 @@ export default ({
   const { global } = useContext(GlobalContext)
   const { extent, terms: _terms, text } = global
 
-  return useQuery(
+  const result = useQuery(
     gql`
       query(
         $extent: WKT_4326
@@ -83,4 +84,6 @@ export default ({
       },
     }
   )
+
+  return children ? children(result) : result
 }

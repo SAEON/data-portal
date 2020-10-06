@@ -1,18 +1,26 @@
 import React, { createContext, Component } from 'react'
+import { MessageDialogue } from '../../components'
 
 export const ExceptionContext = createContext()
 
 export default class extends Component {
-  componentDidCatch(error, info) {
-    console.log(
-      'TODO - Please implement this more effectively if you see this in the console',
-      error,
-      info
-    )
+  constructor(props) {
+    super(props)
+    this.state = { error: undefined }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error: error.message }
   }
 
   render() {
-    const { children } = this.props
-    return <>{children}</>
+    const { props, state } = this
+    const { children } = props
+    const { error } = state
+    return error ? (
+      <MessageDialogue permanent hideIcon defaultOpen title="Application Error" text={error} />
+    ) : (
+      <>{children}</>
+    )
   }
 }

@@ -22,8 +22,11 @@ export default ({
   icon = undefined,
   onOpenEffect = undefined,
   badgeProps = undefined,
+  hideIcon = false,
+  defaultOpen = false,
+  permanent = false,
 }) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
 
   useEffect(() => {
     if (open && onOpenEffect) {
@@ -33,26 +36,36 @@ export default ({
 
   return (
     <span onClick={e => e.stopPropagation()}>
-      <Tooltip placement="right-end" {...tooltipProps}>
-        <span>
-          <IconButton
-            onClick={e => {
-              e.stopPropagation()
-              setOpen(!open)
-            }}
-            {...iconProps}
-          >
-            {badgeProps ? (
-              <Badge {...badgeProps}>
-                {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
-              </Badge>
-            ) : (
-              icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
-            )}
-          </IconButton>
-        </span>
-      </Tooltip>
-      <Dialog {...dialogueProps} open={open} onClose={() => setOpen(false)} PaperProps={paperProps}>
+      {hideIcon ? undefined : (
+        <Tooltip placement="right-end" {...tooltipProps}>
+          <span>
+            <IconButton
+              onClick={e => {
+                e.stopPropagation()
+                setOpen(!open)
+              }}
+              {...iconProps}
+            >
+              {badgeProps ? (
+                <Badge {...badgeProps}>
+                  {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
+                </Badge>
+              ) : (
+                icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
+              )}
+            </IconButton>
+          </span>
+        </Tooltip>
+      )}
+
+      <Dialog
+        disableBackdropClick={permanent}
+        disableEscapeKeyDown={permanent}
+        {...dialogueProps}
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={paperProps}
+      >
         {title ? (
           <DialogTitle>
             {typeof title === 'function' ? title(() => setOpen(false)) : title}
