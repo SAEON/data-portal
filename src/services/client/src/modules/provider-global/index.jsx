@@ -9,8 +9,13 @@ export const GlobalContext = createContext()
 const GlobaProvider = ({ children, ...props }) => {
   return (
     <QuickForm
-      layersearch={undefined}
-      layers={props?.layers || []}
+      /**
+       * /records state
+       */
+      selectedDois={props?.selectedDois || []}
+      /**
+       * Global search state
+       */
       text={props?.text || undefined}
       extent={props?.extent || undefined}
       terms={props?.terms || []}

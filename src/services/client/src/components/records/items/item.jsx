@@ -39,9 +39,9 @@ export default ({
   const [codeView, setCodeView] = useState(false)
   const classes = useStyles()
   const { global, setGlobal } = useContext(GlobalContext)
-  const { layers } = global
+  const { selectedDois } = global
 
-  const mapLayers = DOI
+  const recordDois = DOI
     ? [
         ...new Set(
           linkedResources
@@ -118,7 +118,7 @@ export default ({
                 onClick={e => {
                   e.stopPropagation()
                   setGlobal({
-                    layers: mapLayers,
+                    selectedDois: recordDois,
                   })
                   history.push('/atlas')
                 }}
@@ -167,12 +167,12 @@ export default ({
               style={{ marginRight: 4 }}
               size="small"
               color="primary"
-              checked={layers.includes(DOI)}
+              checked={selectedDois.includes(DOI)}
               onChange={(e, checked) => {
                 if (checked) {
-                  setGlobal({ layers: [...layers, DOI] })
+                  setGlobal({ selectedDois: [...selectedDois, DOI] })
                 } else {
-                  setGlobal({ layers: layers.filter(layer => layer !== DOI) })
+                  setGlobal({ selectedDois: selectedDois.filter(doi => doi !== DOI) })
                 }
               }}
             />

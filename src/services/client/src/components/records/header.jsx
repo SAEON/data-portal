@@ -51,7 +51,7 @@ export default ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const { global, setGlobal } = useContext(GlobalContext)
-  const { layers } = global // layers is an array of dois
+  const { selectedDois } = global
 
   const resultsWithDOIs =
     catalogue?.summary
@@ -90,9 +90,9 @@ export default ({
               <Tooltip title={`Unselect all datasets`}>
                 <span style={{ display: 'flex', alignContent: 'center' }}>
                   <IconButton
-                    disabled={!layers?.length}
+                    disabled={!selectedDois?.length}
                     onClick={() => {
-                      setGlobal({ layers: [] })
+                      setGlobal({ selectedDois: [] })
                     }}
                   >
                     <RefreshIcon />
@@ -130,16 +130,20 @@ export default ({
                       return (
                         <Fade in={!loading && !error}>
                           <IconButton
-                            disabled={!(layers?.length || resultsWithDOIs)}
+                            disabled={!(selectedDois?.length || resultsWithDOIs)}
                             onClick={() => {
                               persistSearchState({
-                                variables: { state: layers.length ? { dois: layers } : global },
+                                variables: {
+                                  state: selectedDois.length ? { dois: selectedDois } : global,
+                                },
                               })
                             }}
                           >
                             <Badge
-                              color={layers?.length || resultsWithDOIs ? 'primary' : 'default'}
-                              badgeContent={layers?.length || resultsWithDOIs || 0}
+                              color={
+                                selectedDois?.length || resultsWithDOIs ? 'primary' : 'default'
+                              }
+                              badgeContent={selectedDois?.length || resultsWithDOIs || 0}
                               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                               invisible={false}
                             >
@@ -155,20 +159,22 @@ export default ({
 
               {/* SHOW SELECTED DATASETS AS LIST */}
               <ShareOrEmbed
-                state={layers.length ? { dois: layers } : global}
+                state={selectedDois.length ? { dois: selectedDois } : global}
                 icon={<ListIcon />}
                 iconProps={{
                   color: 'default',
-                  disabled: !(layers?.length || resultsWithDOIs),
+                  disabled: !(selectedDois?.length || resultsWithDOIs),
                   style: { marginRight: 10 },
                 }}
                 tooltipProps={{
-                  title: `Share list of ${layers?.length || resultsWithDOIs} selected datasets`,
+                  title: `Share list of ${
+                    selectedDois?.length || resultsWithDOIs
+                  } selected datasets`,
                   placement: 'bottom',
                 }}
                 badgeProps={{
-                  color: layers?.length || resultsWithDOIs ? 'primary' : 'default',
-                  badgeContent: layers?.length || resultsWithDOIs || 0,
+                  color: selectedDois?.length || resultsWithDOIs ? 'primary' : 'default',
+                  badgeContent: selectedDois?.length || resultsWithDOIs || 0,
                   anchorOrigin: { vertical: 'top', horizontal: 'right' },
                   invisible: false,
                 }}
