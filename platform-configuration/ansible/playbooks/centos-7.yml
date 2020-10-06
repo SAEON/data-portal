@@ -27,7 +27,7 @@
 
     - name: Cleanup docker files regularly
       cron:
-        name: Prone docker system
+        name: Prune docker system
         minute: "0"
         hour: "0"
         day: "*"
