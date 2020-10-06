@@ -60,17 +60,11 @@ export default forwardRef(
       opacity = 0.8,
       style = {},
       disableMinify = false,
-      marginTop,
-      marginRight,
-      marginBottom,
-      marginLeft,
     },
     ref
   ) => {
-    const GHOST_GUTTER_X =
-      ((marginRight || PORTAL_MARGIN_RIGHT) + (marginLeft || PORTAL_MARGIN_LEFT)) / 4
-    const GHOST_GUTTER_Y =
-      ((marginTop || PORTAL_MARGIN_TOP) + (marginBottom || PORTAL_MARGIN_BOTTOM)) / 4
+    const GHOST_GUTTER_X = (PORTAL_MARGIN_RIGHT + PORTAL_MARGIN_LEFT) / 4
+    const GHOST_GUTTER_Y = (PORTAL_MARGIN_TOP + PORTAL_MARGIN_BOTTOM) / 4
     const classes = useStyles({ PORTAL, MENU_HEADER_HEIGHT, GHOST_GUTTER_X, GHOST_GUTTER_Y })
 
     /**
