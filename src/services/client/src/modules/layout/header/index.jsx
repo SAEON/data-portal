@@ -19,12 +19,7 @@ export default withRouter(({ children }) => {
     <>
       {HEADLESS_PAGES.includes(currentRoute) ? null : (
         <>
-          <AppBar
-            className={clsx(classes.appBar)}
-            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
-            variant="outlined"
-            position="fixed"
-          >
+          <AppBar className={clsx(classes.appBar)} variant="outlined" position="fixed">
             <Toolbar disableGutters={true} variant="dense">
               <Grid container>
                 <Grid item xs={12} sm={4}></Grid>

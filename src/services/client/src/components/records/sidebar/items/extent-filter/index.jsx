@@ -28,7 +28,7 @@ export default ({ title }) => {
         position="relative"
         variant="outlined"
         className={clsx(classes.appbar)}
-        style={{ zIndex: 800, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{ zIndex: 800 }}
       >
         <Toolbar className={clsx(classes.toolbar)} variant="regular">
           <Typography variant="overline" noWrap>

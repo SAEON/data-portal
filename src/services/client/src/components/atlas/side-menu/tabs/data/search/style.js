@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(() => ({
+export default makeStyles(theme => ({
   sortList: {
-    borderTop: '1px solid rgba(0, 0, 0, 0.12)',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
+    borderBottom: `1px solid ${theme.palette.grey[200]}`,
+    marginTop: 16,
     paddingTop: 16,
     paddingBottom: 16,
   },
@@ -12,11 +13,10 @@ export default makeStyles(() => ({
     width: '100%',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      backgroundColor: theme.palette.grey[100],
     },
   },
   isSelected: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    // border: '1px solid rgba(0, 0, 0, 0.2)',
+    backgroundColor: theme.palette.grey[100],
   },
 }))

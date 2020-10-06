@@ -1,5 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
+const defaultTheme = createMuiTheme()
+
 export default createMuiTheme({
   customSizes: {
     thickToolbar: {
@@ -23,10 +25,11 @@ export default createMuiTheme({
     },
     MuiPaper: {
       rounded: {
-        borderRadius: 0,
+        borderRadius: 2,
       },
       outlined: {
         border: 'none',
+        borderBottom: `1px solid ${defaultTheme.palette.grey[200]}`,
       },
     },
     MuiButton: {

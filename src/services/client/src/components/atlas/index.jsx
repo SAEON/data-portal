@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useRef, useContext } from 'react'
 import { Loading } from '../../components'
 import SideMenu from './side-menu'
 import { GlobalContext } from '../../modules/provider-global'
-import useCatalogue from '../../lib/useCatalogue'
+import { useCatalogue } from '../../hooks'
 import { Typography } from '@material-ui/core'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))

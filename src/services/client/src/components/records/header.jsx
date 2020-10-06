@@ -60,15 +60,7 @@ export default ({
 
   return (
     <>
-      <AppBar
-        color="inherit"
-        position="sticky"
-        style={{
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          borderTop: '1px solid rgba(0, 0, 0, 0.12)',
-        }}
-        variant="outlined"
-      >
+      <AppBar color="inherit" position="sticky" variant="outlined">
         <Toolbar disableGutters variant="dense" style={{ display: 'flex' }}>
           <Grid container>
             <Grid item xs={1} sm={4}>

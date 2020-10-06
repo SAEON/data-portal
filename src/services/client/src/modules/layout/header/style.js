@@ -6,6 +6,7 @@ export default makeStyles(theme => ({
   appBar: {
     backgroundColor: theme.palette.primary.main,
     width: '100%',
+    border: 'none',
   },
   drawer: {
     width: drawerWidth,
@@ -20,10 +21,10 @@ export default makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    minHeight: 49,
+    minHeight: 48,
   },
   content: {
-    height: `calc(100% - ${49}px)`,
+    height: `calc(100% - ${48}px)`,
     position: 'relative',
   },
 }))

@@ -30,6 +30,7 @@ const ITEM_X_PADDING_RIGHT = 8
 
 const SEARCH_BOX_HEIGHT = 71
 const ADD_DATASET_BUTTON_HEIGHT = 26
+const SEARCH_BOX_MARGIN = 52
 
 var cachedSearch
 
@@ -96,7 +97,7 @@ export default () => {
       <Box
         className={clsx(classes.sortList)}
         style={{
-          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${ADD_DATASET_BUTTON_HEIGHT}px - 40px)`,
+          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${ADD_DATASET_BUTTON_HEIGHT}px - ${SEARCH_BOX_MARGIN}px)`,
         }}
         m={1}
       >

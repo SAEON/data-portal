@@ -63,7 +63,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
         className={clsx(classes.appbar)}
         position="relative"
         variant="outlined"
-        style={{ zIndex: 800, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+        style={{ zIndex: 800 }}
       >
         <Toolbar className={clsx(classes.toolbar)} variant="regular">
           <Typography variant="overline" noWrap>

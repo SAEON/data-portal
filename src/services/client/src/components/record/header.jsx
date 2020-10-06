@@ -29,12 +29,7 @@ export default ({ record, toggleCodeView, codeView }) => {
     : undefined
 
   return (
-    <AppBar
-      color="inherit"
-      position="sticky"
-      style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
-      variant="outlined"
-    >
+    <AppBar color="inherit" position="sticky" variant="outlined">
       <Toolbar variant="dense">
         <Grid container spacing={2} justify="flex-end">
           {/* PAGE TITLE */}

@@ -6,7 +6,7 @@ import { GlobalContext } from '../../modules/provider-global'
 import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import { Footer, Loading } from '../../components'
-import useCatalogue from '../../lib/useCatalogue'
+import { useCatalogue } from '../../hooks'
 
 const DEFAULT_CURSORS = {
   start: undefined,
