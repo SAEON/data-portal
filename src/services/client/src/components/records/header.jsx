@@ -18,7 +18,7 @@ import {
   NavigateBefore as NavigateBeforeIcon,
   ArrowDropDown as ArrowDropDownIcon,
   FilterList as FilterIcon,
-  Map as MapIcon,
+  Explore as MapIcon,
   List as ListIcon,
   Refresh as RefreshIcon,
 } from '@material-ui/icons'
@@ -37,6 +37,46 @@ const pageSizes = [
   200,
   // 'ALL'
 ]
+
+const doiMapCache = {}
+
+const doiHasMap = (doi, records) => {
+  if (doiMapCache.hasOwnProperty(doi)) {
+    return doiMapCache[doi]
+  } else {
+    for (let node of records.nodes) {
+      var { target } = node
+      var { _source } = target
+      var { identifier, linkedResources } = _source
+
+      const DOI =
+        identifier.identifierType.toUpperCase() === 'DOI' ? identifier.identifier : undefined
+
+      if (!DOI) return false
+
+      doiMapCache[DOI] = Boolean(
+        linkedResources?.find(
+          ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
+        )
+      )
+
+      if (doi === DOI) {
+        return doiMapCache[doi]
+      }
+    }
+  }
+}
+
+const isAtlasAvailable = (selectedDois, atlasLayersCount, records) =>
+  records && atlasLayersCount
+    ? selectedDois?.length
+      ? selectedDois.filter(doi => doiHasMap(doi, records)).length
+        ? true
+        : false
+      : atlasLayersCount < MAX_ATLAS_DATASETS
+      ? true
+      : false
+    : false
 
 export default ({
   catalogue,
@@ -106,13 +146,15 @@ export default ({
               {/* PREVIEW ALL DATASETS */}
               <Tooltip
                 title={
-                  selectedDois?.length
-                    ? selectedDois.length < MAX_ATLAS_DATASETS
-                      ? `Configure atlas from ${selectedDois.length} datasets`
-                      : `${selectedDois.length} maps exceeds maximum atlas dataset limit of ${MAX_ATLAS_DATASETS} layers`
-                    : atlasLayersCount < MAX_ATLAS_DATASETS
-                    ? `Configure atlas from ${atlasLayersCount} search results`
-                    : `${atlasLayersCount} maps exceeds maximum atlas dataset limit of ${MAX_ATLAS_DATASETS} layers`
+                  isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+                    ? `Configure atlas from ${
+                        selectedDois?.filter(doi => doiMapCache[doi]).length || atlasLayersCount
+                      } maps`
+                    : selectedDois.length
+                    ? 'No atlas preview available'
+                    : atlasLayersCount
+                    ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${MAX_ATLAS_DATASETS}`
+                    : 'Search context: no datasets with maps found'
                 }
               >
                 <span style={{ display: 'flex', alignContent: 'center' }}>
@@ -144,10 +186,7 @@ export default ({
                         <Fade in={!loading && !error}>
                           <IconButton
                             disabled={
-                              !(
-                                selectedDois?.length ||
-                                (atlasLayersCount > 0 && atlasLayersCount <= MAX_ATLAS_DATASETS)
-                              )
+                              !isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
                             }
                             onClick={() => {
                               persistSearchState({
@@ -159,12 +198,17 @@ export default ({
                           >
                             <Badge
                               color={
-                                selectedDois?.length ||
-                                (atlasLayersCount > 0 && atlasLayersCount <= MAX_ATLAS_DATASETS)
+                                isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
                                   ? 'primary'
                                   : 'default'
                               }
-                              badgeContent={selectedDois?.length || atlasLayersCount || 0}
+                              badgeContent={
+                                isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+                                  ? selectedDois?.filter(doi => doiMapCache[doi]).length ||
+                                    atlasLayersCount ||
+                                    0
+                                  : 0
+                              }
                               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                               invisible={false}
                             >

@@ -14,7 +14,7 @@ import {
   CircularProgress,
 } from '@material-ui/core'
 import {
-  BarChart as ViewIcon,
+  Explore as ViewIcon,
   Code as CodeIcon,
   FormatQuote as CitationIcon,
 } from '@material-ui/icons'
@@ -110,7 +110,7 @@ export default ({
 
           {/* PREVIEW */}
           <Tooltip
-            title={geoResourceDois.length ? 'Preview dataset' : 'Preview not available'}
+            title={geoResourceDois.length ? 'Explore dataset' : 'Preview not available'}
             placement="left-start"
           >
             <span>
