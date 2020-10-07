@@ -54,10 +54,11 @@ export default ({
   const { selectedDois } = global
   const resultCount = catalogue?.records.totalCount
 
-  const atlasLayersCount = catalogue?.summary
-    .find(summary => summary['linkedResources.linkedResourceType.raw'])
-    ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
-    .doc_count
+  const atlasLayersCount =
+    catalogue?.summary
+      .find(summary => summary['linkedResources.linkedResourceType.raw'])
+      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
+      ?.doc_count || 0
 
   return (
     <>
