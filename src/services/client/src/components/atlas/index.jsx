@@ -4,14 +4,12 @@ import SideMenu from './side-menu'
 import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
-import { CLIENT_HOST_ADDRESS } from '../../config'
+import { CLIENT_HOST_ADDRESS, MAX_ATLAS_DATASETS } from '../../config'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))
 const MapProvider = lazy(() => import('../../modules/provider-map'))
 const StateProvider = lazy(() => import('./state'))
 const Map = lazy(() => import('./map'))
-
-const MAX_DATASETS = 2000
 
 export default () => {
   const snapMenusContainer = useRef()
@@ -46,16 +44,16 @@ export default () => {
               { ...(data?.browserClient.findSearchState || {}) },
               { dois: [...(data?.browserClient.findSearchState.selectedDois || [])] }
             )}
-            pageSize={MAX_DATASETS}
+            pageSize={MAX_ATLAS_DATASETS}
           >
             {({ error, loading, data }) => {
               if (error) {
                 throw new Error('Error searching catalogue')
               }
 
-              if (data?.catalogue.records.totalCount > MAX_DATASETS) {
+              if (data?.catalogue.records.totalCount > MAX_ATLAS_DATASETS) {
                 throw new Error(
-                  `Atlas supports a maximum of ${MAX_DATASETS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
+                  `Atlas supports a maximum of ${MAX_ATLAS_DATASETS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
                 )
               }
 

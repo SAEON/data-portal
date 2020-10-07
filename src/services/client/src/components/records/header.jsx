@@ -27,6 +27,7 @@ import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../modules/provider-global'
 import ShareOrEmbed from '../share-or-embed'
 import { usePersistSearch as WithPersistSearch } from '../../hooks'
+import { MAX_ATLAS_DATASETS } from '../../config'
 
 const pageSizes = [
   10,
@@ -103,7 +104,17 @@ export default ({
               </Tooltip>
 
               {/* PREVIEW ALL DATASETS */}
-              <Tooltip title={`Configure atlas from ${atlasLayersCount} datasets`}>
+              <Tooltip
+                title={
+                  selectedDois?.length
+                    ? selectedDois.length < MAX_ATLAS_DATASETS
+                      ? `Configure atlas from ${selectedDois.length} datasets`
+                      : `${selectedDois.length} maps exceeds maximum atlas dataset limit of ${MAX_ATLAS_DATASETS} layers`
+                    : atlasLayersCount < MAX_ATLAS_DATASETS
+                    ? `Configure atlas from ${atlasLayersCount} search results`
+                    : `${atlasLayersCount} maps exceeds maximum atlas dataset limit of ${MAX_ATLAS_DATASETS} layers`
+                }
+              >
                 <span style={{ display: 'flex', alignContent: 'center' }}>
                   <WithPersistSearch>
                     {([persistSearchState, { loading, error, data }]) => {
@@ -132,7 +143,12 @@ export default ({
                       return (
                         <Fade in={!loading && !error}>
                           <IconButton
-                            disabled={!(selectedDois?.length || resultCount)}
+                            disabled={
+                              !(
+                                selectedDois?.length ||
+                                (atlasLayersCount > 0 && atlasLayersCount <= MAX_ATLAS_DATASETS)
+                              )
+                            }
                             onClick={() => {
                               persistSearchState({
                                 variables: {
@@ -142,8 +158,13 @@ export default ({
                             }}
                           >
                             <Badge
-                              color={selectedDois?.length || resultCount ? 'primary' : 'default'}
-                              badgeContent={selectedDois?.length || resultCount || 0}
+                              color={
+                                selectedDois?.length ||
+                                (atlasLayersCount > 0 && atlasLayersCount <= MAX_ATLAS_DATASETS)
+                                  ? 'primary'
+                                  : 'default'
+                              }
+                              badgeContent={selectedDois?.length || atlasLayersCount || 0}
                               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                               invisible={false}
                             >
