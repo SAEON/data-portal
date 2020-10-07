@@ -46,7 +46,7 @@ services:
   mongo:
     container_name: mongo
     restart: always
-    image: mongo:latest
+    image: mongo:4.4.1
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PSWD}

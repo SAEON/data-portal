@@ -7,8 +7,22 @@
       prompt: Which deployment environment is this for? [next, stable]
       default: "next"
       private: no
+
+    - name: mongo_username
+      prompt: Provide a MongoDB username
+      default: ""
+      private: no
+
+    - name: mongo_password
+      prompt: Provide a MongoDB password
+      default: ""
+      private: yes      
       
   tasks:
+    - name: Create required directories
+      shell: |
+        mkdir /opt/dbak
+
     - name: Install latest Git
       shell: |
         yum -y remove git*
@@ -33,7 +47,27 @@
         day: "*"
         month: "*"
         weekday: "0"
-        job: "docker system prune -f >> /opt/docker-system-clean.log 2>&1"
+        job: "docker system prune -f > /opt/docker-system-clean.log 2>&1"
+
+    - name: Backup catalogue database (MongoDB)
+      cron:
+        name: Backup catalogue database (MongoDB)
+        minute: "0"
+        hour: "0"
+        day: "*"
+        month: "*"
+        weekday: "*"
+        job: "docker exec mongo sh -c 'exec mongodump --username {{ mongo_username }} --password {{ mongo_password }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1"
+    
+    - name: Prune MongoDB backups
+      cron:
+        name: Prune MongoDB backups
+        minute: "0"
+        hour: "0"
+        day: "*"
+        month: "*"
+        weekday: "0"
+        job: "find /opt/dbak/ -mtime + 10 -type -f -delete"
 
     - name: Install Docker Compose
       shell: |

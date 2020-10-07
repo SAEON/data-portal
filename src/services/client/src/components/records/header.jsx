@@ -149,7 +149,7 @@ export default ({
                   isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
                     ? `Configure atlas from ${
                         selectedDois?.filter(doi => doiMapCache[doi]).length || atlasLayersCount
-                      } maps`
+                      } mappable search results`
                     : selectedDois.length
                     ? 'No atlas preview available'
                     : atlasLayersCount
