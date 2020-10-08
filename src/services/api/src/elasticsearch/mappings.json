@@ -53,12 +53,30 @@
       }
     },
     {
-      "publicationYear_temp": {
+      "publicationYear": {
         "mapping": {
           "type": "long"
         },
         "match_mapping_type": "string",
         "match": "publicationYear"
+      }
+    },
+    {
+      "DOIS": {
+        "mapping": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            },
+            "raw_lowercase": {
+              "type": "keyword",
+              "normalizer": "doi_keyword"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "identifier"
       }
     },
     {
@@ -74,7 +92,7 @@
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear"
+        "unmatch": "publicationYear|identifier"
       }
     }
   ]

@@ -1,6 +1,13 @@
 {
   "index": {
     "analysis": {
+      "normalizer": {
+        "doi_keyword": {
+          "type": "custom",
+          "char_filter": [],
+          "filter": ["lowercase", "asciifolding"]
+        }
+      },
       "filter": {
         "vocabulary_mapping": {
           "type": "synonym",
