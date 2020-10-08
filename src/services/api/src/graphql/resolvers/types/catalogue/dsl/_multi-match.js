@@ -1,11 +1,15 @@
+/**
+ * Fuzziness
+ * https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#fuzziness
+ */
 const fields = {
-  'titles.title': 3,
-  'descriptions.description': 2,
-  'creators.name': 2,
-  subtitle: 1,
-  'contributors.name': 2,
-  'subjects.subject': 1,
-  'identifier.identifier.raw_lowercase': 10,
+  'titles.title': { boost: 3, fuzziness: 'AUTO' },
+  'descriptions.description': { boost: 2, fuzziness: 'AUTO' },
+  'creators.name': { boost: 2, fuzziness: 'AUTO' },
+  subtitle: { boost: 1, fuzziness: 'AUTO' },
+  'contributors.name': { boost: 2, fuzziness: 'AUTO' },
+  'subjects.subject': { boost: 2, fuzziness: 'AUTO' },
+  'identifier.identifier.raw_lowercase': { boost: 10, fuzziness: 0 },
 }
 
 /**
@@ -20,7 +24,8 @@ export default txt => ({
         match: {
           'titles.title': {
             query: txt,
-            boost: fields['titles.title'],
+            boost: fields['titles.title'].boost,
+            fuzziness: fields['titles.title'].fuzziness,
           },
         },
       },
@@ -28,7 +33,8 @@ export default txt => ({
         match: {
           'descriptions.description': {
             query: txt,
-            boost: fields['descriptions.description'],
+            boost: fields['descriptions.description'].boost,
+            fuzziness: fields['descriptions.description'].fuzziness,
           },
         },
       },
@@ -36,7 +42,8 @@ export default txt => ({
         match: {
           'creators.name': {
             query: txt,
-            boost: fields['creators.name'],
+            boost: fields['creators.name'].boost,
+            fuzziness: fields['creators.name'].fuzziness,
           },
         },
       },
@@ -44,7 +51,8 @@ export default txt => ({
         match: {
           subtitle: {
             query: txt,
-            boost: fields.subtitle,
+            boost: fields.subtitle.boost,
+            fuzziness: fields.subtitle.fuzziness,
           },
         },
       },
@@ -52,7 +60,8 @@ export default txt => ({
         match: {
           'contributors.name': {
             query: txt,
-            boost: fields['contributors.name'],
+            boost: fields['contributors.name'].boost,
+            fuzziness: fields['contributors.name'].fuzziness,
           },
         },
       },
@@ -60,7 +69,8 @@ export default txt => ({
         match: {
           'subjects.subject': {
             query: txt,
-            boost: fields['subjects.subject'],
+            boost: fields['subjects.subject'].boost,
+            fuzziness: fields['subjects.subject'].fuzziness,
           },
         },
       },
@@ -68,7 +78,8 @@ export default txt => ({
         match: {
           'identifier.identifier.raw_lowercase': {
             query: txt,
-            boost: fields['identifier.identifier.raw_lowercase'],
+            boost: fields['identifier.identifier.raw_lowercase'].boost,
+            fuzziness: fields['identifier.identifier.raw_lowercase'].fuzziness,
           },
         },
       },
