@@ -2,86 +2,74 @@ import React, { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
 import { getUriState } from '../../lib/fns'
 import { Loading } from '../../components'
-import { useQuery, gql } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { WithQglQuery } from '../../hooks'
 
 export const GlobalContext = createContext()
 
-const GlobaProvider = ({ children, ...props }) => {
+export default ({ children }) => {
+  const { search, text = undefined, originId = undefined } = getUriState()
+
   return (
-    <QuickForm
-      /**
-       * /records state
-       */
-      selectedDois={props?.selectedDois || []}
-      /**
-       * Global search state
-       */
-      text={props?.text || undefined}
-      extent={props?.extent || undefined}
-      terms={props?.terms || []}
-      ids={props?.ids || []}
-      dois={props?.dois || []}
-    >
-      {(setGlobal, global) => (
-        <GlobalContext.Provider
-          value={{
-            global,
-            setGlobal: (obj, clearHistory = false, cb) => {
-              setGlobal(
-                Object.assign(
-                  clearHistory
-                    ? {
-                        layers: [],
-                        text: undefined,
-                        extent: undefined,
-                        terms: [],
-                      }
-                    : {},
-                  obj
-                )
-              )
-              if (cb) cb()
-            },
-          }}
-        >
-          {children}
-        </GlobalContext.Provider>
-      )}
-    </QuickForm>
-  )
-}
-
-export default props => {
-  const { search, text = undefined } = getUriState()
-  let gqlResponse = {}
-
-  if (search) {
-    gqlResponse = useQuery(
-      gql`
+    <WithQglQuery
+      QUERY={gql`
         query($id: ID!) {
           browserClient {
             findSearchState(id: $id)
           }
         }
-      `,
-      {
-        variables: {
-          id: search,
-        },
-      }
-    )
-  }
-  const { error, loading, data } = gqlResponse
-  if (error) {
-    console.warn(
-      'Error loading initial app state. This is most probably because no initial app state was specified',
-      error
-    )
-  }
+      `}
+      variables={{ id: search }}
+    >
+      {({ error, loading, data }) => {
+        if (error) {
+          // TODO - Get the error context from Apollo link
+        }
 
-  return loading ? (
-    <Loading />
-  ) : (
-    <GlobaProvider text={text} {...props} {...data?.browserClient.findSearchState} />
+        const state = data?.browserClient.findSearchState
+
+        return loading ? (
+          <Loading />
+        ) : (
+          <QuickForm
+            originId={originId || undefined}
+            text={text || undefined}
+            extent={state?.extent || undefined}
+            terms={state?.terms || []}
+            ids={state?.ids || []}
+            dois={state?.dois || []}
+            selectedDois={state?.selectedDois || []}
+          >
+            {(setGlobal, global) => {
+              return (
+                <GlobalContext.Provider
+                  value={{
+                    global,
+                    setGlobal: (obj, clearHistory = false, cb) => {
+                      setGlobal(
+                        Object.assign(
+                          clearHistory
+                            ? {
+                                layers: [],
+                                text: undefined,
+                                extent: undefined,
+                                terms: [],
+                              }
+                            : {},
+                          obj
+                        )
+                      )
+                      if (cb) cb()
+                    },
+                  }}
+                >
+                  {children}
+                </GlobalContext.Provider>
+              )
+            }}
+          </QuickForm>
+        )
+      }}
+    </WithQglQuery>
   )
 }

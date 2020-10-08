@@ -5,9 +5,9 @@
 const fields = {
   'titles.title': { boost: 3, fuzziness: 'AUTO' },
   'descriptions.description': { boost: 2, fuzziness: 'AUTO' },
-  'creators.name': { boost: 2, fuzziness: 'AUTO' },
+  'creators.name': { boost: 2, fuzziness: 2 },
   subtitle: { boost: 1, fuzziness: 'AUTO' },
-  'contributors.name': { boost: 2, fuzziness: 'AUTO' },
+  'contributors.name': { boost: 2, fuzziness: 2 },
   'subjects.subject': { boost: 2, fuzziness: 'AUTO' },
   'identifier.identifier.raw_lowercase': { boost: 10, fuzziness: 0 },
 }

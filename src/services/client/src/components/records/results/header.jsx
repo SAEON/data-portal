@@ -240,7 +240,7 @@ export default ({
                   badgeContent: selectedDois?.length || resultCount || 0,
                   anchorOrigin: { vertical: 'top', horizontal: 'right' },
                   invisible: false,
-                  Component: StyledBadge,
+                  _component: StyledBadge,
                 }}
               />
 

@@ -47,10 +47,10 @@ export default ({
               {...iconProps}
             >
               {badgeProps ? (
-                badgeProps.Component ? (
-                  <badgeProps.Component {...badgeProps}>
+                badgeProps._component ? (
+                  <badgeProps._component {...badgeProps}>
                     {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
-                  </badgeProps.Component>
+                  </badgeProps._component>
                 ) : (
                   <Badge {...badgeProps}>
                     {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}

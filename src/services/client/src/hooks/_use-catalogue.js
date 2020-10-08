@@ -13,6 +13,7 @@ export default ({
   dois = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
+  console.log('global', global)
   const { extent, terms: _terms, text } = global
 
   const result = useQuery(
