@@ -1,6 +1,4 @@
-import wkt from 'wkt'
-const { parse } = wkt
-import matchFields from './_match-fields.js'
+import { multiMatch, geoShape, termsQuery, doisQuery, idsQuery } from './dsl/index.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
@@ -14,7 +12,6 @@ export default async (_, args, ctx) => {
     terms = undefined,
     before = undefined,
     after = undefined,
-    textSort = undefined,
   } = args
 
   if (size < 1 || size > 10000) {
@@ -47,76 +44,19 @@ export default async (_, args, ctx) => {
 
   if (ids && ids.length) {
     dsl.size = ids.length
-    dsl.query.bool.must = [
-      {
-        terms: {
-          'id.raw': ids,
-        },
-      },
-    ]
+    dsl.query.bool.must = [idsQuery(ids)]
   } else if (dois && dois.length) {
     dsl.size = dois.length
-    dsl.query.bool.must = [
-      {
-        terms: {
-          'identifier.identifier.raw': dois,
-        },
-      },
-    ]
+    dsl.query.bool.must = [doisQuery(dois)]
   } else {
     if (extent) {
-      // Our metadata shapes are specified in YX, rather than XY. So this translation is needed
-      const shape = parse(extent)
-
-      dsl.query.bool.must = [
-        ...dsl.query.bool.must,
-        {
-          geo_shape: {
-            'geoLocations.geoLocationBox.geo_shape': {
-              shape,
-              relation: 'within',
-            },
-          },
-        },
-      ]
+      dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
     }
-
     if (match) {
-      dsl.query.bool.must = [
-        ...dsl.query.bool.must,
-        {
-          multi_match: {
-            query: match.toLowerCase(),
-            fields: matchFields,
-            type: 'best_fields',
-            fuzziness: 'AUTO',
-          },
-        },
-      ]
+      dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(match.toLowerCase())]
     }
-
     if (terms?.length) {
-      dsl.query.bool.must = [
-        ...dsl.query.bool.must,
-        ...terms
-          .filter(({ field, value }) =>
-            field === 'publicationYear' ? Boolean(parseInt(value), 10) : true
-          )
-          .map(({ field, value }) => ({ term: { [field]: value } })),
-      ]
-    }
-
-    if (textSort) {
-      dsl.query.bool.should = [
-        {
-          multi_match: {
-            query: textSort.toLowerCase(),
-            fields: matchFields,
-            type: 'best_fields',
-            fuzziness: 'AUTO',
-          },
-        },
-      ]
+      dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
     }
   }
 
