@@ -18,12 +18,12 @@ import {
   Code as CodeIcon,
   FormatQuote as CitationIcon,
 } from '@material-ui/icons'
-import { GlobalContext } from '../../../modules/provider-global'
-import { CitationDialog, DataDownloadButton } from '../..'
+import { GlobalContext } from '../../../../modules/provider-global'
+import { CitationDialog, DataDownloadButton } from '../../..'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
-import { usePersistSearch as WithPersistSearch } from '../../../hooks'
+import { usePersistSearch as WithPersistSearch } from '../../../../hooks'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 

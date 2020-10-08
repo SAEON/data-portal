@@ -11,20 +11,15 @@ export default ({ searchId, shareType }) => {
    * /records (fullpage)
    */
   if (currentPath === '/records' && shareType === 'fullpage') {
-    return `${CLIENT_HOST_ADDRESS}/render/recordspage?${
+    return `${CLIENT_HOST_ADDRESS}/render/records?${
       shareType === 'component' ? 'disableSidebar=true&' : ''
-    }search=${searchId}`
+    }search=${searchId}&showSearchBar=true`
   }
 
   /**
    * /records (component)
    */
-  if (
-    currentPath === '/records' ||
-    currentPath === '/recordspage' ||
-    currentPath === '/render/recordspage' ||
-    currentPath === '/render/records'
-  ) {
+  if (currentPath === '/records' || currentPath === '/render/records') {
     return `${CLIENT_HOST_ADDRESS}/render/records?${
       shareType === 'component' ? 'disableSidebar=true&' : ''
     }search=${searchId}`

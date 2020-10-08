@@ -1,5 +1,5 @@
 import React from 'react'
-import { Records, Record, Atlas, Home, RecordsPage } from '../../components'
+import { Records, Record, Atlas, Home } from '../../components'
 import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'
 
@@ -9,7 +9,6 @@ const components = {
   records: Records,
   record: Record,
   atlas: Atlas,
-  recordspage: RecordsPage,
 }
 
 export default ({ location }) => {

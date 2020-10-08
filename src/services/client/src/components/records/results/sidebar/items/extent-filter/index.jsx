@@ -11,11 +11,11 @@ import {
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import { OlReact, MapProxy } from '@saeon/ol-react'
-import { terrestrisBaseMap } from '../../../../../lib/ol'
+import { terrestrisBaseMap } from '../../../../../../lib/ol'
 import FilterControl from './filter-control'
 import useStyles from '../style'
 import clsx from 'clsx'
-import { GlobalContext } from '../../../../../modules/provider-global'
+import { GlobalContext } from '../../../../../../modules/provider-global'
 
 export default ({ title }) => {
   const { global } = useContext(GlobalContext)

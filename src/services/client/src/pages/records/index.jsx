@@ -1,6 +1,6 @@
 import React from 'react'
-import { RecordsPage } from '../../components'
+import { Records } from '../../components'
 
 export default () => {
-  return <RecordsPage />
+  return <Records showSearchBar={true} />
 }
