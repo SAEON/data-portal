@@ -8,7 +8,6 @@ import {
   MenuItem,
   Tooltip,
   IconButton,
-  Badge,
   Grid,
   CircularProgress,
   Fade,
@@ -28,6 +27,7 @@ import { GlobalContext } from '../../modules/provider-global'
 import ShareOrEmbed from '../share-or-embed'
 import { usePersistSearch as WithPersistSearch } from '../../hooks'
 import { MAX_ATLAS_DATASETS } from '../../config'
+import StyledBadge from './_styled-badge'
 
 const pageSizes = [
   10,
@@ -196,7 +196,7 @@ export default ({
                               })
                             }}
                           >
-                            <Badge
+                            <StyledBadge
                               color={
                                 isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
                                   ? 'primary'
@@ -213,7 +213,7 @@ export default ({
                               invisible={false}
                             >
                               <MapIcon />
-                            </Badge>
+                            </StyledBadge>
                           </IconButton>
                         </Fade>
                       )
@@ -240,6 +240,7 @@ export default ({
                   badgeContent: selectedDois?.length || resultCount || 0,
                   anchorOrigin: { vertical: 'top', horizontal: 'right' },
                   invisible: false,
+                  Component: StyledBadge,
                 }}
               />
 
