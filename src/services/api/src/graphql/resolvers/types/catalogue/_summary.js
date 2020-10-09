@@ -37,12 +37,15 @@ export default async (_, args, ctx) => {
   }
 
   if (extent || terms?.length || match || ids?.length || dois?.length) {
-    dsl.min_score = min_score
     dsl.query = {
       bool: {
         must: [],
       },
     }
+  }
+
+  if (extent || terms?.length || match) {
+    dsl.min_score = min_score
   }
 
   if (ids && ids.length) {

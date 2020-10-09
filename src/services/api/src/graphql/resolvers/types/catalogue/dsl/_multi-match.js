@@ -4,23 +4,24 @@
  */
 const fields = {
   // Titles and text
-  'titles.title': { boost: 3, fuzziness: 3 },
-  subtitle: { boost: 1, fuzziness: 1 },
-  'descriptions.description': { boost: 2, fuzziness: 1 },
+  'titles.title': { boost: 5, fuzziness: 1 },
+  subtitle: { boost: 2, fuzziness: 1 },
+  'descriptions.description': { boost: 5, fuzziness: 1 },
 
   // Creators
   'creators.name': { boost: 2, fuzziness: 3 },
-  'creators.name.raw_lowercase': { boost: 10, fuzziness: 0 },
+  'creators.name.raw': { boost: 10, fuzziness: 0 },
 
   // Contributors
   'contributors.name': { boost: 2, fuzziness: 2 },
-  'contributors.name.raw_lowercase': { boost: 10, fuzziness: 0 },
+  'contributors.name.raw': { boost: 10, fuzziness: 0 },
 
   // Subjects
   'subjects.subject': { boost: 2, fuzziness: 'AUTO' },
+  'subjects.subject.raw': { boost: 10, fuzziness: 0 },
 
   // DOI
-  'identifier.identifier.raw_lowercase': { boost: 100, fuzziness: 0 },
+  'identifier.identifier.raw': { boost: 100, fuzziness: 0 },
 }
 
 /**

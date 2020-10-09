@@ -31,7 +31,8 @@
           "fields": {
             "raw": {
               "ignore_above": 256,
-              "type": "keyword"
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
@@ -42,6 +43,7 @@
       "spatial": {
         "mapping": {
           "type": "keyword",
+          "normalizer": "keyword_trimmed_lower",
           "fields": {
             "geo_shape": {
               "type": "geo_shape"
@@ -68,17 +70,29 @@
           "fields": {
             "raw": {
               "ignore_above": 256,
-              "type": "keyword"
-            },
-            "raw_lowercase": {
-              "ignore_above": 256,
               "type": "keyword",
-              "normalizer": "keyword_lowercase"
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
         "match_mapping_type": "string",
         "match": "name"
+      }
+    },
+    {
+      "subject": {
+        "mapping": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "subject"
       }
     },
     {
@@ -88,12 +102,8 @@
           "fields": {
             "raw": {
               "ignore_above": 256,
-              "type": "keyword"
-            },
-            "raw_lowercase": {
-              "ignore_above": 256,
               "type": "keyword",
-              "normalizer": "keyword_lowercase"
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
@@ -109,12 +119,13 @@
           "fields": {
             "raw": {
               "ignore_above": 256,
-              "type": "keyword"
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|identifier|name"
+        "unmatch": "publicationYear|identifier|name|subject"
       }
     }
   ]

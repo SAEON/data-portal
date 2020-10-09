@@ -44,7 +44,7 @@ export default async (_, args, ctx) => {
     ],
   }
 
-  if (ids?.length || dois?.length || match || extent || terms?.length) {
+  if (match || extent || terms?.length) {
     dsl.min_score = min_score
   }
 
@@ -70,8 +70,6 @@ export default async (_, args, ctx) => {
       dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
     }
   }
-
-  console.log(dsl)
 
   const data = await catalogue.query(dsl)
 
