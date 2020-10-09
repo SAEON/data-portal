@@ -7,6 +7,7 @@ export default {
   input: ['src/index.js'],
   output: [
     {
+      exports: "default",
       dir: 'dist',
       format: 'cjs',
       compact: true,

@@ -1,11 +1,9 @@
-import apolloHttpLink from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
 import apolloClient from 'apollo-client'
-import apolloCache from 'apollo-cache-inmemory'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import createExecutor from './_create-executor.js'
 import createIterator from './_create-iterator.js'
 
-const { createHttpLink } = apolloHttpLink
-const { InMemoryCache } = apolloCache
 const { ApolloClient } = apolloClient
 
 export default ({
