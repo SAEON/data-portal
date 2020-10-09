@@ -62,16 +62,38 @@
       }
     },
     {
+      "name": {
+        "mapping": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword"
+            },
+            "raw_lowercase": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_lowercase"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "name"
+      }
+    },
+    {
       "DOIS": {
         "mapping": {
           "type": "text",
           "fields": {
             "raw": {
+              "ignore_above": 256,
               "type": "keyword"
             },
             "raw_lowercase": {
+              "ignore_above": 256,
               "type": "keyword",
-              "normalizer": "doi_keyword"
+              "normalizer": "keyword_lowercase"
             }
           }
         },
@@ -92,7 +114,7 @@
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|identifier"
+        "unmatch": "publicationYear|identifier|name"
       }
     }
   ]

@@ -163,7 +163,7 @@ export default ({ json, id }) => {
                               .trim()
                               .toUpperCase()}{' '}
                           </b>{' '}
-                          {contributor.name},{contributor.affiliations.map(aff => aff.affiliation)}
+                          {contributor.name}, {contributor.affiliations.map(aff => aff.affiliation)}
                         </Typography>
                       </div>
                     ))}

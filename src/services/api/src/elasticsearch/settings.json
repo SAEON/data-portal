@@ -2,7 +2,7 @@
   "index": {
     "analysis": {
       "normalizer": {
-        "doi_keyword": {
+        "keyword_lowercase": {
           "type": "custom",
           "char_filter": [],
           "filter": ["lowercase", "asciifolding"]

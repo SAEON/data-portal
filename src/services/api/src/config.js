@@ -24,7 +24,8 @@ export const ALLOWED_ORIGINS =
 
 // Elasticsearch
 export const ES_HOST_ADDRESS = process.env.ES_HOST_ADDRESS || `http://localhost:9200`
-export const ES_INDEX = process.env.ES_INDEX || 'odp'
+export const ES_TEMPLATE = process.env.ES_TEMPLATE || 'saeon-odp'
+export const ES_INDEX = `${ES_TEMPLATE}-${process.env.ES_INDEX || 'catalogue-search'}`
 export const ES_INTEGRATION_BATCH_SIZE = process.env.ES_INTEGRATION_BATCH_SIZE || 100
 export const ES_TEMPLATE_INTEGRATION_ENABLED =
   process.env.ES_TEMPLATE_INTEGRATION_ENABLED || 'enabled'

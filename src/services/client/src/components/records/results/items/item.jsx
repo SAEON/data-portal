@@ -236,7 +236,7 @@ export default ({
                   </Typography>
                   <br />
                   <Typography variant="overline">
-                    {contributors?.[0]?.name || 'Contributor info missing'}
+                    {contributors?.map(({ name }) => name).join(', ') || 'Contributor info missing'}
                   </Typography>
                 </CardContent>
 
