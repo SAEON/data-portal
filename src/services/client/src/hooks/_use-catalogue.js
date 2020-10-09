@@ -15,7 +15,7 @@ export default ({
 } = {}) => {
   const { global } = useContext(GlobalContext)
   const { extent, terms: _terms } = global
-  text = global.text || text
+  text = text || global.text
 
   const result = useQuery(
     gql`

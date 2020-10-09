@@ -11,7 +11,7 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/link-ws'
 import Application from './app'
 import { nativeExtensions } from './lib/fns'
-import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER, BACKGROUNDS } from './config'
+import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
 import { SnackbarProvider } from 'notistack'
 
 // Some helpful functions
@@ -49,33 +49,10 @@ configureLogger(() => ({
   },
 }))
 
-const getBackgroundImagePath = () => {
-  const backgrounds = BACKGROUNDS.split(',')
-  const min = 0
-  const max = backgrounds.length - 1
-  const i = Math.floor(Math.random() * (max - min + 1) + min)
-  return `url(/bg/${backgrounds[i]})`
-}
-
 render(
-  <>
-    <div
-      id="bg"
-      style={{
-        position: 'fixed',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundSize: 'cover',
-        backgroundImage: getBackgroundImagePath(),
-        zIndex: -1,
-      }}
-    />
-    <SnackbarProvider maxSnack={5}>
-      <Application link={link} />
-    </SnackbarProvider>
-  </>,
+  <SnackbarProvider maxSnack={5}>
+    <Application link={link} />
+  </SnackbarProvider>,
   document.getElementById('root')
 )
 

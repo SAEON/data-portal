@@ -12,6 +12,7 @@ import theme from './theme'
 import { debounce } from './lib/fns'
 import packageJson from '../package.json'
 import { useSnackbar } from 'notistack'
+import BackgroundProvider from './modules/provider-background'
 
 /*this should probably be an imported function. target has circular references that cause errors when storing target.
 This function is to remove circular references. 
@@ -42,38 +43,23 @@ export default ({ link }) => {
   )
 
   return (
-    <ApolloProvider
-      client={
-        new ApolloClient({
-          cache: new InMemoryCache(),
-          link,
-        })
-      }
-    >
-      <CssBaseline>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundary>
-            <AuthProvider>
-              <ServerLogger
-                event={'click'}
-                handle={async ({ type, target, x, y }) =>
-                  // console.log('target', target)
-                  console.gql({
-                    clientVersion: packageJson.version,
-                    type,
-                    commitHash: LATEST_COMMIT,
-                    createdAt: new Date(),
-                    info: {
-                      x,
-                      y,
-                      target: simplifyTarget(target), // TODO - We should store the HTML of the DOM element
-                    },
-                  })
-                }
-              >
+    <BackgroundProvider>
+      <ApolloProvider
+        client={
+          new ApolloClient({
+            cache: new InMemoryCache(),
+            link,
+          })
+        }
+      >
+        <CssBaseline>
+          <ThemeProvider theme={theme}>
+            <ErrorBoundary>
+              <AuthProvider>
                 <ServerLogger
-                  event={'mousemove'}
-                  handle={debounce(async ({ type, x, y }) =>
+                  event={'click'}
+                  handle={async ({ type, target, x, y }) =>
+                    // console.log('target', target)
                     console.gql({
                       clientVersion: packageJson.version,
                       type,
@@ -82,17 +68,34 @@ export default ({ link }) => {
                       info: {
                         x,
                         y,
+                        target: simplifyTarget(target), // TODO - We should store the HTML of the DOM element
                       },
                     })
-                  )}
+                  }
                 >
-                  <Layout />
+                  <ServerLogger
+                    event={'mousemove'}
+                    handle={debounce(async ({ type, x, y }) =>
+                      console.gql({
+                        clientVersion: packageJson.version,
+                        type,
+                        commitHash: LATEST_COMMIT,
+                        createdAt: new Date(),
+                        info: {
+                          x,
+                          y,
+                        },
+                      })
+                    )}
+                  >
+                    <Layout />
+                  </ServerLogger>
                 </ServerLogger>
-              </ServerLogger>
-            </AuthProvider>
-          </ErrorBoundary>
-        </ThemeProvider>
-      </CssBaseline>
-    </ApolloProvider>
+              </AuthProvider>
+            </ErrorBoundary>
+          </ThemeProvider>
+        </CssBaseline>
+      </ApolloProvider>
+    </BackgroundProvider>
   )
 }
