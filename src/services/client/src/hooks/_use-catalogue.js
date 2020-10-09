@@ -17,8 +17,6 @@ export default ({
   const { extent, terms: _terms } = global
   text = global.text || text
 
-  console.log(global.text, text)
-
   const result = useQuery(
     gql`
       query(
