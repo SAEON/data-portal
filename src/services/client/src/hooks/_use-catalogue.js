@@ -11,10 +11,11 @@ export default ({
   summaryLimit = 50,
   ids = undefined,
   dois = undefined,
+  text = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
-  console.log('global', global)
-  const { extent, terms: _terms, text } = global
+  const { extent, terms: _terms } = global
+  text = global.text || text
 
   const result = useQuery(
     gql`

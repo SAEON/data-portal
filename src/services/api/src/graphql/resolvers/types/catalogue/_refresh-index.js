@@ -20,7 +20,7 @@ const { GraphQLError } = graphql
  * or it should be removed from GraphQL
  */
 const oldCatalogue = new Catalogue({
-  dslAddress: `${HTTP_PROXY}/proxy/saeon-elk`,
+  dslAddress: `http://192.168.115.56:9200`,
   index: 'saeon-odp-4-2',
 })
 

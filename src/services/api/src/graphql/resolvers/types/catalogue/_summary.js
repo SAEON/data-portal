@@ -1,4 +1,11 @@
-import { multiMatch, geoShape, termsQuery, doisQuery, idsQuery } from './dsl/index.js'
+import {
+  multiMatch,
+  geoShape,
+  termsQuery,
+  doisQuery,
+  idsQuery,
+  minScore as min_score,
+} from './dsl/index.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
@@ -29,7 +36,8 @@ export default async (_, args, ctx) => {
     ),
   }
 
-  if (extent || terms?.length || match || (ids && ids.length) || (dois && dois.length)) {
+  if (extent || terms?.length || match || ids?.length || dois?.length) {
+    dsl.min_score = min_score
     dsl.query = {
       bool: {
         must: [],

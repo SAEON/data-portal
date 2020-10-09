@@ -46,7 +46,7 @@ export default ({ children, data }) => {
           return linkedResources
             ?.filter(({ linkedResourceType: t }) => t.toUpperCase() === 'QUERY')
             .map(({ resourceURL, resourceDescription: description }) => {
-              const { pathname, query, port, hostname } = npmUrl.parse(resourceURL, true)
+              const { pathname, hostname, port, query } = npmUrl.parse(resourceURL, true)
               const { layers: LAYERS } = query
               const layerId = `${id} - ${LAYERS}`
               const uri = `${SPATIALDATA_PROXY}/${hostname}/${port}${pathname}`
@@ -61,6 +61,7 @@ export default ({ children, data }) => {
                 LAYERS,
                 geoExtent,
                 immutableResource,
+                ...query,
               }
             })
         })

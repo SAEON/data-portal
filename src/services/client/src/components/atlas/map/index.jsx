@@ -17,9 +17,9 @@ export default () => {
    */
   useEffect(() => {
     if (layers.length <= MAX_AUTO_LAYERS) {
+      console.log(layers[0])
       proxy.addLayers(
         layers.map(({ uri, title, description: layerTitle, layerId, LAYERS }) => {
-          console.log(title)
           return createLayer({
             LegendMenu: () => (
               <SaeonGeoServerLegend
