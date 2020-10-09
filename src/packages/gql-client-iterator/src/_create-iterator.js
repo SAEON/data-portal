@@ -1,21 +1,10 @@
-import { REPOSITORY_ID, LOAD_BATCH_SIZE } from '../config.js'
-
 const objectValueFromPathString = (str, obj) => str.split('.').reduce((o, k) => o[k], obj)
 
 export default async function iterate({ dataPath, pageInfoPath, executor, query, after = null }) {
-  const { data } = await executor({
-    variables: Object.assign(
-      {
-        id: REPOSITORY_ID,
-        first: LOAD_BATCH_SIZE,
-      },
-      { after }
-    ),
-    query,
-  })
+  const { data } = await executor({ after })
 
   return {
-    next: async () => {
+    next: () => {
       return iterate({
         dataPath,
         pageInfoPath,

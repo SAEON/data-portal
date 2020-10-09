@@ -1,32 +1,50 @@
+TODO. this is how to use the iterator.
+
+```js
 import fetch from 'node-fetch'
-import apolloHttpLink from 'apollo-link-http'
-import apolloClient from 'apollo-client'
-import apolloCache from 'apollo-cache-inmemory'
-import createExecutor from './_create-executor.js'
-import createIterator from './_create-iterator.js'
-import query from './_query.js'
+import gql from 'graphql-tag'
+import gqlIterator from '../../../../packages/gql-client-iterator/src/index.js'
 import jsBase64 from 'js-base64'
 import { DATACITE_USERNAME, DATACITE_PASSWORD } from '../config.js'
 
 const { encode } = jsBase64
 
-const { createHttpLink } = apolloHttpLink
-const { InMemoryCache } = apolloCache
-const { ApolloClient } = apolloClient
-
+const REPOSITORY_ID = 'NRF.SAEON'
+const LOAD_BATCH_SIZE = 1
 const DATACITE_GQL_ENDPOINT = 'https://api.datacite.org/graphql'
 
-let iterator = await createIterator({
-  executor: createExecutor(
-    new ApolloClient({
-      link: createHttpLink({ uri: DATACITE_GQL_ENDPOINT, fetch }),
-      cache: new InMemoryCache(),
-    })
-  ),
+const query = gql`
+  query($id: ID!, $after: String, $first: Int) {
+    repository(id: $id) {
+      datasets(first: $first, after: $after) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            doi
+            url
+          }
+        }
+      }
+    }
+  }
+`
+
+const createIterator = gqlIterator({
+  fetch,
   query,
+  gqlEndpoint: DATACITE_GQL_ENDPOINT,
+  variables: {
+    id: REPOSITORY_ID,
+    first: LOAD_BATCH_SIZE,
+  },
   pageInfoPath: 'repository.datasets.pageInfo',
   dataPath: 'repository.datasets.edges',
 })
+
+let iterator = await createIterator()
 
 while (!iterator.done) {
   const dois = iterator.data.reduce((acc, { node }) => [...acc, node.doi], [])
@@ -46,7 +64,11 @@ while (!iterator.done) {
     )
   )
 
+  /**
+   * For now, just log the results
+   */
   console.log(dois, result)
 
   iterator = await iterator.next()
 }
+```

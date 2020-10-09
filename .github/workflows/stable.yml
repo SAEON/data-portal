@@ -11,12 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: stable
-
-      - name: Configure services/doi-resolver
-        run: |
-          echo "PORT=3002" > src/services/doi-resolver/.env
-          echo "REDIRECT_TARGET=https://catalogue.saeon.ac.za/records/" >> src/services/doi-resolver/.env          
+          ref: stable  
 
       - name: Configure services/proxy
         run: |

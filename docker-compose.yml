@@ -65,13 +65,6 @@ services:
     depends_on:
       - elasticsearch
 
-  doi-resolver:
-    container_name: doi-resolver
-    restart: always
-    build: src/services/doi-resolver
-    ports:
-      - 5002:3002
-
   api:
     container_name: api
     restart: always
