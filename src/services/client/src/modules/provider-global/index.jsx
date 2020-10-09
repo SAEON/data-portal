@@ -33,7 +33,7 @@ export default ({ children }) => {
         ) : (
           <QuickForm
             originId={originId || undefined}
-            text={text || undefined}
+            text={text || state?.text || undefined}
             extent={state?.extent || undefined}
             terms={state?.terms || []}
             ids={state?.ids || []}
