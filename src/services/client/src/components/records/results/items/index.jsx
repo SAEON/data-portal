@@ -16,7 +16,7 @@ export default ({ results }) => {
           const {
             identifier,
             titles,
-            contributors,
+            creators,
             descriptions,
             immutableResource,
             id,
@@ -36,15 +36,15 @@ export default ({ results }) => {
               style={isMobile ? { padding: '16px 16px 0 16px' } : { marginBottom: 16 }}
             >
               <ResultItem
+                id={id}
                 DOI={DOI}
                 _source={_source}
                 _score={_score}
                 titles={titles}
-                contributors={contributors}
+                creators={creators}
                 descriptions={descriptions}
                 immutableResource={immutableResource}
                 linkedResources={linkedResources}
-                id={id}
               />
             </Grid>
           )

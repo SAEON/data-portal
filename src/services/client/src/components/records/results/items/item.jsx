@@ -31,7 +31,7 @@ export default ({
   DOI,
   _source,
   titles,
-  contributors,
+  creators,
   descriptions,
   id,
   immutableResource,
@@ -236,7 +236,7 @@ export default ({
                   </Typography>
                   <br />
                   <Typography variant="overline">
-                    {contributors?.map(({ name }) => name).join(', ') || 'Contributor info missing'}
+                    {creators?.map(({ name }) => name).join(', ') || 'Contributor info missing'}
                   </Typography>
                 </CardContent>
 
