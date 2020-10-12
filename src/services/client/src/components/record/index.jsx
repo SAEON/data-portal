@@ -1,12 +1,12 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
-import { Typography } from '@material-ui/core'
+import { gql } from '@apollo/client'
 import { Loading } from '../../components'
+import { WithQglQuery } from '../../hooks'
 import Layout from './layout'
 
-export default ({ id }) => {
-  const { loading, error, data } = useQuery(
-    gql`
+export default ({ id }) => (
+  <WithQglQuery
+    QUERY={gql`
       query catalogue($ids: [ID!]) {
         catalogue {
           records(ids: $ids) {
@@ -16,20 +16,19 @@ export default ({ id }) => {
           }
         }
       }
-    `,
-    {
-      variables: { ids: [id] },
-    }
-  )
+    `}
+    variables={{ ids: [id] }}
+  >
+    {({ loading, error, data }) => {
+      if (error) {
+        throw new Error(`Error retrieving record ${id}. ${error}`)
+      }
 
-  const record = data?.catalogue?.records?.nodes?.[0]?.target?._source
-  return error ? (
-    <Typography variant="overline" style={{ margin: 10, padding: 10 }}>
-      {error.message}
-    </Typography>
-  ) : loading ? (
-    <Loading />
-  ) : (
-    <Layout json={record} id={id} />
-  )
-}
+      return loading ? (
+        <Loading />
+      ) : (
+        <Layout id={id} json={data?.catalogue?.records?.nodes?.[0]?.target?._source} />
+      )
+    }}
+  </WithQglQuery>
+)

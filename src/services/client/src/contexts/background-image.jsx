@@ -1,5 +1,12 @@
+/**
+ * Provides some measure of control over which background
+ * image is displayed throughout the application. This
+ * is not yet fully implemented - current the background
+ * is chosen at random.
+ */
+
 import React, { createContext } from 'react'
-import { BACKGROUNDS } from '../../config'
+import { BACKGROUNDS } from '../config'
 
 const getBackgroundImagePath = () => {
   const backgrounds = BACKGROUNDS.split(',')

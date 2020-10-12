@@ -31,7 +31,8 @@ export default class extends Component {
               {error}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              If assistance is required, please contact{' '}
+              Please try refreshing this page in a few minutes. If the error persists, or if
+              assistance is required, please contact{' '}
               {
                 <Link variant="body1" href={`mailto:${WEB_DEVELOPER_CONTACT}`}>
                   {WEB_DEVELOPER_CONTACT}

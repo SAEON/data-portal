@@ -4,16 +4,16 @@
  */
 const fields = {
   // Titles and text
-  'titles.title': { boost: 5, fuzziness: 1 },
-  subtitle: { boost: 2, fuzziness: 1 },
-  'descriptions.description': { boost: 5, fuzziness: 1 },
+  'titles.title': { boost: 5, fuzziness: 0 },
+  subtitle: { boost: 2, fuzziness: 0 },
+  'descriptions.description': { boost: 5, fuzziness: 0 },
 
   // Creators
-  'creators.name': { boost: 2, fuzziness: 3 },
+  'creators.name': { boost: 5, fuzziness: 3 },
   'creators.name.raw': { boost: 10, fuzziness: 0 },
 
   // Contributors
-  'contributors.name': { boost: 2, fuzziness: 2 },
+  'contributors.name': { boost: 5, fuzziness: 3 },
   'contributors.name.raw': { boost: 10, fuzziness: 0 },
 
   // Subjects

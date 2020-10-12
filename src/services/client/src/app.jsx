@@ -12,7 +12,7 @@ import theme from './theme'
 import { debounce } from './lib/fns'
 import packageJson from '../package.json'
 import { useSnackbar } from 'notistack'
-import BackgroundProvider from './modules/provider-background'
+import BackgroundImageProvider from './contexts/background-image'
 
 /*this should probably be an imported function. target has circular references that cause errors when storing target.
 This function is to remove circular references. 
@@ -43,7 +43,7 @@ export default ({ link }) => {
   )
 
   return (
-    <BackgroundProvider>
+    <BackgroundImageProvider>
       <ApolloProvider
         client={
           new ApolloClient({
@@ -96,6 +96,6 @@ export default ({ link }) => {
           </ThemeProvider>
         </CssBaseline>
       </ApolloProvider>
-    </BackgroundProvider>
+    </BackgroundImageProvider>
   )
 }
