@@ -22,75 +22,84 @@ const makeIterator = async (offset = 0) => {
   return {
     next: () => makeIterator(offset + results.length),
     data: results
-      .map(({ id, doi, institution, collection, projects, schema, metadata, published }) =>
-        published
-          ? {
-              id,
-              doi,
-              institution,
-              collection,
-              projects,
-              schema,
-              ...Object.fromEntries(
-                Object.entries(metadata).map(([key, value]) =>
-                  key === 'dates'
-                    ? [
-                        key,
-                        value.map(({ date, dateType }) => {
-                          const dateStrings = date.split('/')
-                          const from = dateStrings[0]
-                          const to = dateStrings[1] || dateStrings[0]
-                          return {
-                            gte: parse(from, 'yyyy-MM-dd', new Date()).toISOString(),
-                            lte:
-                              to === from
-                                ? lastDayOfYear(parse(to, 'yyyy-MM-dd', new Date())).toISOString()
-                                : parse(to, 'yyyy-MM-dd', new Date()).toISOString(),
-                            dateType,
-                          }
-                        }),
-                      ]
-                    : key === 'geoLocations'
-                    ? [
-                        key,
-                        value.map(({ geoLocationBox, geoLocationPoint }) => ({
-                          geoLocationBox: geoLocationBox
-                            ? createWkt_4326({
-                                type: 'Polygon',
-                                coordinates: [
-                                  [
+      .map(
+        ({ id, doi, institution, collection, projects, schema, metadata, published }) =>
+          published
+            ? {
+                id,
+                doi,
+                institution,
+                collection,
+                projects,
+                schema,
+                ...Object.fromEntries(
+                  Object.entries(metadata).map(([key, value]) =>
+                    key === 'dates'
+                      ? [
+                          key,
+                          value.map(({ date, dateType }) => {
+                            const dateStrings = date.split('/')
+                            const from = dateStrings[0]
+                            const to = dateStrings[1] || dateStrings[0]
+                            return {
+                              gte: parse(from, 'yyyy-MM-dd', new Date()).toISOString(),
+                              lte:
+                                to === from
+                                  ? lastDayOfYear(parse(to, 'yyyy-MM-dd', new Date())).toISOString()
+                                  : parse(to, 'yyyy-MM-dd', new Date()).toISOString(),
+                              dateType,
+                            }
+                          }),
+                        ]
+                      : key === 'geoLocations'
+                      ? [
+                          key,
+                          value.map(({ geoLocationBox, geoLocationPoint }) => ({
+                            geoLocationBox: geoLocationBox
+                              ? createWkt_4326({
+                                  type: 'Polygon',
+                                  coordinates: [
                                     [
-                                      geoLocationBox.westBoundLongitude,
-                                      geoLocationBox.northBoundLatitude,
-                                    ],
-                                    [
-                                      geoLocationBox.eastBoundLongitude,
-                                      geoLocationBox.northBoundLatitude,
-                                    ],
-                                    [
-                                      geoLocationBox.eastBoundLongitude,
-                                      geoLocationBox.southBoundLatitude,
-                                    ],
-                                    [
-                                      geoLocationBox.westBoundLongitude,
-                                      geoLocationBox.southBoundLatitude,
-                                    ],
-                                    [
-                                      geoLocationBox.westBoundLongitude,
-                                      geoLocationBox.northBoundLatitude,
+                                      [
+                                        geoLocationBox.westBoundLongitude,
+                                        geoLocationBox.northBoundLatitude,
+                                      ],
+                                      [
+                                        geoLocationBox.eastBoundLongitude,
+                                        geoLocationBox.northBoundLatitude,
+                                      ],
+                                      [
+                                        geoLocationBox.eastBoundLongitude,
+                                        geoLocationBox.southBoundLatitude,
+                                      ],
+                                      [
+                                        geoLocationBox.westBoundLongitude,
+                                        geoLocationBox.southBoundLatitude,
+                                      ],
+                                      [
+                                        geoLocationBox.westBoundLongitude,
+                                        geoLocationBox.northBoundLatitude,
+                                      ],
                                     ],
                                   ],
-                                ],
-                              })
-                            : undefined,
-                          geoLocationPoint: geoLocationPoint ? geoLocationPoint : undefined,
-                        })),
-                      ]
-                    : [key, value]
-                )
-              ),
-            }
-          : undefined
+                                })
+                              : undefined,
+                            geoLocationPoint: geoLocationPoint
+                              ? createWkt_4326({
+                                  type: 'Point',
+                                  coordinates: [
+                                    geoLocationPoint.pointLongitude,
+                                    geoLocationPoint.pointLatitude,
+                                  ],
+                                })
+                              : undefined, // TODO elevation?
+                          })),
+                        ]
+                      : [key, value]
+                  )
+                ),
+              }
+            : undefined // publised === false
       )
       // Filter on published = true|false
       .filter(_ => _),
