@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Grid, Typography, Chip, Card, CardContent, Fade, IconButton } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
-import { ArrowBack as BackIcon } from '@material-ui/icons'
+import { Grid, Typography, Chip, Card, CardContent, Fade } from '@material-ui/core'
 import { GlobalContext } from '../../contexts/global'
 import { terrestrisBaseMap } from '../../lib/ol'
 import { useHistory } from 'react-router-dom'
@@ -39,7 +37,6 @@ const Row = ({ title, children, ...props }) => (
 )
 
 export default ({ json, id }) => {
-  const theme = useTheme()
   const [codeView, updateCodeView] = useState(false)
   const { setGlobal } = useContext(GlobalContext)
   const history = useHistory()
@@ -47,8 +44,6 @@ export default ({ json, id }) => {
   if (!id || !json) {
     return 'Record not found'
   }
-
-  console.log(history)
 
   return (
     <>
@@ -61,18 +56,6 @@ export default ({ json, id }) => {
 
       <div style={{ margin: isMobile ? '16px 0 16px' : '32px 0px 32px' }}>
         <Grid container justify="center">
-          {history.length > 2 ? (
-            <Grid item lg={10} xl={8}>
-              <IconButton
-                size="small"
-                onClick={() => history.goBack()}
-                style={{ marginBottom: '12px', backgroundColor: theme.palette.common.white }}
-              >
-                <BackIcon />
-              </IconButton>
-            </Grid>
-          ) : undefined}
-
           <Grid item lg={10} xl={8}>
             {codeView ? (
               <Fade key="1" in={codeView}>
