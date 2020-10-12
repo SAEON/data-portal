@@ -1,9 +1,9 @@
 import React, { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
-import { getUriState } from '../../lib/fns'
-import { Loading } from '../../components'
+import { getUriState } from '../lib/fns'
+import { Loading } from '../components'
 import { gql } from '@apollo/client'
-import { WithQglQuery } from '../../hooks'
+import { WithQglQuery } from '../hooks'
 
 export const GlobalContext = createContext()
 

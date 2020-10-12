@@ -23,7 +23,7 @@ import {
 } from '@material-ui/icons'
 import { isMobile } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
-import { GlobalContext } from '../../../modules/provider-global'
+import { GlobalContext } from '../../../contexts/global'
 import ShareOrEmbed from '../../share-or-embed'
 import { usePersistSearch as WithPersistSearch } from '../../../hooks'
 import { MAX_ATLAS_DATASETS } from '../../../config'

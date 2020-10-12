@@ -3,9 +3,9 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { ApolloProvider } from '@apollo/client'
-import ErrorBoundary from './modules/error-boundary'
-import AuthProvider from './modules/provider-auth'
-import Layout from './modules/layout'
+import ErrorProvider from './contexts/error'
+import AuthProvider from './contexts/authentication'
+import Layout from './layout'
 import theme from './theme'
 import { SnackbarProvider } from 'notistack'
 import BackgroundImageProvider from './contexts/background-image'
@@ -17,7 +17,7 @@ import { WebSocketLink } from '@apollo/link-ws'
 
 export default () => {
   return (
-    <ErrorBoundary>
+    <ErrorProvider>
       <NativeExtensions>
         <BackgroundImageProvider>
           <ApolloProvider
@@ -62,6 +62,6 @@ export default () => {
           </ApolloProvider>
         </BackgroundImageProvider>
       </NativeExtensions>
-    </ErrorBoundary>
+    </ErrorProvider>
   )
 }

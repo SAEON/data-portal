@@ -7,7 +7,7 @@ import {
   REQUESTED_SCOPES as requestedScopes,
   LOGOUT_ENDPOINT as logoutEndpoint,
   ENABLE_LOGIN,
-} from '../../config'
+} from '../config'
 import authClient from '@saeon/pkce-client'
 
 const { authenticate, logout, getBearerToken } = authClient({

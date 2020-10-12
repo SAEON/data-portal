@@ -13,7 +13,7 @@ import {
   Fade,
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import { GlobalContext } from '../../../../../modules/provider-global'
+import { GlobalContext } from '../../../../../contexts/global'
 import useStyles from './style'
 import clsx from 'clsx'
 

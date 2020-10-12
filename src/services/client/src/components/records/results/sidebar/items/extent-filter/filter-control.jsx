@@ -6,7 +6,7 @@ import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
-import { GlobalContext } from '../../../../../../modules/provider-global'
+import { GlobalContext } from '../../../../../../contexts/global'
 
 const wkt = new WKT()
 

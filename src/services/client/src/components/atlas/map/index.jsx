@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { MapContext } from '../../../modules/provider-map'
+import { MapContext } from '../../../contexts/ol-react'
 import { AtlasContext } from '../state'
 import { createLayer, LayerTypes } from '../../../lib/ol'
 import SaeonGeoServerLegend from '../side-menu/tabs/data/layers/layer-types/saeon-geoserver/legend'

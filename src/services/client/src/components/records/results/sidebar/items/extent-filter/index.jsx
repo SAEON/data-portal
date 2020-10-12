@@ -15,7 +15,7 @@ import { terrestrisBaseMap } from '../../../../../../lib/ol'
 import FilterControl from './filter-control'
 import useStyles from '../style'
 import clsx from 'clsx'
-import { GlobalContext } from '../../../../../../modules/provider-global'
+import { GlobalContext } from '../../../../../../contexts/global'
 
 export default ({ title }) => {
   const { global } = useContext(GlobalContext)

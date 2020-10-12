@@ -3,7 +3,7 @@ import { Grid, useMediaQuery, Typography, Fade, Divider } from '@material-ui/cor
 import { useTheme } from '@material-ui/core/styles'
 import { gql } from '@apollo/client'
 import { RecordsSearch, Loading } from '../../components'
-import { GlobalContext } from '../../modules/provider-global'
+import { GlobalContext } from '../../contexts/global'
 import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'

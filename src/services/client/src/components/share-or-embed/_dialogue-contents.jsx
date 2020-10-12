@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
-import { GlobalContext } from '../../modules/provider-global'
+import { GlobalContext } from '../../contexts/global'
 import { usePersistSearch } from '../../hooks'
 import { Link } from '..'
 import { createShareLink } from '../../lib/fns'

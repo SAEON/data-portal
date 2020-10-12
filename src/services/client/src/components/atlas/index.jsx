@@ -7,7 +7,7 @@ import { gql } from '@apollo/client'
 import { CLIENT_HOST_ADDRESS, MAX_ATLAS_DATASETS } from '../../config'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))
-const MapProvider = lazy(() => import('../../modules/provider-map'))
+const OlReactProvider = lazy(() => import('../../contexts/ol-react'))
 const StateProvider = lazy(() => import('./state'))
 const Map = lazy(() => import('./map'))
 
@@ -71,7 +71,7 @@ export default () => {
                   }}
                 >
                   <Suspense fallback={<Loading />}>
-                    <MapProvider>
+                    <OlReactProvider>
                       <Suspense fallback={null}>
                         <StateProvider data={data}>
                           <Suspense fallback={null}>
@@ -88,7 +88,7 @@ export default () => {
                           </Suspense>
                         </StateProvider>
                       </Suspense>
-                    </MapProvider>
+                    </OlReactProvider>
                   </Suspense>
                 </div>
               )

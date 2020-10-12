@@ -1,17 +1,17 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import State from '../provider-global'
+import GlobalProvider from '../contexts/global'
 import Header from './header'
 import Routes from './routes'
 
 export default () => {
   return (
-    <State>
+    <GlobalProvider>
       <Router>
         <Header>
           <Routes />
         </Header>
       </Router>
-    </State>
+    </GlobalProvider>
   )
 }

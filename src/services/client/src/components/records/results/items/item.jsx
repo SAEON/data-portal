@@ -18,7 +18,7 @@ import {
   Code as CodeIcon,
   FormatQuote as CitationIcon,
 } from '@material-ui/icons'
-import { GlobalContext } from '../../../../modules/provider-global'
+import { GlobalContext } from '../../../../contexts/global'
 import { CitationDialog, DataDownloadButton } from '../../..'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'

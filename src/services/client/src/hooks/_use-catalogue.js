@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
-import { GlobalContext } from '../modules/provider-global'
+import { GlobalContext } from '../contexts/global'
 
 export default ({
   children = undefined,

@@ -1,15 +1,15 @@
 import React, { lazy, Suspense } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
 import { Fade } from '@material-ui/core'
-import { Loading } from '../../components'
+import { Loading } from '../components'
 
 // Pages
-const HomePage = lazy(() => import('../../pages/home'))
-const RecordPage = lazy(() => import('../../pages/record'))
-const RecordsPage = lazy(() => import('../../pages/records'))
-const AboutPage = lazy(() => import('../../pages/about'))
-const RenderComponent = lazy(() => import('../../pages/render'))
-const AtlasPage = lazy(() => import('../../pages/atlas'))
+const HomePage = lazy(() => import('../pages/home'))
+const RecordPage = lazy(() => import('../pages/record'))
+const RecordsPage = lazy(() => import('../pages/records'))
+const AboutPage = lazy(() => import('../pages/about'))
+const RenderComponent = lazy(() => import('../pages/render'))
+const AtlasPage = lazy(() => import('../pages/atlas'))
 
 const PageTransition = ({ children, tKey }) => (
   <Fade key={tKey} in={true}>

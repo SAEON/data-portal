@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Grid, Typography, Chip, Card, CardContent, Fade } from '@material-ui/core'
-import { GlobalContext } from '../../modules/provider-global'
+import { GlobalContext } from '../../contexts/global'
 import { terrestrisBaseMap } from '../../lib/ol'
 import { useHistory } from 'react-router-dom'
 import Header from './header'

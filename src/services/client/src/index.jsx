@@ -8,7 +8,12 @@ import Application from './app'
 
 render(<Application />, document.getElementById('root'))
 
-// Worker defined in webpack.config.js (Google Workbox)
+/**
+ * TODO
+ *
+ * Figure out how this works:
+ * Worker defined in webpack.config.js (Google Workbox)
+ */
 if ('serviceWorker' in navigator) {
   // window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js'))
 
