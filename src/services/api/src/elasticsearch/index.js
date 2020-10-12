@@ -65,7 +65,7 @@ export const configure = async () => {
   if (ES_INDEX_INTEGRATION_ENABLED === 'enabled') {
     execute(
       schema,
-      ` query ($authorizationCode: String!) {
+      `query ($authorizationCode: String!) {
         catalogue {
           refreshIndex(authorizationCode: $authorizationCode)
         }

@@ -17,9 +17,9 @@ import { WebSocketLink } from '@apollo/link-ws'
 
 export default () => {
   return (
-    <ErrorProvider>
-      <NativeExtensions>
-        <BackgroundImageProvider>
+    <BackgroundImageProvider>
+      <ErrorProvider>
+        <NativeExtensions>
           <ApolloProvider
             client={
               new ApolloClient({
@@ -60,8 +60,8 @@ export default () => {
               </CssBaseline>
             </ApplicationLogger>
           </ApolloProvider>
-        </BackgroundImageProvider>
-      </NativeExtensions>
-    </ErrorProvider>
+        </NativeExtensions>
+      </ErrorProvider>
+    </BackgroundImageProvider>
   )
 }

@@ -1,61 +1,103 @@
 import graphql from 'graphql'
-import Catalogue from '../../../../lib/catalogue.js'
 import fetch from 'node-fetch'
-import {
-  ES_INDEX,
-  ES_HOST_ADDRESS,
-  ES_INTEGRATION_BATCH_SIZE,
-  HTTP_PROXY,
-  CATALOGUE_SECRET,
-} from '../../../../config.js'
+import parse from 'date-fns/parse/index.js'
+import lastDayOfYear from 'date-fns/lastDayOfYear/index.js'
+import wkt from 'wkt'
+import { ES_INDEX, ES_HOST_ADDRESS, CATALOGUE_SECRET } from '../../../../config.js'
+
+const { stringify: createWkt_4326 } = wkt
 
 const { GraphQLError } = graphql
+const ODP_BATCH_SIZE = 100
 
-/**
- * TODO
- * The ES source will need to be updated for this integration
- *
- * TODO
- * This should either be made available by username / password
- * or it should be removed from GraphQL
- */
-const oldCatalogue = new Catalogue({
-  dslAddress: `http://192.168.115.56:9200`,
-  index: 'saeon-odp-4-2',
-})
-
-const makeIterator = async (cursor = null) => {
-  const dsl = {
-    size: ES_INTEGRATION_BATCH_SIZE,
-    query: {
-      match_all: {},
+const makeIterator = async (offset = 0) => {
+  const uri = `https://odp.saeon.dvn/api/catalogue?limit=${ODP_BATCH_SIZE}&offset=${offset}`
+  const results = await fetch(uri, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
     },
-    sort: [{ _id: 'asc' }],
-  }
-
-  if (cursor) {
-    dsl.search_after = [cursor]
-  }
-
-  const response = await oldCatalogue.query(dsl)
-  const { hits } = response.hits
+  }).then(res => res.json())
 
   return {
-    next: () => makeIterator(hits[hits.length - 1]._id),
-    values: hits,
-    done: Boolean(!hits.length),
+    next: () => makeIterator(offset + results.length),
+    data: results
+      .map(({ id, doi, institution, collection, projects, schema, metadata, published }) =>
+        published
+          ? {
+              id,
+              doi,
+              institution,
+              collection,
+              projects,
+              schema,
+              ...Object.fromEntries(
+                Object.entries(metadata).map(([key, value]) =>
+                  key === 'dates'
+                    ? [
+                        key,
+                        value.map(({ date, dateType }) => {
+                          const dateStrings = date.split('/')
+                          const from = dateStrings[0]
+                          const to = dateStrings[1] || dateStrings[0]
+                          return {
+                            gte: parse(from, 'yyyy-MM-dd', new Date()).toISOString(),
+                            lte:
+                              to === from
+                                ? lastDayOfYear(parse(to, 'yyyy-MM-dd', new Date())).toISOString()
+                                : parse(to, 'yyyy-MM-dd', new Date()).toISOString(),
+                            dateType,
+                          }
+                        }),
+                      ]
+                    : key === 'geoLocations'
+                    ? [
+                        key,
+                        value.map(({ geoLocationBox, geoLocationPoint }) => ({
+                          geoLocationBox: geoLocationBox
+                            ? createWkt_4326({
+                                type: 'Polygon',
+                                coordinates: [
+                                  [
+                                    [
+                                      geoLocationBox.westBoundLongitude,
+                                      geoLocationBox.northBoundLatitude,
+                                    ],
+                                    [
+                                      geoLocationBox.eastBoundLongitude,
+                                      geoLocationBox.northBoundLatitude,
+                                    ],
+                                    [
+                                      geoLocationBox.eastBoundLongitude,
+                                      geoLocationBox.southBoundLatitude,
+                                    ],
+                                    [
+                                      geoLocationBox.westBoundLongitude,
+                                      geoLocationBox.southBoundLatitude,
+                                    ],
+                                    [
+                                      geoLocationBox.westBoundLongitude,
+                                      geoLocationBox.northBoundLatitude,
+                                    ],
+                                  ],
+                                ],
+                              })
+                            : undefined,
+                          geoLocationPoint: geoLocationPoint ? geoLocationPoint : undefined,
+                        })),
+                      ]
+                    : [key, value]
+                )
+              ),
+            }
+          : undefined
+      )
+      // Filter on published = true|false
+      .filter(_ => _),
+    done: !results.length,
   }
 }
 
-/**
- * Even with only 2 000 docs, the default content-length
- * allowed for ES POST requests is exceeded. So it's best
- * to batch bulk inserts into ES
- *
- * Source docs don't have ID fields, so these are created
- * by hashing the doc.identifier object. If there are
- * duplicates of this... file a ticket with the curators
- */
 export default async (_, args) => {
   const { authorizationCode } = args
   if (authorizationCode !== CATALOGUE_SECRET) {
@@ -90,28 +132,19 @@ export default async (_, args) => {
      */
     let iterator = await makeIterator()
     while (!iterator.done) {
-      // This address isn't available via the proxy, and is a temporary solution
       const response = await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-ndjson',
         },
-        body: iterator.values
-          .map(({ _source }) =>
-            Object.assign(
-              Object.fromEntries(
-                Object.entries(_source.metadata_json).filter(([k]) => k !== 'originalMetadata')
-              ),
-              { id: _source.record_id }
-            )
-          )
+        body: iterator.data
           .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
           .join(''),
       })
         .then(res => res.json())
         .then(json => {
-          if (json.error) {
-            throw new Error(JSON.stringify(json.error))
+          if (json.errors) {
+            throw new Error(JSON.stringify(json.items))
           } else {
             return json
           }

@@ -36,7 +36,8 @@
             }
           }
         },
-        "match_mapping_type": "date"
+        "match_mapping_type": "string",
+        "match": "gte|lte"
       }
     },
     {
@@ -125,7 +126,7 @@
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|identifier|name|subject"
+        "unmatch": "publicationYear|identifier|name|subject|gte|lte"
       }
     }
   ]

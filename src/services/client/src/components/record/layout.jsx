@@ -13,6 +13,7 @@ import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 import { isMobile } from 'react-device-detect'
+import { format } from 'date-fns'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
@@ -137,15 +138,16 @@ export default ({ json, id }) => {
 
                   <Row title="Temporal coverage">
                     <Typography variant="body2">
-                      {[
-                        ...new Set(
-                          Object.entries(
-                            json.dates.find(({ dateType: t }) => t.toUpperCase() === 'VALID').date
-                          )
-                            .sort(([k]) => (k === 'gte' ? -1 : 1))
-                            .map(([, v]) => parseInt(v, 10)) // NOTE - dates in the form 2015-01-01 are just "2015" on the client
-                        ),
-                      ].join(' - ')}
+                      {Object.entries(
+                        json.dates.find(({ dateType: t }) => t.toUpperCase() === 'VALID')
+                      )
+                        .map(([key, value]) => (key !== 'dateType' ? [key, value] : undefined))
+                        .filter(_ => _)
+                        .sort(({ gte }) => (gte ? -1 : 1))
+                        .map(([, dtString]) =>
+                          format(new Date(dtString), 'yyy-MM-dd').replace(/-/g, '/')
+                        )
+                        .join(' - ')}
                     </Typography>
                   </Row>
 
