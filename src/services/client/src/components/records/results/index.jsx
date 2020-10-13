@@ -7,6 +7,7 @@ import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import { Footer, Loading } from '../../../components'
 import { useCatalogue } from '../../../hooks'
+import { getUriState } from '../../../lib/fns'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -19,6 +20,9 @@ export default ({ disableSidebar = false }) => {
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
+
+  const showTopMenu = !window.location.pathname.includes('/render')
+  const { showSearchBar } = getUriState()
 
   const { global } = useContext(GlobalContext)
   const { terms, extent = undefined, text = undefined, dois } = global
@@ -65,7 +69,13 @@ export default ({ disableSidebar = false }) => {
       loading={loading}
       catalogue={data?.catalogue}
     >
-      <div style={{ minHeight: 'calc(100% - 49px - 49px)' }}>
+      <div
+        style={{
+          minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
+            showSearchBar === 'true' || !showSearchBar ? '128' : '0'
+          }px - 49px - 49px)`,
+        }}
+      >
         <Grid container direction="row" justify="center">
           {loading ? (
             <Grid item xs={12} style={{ position: 'relative' }}>
