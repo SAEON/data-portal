@@ -1,11 +1,4 @@
-import {
-  multiMatch,
-  geoShape,
-  termsQuery,
-  doisQuery,
-  idsQuery,
-  minScore as min_score,
-} from './dsl/index.js'
+import buildDsl from './dsl/index.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
@@ -44,34 +37,14 @@ export default async (_, args, ctx) => {
     ],
   }
 
-  if (match || extent || terms?.length) {
-    dsl.min_score = min_score
-  }
-
   if (before || after) {
     const c = before || after
     dsl.search_after = [c.score || 0, c.id]
   }
 
-  if (ids && ids.length) {
-    dsl.size = ids.length
-    dsl.query.bool.must = [idsQuery(ids)]
-  } else if (dois && dois.length) {
-    dsl.size = dois.length
-    dsl.query.bool.must = [doisQuery(dois)]
-  } else {
-    if (extent) {
-      dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
-    }
-    if (match) {
-      dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(match.toLowerCase())]
-    }
-    if (terms?.length) {
-      dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
-    }
-  }
-
-  const data = await catalogue.query(dsl)
+  const data = await catalogue.query(
+    buildDsl({ dsl, ids, dois, match, terms, extent, isAggregation: false })
+  )
 
   return {
     _firstResult:

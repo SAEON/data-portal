@@ -23,6 +23,8 @@ export const ALLOWED_ORIGINS =
   process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
 // Elasticsearch
+export const SAEON_ODP_PROVIDER =
+  process.env.SAEON_ODP_PROVIDER || 'https://odp.saeon.dvn/api/catalogue'
 export const ES_HOST_ADDRESS = process.env.ES_HOST_ADDRESS || `http://localhost:9200`
 export const ES_TEMPLATE = process.env.ES_TEMPLATE || 'saeon-odp'
 export const ES_INDEX = `${ES_TEMPLATE}-${process.env.ES_INDEX || 'catalogue-search'}`

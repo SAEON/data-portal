@@ -1,11 +1,4 @@
-import {
-  multiMatch,
-  geoShape,
-  termsQuery,
-  doisQuery,
-  idsQuery,
-  minScore as min_score,
-} from './dsl/index.js'
+import buildDsl from './dsl/index.js'
 
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
@@ -36,35 +29,10 @@ export default async (_, args, ctx) => {
     ),
   }
 
-  if (extent || terms?.length || match || ids?.length || dois?.length) {
-    dsl.query = {
-      bool: {
-        must: [],
-      },
-    }
-  }
+  const result = await catalogue.query(
+    buildDsl({ dsl, ids, dois, match, terms, extent, isAggregation: true })
+  )
 
-  if (extent || terms?.length || match) {
-    dsl.min_score = min_score
-  }
-
-  if (ids && ids.length) {
-    dsl.query.bool.must = [idsQuery(ids)]
-  } else if (dois && dois.length) {
-    dsl.query.bool.must = [doisQuery(dois)]
-  } else {
-    if (extent) {
-      dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
-    }
-    if (match) {
-      dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(match.toLowerCase())]
-    }
-    if (terms?.length) {
-      dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
-    }
-  }
-
-  const result = await catalogue.query(dsl)
   return Object.entries(result.aggregations).map(([name, { buckets }]) => ({
     [name]: buckets,
   }))
