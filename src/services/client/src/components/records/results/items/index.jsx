@@ -14,19 +14,14 @@ export default ({ results }) => {
           const { target } = item
           const { _source, _score } = target
           const {
-            identifier,
             titles,
             creators,
             descriptions,
             immutableResource,
             id,
             linkedResources,
+            doi,
           } = _source
-
-          const DOI =
-            identifier && identifier.identifierType.toUpperCase() === 'DOI'
-              ? identifier.identifier
-              : undefined
 
           return (
             <Grid
@@ -37,7 +32,7 @@ export default ({ results }) => {
             >
               <ResultItem
                 id={id}
-                DOI={DOI}
+                doi={doi}
                 _source={_source}
                 _score={_score}
                 titles={titles}

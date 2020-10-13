@@ -30,7 +30,6 @@ export default ({
   LegendMenu,
   DataMenu,
 }) => {
-  console.log('rendering saeon layer')
   const title = layer.get('title')
   const visible = layer.getVisible()
   const [legendOpen, setLegendOpen] = useState(false)

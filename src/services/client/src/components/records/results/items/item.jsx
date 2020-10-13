@@ -23,12 +23,12 @@ import { CitationDialog, DataDownloadButton } from '../../..'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
-import { usePersistSearch as WithPersistSearch } from '../../../../hooks'
+import { gql, useApolloClient } from '@apollo/client'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
 export default ({
-  DOI,
+  doi,
   _source,
   titles,
   creators,
@@ -37,25 +37,20 @@ export default ({
   immutableResource,
   linkedResources,
 }) => {
+  const client = useApolloClient()
+  const [loading, setLoading] = useState(false)
   const history = useHistory()
   const [codeView, setCodeView] = useState(false)
   const classes = useStyles()
   const { global, setGlobal } = useContext(GlobalContext)
   const { selectedDois } = global
 
-  // TODO - this could be clearer
-  const geoResourceDois = DOI
-    ? [
-        ...new Set(
-          linkedResources
-            ?.filter(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-            ?.map(() => DOI)
-        ),
-      ]
-    : undefined
+  const hasLayers = Boolean(
+    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
+  )
 
   return (
-    <Fade in={true} key={DOI}>
+    <Fade in={true} key={doi}>
       <Card style={{ backgroundColor: CARD_BG_COLOUR, height: 220 }} variant="outlined">
         {/* Button bar */}
         <Toolbar
@@ -65,11 +60,11 @@ export default ({
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           {/* DOI */}
-          {isMobile ? undefined : DOI ? (
+          {isMobile ? undefined : doi ? (
             <Typography
               component={MuiLink}
               variant="overline"
-              href={`https://doi.org/${DOI}`}
+              href={`https://doi.org/${doi}`}
               style={{
                 cursor: 'pointer',
                 marginRight: 'auto',
@@ -81,7 +76,7 @@ export default ({
               target="_blank"
               rel="noopener noreferrer"
             >
-              {`https://doi.org/${DOI}`}
+              {`https://doi.org/${doi}`}
             </Typography>
           ) : (
             <Typography
@@ -98,7 +93,6 @@ export default ({
             </Typography>
           )}
 
-          {/* TOOLS */}
           {/* Download Data */}
           <DataDownloadButton
             style={{ marginLeft: 8 }}
@@ -109,54 +103,51 @@ export default ({
           />
 
           {/* PREVIEW */}
-          <Tooltip
-            title={geoResourceDois.length ? 'Explore dataset' : 'Preview not available'}
-            placement="left-start"
-          >
-            <span>
-              <WithPersistSearch>
-                {([persistSearchState, { loading, error, data }]) => {
-                  if (error) {
-                    throw new Error('Error persiting search state', error)
-                  }
 
-                  if (data) {
-                    const searchId = data.browserClient.persistSearchState
-                    history.push({
-                      pathname: 'atlas',
-                      search: `?search=${searchId}`,
+          {loading ? (
+            <Fade in={true}>
+              <CircularProgress thickness={2} size={18} style={{ margin: '0 6px' }} />
+            </Fade>
+          ) : (
+            <Tooltip
+              title={hasLayers ? 'Explore dataset' : 'Preview not available'}
+              placement="left-start"
+            >
+              <span>
+                <IconButton
+                  className={clsx(classes['small-icon-button'])}
+                  size="small"
+                  disabled={!hasLayers}
+                  onClick={async e => {
+                    e.stopPropagation()
+                    setLoading(true)
+                    const { data } = await client.mutate({
+                      mutation: gql`
+                        mutation($state: JSON!) {
+                          browserClient {
+                            persistSearchState(state: $state)
+                          }
+                        }
+                      `,
+                      variables: {
+                        state: { selectedDois: [doi] },
+                      },
                     })
-                  }
-
-                  if (loading || data) {
-                    return (
-                      <Fade in={true}>
-                        <CircularProgress thickness={2} size={12} style={{ margin: '0 6px' }} />
-                      </Fade>
-                    )
-                  }
-
-                  return (
-                    <IconButton
-                      className={clsx(classes['small-icon-button'])}
-                      size="small"
-                      disabled={!geoResourceDois.length}
-                      onClick={e => {
-                        e.stopPropagation()
-                        persistSearchState({
-                          variables: {
-                            state: { selectedDois: geoResourceDois },
-                          },
-                        })
-                      }}
-                    >
-                      <ViewIcon />
-                    </IconButton>
-                  )
-                }}
-              </WithPersistSearch>
-            </span>
-          </Tooltip>
+                    if (data) {
+                      history.push({
+                        pathname: '/atlas',
+                        search: `?search=${data.browserClient.persistSearchState}`,
+                      })
+                    } else {
+                      throw new Error('Error creating atlas')
+                    }
+                  }}
+                >
+                  <ViewIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
 
           {/* Citation */}
           <CitationDialog record={_source}>
@@ -197,12 +188,12 @@ export default ({
               style={{ marginRight: 4 }}
               size="small"
               color="primary"
-              checked={selectedDois.includes(DOI)}
+              checked={selectedDois.includes(doi)}
               onChange={(e, checked) => {
                 if (checked) {
-                  setGlobal({ selectedDois: [...selectedDois, DOI] })
+                  setGlobal({ selectedDois: [...selectedDois, doi] })
                 } else {
-                  setGlobal({ selectedDois: selectedDois.filter(doi => doi !== DOI) })
+                  setGlobal({ selectedDois: selectedDois.filter(doi => doi !== doi) })
                 }
               }}
             />

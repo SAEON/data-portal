@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   FormatQuote as CitationIcon,
   Code as CodeIcon,
@@ -17,15 +17,13 @@ import {
 } from '@material-ui/core'
 import { CitationDialog, DataDownloadButton } from '..'
 import { useHistory } from 'react-router-dom'
-import { usePersistSearch as WithPersistSearch } from '../../hooks'
+import { useApolloClient, gql } from '@apollo/client'
 
 export default ({ record, toggleCodeView, codeView }) => {
+  const client = useApolloClient()
+  const [loading, setLoading] = useState(false)
   const history = useHistory()
-  const { identifier, linkedResources } = record
-  const DOI =
-    identifier && identifier.identifierType.toUpperCase() === 'DOI'
-      ? identifier.identifier
-      : undefined
+  const { linkedResources, doi } = record
 
   const hasLayers = Boolean(
     linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
@@ -38,56 +36,52 @@ export default ({ record, toggleCodeView, codeView }) => {
           {/* PAGE TITLE */}
           <Grid item xs style={{ alignSelf: 'center' }}>
             <Typography variant="overline" component="h1">
-              {DOI || 'UNKNOWN DOI'}
+              {doi || 'UNKNOWN DOI'}
             </Typography>
           </Grid>
 
           <Hidden xsDown>
             {/* PREVIEW */}
-            <Tooltip title={hasLayers ? 'Preview dataset' : 'Unable to preview this dataset'}>
-              <span>
-                <WithPersistSearch>
-                  {([persistSearchState, { loading, error, data }]) => {
-                    if (error) {
-                      throw new Error('Error persiting search state', error)
-                    }
-
-                    if (data) {
-                      const searchId = data.browserClient.persistSearchState
-                      history.push({
-                        pathname: '/atlas',
-                        search: `?search=${searchId}`,
+            {loading ? (
+              <Fade in={loading}>
+                <CircularProgress thickness={2} size={18} style={{ margin: '15px 8px' }} />
+              </Fade>
+            ) : (
+              <Tooltip title={hasLayers ? 'Preview dataset' : 'Unable to preview this dataset'}>
+                <span>
+                  <IconButton
+                    disabled={!hasLayers}
+                    color={'primary'}
+                    onClick={async e => {
+                      e.stopPropagation()
+                      setLoading(true)
+                      const { data } = await client.mutate({
+                        mutation: gql`
+                          mutation($state: JSON!) {
+                            browserClient {
+                              persistSearchState(state: $state)
+                            }
+                          }
+                        `,
+                        variables: {
+                          state: { selectedDois: [doi] },
+                        },
                       })
-                    }
-
-                    if (loading || data) {
-                      return (
-                        <Fade in={true}>
-                          <CircularProgress thickness={2} size={12} style={{ margin: '0 6px' }} />
-                        </Fade>
-                      )
-                    }
-
-                    return (
-                      <IconButton
-                        disabled={!hasLayers}
-                        color={'primary'}
-                        onClick={e => {
-                          e.stopPropagation()
-                          persistSearchState({
-                            variables: {
-                              state: { selectedDois: [DOI] },
-                            },
-                          })
-                        }}
-                      >
-                        <PreviewIcon />
-                      </IconButton>
-                    )
-                  }}
-                </WithPersistSearch>
-              </span>
-            </Tooltip>
+                      if (data) {
+                        history.push({
+                          pathname: '/atlas',
+                          search: `?search=${data.browserClient.persistSearchState}`,
+                        })
+                      } else {
+                        throw new Error('Error creating atlas')
+                      }
+                    }}
+                  >
+                    <PreviewIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+            )}
 
             {/* JSON */}
             <Tooltip title="View raw metadata record (JSON)">

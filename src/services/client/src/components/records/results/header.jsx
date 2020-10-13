@@ -22,10 +22,10 @@ import {
   Refresh as RefreshIcon,
 } from '@material-ui/icons'
 import { isMobile } from 'react-device-detect'
+import { gql, useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../../contexts/global'
 import ShareOrEmbed from '../../share-or-embed'
-import { usePersistSearch as WithPersistSearch } from '../../../hooks'
 import { MAX_ATLAS_DATASETS } from '../../../config'
 import StyledBadge from './_styled-badge'
 
@@ -47,20 +47,17 @@ const doiHasMap = (doi, records) => {
     for (let node of records.nodes) {
       var { target } = node
       var { _source } = target
-      var { identifier, linkedResources } = _source
+      var { linkedResources, doi: itemDoi } = _source
 
-      const DOI =
-        identifier.identifierType.toUpperCase() === 'DOI' ? identifier.identifier : undefined
+      if (!itemDoi) return false
 
-      if (!DOI) return false
-
-      doiMapCache[DOI] = Boolean(
+      doiMapCache[itemDoi] = Boolean(
         linkedResources?.find(
           ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
         )
       )
 
-      if (doi === DOI) {
+      if (doi === itemDoi) {
         return doiMapCache[doi]
       }
     }
@@ -90,6 +87,9 @@ export default ({
   showSidebar,
   setShowSidebar,
 }) => {
+  const client = useApolloClient()
+  const [savedSearchLoading, setSavedSearchLoading] = useState(false)
+  const history = useHistory()
   const [anchorEl, setAnchorEl] = useState(null)
   const { global, setGlobal } = useContext(GlobalContext)
   const { selectedDois } = global
@@ -144,83 +144,76 @@ export default ({
               </Tooltip>
 
               {/* PREVIEW ALL DATASETS */}
-              <Tooltip
-                title={
-                  isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
-                    ? `Configure atlas from ${
-                        selectedDois?.filter(doi => doiMapCache[doi]).length || atlasLayersCount
-                      } mappable search results`
-                    : selectedDois.length
-                    ? 'No atlas preview available'
-                    : atlasLayersCount
-                    ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${MAX_ATLAS_DATASETS}`
-                    : 'Search context: no datasets with maps found'
-                }
-              >
-                <span style={{ display: 'flex', alignContent: 'center' }}>
-                  <WithPersistSearch>
-                    {([persistSearchState, { loading, error, data }]) => {
-                      const history = useHistory()
-
-                      if (error) {
-                        throw new Error('Error persiting search state', error)
+              {savedSearchLoading ? (
+                <Fade key="loading" in={savedSearchLoading}>
+                  <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+                </Fade>
+              ) : (
+                <Tooltip
+                  title={
+                    isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+                      ? `Configure atlas from ${
+                          selectedDois?.filter(doi => doiMapCache[doi]).length || atlasLayersCount
+                        } mappable search results`
+                      : selectedDois.length
+                      ? 'No atlas preview available'
+                      : atlasLayersCount
+                      ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${MAX_ATLAS_DATASETS}`
+                      : 'Search context: no datasets with maps found'
+                  }
+                >
+                  <span style={{ display: 'flex', alignContent: 'center' }}>
+                    <IconButton
+                      disabled={
+                        !isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
                       }
-
-                      if (data) {
-                        const searchId = data.browserClient.persistSearchState
-                        history.push({
-                          pathname: 'atlas',
-                          search: `?search=${searchId}`,
-                        })
-                      }
-
-                      if (loading || data) {
-                        return (
-                          <Fade in={loading || data}>
-                            <CircularProgress thickness={2} size={16} style={{ marginRight: 8 }} />
-                          </Fade>
-                        )
-                      }
-
-                      return (
-                        <Fade in={!loading && !error}>
-                          <IconButton
-                            disabled={
-                              !isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+                      onClick={async e => {
+                        e.stopPropagation()
+                        setSavedSearchLoading(true)
+                        const { data } = await client.mutate({
+                          mutation: gql`
+                            mutation($state: JSON!) {
+                              browserClient {
+                                persistSearchState(state: $state)
+                              }
                             }
-                            onClick={() => {
-                              persistSearchState({
-                                variables: {
-                                  state: selectedDois.length ? { selectedDois } : global,
-                                },
-                              })
-                            }}
-                          >
-                            <StyledBadge
-                              color={
-                                isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
-                                  ? 'primary'
-                                  : 'default'
-                              }
-                              badgeContent={
-                                isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
-                                  ? selectedDois?.filter(doi => doiMapCache[doi]).length ||
-                                    atlasLayersCount ||
-                                    0
-                                  : 0
-                              }
-                              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                              invisible={false}
-                            >
-                              <MapIcon />
-                            </StyledBadge>
-                          </IconButton>
-                        </Fade>
-                      )
-                    }}
-                  </WithPersistSearch>
-                </span>
-              </Tooltip>
+                          `,
+                          variables: {
+                            state: selectedDois.length ? { selectedDois } : global,
+                          },
+                        })
+                        if (data) {
+                          history.push({
+                            pathname: 'atlas',
+                            search: `?search=${data.browserClient.persistSearchState}`,
+                          })
+                        } else {
+                          throw new Error('Error creating atlas')
+                        }
+                      }}
+                    >
+                      <StyledBadge
+                        color={
+                          isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+                            ? 'primary'
+                            : 'default'
+                        }
+                        badgeContent={
+                          isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+                            ? selectedDois?.filter(doi => doiMapCache[doi]).length ||
+                              atlasLayersCount ||
+                              0
+                            : 0
+                        }
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        invisible={false}
+                      >
+                        <MapIcon />
+                      </StyledBadge>
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              )}
 
               {/* SHOW SELECTED DATASETS AS LIST */}
               <ShareOrEmbed

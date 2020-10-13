@@ -7,7 +7,7 @@ export default terms =>
       term: {
         [field]: {
           value,
-          boost: 5,
+          boost: 10,
         },
       },
     }))

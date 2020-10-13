@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
 import { GlobalContext } from '../../contexts/global'
-import { usePersistSearch } from '../../hooks'
 import { Link } from '..'
 import { createShareLink } from '../../lib/fns'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
+import { gql, useMutation } from '@apollo/client'
 
 /**
  * Dialogue contents of the share dialogue
@@ -15,7 +15,14 @@ import TabPanel from './_panel'
  */
 export default ({ tabIndex, state = undefined, shareType = 'component' }) => {
   const { global } = useContext(GlobalContext)
-  const [persistSearchState, { loading, error, data }] = usePersistSearch()
+  const [persistSearchState, { loading, error, data }] = useMutation(gql`
+    mutation($state: JSON!) {
+      browserClient {
+        persistSearchState(state: $state)
+      }
+    }
+  `)
+
   useEffect(() => {
     persistSearchState({ variables: { state: state || global } })
   }, [global, persistSearchState, state])
