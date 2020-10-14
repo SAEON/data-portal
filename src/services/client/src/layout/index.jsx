@@ -1,17 +1,17 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import GlobalProvider from '../contexts/global'
 import Header from './header'
 import Routes from './routes'
 
 export default () => {
+  const { pathname } = window.location
+  // eslint-disable-next-line no-useless-escape
+  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0]
+
   return (
-    <GlobalProvider>
-      <Router>
-        <Header>
-          <Routes />
-        </Header>
-      </Router>
-    </GlobalProvider>
+    <Router>
+      {currentRoute === '/render' ? undefined : <Header />}
+      <Routes />
+    </Router>
   )
 }

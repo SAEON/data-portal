@@ -73,7 +73,7 @@ export default ({ disableSidebar = false }) => {
         style={{
           minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
             showSearchBar === 'true' || !showSearchBar ? '128' : '0'
-          }px - 49px - 49px)`,
+          }px - 48px - 49px)`,
         }}
       >
         <Grid container direction="row" justify="center">

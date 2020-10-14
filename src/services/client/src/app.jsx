@@ -4,6 +4,7 @@ import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { ApolloProvider } from '@apollo/client'
 import ErrorProvider from './contexts/error'
+import GlobalProvider from './contexts/global'
 import AuthProvider from './contexts/authentication'
 import Layout from './layout'
 import theme from './theme'
@@ -49,13 +50,15 @@ export default () => {
             <ApplicationLogger>
               <CssBaseline>
                 <ThemeProvider theme={theme}>
-                  <SnackbarProvider>
-                    <DefaultApplicationNotices>
-                      <AuthProvider>
-                        <Layout />
-                      </AuthProvider>
-                    </DefaultApplicationNotices>
-                  </SnackbarProvider>
+                  <GlobalProvider>
+                    <SnackbarProvider>
+                      <DefaultApplicationNotices>
+                        <AuthProvider>
+                          <Layout />
+                        </AuthProvider>
+                      </DefaultApplicationNotices>
+                    </SnackbarProvider>
+                  </GlobalProvider>
                 </ThemeProvider>
               </CssBaseline>
             </ApplicationLogger>

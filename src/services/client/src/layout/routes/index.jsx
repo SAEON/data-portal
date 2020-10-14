@@ -1,25 +1,15 @@
-import React, { lazy, Suspense } from 'react'
-import { Route, Redirect, Switch } from 'react-router-dom'
-import { Fade } from '@material-ui/core'
-import { Loading } from '../components'
+import React, { lazy } from 'react'
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
+import Transition from './_transition'
 
-// Pages
-const HomePage = lazy(() => import('../pages/home'))
-const RecordPage = lazy(() => import('../pages/record'))
-const RecordsPage = lazy(() => import('../pages/records'))
-const AboutPage = lazy(() => import('../pages/about'))
-const RenderComponent = lazy(() => import('../pages/render'))
-const AtlasPage = lazy(() => import('../pages/atlas'))
+const HomePage = lazy(() => import('../../pages/home'))
+const RecordPage = lazy(() => import('../../pages/record'))
+const RecordsPage = lazy(() => import('../../pages/records'))
+const AboutPage = lazy(() => import('../../pages/about'))
+const Render = lazy(() => import('../../pages/render'))
+const AtlasPage = lazy(() => import('../../pages/atlas'))
 
-const PageTransition = ({ children, tKey }) => (
-  <Fade key={tKey} in={true}>
-    <div>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
-    </div>
-  </Fade>
-)
-
-export default () => {
+export default withRouter(() => {
   return (
     <Switch key={location.pathname || '/'}>
       <Route key={'authenticated'} path={'/authenticated'} render={() => <Redirect to={'/'} />} />
@@ -30,9 +20,9 @@ export default () => {
         exact={false}
         path={'/render'}
         render={props => (
-          <PageTransition tKey="render">
-            <RenderComponent {...props} />
-          </PageTransition>
+          <Transition tKey="render">
+            <Render {...props} />
+          </Transition>
         )}
       />
 
@@ -42,9 +32,9 @@ export default () => {
         exact={true}
         path={'/records'}
         render={() => (
-          <PageTransition tKey="records">
+          <Transition tKey="records">
             <RecordsPage />
-          </PageTransition>
+          </Transition>
         )}
       />
 
@@ -54,9 +44,9 @@ export default () => {
         path={'/records/:id'}
         exact={false}
         render={props => (
-          <PageTransition tKey="record">
+          <Transition tKey="record">
             <RecordPage id={props.match.params.id} {...props} />
-          </PageTransition>
+          </Transition>
         )}
       />
 
@@ -67,9 +57,9 @@ export default () => {
         exact={true}
         render={() => {
           return (
-            <PageTransition tKey="atlas">
+            <Transition tKey="atlas">
               <AtlasPage />
-            </PageTransition>
+            </Transition>
           )
         }}
       />
@@ -80,9 +70,9 @@ export default () => {
         path={'/'}
         exact={true}
         render={() => (
-          <PageTransition>
+          <Transition>
             <HomePage />
-          </PageTransition>
+          </Transition>
         )}
       />
 
@@ -92,11 +82,11 @@ export default () => {
         path={'/about'}
         exact={true}
         render={() => (
-          <PageTransition tKey="about">
+          <Transition tKey="about">
             <AboutPage />
-          </PageTransition>
+          </Transition>
         )}
       />
     </Switch>
   )
-}
+})

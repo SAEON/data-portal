@@ -1,20 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const drawerWidth = 240
-
 export default makeStyles(theme => ({
   appBar: {
     backgroundColor: theme.palette.primary.main,
     width: '100%',
     border: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: drawerWidth,
   },
   toolbar: {
     display: 'flex',
@@ -22,9 +12,5 @@ export default makeStyles(theme => ({
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     minHeight: 48,
-  },
-  content: {
-    height: `calc(100% - ${48}px)`,
-    position: 'relative',
   },
 }))
