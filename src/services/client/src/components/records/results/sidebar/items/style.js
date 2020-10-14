@@ -6,5 +6,6 @@ export default makeStyles(theme => ({
   },
   appbar: {
     backgroundColor: theme.palette.common.white,
+    zIndex: 800,
   },
 }))

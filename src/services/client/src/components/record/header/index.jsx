@@ -15,15 +15,14 @@ import {
   Fade,
   CircularProgress,
 } from '@material-ui/core'
-import { CitationDialog, DataDownloadButton } from '..'
+import { CitationDialog, DataDownloadButton } from '../..'
 import { useHistory } from 'react-router-dom'
 import { useApolloClient, gql } from '@apollo/client'
 
-export default ({ record, toggleCodeView, codeView }) => {
+export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResource, id }) => {
   const client = useApolloClient()
   const [loading, setLoading] = useState(false)
   const history = useHistory()
-  const { linkedResources, doi } = record
 
   const hasLayers = Boolean(
     linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
@@ -97,7 +96,7 @@ export default ({ record, toggleCodeView, codeView }) => {
             </Tooltip>
 
             {/* CITATTION */}
-            <CitationDialog record={record}>
+            <CitationDialog doi={doi} id={id}>
               {({ disabled, onClick }) => (
                 <Tooltip placement="left-start" title="Cite this record">
                   <span>
@@ -111,7 +110,7 @@ export default ({ record, toggleCodeView, codeView }) => {
           </Hidden>
 
           {/* DATA DOWNLOAD */}
-          <DataDownloadButton color="primary" immutableResource={record.immutableResource} />
+          <DataDownloadButton color="primary" immutableResource={immutableResource} />
         </Grid>
       </Toolbar>
     </AppBar>

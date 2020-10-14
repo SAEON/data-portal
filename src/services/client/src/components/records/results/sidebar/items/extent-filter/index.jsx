@@ -24,14 +24,14 @@ export default ({ title }) => {
 
   return (
     <>
-      <AppBar
-        position="relative"
-        variant="outlined"
-        className={clsx(classes.appbar)}
-        style={{ zIndex: 800 }}
-      >
+      <AppBar position="relative" variant="outlined" className={clsx(classes.appbar)}>
         <Toolbar className={clsx(classes.toolbar)} variant="regular">
-          <Typography variant="overline" noWrap>
+          <Typography
+            onClick={() => setCollapsed(!collapsed)}
+            style={{ cursor: 'pointer' }}
+            variant="overline"
+            noWrap
+          >
             {title}
           </Typography>
 
@@ -44,11 +44,11 @@ export default ({ title }) => {
               size="small"
             >
               {collapsed ? (
-                <Fade key={1} in={collapsed}>
+                <Fade key={1} timeout={750} in={collapsed}>
                   <ExpandMoreIcon />
                 </Fade>
               ) : (
-                <Fade key={2} in={!collapsed}>
+                <Fade key={2} timeout={750} in={!collapsed}>
                   <ExpandLessIcon />
                 </Fade>
               )}

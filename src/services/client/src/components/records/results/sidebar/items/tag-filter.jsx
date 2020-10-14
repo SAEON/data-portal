@@ -59,31 +59,31 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
 
   return (
     <>
-      <AppBar
-        className={clsx(classes.appbar)}
-        position="relative"
-        variant="outlined"
-        style={{ zIndex: 800 }}
-      >
+      <AppBar className={clsx(classes.appbar)} position="relative" variant="outlined">
         <Toolbar className={clsx(classes.toolbar)} variant="regular">
-          <Typography variant="overline" noWrap>
+          <Typography
+            onClick={() => setCollapsed(!collapsed)}
+            style={{ cursor: 'pointer' }}
+            variant="overline"
+            noWrap
+          >
             {title}
           </Typography>
 
           <div style={{ marginLeft: 'auto' }}>
             {/* Icon */}
             <IconButton
-              aria-label="Collapse filter"
               onClick={() => setCollapsed(!collapsed)}
+              aria-label="Collapse filter"
               color="inherit"
               size="small"
             >
               {collapsed ? (
-                <Fade key={1} in={collapsed}>
+                <Fade key={1} timeout={750} in={collapsed}>
                   <ExpandMoreIcon />
                 </Fade>
               ) : (
-                <Fade key={2} in={!collapsed}>
+                <Fade key={2} timeout={750} in={!collapsed}>
                   <ExpandLessIcon />
                 </Fade>
               )}

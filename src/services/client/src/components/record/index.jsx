@@ -1,34 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { gql } from '@apollo/client'
 import { Loading } from '../../components'
 import { WithQglQuery } from '../../hooks'
-import Layout from './layout'
+import FieldView from './field-view'
+import Header from './header'
+import CodeView from './code-view'
+import { Footer } from '../'
 
-export default ({ id }) => (
-  <WithQglQuery
-    QUERY={gql`
-      query catalogue($ids: [ID!]) {
-        catalogue {
-          records(ids: $ids) {
-            nodes {
-              target
+export default ({ id }) => {
+  const [codeView, updateCodeView] = useState(false)
+
+  return (
+    <WithQglQuery
+      QUERY={gql`
+        query catalogue($ids: [ID!]) {
+          catalogue {
+            records(ids: $ids) {
+              nodes {
+                target
+              }
             }
           }
         }
-      }
-    `}
-    variables={{ ids: [id] }}
-  >
-    {({ loading, error, data }) => {
-      if (error) {
-        throw new Error(`Error retrieving record ${id}. ${error}`)
-      }
+      `}
+      variables={{ ids: [id] }}
+    >
+      {({ loading, error, data }) => {
+        if (error) {
+          throw new Error(`Error retrieving record ${id}. ${error}`)
+        }
 
-      return loading ? (
-        <Loading />
-      ) : (
-        <Layout id={id} json={data?.catalogue?.records?.nodes?.[0]?.target?._source} />
-      )
-    }}
-  </WithQglQuery>
-)
+        return loading ? (
+          <Loading />
+        ) : (
+          <>
+            <Header
+              codeView={codeView}
+              toggleCodeView={() => updateCodeView(!codeView)}
+              {...data?.catalogue?.records?.nodes?.[0]?.target?._source}
+            />
+            {codeView ? (
+              <CodeView
+                codeView={codeView}
+                json={data?.catalogue?.records?.nodes?.[0]?.target?._source}
+              />
+            ) : (
+              <FieldView
+                codeView={codeView}
+                {...data?.catalogue?.records?.nodes?.[0]?.target?._source}
+              />
+            )}
+            <Footer />
+          </>
+        )
+      }}
+    </WithQglQuery>
+  )
+}

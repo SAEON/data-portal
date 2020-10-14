@@ -10,37 +10,16 @@ export default ({ results }) => {
     <Grid container item xs={12}>
       {results.length ? (
         results.map(item => {
-          // Get record values
-          const { target } = item
-          const { _source, _score } = target
-          const {
-            titles,
-            creators,
-            descriptions,
-            immutableResource,
-            id,
-            linkedResources,
-            doi,
-          } = _source
+          const { _source } = item.target
 
           return (
             <Grid
-              key={id}
+              key={_source.id}
               item
               xs={12}
               style={isMobile ? { padding: '16px 16px 0 16px' } : { marginBottom: 16 }}
             >
-              <ResultItem
-                id={id}
-                doi={doi}
-                _source={_source}
-                _score={_score}
-                titles={titles}
-                creators={creators}
-                descriptions={descriptions}
-                immutableResource={immutableResource}
-                linkedResources={linkedResources}
-              />
+              <ResultItem {..._source} />
             </Grid>
           )
         })

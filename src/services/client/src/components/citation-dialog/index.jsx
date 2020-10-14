@@ -5,7 +5,9 @@ import { gql } from '@apollo/client'
 import Dialogue from './dialogue'
 import { WithQglQuery } from '../../hooks'
 
-export default ({ record, children, ...props }) => {
+// TODO records now have doi
+
+export default ({ doi, id, children, ...props }) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -56,7 +58,8 @@ export default ({ record, children, ...props }) => {
             )}
             {open ? (
               <Dialogue
-                record={record}
+                doi={doi}
+                id={id}
                 open={open}
                 setOpen={setOpen}
                 citationStyles={data?.citationStyles}

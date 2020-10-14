@@ -18,39 +18,39 @@ import { WebSocketLink } from '@apollo/link-ws'
 
 export default () => {
   return (
-    <BackgroundImageProvider>
-      <ErrorProvider>
-        <NativeExtensions>
-          <ApolloProvider
-            client={
-              new ApolloClient({
-                cache: new InMemoryCache(),
-                link: split(
-                  ({ query }) => {
-                    const definition = getMainDefinition(query)
-                    return (
-                      definition.kind === 'OperationDefinition' &&
-                      definition.operation === 'subscription'
-                    )
-                  },
-                  new WebSocketLink({
-                    uri: GQL_SUBSCRIPTIONS_PROVIDER,
-                    options: {
-                      reconnect: true,
-                    },
-                  }),
-                  new HttpLink({
-                    uri: GQL_PROVIDER,
-                    credentials: 'include',
-                  })
-                ),
+    <NativeExtensions>
+      <ApolloProvider
+        client={
+          new ApolloClient({
+            cache: new InMemoryCache(),
+            link: split(
+              ({ query }) => {
+                const definition = getMainDefinition(query)
+                return (
+                  definition.kind === 'OperationDefinition' &&
+                  definition.operation === 'subscription'
+                )
+              },
+              new WebSocketLink({
+                uri: GQL_SUBSCRIPTIONS_PROVIDER,
+                options: {
+                  reconnect: true,
+                },
+              }),
+              new HttpLink({
+                uri: GQL_PROVIDER,
+                credentials: 'include',
               })
-            }
-          >
-            <ApplicationLogger>
-              <CssBaseline>
-                <ThemeProvider theme={theme}>
-                  <GlobalProvider>
+            ),
+          })
+        }
+      >
+        <ErrorProvider>
+          <GlobalProvider>
+            <BackgroundImageProvider>
+              <ApplicationLogger>
+                <CssBaseline>
+                  <ThemeProvider theme={theme}>
                     <SnackbarProvider>
                       <DefaultApplicationNotices>
                         <AuthProvider>
@@ -58,13 +58,13 @@ export default () => {
                         </AuthProvider>
                       </DefaultApplicationNotices>
                     </SnackbarProvider>
-                  </GlobalProvider>
-                </ThemeProvider>
-              </CssBaseline>
-            </ApplicationLogger>
-          </ApolloProvider>
-        </NativeExtensions>
-      </ErrorProvider>
-    </BackgroundImageProvider>
+                  </ThemeProvider>
+                </CssBaseline>
+              </ApplicationLogger>
+            </BackgroundImageProvider>
+          </GlobalProvider>
+        </ErrorProvider>
+      </ApolloProvider>
+    </NativeExtensions>
   )
 }
