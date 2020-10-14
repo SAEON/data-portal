@@ -46,11 +46,11 @@ export default () => {
         }
       >
         <ErrorProvider>
-          <GlobalProvider>
-            <BackgroundImageProvider>
-              <ApplicationLogger>
-                <CssBaseline>
-                  <ThemeProvider theme={theme}>
+          <CssBaseline>
+            <ThemeProvider theme={theme}>
+              <GlobalProvider>
+                <BackgroundImageProvider>
+                  <ApplicationLogger>
                     <SnackbarProvider>
                       <DefaultApplicationNotices>
                         <AuthProvider>
@@ -58,11 +58,11 @@ export default () => {
                         </AuthProvider>
                       </DefaultApplicationNotices>
                     </SnackbarProvider>
-                  </ThemeProvider>
-                </CssBaseline>
-              </ApplicationLogger>
-            </BackgroundImageProvider>
-          </GlobalProvider>
+                  </ApplicationLogger>
+                </BackgroundImageProvider>
+              </GlobalProvider>
+            </ThemeProvider>
+          </CssBaseline>
         </ErrorProvider>
       </ApolloProvider>
     </NativeExtensions>
