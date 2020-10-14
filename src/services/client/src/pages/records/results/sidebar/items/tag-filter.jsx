@@ -19,7 +19,7 @@ import clsx from 'clsx'
 
 const LIST_SIZE = 3
 
-export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) => {
+export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', style = {} }) => {
   const [showAll, toggleShowAll] = useState(false)
   const { global, setGlobal } = useContext(GlobalContext)
   const { terms } = global
@@ -59,7 +59,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc' }) =>
 
   return (
     <>
-      <AppBar className={clsx(classes.appbar)} position="relative" variant="outlined">
+      <AppBar style={style} className={clsx(classes.appbar)} position="relative" variant="outlined">
         <Toolbar className={clsx(classes.toolbar)} variant="regular">
           <Typography
             onClick={() => setCollapsed(!collapsed)}

@@ -36,16 +36,15 @@ export default () => {
           throw new Error('Error loading search state for Atlas')
         }
 
+        const savedState = Object.assign(
+          { ...(data?.browserClient.findSearchState || {}) },
+          { dois: [...(data?.browserClient.findSearchState.selectedDois || [])] }
+        )
+
         return loading ? (
           <Loading />
         ) : (
-          <WithCatalogue
-            {...Object.assign(
-              { ...(data?.browserClient.findSearchState || {}) },
-              { dois: [...(data?.browserClient.findSearchState.selectedDois || [])] }
-            )}
-            pageSize={MAX_ATLAS_DATASETS}
-          >
+          <WithCatalogue {...savedState} pageSize={MAX_ATLAS_DATASETS}>
             {({ error, loading, data }) => {
               if (error) {
                 throw new Error('Error searching catalogue')

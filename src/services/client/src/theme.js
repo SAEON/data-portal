@@ -8,6 +8,9 @@ export default createMuiTheme({
       minHeight: 128,
     },
   },
+  shape: {
+    borderRadius: 2,
+  },
   overrides: {
     MuiTypography: {
       h6: {

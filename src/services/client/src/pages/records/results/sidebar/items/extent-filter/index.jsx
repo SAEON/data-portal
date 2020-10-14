@@ -9,6 +9,7 @@ import {
   Fade,
   Card,
 } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap } from '../../../../../../lib/ol'
@@ -21,10 +22,16 @@ export default ({ title }) => {
   const { global } = useContext(GlobalContext)
   const [collapsed, setCollapsed] = useState(!global?.extent)
   const classes = useStyles()
+  const theme = useTheme()
 
   return (
     <>
-      <AppBar position="relative" variant="outlined" className={clsx(classes.appbar)}>
+      <AppBar
+        position="relative"
+        variant="outlined"
+        className={clsx(classes.appbar)}
+        style={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0` }}
+      >
         <Toolbar className={clsx(classes.toolbar)} variant="regular">
           <Typography
             onClick={() => setCollapsed(!collapsed)}
