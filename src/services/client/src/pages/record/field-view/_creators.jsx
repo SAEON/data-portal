@@ -15,7 +15,7 @@ export default ({ creators }) => (
     <br />
     {creators.map((creator, i) => (
       <div key={creator.name}>
-        <Typography variant="body2">
+        <Typography gutterBottom variant="body2">
           <sup>[{i + 1}]</sup>&nbsp;
           {creator.affiliations.map(aff => aff.affiliation)}
         </Typography>

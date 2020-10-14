@@ -45,6 +45,7 @@ export default ({
             >
               {titles.length ? <Titles titles={titles} /> : undefined}
               {creators.length ? <Creators creators={creators} /> : undefined}
+              {rightsList?.length ? <RightsList rightsList={rightsList} /> : undefined}
               {geoLocations.length ? <GeoLocations geoLocations={geoLocations} /> : undefined}
               {dates.length ? <Dates dates={dates} /> : undefined}
               {publisher ? (
@@ -57,7 +58,6 @@ export default ({
                 <LinkedResources linkedResources={linkedResources} />
               ) : undefined}
               <Identifiers identifier={identifier} alternateIdentifiers={alternateIdentifiers} />
-              {rightsList?.length ? <RightsList rightsList={rightsList} /> : undefined}
             </Grid>
           </Fade>
         </Grid>
