@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Grid, Fade, Card } from '@material-ui/core'
 import TagFilter from './items/tag-filter'
-import ExtentFilter from './items/extent-filter'
+import { Loading } from '../../../../components'
+
+const ExtentFilter = lazy(() => import('./items/extent-filter'))
 
 export default ({ catalogue }) => {
   return (
@@ -10,7 +12,9 @@ export default ({ catalogue }) => {
         <Card variant="outlined" style={{ border: 'none' }}>
           {/* Area filter */}
           <Grid item xs={12}>
-            <ExtentFilter title="Extent Filter" />
+            <Suspense fallback={<Loading />}>
+              <ExtentFilter title="Extent Filter" />
+            </Suspense>
           </Grid>
 
           {/* Keywords */}
