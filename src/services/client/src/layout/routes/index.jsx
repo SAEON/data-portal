@@ -5,7 +5,6 @@ import Transition from './_transition'
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
-const AboutPage = lazy(() => import('../../pages/about'))
 const Render = lazy(() => import('../../pages/render'))
 const AtlasPage = lazy(() => import('../../pages/atlas'))
 
@@ -72,18 +71,6 @@ export default withRouter(() => {
         render={() => (
           <Transition>
             <HomePage />
-          </Transition>
-        )}
-      />
-
-      {/* INFO */}
-      <Route
-        key={'about'}
-        path={'/about'}
-        exact={true}
-        render={() => (
-          <Transition tKey="about">
-            <AboutPage />
           </Transition>
         )}
       />

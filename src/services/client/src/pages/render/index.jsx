@@ -1,7 +1,8 @@
 import React from 'react'
-import { Records, Record, Atlas, Home } from '../../components'
+import { Records, Record, Atlas } from '../../components'
 import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'
+import Home from '../home'
 
 const components = {
   '': Home,

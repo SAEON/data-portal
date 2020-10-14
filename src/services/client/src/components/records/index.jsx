@@ -4,7 +4,6 @@ import SearchBar from './search-bar'
 import { isMobile } from 'react-device-detect'
 
 export default ({ showSearchBar = false, ...props } = {}) => {
-  console.log('rendering /records')
   return showSearchBar ? (
     <div
       style={{
