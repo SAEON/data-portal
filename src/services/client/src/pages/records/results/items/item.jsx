@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core'
 import { Explore as ViewIcon, FormatQuote as CitationIcon } from '@material-ui/icons'
 import { GlobalContext } from '../../../../contexts/global'
-import { CitationDialog, DataDownloadButton } from '../../../../components'
+import { CitationDialog } from '../../../../components'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
@@ -23,15 +23,7 @@ import { gql, useApolloClient } from '@apollo/client'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
-export default ({
-  doi,
-  titles,
-  creators,
-  descriptions,
-  id,
-  immutableResource,
-  linkedResources,
-}) => {
+export default ({ doi, titles, creators, descriptions, id, linkedResources }) => {
   const client = useApolloClient()
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -87,17 +79,7 @@ export default ({
             </Typography>
           )}
 
-          {/* Download Data */}
-          <DataDownloadButton
-            style={{ marginLeft: 8 }}
-            tooltipPlacement="left-start"
-            className={clsx(classes['small-icon-button'])}
-            size="small"
-            immutableResource={immutableResource}
-          />
-
           {/* PREVIEW */}
-
           {loading ? (
             <Fade in={true}>
               <CircularProgress thickness={2} size={18} style={{ margin: '0 6px' }} />
