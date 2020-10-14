@@ -7,10 +7,8 @@ import { WithQglQuery } from '../hooks'
 
 export const GlobalContext = createContext()
 
-export default ({ children }) => {
-  const { search, text = undefined, originId = undefined } = getUriState()
-
-  return (
+const FromSavedSearch = ({ id, children }) =>
+  id ? (
     <WithQglQuery
       QUERY={gql`
         query($id: ID!) {
@@ -19,57 +17,64 @@ export default ({ children }) => {
           }
         }
       `}
-      variables={{ id: search }}
+      variables={{ id }}
     >
       {({ error, loading, data }) => {
         if (error) {
-          // TODO - Get the error context from Apollo link
+          throw new Error('Unable to load saved search')
+        } else {
+          return loading ? <Loading /> : children(data?.browserClient.findSearchState)
         }
-
-        const state = data?.browserClient.findSearchState
-
-        return loading ? (
-          <Loading />
-        ) : (
-          <QuickForm
-            originId={originId || undefined}
-            text={text || state?.text || undefined}
-            extent={state?.extent || undefined}
-            terms={state?.terms || []}
-            ids={state?.ids || []}
-            dois={state?.dois || []}
-            selectedDois={state?.selectedDois || []}
-          >
-            {(setGlobal, global) => {
-              return (
-                <GlobalContext.Provider
-                  value={{
-                    global,
-                    setGlobal: (obj, clearHistory = false, cb) => {
-                      setGlobal(
-                        Object.assign(
-                          clearHistory
-                            ? {
-                                layers: [],
-                                text: undefined,
-                                extent: undefined,
-                                terms: [],
-                              }
-                            : {},
-                          obj
-                        )
-                      )
-                      if (cb) cb()
-                    },
-                  }}
-                >
-                  {children}
-                </GlobalContext.Provider>
-              )
-            }}
-          </QuickForm>
-        )
       }}
     </WithQglQuery>
+  ) : (
+    children()
+  )
+
+export default ({ children }) => {
+  const { search, text = undefined, originId = undefined } = getUriState()
+
+  return (
+    <FromSavedSearch id={search}>
+      {state => (
+        <QuickForm
+          originId={originId || undefined}
+          text={text || state?.text || undefined}
+          extent={state?.extent || undefined}
+          terms={state?.terms || []}
+          ids={state?.ids || []}
+          dois={state?.dois || []}
+          selectedDois={state?.selectedDois || []}
+        >
+          {(setGlobal, global) => {
+            return (
+              <GlobalContext.Provider
+                value={{
+                  global,
+                  setGlobal: (obj, clearHistory = false, cb) => {
+                    setGlobal(
+                      Object.assign(
+                        clearHistory
+                          ? {
+                              layers: [],
+                              text: undefined,
+                              extent: undefined,
+                              terms: [],
+                            }
+                          : {},
+                        obj
+                      )
+                    )
+                    if (cb) cb()
+                  },
+                }}
+              >
+                {children}
+              </GlobalContext.Provider>
+            )
+          }}
+        </QuickForm>
+      )}
+    </FromSavedSearch>
   )
 }
