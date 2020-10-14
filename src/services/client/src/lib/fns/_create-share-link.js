@@ -3,7 +3,11 @@ import { CLIENT_HOST_ADDRESS } from '../../config'
 export default ({ searchId, shareType }) => {
   const currentPath = window.location.pathname
 
-  if (['/', '/atlas'].includes(currentPath)) {
+  if (['/', '/home'].includes(currentPath)) {
+    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
+  }
+
+  if (['/atlas'].includes(currentPath)) {
     return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
   }
 
