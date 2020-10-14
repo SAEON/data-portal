@@ -1,17 +1,14 @@
-import React from 'react'
-import { Records } from '../../components'
+import React, { lazy, Suspense } from 'react'
+import { Loading } from '../../components'
 import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'
-import Home from '../home'
-import Atlas from '../atlas'
-import Record from '../record'
 
 const components = {
-  '': Home,
-  home: Home,
-  records: Records,
-  record: Record,
-  atlas: Atlas,
+  '': lazy(() => import('../home')),
+  home: lazy(() => import('../home')),
+  records: lazy(() => import('../records')),
+  record: lazy(() => import('../record')),
+  atlas: lazy(() => import('../atlas')),
 }
 
 export default ({ location }) => {
@@ -47,5 +44,9 @@ export default ({ location }) => {
     })
   )
 
-  return <Component {...props} />
+  return (
+    <Suspense fallback={<Loading />}>
+      <Component {...props} />
+    </Suspense>
+  )
 }

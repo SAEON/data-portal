@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core'
 import { Explore as ViewIcon, FormatQuote as CitationIcon } from '@material-ui/icons'
 import { GlobalContext } from '../../../../contexts/global'
-import { CitationDialog, DataDownloadButton } from '../../..'
+import { CitationDialog, DataDownloadButton } from '../../../../components'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'

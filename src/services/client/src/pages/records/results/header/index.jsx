@@ -24,9 +24,9 @@ import {
 import { isMobile } from 'react-device-detect'
 import { gql, useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { GlobalContext } from '../../../contexts/global'
-import ShareOrEmbed from '../../share-or-embed'
-import { MAX_ATLAS_DATASETS } from '../../../config'
+import { GlobalContext } from '../../../../contexts/global'
+import { ShareOrEmbed } from '../../../../components'
+import { MAX_ATLAS_DATASETS } from '../../../../config'
 import StyledBadge from './_styled-badge'
 
 const pageSizes = [

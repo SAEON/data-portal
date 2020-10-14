@@ -13,7 +13,7 @@ export default ({ searchId, shareType }) => {
   if (currentPath === '/records' && shareType === 'fullpage') {
     return `${CLIENT_HOST_ADDRESS}/render/records?${
       shareType === 'component' ? 'disableSidebar=true&' : ''
-    }search=${searchId}&showSearchBar=true`
+    }search=${searchId}`
   }
 
   /**
@@ -22,7 +22,7 @@ export default ({ searchId, shareType }) => {
   if (currentPath === '/records' || currentPath === '/render/records') {
     return `${CLIENT_HOST_ADDRESS}/render/records?${
       shareType === 'component' ? 'disableSidebar=true&' : ''
-    }search=${searchId}`
+    }search=${searchId}&showSearchBar=false`
   }
 
   /**
