@@ -1,7 +1,7 @@
 import React from 'react'
 import Row from '../_row'
 import { Typography } from '@material-ui/core'
-import { Link as SimpleLink } from '../..'
+import { Link as SimpleLink } from '../../../components'
 
 export default ({ linkedResources }) => (
   <Row title="Resources">

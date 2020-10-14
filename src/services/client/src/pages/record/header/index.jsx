@@ -15,7 +15,7 @@ import {
   Fade,
   CircularProgress,
 } from '@material-ui/core'
-import { CitationDialog, DataDownloadButton } from '../..'
+import { CitationDialog, DataDownloadButton } from '../../../components'
 import { useHistory } from 'react-router-dom'
 import { useApolloClient, gql } from '@apollo/client'
 
