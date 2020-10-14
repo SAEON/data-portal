@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from '@material-ui/core'
 import { Search as SearchIcon, Close as CloseIcon, Add as AddIcon } from '@material-ui/icons'
-import { MessageDialogue, Record } from '../../../../..'
+import { MessageDialogue, Record } from '../../../../../../components'
 import Minisearch from 'minisearch'
 import QuickForm from '@saeon/quick-form'
 import { debounce } from '../../../../../../lib/fns'

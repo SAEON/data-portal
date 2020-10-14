@@ -18,7 +18,12 @@ import {
   BarChart as ViewDataIcon,
 } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { MessageDialogue, Record, Slider, DataDownloadButton } from '../../../../../../..'
+import {
+  MessageDialogue,
+  Record,
+  Slider,
+  DataDownloadButton,
+} from '../../../../../../../../components'
 import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 
 export default ({

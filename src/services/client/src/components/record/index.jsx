@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { gql } from '@apollo/client'
-import { Loading } from '../../components'
+import { Loading, Footer } from '../../components'
 import { WithQglQuery } from '../../hooks'
 import FieldView from './field-view'
 import Header from './header'
 import CodeView from './code-view'
-import { Footer } from '../'
 
 export default ({ id }) => {
   const [codeView, updateCodeView] = useState(false)
