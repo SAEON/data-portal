@@ -2,10 +2,10 @@
   "index": {
     "analysis": {
       "normalizer": {
-        "doi_keyword": {
+        "keyword_trimmed_lower": {
           "type": "custom",
           "char_filter": [],
-          "filter": ["lowercase", "asciifolding"]
+          "filter": ["lowercase", "asciifolding", "trim"]
         }
       },
       "filter": {

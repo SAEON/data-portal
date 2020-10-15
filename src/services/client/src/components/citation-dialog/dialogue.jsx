@@ -15,10 +15,9 @@ import { DATA_CURATOR_CONTACT } from '../../config'
 const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'
 
-export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
-  const { identifier, id } = record
-  const DOI = identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI'
+// TODO - records now include a doi, so this can be cleaned up
 
+export default ({ doi, id, open, setOpen, citationStyles, citationLocales }) => {
   if (!id)
     throw new Error(
       `This metadata record has no identifier. Please contact ${DATA_CURATOR_CONTACT} with a screenshot of this page, or a copy of the current URL`
@@ -63,7 +62,7 @@ export default ({ record, open, setOpen, citationStyles, citationLocales }) => {
         fullWidth={true}
       >
         {/* TITLE */}
-        <DialogTitle>{DOI}</DialogTitle>
+        <DialogTitle>{doi}</DialogTitle>
 
         {/* TITLE */}
         <DialogContent>

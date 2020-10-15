@@ -3,7 +3,11 @@ import { CLIENT_HOST_ADDRESS } from '../../config'
 export default ({ searchId, shareType }) => {
   const currentPath = window.location.pathname
 
-  if (['/', '/atlas'].includes(currentPath)) {
+  if (['/', '/home'].includes(currentPath)) {
+    return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
+  }
+
+  if (['/atlas'].includes(currentPath)) {
     return `${CLIENT_HOST_ADDRESS}/render${currentPath}?search=${searchId}`
   }
 
@@ -13,7 +17,7 @@ export default ({ searchId, shareType }) => {
   if (currentPath === '/records' && shareType === 'fullpage') {
     return `${CLIENT_HOST_ADDRESS}/render/records?${
       shareType === 'component' ? 'disableSidebar=true&' : ''
-    }search=${searchId}&showSearchBar=true`
+    }search=${searchId}`
   }
 
   /**
@@ -22,7 +26,7 @@ export default ({ searchId, shareType }) => {
   if (currentPath === '/records' || currentPath === '/render/records') {
     return `${CLIENT_HOST_ADDRESS}/render/records?${
       shareType === 'component' ? 'disableSidebar=true&' : ''
-    }search=${searchId}`
+    }search=${searchId}&showSearchBar=false`
   }
 
   /**

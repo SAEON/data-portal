@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
-import { GlobalContext } from '../modules/provider-global'
+import { GlobalContext } from '../contexts/global'
 
 export default ({
   children = undefined,
@@ -11,10 +11,11 @@ export default ({
   summaryLimit = 50,
   ids = undefined,
   dois = undefined,
+  text = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
-  console.log('global', global)
-  const { extent, terms: _terms, text } = global
+  const { extent, terms: _terms } = global
+  text = text || global.text
 
   const result = useQuery(
     gql`

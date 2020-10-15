@@ -1,12 +1,12 @@
 {
   "name": "@catalogue/api",
-  "version": "0.0.243",
+  "version": "0.0.244",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --ext js,graphql,json --watch ./src --watch ../../packages/catalogue-search/src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-json-modules src'",
-    "start:prod": "NODE_ENV=production TZ=utc node --no-warnings --experimental-json-modules src",
+    "start": "nodemon --ext js,graphql,json --watch ./src --watch ../../packages/catalogue-search/src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --no-warnings --experimental-json-modules src'",
+    "start:prod": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_ENV=production TZ=utc node --no-warnings --experimental-json-modules src",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },

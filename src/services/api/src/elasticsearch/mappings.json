@@ -31,17 +31,20 @@
           "fields": {
             "raw": {
               "ignore_above": 256,
-              "type": "keyword"
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
-        "match_mapping_type": "date"
+        "match_mapping_type": "string",
+        "match": "gte|lte"
       }
     },
     {
       "spatial": {
         "mapping": {
           "type": "keyword",
+          "normalizer": "keyword_trimmed_lower",
           "fields": {
             "geo_shape": {
               "type": "geo_shape"
@@ -62,16 +65,46 @@
       }
     },
     {
+      "name": {
+        "mapping": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "name"
+      }
+    },
+    {
+      "subject": {
+        "mapping": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "subject"
+      }
+    },
+    {
       "DOIS": {
         "mapping": {
           "type": "text",
           "fields": {
             "raw": {
-              "type": "keyword"
-            },
-            "raw_lowercase": {
+              "ignore_above": 256,
               "type": "keyword",
-              "normalizer": "doi_keyword"
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
@@ -87,12 +120,13 @@
           "fields": {
             "raw": {
               "ignore_above": 256,
-              "type": "keyword"
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
             }
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|identifier"
+        "unmatch": "publicationYear|identifier|name|subject|gte|lte"
       }
     }
   ]

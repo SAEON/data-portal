@@ -7,13 +7,14 @@ import {
   CATALOGUE_SECRET,
   ES_TEMPLATE_INTEGRATION_ENABLED,
   ES_INDEX_INTEGRATION_ENABLED,
+  ES_TEMPLATE,
 } from '../config.js'
 import mappings from './mappings.json'
 import settings from './settings.json'
 import schema from '../graphql/schema/index.js'
 
 const { graphql: execute } = graphql
-const TEMPLATE_URI = `${ES_HOST_ADDRESS}/_index_template/${ES_INDEX}`
+const TEMPLATE_URI = `${ES_HOST_ADDRESS}/_index_template/${ES_TEMPLATE}`
 
 export const configure = async () => {
   /**
@@ -28,7 +29,7 @@ export const configure = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        index_patterns: [ES_INDEX],
+        index_patterns: [`${ES_TEMPLATE}-*`],
         template: {
           settings,
           mappings,
@@ -64,7 +65,7 @@ export const configure = async () => {
   if (ES_INDEX_INTEGRATION_ENABLED === 'enabled') {
     execute(
       schema,
-      ` query ($authorizationCode: String!) {
+      `query ($authorizationCode: String!) {
         catalogue {
           refreshIndex(authorizationCode: $authorizationCode)
         }

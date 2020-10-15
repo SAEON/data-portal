@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { TextField, InputAdornment } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { GlobalContext } from '../../modules/provider-global'
+import { GlobalContext } from '../../contexts/global'
 import { debounce } from '../../lib/fns'
 
 export default ({

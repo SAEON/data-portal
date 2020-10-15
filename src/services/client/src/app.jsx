@@ -2,97 +2,69 @@ import React from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
-import { LATEST_COMMIT, DEFAULT_NOTICES } from './config'
 import { ApolloProvider } from '@apollo/client'
-import ErrorBoundary from './modules/error-boundary'
-import ServerLogger from './components/server-logger'
-import AuthProvider from './modules/provider-auth'
-import Layout from './modules/layout'
+import ErrorProvider from './contexts/error'
+import GlobalProvider from './contexts/global'
+import AuthProvider from './contexts/authentication'
+import Layout from './layout'
 import theme from './theme'
-import { debounce } from './lib/fns'
-import packageJson from '../package.json'
-import { useSnackbar } from 'notistack'
+import { SnackbarProvider } from 'notistack'
+import BackgroundImageProvider from './contexts/background-image'
+import { NativeExtensions, ApplicationLogger, DefaultApplicationNotices } from './components'
+import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
+import { HttpLink, split } from '@apollo/client'
+import { getMainDefinition } from '@apollo/client/utilities'
+import { WebSocketLink } from '@apollo/link-ws'
 
-/*this should probably be an imported function. target has circular references that cause errors when storing target.
-This function is to remove circular references. 
-Currently it only keeps designated props but later can iterate and remove circular references
-returns a simple object but will later return a more appropriate value(e.g. xml)*/
-function simplifyTarget(target) {
-  const { id, height, width, tagName } = target
-  var simpleTarget = { tagName, id, class: target.getAttribute('class'), height, width }
-  return simpleTarget
-}
-
-export default ({ link }) => {
-  const { enqueueSnackbar } = useSnackbar()
-  const notices = DEFAULT_NOTICES.split(';')
-    .filter(_ => _)
-    .map(str => {
-      const [msg, variant] = str.split(',').map(s => s.trim())
-      return {
-        msg,
-        variant,
-      }
-    })
-
-  notices.forEach(({ msg, variant }) =>
-    enqueueSnackbar(msg, {
-      variant,
-    })
-  )
-
+export default () => {
   return (
-    <ApolloProvider
-      client={
-        new ApolloClient({
-          cache: new InMemoryCache(),
-          link,
-        })
-      }
-    >
-      <CssBaseline>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundary>
-            <AuthProvider>
-              <ServerLogger
-                event={'click'}
-                handle={async ({ type, target, x, y }) =>
-                  // console.log('target', target)
-                  console.gql({
-                    clientVersion: packageJson.version,
-                    type,
-                    commitHash: LATEST_COMMIT,
-                    createdAt: new Date(),
-                    info: {
-                      x,
-                      y,
-                      target: simplifyTarget(target), // TODO - We should store the HTML of the DOM element
-                    },
-                  })
-                }
-              >
-                <ServerLogger
-                  event={'mousemove'}
-                  handle={debounce(async ({ type, x, y }) =>
-                    console.gql({
-                      clientVersion: packageJson.version,
-                      type,
-                      commitHash: LATEST_COMMIT,
-                      createdAt: new Date(),
-                      info: {
-                        x,
-                        y,
-                      },
-                    })
-                  )}
-                >
-                  <Layout />
-                </ServerLogger>
-              </ServerLogger>
-            </AuthProvider>
-          </ErrorBoundary>
-        </ThemeProvider>
-      </CssBaseline>
-    </ApolloProvider>
+    <NativeExtensions>
+      <ApolloProvider
+        client={
+          new ApolloClient({
+            cache: new InMemoryCache(),
+            link: split(
+              ({ query }) => {
+                const definition = getMainDefinition(query)
+                return (
+                  definition.kind === 'OperationDefinition' &&
+                  definition.operation === 'subscription'
+                )
+              },
+              new WebSocketLink({
+                uri: GQL_SUBSCRIPTIONS_PROVIDER,
+                options: {
+                  reconnect: true,
+                },
+              }),
+              new HttpLink({
+                uri: GQL_PROVIDER,
+                credentials: 'include',
+              })
+            ),
+          })
+        }
+      >
+        <ErrorProvider>
+          <CssBaseline>
+            <ThemeProvider theme={theme}>
+              <GlobalProvider>
+                <BackgroundImageProvider>
+                  <ApplicationLogger>
+                    <SnackbarProvider>
+                      <DefaultApplicationNotices>
+                        <AuthProvider>
+                          <Layout />
+                        </AuthProvider>
+                      </DefaultApplicationNotices>
+                    </SnackbarProvider>
+                  </ApplicationLogger>
+                </BackgroundImageProvider>
+              </GlobalProvider>
+            </ThemeProvider>
+          </CssBaseline>
+        </ErrorProvider>
+      </ApolloProvider>
+    </NativeExtensions>
   )
 }
