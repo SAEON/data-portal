@@ -29,6 +29,8 @@ jobs:
           echo "CATALOGUE_SECRET=${{ secrets.CATALOGUE_SECRET }}" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
           echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
+          echo "POSTGIS_USER=${{ secrets.POSTGIS_USER }}" >> src/services/api/.env
+          echo "POSTGIS_PSWD=${{ secrets.POSTGIS_PSWD }}" >> src/services/api/.env
 
       - name: Configure services/client
         run: |

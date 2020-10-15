@@ -1,12 +1,12 @@
 version: '3.7'
 
-
 volumes:
   mongo:
     driver: local
   elasticsearch:
-    driver: local  
-
+    driver: local
+  postgis:
+    driver: local
 
 services:
   elasticsearch:
@@ -54,6 +54,19 @@ services:
       - mongo:/data/db/
     ports:
       - 27017:27017
+
+  postgis:
+    build: src/services/postgis
+    container_name: postgis
+    environment:
+      POSTGRES_USER: ${postgres_user}
+      POSTGRES_PASSWORD: ${postgres_password}
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - 5442:5432 #Guarantees a unique port
+    volumes:
+      - postgis:/var/lib/postgresql/data/pgdata
 
   proxy:
     container_name: proxy

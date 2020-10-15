@@ -32,6 +32,7 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
   - [Material UI](https://material-ui.com/)
 
 # Quick start
+
 Setup the repository for development. The repository _should_ be supported cross-platform - on any platform that `Node.js` can be installed. However, this workflow has only been tested on Ubuntu.
 
 ```sh
@@ -54,7 +55,7 @@ npm run install-dependencies
 
 ### Start the services
 
-The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON VPN. After the first start you don't have to connect to the VPN when developing on your local machine.
+The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON VPN. After the first start you don't have to connect to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
 
 #### MongoDB
 
@@ -105,7 +106,8 @@ Continuous deployment is supported targeting a CentOS 7 environment
 6. Push from local to your forked repository to trigger a deployment
 
 ## SAEON's Deployment context
-As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compoose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compose`. Endpoints of SAEON's development and production deployment are listed below.
+
+As of September 2020 SAEON currently deploys two instances of the catalogue stack - a development and a production instance. For a full breakdown of services that run to support an instance of the catalogue stack refer [the docker compose file](/docker-compose.yml). To replicate the SAEON deployment, use `docker-compose`. Endpoints of SAEON's development and production deployment are listed below.
 
 ```sh
 # Clone the repo
@@ -120,6 +122,7 @@ docker-compose up -d --force-recreate --build
 ```
 
 #### SAEON development endpoints
+
 ```
 catalogue.saeon.dvn
 api.catalogue.saeon.dvn (/graphql & /proxy)
@@ -128,6 +131,7 @@ kibana.saeon.dvn
 ```
 
 #### SAEON production endpoints
+
 ```
 catalogue.saeon.ac.za
 api.catalogue.saeon.ac.za (/graphql & /proxy)
@@ -136,7 +140,8 @@ kibana.saeon.int
 ```
 
 ## Deploying individual services
-Deploy services in the `src/services` directory individually as docker containers via the `docker` CLI. Note that compared to the `docker` CLI commands above, 3rd party services are configured slightly differently in the `docker-compose` deployment. 
+
+Deploy services in the `src/services` directory individually as docker containers via the `docker` CLI. Note that compared to the `docker` CLI commands above, 3rd party services are configured slightly differently in the `docker-compose` deployment.
 
 ```sh
 docker build -t <image name> -f ./src/services/<service name>/Dockerfile .

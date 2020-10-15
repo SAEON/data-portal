@@ -15,6 +15,12 @@ export const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017'
 export const MONGO_USER = process.env.MONGO_USER || 'admin'
 export const MONGO_PSWD = process.env.MONGO_PSWD || 'password'
 
+// Postgis
+export const POSTGIS_DB = process.env.POSTGIS_DB || 'catalogue'
+// export const POSTGIS_URL = process.env.POSTGIS_URL || 'postgis://localhost:5442'
+export const POSTGIS_USER = process.env.POSTGIS_USER || 'admin'
+export const POSTGIS_PSWD = process.env.POSTGIS_PSWD || 'password'
+
 // HTTP
 export const PORT = process.env.PORT || 3000
 export const GQL_PROVIDER = process.env.GQL_PROVIDER || 'http://localhost:3000'

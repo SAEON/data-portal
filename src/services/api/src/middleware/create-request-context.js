@@ -1,4 +1,4 @@
-import { db, collections, getDataLoaders } from '../mongo/index.js'
+import { db as mongoDb, collections, getDataLoaders } from '../mongo/index.js'
 import Catalogue from '../lib/catalogue.js'
 import { HTTP_PROXY, ES_INDEX } from '../config.js'
 
@@ -10,9 +10,12 @@ const catalogue = new Catalogue({
 export default app => async (_, next) => {
   app.context.catalogue = catalogue
   app.context.mongo = {
-    db,
+    db: mongoDb,
     collections,
     dataLoaders: getDataLoaders(),
+  }
+  app.context.pg = {
+    db
   }
   await next()
 }
