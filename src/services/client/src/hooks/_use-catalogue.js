@@ -14,7 +14,7 @@ export default ({
   text = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
-  const { extent, terms: _terms } = global
+  const { extent, terms: _terms, referrerId } = global
   text = text || global.text
 
   const result = useQuery(
@@ -30,8 +30,9 @@ export default ({
         $summaryLimit: Int
         $ids: [ID!]
         $dois: [String!]
+        $referrerId: String
       ) {
-        catalogue {
+        catalogue(referrerId: $referrerId) {
           summary(
             fields: $fields
             filterByText: $match
@@ -83,6 +84,7 @@ export default ({
         after: endCursor,
         before: startCursor,
         summaryLimit,
+        referrerId,
       },
     }
   )

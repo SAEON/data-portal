@@ -147,8 +147,8 @@ input FeedbackInput {
 # GraphQL types
 
 type Query {
-  # Return the Catalogue entity
-  catalogue: Catalogue!
+  # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
+  catalogue(referrerId: String): Catalogue!
   # Return the BrowserClient entity
   browserClient: BrowserClient!
 }
