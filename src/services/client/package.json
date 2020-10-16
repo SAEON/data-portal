@@ -13,8 +13,8 @@
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../../packages/catalogue-search/src/**/*.@(js|jsx)\" \"../../packages/snap-menus/src/**/*.@(js|jsx)\" \"../../packages/logger/src/**/*.@(js|jsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx)\" \"../../packages/ol-react/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --open",
-    "ncu": "ncu --reject @date-io/date-fns",
-    "ncu -u": "ncu -u --reject @date-io/date-fns"
+    "ncu": "ncu --reject @date-io/date-fns,webpack,webpack-cli",
+    "ncu -u": "ncu -u --reject @date-io/date-fns,webpack,webpack-cli"
   },
   "repository": {
     "type": "git",
@@ -39,11 +39,11 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
-    "@saeon/logger": "^6.0.5",
-    "@saeon/ol-react": "^10.0.2",
-    "@saeon/pkce-client": "0.5.12",
-    "@saeon/quick-form": "3.0.2",
-    "@saeon/snap-menus": "^5.0.6",
+    "@saeon/logger": "^6.1.0",
+    "@saeon/ol-react": "^10.1.0",
+    "@saeon/pkce-client": "0.6.0",
+    "@saeon/quick-form": "3.1.0",
+    "@saeon/snap-menus": "^5.1.0",
     "@svgr/webpack": "^5.4.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-imports": "^2.0.0",
