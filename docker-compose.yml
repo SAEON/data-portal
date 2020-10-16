@@ -56,7 +56,8 @@ services:
       - 27017:27017
 
   postgis:
-    build: src/services/postgis
+    # build: src/services/postgis
+    image: postgis/postgis:12-3.0
     container_name: postgis
     environment:
       POSTGRES_USER: ${postgres_user}

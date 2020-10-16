@@ -1,4 +1,3 @@
-
 import createPool from './_pool'
 const pool = createPool()
 

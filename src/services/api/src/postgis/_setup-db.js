@@ -21,7 +21,7 @@ export default () =>
       console.log(
         '\n\n',
         '================================\n',
-        "Performing Postgis DB Setup\n",
+        'Performing Postgis DB Setup\n',
         '================================\n\n'
       )
       const configDbPool = pool()
@@ -31,8 +31,8 @@ export default () =>
       await configDbPool.end()
       console.log('testQuery complete 1')
       // Create the seacrifog schema, and populate database
-    //   await query({ text: loadSqlFile('migration/schema.sql') })
-    //   console.log('testQuery complete2')
+      //   await query({ text: loadSqlFile('migration/schema.sql') })
+      //   console.log('testQuery complete2')
     })()
   ).catch(err => {
     console.logError('Error initializing DEV database', err)

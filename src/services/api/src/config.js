@@ -17,11 +17,11 @@ export const MONGO_PSWD = process.env.MONGO_PSWD || 'password'
 
 // Postgis
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'catalogue'
-export const POSTGIS_HOST = POSTGIS_HOST || 'localhost'
+export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
 export const POSTGIS_USER = process.env.POSTGIS_USER || 'admin'
 export const POSTGIS_PSWD = process.env.POSTGIS_PSWD || 'password'
 export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
-export const FORCE_DB_RESET  = process.env.FORCE_DB_RESET  || true
+export const FORCE_DB_RESET = process.env.FORCE_DB_RESET || true
 
 // HTTP
 export const PORT = process.env.PORT || 3000
@@ -31,9 +31,11 @@ export const ALLOWED_ORIGINS =
   process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
 // Elasticsearch
+export const SAEON_ODP_PROVIDER =
+  process.env.SAEON_ODP_PROVIDER || 'https://odp.saeon.dvn/api/catalogue'
 export const ES_HOST_ADDRESS = process.env.ES_HOST_ADDRESS || `http://localhost:9200`
-export const ES_INDEX = process.env.ES_INDEX || 'odp'
-export const ES_INTEGRATION_BATCH_SIZE = process.env.ES_INTEGRATION_BATCH_SIZE || 100
+export const ES_TEMPLATE = process.env.ES_TEMPLATE || 'saeon-odp'
+export const ES_INDEX = `${ES_TEMPLATE}-${process.env.ES_INDEX || 'catalogue-search'}`
 export const ES_TEMPLATE_INTEGRATION_ENABLED =
   process.env.ES_TEMPLATE_INTEGRATION_ENABLED || 'enabled'
 export const ES_INDEX_INTEGRATION_ENABLED = process.env.ES_INDEX_INTEGRATION_ENABLED || 'enabled'

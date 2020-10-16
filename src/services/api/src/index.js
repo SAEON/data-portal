@@ -10,9 +10,9 @@ import zlib from 'zlib'
 import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
 import { configure as configureElasticsearch } from './elasticsearch/index.js'
-import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY, FORCE_DB_RESET  } from './config.js'
+import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY, FORCE_DB_RESET } from './config.js'
 import clientSession from './middleware/client-session.js'
-import setupDb from './postgis'
+// import setupDb from './postgis'
 
 if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
   console.error(
@@ -26,8 +26,9 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 // Configure Elasticsearch
 await configureElasticsearch()
 
-if(FORCE_DB_RESET)
-{setupDb()}
+if (FORCE_DB_RESET) {
+  setupDb()
+}
 /**
  * Setup HTTP server (Koa)
  *
