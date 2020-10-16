@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useRef } from 'react'
+import { lazy, Suspense, useRef } from 'react'
 import { Loading } from '../../components'
 import SideMenu from './side-menu'
 import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'

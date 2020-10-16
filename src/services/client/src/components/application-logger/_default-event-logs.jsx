@@ -1,4 +1,3 @@
-import React from 'react'
 import { RegisterEventLog } from '..'
 import { LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'

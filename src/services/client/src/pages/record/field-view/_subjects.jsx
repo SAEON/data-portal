@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react';
 import Row from '../_row'
 import { Grid, Chip } from '@material-ui/core'
 import { GlobalContext } from '../../../contexts/global'

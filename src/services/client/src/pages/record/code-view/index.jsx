@@ -1,4 +1,3 @@
-import React from 'react'
 import Row from '../_row'
 import { Grid, Fade } from '@material-ui/core'
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Grid, Fade } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 

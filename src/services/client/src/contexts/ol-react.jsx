@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import { OlReact, MapProxy } from '@saeon/ol-react'
 import { terrestrisBaseMap } from '../lib/ol'
 

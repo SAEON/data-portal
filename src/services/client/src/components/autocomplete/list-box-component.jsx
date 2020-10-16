@@ -1,4 +1,4 @@
-import React, {
+import {
   forwardRef,
   Children,
   isValidElement,
@@ -7,7 +7,7 @@ import React, {
   cloneElement,
   useRef,
   useEffect,
-} from 'react'
+} from 'react';
 import { useTheme } from '@material-ui/core/styles'
 import { useMediaQuery, ListSubheader } from '@material-ui/core'
 import { VariableSizeList } from 'react-window'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Typography, Slider } from '@material-ui/core'
 import QuickForm from '@saeon/quick-form'
 import { debounce } from '../../lib/fns'

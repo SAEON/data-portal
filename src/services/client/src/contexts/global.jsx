@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
 import { getUriState } from '../lib/fns'
 import { Loading } from '../components'

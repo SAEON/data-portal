@@ -1,4 +1,3 @@
-import React from 'react'
 import Results from './results'
 import SearchBar from './search-bar'
 import { isMobile } from 'react-device-detect'

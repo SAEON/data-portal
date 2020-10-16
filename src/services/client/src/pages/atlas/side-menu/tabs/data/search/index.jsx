@@ -1,4 +1,4 @@
-import React, { useContext, forwardRef, useState, useMemo, useEffect } from 'react'
+import { useContext, forwardRef, useState, useMemo, useEffect } from 'react';
 import { AtlasContext } from '../../../../state'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'

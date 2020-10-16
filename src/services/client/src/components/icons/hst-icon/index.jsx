@@ -1,4 +1,3 @@
-import React from 'react'
 import { SvgIcon } from '@material-ui/core'
 import HstLogo from './hst-logo.svg'
 

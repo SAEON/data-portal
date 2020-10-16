@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
 import {
   FormatQuote as CitationIcon,
   Code as CodeIcon,

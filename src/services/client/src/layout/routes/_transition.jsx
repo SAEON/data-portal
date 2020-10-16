@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { Fade } from '@material-ui/core'
 import { Loading } from '../../components'
 

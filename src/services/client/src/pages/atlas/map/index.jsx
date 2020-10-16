@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { MapContext } from '../../../contexts/ol-react'
 import { AtlasContext } from '../state'
 import { createLayer, LayerTypes } from '../../../lib/ol'

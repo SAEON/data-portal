@@ -1,4 +1,3 @@
-import React from 'react'
 import ResultItem from './item'
 import { Card, Grid, Typography } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'

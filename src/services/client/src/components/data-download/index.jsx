@@ -1,4 +1,3 @@
-import React from 'react'
 import { Tooltip, Button, IconButton } from '@material-ui/core'
 import { GetApp as GetAppIcon } from '@material-ui/icons'
 import SimpleLink from '../link'

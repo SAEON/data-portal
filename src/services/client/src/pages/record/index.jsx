@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { gql } from '@apollo/client'
 import { Loading, Footer } from '../../components'
 import { WithQglQuery } from '../../hooks'

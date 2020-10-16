@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react';
 import { Grid, Fade } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import TagFilter from './items/tag-filter'
