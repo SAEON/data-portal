@@ -61,7 +61,7 @@ services:
     environment:
       POSTGRES_USER: ${postgres_user}
       POSTGRES_PASSWORD: ${postgres_password}
-      POSTGRES_DB: postgres
+      POSTGRES_DB: catalogue
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5442:5432 #Guarantees a unique port

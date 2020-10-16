@@ -1,4 +1,5 @@
 import { db as mongoDb, collections, getDataLoaders } from '../mongo/index.js'
+// import { db as postgisDb} from '../postgis/index.js'
 import Catalogue from '../lib/catalogue.js'
 import { HTTP_PROXY, ES_INDEX } from '../config.js'
 
@@ -15,7 +16,7 @@ export default app => async (_, next) => {
     dataLoaders: getDataLoaders(),
   }
   app.context.pg = {
-    db
+    // db: postgisDb
   }
   await next()
 }
