@@ -1,4 +1,3 @@
-import React from 'react'
 import { Divider, Grid, Toolbar } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { RecordsSearch } from '../../../components'

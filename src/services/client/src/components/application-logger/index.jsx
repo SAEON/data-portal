@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
 import { configure as configureLogger } from '@saeon/logger'
 import { logToGql } from '@saeon/logger/log-to-graphql'

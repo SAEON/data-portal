@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Typography, Fade } from '@material-ui/core'
 
 export default props => {

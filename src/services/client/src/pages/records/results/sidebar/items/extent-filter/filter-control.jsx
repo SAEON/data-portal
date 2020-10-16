@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Tooltip, IconButton, Card } from '@material-ui/core'
 import { CropSquare as CropIcon, Close as CloseIcon } from '@material-ui/icons'
 import VectorLayer from 'ol/layer/Vector'

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const pStyle = {
   wordBreak: 'break-all',
 }

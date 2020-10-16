@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Tabs, Tab, AppBar, Fade } from '@material-ui/core'
 import { FilterList as FilterIcon, Layers as LayersIcon } from '@material-ui/icons'
 import { TabsContext } from '../'

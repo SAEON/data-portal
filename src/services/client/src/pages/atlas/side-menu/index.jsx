@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import { useMenu } from '@saeon/snap-menus'
 import Tabs from './tabs'
 

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { Loading } from '../../components'
 import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'

@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import { lazy } from 'react'
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
 import Transition from './_transition'
 

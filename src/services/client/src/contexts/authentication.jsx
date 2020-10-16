@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import {
   CLIENT_ID as clientId,
   REDIRECT_URL as redirectUrl,

@@ -1,4 +1,4 @@
-import React, { createContext, useMemo } from 'react'
+import { createContext, useMemo } from 'react'
 import npmUrl from 'url'
 import { CATALOGUE_API_ADDRESS } from '../../../config'
 import WKT from 'ol/format/WKT'

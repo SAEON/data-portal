@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Grid, useMediaQuery, Typography, Fade, Divider } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { gql } from '@apollo/client'

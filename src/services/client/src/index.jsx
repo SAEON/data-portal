@@ -2,7 +2,6 @@ import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import 'typeface-roboto'
 import './index.scss'
-import React from 'react'
 import { render } from 'react-dom'
 import Application from './app'
 

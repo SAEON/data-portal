@@ -25,6 +25,8 @@ module.exports = {
     'react/display-name': 0,
     'react/prop-types': 0,
     'no-prototype-builtins': 0,
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     react: {

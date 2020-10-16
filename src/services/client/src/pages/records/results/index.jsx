@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import Header from './header'
 import Sidebar from './sidebar'
 import Items from './items'

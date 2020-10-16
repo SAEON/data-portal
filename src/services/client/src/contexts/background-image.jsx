@@ -5,7 +5,7 @@
  * is chosen at random.
  */
 
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import { BACKGROUNDS } from '../config'
 
 const getBackgroundImagePath = () => {

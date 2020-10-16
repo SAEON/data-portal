@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import QuickForm from '@saeon/quick-form'
 import { gql, useMutation } from '@apollo/client'
 import { Rating } from '@material-ui/lab'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { createPortal } from 'react-dom'
 

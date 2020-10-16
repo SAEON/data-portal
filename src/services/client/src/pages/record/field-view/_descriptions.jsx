@@ -1,4 +1,3 @@
-import React from 'react'
 import Row from '../_row'
 import { Typography } from '@material-ui/core'
 
