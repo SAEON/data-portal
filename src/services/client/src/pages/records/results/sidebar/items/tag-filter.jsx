@@ -1,4 +1,4 @@
-import { useState, useContext, useMemo } from 'react';
+import { useState, useContext, useMemo } from 'react'
 import {
   Typography,
   Grid,
