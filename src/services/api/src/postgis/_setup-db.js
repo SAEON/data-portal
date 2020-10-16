@@ -1,5 +1,5 @@
 // import query from './_query'
-import pool from './_pool'
+import pool from './_pool.js'
 
 /**
  * Used to load the SQL files used to set up the database
@@ -26,13 +26,12 @@ export default () =>
       )
       const configDbPool = pool()
       console.log('starting testQuery')
-      const testQuery = 'SELECT * FROM users WHERE id = 1'
+      const testQuery = 'SELECT "Hello World"'
       await configDbPool.query(testQuery)
       await configDbPool.end()
       console.log('testQuery complete 1')
       // Create the seacrifog schema, and populate database
       //   await query({ text: loadSqlFile('migration/schema.sql') })
-      //   console.log('testQuery complete2')
     })()
   ).catch(err => {
     console.logError('Error initializing DEV database', err)

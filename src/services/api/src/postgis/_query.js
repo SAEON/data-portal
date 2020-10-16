@@ -1,4 +1,4 @@
-import createPool from './_pool'
+import createPool from './_pool.js'
 const pool = createPool()
 
 export default ({ text, values, name }) =>

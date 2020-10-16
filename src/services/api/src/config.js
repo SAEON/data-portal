@@ -21,7 +21,7 @@ export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
 export const POSTGIS_USER = process.env.POSTGIS_USER || 'admin'
 export const POSTGIS_PSWD = process.env.POSTGIS_PSWD || 'password'
 export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
-export const FORCE_DB_RESET = process.env.FORCE_DB_RESET || true
+
 
 // HTTP
 export const PORT = process.env.PORT || 3000
@@ -65,7 +65,6 @@ console.log('Configuration', {
   // Elasticsearch
   ES_HOST_ADDRESS,
   ES_INDEX,
-  ES_INTEGRATION_BATCH_SIZE,
   ES_TEMPLATE_INTEGRATION_ENABLED,
   ES_INDEX_INTEGRATION_ENABLED,
 })
