@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 import { MapContext } from '../../../../../../contexts/ol-react'
 import { AtlasContext } from '../../../../state'
 import { Typography, Box, Tooltip, IconButton } from '@material-ui/core'

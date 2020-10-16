@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { TextField, InputAdornment } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'

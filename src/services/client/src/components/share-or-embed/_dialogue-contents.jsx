@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
 import { GlobalContext } from '../../contexts/global'
 import { Link } from '..'

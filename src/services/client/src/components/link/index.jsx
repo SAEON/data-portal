@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef } from 'react'
 import useStyles from './style'
 
 export default forwardRef(

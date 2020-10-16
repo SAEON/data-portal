@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import { Button, CircularProgress } from '@material-ui/core'
 import { FormatQuote as CitationIcon } from '@material-ui/icons'
 import { gql } from '@apollo/client'

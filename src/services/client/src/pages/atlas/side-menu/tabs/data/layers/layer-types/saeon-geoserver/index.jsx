@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState } from 'react'
 import {
   Card,
   CardHeader,
