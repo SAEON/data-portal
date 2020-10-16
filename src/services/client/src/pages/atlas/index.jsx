@@ -5,6 +5,7 @@ import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
 import { CLIENT_HOST_ADDRESS, MAX_ATLAS_DATASETS } from '../../config'
+import { setShareLink } from './../../hooks'
 
 const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))
 const OlReactProvider = lazy(() => import('../../contexts/ol-react'))
@@ -12,6 +13,7 @@ const StateProvider = lazy(() => import('./state'))
 const Map = lazy(() => import('./map'))
 
 export default () => {
+  setShareLink('/atlas')
   const snapMenusContainer = useRef()
   const searchId = getUriState().search
   if (!searchId) {
