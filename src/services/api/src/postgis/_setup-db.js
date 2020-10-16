@@ -1,19 +1,4 @@
-// import query from './_query'
-import pool from './_pool.js'
-
-/**
- * Used to load the SQL files used to set up the database
- * @param {String} filepath Path to a SQL file (note that there are placeholders for variables)
- * @param  {...any} args Variables that get inserted into the placeholders in order. This seems unclear...
- */
-// const loadSqlFile = (filepath, ...args) => {
-//   let sql = readFileSync(normalize(join(__dirname, `./sql/${filepath}`))).toString('utf8')
-//   args.forEach((arg, i) => {
-//     const regex = new RegExp(`:${i + 1}`, 'g')
-//     sql = sql.replace(regex, `${arg}`)
-//   })
-//   return sql
-// }
+import query from './_query.js'
 
 export default () =>
   Promise.resolve(
@@ -24,14 +9,7 @@ export default () =>
         'Performing Postgis DB Setup\n',
         '================================\n\n'
       )
-      const configDbPool = pool()
-      console.log('starting testQuery')
-      const testQuery = 'SELECT "Hello World"'
-      await configDbPool.query(testQuery)
-      await configDbPool.end()
-      console.log('testQuery complete 1')
-      // Create the seacrifog schema, and populate database
-      //   await query({ text: loadSqlFile('migration/schema.sql') })
+      await query({ text: 'SELECT 999 AS x' })
     })()
   ).catch(err => {
     console.logError('Error initializing DEV database', err)

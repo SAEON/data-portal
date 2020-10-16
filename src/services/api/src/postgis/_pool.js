@@ -5,8 +5,8 @@ import {
   POSTGIS_PSWD,
   POSTGIS_PORT,
 } from '../config.js'
-import pkg from 'pg'
-const { Pool } = pkg
+import pg from 'pg'
+const { Pool } = pg
 
 export default () =>
   new Pool({
