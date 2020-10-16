@@ -8,11 +8,15 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
 import { CLIENT_HOST_ADDRESS, GQL_PROVIDER } from '../../config'
-import { WithQglQuery } from '../../hooks'
+import { WithQglQuery, setShareLink } from '../../hooks'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
 
 export default () => {
+  setShareLink({
+    uri: `${CLIENT_HOST_ADDRESS}/render`,
+    params: true,
+  })
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))

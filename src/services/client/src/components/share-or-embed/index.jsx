@@ -4,7 +4,7 @@ import { Tabs, Tab } from '@material-ui/core'
 import { Share as ShareIcon } from '@material-ui/icons'
 import DialogueContents from './_dialogue-contents'
 
-export default ({ icon, iconProps, tooltipProps, badgeProps, state, shareType }) => {
+export default ({ icon, iconProps, tooltipProps, badgeProps, state, params }) => {
   const [tabIndex, setTabIndex] = useState(0)
 
   return (
@@ -28,7 +28,7 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, state, shareType })
         <Tab label="Share" />
         <Tab label="Embed" />
       </Tabs>
-      <DialogueContents shareType={shareType} tabIndex={tabIndex} state={state} />
+      <DialogueContents tabIndex={tabIndex} state={state} params={params} />
     </MessageDialogue>
   )
 }

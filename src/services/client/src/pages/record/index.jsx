@@ -1,12 +1,18 @@
 import { useState } from 'react'
 import { gql } from '@apollo/client'
 import { Loading, Footer } from '../../components'
-import { WithQglQuery } from '../../hooks'
+import { WithQglQuery, setShareLink } from '../../hooks'
 import FieldView from './field-view'
 import Header from './header'
 import CodeView from './code-view'
+import { CLIENT_HOST_ADDRESS } from '../../config'
 
 export default ({ id }) => {
+  setShareLink({
+    uri: `${CLIENT_HOST_ADDRESS}/render/record?id=${id}`,
+    params: false,
+  })
+
   const [codeView, updateCodeView] = useState(false)
 
   return (

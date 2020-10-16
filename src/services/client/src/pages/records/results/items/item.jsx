@@ -97,6 +97,7 @@ export default ({ doi, titles, creators, descriptions, id, linkedResources }) =>
                   onClick={async e => {
                     e.stopPropagation()
                     setLoading(true)
+                    setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
                     const { data } = await client.mutate({
                       mutation: gql`
                         mutation($state: JSON!) {
@@ -154,7 +155,7 @@ export default ({ doi, titles, creators, descriptions, id, linkedResources }) =>
               checked={selectedDois.includes(doi)}
               onChange={(e, checked) => {
                 if (checked) {
-                  setGlobal({ selectedDois: [...selectedDois, doi] })
+                  setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
                 } else {
                   setGlobal({ selectedDois: selectedDois.filter(doi => doi !== doi) })
                 }
