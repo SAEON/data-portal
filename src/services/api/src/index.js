@@ -23,7 +23,7 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 }
 
 // Configure Elasticsearch
-await configureElasticsearch()
+configureElasticsearch().then(() => console.log('Elasticsearch configured'))
 
 /**
  * Setup HTTP server (Koa)

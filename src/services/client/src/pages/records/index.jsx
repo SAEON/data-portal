@@ -1,4 +1,4 @@
-import Results from './results'
+import Results from './search-results'
 import SearchBar from './search-bar'
 import { isMobile } from 'react-device-detect'
 import { CLIENT_HOST_ADDRESS } from '../../config'

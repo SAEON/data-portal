@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { SAEON_ODP_PROVIDER } from '../../../../../../config.js'
+import { SAEON_ODP_PROVIDER } from '../../../config.js'
 import parseDates from './_parse-dates.js'
 import parseSpatial from './_parse-spatial.js'
 

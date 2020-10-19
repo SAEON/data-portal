@@ -65,54 +65,6 @@
       }
     },
     {
-      "name": {
-        "mapping": {
-          "type": "text",
-          "fields": {
-            "raw": {
-              "ignore_above": 256,
-              "type": "keyword",
-              "normalizer": "keyword_trimmed_lower"
-            }
-          }
-        },
-        "match_mapping_type": "string",
-        "match": "name"
-      }
-    },
-    {
-      "subject": {
-        "mapping": {
-          "type": "text",
-          "fields": {
-            "raw": {
-              "ignore_above": 256,
-              "type": "keyword",
-              "normalizer": "keyword_trimmed_lower"
-            }
-          }
-        },
-        "match_mapping_type": "string",
-        "match": "subject"
-      }
-    },
-    {
-      "DOIS": {
-        "mapping": {
-          "type": "text",
-          "fields": {
-            "raw": {
-              "ignore_above": 256,
-              "type": "keyword",
-              "normalizer": "keyword_trimmed_lower"
-            }
-          }
-        },
-        "match_mapping_type": "string",
-        "match": "identifier"
-      }
-    },
-    {
       "strings": {
         "mapping": {
           "analyzer": "saeon_text_fields",
@@ -126,7 +78,7 @@
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|identifier|name|subject|gte|lte"
+        "unmatch": "publicationYear|gte|lte"
       }
     }
   ]

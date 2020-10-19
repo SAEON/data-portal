@@ -8,6 +8,7 @@ export const CATALOGUE_SECRET = bcrypt.hashSync(process.env.CATALOGUE_SECRET || 
 // Service
 export const NODE_ENV = process.env.NODE_ENV || 'development'
 export const DEPLOY_ENV = process.env.DEPLOY_ENV || 'development'
+export const INDEX_BUILD_SCHEDULE = process.env.INDEX_BUILD_SCHEDULE || '0 0 0 * * *'
 
 // Mongo
 export const MONGO_DB = process.env.MONGO_DB || 'catalogue'

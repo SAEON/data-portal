@@ -1,8 +1,8 @@
 export default async (self, args, ctx) => {
   const { input } = args
-  const { EventLog } = await ctx.mongo.collections
+  const { Logs } = await ctx.mongo.collections
 
-  const { insertedCount } = await EventLog.insertMany(
+  const { insertedCount } = await Logs.insertMany(
     input.map(eventDoc =>
       Object.assign({ clientSession: ctx.cookies.get('ClientSession') }, eventDoc)
     )

@@ -1,22 +1,30 @@
+import hash from 'object-hash'
 import packageJson from '../../../../package.json'
 
 export default async (_, args, ctx, info) => {
   const referrerId = args?.referrerId || undefined
-  const clientSession = ctx.cookies.get('ClientSession')
+  const clientSession = ctx?.cookies.get('ClientSession') || undefined
   const { operation, fragments, variableValues } = info
+  const { Logs } = await ctx.mongo.collections
 
-  // TODO log to Mongo
+  const query = {
+    operation: JSON.stringify(operation),
+    fragments: JSON.stringify(fragments),
+    variableValues: JSON.stringify(variableValues),
+  }
+
   const log = {
     clientSession,
     referrerId,
-    operation,
-    fragments,
-    variableValues,
     apiVersion: packageJson.version,
     type: 'query',
+    queryHash: hash(query),
+    ...query,
   }
 
+  await Logs.insertMany([log])
+
   return {
-    id: 'catalogue', // TODO: ID could be a hash of self, args?
+    id: hash(JSON.stringify(log)),
   }
 }

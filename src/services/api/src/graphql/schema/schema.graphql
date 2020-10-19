@@ -93,9 +93,6 @@ type Catalogue {
     fields: [String!]
     limit: Int
   ): JSON!
-
-  # Refreshes the Elasticsearch index from the source (currently the source is the old Elasticsearch instance)
-  refreshIndex(authorizationCode: String!): JSON!
 }
 
 type CatalogueConnection implements Connection {

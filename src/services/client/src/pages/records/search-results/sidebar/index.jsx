@@ -14,14 +14,7 @@ export default ({ catalogue }) => {
 
   return (
     <Fade in={Boolean(catalogue)}>
-      <Grid
-        className={clsx(classes.sideBar)}
-        style={{ position: 'sticky', top: 65 }}
-        container
-        item
-        xs={12}
-        spacing={0}
-      >
+      <Grid className={clsx(classes.sideBar)} container item xs={12} spacing={0}>
         {/* Area filter */}
         <Grid item xs={12}>
           <Suspense fallback={<Loading />}>

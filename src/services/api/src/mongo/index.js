@@ -9,7 +9,7 @@ const CONNECTION_STRING = `${MONGO_URL}`
 
 export const _collections = {
   Maps: 'maps',
-  EventLog: 'eventLog',
+  Logs: 'logs',
   Feedback: 'feedback',
   SavedSearches: 'savedSearches',
 }

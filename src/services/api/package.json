@@ -28,10 +28,11 @@
   },
   "dependencies": {
     "@koa/router": "^9.4.0",
-    "@saeon/logger": "^6.0.6",
+    "@saeon/logger": "^6.1.0",
     "apollo-server-koa": "^2.18.2",
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
+    "cron": "^1.8.2",
     "dataloader": "^2.0.0",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",

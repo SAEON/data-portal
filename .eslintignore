@@ -7,6 +7,7 @@ src/generators/**
 src/services/reporting/src/index.js
 src/services/api/src/graphql/schema/index.js
 src/services/api/src/index.js
+src/services/api/src/elasticsearch/odp-integration/index.js
 src/services/api/src/graphql/resolvers/types/catalogue/index.js
 src/services/api/src/graphql/resolvers/types/browser-client/index.js
 src/services/api/src/graphql/resolvers/mutations/index.js

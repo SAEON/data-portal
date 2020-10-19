@@ -33,6 +33,7 @@ export default ({
         $referrerId: String
       ) {
         catalogue(referrerId: $referrerId) {
+          id
           summary(
             fields: $fields
             filterByText: $match
@@ -67,6 +68,7 @@ export default ({
       }
     `,
     {
+      fetchPolicy: 'cache-and-network',
       variables: {
         fields: [
           'linkedResources.linkedResourceType.raw',
