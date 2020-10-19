@@ -25,15 +25,15 @@ export default () => {
   return (
     <WithQglQuery
       QUERY={gql`
-        query catalogue($match: String!) {
+        query catalogue($text: String!) {
           catalogue {
-            records(match: $match) {
+            records(text: $text) {
               totalCount
             }
           }
         }
       `}
-      variables={{ match: global.text || '' }}
+      variables={{ text: global.text || '' }}
     >
       {({ error, loading, data }) => {
         if (error) {

@@ -1,7 +1,8 @@
 import mongodb from 'mongodb'
 import { MONGO_DB as DB, MONGO_URL, MONGO_USER, MONGO_PSWD, NODE_ENV } from '../config.js'
 import getCollections from './_collections.js'
-import configureDataLoaders from './_data-loaders.js'
+import configureDataFinders from './_data-finders.js'
+import configureDataInserters from './_data-inserters.js'
 
 const { MongoClient } = mongodb
 
@@ -30,4 +31,5 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
   })
 
 export const collections = getCollections({ db, _collections })
-export const getDataLoaders = configureDataLoaders({ db, _collections })
+export const getDataFinders = configureDataFinders({ db, _collections })
+export const getDataInserters = configureDataInserters({ db, _collections })

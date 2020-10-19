@@ -29,7 +29,8 @@ const fields = {
   'subjects.subject.raw': { boost: 10, fuzziness: 0 },
 
   // DOI
-  'identifier.identifier.raw': { boost: 100, fuzziness: 0 },
+  doi: { boost: 10, fuzziness: 5 },
+  'doi.raw': { boost: 100, fuzziness: 0 },
 }
 
 /**

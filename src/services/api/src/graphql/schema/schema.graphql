@@ -64,7 +64,7 @@ type Catalogue {
     # Fetch a single record by DOIs (other arguments are ignored)
     dois: [String!]
     # Fulltext search for provided string
-    match: String
+    text: String
     # Search for exact matches of field values (intersection)
     terms: [TermInput!]
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
@@ -145,7 +145,7 @@ input FeedbackInput {
 
 type Query {
   # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
-  catalogue(referrerId: String): Catalogue!
+  catalogue(referrer: String): Catalogue!
   # Return the BrowserClient entity
   browserClient: BrowserClient!
 }
@@ -155,7 +155,7 @@ type Subscription {
 }
 
 type Mutation {
-  logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
+  logBrowserEvents(input: [BrowserEventInput]!): Void
   submitFeedback(input: FeedbackInput!): Boolean!
   # Return the BrowserClient entity
   browserClient: BrowserClient!

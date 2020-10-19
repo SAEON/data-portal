@@ -1,4 +1,4 @@
-import { db, collections, getDataLoaders } from '../mongo/index.js'
+import { db, collections, getDataFinders, getDataInserters } from '../mongo/index.js'
 import Catalogue from '../lib/catalogue.js'
 import { HTTP_PROXY, ES_INDEX } from '../config.js'
 
@@ -7,12 +7,19 @@ const catalogue = new Catalogue({
   index: ES_INDEX,
 })
 
+/**
+ * Application level batching
+ * Used for logging to Mongo
+ */
+const dataInserters = getDataInserters()
+
 export default app => async (_, next) => {
   app.context.catalogue = catalogue
   app.context.mongo = {
     db,
     collections,
-    dataLoaders: getDataLoaders(),
+    dataFinders: getDataFinders(), // Request level batching
+    dataInserters,
   }
   await next()
 }
