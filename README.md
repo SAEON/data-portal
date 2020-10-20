@@ -35,12 +35,16 @@ This is a tool for exploring SAEON's metadata catalogues interactively, and with
 
 Setup the repository for development. The repository _should_ be supported cross-platform - on any platform that `Node.js` can be installed. However, this workflow has only been tested on Ubuntu.
 
+#### System requirements
+1. Docker Desktop
+2. Node.js __v14.13__ (Lower versions simply won't work)
+
 ```sh
 # Download the source code
 git clone git@github.com:SAEONData/catalogue.git catalogue
 cd catalogue
 
-# Make sure that Node.js ^14.10 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^14.13 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings

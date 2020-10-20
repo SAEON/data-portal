@@ -14,7 +14,7 @@ var LATEST_COMMIT
 try {
   LATEST_COMMIT = execSync('git rev-parse HEAD').toString().trim()
 } catch {
-  LATEST_COMMIT = 'UNKNOWN' // TODO - seems like I don't have access to git in the runner context
+  LATEST_COMMIT = 'UNKNOWN' // TODO - Dockerfiles are children of the directory where .git/ is
 }
 
 module.exports = () => {

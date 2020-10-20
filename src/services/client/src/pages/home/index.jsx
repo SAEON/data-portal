@@ -27,6 +27,7 @@ export default () => {
       QUERY={gql`
         query catalogue($text: String!) {
           catalogue {
+            id
             records(text: $text) {
               totalCount
             }

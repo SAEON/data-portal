@@ -5,8 +5,6 @@ import { gql } from '@apollo/client'
 import Dialogue from './dialogue'
 import { WithQglQuery } from '../../hooks'
 
-// TODO records now have doi
-
 export default ({ doi, id, children, ...props }) => {
   const [open, setOpen] = useState(false)
 

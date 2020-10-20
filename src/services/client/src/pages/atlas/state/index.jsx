@@ -16,21 +16,9 @@ export default ({ children, data }) => {
       data.catalogue.records.nodes
         .map(({ target }) => {
           const { _source } = target
-          const {
-            id,
-            identifier,
-            geoLocations,
-            immutableResource,
-            linkedResources,
-            titles,
-          } = _source
+          const { id, doi: DOI, geoLocations, immutableResource, linkedResources, titles } = _source
 
           if (!linkedResources) return undefined
-
-          const DOI =
-            identifier && identifier.identifierType.toUpperCase() === 'DOI'
-              ? identifier.identifier
-              : undefined
 
           let geoExtent
           try {
