@@ -1,6 +1,9 @@
 import { config } from 'dotenv'
 config()
 
+// Repository information
+export const LATEST_COMMIT = process.env.LATEST_COMMIT || undefined
+
 // Service
 export const NODE_ENV = process.env.NODE_ENV || 'development'
 export const DEPLOY_ENV = process.env.DEPLOY_ENV || 'development'

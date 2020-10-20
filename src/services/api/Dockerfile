@@ -1,6 +1,13 @@
 FROM node:14.13
+
+ARG MONGO_USER
+ARG MONGO_PSWD
+ENV MONGO_PSWD $MONGO_PSWD
+
 WORKDIR /app
 COPY . .
-RUN npm ci --only=production
-EXPOSE 3000
-CMD npm run start:prod
+RUN echo `${MONGO_PSWD}`
+# RUN npm ci --only=production
+# EXPOSE 3000
+
+# CMD MONGO_USER=${MONGO_USER} MONGO_PSWD=${MONGO_PSWD} npm run start:prod

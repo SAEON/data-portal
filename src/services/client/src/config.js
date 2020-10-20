@@ -1,3 +1,6 @@
+// Repository information
+export const LATEST_COMMIT = process.env.LATEST_COMMIT || undefined
+
 // Application configuration
 export const BACKGROUNDS = process.env.BACKGROUNDS || ''
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'local'
@@ -7,7 +10,6 @@ export const SOURCE_CODE_URI =
   'https://github.com/SAEONData/catalogue/tree/next/src/services/client'
 export const DATA_CURATOR_CONTACT = process.env.DATA_CURATOR_CONTACT || 'leo@saeon.ac.za'
 export const WEB_DEVELOPER_CONTACT = process.env.WEB_DEVELOPER_CONTACT || 'zach@saeon.ac.za'
-export const LATEST_COMMIT = process.env.LATEST_COMMIT
 export const MAX_ATLAS_DATASETS = 1000
 
 // API Configuration

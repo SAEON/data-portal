@@ -1,6 +1,9 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
+// Repository information
+export const LATEST_COMMIT = process.env.LATEST_COMMIT || undefined
+
 // Anyproxy configuration
 export const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8001
 export const ENABLE_WEB_INTERFACE =

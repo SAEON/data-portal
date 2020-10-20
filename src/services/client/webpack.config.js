@@ -6,16 +6,9 @@ const path = require('path')
 const fs = require('fs')
 const packageJson = require('./package.json')
 // const { GenerateSW } = require('workbox-webpack-plugin')
-const { execSync } = require('child_process')
 require('dotenv').config()
 
-const { NODE_ENV: mode, DEPLOYMENT_ENV } = process.env
-var LATEST_COMMIT
-try {
-  LATEST_COMMIT = execSync('git rev-parse HEAD').toString().trim()
-} catch {
-  LATEST_COMMIT = 'UNKNOWN' // TODO - Dockerfiles are children of the directory where .git/ is
-}
+const { NODE_ENV: mode, DEPLOYMENT_ENV, LATEST_COMMIT } = process.env
 
 module.exports = () => {
   const output = 'dist'

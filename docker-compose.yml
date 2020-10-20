@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 volumes:
   mongo:
@@ -9,39 +9,39 @@ volumes:
     driver: local
 
 services:
-  elasticsearch:
-    container_name: elasticsearch
-    restart: always
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
-    environment:
-      - xpack.security.enabled=false
-      - xpack.license.self_generated.type=basic
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    cap_add:
-      - IPC_LOCK
-    volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
+  # elasticsearch:
+  #   container_name: elasticsearch
+  #   restart: always
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+  #   environment:
+  #     - xpack.security.enabled=false
+  #     - xpack.license.self_generated.type=basic
+  #     - discovery.type=single-node
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #     nofile:
+  #       soft: 65536
+  #       hard: 65536
+  #   cap_add:
+  #     - IPC_LOCK
+  #   volumes:
+  #     - elasticsearch:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
 
-  kibana:
-    container_name: kibana
-    restart: always
-    image: docker.elastic.co/kibana/kibana:7.9.2
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   container_name: kibana
+  #   restart: always
+  #   image: docker.elastic.co/kibana/kibana:7.9.2
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - elasticsearch
 
   mongo:
     container_name: mongo
@@ -55,46 +55,49 @@ services:
     ports:
       - 27017:27017
 
-  postgis:
-    # build: src/services/postgis
-    image: postgis/postgis:12-3.0
-    container_name: postgis
-    environment:
-      POSTGRES_USER: ${postgres_user}
-      POSTGRES_PASSWORD: ${postgres_password}
-      POSTGRES_DB: catalogue
-      PGDATA: /var/lib/postgresql/data/pgdata
-    ports:
-      - 5442:5432 #Guarantees a unique port
-    volumes:
-      - postgis:/var/lib/postgresql/data/pgdata
+  # postgis:
+  #   image: postgis/postgis:12-3.0
+  #   container_name: postgis
+  #   environment:
+  #     POSTGRES_USER: ${postgres_user}
+  #     POSTGRES_PASSWORD: ${postgres_password}
+  #     POSTGRES_DB: catalogue
+  #     PGDATA: /var/lib/postgresql/data/pgdata
+  #   ports:
+  #     - 5442:5432
+  #   volumes:
+  #     - postgis:/var/lib/postgresql/data/pgdata
 
-  proxy:
-    container_name: proxy
-    restart: always
-    build: src/services/proxy
-    ports:
-      - 8001:8001
-      - 8002:8002
-    depends_on:
-      - elasticsearch
+  # proxy:
+  #   container_name: proxy
+  #   restart: always
+  #   build: src/services/proxy
+  #   ports:
+  #     - 8001:8001
+  #     - 8002:8002
+  #   depends_on:
+  #     - elasticsearch
 
   api:
     container_name: api
+    environment:
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PSWD: ${MONGO_PSWD}
     restart: always
     build: src/services/api
     ports:
       - 5000:3000
-    depends_on:
-      - proxy
-      - mongo
-      - elasticsearch
+    # depends_on:
+    #   - proxy
+    #   - mongo
+    #   - elasticsearch
+    #   - postgis
 
-  client:
-    container_name: client
-    restart: always
-    build: src/services/client
-    ports:
-      - 5001:80
-    depends_on:
-      - api
+  # client:
+  #   container_name: client
+  #   restart: always
+  #   build: src/services/client
+  #   ports:
+  #     - 5001:80
+  #   depends_on:
+  #     - api
