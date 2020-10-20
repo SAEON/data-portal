@@ -29,8 +29,14 @@ jobs:
           echo "CATALOGUE_SECRET=${{ secrets.CATALOGUE_SECRET }}" >> src/services/api/.env
           echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
           echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
+          echo "POSTGIS_HOST=postgis" >> src/services/api/.env
+          echo "POSTGIS_PORT=5442" >> src/services/api/.env
           echo "POSTGIS_USER=${{ secrets.POSTGIS_USER }}" >> src/services/api/.env
           echo "POSTGIS_PSWD=${{ secrets.POSTGIS_PSWD }}" >> src/services/api/.env
+          echo "POSTGIS_FOREIGN_HOST=spatialdb.saeon.int" >> src/services/api/.env
+          echo "POSTGIS_FOREIGN_DBNAME=BEA" >> src/services/api/.env
+          echo "POSTGIS_FOREIGN_USER=datascience_user" >> src/services/api/.env
+          echo "POSTGIS_FOREIGN_PASSWORD=Eu28&Zrz^a" >> src/services/api/.env
 
       - name: Configure services/client
         run: |
