@@ -1,20 +1,13 @@
-import {
-  POSTGIS_DB as DB,
-  POSTGIS_HOST,
-  POSTGIS_USER,
-  POSTGIS_PSWD,
-  POSTGIS_PORT,
-} from '../config.js'
 import pg from 'pg'
 const { Pool } = pg
 
-export default () =>
+export default (host, user, database, password, port) =>
   new Pool({
-    host: POSTGIS_HOST,
-    user: POSTGIS_USER,
-    database: DB,
-    password: POSTGIS_PSWD,
-    port: POSTGIS_PORT,
+    host: host,
+    user: user,
+    database: database,
+    password: password,
+    port: port,
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,

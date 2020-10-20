@@ -20,8 +20,11 @@ export const POSTGIS_DB = process.env.POSTGIS_DB || 'catalogue'
 export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
 export const POSTGIS_USER = process.env.POSTGIS_USER || 'admin'
 export const POSTGIS_PSWD = process.env.POSTGIS_PSWD || 'password'
-export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
-
+export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5442
+export const POSTGIS_FOREIGN_HOST = process.env.POSTGIS_FOREIGN_HOST || 'localhost'
+export const POSTGIS_FOREIGN_DBNAME = process.env.POSTGIS_FOREIGN_DBNAME || 'public'
+export const POSTGIS_FOREIGN_USER = process.env.POSTGIS_FOREIGN_USER || 'postgres'
+export const POSTGIS_FOREIGN_PASSWORD = process.env.POSTGIS_FOREIGN_PASSWORD || 'password'
 
 // HTTP
 export const PORT = process.env.PORT || 3000

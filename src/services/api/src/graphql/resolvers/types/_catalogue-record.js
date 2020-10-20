@@ -2,7 +2,8 @@ import fetch from 'node-fetch'
 
 export default {
   id: async self => self._id,
-  target: async self => self,
+  metadata: async self => self,
+  data: async self => 'To be implemented',
   citation: async (self, args) => {
     const { identifier } = self._source
     const doi = identifier.identifierType === 'DOI' ? identifier.identifier : 'INVALID_DOI'

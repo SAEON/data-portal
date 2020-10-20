@@ -112,7 +112,8 @@ type CatalogueRecordEdge implements Edge {
 
 type CatalogueRecord implements Node {
   id: ID!
-  target: JSON!
+  metadata: JSON!
+  data: String
   citation(style: CitationStyle, language: CitationLocale): String! # CitationStyle and CitationLocale are enums defined at runtime
 }
 
