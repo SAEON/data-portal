@@ -31,6 +31,7 @@ export default () =>
       ]
       for (let i = 0; i < setupQueries.length; i++) {
         await query({ text: setupQueries[i], values: [] })
+        console.log("DONE: ", setupQueries[i])
       }
     })()
   ).catch(err => {
