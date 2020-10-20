@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 export default {
   id: async self => self._id,
   metadata: async self => self,
-  data: async self => 'To be implemented',
+  data: async () => 'To be implemented',
   citation: async (self, args) => {
     const { doi } = self._source
     const { style = 'apa', language = 'en-US' } = args

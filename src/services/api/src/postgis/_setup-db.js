@@ -30,8 +30,7 @@ export default () =>
         `CREATE MATERIALIZED VIEW IF NOT EXISTS meso_point_mv AS SELECT "MESO_ID" AS meso_id,"LAT" AS lat,"LON" AS lon FROM saeon_fdw."meso_point";`,
       ]
       for (let i = 0; i < setupQueries.length; i++) {
-        var response = await query({ text: setupQueries[i], values: [] })
-        // console.log(response)
+        await query({ text: setupQueries[i], values: [] })
       }
     })()
   ).catch(err => {
