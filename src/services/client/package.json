@@ -27,7 +27,7 @@
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@apollo/client": "^3.2.4",
+    "@apollo/client": "^3.2.5",
     "@apollo/link-ws": "^2.0.0-beta.3",
     "@babel/core": "^7.12.3",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
