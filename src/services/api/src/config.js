@@ -1,9 +1,5 @@
-import dotenv from 'dotenv'
-import bcrypt from 'bcrypt'
-dotenv.config()
-
-// TODO
-export const CATALOGUE_SECRET = bcrypt.hashSync(process.env.CATALOGUE_SECRET || 'secret-string', 10)
+import { config } from 'dotenv'
+config()
 
 // Service
 export const NODE_ENV = process.env.NODE_ENV || 'development'

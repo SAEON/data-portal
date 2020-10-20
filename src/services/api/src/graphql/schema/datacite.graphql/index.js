@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
-
 const _fetch = p => fetch(p).then(res => res.json())
+
+console.log('Building datacite citation schema')
 
 const dataciteCitationStyles = `
 enum CitationStyle {

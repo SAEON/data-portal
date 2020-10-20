@@ -1,10 +1,8 @@
-import mongodb from 'mongodb'
+import MongoClient from 'mongodb'
 import { MONGO_DB as DB, MONGO_URL, MONGO_USER, MONGO_PSWD, NODE_ENV } from '../config.js'
 import getCollections from './_collections.js'
 import configureDataFinders from './_data-finders.js'
 import configureDataInserters from './_data-inserters.js'
-
-const { MongoClient } = mongodb
 
 const CONNECTION_STRING = `${MONGO_URL}`
 

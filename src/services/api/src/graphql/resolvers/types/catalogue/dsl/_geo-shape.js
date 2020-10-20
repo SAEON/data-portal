@@ -1,5 +1,4 @@
-import wkt from 'wkt'
-const { parse } = wkt
+import { parse } from 'wkt'
 
 export default wkt_4326 => ({
   geo_shape: {

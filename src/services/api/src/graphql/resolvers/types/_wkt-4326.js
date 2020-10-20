@@ -1,8 +1,5 @@
-import graphql from 'graphql/index.js'
-import wkt from 'wkt'
-
-const { parse } = wkt
-const { GraphQLScalarType, GraphQLError } = graphql
+import { GraphQLScalarType, GraphQLError } from 'graphql'
+import { parse } from 'wkt'
 
 const error = 'GraphQL scalar type (WKT_4326) error. Value must be a valid WKT string'
 
