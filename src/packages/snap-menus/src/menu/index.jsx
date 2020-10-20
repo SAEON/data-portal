@@ -1,5 +1,5 @@
 import 'react-resizable/css/styles.css'
-import React, { useState, useEffect, forwardRef } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
 import {

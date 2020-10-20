@@ -1,4 +1,3 @@
-import React from 'react'
 import MenuContext from './context'
 
 const PORTAL = document.createElement('div')

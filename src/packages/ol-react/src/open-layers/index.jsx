@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo } from 'react'
+import { useRef, useLayoutEffect, useMemo } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control'

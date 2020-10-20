@@ -1,5 +1,5 @@
 import hash from 'object-hash'
-import packageJson from '../../../../package.json'
+import packageJson from '../../../../../package.json'
 
 export default async (_, args, ctx, info) => {
   const referrer = args?.referrer || undefined
