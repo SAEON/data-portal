@@ -8,130 +8,123 @@ import {
   DialogActions,
 } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import { useQuery, gql } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { WithQglQuery } from '../../hooks'
 import Autocomplete from '../../components/autocomplete/autocomplete'
-import { DATA_CURATOR_CONTACT } from '../../config'
 
 const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'
 
-// TODO - records now include a doi, so this can be cleaned up
-
 export default ({ doi, id, open, setOpen, citationStyles, citationLocales }) => {
-  if (!id)
-    throw new Error(
-      `This metadata record has no identifier. Please contact ${DATA_CURATOR_CONTACT} with a screenshot of this page, or a copy of the current URL`
-    )
-
   const [citationParams, setCitationParams] = useState({
     style: DEFAULT_CITATION_STYLE,
     language: DEFAULT_CITATION_LANG,
     copied: false,
   })
 
-  const { error, loading, data } = useQuery(
-    gql`
-      query($ids: [ID!], $style: CitationStyle, $language: CitationLocale) {
-        catalogue {
-          records(ids: $ids) {
-            nodes {
-              citation(style: $style, language: $language)
+  return (
+    <WithQglQuery
+      QUERY={gql`
+        query($ids: [ID!], $style: CitationStyle, $language: CitationLocale) {
+          catalogue {
+            records(ids: $ids) {
+              nodes {
+                citation(style: $style, language: $language)
+              }
             }
           }
         }
-      }
-    `,
-    {
-      variables: {
+      `}
+      variables={{
         ids: [id],
         style: citationParams.style,
         language: citationParams.language,
-      },
-    }
-  )
-
-  return (
-    <>
-      {/* Dialogue */}
-      <Dialog
-        onClose={() => {
-          setOpen(false)
-        }}
-        open={open}
-        maxWidth="sm"
-        fullWidth={true}
-      >
-        {/* TITLE */}
-        <DialogTitle>{doi}</DialogTitle>
-
-        {/* TITLE */}
-        <DialogContent>
-          {/* SELECT STYLE */}
-          <Autocomplete
-            label="Style"
-            variant="outlined"
-            setOption={value =>
-              setCitationParams(
-                Object.assign(
-                  { ...citationParams },
-                  {
-                    copied: false,
-                    style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE,
-                  }
-                )
-              )
-            }
-            selectedOptions={citationParams.style.replace(/_/g, '-')}
-            options={citationStyles?.enumValues?.map(v => v.name.replace(/_/g, '-'))}
-          />
-
-          <div style={{ marginTop: 12 }} />
-
-          {/* SELECT LANGUAGE */}
-          <Autocomplete
-            label="Language"
-            variant="outlined"
-            setOption={value =>
-              setCitationParams(
-                Object.assign(
-                  { ...citationParams },
-                  {
-                    copied: false,
-                    language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG,
-                  }
-                )
-              )
-            }
-            selectedOptions={citationParams.language.replace(/_/g, '-')}
-            options={citationLocales?.enumValues?.map(v => v.name.replace(/_/g, '-'))}
-          />
-
-          <div style={{ marginTop: 24 }} />
-
-          {/* CITATION TEXT */}
-          {error ? (
-            'Error'
-          ) : loading ? (
-            <CircularProgress />
-          ) : (
-            <samp>{data.catalogue.records.nodes[0].citation}</samp>
-          )}
-        </DialogContent>
-
-        {/* COPY Button */}
-        <DialogActions>
-          <Button
-            disabled={error || loading}
-            onClick={() => {
-              navigator.clipboard.writeText(data.catalogue.records.nodes[0].citation)
-              setCitationParams(Object.assign({ ...citationParams }, { copied: true }))
+      }}
+    >
+      {({ error, loading, data }) => (
+        <>
+          {/* Dialogue */}
+          <Dialog
+            onClose={() => {
+              setOpen(false)
             }}
-            startIcon={<AssignmentIcon />}
+            open={open}
+            maxWidth="sm"
+            fullWidth={true}
           >
-            {citationParams.copied ? 'Copied!' : 'Copy to cliboard'}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+            {/* TITLE */}
+            <DialogTitle>{doi}</DialogTitle>
+
+            {/* TITLE */}
+            <DialogContent>
+              {/* SELECT STYLE */}
+              <Autocomplete
+                label="Style"
+                variant="outlined"
+                setOption={value =>
+                  setCitationParams(
+                    Object.assign(
+                      { ...citationParams },
+                      {
+                        copied: false,
+                        style: value?.replace(/-/g, '_') || DEFAULT_CITATION_STYLE,
+                      }
+                    )
+                  )
+                }
+                selectedOptions={citationParams.style.replace(/_/g, '-')}
+                options={citationStyles?.enumValues?.map(v => v.name.replace(/_/g, '-'))}
+              />
+
+              <div style={{ marginTop: 12 }} />
+
+              {/* SELECT LANGUAGE */}
+              <Autocomplete
+                label="Language"
+                variant="outlined"
+                setOption={value =>
+                  setCitationParams(
+                    Object.assign(
+                      { ...citationParams },
+                      {
+                        copied: false,
+                        language: value?.replace(/-/g, '_') || DEFAULT_CITATION_LANG,
+                      }
+                    )
+                  )
+                }
+                selectedOptions={citationParams.language.replace(/_/g, '-')}
+                options={citationLocales?.enumValues?.map(v => v.name.replace(/_/g, '-'))}
+              />
+
+              <div style={{ marginTop: 24 }} />
+
+              {/* CITATION TEXT */}
+              {error ? (
+                'Error'
+              ) : loading ? (
+                <CircularProgress />
+              ) : (
+                <samp>{data.catalogue.records.nodes[0].citation}</samp>
+              )}
+            </DialogContent>
+
+            {/* COPY Button */}
+            <DialogActions>
+              <Button
+                disabled={error || loading}
+                onClick={() => {
+                  navigator.clipboard.writeText(data.catalogue.records.nodes[0].citation)
+                  setCitationParams(Object.assign({ ...citationParams }, { copied: true }))
+                }}
+                startIcon={<AssignmentIcon />}
+              >
+                {citationParams.copied ? 'Copied!' : 'Copy to cliboard'}
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
+    </WithQglQuery>
   )
 }
