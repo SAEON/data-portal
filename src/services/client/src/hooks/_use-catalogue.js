@@ -12,6 +12,7 @@ export default ({
   ids = undefined,
   dois = undefined,
   text = undefined,
+  fetchPolicy = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
   const { extent, terms: _terms, referrer } = global
@@ -68,7 +69,7 @@ export default ({
       }
     `,
     {
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: fetchPolicy || 'cache-first',
       variables: {
         fields: [
           'linkedResources.linkedResourceType.raw',

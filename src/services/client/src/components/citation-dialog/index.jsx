@@ -7,7 +7,6 @@ import { WithQglQuery } from '../../hooks'
 
 export default ({ doi, id, children, ...props }) => {
   const [open, setOpen] = useState(false)
-  console.log('rendering citation dialogue')
 
   return (
     <WithQglQuery

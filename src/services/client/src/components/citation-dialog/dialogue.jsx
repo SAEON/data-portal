@@ -27,6 +27,7 @@ export default ({ doi, id, open, setOpen, citationStyles, citationLocales }) => 
       QUERY={gql`
         query($ids: [ID!], $style: CitationStyle, $language: CitationLocale) {
           catalogue {
+            id
             records(ids: $ids) {
               nodes {
                 citation(style: $style, language: $language)

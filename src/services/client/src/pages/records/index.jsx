@@ -25,11 +25,14 @@ export default ({ showSearchBar = true, ...props } = {}) => {
       </div>
       <div style={{ display: 'flex', flexGrow: 1 }}>
         <div style={{ display: 'block', width: '100%' }}>
-          <Results {...props} hideSidebar={isMobile ? true : false} />
+          <Results
+            disableSidebar={props.disableSidebar || false}
+            hideSidebar={isMobile ? true : false}
+          />
         </div>
       </div>
     </div>
   ) : (
-    <Results {...props} hideSidebar={isMobile ? true : false} />
+    <Results disableSidebar={props.disableSidebar || false} hideSidebar={isMobile ? true : false} />
   )
 }

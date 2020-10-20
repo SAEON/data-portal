@@ -20,6 +20,7 @@ export default ({ id }) => {
       QUERY={gql`
         query catalogue($ids: [ID!]) {
           catalogue {
+            id
             records(ids: $ids) {
               nodes {
                 target
