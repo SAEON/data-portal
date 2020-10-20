@@ -8,6 +8,14 @@ const fields = {
   subtitle: { boost: 2, fuzziness: 0 },
   'descriptions.description': { boost: 5, fuzziness: 0 },
 
+  // Institution
+  institution: { boost: 5, fuzziness: 3 },
+  'institution.raw': { boost: 100, fuzziness: 0 },
+
+  // Collection
+  collection: { boost: 5, fuzziness: 3 },
+  'collection.raw': { boost: 100, fuzziness: 0 },
+
   // Creators
   'creators.name': { boost: 5, fuzziness: 3 },
   'creators.name.raw': { boost: 10, fuzziness: 0 },
@@ -21,7 +29,8 @@ const fields = {
   'subjects.subject.raw': { boost: 10, fuzziness: 0 },
 
   // DOI
-  'identifier.identifier.raw': { boost: 100, fuzziness: 0 },
+  doi: { boost: 50, fuzziness: 5 },
+  'doi.raw': { boost: 100, fuzziness: 0 },
 }
 
 /**

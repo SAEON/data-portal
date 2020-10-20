@@ -1,5 +1,8 @@
-var _link
+var _share = {
+  uri: undefined,
+  params: undefined,
+}
 
-export const getShareLink = () => _link
+export const getShareLink = () => _share
 
-export const setShareLink = link => (_link = link)
+export const setShareLink = link => (_share = link)

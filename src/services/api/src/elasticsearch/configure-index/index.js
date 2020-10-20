@@ -1,16 +1,8 @@
-import graphql from 'graphql'
 import fetch from 'node-fetch'
-import { ES_INDEX, ES_HOST_ADDRESS, CATALOGUE_SECRET } from '../../../../../config.js'
-import makeOdpIterator from './odp/index.js'
+import { ES_INDEX, ES_HOST_ADDRESS } from '../../config.js'
+import makeOdpIterator from './iterator/index.js'
 
-const { GraphQLError } = graphql
-
-export default async (_, args) => {
-  const { authorizationCode } = args
-  if (authorizationCode !== CATALOGUE_SECRET) {
-    throw new GraphQLError('Permission denied') // TODO. 401 ?
-  }
-
+export default async () => {
   const result = {
     updated: 0,
     created: 0,

@@ -3,12 +3,15 @@
 **/.build/**
 src/generators/**
 
-// TODO Ignored because of top-level await. Not ideal
+# Reporting app
 src/services/reporting/src/index.js
-src/services/api/src/graphql/schema/index.js
+
+# API
 src/services/api/src/index.js
+src/services/api/src/graphql/schema/datacite.graphql/index.js
+src/services/api/src/elasticsearch/odp-integration/index.js
 src/services/api/src/graphql/resolvers/types/catalogue/index.js
+src/services/api/src/graphql/resolvers/types/subscription/index.js
+src/services/api/src/graphql/resolvers/types/query/index.js
+src/services/api/src/graphql/resolvers/types/mutation/index.js
 src/services/api/src/graphql/resolvers/types/browser-client/index.js
-src/services/api/src/graphql/resolvers/mutations/index.js
-src/services/api/src/graphql/resolvers/queries/index.js
-src/services/doi-resolver/src/datacite/index.js

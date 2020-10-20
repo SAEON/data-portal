@@ -1,49 +1,3 @@
-# https://itnext.io/improve-your-graphql-schema-with-the-relay-specification-8952d06998eb
-
-scalar DateTime
-scalar JSON
-scalar Void
-scalar WKT_4326
-
-type PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor: JSON
-  endCursor: JSON
-}
-
-# Interfaces
-
-interface Node {
-  id: ID!
-}
-
-interface Connection {
-  # A list of edges
-  edges: [Edge!]!
-  # A list of nodes
-  nodes: [Node!]
-  # Information to aid in pagination
-  pageInfo: PageInfo!
-  # Count of total results
-  totalCount: Int!
-}
-
-interface Edge {
-  cursor: String!
-  node: Node!
-}
-
-# Client
-
-type BrowserClient {
-  # Save a web-browser's search context for retrieving
-  persistSearchState(state: JSON!): ID!
-  findSearchState(id: ID!): JSON
-}
-
-# Catalogue
-
 input ES_Cursor {
   id: ID
   score: Float
@@ -64,7 +18,7 @@ type Catalogue {
     # Fetch a single record by DOIs (other arguments are ignored)
     dois: [String!]
     # Fulltext search for provided string
-    match: String
+    text: String
     # Search for exact matches of field values (intersection)
     terms: [TermInput!]
     # Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
@@ -93,9 +47,6 @@ type Catalogue {
     fields: [String!]
     limit: Int
   ): JSON!
-
-  # Refreshes the Elasticsearch index from the source (currently the source is the old Elasticsearch instance)
-  refreshIndex(authorizationCode: String!): JSON!
 }
 
 type CatalogueConnection implements Connection {
@@ -115,52 +66,4 @@ type CatalogueRecord implements Node {
   metadata: JSON!
   data: String
   citation(style: CitationStyle, language: CitationLocale): String! # CitationStyle and CitationLocale are enums defined at runtime
-}
-
-# Browser events
-type BrowserEvent implements Node {
-  id: ID!
-  type: String!
-  createdAt: DateTime
-  info: JSON!
-  clientVersion: String!
-  # Most recent source code commit of currently executing code
-  commitHash: String!
-}
-
-input BrowserEventInput {
-  type: String!
-  createdAt: DateTime!
-  info: JSON!
-  clientVersion: String!
-  # Most recent source code commit of currently executing code
-  commitHash: String!
-}
-
-input FeedbackInput {
-  text: String!
-  rating: Int!
-  pathname: String!
-  # Most recent source code commit of currently executing code
-  commitHash: String!
-}
-
-# GraphQL types
-
-type Query {
-  # Return the Catalogue entity
-  catalogue: Catalogue!
-  # Return the BrowserClient entity
-  browserClient: BrowserClient!
-}
-
-type Subscription {
-  onFilterChange: JSON
-}
-
-type Mutation {
-  logBrowserEvents(input: [BrowserEventInput]!): [Boolean]!
-  submitFeedback(input: FeedbackInput!): Boolean!
-  # Return the BrowserClient entity
-  browserClient: BrowserClient!
 }

@@ -1,5 +1,4 @@
-import { db as mongoDb, collections, getDataLoaders } from '../mongo/index.js'
-// import { db as postgisDb} from '../postgis/index.js'
+import { db as mongoDb, collections, getDataFinders, getDataInserters } from '../mongo/index.js'
 import Catalogue from '../lib/catalogue.js'
 import { HTTP_PROXY, ES_INDEX } from '../config.js'
 
@@ -8,12 +7,19 @@ const catalogue = new Catalogue({
   index: ES_INDEX,
 })
 
+/**
+ * Application level batching
+ * Used for logging to Mongo
+ */
+const dataInserters = getDataInserters()
+
 export default app => async (_, next) => {
   app.context.catalogue = catalogue
   app.context.mongo = {
     db: mongoDb,
     collections,
-    dataLoaders: getDataLoaders(),
+    dataFinders: getDataFinders(), // Request level batching
+    dataInserters,
   }
   app.context.pg = {
     // db: postgisDb

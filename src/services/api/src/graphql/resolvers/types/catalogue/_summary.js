@@ -4,7 +4,7 @@ export default async (_, args, ctx) => {
   const { catalogue } = ctx
   const {
     fields,
-    filterByText: match = undefined,
+    filterByText: text = undefined,
     filterByExtent: extent = undefined,
     filterByIds: ids = undefined,
     filterByDois: dois = undefined,
@@ -30,7 +30,7 @@ export default async (_, args, ctx) => {
   }
 
   const result = await catalogue.query(
-    buildDsl({ dsl, ids, dois, match, terms, extent, isAggregation: true })
+    buildDsl({ dsl, ids, dois, text, terms, extent, isAggregation: true })
   )
 
   return Object.entries(result.aggregations).map(([name, { buckets }]) => ({

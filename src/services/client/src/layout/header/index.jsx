@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, Tooltip, Link, Grid } from '@material-ui/core'
 import { GitHub as GitHubIcon } from '@material-ui/icons'
 import packageJson from '../../../package.json'
@@ -6,11 +7,12 @@ import FeedbackDialogue from './_feedback-dialogue'
 import { ShareOrEmbed } from '../../components'
 import useStyles from './style'
 import clsx from 'clsx'
-import { getShareLink } from '../../hooks'
+import { GlobalContext } from '../../contexts/global'
 
 export default () => {
-  console.log('getShareLink', getShareLink())
   const classes = useStyles()
+  const { global } = useContext(GlobalContext)
+  const { selectedDois } = global
 
   return (
     <>
@@ -45,7 +47,13 @@ export default () => {
                   <GitHubIcon color="inherit" />
                 </IconButton>
               </Tooltip>
-              <ShareOrEmbed shareType="fullpage" />
+              <ShareOrEmbed
+                state={
+                  selectedDois.length && window.location.pathname.includes('atlas')
+                    ? { dois: selectedDois }
+                    : global
+                }
+              />
               <FeedbackDialogue />
             </Grid>
           </Grid>

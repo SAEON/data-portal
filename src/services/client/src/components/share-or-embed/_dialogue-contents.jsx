@@ -2,10 +2,10 @@ import { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
 import { GlobalContext } from '../../contexts/global'
 import { Link } from '..'
-import { createShareLink } from '../../lib/fns'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
+import { getShareLink } from '../../hooks'
 
 /**
  * Dialogue contents of the share dialogue
@@ -13,7 +13,9 @@ import { gql, useMutation } from '@apollo/client'
  * dialogue is opened. The useEffect hook will
  * fire every time the dialogue is opened
  */
-export default ({ tabIndex, state = undefined, shareType = 'component' }) => {
+export default ({ tabIndex, state = undefined, params = {} }) => {
+  const { uri: shareLink, params: includeParams } = getShareLink()
+
   const { global } = useContext(GlobalContext)
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
     mutation($state: JSON!) {
@@ -24,10 +26,24 @@ export default ({ tabIndex, state = undefined, shareType = 'component' }) => {
   `)
 
   useEffect(() => {
-    persistSearchState({ variables: { state: state || global } })
+    persistSearchState({
+      variables: {
+        state: state
+          ? Object.assign({ ...state }, { selectedDois: global.selectedDois || [] })
+          : global,
+      },
+    })
   }, [global, persistSearchState, state])
 
   const searchId = data?.browserClient.persistSearchState
+
+  const uri = `${shareLink}${
+    includeParams
+      ? `${shareLink.includes('?') ? '&' : '?'}search=${searchId}&${Object.entries(params)
+          .map(([param, val]) => `${param}=${val}`)
+          .join('&')}`
+      : ''
+  }`
 
   return error ? (
     'Error'
@@ -48,13 +64,10 @@ export default ({ tabIndex, state = undefined, shareType = 'component' }) => {
     <Fade in={Boolean(data)} key="data">
       <div>
         <TabPanel value={tabIndex} index={0}>
-          <Link uri={createShareLink({ searchId, shareType })} />
+          <Link uri={uri} />
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-          {`<iframe width="100%" height="100%" src="${createShareLink({
-            searchId,
-            shareType,
-          })}" frameborder="0" allowfullscreen></iframe>`}
+          {`<iframe width="100%" height="100%" src="${uri}" frameborder="0" allowfullscreen></iframe>`}
         </TabPanel>
       </div>
     </Fade>

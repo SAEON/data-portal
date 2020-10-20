@@ -1,5 +1,4 @@
-import wkt from 'wkt'
-const { stringify: createWkt_4326 } = wkt
+import { stringify as createWkt_4326 } from 'wkt'
 
 export default spatial =>
   spatial.map(({ geoLocationBox, geoLocationPoint }) => ({

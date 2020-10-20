@@ -7,7 +7,7 @@ export default async (_, args, ctx) => {
     size = 100,
     ids = undefined,
     dois = undefined,
-    match = undefined,
+    text = undefined,
     extent = undefined,
     terms = undefined,
     before = undefined,
@@ -43,7 +43,7 @@ export default async (_, args, ctx) => {
   }
 
   const data = await catalogue.query(
-    buildDsl({ dsl, ids, dois, match, terms, extent, isAggregation: false })
+    buildDsl({ dsl, ids, dois, text, terms, extent, isAggregation: false })
   )
 
   return {

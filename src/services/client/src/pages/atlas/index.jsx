@@ -13,7 +13,8 @@ const StateProvider = lazy(() => import('./state'))
 const Map = lazy(() => import('./map'))
 
 export default () => {
-  setShareLink('/atlas')
+  setShareLink({ uri: `${CLIENT_HOST_ADDRESS}/render/atlas`, params: true })
+
   const snapMenusContainer = useRef()
   const searchId = getUriState().search
   if (!searchId) {
@@ -38,15 +39,18 @@ export default () => {
           throw new Error('Error loading search state for Atlas')
         }
 
-        const savedState = Object.assign(
-          { ...(data?.browserClient.findSearchState || {}) },
-          { dois: [...(data?.browserClient.findSearchState.selectedDois || [])] }
-        )
+        const findSearchState = data?.browserClient.findSearchState || {}
 
         return loading ? (
           <Loading />
         ) : (
-          <WithCatalogue {...savedState} pageSize={MAX_ATLAS_DATASETS}>
+          <WithCatalogue
+            {...Object.assign(
+              { ...findSearchState },
+              { dois: findSearchState.selectedDois || findSearchState.dois || [] }
+            )}
+            pageSize={MAX_ATLAS_DATASETS}
+          >
             {({ error, loading, data }) => {
               if (error) {
                 throw new Error('Error searching catalogue')

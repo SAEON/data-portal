@@ -32,13 +32,13 @@ const FromSavedSearch = ({ id, children }) =>
   )
 
 export default ({ children }) => {
-  const { search, text = undefined, originId = undefined } = getUriState()
+  const { search, text = undefined, referrer = undefined } = getUriState()
 
   return (
     <FromSavedSearch id={search}>
       {state => (
         <QuickForm
-          originId={originId || undefined}
+          referrer={referrer || undefined}
           text={text || state?.text || undefined}
           extent={state?.extent || undefined}
           terms={state?.terms || []}

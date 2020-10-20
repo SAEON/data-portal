@@ -1,0 +1,87 @@
+# https://itnext.io/improve-your-graphql-schema-with-the-relay-specification-8952d06998eb
+
+scalar DateTime
+scalar JSON
+scalar Void
+scalar WKT_4326
+
+type PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor: JSON
+  endCursor: JSON
+}
+
+# Interfaces
+
+interface Node {
+  id: ID!
+}
+
+interface Connection {
+  # A list of edges
+  edges: [Edge!]!
+  # A list of nodes
+  nodes: [Node!]
+  # Information to aid in pagination
+  pageInfo: PageInfo!
+  # Count of total results
+  totalCount: Int!
+}
+
+interface Edge {
+  cursor: String!
+  node: Node!
+}
+
+type BrowserClient {
+  # Save a web-browser's search context for retrieving
+  persistSearchState(state: JSON!): ID!
+  findSearchState(id: ID!): JSON
+}
+
+# Browser events
+type BrowserEvent implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime
+  info: JSON!
+  clientVersion: String!
+  # Most recent source code commit of currently executing code
+  commitHash: String!
+}
+
+input BrowserEventInput {
+  type: String!
+  createdAt: DateTime!
+  info: JSON!
+  clientVersion: String!
+  # Most recent source code commit of currently executing code
+  commitHash: String!
+}
+
+input FeedbackInput {
+  text: String!
+  rating: Int!
+  pathname: String!
+  # Most recent source code commit of currently executing code
+  commitHash: String!
+}
+
+type Query {
+  # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
+  catalogue(referrer: String): Catalogue!
+  # Return the BrowserClient entity
+  browserClient: BrowserClient!
+}
+
+type Subscription {
+  onFilterChange: JSON
+}
+
+type Mutation {
+  logBrowserEvents(input: [BrowserEventInput]!): Void
+  submitFeedback(input: FeedbackInput!): Boolean!
+  # Return the BrowserClient entity
+  browserClient: BrowserClient!
+}

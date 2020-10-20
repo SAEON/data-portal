@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react'
+import { useRef, useContext } from 'react'
 import { createPortal } from 'react-dom'
 import SnapMenu from './menu/index.jsx'
 import context from './context.js'

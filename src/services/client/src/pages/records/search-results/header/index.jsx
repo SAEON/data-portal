@@ -217,6 +217,7 @@ export default ({
 
               {/* SHOW SELECTED DATASETS AS LIST */}
               <ShareOrEmbed
+                params={{ showSearchBar: false }}
                 state={selectedDois.length ? { dois: selectedDois } : global}
                 icon={<ListIcon />}
                 iconProps={{

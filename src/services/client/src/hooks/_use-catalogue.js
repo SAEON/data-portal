@@ -14,14 +14,14 @@ export default ({
   text = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
-  const { extent, terms: _terms } = global
+  const { extent, terms: _terms, referrer } = global
   text = text || global.text
 
   const result = useQuery(
     gql`
       query(
         $extent: WKT_4326
-        $match: String
+        $text: String
         $terms: [TermInput!]
         $size: Int
         $before: ES_Cursor
@@ -30,11 +30,13 @@ export default ({
         $summaryLimit: Int
         $ids: [ID!]
         $dois: [String!]
+        $referrer: String
       ) {
-        catalogue {
+        catalogue(referrer: $referrer) {
+          id
           summary(
             fields: $fields
-            filterByText: $match
+            filterByText: $text
             filterByExtent: $extent
             filterByTerms: $terms
             limit: $summaryLimit
@@ -43,7 +45,7 @@ export default ({
           )
           records(
             extent: $extent
-            match: $match
+            text: $text
             terms: $terms
             size: $size
             before: $before
@@ -66,6 +68,7 @@ export default ({
       }
     `,
     {
+      fetchPolicy: 'cache-and-network',
       variables: {
         fields: [
           'linkedResources.linkedResourceType.raw',
@@ -78,11 +81,12 @@ export default ({
         dois,
         extent,
         terms: terms || _terms,
-        match: text,
+        text,
         size: pageSize,
         after: endCursor,
         before: startCursor,
         summaryLimit,
+        referrer,
       },
     }
   )

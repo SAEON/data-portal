@@ -8,11 +8,15 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
 import { CLIENT_HOST_ADDRESS, GQL_PROVIDER } from '../../config'
-import { WithQglQuery } from '../../hooks'
+import { WithQglQuery, setShareLink } from '../../hooks'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
 
 export default () => {
+  setShareLink({
+    uri: `${CLIENT_HOST_ADDRESS}/render`,
+    params: true,
+  })
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
@@ -21,15 +25,15 @@ export default () => {
   return (
     <WithQglQuery
       QUERY={gql`
-        query catalogue($match: String!) {
+        query catalogue($text: String!) {
           catalogue {
-            records(match: $match) {
+            records(text: $text) {
               totalCount
             }
           }
         }
       `}
-      variables={{ match: global.text || '' }}
+      variables={{ text: global.text || '' }}
     >
       {({ error, loading, data }) => {
         if (error) {

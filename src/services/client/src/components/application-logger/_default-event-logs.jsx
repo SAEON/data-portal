@@ -3,12 +3,6 @@ import { LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
 import { debounce } from '../../lib/fns'
 
-function simplifyTarget(target) {
-  const { id, height, width, tagName } = target
-  var simpleTarget = { tagName, id, class: target.getAttribute('class'), height, width }
-  return simpleTarget
-}
-
 export default ({ children }) => (
   <RegisterEventLog
     event={'click'}
@@ -21,7 +15,7 @@ export default ({ children }) => (
         info: {
           x,
           y,
-          target: simplifyTarget(target),
+          target: target.outerHTML,
         },
       })
     }

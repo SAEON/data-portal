@@ -1,6 +1,4 @@
-import graphql from 'graphql/index.js'
-
-const { GraphQLScalarType, GraphQLError, Kind } = graphql
+import { GraphQLScalarType, GraphQLError, Kind } from 'graphql'
 
 export default new GraphQLScalarType({
   name: 'DateTime',

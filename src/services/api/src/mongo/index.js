@@ -1,15 +1,14 @@
-import mongodb from 'mongodb'
+import MongoClient from 'mongodb'
 import { MONGO_DB as DB, MONGO_URL, MONGO_USER, MONGO_PSWD, NODE_ENV } from '../config.js'
 import getCollections from './_collections.js'
-import configureDataLoaders from './_data-loaders.js'
-
-const { MongoClient } = mongodb
+import configureDataFinders from './_data-finders.js'
+import configureDataInserters from './_data-inserters.js'
 
 const CONNECTION_STRING = `${MONGO_URL}`
 
 export const _collections = {
   Maps: 'maps',
-  EventLog: 'eventLog',
+  Logs: 'logs',
   Feedback: 'feedback',
   SavedSearches: 'savedSearches',
 }
@@ -30,4 +29,5 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
   })
 
 export const collections = getCollections({ db, _collections })
-export const getDataLoaders = configureDataLoaders({ db, _collections })
+export const getDataFinders = configureDataFinders({ db, _collections })
+export const getDataInserters = configureDataInserters({ db, _collections })

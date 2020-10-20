@@ -1,5 +1,5 @@
 # Build client
-FROM node:14.10 as build
+FROM node:14.13 as build
 WORKDIR /app
 COPY . .
 RUN npm ci --only=production

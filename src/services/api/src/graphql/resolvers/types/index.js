@@ -5,9 +5,9 @@ export { default as Void } from './_void.js'
 export { default as WKT_4326 } from './_wkt-4326.js'
 
 // GraphQL Types
-export { default as Mutation } from './_mutation.js'
-export { default as Query } from './_query.js'
-export { default as Subscription } from './_subscription.js'
+export { default as Mutation } from './mutation/index.js'
+export { default as Query } from './query/index.js'
+export { default as Subscription } from './subscription/index.js'
 
 // Relay
 export { default as PageInfo } from './_page-info.js'
