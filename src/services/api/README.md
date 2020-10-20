@@ -12,13 +12,18 @@ GraphQL API to be paired with instances of the @saeon/client package
 docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
 ```
 
-4. Start an instance of Elasticsearch and Kibana:
+4. Start an instance of Postgres/Postgis:
+```sh
+docker run --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5442:5432  postgis/postgis:12-3.0
+```
+
+5. Start an instance of Elasticsearch and Kibana:
 
 ```sh
 TODO
 ```
 
-5. Then, from the root of the repository:
+6. Then, from the root of the repository:
 
 ```sh
 npm install
