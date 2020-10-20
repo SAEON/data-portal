@@ -23,7 +23,7 @@ export default ({ id }) => {
             id
             records(ids: $ids) {
               nodes {
-                target
+                metadata
               }
             }
           }
@@ -43,17 +43,17 @@ export default ({ id }) => {
             <Header
               codeView={codeView}
               toggleCodeView={() => updateCodeView(!codeView)}
-              {...data?.catalogue?.records?.nodes?.[0]?.target?._source}
+              {...data?.catalogue?.records?.nodes?.[0]?.metadata?._source}
             />
             {codeView ? (
               <CodeView
                 codeView={codeView}
-                json={data?.catalogue?.records?.nodes?.[0]?.target?._source}
+                json={data?.catalogue?.records?.nodes?.[0]?.metadata?._source}
               />
             ) : (
               <FieldView
                 codeView={codeView}
-                {...data?.catalogue?.records?.nodes?.[0]?.target?._source}
+                {...data?.catalogue?.records?.nodes?.[0]?.metadata?._source}
               />
             )}
             <Footer />

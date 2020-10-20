@@ -62,7 +62,7 @@ export default ({
             }
             totalCount
             nodes {
-              target
+              metadata
             }
           }
         }

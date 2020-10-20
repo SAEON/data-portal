@@ -45,8 +45,8 @@ const doiHasMap = (doi, records) => {
     return doiMapCache[doi]
   } else {
     for (let node of records.nodes) {
-      var { target } = node
-      var { _source } = target
+      var { metadata } = node
+      var { _source } = metadata
       var { linkedResources, doi: itemDoi } = _source
 
       if (!itemDoi) return false

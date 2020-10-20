@@ -18,14 +18,14 @@ export default () =>
       )
 
       //likely to refactor queries below to be pulled from .sql files and have sensitive variables(user details) passed on execution
-      //Bug note: IMPORT FOREIGN SCHEMA bugs out if schema already imported
       const setupQueries = [
         // FDW setup
         `CREATE EXTENSION IF NOT EXISTS postgres_fdw;`,
+        `DROP SCHEMA IF EXISTS saeon_fdw CASCADE`,
         `CREATE SERVER IF NOT EXISTS saeon_server FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '${POSTGIS_FOREIGN_HOST}', dbname '${POSTGIS_FOREIGN_DBNAME}');`,
         `CREATE USER MAPPING IF NOT EXISTS FOR CURRENT_USER SERVER saeon_server OPTIONS (user '${POSTGIS_FOREIGN_USER}', password '${POSTGIS_FOREIGN_PASSWORD}');`,
         `CREATE SCHEMA IF NOT EXISTS saeon_fdw;`,
-        // `IMPORT FOREIGN SCHEMA public FROM SERVER saeon_server INTO saeon_fdw;`,
+        `IMPORT FOREIGN SCHEMA public FROM SERVER saeon_server INTO saeon_fdw;`,
         // Materialized View setup
         `CREATE MATERIALIZED VIEW IF NOT EXISTS meso_point_mv AS SELECT "MESO_ID" AS meso_id,"LAT" AS lat,"LON" AS lon FROM saeon_fdw."meso_point";`,
       ]

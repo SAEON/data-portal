@@ -14,8 +14,8 @@ export default ({ children, data }) => {
   const layers = useMemo(
     () =>
       data.catalogue.records.nodes
-        .map(({ target }) => {
-          const { _source } = target
+        .map(({ metadata }) => {
+          const { _source } = metadata
           const { id, doi: DOI, geoLocations, immutableResource, linkedResources, titles } = _source
 
           if (!linkedResources) return undefined

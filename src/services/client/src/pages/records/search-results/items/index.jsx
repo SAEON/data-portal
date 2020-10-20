@@ -9,7 +9,7 @@ export default ({ results }) => {
     <Grid container item xs={12}>
       {results.length ? (
         results.map(item => {
-          const { _source } = item.target
+          const { _source } = item.metadata
 
           return (
             <Grid
