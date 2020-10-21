@@ -56,7 +56,7 @@ npm run configure-git
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies
 ```
-
+ 
 ### Start the services
 
 The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON VPN. After the first start you don't have to connect to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
