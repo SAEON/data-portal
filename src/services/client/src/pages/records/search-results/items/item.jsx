@@ -20,6 +20,7 @@ import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
 import { gql, useApolloClient } from '@apollo/client'
+import packageJson from '../../../../../package.json'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
@@ -107,6 +108,7 @@ export default ({ doi, titles, creators, descriptions, id, linkedResources }) =>
                         }
                       `,
                       variables: {
+                        createdBy: `${packageJson.name} v${packageJson.version}`,
                         state: { selectedDois: [doi] },
                       },
                     })

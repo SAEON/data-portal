@@ -21,10 +21,8 @@ export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) 
   }
 
   if (ids && ids.length) {
-    if (!isAggregation) dsl.size = ids.length
     dsl.query.bool.must = [idsQuery(ids)]
   } else if (dois && dois.length) {
-    if (!isAggregation) dsl.size = dois.length
     dsl.query.bool.must = [doisQuery(dois)]
   } else {
     if (text) {

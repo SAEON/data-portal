@@ -18,6 +18,7 @@ import {
 import { CitationDialog, DataDownloadButton } from '../../../components'
 import { useHistory } from 'react-router-dom'
 import { useApolloClient, gql } from '@apollo/client'
+import packageJson from '../../../../package.json'
 
 export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResource, id }) => {
   const client = useApolloClient()
@@ -63,6 +64,7 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
                           }
                         `,
                         variables: {
+                          createdBy: `${packageJson.name} v${packageJson.version}`,
                           state: { selectedDois: [doi] },
                         },
                       })

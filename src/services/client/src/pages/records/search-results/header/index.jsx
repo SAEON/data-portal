@@ -28,6 +28,7 @@ import { GlobalContext } from '../../../../contexts/global'
 import { ShareOrEmbed } from '../../../../components'
 import { MAX_ATLAS_DATASETS } from '../../../../config'
 import StyledBadge from './_styled-badge'
+import packageJson from '../../../../../package.json'
 
 const pageSizes = [
   10,
@@ -179,6 +180,7 @@ export default ({
                             }
                           `,
                           variables: {
+                            createdBy: `${packageJson.name} v${packageJson.version}`,
                             state: selectedDois.length ? { selectedDois } : global,
                           },
                         })

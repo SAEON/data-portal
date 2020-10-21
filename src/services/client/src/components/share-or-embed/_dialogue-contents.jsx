@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
 import { getShareLink } from '../../hooks'
+import packageJson from '../../../package.json'
 
 /**
  * Dialogue contents of the share dialogue
@@ -28,6 +29,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
   useEffect(() => {
     persistSearchState({
       variables: {
+        createdBy: `${packageJson.name} v${packageJson.version}`,
         state: state
           ? Object.assign({ ...state }, { selectedDois: global.selectedDois || [] })
           : global,

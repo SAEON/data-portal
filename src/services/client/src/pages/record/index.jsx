@@ -18,10 +18,10 @@ export default ({ id }) => {
   return (
     <WithQglQuery
       QUERY={gql`
-        query catalogue($ids: [ID!]) {
+        query catalogue($ids: [ID!], $size: Int) {
           catalogue {
             id
-            records(ids: $ids) {
+            records(ids: $ids, size: $size) {
               nodes {
                 metadata
               }
@@ -29,7 +29,7 @@ export default ({ id }) => {
           }
         }
       `}
-      variables={{ ids: [id] }}
+      variables={{ ids: [id], size: 1 }}
     >
       {({ loading, error, data }) => {
         if (error) {

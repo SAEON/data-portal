@@ -13,6 +13,7 @@ const _import = p =>
 const typeDefs = `
   ${_import('./_schema.graphql')}
   ${_import('./_catalogue.graphql')}
+  ${_import('./_browser.graphql')}
   ${datacite}`
 
 export default makeExecutableSchema({

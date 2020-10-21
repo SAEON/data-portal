@@ -42,7 +42,7 @@ jobs:
           echo "REDIRECT_URL=http://catalogue.saeon.dvn/authenticated" >> src/services/client/.env
           echo "CLIENT_HOST_ADDRESS=http://catalogue.saeon.dvn" >> src/services/client/.env
           echo "DEPLOYMENT_ENV=development" >> src/services/client/.env
-          echo "DEFAULT_NOTICES=This is the catalogue DEVELOPMENT deployment. Feedback is welcome!" >> src/services/client/.env
+          echo "DEFAULT_NOTICES=This is the catalogue DEVELOPMENT deployment. Feedback is welcome!;Find the production deployment of the catalogue at catalogue.saeon.ac.za,info" >> src/services/client/.env
           echo "LATEST_COMMIT=`git rev-parse HEAD`" >> ./.env
 
       - name: Configure Nginx (server entry)
