@@ -2,7 +2,7 @@ import { config } from 'dotenv'
 config()
 
 // Repository information
-export const LATEST_COMMIT = process.env.LATEST_COMMIT || undefined
+export const LATEST_COMMIT = process.env.LATEST_COMMIT || ''
 
 // Service
 export const NODE_ENV = process.env.NODE_ENV || 'development'
@@ -19,7 +19,7 @@ export const MONGO_PSWD = process.env.MONGO_PSWD || 'password'
 export const FORCE_PG_RESET = process.env.FORCE_PG_RESET || true
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'catalogue'
 export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
-export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5442
+export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
 export const POSTGIS_USER = process.env.POSTGIS_USER || 'admin'
 export const POSTGIS_PSWD = process.env.POSTGIS_PSWD || 'password'
 export const POSTGIS_FOREIGN_HOST = process.env.POSTGIS_FOREIGN_HOST || 'localhost'

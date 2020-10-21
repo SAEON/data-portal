@@ -1,5 +1,5 @@
 // Repository information
-export const LATEST_COMMIT = process.env.LATEST_COMMIT || undefined
+export const LATEST_COMMIT = process.env.LATEST_COMMIT || ''
 
 // Application configuration
 export const BACKGROUNDS = process.env.BACKGROUNDS || ''

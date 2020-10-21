@@ -8,7 +8,7 @@ const packageJson = require('./package.json')
 // const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
-const { NODE_ENV: mode, DEPLOYMENT_ENV, LATEST_COMMIT } = process.env
+const { NODE_ENV: mode, DEPLOYMENT_ENV, LATEST_COMMIT = '' } = process.env
 
 module.exports = () => {
   const output = 'dist'

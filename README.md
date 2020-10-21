@@ -70,7 +70,7 @@ docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e 
 #### Postgis
 
 ```sh
-docker run --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5442:5432  postgis/postgis:12-3.0
+docker run --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5432:5432  postgis/postgis:12-3.0
 ```
 
 #### Elasticsearch
