@@ -8,15 +8,6 @@ import {
 export default () =>
   Promise.resolve(
     (async () => {
-      console.log(
-        '\x1b[33m',
-        '\n\n',
-        '=========================================\n',
-        'Performing Postgis DB Setup\n',
-        '=========================================\n\n',
-        '\x1b[0m'
-      )
-
       //likely to refactor queries below to be pulled from .sql files and have sensitive variables(user details) passed on execution
       const setupQueries = [
         // FDW setup
@@ -31,12 +22,13 @@ export default () =>
       ]
       for (let i = 0; i < setupQueries.length; i++) {
         await query({ text: setupQueries[i], values: [] })
-        console.log('DONE: ', setupQueries[i])
       }
+      console.log('\x1b[36m', 'Postgis FDW and materialized views configured', '\x1b[0m')//cyan
     })()
   ).catch(err => {
-    console.log('!!!!!!!!!!!!! ERROR INITIALIZING DEV DATABASE !!!!!!!!!!!!!')
+    console.log('\x1b[31m', '!!!!!!!!!!!!! ERROR INITIALIZING DEV DATABASE !!!!!!!!!!!!!', '\x1b[0m')//red
     console.log('Error:')
     console.log(err)
+    console.error(err)
     process.exit(1)
   })
