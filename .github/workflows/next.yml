@@ -29,6 +29,7 @@ jobs:
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
           echo "FORCE_PG_RESET=true" >> src/services/api/.env
           echo "POSTGIS_HOST=postgis" >> src/services/api/.env
+          echo "POSTGIS_PORT=5432" >> src/services/api/.env
           echo "POSTGIS_FOREIGN_HOST=spatialdb.saeon.int" >> src/services/api/.env
           echo "POSTGIS_FOREIGN_DBNAME=BEA" >> src/services/api/.env
           echo "LATEST_COMMIT=`git rev-parse HEAD`" >> ./.env
