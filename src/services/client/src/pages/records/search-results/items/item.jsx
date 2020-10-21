@@ -101,9 +101,9 @@ export default ({ doi, titles, creators, descriptions, id, linkedResources }) =>
                     setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
                     const { data } = await client.mutate({
                       mutation: gql`
-                        mutation($state: JSON!) {
+                        mutation($state: JSON!, $createdBy: String!) {
                           browserClient {
-                            persistSearchState(state: $state)
+                            persistSearchState(state: $state, createdBy: $createdBy)
                           }
                         }
                       `,

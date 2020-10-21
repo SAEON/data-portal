@@ -173,9 +173,9 @@ export default ({
                         setSavedSearchLoading(true)
                         const { data } = await client.mutate({
                           mutation: gql`
-                            mutation($state: JSON!) {
+                            mutation($state: JSON!, $createdBy: String!) {
                               browserClient {
-                                persistSearchState(state: $state)
+                                persistSearchState(state: $state, createdBy: $createdBy)
                               }
                             }
                           `,

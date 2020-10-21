@@ -3,7 +3,7 @@ const { ObjectID } = mongodb
 import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
-  const { state } = args
+  const { state, createdBy } = args
   const { SavedSearches } = await ctx.mongo.collections
 
   const result = await SavedSearches.findOneAndUpdate(
@@ -16,6 +16,7 @@ export default async (self, args, ctx) => {
         hashedState: hash(state),
         state,
         createdAt: new Date(),
+        createdBy,
       },
       $set: {
         modifiedAt: new Date(),

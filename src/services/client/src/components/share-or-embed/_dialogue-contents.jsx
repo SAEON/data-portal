@@ -19,9 +19,9 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
 
   const { global } = useContext(GlobalContext)
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
-    mutation($state: JSON!) {
+    mutation($state: JSON!, $createdBy: String!) {
       browserClient {
-        persistSearchState(state: $state)
+        persistSearchState(state: $state, createdBy: $createdBy)
       }
     }
   `)
