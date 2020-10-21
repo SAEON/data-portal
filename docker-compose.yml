@@ -59,8 +59,8 @@ services:
     image: $POSTGIS_IMAGE
     container_name: postgis
     environment:
-      POSTGRES_USER: ${POSTGIS_USER}
-      POSTGRES_PASSWORD: ${POSTGIS_PSWD}
+      POSTGRES_USER: $POSTGIS_USER
+      POSTGRES_PASSWORD: $POSTGIS_PSWD
       POSTGRES_DB: catalogue
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
