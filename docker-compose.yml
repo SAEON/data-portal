@@ -87,6 +87,8 @@ services:
       args:
         MONGO_USER: $MONGO_USER
         MONGO_PSWD: $MONGO_PSWD
+        POSTGIS_USER: $POSTGIS_USER
+        POSTGIS_PSWD: $POSTGIS_PSWD
     ports:
       - 5000:3000
     depends_on:
