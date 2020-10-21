@@ -12,7 +12,7 @@ services:
   elasticsearch:
     container_name: elasticsearch
     restart: always
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    image: $ELASTICSEARCH_IMAGE
     environment:
       - xpack.security.enabled=false
       - xpack.license.self_generated.type=basic
@@ -35,7 +35,7 @@ services:
   kibana:
     container_name: kibana
     restart: always
-    image: docker.elastic.co/kibana/kibana:7.9.2
+    image: $KIBANA_IMAGE
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
@@ -46,7 +46,7 @@ services:
   mongo:
     container_name: mongo
     restart: always
-    image: mongo:4.4.1
+    image: $MONGO_IMAGE
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PSWD
@@ -56,7 +56,7 @@ services:
       - 27017:27017
 
   postgis:
-    image: postgis/postgis:12-3.0
+    image: $POSTGIS_IMAGE
     container_name: postgis
     environment:
       POSTGRES_USER: ${POSTGIS_USER}
