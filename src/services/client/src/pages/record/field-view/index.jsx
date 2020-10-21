@@ -42,18 +42,18 @@ export default ({
               alignItems="stretch"
               spacing={isMobile ? 2 : 3}
             >
-              {titles.length ? <Titles titles={titles} /> : undefined}
-              {creators.length ? <Creators creators={creators} /> : undefined}
+              {titles?.length ? <Titles titles={titles} /> : undefined}
+              {creators?.length ? <Creators creators={creators} /> : undefined}
               {rightsList?.length ? <RightsList rightsList={rightsList} /> : undefined}
-              {geoLocations.length ? <GeoLocations geoLocations={geoLocations} /> : undefined}
-              {dates.length ? <Dates dates={dates} /> : undefined}
+              {geoLocations?.length ? <GeoLocations geoLocations={geoLocations} /> : undefined}
+              {dates?.length ? <Dates dates={dates} /> : undefined}
               {publisher ? (
                 <Publisher publisher={publisher} publicationYear={publicationYear} />
               ) : undefined}
-              {contributors.length ? <Contributors contributors={contributors} /> : undefined}
-              {descriptions.length ? <Descriptions descriptions={descriptions} /> : undefined}
-              {subjects.length ? <Subjects subjects={subjects} /> : undefined}
-              {linkedResources.length ? (
+              {contributors?.length ? <Contributors contributors={contributors} /> : undefined}
+              {descriptions?.length ? <Descriptions descriptions={descriptions} /> : undefined}
+              {subjects?.length ? <Subjects subjects={subjects} /> : undefined}
+              {linkedResources?.length ? (
                 <LinkedResources linkedResources={linkedResources} />
               ) : undefined}
               <Identifiers identifier={identifier} alternateIdentifiers={alternateIdentifiers} />

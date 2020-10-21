@@ -16,7 +16,7 @@ export default ({ creators }) => (
       <div key={creator.name}>
         <Typography gutterBottom variant="body2">
           <sup>[{i + 1}]</sup>&nbsp;
-          {creator.affiliations.map(aff => aff.affiliation)}
+          {creator.affiliations?.map(aff => aff.affiliation)}
         </Typography>
       </div>
     ))}

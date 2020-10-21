@@ -64,7 +64,7 @@ The catalogue software comprises three services, and is dependant on additional 
 #### MongoDB
 
 ```sh
-docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:latest
+docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
 ```
 
 #### Postgis
