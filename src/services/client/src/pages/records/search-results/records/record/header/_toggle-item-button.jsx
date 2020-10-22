@@ -13,13 +13,11 @@ export default ({ doi }) => {
         size="small"
         color="primary"
         checked={selectedDois.includes(doi)}
-        onChange={(e, checked) => {
-          if (checked) {
-            setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
-          } else {
-            setGlobal({ selectedDois: selectedDois.filter(doi => doi !== doi) })
-          }
-        }}
+        onChange={(e, checked) =>
+          checked
+            ? setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
+            : setGlobal({ selectedDois: selectedDois.filter(selectedDoi => selectedDoi !== doi) })
+        }
       />
     </Tooltip>
   )

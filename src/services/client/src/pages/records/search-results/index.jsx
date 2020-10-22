@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 import Header from './header'
 import Filters from './filters'
-import Items from './items'
+import Records from './records'
 import { GlobalContext } from '../../../contexts/global'
 import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
@@ -97,7 +97,7 @@ export default ({ disableSidebar = false }) => {
                         )}
 
                         <Grid item xs style={{ flexGrow: 1 }}>
-                          <Items results={results} />
+                          <Records results={results} />
                         </Grid>
                       </>
                     ) : (
@@ -118,7 +118,7 @@ export default ({ disableSidebar = false }) => {
                             </Grid>
                           ) : null}
                           <Grid item xs style={{ flexGrow: 1 }}>
-                            <Items results={results} />
+                            <Records results={results} />
                           </Grid>
                         </Grid>
                       </Grid>
