@@ -8,7 +8,10 @@ export default makeStyles(theme => ({
     caretColor: theme.palette.common.white,
   },
   recordSearchBox: {
-    transition: 'background-color .2s ease-in',
+    transitionTimingFunction: theme.transitions.easing.easeInOut,
+    transitionDuration: theme.transitions.duration.standard,
+    transitionProperty: 'background-color',
+
     // When not hovered, not active
     '& .MuiInput-underline:before': {
       borderBottom: 'none',
@@ -28,7 +31,7 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   toolbar: {
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: fade(theme.palette.common.black, 0.4),
     minHeight: theme.customSizes.thickToolbar.minHeight,
   },
 }))
