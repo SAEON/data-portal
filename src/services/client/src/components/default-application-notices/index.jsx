@@ -2,26 +2,24 @@ import { useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import { DEFAULT_NOTICES } from '../../config'
 
-const notices = DEFAULT_NOTICES.split(';')
-  .filter(_ => _)
-  .map(str => {
-    const [msg, variant] = str.split(',').map(s => s.trim())
-    return {
-      msg,
-      variant,
-    }
-  })
-
 /**
  * Example of a notice:
- * DEFAULT_NOTICES=Some message,warning
+ * DEFAULT_NOTICES=Some message,warning;Some other message,info
  */
 export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
     const _ = async () => {
-      for (const { msg, variant } of notices) {
+      for (const { msg, variant } of DEFAULT_NOTICES.split(';')
+        .filter(_ => _)
+        .map(str => {
+          const [msg, variant] = str.split(',').map(s => s.trim())
+          return {
+            msg,
+            variant,
+          }
+        })) {
         enqueueSnackbar(msg, {
           variant,
         })
