@@ -8,7 +8,7 @@ export default makeStyles(theme => ({
     caretColor: theme.palette.common.white,
   },
   recordSearchBox: {
-    transition: 'all .2s ease-in', // This is for the backgroundColor
+    transition: 'background-color .2s ease-in',
     // When not hovered, not active
     '& .MuiInput-underline:before': {
       borderBottom: 'none',

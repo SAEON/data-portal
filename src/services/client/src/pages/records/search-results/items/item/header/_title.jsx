@@ -1,22 +1,18 @@
 import { Typography, Link as MuiLink } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-
-const style = {
-  marginRight: 'auto',
-  marginLeft: 16,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-}
+import clsx from 'clsx'
+import useStyles from './style'
 
 export default ({ doi }) => {
+  const classes = useStyles()
+
   return isMobile ? undefined : doi ? (
     <Typography
       component={MuiLink}
       variant="overline"
       href={`https://doi.org/${doi}`}
+      className={clsx(classes.title)}
       style={{
-        ...style,
         cursor: 'pointer',
       }}
       target="_blank"
@@ -25,7 +21,7 @@ export default ({ doi }) => {
       {`https://doi.org/${doi}`}
     </Typography>
   ) : (
-    <Typography style={{ ...style }} variant="overline">
+    <Typography className={clsx(classes.title)} variant="overline">
       No DOI
     </Typography>
   )

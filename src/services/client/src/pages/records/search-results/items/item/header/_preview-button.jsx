@@ -3,6 +3,7 @@ import { IconButton, Fade, Tooltip, CircularProgress } from '@material-ui/core'
 import { Explore as ViewIcon } from '@material-ui/icons'
 import packageJson from '../../../../../../../package.json'
 import { gql, useApolloClient } from '@apollo/client'
+import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import useStyles from './style'
 import { GlobalContext } from '../../../../../../contexts/global'
@@ -13,6 +14,7 @@ export default ({ doi, linkedResources }) => {
   const classes = useStyles()
   const { global, setGlobal } = useContext(GlobalContext)
   const { selectedDois } = global
+  const history = useHistory()
 
   const hasLayers = Boolean(
     linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')

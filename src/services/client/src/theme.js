@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 const defaultTheme = createMuiTheme()
 
 export default createMuiTheme({
+  boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
   customSizes: {
     thickToolbar: {
       minHeight: 128,

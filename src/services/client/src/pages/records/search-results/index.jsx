@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 import Header from './header'
-import Sidebar from './sidebar'
+import Filters from './filters'
 import Items from './items'
 import { GlobalContext } from '../../../contexts/global'
 import { Typography, Grid, Collapse } from '@material-ui/core'
@@ -91,7 +91,7 @@ export default ({ disableSidebar = false }) => {
                         {disableSidebar ? null : (
                           <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
                             <Grid item xs={12}>
-                              <Sidebar catalogue={data?.catalogue} />
+                              <Filters catalogue={data?.catalogue} />
                             </Grid>
                           </Collapse>
                         )}
@@ -114,7 +114,7 @@ export default ({ disableSidebar = false }) => {
                         <Grid container item lg={10} xl={8}>
                           {showSidebar ? (
                             <Grid style={{ paddingRight: 16 }} item md={4}>
-                              <Sidebar catalogue={data?.catalogue} />
+                              <Filters catalogue={data?.catalogue} />
                             </Grid>
                           ) : null}
                           <Grid item xs style={{ flexGrow: 1 }}>

@@ -1,16 +1,18 @@
-import ResultItem from './item'
+import Record from './item'
 import { Card, Grid, Typography } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-
-const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
+import clsx from 'clsx'
+import useStyles from './style'
 
 export default ({ results }) => {
+  const classes = useStyles()
+
   return (
     <Grid container item xs={12}>
-      {results.length ? (
-        results.map(item => {
-          const { _source } = item.metadata
-
+      {/* Results */}
+      {Boolean(results.length) &&
+        results.map(({ metadata }) => {
+          const { _source } = metadata
           return (
             <Grid
               key={_source.id}
@@ -18,13 +20,15 @@ export default ({ results }) => {
               xs={12}
               style={isMobile ? { padding: '16px 16px 0 16px' } : { marginBottom: 16 }}
             >
-              <ResultItem {..._source} />
+              <Record {..._source} />
             </Grid>
           )
-        })
-      ) : (
+        })}
+
+      {/* NO Results */}
+      {!results.length && (
         <Grid item xs={12} style={isMobile ? { padding: '16px 16px 0 16px' } : {}}>
-          <Card style={{ backgroundColor: CARD_BG_COLOUR }} variant="outlined">
+          <Card className={clsx(classes.card)} variant="outlined">
             <Typography
               style={{ margin: 20, display: 'block', textAlign: 'center' }}
               variant="overline"
