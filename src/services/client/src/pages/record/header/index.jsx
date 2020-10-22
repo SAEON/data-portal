@@ -57,7 +57,7 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
                       setLoading(true)
                       const { data } = await client.mutate({
                         mutation: gql`
-                          mutation($state: JSON!, $createdBy: String) {
+                          mutation($state: JSON!, $createdBy: String!) {
                             browserClient {
                               persistSearchState(state: $state, createdBy: $createdBy)
                             }
