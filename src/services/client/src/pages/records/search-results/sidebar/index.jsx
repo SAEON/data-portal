@@ -1,12 +1,9 @@
-import { lazy, Suspense } from 'react'
 import { Grid, Fade } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import TagFilter from './items/tag-filter'
-import { Loading } from '../../../../components'
+import ExtentFilter from './items/extent-filter'
 import useStyles from './style'
 import clsx from 'clsx'
-
-const ExtentFilter = lazy(() => import('./items/extent-filter'))
 
 export default ({ catalogue }) => {
   const classes = useStyles()
@@ -17,9 +14,7 @@ export default ({ catalogue }) => {
       <Grid className={clsx(classes.sideBar)} container item xs={12} spacing={0}>
         {/* Area filter */}
         <Grid item xs={12} style={{ position: 'relative' }}>
-          <Suspense fallback={<Loading />}>
-            <ExtentFilter title="Extent Filter" />
-          </Suspense>
+          <ExtentFilter title="Extent Filter" />
         </Grid>
 
         {/* Keywords */}

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, lazy, Suspense } from 'react'
 import {
   Typography,
   Grid,
@@ -11,12 +11,12 @@ import {
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import { OlReact, MapProxy } from '@saeon/ol-react'
-import { terrestrisBaseMap } from '../../../../../../lib/ol'
-import FilterControl from './filter-control'
 import useStyles from '../style'
 import clsx from 'clsx'
 import { GlobalContext } from '../../../../../../contexts/global'
+import { Loading } from '../../../../../../components'
+
+const Map = lazy(() => import('./map'))
 
 export default ({ title }) => {
   const { global } = useContext(GlobalContext)
@@ -68,22 +68,15 @@ export default ({ title }) => {
           <Grid item xs={12}>
             <Card>
               <div style={{ position: 'relative' }}>
-                <OlReact
-                  viewOptions={{
-                    center: [26, -25],
-                    zoom: 4,
-                  }}
-                  layers={[terrestrisBaseMap()]}
-                  style={{ height: '300px' }}
+                <Suspense
+                  fallback={
+                    <div style={{ height: 4 }}>
+                      <Loading />
+                    </div>
+                  }
                 >
-                  {({ map }) => {
-                    return (
-                      <MapProxy map={map}>
-                        {({ proxy }) => <FilterControl proxy={proxy} />}
-                      </MapProxy>
-                    )
-                  }}
-                </OlReact>
+                  <Map />
+                </Suspense>
               </div>
             </Card>
           </Grid>

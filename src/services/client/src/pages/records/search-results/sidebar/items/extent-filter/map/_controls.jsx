@@ -6,13 +6,14 @@ import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
-import { GlobalContext } from '../../../../../../contexts/global'
+import { GlobalContext } from '../../../../../../../contexts/global'
 
 const wkt = new WKT()
 
 var draw
 var defaultZoom
 var defaultCenter
+
 export default ({ proxy }) => {
   const source = new VectorSource({ wrapX: false })
   const layer = new VectorLayer({
