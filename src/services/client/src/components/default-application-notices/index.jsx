@@ -20,11 +20,15 @@ export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
-    notices.forEach(({ msg, variant }) =>
-      enqueueSnackbar(msg, {
-        variant,
-      })
-    )
+    const _ = async () => {
+      for (const { msg, variant } of notices) {
+        enqueueSnackbar(msg, {
+          variant,
+        })
+        await new Promise(res => setTimeout(res, 250))
+      }
+    }
+    _()
   })
 
   return children
