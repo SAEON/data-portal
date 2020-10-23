@@ -31,9 +31,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
     persistSearchState({
       variables: {
         createdBy: `${packageJson.name} v${packageJson.version}`,
-        state: state
-          ? Object.assign({ ...state }, { selectedDois: global.selectedDois || [] })
-          : global,
+        state: state || global,
       },
     })
   }, [global, persistSearchState, state])

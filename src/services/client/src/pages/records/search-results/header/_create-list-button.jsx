@@ -10,7 +10,6 @@ const removeSelectedDois = obj =>
 export default ({ catalogue }) => {
   const { global } = useContext(GlobalContext)
   const { selectedDois } = global
-
   const resultCount = catalogue?.records.totalCount
 
   return (

@@ -1,4 +1,4 @@
-import { Typography, Link } from '@material-ui/core'
+import { Typography, Link, DialogContentText } from '@material-ui/core'
 import { createContext, Component } from 'react'
 import { MessageDialogue } from '../components'
 import { WEB_DEVELOPER_CONTACT } from '../config'
@@ -27,10 +27,10 @@ export default class extends Component {
         title="Application Error"
         text={
           <>
-            <Typography variant="body2" style={{ marginBottom: 16 }} gutterBottom>
+            <DialogContentText variant="body2" gutterBottom style={{ marginBottom: 16 }}>
               {error}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
+            </DialogContentText>
+            <DialogContentText variant="body2" gutterBottom>
               Please try refreshing this page in a few minutes. If the error persists, or if
               assistance is required, please contact{' '}
               {
@@ -39,7 +39,7 @@ export default class extends Component {
                 </Link>
               }{' '}
               with a screenshot of this page so that we may resolve the issue speedily
-            </Typography>
+            </DialogContentText>
           </>
         }
       />

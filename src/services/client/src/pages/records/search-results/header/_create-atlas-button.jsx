@@ -2,12 +2,12 @@ import { useState, useContext } from 'react'
 import { Tooltip, IconButton, CircularProgress, Fade } from '@material-ui/core'
 import { Explore as MapIcon } from '@material-ui/icons'
 import { gql } from '@apollo/client'
-import packageJson from '../../../../../package.json'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { MAX_ATLAS_DATASETS } from '../../../../config'
 import { GlobalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
+import packageJson from '../../../../../package.json'
 
 const doiMapCache = {}
 

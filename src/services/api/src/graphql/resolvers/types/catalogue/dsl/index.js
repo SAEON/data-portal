@@ -30,9 +30,11 @@ export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) 
       dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(text.toLowerCase())]
     }
     if (terms?.length) {
+      dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
       dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
     }
     if (extent) {
+      dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
       dsl.query.bool.filter = [...dsl.query.bool.filter, geoShape(extent)]
     }
   }
