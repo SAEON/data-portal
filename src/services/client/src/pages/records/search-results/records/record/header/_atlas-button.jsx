@@ -40,19 +40,19 @@ export default ({ doi, linkedResources }) => {
                 mutation($state: JSON!, $createdBy: String!) {
                   browserClient {
                     id
-                    persistSearchState(state: $state, createdBy: $createdBy)
+                    createAtlas(state: $state, createdBy: $createdBy)
                   }
                 }
               `,
               variables: {
                 createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: { selectedDois: [doi] },
+                state: { dois: [doi] },
               },
             })
             if (data) {
               history.push({
                 pathname: '/atlas',
-                search: `?search=${data.browserClient.persistSearchState}`,
+                search: `?atlas=${data.browserClient.createAtlas}`,
               })
             } else {
               throw new Error('Error creating atlas')

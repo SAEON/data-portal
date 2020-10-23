@@ -7,7 +7,7 @@ import configureDataInserters from './_data-inserters.js'
 const CONNECTION_STRING = `${MONGO_URL}`
 
 export const _collections = {
-  Maps: 'maps',
+  Atlases: 'atlases',
   Logs: 'logs',
   Feedback: 'feedback',
   SavedSearches: 'savedSearches',

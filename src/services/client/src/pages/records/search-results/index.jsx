@@ -51,6 +51,9 @@ export default ({ disableSidebar = false }) => {
       startCursor={cursors.start}
       endCursor={cursors.end}
       dois={dois}
+      terms={terms}
+      extent={extent}
+      text={text}
     >
       {({ error, loading, data }) => {
         const results = cursors.start

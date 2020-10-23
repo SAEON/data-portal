@@ -46,6 +46,13 @@ const isAtlasAvailable = (selectedDois, atlasLayersCount, records) =>
       : false
     : false
 
+const removeSelectedDois = obj =>
+  Object.fromEntries(
+    Object.entries(
+      obj.selectedDois?.length ? Object.assign({ ...obj }, { dois: obj.selectedDois }) : obj
+    ).filter(([key]) => key !== 'selectedDois')
+  )
+
 export default ({ catalogue }) => {
   const { global } = useContext(GlobalContext)
   const { selectedDois } = global
@@ -87,19 +94,19 @@ export default ({ catalogue }) => {
               mutation: gql`
                 mutation($state: JSON!, $createdBy: String!) {
                   browserClient {
-                    persistSearchState(state: $state, createdBy: $createdBy)
+                    createAtlas(state: $state, createdBy: $createdBy)
                   }
                 }
               `,
               variables: {
                 createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: selectedDois.length ? { selectedDois } : global,
+                state: removeSelectedDois(global),
               },
             })
             if (data) {
               history.push({
-                pathname: 'atlas',
-                search: `?search=${data.browserClient.persistSearchState}`,
+                pathname: '/atlas',
+                search: `?atlas=${data.browserClient.createAtlas}`,
               })
             } else {
               throw new Error('Error creating atlas')

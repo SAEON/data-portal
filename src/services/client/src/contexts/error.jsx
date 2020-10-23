@@ -1,4 +1,4 @@
-import { Typography, Link, DialogContentText } from '@material-ui/core'
+import { Link, DialogContentText } from '@material-ui/core'
 import { createContext, Component } from 'react'
 import { MessageDialogue } from '../components'
 import { WEB_DEVELOPER_CONTACT } from '../config'

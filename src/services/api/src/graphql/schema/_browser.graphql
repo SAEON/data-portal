@@ -2,17 +2,20 @@ type BrowserClient {
   id: ID!
   # Save a web-browser's search context for retrieving
   persistSearchState(state: JSON!, createdBy: String!): ID!
+  # Retrieve a web-browser's previously saved search context
   findSearchState(id: ID!): JSON
+  # Save a web-browser's search context for retrieving as an atlas
+  createAtlas(state: JSON!, createdBy: String!): ID!
+  # Retrieve a web-browser's previously saved atlas
+  findAtlas(id: ID!): JSON
 }
 
-# Browser events
 type BrowserEvent implements Node {
   id: ID!
   type: String!
   createdAt: DateTime
   info: JSON!
   clientVersion: String!
-  # Most recent source code commit of currently executing code
   commitHash: String!
 }
 
@@ -21,7 +24,6 @@ input BrowserEventInput {
   createdAt: DateTime!
   info: JSON!
   clientVersion: String!
-  # Most recent source code commit of currently executing code
   commitHash: String!
 }
 
@@ -29,6 +31,5 @@ input FeedbackInput {
   text: String!
   rating: Int!
   pathname: String!
-  # Most recent source code commit of currently executing code
   commitHash: String!
 }

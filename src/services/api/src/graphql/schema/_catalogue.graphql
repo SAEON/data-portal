@@ -33,8 +33,9 @@ type Catalogue {
 
   # Get count aggregation of records by fields, with optional filters
   summary(
+    # Filter by a single record (ID). Other filters are ignored
     filterByIds: [ID!]
-    # Fetch a single record by DOIs (other arguments are ignored)
+    # Filter by a single record (DOI). Other filters are ignored
     filterByDois: [String!]
     # Filter on full text search
     filterByText: String
@@ -42,9 +43,9 @@ type Catalogue {
     filterByExtent: WKT_4326
     # List of terms to filter on
     filterByTerms: [TermInput!]
-    # Provide IDs that should be filtered on
     # A list of fields to perform term agggregation on
     fields: [String!]
+    # Limit of aggregation items to return
     limit: Int
   ): JSON!
 }

@@ -16,8 +16,8 @@ export default () => {
   setShareLink({ uri: `${CLIENT_HOST_ADDRESS}/render/atlas`, params: true })
 
   const snapMenusContainer = useRef()
-  const searchId = getUriState().search
-  if (!searchId) {
+  const atlasId = getUriState().atlas
+  if (!atlasId) {
     throw new Error(
       `The ATLAS requires prior-configuration of what layers to show. This is done at ${CLIENT_HOST_ADDRESS}/records`
     )
@@ -28,29 +28,21 @@ export default () => {
       QUERY={gql`
         query($id: ID!) {
           browserClient {
-            findSearchState(id: $id)
+            findAtlas(id: $id)
           }
         }
       `}
-      variables={{ id: searchId }}
+      variables={{ id: atlasId }}
     >
       {({ error, loading, data }) => {
         if (error) {
           throw new Error('Error loading search state for Atlas')
         }
 
-        const findSearchState = data?.browserClient.findSearchState || {}
-
         return loading ? (
           <Loading />
         ) : (
-          <WithCatalogue
-            {...Object.assign(
-              { ...findSearchState },
-              { dois: findSearchState.selectedDois || findSearchState.dois || [] }
-            )}
-            pageSize={MAX_ATLAS_DATASETS}
-          >
+          <WithCatalogue {...data?.browserClient.findAtlas} pageSize={MAX_ATLAS_DATASETS}>
             {({ error, loading, data }) => {
               if (error) {
                 throw new Error('Error searching catalogue')
