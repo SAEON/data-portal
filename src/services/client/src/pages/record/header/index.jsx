@@ -1,114 +1,26 @@
-import { useState } from 'react'
-import {
-  FormatQuote as CitationIcon,
-  Code as CodeIcon,
-  BarChart as PreviewIcon,
-} from '@material-ui/icons'
-import {
-  AppBar,
-  Toolbar,
-  Grid,
-  Typography,
-  Tooltip,
-  Hidden,
-  IconButton,
-  Fade,
-  CircularProgress,
-} from '@material-ui/core'
-import { CitationDialog, DataDownloadButton } from '../../../components'
-import { useHistory } from 'react-router-dom'
-import { useApolloClient, gql } from '@apollo/client'
-import packageJson from '../../../../package.json'
+import { AppBar, Toolbar, Grid, Hidden } from '@material-ui/core'
+import { DataDownloadButton } from '../../../components'
+import AtlasButton from './_atlas-button'
+import CitationButton from './_citation-button'
+import CodeViewButton from './_code-view-button'
+import Title from './_title'
 
-export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResource, id }) => {
-  const client = useApolloClient()
-  const [loading, setLoading] = useState(false)
-  const history = useHistory()
-
-  const hasLayers = Boolean(
-    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-  )
-
+export default _source => {
   return (
     <AppBar color="inherit" position="sticky" variant="outlined">
       <Toolbar variant="dense">
         <Grid container spacing={2} justify="flex-end">
           <Grid item xs style={{ alignSelf: 'center' }}>
-            <Typography variant="overline" component="h1">
-              {doi || 'UNKNOWN DOI'}
-            </Typography>
+            <Title {..._source} />
           </Grid>
 
           <Hidden xsDown>
-            {loading ? (
-              <Fade in={loading}>
-                <CircularProgress thickness={2} size={18} style={{ margin: '15px 8px' }} />
-              </Fade>
-            ) : (
-              <Tooltip title={hasLayers ? 'Preview dataset' : 'Unable to preview this dataset'}>
-                <span>
-                  <IconButton
-                    disabled={!hasLayers}
-                    color={'primary'}
-                    onClick={async e => {
-                      e.stopPropagation()
-                      setLoading(true)
-                      const { data } = await client.mutate({
-                        mutation: gql`
-                          mutation($state: JSON!, $createdBy: String!) {
-                            browserClient {
-                              id
-                              createAtlas(state: $state, createdBy: $createdBy)
-                            }
-                          }
-                        `,
-                        variables: {
-                          createdBy: `${packageJson.name} v${packageJson.version}`,
-                          state: { dois: [doi] },
-                        },
-                      })
-                      if (data) {
-                        history.push({
-                          pathname: '/atlas',
-                          search: `?atlas=${data.browserClient.createAtlas}`,
-                        })
-                      } else {
-                        throw new Error('Error creating atlas')
-                      }
-                    }}
-                  >
-                    <PreviewIcon />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            )}
-
-            <Tooltip title="View raw metadata record (JSON)">
-              <IconButton
-                color={codeView ? 'primary' : 'default'}
-                onClick={e => {
-                  e.stopPropagation()
-                  toggleCodeView()
-                }}
-              >
-                <CodeIcon />
-              </IconButton>
-            </Tooltip>
-
-            <CitationDialog doi={doi} id={id}>
-              {({ disabled, onClick }) => (
-                <Tooltip placement="left-start" title="Cite this record">
-                  <span>
-                    <IconButton color="primary" disabled={disabled} onClick={onClick}>
-                      <CitationIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-              )}
-            </CitationDialog>
+            <AtlasButton {..._source} />
+            <CodeViewButton {..._source} />
+            <CitationButton {..._source} />
           </Hidden>
 
-          <DataDownloadButton color="primary" immutableResource={immutableResource} />
+          <DataDownloadButton color="primary" immutableResource={_source?.immutableResource} />
         </Grid>
       </Toolbar>
     </AppBar>
