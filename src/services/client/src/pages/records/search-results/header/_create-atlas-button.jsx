@@ -105,7 +105,7 @@ export default ({ catalogue }) => {
             })
             if (data) {
               history.push({
-                pathname: '/atlas',
+                pathname: window.location.pathname.includes('render') ? '/render/atlas' : '/atlas',
                 search: `?atlas=${data.browserClient.createAtlas}`,
               })
             } else {
