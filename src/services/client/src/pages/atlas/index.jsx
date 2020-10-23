@@ -22,10 +22,8 @@ export default () => {
   }
 
   setShareLink({
-    uri: `${CLIENT_HOST_ADDRESS}/render/atlas`,
-    params: {
-      atlas: atlasId,
-    },
+    uri: `${CLIENT_HOST_ADDRESS}/render/atlas?atlas=${atlasId}`,
+    params: false,
   })
 
   return (
