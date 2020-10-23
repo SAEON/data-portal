@@ -27,49 +27,49 @@ export default () => {
   })
 
   return (
-    <WithQglQuery
-      QUERY={gql`
-        query($id: ID!) {
-          browserClient {
-            findAtlas(id: $id)
-          }
-        }
-      `}
-      variables={{ id: atlasId }}
+    <div
+      ref={snapMenusContainer}
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+      }}
     >
-      {({ error, loading, data }) => {
-        if (error) {
-          throw new Error('Error loading search state for Atlas')
-        }
+      <WithQglQuery
+        QUERY={gql`
+          query($id: ID!) {
+            browserClient {
+              findAtlas(id: $id)
+            }
+          }
+        `}
+        variables={{ id: atlasId }}
+      >
+        {({ error, loading, data }) => {
+          if (error) {
+            throw new Error('Error loading search state for Atlas')
+          }
 
-        return loading ? (
-          <Loading />
-        ) : (
-          <WithCatalogue {...data?.browserClient.findAtlas} pageSize={MAX_ATLAS_DATASETS}>
-            {({ error, loading, data }) => {
-              if (error) {
-                throw new Error('Error searching catalogue')
-              }
+          return loading ? (
+            <Loading />
+          ) : (
+            <WithCatalogue {...data?.browserClient.findAtlas} pageSize={MAX_ATLAS_DATASETS}>
+              {({ error, loading, data }) => {
+                if (error) {
+                  throw new Error('Error searching catalogue')
+                }
 
-              if (data?.catalogue.records.totalCount > MAX_ATLAS_DATASETS) {
-                throw new Error(
-                  `Atlas supports a maximum of ${MAX_ATLAS_DATASETS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
-                )
-              }
+                if (data?.catalogue.records.totalCount > MAX_ATLAS_DATASETS) {
+                  throw new Error(
+                    `Atlas supports a maximum of ${MAX_ATLAS_DATASETS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
+                  )
+                }
 
-              return loading ? (
-                <Loading />
-              ) : (
-                <div
-                  ref={snapMenusContainer}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                  }}
-                >
+                return loading ? (
+                  <Loading />
+                ) : (
                   <Suspense fallback={<Loading />}>
                     <OlReactProvider>
                       <Suspense fallback={null}>
@@ -90,12 +90,12 @@ export default () => {
                       </Suspense>
                     </OlReactProvider>
                   </Suspense>
-                </div>
-              )
-            }}
-          </WithCatalogue>
-        )
-      }}
-    </WithQglQuery>
+                )
+              }}
+            </WithCatalogue>
+          )
+        }}
+      </WithQglQuery>
+    </div>
   )
 }
