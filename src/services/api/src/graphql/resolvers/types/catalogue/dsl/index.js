@@ -11,6 +11,7 @@ export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) 
       dsl.query = {
         bool: {
           must: [],
+          filter: [],
         },
       }
     }
@@ -21,18 +22,18 @@ export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) 
   }
 
   if (ids && ids.length) {
-    dsl.query.bool.must = [idsQuery(ids)]
+    dsl.query.bool.filter = [idsQuery(ids)]
   } else if (dois && dois.length) {
-    dsl.query.bool.must = [doisQuery(dois)]
+    dsl.query.bool.filter = [doisQuery(dois)]
   } else {
     if (text) {
       dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(text.toLowerCase())]
     }
     if (terms?.length) {
-      dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
+      dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
     }
     if (extent) {
-      dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
+      dsl.query.bool.filter = [...dsl.query.bool.filter, geoShape(extent)]
     }
   }
 
