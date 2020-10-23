@@ -13,17 +13,16 @@ export default ({
     <SimpleLink style={{ display: 'block' }} uri={immutableResource.resourceURL}>
       <Tooltip
         placement={tooltipPlacement || 'bottom'}
-        title={`${immutableResource.resourceDescription} (${immutableResource.resourceURL.replace(
-          /.*\./,
-          ''
-        )})`}
+        title={`${
+          immutableResource?.resourceDescription
+        } (${immutableResource?.resourceURL?.replace(/.*\./, '')})`}
       >
         {children ? (
           <Button {...props} startIcon={<GetAppIcon />}>
             {children}
           </Button>
         ) : (
-          <IconButton {...props}>
+          <IconButton disabled={!immutableResource?.resourceURL} {...props}>
             <GetAppIcon fontSize={fontSize} />
           </IconButton>
         )}

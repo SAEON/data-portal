@@ -33,7 +33,6 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
     <AppBar color="inherit" position="sticky" variant="outlined">
       <Toolbar variant="dense">
         <Grid container spacing={2} justify="flex-end">
-          {/* PAGE TITLE */}
           <Grid item xs style={{ alignSelf: 'center' }}>
             <Typography variant="overline" component="h1">
               {doi || 'UNKNOWN DOI'}
@@ -41,7 +40,6 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
           </Grid>
 
           <Hidden xsDown>
-            {/* PREVIEW */}
             {loading ? (
               <Fade in={loading}>
                 <CircularProgress thickness={2} size={18} style={{ margin: '15px 8px' }} />
@@ -60,19 +58,19 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
                           mutation($state: JSON!, $createdBy: String!) {
                             browserClient {
                               id
-                              persistSearchState(state: $state, createdBy: $createdBy)
+                              createAtlas(state: $state, createdBy: $createdBy)
                             }
                           }
                         `,
                         variables: {
                           createdBy: `${packageJson.name} v${packageJson.version}`,
-                          state: { selectedDois: [doi] },
+                          state: { dois: [doi] },
                         },
                       })
                       if (data) {
                         history.push({
                           pathname: '/atlas',
-                          search: `?search=${data.browserClient.persistSearchState}`,
+                          search: `?atlas=${data.browserClient.createAtlas}`,
                         })
                       } else {
                         throw new Error('Error creating atlas')
@@ -85,7 +83,6 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
               </Tooltip>
             )}
 
-            {/* JSON */}
             <Tooltip title="View raw metadata record (JSON)">
               <IconButton
                 color={codeView ? 'primary' : 'default'}
@@ -98,7 +95,6 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
               </IconButton>
             </Tooltip>
 
-            {/* CITATTION */}
             <CitationDialog doi={doi} id={id}>
               {({ disabled, onClick }) => (
                 <Tooltip placement="left-start" title="Cite this record">
@@ -112,7 +108,6 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
             </CitationDialog>
           </Hidden>
 
-          {/* DATA DOWNLOAD */}
           <DataDownloadButton color="primary" immutableResource={immutableResource} />
         </Grid>
       </Toolbar>

@@ -13,8 +13,6 @@ const StateProvider = lazy(() => import('./state'))
 const Map = lazy(() => import('./map'))
 
 export default () => {
-  setShareLink({ uri: `${CLIENT_HOST_ADDRESS}/render/atlas`, params: true })
-
   const snapMenusContainer = useRef()
   const atlasId = getUriState().atlas
   if (!atlasId) {
@@ -22,6 +20,13 @@ export default () => {
       `The ATLAS requires prior-configuration of what layers to show. This is done at ${CLIENT_HOST_ADDRESS}/records`
     )
   }
+
+  setShareLink({
+    uri: `${CLIENT_HOST_ADDRESS}/render/atlas`,
+    params: {
+      atlas: atlasId,
+    },
+  })
 
   return (
     <WithQglQuery
