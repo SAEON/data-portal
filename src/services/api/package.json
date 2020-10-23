@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@koa/router": "^9.4.0",
-    "@saeon/logger": "^6.1.0",
+    "@saeon/logger": "^6.1.1",
     "apollo-server-koa": "^2.18.2",
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",

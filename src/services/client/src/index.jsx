@@ -1,11 +1,19 @@
+import { lazy, Suspense } from 'react'
+import { Loading } from './components'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import 'typeface-roboto'
 import './index.scss'
 import { render } from 'react-dom'
-import Application from './app'
 
-render(<Application />, document.getElementById('root'))
+const App = lazy(() => import('./app'))
+
+render(
+  <Suspense fallback={<Loading />}>
+    <App />
+  </Suspense>,
+  document.getElementById('root')
+)
 
 /**
  * TODO
