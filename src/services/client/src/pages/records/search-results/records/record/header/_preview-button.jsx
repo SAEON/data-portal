@@ -39,6 +39,7 @@ export default ({ doi, linkedResources }) => {
               mutation: gql`
                 mutation($state: JSON!, $createdBy: String!) {
                   browserClient {
+                    id
                     persistSearchState(state: $state, createdBy: $createdBy)
                   }
                 }

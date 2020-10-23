@@ -59,6 +59,7 @@ export default ({ toggleCodeView, codeView, linkedResources, doi, immutableResou
                         mutation: gql`
                           mutation($state: JSON!, $createdBy: String!) {
                             browserClient {
+                              id
                               persistSearchState(state: $state, createdBy: $createdBy)
                             }
                           }

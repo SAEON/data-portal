@@ -1,4 +1,5 @@
 type BrowserClient {
+  id: ID!
   # Save a web-browser's search context for retrieving
   persistSearchState(state: JSON!, createdBy: String!): ID!
   findSearchState(id: ID!): JSON

@@ -21,6 +21,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
     mutation($state: JSON!, $createdBy: String!) {
       browserClient {
+        id
         persistSearchState(state: $state, createdBy: $createdBy)
       }
     }
