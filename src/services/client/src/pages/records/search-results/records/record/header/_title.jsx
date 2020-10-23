@@ -6,7 +6,7 @@ import useStyles from './style'
 export default ({ doi }) => {
   const classes = useStyles()
 
-  return isMobile ? undefined : doi ? (
+  return isMobile ? null : doi ? (
     <Typography
       component={MuiLink}
       variant="overline"

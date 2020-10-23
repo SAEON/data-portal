@@ -87,7 +87,7 @@ export default ({
       }
     `,
     {
-      fetchPolicy: fetchPolicy || 'cache-and-network',
+      fetchPolicy: fetchPolicy || 'cache-first',
       variables: {
         fields,
         ids,

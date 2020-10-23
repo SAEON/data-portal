@@ -1,9 +1,7 @@
 import { Link, DialogContentText } from '@material-ui/core'
-import { createContext, Component } from 'react'
-import { MessageDialogue } from '../components'
-import { WEB_DEVELOPER_CONTACT } from '../config'
-
-export const ExceptionContext = createContext()
+import { Component } from 'react'
+import { MessageDialogue } from '../../components'
+import { WEB_DEVELOPER_CONTACT } from '../../config'
 
 export default class extends Component {
   constructor(props) {

@@ -2,14 +2,18 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { ApolloProvider } from '@apollo/client'
-import ErrorProvider from './contexts/error'
 import GlobalProvider from './contexts/global'
 import AuthProvider from './contexts/authentication'
 import Layout from './layout'
 import theme from './theme'
 import { SnackbarProvider } from 'notistack'
 import BackgroundImageProvider from './contexts/background-image'
-import { NativeExtensions, ApplicationLogger, DefaultApplicationNotices } from './components'
+import {
+  NativeExtensions,
+  ApplicationLogger,
+  DefaultApplicationNotices,
+  ErrorBoundary,
+} from './components'
 import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
 import { HttpLink, split } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
@@ -44,9 +48,9 @@ export default () => {
           })
         }
       >
-        <ErrorProvider>
-          <CssBaseline>
-            <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <ThemeProvider theme={theme}>
+            <ErrorBoundary>
               <GlobalProvider>
                 <BackgroundImageProvider>
                   <ApplicationLogger>
@@ -60,9 +64,9 @@ export default () => {
                   </ApplicationLogger>
                 </BackgroundImageProvider>
               </GlobalProvider>
-            </ThemeProvider>
-          </CssBaseline>
-        </ErrorProvider>
+            </ErrorBoundary>
+          </ThemeProvider>
+        </CssBaseline>
       </ApolloProvider>
     </NativeExtensions>
   )
