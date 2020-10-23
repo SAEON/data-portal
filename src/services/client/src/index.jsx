@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Loading } from './components'
+import Loading from './components/loading'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import 'typeface-roboto'
