@@ -32,7 +32,7 @@ export default () => {
             </Grid>
             <Grid item style={{ flexGrow: 2 }}>
               <RecordsSearch
-                className={classes.recordSearchBox}
+                className={classes.recordsSearchBox}
                 color={'secondary'}
                 inputProps={{
                   className: classes.input,

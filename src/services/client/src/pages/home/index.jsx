@@ -10,8 +10,6 @@ import { isMobile } from 'react-device-detect'
 import { CLIENT_HOST_ADDRESS, GQL_PROVIDER } from '../../config'
 import { WithQglQuery, setShareLink } from '../../hooks'
 
-const CARD_BG_COLOUR = 'rgba(255,255,255,0.75)'
-
 export default () => {
   setShareLink({
     uri: `${CLIENT_HOST_ADDRESS}/render`,
@@ -47,7 +45,14 @@ export default () => {
 
             <Grid
               container
-              style={{ position: 'absolute', top: 'calc(50% - 120px)', zIndex: 1 }}
+              style={{
+                position: 'absolute',
+                top:
+                  window.innerHeight / 2 -
+                  (window.location.pathname.includes('render') ? 0 : 48) -
+                  95 / 2,
+                zIndex: 1,
+              }}
               alignItems="stretch"
               item
               className={clsx({
@@ -62,10 +67,7 @@ export default () => {
                 direction={isMobile ? 'column' : 'row'}
                 item
                 xs={12}
-                style={{
-                  backgroundColor: CARD_BG_COLOUR,
-                  padding: 16,
-                }}
+                className={clsx(classes.grid)}
               >
                 <Grid style={{ display: 'flex' }} item>
                   <a style={{ display: 'block', margin: 'auto' }} href={CLIENT_HOST_ADDRESS}>

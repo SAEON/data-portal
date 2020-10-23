@@ -7,7 +7,7 @@ export default makeStyles(theme => ({
     padding: 32,
     caretColor: theme.palette.common.white,
   },
-  recordSearchBox: {
+  recordsSearchBox: {
     transitionTimingFunction: theme.transitions.easing.easeInOut,
     transitionDuration: theme.transitions.duration.standard,
     transitionProperty: 'background-color',
