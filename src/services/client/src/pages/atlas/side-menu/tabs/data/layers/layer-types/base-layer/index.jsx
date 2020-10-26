@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, memo } from 'react'
 import {
   Card,
   CardHeader,
@@ -15,7 +15,13 @@ import QuickForm from '@saeon/quick-form'
 import { Slider } from '../../../../../../../../components'
 import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 
-export default ({ layer, proxy }) => {
+/**
+ * TODO
+ *
+ * Memo function should check specific properties
+ * proxy and layer objects
+ */
+export default memo(({ layer, proxy }) => {
   const title = layer.get('title')
   const visible = layer.getVisible()
 
@@ -88,4 +94,4 @@ export default ({ layer, proxy }) => {
       </QuickForm>
     </div>
   )
-}
+})
