@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef } from 'react'
+import { useRef } from 'react'
 import { Loading } from '../../components'
 import SideMenu from './side-menu'
 import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
@@ -6,11 +6,10 @@ import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
 import { CLIENT_HOST_ADDRESS, MAX_ATLAS_DATASETS } from '../../config'
 import { setShareLink } from './../../hooks'
-
-const MenuProvider = lazy(() => import('@saeon/snap-menus/src/provider'))
-const OlReactProvider = lazy(() => import('../../contexts/ol-react'))
-const StateProvider = lazy(() => import('./state'))
-const Map = lazy(() => import('./map'))
+import MenuProvider from '@saeon/snap-menus/src/provider'
+import OlReactProvider from '../../contexts/ol-react'
+import StateProvider from './state'
+import Map from './map'
 
 export default () => {
   const snapMenusContainer = useRef()
@@ -70,26 +69,20 @@ export default () => {
                 return loading ? (
                   <Loading />
                 ) : (
-                  <Suspense fallback={<Loading />}>
+                  <StateProvider data={data}>
                     <OlReactProvider>
-                      <Suspense fallback={null}>
-                        <StateProvider data={data}>
-                          <Suspense fallback={null}>
-                            <MenuProvider
-                              MARGIN_TOP={5}
-                              MARGIN_RIGHT={5}
-                              MARGIN_BOTTOM={5}
-                              MARGIN_LEFT={5}
-                              SNAP_MENUS_CONTAINER_REF={snapMenusContainer}
-                            >
-                              <SideMenu snapMenusContainer={snapMenusContainer} />
-                              <Map />
-                            </MenuProvider>
-                          </Suspense>
-                        </StateProvider>
-                      </Suspense>
+                      <MenuProvider
+                        MARGIN_TOP={5}
+                        MARGIN_RIGHT={5}
+                        MARGIN_BOTTOM={5}
+                        MARGIN_LEFT={5}
+                        SNAP_MENUS_CONTAINER_REF={snapMenusContainer}
+                      >
+                        <SideMenu snapMenusContainer={snapMenusContainer} />
+                        <Map />
+                      </MenuProvider>
                     </OlReactProvider>
-                  </Suspense>
+                  </StateProvider>
                 )
               }}
             </WithCatalogue>

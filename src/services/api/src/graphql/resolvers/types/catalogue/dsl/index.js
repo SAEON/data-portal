@@ -22,8 +22,10 @@ export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) 
   }
 
   if (ids && ids.length) {
+    dsl.query.bool.must = [idsQuery(ids)]
     dsl.query.bool.filter = [idsQuery(ids)]
   } else if (dois && dois.length) {
+    dsl.query.bool.must = [doisQuery(dois)]
     dsl.query.bool.filter = [doisQuery(dois)]
   } else {
     if (text) {

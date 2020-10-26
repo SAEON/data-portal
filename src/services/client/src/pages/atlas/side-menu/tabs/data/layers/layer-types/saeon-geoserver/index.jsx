@@ -9,6 +9,7 @@ import {
   Collapse,
   CardContent,
   IconButton,
+  Box,
 } from '@material-ui/core'
 import {
   DragIndicator,
@@ -46,7 +47,9 @@ export default ({
         onClose={() => setDataTableOpen(false)}
         open={dataTableOpen}
       >
-        Implementation coming soon
+        <Box m={1}>
+          <Typography variant="overline">Under construction!</Typography>
+        </Box>
       </DataMenu>
       <LegendMenu
         defaultPosition={{ x: 650, y: 25 }}
