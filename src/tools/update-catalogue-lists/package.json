@@ -1,0 +1,17 @@
+{
+  "name": "update-catalogue-lists",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "TC=utc node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "googleapis": "^39.2.0",
+    "mongodb": "^3.6.2"
+  }
+}
