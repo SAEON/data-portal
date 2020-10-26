@@ -1,6 +1,6 @@
 import Row from '../_row'
 import { Typography } from '@material-ui/core'
-import { Link as SimpleLink } from '../../../components'
+import SimpleLink from '../../../components/link'
 
 export default ({ linkedResources }) => (
   <Row title="Resources">

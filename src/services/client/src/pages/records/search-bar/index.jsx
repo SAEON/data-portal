@@ -1,6 +1,6 @@
 import { Divider, Grid, Toolbar } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
-import { RecordsSearch } from '../../../components'
+import RecordsSearch from '../../../components/records-search'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import { CLIENT_HOST_ADDRESS } from '../../../config'

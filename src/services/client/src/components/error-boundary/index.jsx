@@ -1,6 +1,6 @@
 import { Link, DialogContentText } from '@material-ui/core'
 import { Component } from 'react'
-import { MessageDialogue } from '../../components'
+import MessageDialogue from '../../components/message-dialogue'
 import { WEB_DEVELOPER_CONTACT } from '../../config'
 
 export default class extends Component {

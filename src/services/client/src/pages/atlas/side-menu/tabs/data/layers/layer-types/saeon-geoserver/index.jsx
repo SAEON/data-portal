@@ -19,7 +19,9 @@ import {
   BarChart as ViewDataIcon,
 } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { MessageDialogue, Slider, DataDownloadButton } from '../../../../../../../../components'
+import MessageDialogue from '../../../../../../../../components/message-dialogue'
+import Slider from '../../../../../../../../components/slider'
+import DataDownloadButton from '../../../../../../../../components/data-download'
 import Record from '../../../../../../../record'
 import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 

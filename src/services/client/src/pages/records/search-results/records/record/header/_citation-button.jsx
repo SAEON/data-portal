@@ -1,6 +1,6 @@
 import { IconButton, Tooltip } from '@material-ui/core'
 import { FormatQuote as CitationIcon } from '@material-ui/icons'
-import { CitationDialog } from '../../../../../../components'
+import CitationDialog from '../../../../../../components/citation-dialog'
 import clsx from 'clsx'
 import useStyles from './style'
 

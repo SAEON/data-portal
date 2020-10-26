@@ -8,12 +8,10 @@ import Layout from './layout'
 import theme from './theme'
 import { SnackbarProvider } from 'notistack'
 import BackgroundImageProvider from './contexts/background-image'
-import {
-  NativeExtensions,
-  ApplicationLogger,
-  DefaultApplicationNotices,
-  ErrorBoundary,
-} from './components'
+import NativeExtensions from './components/native-extensions'
+import ApplicationLogger from './components/application-logger'
+import DefaultApplicationNotices from './components/default-application-notices'
+import ErrorBoundary from './components/error-boundary'
 import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
 import { HttpLink, split } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'

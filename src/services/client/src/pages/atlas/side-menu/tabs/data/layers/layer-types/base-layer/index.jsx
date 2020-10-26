@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import { DragIndicator, Info as InfoIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { Slider } from '../../../../../../../../components'
+import Slider from '../../../../../../../../components/slider'
 import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 
 /**

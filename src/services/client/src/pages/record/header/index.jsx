@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Grid, Hidden } from '@material-ui/core'
-import { DataDownloadButton } from '../../../components'
+import DataDownloadButton from '../../../components/data-download'
 import AtlasButton from './_atlas-button'
 import CitationButton from './_citation-button'
 import CodeViewButton from './_code-view-button'

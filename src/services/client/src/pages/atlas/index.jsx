@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Loading } from '../../components'
+import Loading from '../../components/loading'
 import SideMenu from './side-menu'
 import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'

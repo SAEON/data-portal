@@ -14,7 +14,7 @@ import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mat
 import useStyles from '../style'
 import clsx from 'clsx'
 import { GlobalContext } from '../../../../../../contexts/global'
-import { Loading } from '../../../../../../components'
+import Loading from '../../../../../../components/loading'
 
 const Map = lazy(() => import('./map'))
 

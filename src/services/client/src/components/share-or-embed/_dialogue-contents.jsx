@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
 import { GlobalContext } from '../../contexts/global'
-import { Link } from '..'
+import Link from '../link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'

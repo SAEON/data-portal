@@ -1,5 +1,5 @@
 import { FormatQuote as CitationIcon } from '@material-ui/icons'
-import { CitationDialog } from '../../../components'
+import CitationDialog from '../../../components/citation-dialog'
 import { Tooltip, IconButton } from '@material-ui/core'
 
 // TODO shouldn't need both DOI and ID

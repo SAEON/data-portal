@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { List as ListIcon } from '@material-ui/icons'
 import { GlobalContext } from '../../../../contexts/global'
-import { ShareOrEmbed } from '../../../../components'
+import ShareOrEmbed from '../../../../components/share-or-embed'
 import StyledBadge from './components/styled-badge'
 
 const removeSelectedDois = obj =>

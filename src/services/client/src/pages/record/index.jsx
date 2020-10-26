@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { gql } from '@apollo/client'
-import { Loading, Footer } from '../../components'
+import Loading from '../../components/loading'
+import Footer from '../../components/footer'
 import { WithQglQuery, setShareLink } from '../../hooks'
 import FieldView from './field-view'
 import Header from './header'

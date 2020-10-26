@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Loading } from '../../components'
+import Loading from '../../components/loading'
 import { getUriState } from '../../lib/fns'
 import { Typography } from '@material-ui/core'
 
