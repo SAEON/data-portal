@@ -34,7 +34,9 @@ authorize(function (auth) {
     },
     async (err, res) => {
       if (err) return console.log('The API returned an error: ' + err)
-      for (const row of res.data.values.slice(1)) {
+      const rows = res.data.values.slice(1)
+      // TODO look for most recent of a particular collectionName
+      for (const row of rows) {
         const [collectionName, url, version, description, createdDate, createdBy, DOIs] = row
         const savedSearches = await db.then(db => db.collection('savedSearches'))
         const savedDoc = await savedSearches.findOneAndUpdate(
