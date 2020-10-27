@@ -22,8 +22,12 @@ export default makeStyles(theme => {
       lineHeight: 1.5,
       cursor: 'pointer',
       display: 'block',
-      fontSize: '1rem',
       textAlign: 'center',
+      fontSize: '0.75rem',
+      fontWeight: 700,
+      letterSpacing: '0.08333em',
+      textTransform: 'uppercase',
+      color: theme.palette.text.primary,
     },
 
     // Author
@@ -39,12 +43,18 @@ export default makeStyles(theme => {
     // Description
     descriptionContent: {},
     description: {
+      color: theme.palette.text.primary,
       cursor: 'pointer',
       fontSize: '0.8rem',
       lineHeight: 1.5,
       textAlign: 'justify',
       whiteSpace: 'break-spaces',
       wordBreak: 'break-word',
+      lineClamp: 3,
+      boxOrient: 'vertical',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      display: '-webkit-box',
     },
   }
 })
