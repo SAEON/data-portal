@@ -1,6 +1,6 @@
 {
   "name": "@saeon/graphql-iterator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Iterate over relay-style GraphQL APIs",
   "main": "src/index.js",
   "type": "module",
