@@ -5,6 +5,7 @@
 TODO
 
 - There should be a single .browserslistrc defined in the source code. Also the browser list should be built at build time
+- Include diagrams in documentation: http://mermaid-js.github.io/mermaid/#/n00b-overview
 
 # @SAEON/CATALOGUE
 

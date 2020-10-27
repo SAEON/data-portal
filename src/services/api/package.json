@@ -23,7 +23,7 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
     "nodemon": "^2.0.6",
-    "npm-check-updates": "^9.2.2",
+    "npm-check-updates": "^9.2.3",
     "prettier": "^2.1.2"
   },
   "dependencies": {
@@ -36,8 +36,8 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
-    "graphql": "^15.3.0",
-    "graphql-tools": "^7.0.0",
+    "graphql": "^15.4.0",
+    "graphql-tools": "^7.0.1",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.0",
     "koa-compress": "^5.0.1",
@@ -46,7 +46,7 @@
     "nanoid": "^3.1.16",
     "node-fetch": "^2.6.1",
     "object-hash": "^2.0.3",
-    "pg": "^8.4.1",
+    "pg": "^8.4.2",
     "sift": "^13.3.5",
     "wkt": "^0.1.1"
   },
