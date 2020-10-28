@@ -1,4 +1,4 @@
-name: mirror@next
+name: mirror@stable
 
 on:
   push:
