@@ -13,44 +13,53 @@ jobs:
         with:
           ref: next
 
-      - name: Configure services/proxy
-        run: |
-          echo "ELASTICSEARCH_PROXY=http://elasticsearch.saeon.dvn" > src/services/proxy/.env
-          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/proxy/.env
+      - uses: cpina/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ZACHSAEON_REPO_ACCESS }}
+        with:
+          source-directory: '.'
+          destination-github-username: 'SAEONData'
+          destination-repository-name: 'catalogue'
+          user-email: zach@saeon.ac.za
 
-      - name: Configure services/api
-        run: |
-          echo "ALLOWED_ORIGINS=http://catalogue.saeon.dvn,http://api.catalogue.saeon.dvn" > src/services/api/.env
-          echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
-          echo "GQL_PROVIDER=http://api.catalogue.saeon.dvn" >> src/services/api/.env
-          echo "ES_HOST_ADDRESS=http://elasticsearch:9200" >> src/services/api/.env
-          echo "ES_TEMPLATE_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
-          echo "ES_INDEX_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
-          echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
-          echo "FORCE_PG_RESET=true" >> src/services/api/.env
-          echo "POSTGIS_HOST=postgis" >> src/services/api/.env
-          echo "POSTGIS_PORT=5432" >> src/services/api/.env
-          echo "POSTGIS_FOREIGN_HOST=spatialdb.saeon.int" >> src/services/api/.env
-          echo "POSTGIS_FOREIGN_DBNAME=BEA" >> src/services/api/.env
-          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/api/.env
+      # - name: Configure services/proxy
+      #   run: |
+      #     echo "ELASTICSEARCH_PROXY=http://elasticsearch.saeon.dvn" > src/services/proxy/.env
+      #     echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/proxy/.env
 
-      - name: Configure services/client
-        run: |
-          echo "CATALOGUE_API_ADDRESS=http://api.catalogue.saeon.dvn" > src/services/client/.env
-          echo "GQL_PROVIDER=http://api.catalogue.saeon.dvn/graphql" >> src/services/client/.env
-          echo "GQL_SUBSCRIPTIONS_PROVIDER=ws://api.catalogue.saeon.dvn/graphql" >> src/services/client/.env
-          echo "REDIRECT_URL=http://catalogue.saeon.dvn/authenticated" >> src/services/client/.env
-          echo "CLIENT_HOST_ADDRESS=http://catalogue.saeon.dvn" >> src/services/client/.env
-          echo "DEPLOYMENT_ENV=development" >> src/services/client/.env
-          echo "DEFAULT_NOTICES=This is the catalogue DEVELOPMENT deployment. Feedback is welcome!;Find the production deployment of the catalogue at catalogue.saeon.ac.za,info" >> src/services/client/.env
-          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/client/.env
+      # - name: Configure services/api
+      #   run: |
+      #     echo "ALLOWED_ORIGINS=http://catalogue.saeon.dvn,http://api.catalogue.saeon.dvn" > src/services/api/.env
+      #     echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
+      #     echo "GQL_PROVIDER=http://api.catalogue.saeon.dvn" >> src/services/api/.env
+      #     echo "ES_HOST_ADDRESS=http://elasticsearch:9200" >> src/services/api/.env
+      #     echo "ES_TEMPLATE_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
+      #     echo "ES_INDEX_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
+      #     echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
+      #     echo "FORCE_PG_RESET=true" >> src/services/api/.env
+      #     echo "POSTGIS_HOST=postgis" >> src/services/api/.env
+      #     echo "POSTGIS_PORT=5432" >> src/services/api/.env
+      #     echo "POSTGIS_FOREIGN_HOST=spatialdb.saeon.int" >> src/services/api/.env
+      #     echo "POSTGIS_FOREIGN_DBNAME=BEA" >> src/services/api/.env
+      #     echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/api/.env
 
-      - name: Configure Nginx (server entry)
-        run: |
-          sudo /opt/copy-nginx-config.sh # cp ./platform-configuration/nginx/next/nginx.conf /etc/nginx/
-          sudo /opt/copy-nginx-server-blocks.sh # cp ./platform-configuration/nginx/next/server-blocks/* /etc/nginx/conf.d/
-          sudo /opt/reload-nginx.sh # service nginx reload
+      # - name: Configure services/client
+      #   run: |
+      #     echo "CATALOGUE_API_ADDRESS=http://api.catalogue.saeon.dvn" > src/services/client/.env
+      #     echo "GQL_PROVIDER=http://api.catalogue.saeon.dvn/graphql" >> src/services/client/.env
+      #     echo "GQL_SUBSCRIPTIONS_PROVIDER=ws://api.catalogue.saeon.dvn/graphql" >> src/services/client/.env
+      #     echo "REDIRECT_URL=http://catalogue.saeon.dvn/authenticated" >> src/services/client/.env
+      #     echo "CLIENT_HOST_ADDRESS=http://catalogue.saeon.dvn" >> src/services/client/.env
+      #     echo "DEPLOYMENT_ENV=development" >> src/services/client/.env
+      #     echo "DEFAULT_NOTICES=This is the catalogue DEVELOPMENT deployment. Feedback is welcome!;Find the production deployment of the catalogue at catalogue.saeon.ac.za,info" >> src/services/client/.env
+      #     echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/client/.env
 
-      - name: Deploy services
-        run: |
-          POSTGIS_FOREIGN_USER="${{ secrets.POSTGIS_FOREIGN_USER }}" POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}" POSTGIS_USER="${{ secrets.POSTGIS_USER }}" POSTGIS_PSWD="${{ secrets.POSTGIS_PSWD }}" MONGO_USER="${{ secrets.MONGO_USER }}" MONGO_PSWD="${{ secrets.MONGO_PSWD }}" /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
+      # - name: Configure Nginx (server entry)
+      #   run: |
+      #     sudo /opt/copy-nginx-config.sh # cp ./platform-configuration/nginx/next/nginx.conf /etc/nginx/
+      #     sudo /opt/copy-nginx-server-blocks.sh # cp ./platform-configuration/nginx/next/server-blocks/* /etc/nginx/conf.d/
+      #     sudo /opt/reload-nginx.sh # service nginx reload
+
+      # - name: Deploy services
+      #   run: |
+      #     POSTGIS_FOREIGN_USER="${{ secrets.POSTGIS_FOREIGN_USER }}" POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}" POSTGIS_USER="${{ secrets.POSTGIS_USER }}" POSTGIS_PSWD="${{ secrets.POSTGIS_PSWD }}" MONGO_USER="${{ secrets.MONGO_USER }}" MONGO_PSWD="${{ secrets.MONGO_PSWD }}" /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

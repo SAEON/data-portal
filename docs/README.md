@@ -1,34 +1,11 @@
 # @SAEON/CATALOGUE
+[Download source code](https://github.com/SAEONData/catalogue)
 
 **_Please note that this is still in development._**
 
 This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [catalogue.saeon.ac.za](https://catalogue.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
 
-# Deployment status
-![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
-![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
-
-# Browser support
-
-- chrome: 80
-- edge: 18
-- firefox: 74
-- ios: 12.2
-- safari: 13
-- samsung: 11.1
-
-# Tech Stack
-
-- API
-  - Node.js server
-  - Proxy server ([anyproxy](http://anyproxy.io/))
-- Browser client
-  - [React.js](https://reactjs.org/)
-  - [OpenLayers 6](https://openlayers.org/)
-  - [Material UI](https://material-ui.com/)
-
 # Quick start
-
 Setup the repository for development. The repository _should_ be supported cross-platform - on any platform that `Node.js` can be installed. However, this workflow has only been tested on Ubuntu.
 
 #### System requirements
