@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/proxy",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A wraper for anyproxy, to deploy behind Node.js as a caching server",
   "main": "index.js",
   "type": "module",
