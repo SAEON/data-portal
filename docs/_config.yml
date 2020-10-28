@@ -3,4 +3,4 @@ logo: /src/sercices/client/public/saeon-logo.png
 description: SAEON Data Portal releases
 show_downloads: true
 google_analytics:
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
