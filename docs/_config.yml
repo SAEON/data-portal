@@ -1,6 +1,6 @@
 title: Minimal theme
 logo: /src/sercices/client/public/saeon-logo.png
 description: SAEON Data Portal releases
-show_downloads: true
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
