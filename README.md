@@ -2,7 +2,6 @@
 
 # Deployments
 ![next](https://github.com/SAEONData/catalogue/workflows/deployment@next/badge.svg?event=push)
-
 ![stable](https://github.com/SAEONData/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
 TODO!
