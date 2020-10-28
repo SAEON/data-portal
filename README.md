@@ -1,7 +1,7 @@
 <!-- GitHub build -->
 
-![deployment@next](https://github.com/SAEONData/catalogue/workflows/deployment@next/badge.svg)
-![deployment@stable](https://github.com/SAEONData/catalogue/workflows/deployment@stable/badge.svg)
+![next](https://github.com/SAEONData/catalogue/workflows/deployment@next/badge.svg)
+![stable](https://github.com/SAEONData/catalogue/workflows/deployment@stable/badge.svg)
 
 TODO!
 
