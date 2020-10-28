@@ -18,14 +18,15 @@ jobs:
           pwd
           ls
 
-      # - uses: cpina/github-action-push-to-another-repository@master
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.ZACHSAEON_REPO_ACCESS }}
-      #   with:
-      #     source-directory: '.'
-      #     destination-github-username: 'SAEONData'
-      #     destination-repository-name: 'catalogue'
-      #     user-email: zach@saeon.ac.za
+      - uses: cpina/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ZACHSAEON_REPO_ACCESS }}
+        with:
+          source-directory: '.'
+          destination-github-username: 'SAEONData'
+          destination-repository-name: 'catalogue'
+          target-branch: 'next'
+          user-email: zach@saeon.ac.za
 
       # - name: Configure services/proxy
       #   run: |
