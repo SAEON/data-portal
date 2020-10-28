@@ -19,15 +19,22 @@
       private: yes      
       
   tasks:
-    - name: Create required directories
-      shell: |
-        mkdir /opt/dbak
+    - name: Ensure /opt directory
+      file:
+        path: /opt
+        state: directory
+        mode: '0755'
+
+    - name: Ensure /opt/dbak directory
+      file:
+        path: /opt/dbak
+        state: directory
+        mode: '0755'
 
     - name: Install latest Git
-      shell: |
-        yum -y remove git*
-        yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
-        yum -y install git
+      yum:
+        name: https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
+        state: present     
 
     - name: Install Docker
       shell: |
@@ -47,7 +54,7 @@
         day: "*"
         month: "*"
         weekday: "0"
-        job: "docker system prune -f > /opt/docker-system-clean.log 2>&1"
+        job: docker system prune -f > /opt/docker-system-clean.log 2>&1
 
     - name: Backup catalogue database (MongoDB)
       cron:
@@ -57,7 +64,7 @@
         day: "*"
         month: "*"
         weekday: "*"
-        job: "docker exec mongo sh -c 'exec mongodump --username {{ mongo_username }} --password {{ mongo_password }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1"
+        job: docker exec mongo sh -c 'exec mongodump --username {{ mongo_username }} --password {{ mongo_password }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1
     
     - name: Prune MongoDB backups
       cron:
@@ -67,11 +74,11 @@
         day: "*"
         month: "*"
         weekday: "0"
-        job: "find /opt/dbak/ -mtime + 10 -type -f -delete"
+        job: find /opt/dbak/ -mtime + 10 -type -f -delete
 
     - name: Install Docker Compose
       shell: |
-        curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
 
     - name: Install Nginx
@@ -93,20 +100,36 @@
         firewall-cmd --permanent --add-port=5432/tcp # Postgres
         firewall-cmd --permanent --add-port=3306/tcp # MySQL      
         firewall-cmd --reload
+    
+    - name: copy-nginx-config.sh
+      copy:
+        content: "cp ./platform-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/"
+        dest: /opt/copy-nginx-config.sh
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: copy-nginx-server-blocks.sh
+      copy:
+        content: "cp ./platform-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" 
+        dest: /opt/copy-nginx-server-blocks.sh
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: reload-nginx.sh
+      copy:
+        content: "service nginx reload" 
+        dest: /opt/reload-nginx.sh
+        owner: root
+        group: root
+        mode: '0700'
 
     - name: Setup Github Actions user
-      shell: |
-        adduser runner
-        usermod -aG docker runner
-
-    - name: Create runner scripts (for controlling the runner, and Nginx)
-      shell: |
-        echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/" > /opt/copy-nginx-config.sh
-        echo "cp ./platform-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" > /opt/copy-nginx-server-blocks.sh
-        echo service nginx reload > /opt/reload-nginx.sh
-        chmod +x /opt/copy-nginx-config.sh
-        chmod +x /opt/copy-nginx-server-blocks.sh
-        chmod +x /opt/reload-nginx.sh    
+      user:
+        name: runner
+        group: docker
+        comment: Limited-privilege User for running Github Actions
 
     - name: GitHub Actions-runner 1/4 (sudo svc)
       lineinfile:

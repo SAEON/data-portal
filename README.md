@@ -1,9 +1,3 @@
-<!-- GitHub build -->
-
-# Deployments
-![next](https://github.com/SAEONData/catalogue/workflows/deployment@next/badge.svg?branch=next)
-![stable](https://github.com/SAEONData/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
-
 TODO!
 
 - There should be a single .browserslistrc defined in the source code. Also the browser list should be built at build time
@@ -14,6 +8,10 @@ TODO!
 **_Please note that this is still in development._**
 
 This is a tool for exploring SAEON's metadata catalogues interactively, and with specific emphasis of searching for datasets that contain OGC-compliant resources. This tool is currently deployed at [catalogue.saeon.ac.za](https://catalogue.saeon.ac.za), but the intention is that bespoke deployments are supported that allow for configuring any number of catalogues to be searched.
+
+# Deployment status
+![next](https://github.com/SAEONData/catalogue/workflows/deployment@next/badge.svg?branch=next)
+![stable](https://github.com/SAEONData/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
 # Browser support
 
