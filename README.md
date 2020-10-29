@@ -62,29 +62,31 @@ npm run install-dependencies
 
 The catalogue software comprises three services, and is dependant on additional 3rd party services (MongoDB, Elasticsearch). These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON VPN. After the first start you don't have to connect to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
 
+#### Setup a Docker network so that related services can communicate with each other
+```sh
+docker network create --driver bridge catalogue_stack
+```
+
 #### MongoDB
 
 ```sh
-docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
+docker run --name mongo --net=catalogue_stack --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
 ```
 
 #### Postgis
 
 ```sh
-docker run --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5432:5432  postgis/postgis:12-3.0
+docker run --name postgis --net=catalogue_stack --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5432:5432  postgis/postgis:12-3.0
 ```
 
 #### Elasticsearch
 
 ```sh
-# Setup a network so that ELK services can communicate with each other
-docker network create --driver bridge elk
-
 # Elasticsearch
-docker run --net=elk --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+docker run --net=catalogue_stack --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.9.2
 
 # Kibana (optional)
-docker run --net=elk --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.2
+docker run --net=catalogue_stack --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.2
 ```
 
 #### [@saeon/api](/src/services/api)
