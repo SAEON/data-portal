@@ -1,5 +1,5 @@
 # @SAEON/CATALOGUE
-[Download source code](https://github.com/SAEONData/catalogue)
+[1.0.0](/assets/releases/v1.0.0.zip)
 
 **_Please note that this is still in development._**
 
