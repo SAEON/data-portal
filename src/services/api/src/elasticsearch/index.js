@@ -4,6 +4,7 @@ import {
   ES_INDEX_INTEGRATION_ENABLED,
   NODE_ENV,
   INDEX_BUILD_SCHEDULE,
+  SCHEDULED_INDEX_INTEGRATION
 } from '../config.js'
 import configTemplate from './configure-template/index.js'
 import configureIndex from './configure-index/index.js'
@@ -29,7 +30,7 @@ export const configure = async () => {
    * Scheduled index refreshes
    * 00:00 every day (UTC)
    */
-  if (NODE_ENV === 'production') {
+  if (NODE_ENV === 'production' && SCHEDULED_INDEX_INTEGRATION === 'enabled') {
     console.log('Scheduled index integration enabled', INDEX_BUILD_SCHEDULE)
     new CronJob(
       INDEX_BUILD_SCHEDULE,

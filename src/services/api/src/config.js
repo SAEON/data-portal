@@ -43,6 +43,7 @@ export const ES_INDEX = `${ES_TEMPLATE}-${process.env.ES_INDEX || 'catalogue-sea
 export const ES_TEMPLATE_INTEGRATION_ENABLED =
   process.env.ES_TEMPLATE_INTEGRATION_ENABLED || 'enabled'
 export const ES_INDEX_INTEGRATION_ENABLED = process.env.ES_INDEX_INTEGRATION_ENABLED || 'enabled'
+export const SCHEDULED_INDEX_INTEGRATION = process.env.SCHEDULED_INDEX_INTEGRATION || 'disabled'
 
 const mask = str => str?.replace(/./g, '*')
 
@@ -75,4 +76,5 @@ console.log('Configuration', {
   ES_INDEX,
   ES_TEMPLATE_INTEGRATION_ENABLED,
   ES_INDEX_INTEGRATION_ENABLED,
+  SCHEDULED_INDEX_INTEGRATION
 })
