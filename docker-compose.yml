@@ -8,114 +8,114 @@ volumes:
   postgis:
     driver: local
 
-# services:
-#   elasticsearch:
-#     container_name: elasticsearch
-#     restart: always
-#     image: $ELASTICSEARCH_IMAGE
-#     environment:
-#       - xpack.security.enabled=false
-#       - xpack.license.self_generated.type=basic
-#       - discovery.type=single-node
-#     ulimits:
-#       memlock:
-#         soft: -1
-#         hard: -1
-#       nofile:
-#         soft: 65536
-#         hard: 65536
-#     cap_add:
-#       - IPC_LOCK
-#     volumes:
-#       - elasticsearch:/usr/share/elasticsearch/data
-#     ports:
-#       - 9200:9200
-#       - 9300:9300
+services:
+  # elasticsearch:
+  #   container_name: elasticsearch
+  #   restart: always
+  #   image: $ELASTICSEARCH_IMAGE
+  #   environment:
+  #     - xpack.security.enabled=false
+  #     - xpack.license.self_generated.type=basic
+  #     - discovery.type=single-node
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #     nofile:
+  #       soft: 65536
+  #       hard: 65536
+  #   cap_add:
+  #     - IPC_LOCK
+  #   volumes:
+  #     - elasticsearch:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
 
-#   kibana:
-#     container_name: kibana
-#     restart: always
-#     image: $KIBANA_IMAGE
-#     environment:
-#       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-#     ports:
-#       - 5601:5601
-#     depends_on:
-#       - elasticsearch
+  # kibana:
+  #   container_name: kibana
+  #   restart: always
+  #   image: $KIBANA_IMAGE
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - elasticsearch
 
-#   mongo:
-#     container_name: mongo
-#     restart: always
-#     image: $MONGO_IMAGE
-#     environment:
-#       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USER
-#       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PSWD
-#     volumes:
-#       - mongo:/data/db/
-#     ports:
-#       - 27017:27017
+  # mongo:
+  #   container_name: mongo
+  #   restart: always
+  #   image: $MONGO_IMAGE
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USER
+  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PSWD
+  #   volumes:
+  #     - mongo:/data/db/
+  #   ports:
+  #     - 27017:27017
 
-#   postgis:
-#     image: $POSTGIS_IMAGE
-#     container_name: postgis
-#     environment:
-#       POSTGRES_USER: $POSTGIS_USER
-#       POSTGRES_PASSWORD: $POSTGIS_PSWD
-#       POSTGRES_DB: catalogue
-#       PGDATA: /var/lib/postgresql/data/pgdata
-#     ports:
-#       - 5442:5432
-#     volumes:
-#       - postgis:/var/lib/postgresql/data/pgdata
+  # postgis:
+  #   image: $POSTGIS_IMAGE
+  #   container_name: postgis
+  #   environment:
+  #     POSTGRES_USER: $POSTGIS_USER
+  #     POSTGRES_PASSWORD: $POSTGIS_PSWD
+  #     POSTGRES_DB: catalogue
+  #     PGDATA: /var/lib/postgresql/data/pgdata
+  #   ports:
+  #     - 5442:5432
+  #   volumes:
+  #     - postgis:/var/lib/postgresql/data/pgdata
 
-#   proxy:
-#     container_name: proxy
-#     restart: always
-#     build:
-#       context: src/services/proxy
-#       dockerfile: Dockerfile
-#       args:
-#         ELASTICSEARCH_PROXY: $ELASTICSEARCH_PROXY
-#         LATEST_COMMIT: $LATEST_COMMIT
-#     ports:
-#       - 8001:8001
-#       - 8002:8002
-#     depends_on:
-#       - elasticsearch
+  # proxy:
+  #   container_name: proxy
+  #   restart: always
+  #   build:
+  #     context: src/services/proxy
+  #     dockerfile: Dockerfile
+  #     args:
+  #       ELASTICSEARCH_PROXY: $ELASTICSEARCH_PROXY
+  #       LATEST_COMMIT: $LATEST_COMMIT
+  #   ports:
+  #     - 8001:8001
+  #     - 8002:8002
+  #   depends_on:
+  #     - elasticsearch
 
-#   api:
-#     container_name: api
-#     restart: always
-#     build:
-#       context: src/services/api
-#       dockerfile: Dockerfile
-#       args:
-#         MONGO_URL: $MONGO_URL
-#         MONGO_USER: $MONGO_USER
-#         MONGO_PSWD: $MONGO_PSWD
-#         POSTGIS_HOST: $POSTGIS_HOST
-#         POSTGIS_PORT: $POSTGIS_PORT            
-#         POSTGIS_USER: $POSTGIS_USER
-#         POSTGIS_PSWD: $POSTGIS_PSWD
-#         FORCE_PG_RESET: $FORCE_PG_RESET
-#         POSTGIS_FOREIGN_HOST: $POSTGIS_FOREIGN_HOST
-#         POSTGIS_FOREIGN_DBNAME: $POSTGIS_FOREIGN_DBNAME        
-#         POSTGIS_FOREIGN_USER: $POSTGIS_FOREIGN_USER
-#         POSTGIS_FOREIGN_PASSWORD: $POSTGIS_FOREIGN_PASSWORD
-#         ALLOWED_ORIGINS: $ALLOWED_ORIGINS
-#         HTTP_PROXY_ADDRESS: $HTTP_PROXY_ADDRESS
-#         GQL_PROVIDER: $GQL_PROVIDER
-#         ES_HOST_ADDRESS: $ES_HOST_ADDRESS
-#         ES_TEMPLATE_INTEGRATION_ENABLED: $ES_TEMPLATE_INTEGRATION_ENABLED
-#         ES_INDEX_INTEGRATION_ENABLED: $ES_INDEX_INTEGRATION_ENABLED
-#         LATEST_COMMIT: $LATEST_COMMIT
-#     ports:
-#       - 5000:3000
-#     depends_on:
-#       - proxy
-#       - mongo
-#       - elasticsearch
-#       - postgis
+  # api:
+  #   container_name: api
+  #   restart: always
+  #   build:
+  #     context: src/services/api
+  #     dockerfile: Dockerfile
+  #     args:
+  #       MONGO_URL: $MONGO_URL
+  #       MONGO_USER: $MONGO_USER
+  #       MONGO_PSWD: $MONGO_PSWD
+  #       POSTGIS_HOST: $POSTGIS_HOST
+  #       POSTGIS_PORT: $POSTGIS_PORT            
+  #       POSTGIS_USER: $POSTGIS_USER
+  #       POSTGIS_PSWD: $POSTGIS_PSWD
+  #       FORCE_PG_RESET: $FORCE_PG_RESET
+  #       POSTGIS_FOREIGN_HOST: $POSTGIS_FOREIGN_HOST
+  #       POSTGIS_FOREIGN_DBNAME: $POSTGIS_FOREIGN_DBNAME        
+  #       POSTGIS_FOREIGN_USER: $POSTGIS_FOREIGN_USER
+  #       POSTGIS_FOREIGN_PASSWORD: $POSTGIS_FOREIGN_PASSWORD
+  #       ALLOWED_ORIGINS: $ALLOWED_ORIGINS
+  #       HTTP_PROXY_ADDRESS: $HTTP_PROXY_ADDRESS
+  #       GQL_PROVIDER: $GQL_PROVIDER
+  #       ES_HOST_ADDRESS: $ES_HOST_ADDRESS
+  #       ES_TEMPLATE_INTEGRATION_ENABLED: $ES_TEMPLATE_INTEGRATION_ENABLED
+  #       ES_INDEX_INTEGRATION_ENABLED: $ES_INDEX_INTEGRATION_ENABLED
+  #       LATEST_COMMIT: $LATEST_COMMIT
+  #   ports:
+  #     - 5000:3000
+  #   depends_on:
+  #     - proxy
+  #     - mongo
+  #     - elasticsearch
+  #     - postgis
 
   client:
     container_name: client
