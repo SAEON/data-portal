@@ -7,7 +7,7 @@ export default () =>
     schema,
     introspection: true,
     playground: {
-      subscriptionEndpoint: `${GQL_PROVIDER}/graphql`,
+      subscriptionEndpoint: `${GQL_PROVIDER}`,
       settings: {
         'editor.theme': 'light',
       },

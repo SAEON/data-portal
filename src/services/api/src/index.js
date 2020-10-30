@@ -10,7 +10,7 @@ import zlib from 'zlib'
 import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
 import { configure as configureElasticsearch } from './elasticsearch/index.js'
-import { NODE_ENV, PORT, GQL_PROVIDER, HTTP_PROXY, FORCE_PG_RESET } from './config.js'
+import { NODE_ENV, PORT, HTTP_PROXY_ADDRESS, FORCE_PG_RESET } from './config.js'
 import clientSession from './middleware/client-session.js'
 import { setupDb } from './postgis/index.js'
 
@@ -58,7 +58,7 @@ app
   .use(router.routes())
   .use(
     proxy('/proxy', {
-      target: HTTP_PROXY,
+      target: HTTP_PROXY_ADDRESS,
       changeOrigin: true,
       logs: true,
       events: {},
@@ -89,8 +89,8 @@ apolloServer.installSubscriptionHandlers(httpServer)
  */
 httpServer.listen(PORT, () => {
   console.log(`@saeon/catalogue API server ready at ${PORT}`)
-  console.log(`@saeon/catalogue GraphQL server ready at ${GQL_PROVIDER}${apolloServer.graphqlPath}`)
+  console.log(`@saeon/catalogue GraphQL server ready at ${apolloServer.graphqlPath}`)
   console.log(
-    `@saeon/catalogue GraphQL subscriptions server ready at ${GQL_PROVIDER}${apolloServer.subscriptionsPath}`
+    `@saeon/catalogue GraphQL subscriptions server ready at ${apolloServer.subscriptionsPath}`
   )
 })

@@ -16,8 +16,8 @@ jobs:
       - name: Configure services/api
         run: |
           echo "ALLOWED_ORIGINS=http://catalogue.saeon.dvn,http://api.catalogue.saeon.dvn" > src/services/api/.env
-          echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
-          echo "GQL_PROVIDER=http://api.catalogue.saeon.dvn" >> src/services/api/.env
+          echo "HTTP_PROXY_ADDRESS=http://proxy:8001" >> src/services/api/.env
+          echo "GQL_PROVIDER=http://api.catalogue.saeon.dvn/graphql" >> src/services/api/.env
           echo "ES_HOST_ADDRESS=http://elasticsearch:9200" >> src/services/api/.env
           echo "ES_TEMPLATE_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
           echo "ES_INDEX_INTEGRATION_ENABLED=enabled" >> src/services/api/.env

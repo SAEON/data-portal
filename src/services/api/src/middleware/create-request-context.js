@@ -1,9 +1,9 @@
 import { db as mongoDb, collections, getDataFinders, getDataInserters } from '../mongo/index.js'
 import Catalogue from '../lib/catalogue.js'
-import { HTTP_PROXY, ES_INDEX } from '../config.js'
+import { HTTP_PROXY_ADDRESS, ES_INDEX } from '../config.js'
 
 const catalogue = new Catalogue({
-  dslAddress: `${HTTP_PROXY}/proxy/elasticsearch`,
+  dslAddress: `${HTTP_PROXY_ADDRESS}/proxy/elasticsearch`,
   index: ES_INDEX,
 })
 

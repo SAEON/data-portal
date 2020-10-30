@@ -4,7 +4,7 @@ import {
   ES_INDEX_INTEGRATION_ENABLED,
   NODE_ENV,
   INDEX_BUILD_SCHEDULE,
-  SCHEDULED_INDEX_INTEGRATION
+  SCHEDULED_INDEX_INTEGRATION,
 } from '../config.js'
 import configTemplate from './configure-template/index.js'
 import configureIndex from './configure-index/index.js'
