@@ -26,7 +26,7 @@ export default () =>
       console.log('\x1b[36m', 'Postgis FDW and materialized views configured', '\x1b[0m')//cyan
     })()
   ).catch(err => {
-    console.log('\x1b[31m', '!!!!!!!!!!!!! ERROR INITIALIZING DEV DATABASE !!!!!!!!!!!!!', '\x1b[0m')//red
+    console.log('\x1b[31m', '!! ERROR INITIALIZING POSTGIS DATABASE !!', '\x1b[0m')//red
     console.log('Error:')
     console.log(err)
     console.error(err)
