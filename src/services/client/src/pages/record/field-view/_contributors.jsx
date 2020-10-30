@@ -17,7 +17,7 @@ export default ({ contributors }) => (
         <Typography gutterBottom variant="body2">
           <sup>[{i + 1}]</sup>&nbsp;
           {contributor.contributorType
-            .replace(/([A-Z])/g, ' $1')
+            ?.replace(/([A-Z])/g, ' $1')
             .trim()
             .toUpperCase()}{' '}
           {contributor.affiliations?.map(aff => aff.affiliation)}

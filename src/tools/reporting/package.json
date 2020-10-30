@@ -1,0 +1,42 @@
+{
+  "name": "reporting",
+  "version": "0.0.1",
+  "description": "This project generates reports on progress in terms of work done on SAEON's Catalogue software by interacting with the Github API",
+  "type": "module",
+  "scripts": {
+    "start": "rimraf .build && nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-json-modules src/index.js'",
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEONData/catalogue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SAEONData/catalogue/issues"
+  },
+  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/reporting",
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@saeon/logger": "^6.1.1",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-fetch": "^0.7.0",
+    "apollo-link-http": "^1.5.17",
+    "copyfiles": "^2.4.0",
+    "csv-stringify": "^5.5.1",
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
+    "node-fetch": "^2.6.1",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "npm-check-updates": "^9.2.2",
+    "prettier": "^2.1.2"
+  }
+}

@@ -1,4 +1,4 @@
-import { RegisterEventLog } from '..'
+import RegisterEventLog from '../application-logger/_register-event-log'
 import { LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
 import { debounce } from '../../lib/fns'

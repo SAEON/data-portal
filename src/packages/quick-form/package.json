@@ -1,6 +1,6 @@
 {
   "name": "@saeon/quick-form",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "description": "Quickly add localised state to your component tree",
   "main": "dist/index.js",
   "exports": {
@@ -14,7 +14,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": ">=16.14"
+    "react": ">=17.0"
   },
   "scripts": {
     "build": "rimraf ./dist && rollup --config rollup.config.js",
@@ -40,8 +40,8 @@
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
-    "npm-check-updates": "^9.1.0",
+    "npm-check-updates": "^9.2.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.0"
+    "rollup": "^2.32.1"
   }
 }

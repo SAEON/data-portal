@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 import Header from './header'
-import Sidebar from './sidebar'
-import Items from './items'
+import Filters from './filters'
+import Records from './records'
 import { GlobalContext } from '../../../contexts/global'
 import { Typography, Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-import { Footer, Loading } from '../../../components'
+import Footer from '../../../components/footer'
+import Loading from '../../../components/loading'
 import { useCatalogue as WithCatalogue } from '../../../hooks'
 import { getUriState } from '../../../lib/fns'
 
@@ -16,7 +17,7 @@ const DEFAULT_CURSORS = {
 }
 
 export default ({ disableSidebar = false }) => {
-  const [showSidebar, setShowSidebar] = useState(!disableSidebar)
+  const [showSidebar, setShowSidebar] = useState(!disableSidebar && !isMobile)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
@@ -51,6 +52,9 @@ export default ({ disableSidebar = false }) => {
       startCursor={cursors.start}
       endCursor={cursors.end}
       dois={dois}
+      terms={terms}
+      extent={extent}
+      text={text}
     >
       {({ error, loading, data }) => {
         const results = cursors.start
@@ -91,13 +95,13 @@ export default ({ disableSidebar = false }) => {
                         {disableSidebar ? null : (
                           <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
                             <Grid item xs={12}>
-                              <Sidebar catalogue={data?.catalogue} />
+                              <Filters catalogue={data?.catalogue} />
                             </Grid>
                           </Collapse>
                         )}
 
                         <Grid item xs style={{ flexGrow: 1 }}>
-                          <Items results={results} />
+                          <Records results={results} />
                         </Grid>
                       </>
                     ) : (
@@ -114,11 +118,11 @@ export default ({ disableSidebar = false }) => {
                         <Grid container item lg={10} xl={8}>
                           {showSidebar ? (
                             <Grid style={{ paddingRight: 16 }} item md={4}>
-                              <Sidebar catalogue={data?.catalogue} />
+                              <Filters catalogue={data?.catalogue} />
                             </Grid>
                           ) : null}
                           <Grid item xs style={{ flexGrow: 1 }}>
-                            <Items results={results} />
+                            <Records results={results} />
                           </Grid>
                         </Grid>
                       </Grid>

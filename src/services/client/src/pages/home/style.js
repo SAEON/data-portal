@@ -1,7 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
-
-// eslint-disable-next-line no-unused-vars
+import { fade } from '@material-ui/core/styles/colorManipulator'
 export default makeStyles(theme => ({
+  grid: {
+    backgroundColor: fade(theme.palette.common.white, 0.75),
+    padding: 16,
+  },
   notMobile: {
     margin: '0 25%',
   },

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MessageDialogue } from '..'
+import MessageDialogue from '../message-dialogue'
 import { Tabs, Tab } from '@material-ui/core'
 import { Share as ShareIcon } from '@material-ui/icons'
 import DialogueContents from './_dialogue-contents'

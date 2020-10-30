@@ -1,13 +1,5 @@
 import { useState, useEffect } from 'react'
-import {
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  Tooltip,
-  Badge,
-} from '@material-ui/core'
+import { IconButton, Dialog, DialogTitle, DialogContent, Tooltip, Badge } from '@material-ui/core'
 import { Info as InfoIcon } from '@material-ui/icons'
 
 export default ({
@@ -78,11 +70,7 @@ export default ({
           </DialogTitle>
         ) : undefined}
         <div style={{ position: 'relative' }}>
-          {children || (
-            <DialogContent {...dialogueContentProps}>
-              <DialogContentText>{text}</DialogContentText>
-            </DialogContent>
-          )}
+          {children || <DialogContent {...dialogueContentProps}>{text}</DialogContent>}
         </div>
       </Dialog>
     </span>

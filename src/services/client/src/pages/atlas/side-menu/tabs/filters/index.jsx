@@ -1,3 +1,9 @@
+import { Typography, Box } from '@material-ui/core'
+
 export default () => {
-  return 'TODO - this panel will allow for specifying filters to the map. all layer-data will be filtered'
+  return (
+    <Box m={1}>
+      <Typography variant="overline">Under construction!</Typography>
+    </Box>
+  )
 }

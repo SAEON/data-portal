@@ -3,8 +3,11 @@
 **/.build/**
 src/generators/**
 
+# Scripts
+scripts/bump-patch.js
+
 # Reporting app
-src/services/reporting/src/index.js
+src/tools/reporting/src/index.js
 
 # API
 src/services/api/src/index.js

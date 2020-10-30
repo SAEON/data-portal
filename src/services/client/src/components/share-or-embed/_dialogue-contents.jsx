@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
 import { GlobalContext } from '../../contexts/global'
-import { Link } from '..'
+import Link from '../link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
@@ -16,36 +16,44 @@ import packageJson from '../../../package.json'
  */
 export default ({ tabIndex, state = undefined, params = {} }) => {
   const { uri: shareLink, params: includeParams } = getShareLink()
+  const isAtlasPage = window.location.pathname.includes('atlas')
 
   const { global } = useContext(GlobalContext)
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
     mutation($state: JSON!, $createdBy: String!) {
       browserClient {
-        persistSearchState(state: $state, createdBy: $createdBy)
+        id
+        ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(state: $state, createdBy: $createdBy)
       }
     }
   `)
 
   useEffect(() => {
-    persistSearchState({
-      variables: {
-        createdBy: `${packageJson.name} v${packageJson.version}`,
-        state: state
-          ? Object.assign({ ...state }, { selectedDois: global.selectedDois || [] })
-          : global,
-      },
-    })
-  }, [global, persistSearchState, state])
+    if (!isAtlasPage) {
+      persistSearchState({
+        variables: {
+          createdBy: `${packageJson.name} v${packageJson.version}`,
+          state: state || global,
+        },
+      })
+    }
+  }, [isAtlasPage, global, persistSearchState, state])
 
-  const searchId = data?.browserClient.persistSearchState
+  const id = data?.browserClient.persistSearchState || undefined
 
-  const uri = `${shareLink}${
-    includeParams
-      ? `${shareLink.includes('?') ? '&' : '?'}search=${searchId}&${Object.entries(params)
-          .map(([param, val]) => `${param}=${val}`)
-          .join('&')}`
-      : ''
-  }`
+  const uri = isAtlasPage
+    ? shareLink
+    : `${shareLink}${
+        includeParams
+          ? `${shareLink.includes('?') ? '&' : '?'}search=${id}&${Object.entries(params)
+              .map(([param, val]) => `${param}=${val}`)
+              .join('&')}`
+          : ''
+      }`
+        // Remove trailing ampersand
+        .split('&')
+        .filter(_ => _)
+        .join('&')
 
   return error ? (
     'Error'
@@ -63,7 +71,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
       </div>
     </Fade>
   ) : (
-    <Fade in={Boolean(data)} key="data">
+    <Fade in={Boolean(data || isAtlasPage)} key="data">
       <div>
         <TabPanel value={tabIndex} index={0}>
           <Link uri={uri} />

@@ -1,0 +1,24 @@
+name: mirror@next
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  deploy:
+    runs-on: catalogue.saeon.dvn
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: next
+
+      - uses: cpina/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ZACHSAEON_REPO_ACCESS }}
+        with:
+          source-directory: '.'
+          destination-github-username: 'SAEONData'
+          destination-repository-name: 'catalogue'
+          target-branch: 'next'
+          user-email: zach@saeon.ac.za

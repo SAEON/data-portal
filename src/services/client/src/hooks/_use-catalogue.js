@@ -2,21 +2,39 @@ import { useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { GlobalContext } from '../contexts/global'
 
+// TODO - aggregation is not required for every equery
+
 export default ({
+  // React
   children = undefined,
+
+  // Apollo
+  fetchPolicy = undefined,
+
+  // Pagination
   pageSize = 20,
   startCursor = undefined,
   endCursor = undefined,
-  terms = undefined,
   summaryLimit = 50,
+
+  // Aggregation fields
+  fields = [
+    'linkedResources.linkedResourceType.raw',
+    'publicationYear',
+    'publisher.raw',
+    'subjects.subject.raw',
+    'creators.name.raw',
+  ],
+
+  // State
+  terms = undefined,
   ids = undefined,
   dois = undefined,
   text = undefined,
-  fetchPolicy = undefined,
+  extent = undefined,
 } = {}) => {
   const { global } = useContext(GlobalContext)
-  const { extent, terms: _terms, referrer } = global
-  text = text || global.text
+  const { referrer } = global
 
   const result = useQuery(
     gql`
@@ -71,17 +89,11 @@ export default ({
     {
       fetchPolicy: fetchPolicy || 'cache-first',
       variables: {
-        fields: [
-          'linkedResources.linkedResourceType.raw',
-          'publicationYear',
-          'publisher.raw',
-          'subjects.subject.raw',
-          'creators.name.raw',
-        ],
+        fields,
         ids,
         dois,
         extent,
-        terms: terms || _terms,
+        terms,
         text,
         size: pageSize,
         after: endCursor,

@@ -1,25 +1,26 @@
-import { Typography, Slider } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import QuickForm from '@saeon/quick-form'
 import { debounce } from '../../lib/fns'
 
+/**
+ * The material-ui slider doesn't seem to work very well
+ */
 export default ({ defaultValue, updateValue, title }) => {
   return (
     <QuickForm effects={[debounce(updateValue)]} value={defaultValue}>
-      {(update, { value }) => (
-        <div>
-          <Typography variant="inherit">{title}</Typography>
-          <Slider
-            style={{ padding: 0 }}
-            value={value}
-            onChange={(e, v) => update({ value: v })}
-            step={0.00001}
-            marks={false}
-            min={1}
-            max={100}
-            valueLabelDisplay="off"
-          />
-        </div>
-      )}
+      {(update, { value }) => {
+        return (
+          <div>
+            <Typography variant="overline">{title}</Typography>
+            <input
+              style={{ display: 'block', width: '100%', margin: 0 }}
+              onChange={e => update({ value: e.target.value })}
+              value={value}
+              type="range"
+            />
+          </div>
+        )
+      }}
     </QuickForm>
   )
 }

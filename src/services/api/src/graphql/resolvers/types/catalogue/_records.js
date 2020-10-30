@@ -27,6 +27,7 @@ export default async (_, args, ctx) => {
     query: {
       bool: {
         must: [],
+        filter: [],
       },
     },
     sort: [

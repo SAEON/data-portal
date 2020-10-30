@@ -42,20 +42,16 @@ export default ({
               alignItems="stretch"
               spacing={isMobile ? 2 : 3}
             >
-              {titles?.length ? <Titles titles={titles} /> : undefined}
-              {creators?.length ? <Creators creators={creators} /> : undefined}
-              {rightsList?.length ? <RightsList rightsList={rightsList} /> : undefined}
-              {geoLocations?.length ? <GeoLocations geoLocations={geoLocations} /> : undefined}
-              {dates?.length ? <Dates dates={dates} /> : undefined}
-              {publisher ? (
-                <Publisher publisher={publisher} publicationYear={publicationYear} />
-              ) : undefined}
-              {contributors?.length ? <Contributors contributors={contributors} /> : undefined}
-              {descriptions?.length ? <Descriptions descriptions={descriptions} /> : undefined}
-              {subjects?.length ? <Subjects subjects={subjects} /> : undefined}
-              {linkedResources?.length ? (
-                <LinkedResources linkedResources={linkedResources} />
-              ) : undefined}
+              {titles?.length && <Titles titles={titles} />}
+              {creators?.length && <Creators creators={creators} />}
+              {rightsList?.length && <RightsList rightsList={rightsList} />}
+              {geoLocations?.length && <GeoLocations geoLocations={geoLocations} />}
+              {dates?.length && <Dates dates={dates} />}
+              {publisher && <Publisher publisher={publisher} publicationYear={publicationYear} />}
+              {contributors?.length && <Contributors contributors={contributors} />}
+              {descriptions?.length && <Descriptions descriptions={descriptions} />}
+              {subjects?.length && <Subjects subjects={subjects} />}
+              {linkedResources?.length && <LinkedResources linkedResources={linkedResources} />}
               <Identifiers identifier={identifier} alternateIdentifiers={alternateIdentifiers} />
             </Grid>
           </Fade>

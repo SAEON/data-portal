@@ -66,13 +66,13 @@ visudo
 exit
 ssh <name>@ip
 
-# Disable root login
+# Configure public key authentication and disable root login
 ssh <name>@<ip>
 sudo su
 vi /etc/ssh/sshd_config
-
-# Find PermitRootLogin, and set it to no (uncomment it if required)
-# Also make sure PasswordAuthentication is no
+# set PubkeyAuthentication to 'yes'
+# set PermitRootLogin to 'no'
+# set PasswordAuthentication to 'no'
 
 # Restart the ssh daemon
 service sshd restart # Ubuntu: service ssh restart

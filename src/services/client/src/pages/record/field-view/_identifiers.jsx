@@ -6,9 +6,9 @@ export default ({ identifier, alternateIdentifiers }) => (
     <div>
       <Typography variant="body2">
         <b>
-          {identifier.identifierType.toUpperCase() === 'PLONE'
+          {identifier?.identifierType.toUpperCase() === 'PLONE'
             ? 'SAEON'
-            : identifier.identifierType.toUpperCase()}
+            : identifier?.identifierType.toUpperCase()}
         </b>{' '}
         {identifier?.identifier || 'Missing identifier'}
       </Typography>

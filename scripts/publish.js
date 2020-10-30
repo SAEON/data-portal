@@ -14,7 +14,9 @@ const PACKAGE = ARGS['--package']
 try {
   exec('git add .')
   exec(`git commit -m "Staging current changes. Bumping ${SEMVER} (${PACKAGE})" --no-verify`)
-} catch {}
+} catch {
+  console.log(`TODO - Not sure why this happens`)
+}
 
 switch (SEMVER) {
   case 'patch':

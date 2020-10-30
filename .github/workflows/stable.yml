@@ -16,6 +16,7 @@ jobs:
       - name: Configure services/proxy
         run: |
           echo "ELASTICSEARCH_PROXY=http://elasticsearch.saeon.int" > src/services/proxy/.env
+          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/proxy/.env
 
       - name: Configure services/api
         run: |
@@ -26,10 +27,14 @@ jobs:
           echo "ES_TEMPLATE_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
           echo "ES_INDEX_INTEGRATION_ENABLED=enabled" >> src/services/api/.env
           echo "DEPLOY_ENV=production" >> src/services/api/.env
-          echo "CATALOGUE_SECRET=${{ secrets.CATALOGUE_SECRET }}" >> src/services/api/.env
           echo "MONGO_URL=mongodb://mongo:27017" >> src/services/api/.env
-          echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> src/services/api/.env
-          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> src/services/api/.env
+          echo "FORCE_PG_RESET=true" >> src/services/api/.env
+          echo "POSTGIS_HOST=postgis" >> src/services/api/.env
+          echo "POSTGIS_PORT=5432" >> src/services/api/.env
+          echo "POSTGIS_FOREIGN_HOST=spatialdb.saeon.int" >> src/services/api/.env
+          echo "POSTGIS_FOREIGN_DBNAME=BEA" >> src/services/api/.env
+          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/api/.env          
+        
 
       - name: Configure services/client
         run: |
@@ -39,7 +44,8 @@ jobs:
           echo "REDIRECT_URL=https://catalogue.saeon.ac.za/authenticated" >> src/services/client/.env
           echo "CLIENT_HOST_ADDRESS=https://catalogue.saeon.ac.za" >> src/services/client/.env
           echo "DEPLOYMENT_ENV=production" >> src/services/client/.env
-          echo "DEFAULT_NOTICES=This service is still under development - feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information,warning" >> src/services/client/.env
+          echo "DEFAULT_NOTICES=Welcome to the SAEON metadata catalogue,info; Please note: this service is still under development,info;Feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information,info" >> src/services/client/.env
+          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/client/.env
 
       - name: Configure Nginx (server entry)
         run: |
@@ -49,6 +55,4 @@ jobs:
 
       - name: Deploy services
         run: |
-          echo "MONGO_USER=${{ secrets.MONGO_USER }}" > ./.env
-          echo "MONGO_PSWD=${{ secrets.MONGO_PSWD }}" >> ./.env
-          /usr/local/bin/docker-compose up -d --force-recreate --build
+          POSTGIS_FOREIGN_USER="${{ secrets.POSTGIS_FOREIGN_USER }}" POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}" POSTGIS_USER="${{ secrets.POSTGIS_USER }}" POSTGIS_PSWD="${{ secrets.POSTGIS_PSWD }}" MONGO_USER="${{ secrets.MONGO_USER }}" MONGO_PSWD="${{ secrets.MONGO_PSWD }}" /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
