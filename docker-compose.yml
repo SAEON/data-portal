@@ -120,7 +120,18 @@ services:
   client:
     container_name: client
     restart: always
-    build: src/services/client
+    build:
+      context: src/services/client
+      dockerfile: Dockerfile
+      args:
+        CATALOGUE_API_ADDRESS: $CATALOGUE_API_ADDRESS
+        GQL_PROVIDER: $GQL_PROVIDER
+        GQL_SUBSCRIPTIONS_PROVIDER: $GQL_SUBSCRIPTIONS_PROVIDER
+        REDIRECT_URL: $REDIRECT_URL
+        CLIENT_HOST_ADDRESS: $CLIENT_HOST_ADDRESS
+        DEPLOYMENT_ENV: $DEPLOYMENT_ENV
+        DEFAULT_NOTICES: $DEFAULT_NOTICES        
+        LATEST_COMMIT: $LATEST_COMMIT
     ports:
       - 5001:80
     depends_on:
