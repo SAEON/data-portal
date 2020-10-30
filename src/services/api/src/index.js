@@ -27,7 +27,7 @@ if (!NODE_ENV || !['production', 'development'].includes(NODE_ENV)) {
 configureElasticsearch().then(() => console.log('Elasticsearch configured'))
 
 //bring back FORCE_PG_RESET **
-if (FORCE_PG_RESET) {
+if (FORCE_PG_RESET === 'enabled') {
   setupDb()
 }
 
