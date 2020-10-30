@@ -13,11 +13,6 @@ jobs:
         with:
           ref: next
 
-      - name: Configure services/proxy
-        run: |
-          echo "ELASTICSEARCH_PROXY=http://elasticsearch.saeon.dvn" > src/services/proxy/.env
-          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/proxy/.env
-
       - name: Configure services/api
         run: |
           echo "ALLOWED_ORIGINS=http://catalogue.saeon.dvn,http://api.catalogue.saeon.dvn" > src/services/api/.env
@@ -53,4 +48,5 @@ jobs:
 
       - name: Deploy services
         run: |
-          POSTGIS_FOREIGN_USER="${{ secrets.POSTGIS_FOREIGN_USER }}" POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}" POSTGIS_USER="${{ secrets.POSTGIS_USER }}" POSTGIS_PSWD="${{ secrets.POSTGIS_PSWD }}" MONGO_USER="${{ secrets.MONGO_USER }}" MONGO_PSWD="${{ secrets.MONGO_PSWD }}" /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
+          echo "LATEST_COMMIT=`git rev-parse HEAD`" >> docker-compose.env
+          ELASTICSEARCH_PROXY="http://elasticsearch.saeon.dvn" POSTGIS_FOREIGN_USER="${{ secrets.POSTGIS_FOREIGN_USER }}" POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}" POSTGIS_USER="${{ secrets.POSTGIS_USER }}" POSTGIS_PSWD="${{ secrets.POSTGIS_PSWD }}" MONGO_USER="${{ secrets.MONGO_USER }}" MONGO_PSWD="${{ secrets.MONGO_PSWD }}" /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

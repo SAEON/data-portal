@@ -71,7 +71,12 @@ services:
   proxy:
     container_name: proxy
     restart: always
-    build: src/services/proxy
+    build:
+      context: src/services/proxy
+      dockerfile: Dockerfile
+      args:
+        ELASTICSEARCH_PROXY: $ELASTICSEARCH_PROXY
+        LATEST_COMMIT: $LATEST_COMMIT
     ports:
       - 8001:8001
       - 8002:8002
