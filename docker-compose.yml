@@ -134,5 +134,5 @@ volumes:
         LATEST_COMMIT: $LATEST_COMMIT
     ports:
       - 5001:80
-    depends_on:
-      - api
+    # depends_on:
+    #   - api
