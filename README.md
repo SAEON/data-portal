@@ -7,6 +7,7 @@ An interactive tool for searching and exploring SAEON-curated datasets
 
 # Tech Stack
 
+- Docker
 - MongoDB
 - Elasticsearch
 - PostGIS
@@ -87,7 +88,7 @@ npm run start:proxy
 npm run start:client
 ```
 
-# Dev-deployment environment
+### Continuous deployment
 
 A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
@@ -95,21 +96,36 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 2. Follow the [instructions](/platform-configuration/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
 3. Run the command: `npm run configure-centos-7-server` from the root of the repository
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
-5. Adjust the `.github/workflows/next.yml` and `.github/workflows/stable.yml` files to include configuration variables sensible for your environment (refer to the section on "Configuration" below)
+5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
 
-#### Configuration
-
-Build-time configuration essentially involves:
-
-1. Creating `.env` files with appropriate values at the beginning of the build process (overwriting existing .env files)
-2. Copying these `.env` files along with source code into the Docker build context, so that they are accessible during container runtime
-
-# Product deployment
-Download and extract the source code from TODO. In the root of the source code folder, update configuration appropriately run `docker-copmpose`.
+# Deployment
+Deploy the software stack via the `docker-compose` CLI. From the root directory of the source code run the following shell command:
 
 ```sh
-TODO
+MONGO_DB_ADDRESS="mongodb://mongo:27017" \
+MONGO_DB_USERNAME="<username>" \
+MONGO_DB_PASSWORD="<password>" \
+POSTGIS_HOST="postgis" \
+POSTGIS_PORT="5432" \
+POSTGIS_USERNAME="<username>" \
+POSTGIS_PASSWORD="<password>" \
+CATALOGUE_API_RESET_POSTGIS="disabled"
+ELASTICSEARCH_ADDRESS="http://elasticsearch:9200" \
+CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD) \ # GIT is required
+CATALOGUE_DEPLOYMENT_ENV="development" \
+CATALOGUE_PROXY_ADDRESS="http://proxy:8001" \
+CATALOGUE_API_ADDRESS="http://localhost:3000" \
+CATALOGUE_API_ALLOWED_ORIGINS="http://localhost:3001,http://localhost:3000" \
+CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled" \
+CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled" \
+CATALOGUE_API_RESET_POSTGIS="disabled" \
+CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
+CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
+CATALOGUE_CLIENT_AUTH_REDIRECT_URL="http://localhost:3001/authenticated" \
+CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
+CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
+docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
 
 # SAEON deployment
@@ -172,8 +188,3 @@ Running one of these scripts will result in all other packages updating their de
 It's also useful to see which packages will be updated by this script. To do that, run:
 
 - `npm run check-package-updates`
-
-# TODO
-
-- [docs](/src/services/docs)
-- [reporting](/src/services/reporting)

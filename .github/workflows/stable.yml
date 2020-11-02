@@ -23,11 +23,11 @@ jobs:
         run: >-
           MONGO_DB_ADDRESS="mongodb://mongo:27017"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
-          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"          
+          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           POSTGIS_HOST="postgis"
           POSTGIS_PORT="5432"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
-          POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"          
+          POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_FOREIGN_HOST="spatialdb.saeon.int"
           POSTGIS_FOREIGN_DB="BEA"
           POSTGIS_FOREIGN_USERNAME="${{ secrets.POSTGIS_FOREIGN_USERNAME }}"
