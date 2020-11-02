@@ -1,5 +1,3 @@
-An interactive tool for searching and exploring SAEON-curated datasets
-
 # Source code
 A public release of the source code is available [HERE](https://github.com/SAEONData/catalogue)
 

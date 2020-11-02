@@ -1,6 +1,6 @@
 title: SAEON Data Portal
 logo: /assets/img/logo.png
-description: SAEON Catalogue software
+description: An interactive tool for searching and exploring SAEON-curated datasets
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
