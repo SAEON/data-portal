@@ -7,7 +7,7 @@ export default ({ doi }) => {
   return (
     <CitationDialog doi={doi}>
       {({ disabled, onClick }) => (
-        <Tooltip placement="left-start" title="Cite this record">
+        <Tooltip placement="bottom" title="Cite this record">
           <span>
             <IconButton color="primary" disabled={disabled} onClick={onClick}>
               <CitationIcon />

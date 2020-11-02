@@ -10,12 +10,15 @@ export default ({
   ...props
 }) => {
   return (
-    <SimpleLink style={{ display: 'block' }} uri={immutableResource.resourceURL}>
+    <SimpleLink style={{ display: 'block' }} uri={immutableResource?.resourceDownload?.downloadURL}>
       <Tooltip
         placement={tooltipPlacement || 'bottom'}
-        title={`${
-          immutableResource?.resourceDescription
-        } (${immutableResource?.resourceURL?.replace(/.*\./, '')})`}
+        title={
+          `${
+            immutableResource?.resourceDescription || 'Unkonwn resource'
+          } (${immutableResource?.resourceDownload?.downloadURL?.replace(/.*\./, '')})` ||
+          'Unknown download'
+        }
       >
         <span>
           {children ? (
@@ -23,7 +26,7 @@ export default ({
               {children}
             </Button>
           ) : (
-            <IconButton disabled={!immutableResource?.resourceURL} {...props}>
+            <IconButton disabled={!immutableResource?.resourceDownload?.downloadURL} {...props}>
               <GetAppIcon fontSize={fontSize} />
             </IconButton>
           )}
