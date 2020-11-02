@@ -13,40 +13,6 @@ jobs:
         with:
           ref: stable  
 
-      - name: Configure services/proxy
-        run: |
-          echo "ELASTICSEARCH_ADDRESS=http://elasticsearch.saeon.int" > src/services/proxy/.env
-          echo "CATALOGUE_LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/proxy/.env
-
-      - name: Configure services/api
-        run: |
-          echo "CATALOGUE_API_ALLOWED_ORIGINS=https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za" > src/services/api/.env
-          echo "HTTP_PROXY=http://proxy:8001" >> src/services/api/.env
-          echo "CATALOGUE_API_GQL_ADDRESS=https://api.atlas.saeon.ac.za" >> src/services/api/.env
-          echo "ELASTICSEARCH_ADDRESS=http://elasticsearch:9200" >> src/services/api/.env
-          echo "CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE=disabled" >> src/services/api/.env
-          echo "CATALOGUE_API_RESET_ELASTICSEARCH_INDEX=disabled" >> src/services/api/.env
-          echo "DEPLOY_ENV=production" >> src/services/api/.env
-          echo "MONGO_DB_ADDRESS=mongodb://mongo:27017" >> src/services/api/.env
-          echo "CATALOGUE_API_RESET_POSTGIS=disabled" >> src/services/api/.env
-          echo "POSTGIS_HOST=postgis" >> src/services/api/.env
-          echo "POSTGIS_PORT=5432" >> src/services/api/.env
-          echo "POSTGIS_FOREIGN_HOST=spatialdb.saeon.int" >> src/services/api/.env
-          echo "POSTGIS_FOREIGN_DB=BEA" >> src/services/api/.env
-          echo "CATALOGUE_LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/api/.env          
-        
-
-      - name: Configure services/client
-        run: |
-          echo "CATALOGUE_API_ADDRESS=https://api.atlas.saeon.ac.za" > src/services/client/.env
-          echo "CATALOGUE_API_GQL_ADDRESS=https://api.atlas.saeon.ac.za/graphql" >> src/services/client/.env
-          echo "CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS=wss://api.catalogue.saeon.ac.za/graphql" >> src/services/client/.env
-          echo "CATALOGUE_CLIENT_AUTH_REDIRECT_URL=https://catalogue.saeon.ac.za/authenticated" >> src/services/client/.env
-          echo "CATALOGUE_CLIENT_ADDRESS=https://catalogue.saeon.ac.za" >> src/services/client/.env
-          echo "CATALOGUE_DEPLOYMENT_ENV=production" >> src/services/client/.env
-          echo "CATALOGUE_CLIENT_DEFAULT_NOTICES=Welcome to the SAEON metadata catalogue,info; Please note: this service is still under development,info;Feedback and bug reports are welcome! Please contact zach@saeon.ac.za for more information,info" >> src/services/client/.env
-          echo "CATALOGUE_LATEST_COMMIT=`git rev-parse HEAD`" >> src/services/client/.env
-
       - name: Configure Nginx (server entry)
         run: |
           sudo /opt/copy-nginx-config.sh # cp ./platform-configuration/nginx/stable/nginx.conf /etc/nginx/
@@ -54,5 +20,30 @@ jobs:
           sudo /opt/reload-nginx.sh # service nginx reload
 
       - name: Deploy services
-        run: |
-          POSTGIS_FOREIGN_USERNAME="${{ secrets.POSTGIS_FOREIGN_USERNAME }}" POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}" POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}" POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}" MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}" MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}" /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
+        run: >-
+          MONGO_DB_ADDRESS="mongodb://mongo:27017"
+          MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
+          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"          
+          POSTGIS_HOST="postgis"
+          POSTGIS_PORT="5432"
+          POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
+          POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"          
+          POSTGIS_FOREIGN_HOST="spatialdb.saeon.int"
+          POSTGIS_FOREIGN_DB="BEA"
+          POSTGIS_FOREIGN_USERNAME="${{ secrets.POSTGIS_FOREIGN_USERNAME }}"
+          POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}"
+          ELASTICSEARCH_ADDRESS="http://elasticsearch:9200"
+          CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
+          CATALOGUE_DEPLOYMENT_ENV="production"
+          CATALOGUE_PROXY_ADDRESS="http://proxy:8001"
+          CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.ac.za"
+          CATALOGUE_API_ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
+          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="disabled"
+          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="disabled"
+          CATALOGUE_API_RESET_POSTGIS="disabled"
+          CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.ac.za/graphql"
+          CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.ac.za/graphql"
+          CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.ac.za/authenticated"
+          CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
+          CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
+          /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
