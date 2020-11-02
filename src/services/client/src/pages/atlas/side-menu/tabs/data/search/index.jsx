@@ -125,7 +125,7 @@ export default () => {
                 {({ index, style }) => {
                   const [id, score] = searchResults[index]
                   const {
-                    DOI,
+                    DOI = 'UNKNOWN DOI',
                     title,
                     description,
                     id: record_id,
