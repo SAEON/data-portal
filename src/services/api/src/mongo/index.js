@@ -1,10 +1,16 @@
 import MongoClient from 'mongodb'
-import { MONGO_DB as DB, MONGO_URL, MONGO_USER, MONGO_PSWD, NODE_ENV } from '../config.js'
+import {
+  MONGO_DB as DB,
+  MONGO_DB_ADDRESS,
+  MONGO_DB_USERNAME,
+  MONGO_DB_PASSWORD,
+  CATALOGUE_API_NODE_ENV,
+} from '../config.js'
 import getCollections from './_collections.js'
 import configureDataFinders from './_data-finders.js'
 import configureDataInserters from './_data-inserters.js'
 
-const CONNECTION_STRING = `${MONGO_URL}`
+const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
 
 export const _collections = {
   Atlases: 'atlases',
@@ -15,8 +21,8 @@ export const _collections = {
 
 export const db = MongoClient.connect(CONNECTION_STRING, {
   auth: {
-    user: MONGO_USER,
-    password: MONGO_PSWD,
+    user: MONGO_DB_USERNAME,
+    password: MONGO_DB_PASSWORD,
   },
   authMechanism: 'SCRAM-SHA-256',
   useNewUrlParser: true,
@@ -25,7 +31,7 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
   .then(client => client.db(DB))
   .catch(error => {
     console.error('Unable to connect to MongoDB', error)
-    if (NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
+    if (CATALOGUE_API_NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
   })
 
 export const collections = getCollections({ db, _collections })

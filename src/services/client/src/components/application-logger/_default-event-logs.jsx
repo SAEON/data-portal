@@ -1,5 +1,5 @@
 import RegisterEventLog from '../application-logger/_register-event-log'
-import { LATEST_COMMIT } from '../../config'
+import { CATALOGUE_LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
 import { debounce } from '../../lib/fns'
 
@@ -10,7 +10,7 @@ export default ({ children }) => (
       console.gql({
         clientVersion: packageJson.version,
         type,
-        commitHash: LATEST_COMMIT,
+        commitHash: CATALOGUE_LATEST_COMMIT,
         createdAt: new Date(),
         info: {
           x,
@@ -26,7 +26,7 @@ export default ({ children }) => (
         console.gql({
           clientVersion: packageJson.version,
           type,
-          commitHash: LATEST_COMMIT,
+          commitHash: CATALOGUE_LATEST_COMMIT,
           createdAt: new Date(),
           info: {
             x,

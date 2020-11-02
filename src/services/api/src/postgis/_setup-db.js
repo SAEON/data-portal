@@ -1,7 +1,7 @@
 import query from './_query.js'
 import {
-  POSTGIS_FOREIGN_DBNAME,
-  POSTGIS_FOREIGN_USER,
+  POSTGIS_FOREIGN_DB,
+  POSTGIS_FOREIGN_USERNAME,
   POSTGIS_FOREIGN_HOST,
   POSTGIS_FOREIGN_PASSWORD,
 } from '../config.js'
@@ -13,8 +13,8 @@ export default () =>
         // FDW setup
         `CREATE EXTENSION IF NOT EXISTS postgres_fdw;`,
         `DROP SCHEMA IF EXISTS saeon_fdw CASCADE`,
-        `CREATE SERVER IF NOT EXISTS saeon_server FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '${POSTGIS_FOREIGN_HOST}', dbname '${POSTGIS_FOREIGN_DBNAME}');`,
-        `CREATE USER MAPPING IF NOT EXISTS FOR CURRENT_USER SERVER saeon_server OPTIONS (user '${POSTGIS_FOREIGN_USER}', password '${POSTGIS_FOREIGN_PASSWORD}');`,
+        `CREATE SERVER IF NOT EXISTS saeon_server FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '${POSTGIS_FOREIGN_HOST}', dbname '${POSTGIS_FOREIGN_DB}');`,
+        `CREATE USER MAPPING IF NOT EXISTS FOR CURRENT_USER SERVER saeon_server OPTIONS (user '${POSTGIS_FOREIGN_USERNAME}', password '${POSTGIS_FOREIGN_PASSWORD}');`,
         `CREATE SCHEMA IF NOT EXISTS saeon_fdw;`,
         `IMPORT FOREIGN SCHEMA public FROM SERVER saeon_server INTO saeon_fdw;`,
         // Materialized View setup

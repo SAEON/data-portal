@@ -67,9 +67,9 @@ WEB_INTERFACE_PORT=8002
 THROTTLE=10000
 
 # SAEON specific
-SAEON_SPATIALDATA_PROXY=http://app01.saeon.ac.za
-SAEON_SPATIALDATA_PROXY2=http://196.21.191.55
+CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS=http://app01.saeon.ac.za
+CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS2=http://196.21.191.55
 SAEON_ELK_PROXY=http://192.168.115.66:9200
-CSIR_ESRI_PROXY=https://pta-gis-2-web1.csir.co.za/server2/rest/services
-HST_ESRI_PROXY=https://gisportal.saeon.ac.za/server/rest/services
+CATALOGUE_PROXY_CSIR_ESRI_ADDRESS=https://pta-gis-2-web1.csir.co.za/server2/rest/services
+CATALOGUE_PROXY_HST_ESRI_PROXY=https://gisportal.saeon.ac.za/server/rest/services
 ```

@@ -4,7 +4,7 @@ import logout from './logout'
 
 export default ({
   clientId: CLIENT_ID,
-  redirectUrl: REDIRECT_URL,
+  redirectUrl: CLIENT_AUTH_REDIRECT_URL,
   authenticationEndpoint: AUTHENTICATION_ENDPOINT,
   tokenEndpoint: TOKEN_ENDPOINT,
   requestedScopes: REQUESTED_SCOPES,
@@ -14,7 +14,7 @@ export default ({
     AUTHENTICATION_ENDPOINT,
     CLIENT_ID,
     REQUESTED_SCOPES,
-    REDIRECT_URL,
+    CLIENT_AUTH_REDIRECT_URL,
     TOKEN_ENDPOINT,
   }),
   logout: logout({ LOGOUT_ENDPOINT }),

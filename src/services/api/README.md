@@ -79,15 +79,15 @@ touch .env
 This is a list of configuration options available (with default values indicated)
 
 ```sh
-MONGO_USER=admin
-MONGO_PSWD=password
-MONGO_URL=mongodb://localhost:27017
+MONGO_DB_USERNAME=admin
+MONGO_DB_PASSWORD=password
+MONGO_DB_ADDRESS=mongodb://localhost:27017
 MONGO_DB=catalogue
 CATALOGUE_SECRET=secret-string
-GQL_PROVIDER=http://localhost:3000
+CATALOGUE_API_GQL_ADDRESS=http://localhost:3000
 PORT=3000
-DEPLOY_ENV=development
-NODE_ENV=development
+CATALOGUE_DEPLOYMENT_ENV=development
+CATALOGUE_API_NODE_ENV=development
 HTTP_PROXY=http://localhost:8001
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
+CATALOGUE_API_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 ```

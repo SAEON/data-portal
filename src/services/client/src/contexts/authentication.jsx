@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import {
-  CLIENT_ID as clientId,
-  REDIRECT_URL as redirectUrl,
+  CATALOGUE_CLIENT_AUTH_ID as clientId,
+  CATALOGUE_CLIENT_AUTH_REDIRECT_URL as redirectUrl,
   AUTHENTICATION_ENDPOINT as authenticationEndpoint,
   TOKEN_ENDPOINT as tokenEndpoint,
   REQUESTED_SCOPES as requestedScopes,

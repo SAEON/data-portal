@@ -1,7 +1,7 @@
 import { Link, DialogContentText } from '@material-ui/core'
 import { Component } from 'react'
 import MessageDialogue from '../../components/message-dialogue'
-import { WEB_DEVELOPER_CONTACT } from '../../config'
+import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 
 export default class extends Component {
   constructor(props) {
@@ -32,8 +32,8 @@ export default class extends Component {
               Please try refreshing this page in a few minutes. If the error persists, or if
               assistance is required, please contact{' '}
               {
-                <Link variant="body1" href={`mailto:${WEB_DEVELOPER_CONTACT}`}>
-                  {WEB_DEVELOPER_CONTACT}
+                <Link variant="body1" href={`mailto:${CATALOGUE_TECHNICAL_CONTACT}`}>
+                  {CATALOGUE_TECHNICAL_CONTACT}
                 </Link>
               }{' '}
               with a screenshot of this page so that we may resolve the issue speedily

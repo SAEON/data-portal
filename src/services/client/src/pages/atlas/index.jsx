@@ -4,7 +4,7 @@ import SideMenu from './side-menu'
 import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
-import { CLIENT_HOST_ADDRESS, MAX_ATLAS_DATASETS } from '../../config'
+import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../config'
 import { setShareLink } from './../../hooks'
 import MenuProvider from '@saeon/snap-menus/src/provider'
 import OlReactProvider from '../../contexts/ol-react'
@@ -16,12 +16,12 @@ export default () => {
   const atlasId = getUriState().atlas
   if (!atlasId) {
     throw new Error(
-      `The ATLAS requires prior-configuration of what layers to show. This is done at ${CLIENT_HOST_ADDRESS}/records`
+      `The ATLAS requires prior-configuration of what layers to show. This is done at ${CATALOGUE_CLIENT_ADDRESS}/records`
     )
   }
 
   setShareLink({
-    uri: `${CLIENT_HOST_ADDRESS}/render/atlas?atlas=${atlasId}`,
+    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/atlas?atlas=${atlasId}`,
     params: false,
   })
 
@@ -54,15 +54,18 @@ export default () => {
           return loading ? (
             <Loading />
           ) : (
-            <WithCatalogue {...data?.browserClient.findAtlas} pageSize={MAX_ATLAS_DATASETS}>
+            <WithCatalogue
+              {...data?.browserClient.findAtlas}
+              pageSize={CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}
+            >
               {({ error, loading, data }) => {
                 if (error) {
                   throw new Error('Error searching catalogue')
                 }
 
-                if (data?.catalogue.records.totalCount > MAX_ATLAS_DATASETS) {
+                if (data?.catalogue.records.totalCount > CATALOGUE_CLIENT_MAX_ATLAS_LAYERS) {
                   throw new Error(
-                    `Atlas supports a maximum of ${MAX_ATLAS_DATASETS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
+                    `Atlas supports a maximum of ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
                   )
                 }
 
