@@ -20,7 +20,7 @@ jobs:
           sudo /opt/reload-nginx.sh # service nginx reload
 
       - name: Deploy services
-        run: >
+        run: >-
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           CATALOGUE_API_ADDRESS="http://api.catalogue.saeon.dvn"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://api.catalogue.saeon.dvn/graphql"
