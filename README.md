@@ -1,4 +1,3 @@
-# @SAEON/CATALOGUE
 An interactive tool for searching and exploring SAEON-curated datasets
 
 # Deployment status
