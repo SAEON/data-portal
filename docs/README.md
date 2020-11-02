@@ -8,7 +8,7 @@ A public release of the source code is available [HERE](https://github.com/SAEON
 - Elasticsearch
 - PostGIS
 - GraphQL API (Node.js)
-- Proxy API (Node.js + [anyproxy](http://anyproxy.io/))
+- Proxy API (Node.js / [anyproxy](http://anyproxy.io/))
 - Browser client ([React.js](https://reactjs.org/) / [Material UI](https://material-ui.com/))
 
 # Deployment

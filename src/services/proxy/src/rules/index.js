@@ -1,10 +1,9 @@
 import url from 'url'
-
-// Rules
 import csirRule from './_csir.js'
 import hstRule from './_hst.js'
-import elasticsearch from './_elasticsearch.js'
-import saeonGeoServers from './_saeon-geoservers.js'
+import elasticsearchRule from './_elasticsearch.js'
+import saeonGeoServersRule from './_saeon-geoservers.js'
+import saeonGeoServerApp04Rule from './_saeon-geoserver-app04.js'
 
 const beforeSendRequest = async requestDetail => {
   const { path } = url.parse(requestDetail.url)
@@ -17,9 +16,11 @@ const beforeSendRequest = async requestDetail => {
     } else if (path.includes('/proxy/hst')) {
       proxiedRequest = hstRule({ path, requestDetail })
     } else if (path.includes('/proxy/elasticsearch')) {
-      proxiedRequest = elasticsearch({ path, requestDetail })
+      proxiedRequest = elasticsearchRule({ path, requestDetail })
     } else if (path.includes('/proxy/saeon-spatialdata/spatialdata.saeon.ac.za')) {
-      proxiedRequest = saeonGeoServers({ path, requestDetail })
+      proxiedRequest = saeonGeoServersRule({ path, requestDetail })
+    } else if (path.includes('/proxy/saeon-spatialdata/196.21.191.55')) {
+      proxiedRequest = saeonGeoServerApp04Rule({ path, requestDetail })
     } else {
       throw new Error('No rule found')
     }
