@@ -1,12 +1,12 @@
 import Results from './search-results'
 import SearchBar from './search-bar'
 import { isMobile } from 'react-device-detect'
-import { CLIENT_HOST_ADDRESS } from '../../config'
+import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks'
 
 export default ({ showSearchBar = true, ...props } = {}) => {
   setShareLink({
-    uri: `${CLIENT_HOST_ADDRESS}/render/records?disableSidebar=true`,
+    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/records?disableSidebar=true`,
     params: true,
   })
   return showSearchBar ? (

@@ -1,10 +1,17 @@
 import url from 'url'
 import { normalize } from 'path'
-import { SAEON_SPATIALDATA_PROXY } from '../config.js'
-const SAEON_SPATIALDATA_PROXY_PARSED = url.parse(SAEON_SPATIALDATA_PROXY)
+import { CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS } from '../config.js'
+const CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_PARSED = url.parse(
+  CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS
+)
 
 export default ({ path, requestDetail }) => {
-  const { protocol, hostname, host, path: proxyPath } = SAEON_SPATIALDATA_PROXY_PARSED
+  const {
+    protocol,
+    hostname,
+    host,
+    path: proxyPath,
+  } = CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_PARSED
   const port = path
     .match(/^\/proxy\/saeon-spatialdata\/spatialdata.saeon.ac.za\/\d{4}/)[0]
     .slice(-4)

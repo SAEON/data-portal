@@ -7,14 +7,14 @@ config()
 const spreadsheetId = process.env.spreadsheetId
 const range = process.env.range
 const CONNECTION_STRING = process.env.CONNECTION_STRING
-const MONGO_USER = process.env.MONGO_USER
-const MONGO_PSWD = process.env.MONGO_PSWD
+const MONGO_DB_USERNAME = process.env.MONGO_DB_USERNAME
+const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD
 const DB = process.env.DB
 
 const db = MongoClient.connect(CONNECTION_STRING, {
   auth: {
-    user: MONGO_USER,
-    password: MONGO_PSWD,
+    user: MONGO_DB_USERNAME,
+    password: MONGO_DB_PASSWORD,
   },
   authMechanism: 'SCRAM-SHA-256',
   useNewUrlParser: true,

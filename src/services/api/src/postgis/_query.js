@@ -1,6 +1,12 @@
-import { POSTGIS_DB, POSTGIS_HOST, POSTGIS_USER, POSTGIS_PSWD, POSTGIS_PORT } from '../config.js'
+import {
+  POSTGIS_DB,
+  POSTGIS_HOST,
+  POSTGIS_USERNAME,
+  POSTGIS_PASSWORD,
+  POSTGIS_PORT,
+} from '../config.js'
 import createPool from './_pool.js'
-const pool = createPool(POSTGIS_HOST, POSTGIS_USER, POSTGIS_DB, POSTGIS_PSWD, POSTGIS_PORT)
+const pool = createPool(POSTGIS_HOST, POSTGIS_USERNAME, POSTGIS_DB, POSTGIS_PASSWORD, POSTGIS_PORT)
 
 export default ({ text, values, name }) =>
   new Promise((resolve, reject) =>

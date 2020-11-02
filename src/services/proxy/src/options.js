@@ -1,14 +1,19 @@
 import rule from './rules/index.js'
-import { PORT, ENABLE_WEB_INTERFACE, WEB_INTERFACE_PORT, THROTTLE } from './config.js'
+import {
+  CATALOGUE_PROXY_PORT,
+  CATALOGUE_PROXY_ENABLE_WEB_INTERFACE,
+  CATALOGUE_PROXY_WEB_INTERFACE_PORT,
+  CATALOGUE_PROXY_THROTTLE,
+} from './config.js'
 
 export default {
-  port: PORT,
+  port: CATALOGUE_PROXY_PORT,
   rule,
   webInterface: {
-    enable: ENABLE_WEB_INTERFACE,
-    webPort: WEB_INTERFACE_PORT,
+    enable: CATALOGUE_PROXY_ENABLE_WEB_INTERFACE,
+    webPort: CATALOGUE_PROXY_WEB_INTERFACE_PORT,
   },
-  throttle: THROTTLE,
+  throttle: CATALOGUE_PROXY_THROTTLE,
   forceProxyHttps: false,
   wsIntercept: false,
   silent: false,

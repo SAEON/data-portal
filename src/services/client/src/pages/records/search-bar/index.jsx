@@ -3,7 +3,7 @@ import { useTheme } from '@material-ui/core/styles'
 import RecordsSearch from '../../../components/records-search'
 import useStyles from './style'
 import { isMobile } from 'react-device-detect'
-import { CLIENT_HOST_ADDRESS } from '../../../config'
+import { CATALOGUE_CLIENT_ADDRESS } from '../../../config'
 
 export default () => {
   const classes = useStyles()
@@ -15,7 +15,7 @@ export default () => {
         <Grid container spacing={0} justify="center">
           <Grid container item xs={12} sm={8} direction={isMobile ? 'column' : 'row'}>
             <Grid style={{ display: 'flex' }} item>
-              <a style={{ display: 'block', margin: 'auto' }} href={CLIENT_HOST_ADDRESS}>
+              <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>
                 <img
                   style={{
                     height: 80,

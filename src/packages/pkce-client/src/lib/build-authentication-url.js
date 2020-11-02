@@ -5,7 +5,7 @@ export default async ({
   CLIENT_ID,
   STATE,
   REQUESTED_SCOPES,
-  REDIRECT_URL,
+  CLIENT_AUTH_REDIRECT_URL,
   VERIFICATION_KEY,
 }) =>
   AUTHENTICATION_ENDPOINT +
@@ -17,7 +17,7 @@ export default async ({
   '&scope=' +
   encodeURIComponent(REQUESTED_SCOPES) +
   '&redirect_uri=' +
-  encodeURIComponent(REDIRECT_URL) +
+  encodeURIComponent(CLIENT_AUTH_REDIRECT_URL) +
   '&code_challenge=' +
   encodeURIComponent(await createVerificationCode(VERIFICATION_KEY)) +
   '&code_challenge_method=S256'

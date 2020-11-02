@@ -2,8 +2,8 @@ import { useContext } from 'react'
 import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
 // import { GitHub as GitHubIcon } from '@material-ui/icons'
 import packageJson from '../../../package.json'
-import { DEPLOYMENT_ENV } from '../../config'
-// import {SOURCE_CODE_URI} from '../../config'
+import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
+// import {CATALOGUE_SOURCE_CODE_URI} from '../../config'
 import FeedbackDialogue from './_feedback-dialogue'
 import ShareOrEmbed from '../../components/share-or-embed'
 import useStyles from './style'
@@ -32,9 +32,9 @@ export default () => {
                 variant="body2"
               >
                 SAEON DATA PORTAL{' '}
-                {DEPLOYMENT_ENV === 'production'
+                {CATALOGUE_DEPLOYMENT_ENV === 'production'
                   ? undefined
-                  : `${DEPLOYMENT_ENV}.${packageJson.version}`}
+                  : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`}
               </Typography>
             </Grid>
 
@@ -42,7 +42,7 @@ export default () => {
             <Grid container justify="flex-end" alignItems="center" item xs>
               {/* <Tooltip placement="left" title="MIT-licensed source code">
                 <IconButton
-                  onClick={() => window.open(SOURCE_CODE_URI, 'catalogue-source-code')}
+                  onClick={() => window.open(CATALOGUE_SOURCE_CODE_URI, 'catalogue-source-code')}
                   color="inherit"
                 >
                   <GitHubIcon color="inherit" />

@@ -3,12 +3,12 @@
   hosts: catalogue
   become: yes
   vars_prompt:
-    - name: deployment_environment
+    - name: CATALOGUE_DEPLOYMENT_ENVironment
       prompt: Which deployment environment is this for? [next, stable]
       default: "next"
       private: no
 
-    - name: mongo_username
+    - name: MONGO_DB_USERNAMEname
       prompt: Provide a MongoDB username
       default: ""
       private: no
@@ -64,7 +64,7 @@
         day: "*"
         month: "*"
         weekday: "*"
-        job: docker exec mongo sh -c 'exec mongodump --username {{ mongo_username }} --password {{ mongo_password }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1
+        job: docker exec mongo sh -c 'exec mongodump --username {{ MONGO_DB_USERNAMEname }} --password {{ mongo_password }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1
     
     - name: Prune MongoDB backups
       cron:
@@ -103,7 +103,7 @@
     
     - name: copy-nginx-config.sh
       copy:
-        content: "cp ./platform-configuration/nginx/{{ deployment_environment }}/nginx.conf /etc/nginx/"
+        content: "cp ./platform-configuration/nginx/{{ CATALOGUE_DEPLOYMENT_ENVironment }}/nginx.conf /etc/nginx/"
         dest: /opt/copy-nginx-config.sh
         owner: root
         group: root
@@ -111,7 +111,7 @@
 
     - name: copy-nginx-server-blocks.sh
       copy:
-        content: "cp ./platform-configuration/nginx/{{ deployment_environment }}/server-blocks/* /etc/nginx/conf.d/" 
+        content: "cp ./platform-configuration/nginx/{{ CATALOGUE_DEPLOYMENT_ENVironment }}/server-blocks/* /etc/nginx/conf.d/" 
         dest: /opt/copy-nginx-server-blocks.sh
         owner: root
         group: root

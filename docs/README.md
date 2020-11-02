@@ -97,7 +97,7 @@ As of September 2020 SAEON currently deploys two instances of the catalogue stac
 git clone <...> catalogue-fork
 
 # Add configuration for docker-compose.yml scripts
-echo "MONGO_USERNAME=<user>" > .env
+echo "MONGO_DB_USERNAMENAME=<user>" > .env
 echo "MONGO_PASSWORD=<pswd>" >> .env
 
 # Build and run the images

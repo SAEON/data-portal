@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-koa'
-import { GQL_PROVIDER } from '../config.js'
+import { CATALOGUE_API_GQL_ADDRESS } from '../config.js'
 import schema from './schema/index.js'
 
 export default () =>
@@ -7,7 +7,7 @@ export default () =>
     schema,
     introspection: true,
     playground: {
-      subscriptionEndpoint: `${GQL_PROVIDER}/graphql`,
+      subscriptionEndpoint: `${CATALOGUE_API_GQL_ADDRESS}`,
       settings: {
         'editor.theme': 'light',
       },

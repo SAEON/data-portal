@@ -8,12 +8,12 @@ import { GlobalContext } from '../../contexts/global'
 import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
-import { CLIENT_HOST_ADDRESS, GQL_PROVIDER } from '../../config'
+import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_API_GQL_ADDRESS } from '../../config'
 import { WithQglQuery, setShareLink } from '../../hooks'
 
 export default () => {
   setShareLink({
-    uri: `${CLIENT_HOST_ADDRESS}/render`,
+    uri: `${CATALOGUE_CLIENT_ADDRESS}/render`,
     params: true,
   })
   const classes = useStyles()
@@ -37,7 +37,7 @@ export default () => {
     >
       {({ error, loading, data }) => {
         if (error) {
-          throw new Error(`${GQL_PROVIDER}: ${error}`)
+          throw new Error(`${CATALOGUE_API_GQL_ADDRESS}: ${error}`)
         }
 
         return (
@@ -71,7 +71,7 @@ export default () => {
                 className={clsx(classes.grid)}
               >
                 <Grid style={{ display: 'flex' }} item>
-                  <a style={{ display: 'block', margin: 'auto' }} href={CLIENT_HOST_ADDRESS}>
+                  <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>
                     <img
                       style={{
                         height: 56,

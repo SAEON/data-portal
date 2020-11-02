@@ -9,7 +9,7 @@ export default ({
   AUTHENTICATION_ENDPOINT,
   CLIENT_ID,
   REQUESTED_SCOPES,
-  REDIRECT_URL,
+  CLIENT_AUTH_REDIRECT_URL,
   TOKEN_ENDPOINT,
 }) => async ({ forceLogin = true, redirectToCurrentPath = false } = {}) => {
   var _redirectToCurrentPath
@@ -22,7 +22,7 @@ export default ({
     CLIENT_ID,
     STATE,
     REQUESTED_SCOPES,
-    REDIRECT_URL,
+    CLIENT_AUTH_REDIRECT_URL,
     VERIFICATION_KEY,
   })
 
@@ -97,7 +97,7 @@ export default ({
       grant_type: 'authorization_code',
       code,
       client_id: CLIENT_ID,
-      redirect_uri: REDIRECT_URL,
+      redirect_uri: CLIENT_AUTH_REDIRECT_URL,
       code_verifier: VERIFICATION_KEY,
     })
       .map(([key, val]) => `${key}=${val}`)

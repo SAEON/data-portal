@@ -6,10 +6,10 @@
  */
 
 import { createContext } from 'react'
-import { BACKGROUNDS } from '../config'
+import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
 
 const getBackgroundImagePath = () => {
-  const backgrounds = BACKGROUNDS.split(',')
+  const backgrounds = CATALOGUE_CLIENT_BACKGROUNDS.split(',')
   const min = 0
   const max = backgrounds.length - 1
   const i = Math.floor(Math.random() * (max - min + 1) + min)

@@ -14,7 +14,7 @@ import {
   CircularProgress,
   Tooltip,
 } from '@material-ui/core'
-import { LATEST_COMMIT } from '../../config'
+import { CATALOGUE_LATEST_COMMIT } from '../../config'
 import { Feedback as FeedbackIcon, Done as DoneIcon, Error as ErrorIcon } from '@material-ui/icons'
 
 export default () => {
@@ -111,7 +111,7 @@ export default () => {
                               text,
                               rating,
                               pathname: window.location.pathname,
-                              commitHash: LATEST_COMMIT,
+                              commitHash: CATALOGUE_LATEST_COMMIT,
                             },
                           },
                         })

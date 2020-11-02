@@ -75,9 +75,9 @@ DEFAULT_ERROR= # default error message shown on startup
 DEFAULT_WARNING= # default warning message shown on startup
 DEFAULT_INFO= # default info message shown on startup
 DEFAULT_SUCCESS=# default success message shown on startup
-GQL_PROVIDER=http://localhost:3000/graphql
-GQL_SUBSCRIPTIONS_PROVIDER=ws://localhost:3000/graphql
-SOURCE_CODE_URI=https://github.com/SAEONData/catalogue/tree/master/src/@saeon/client
+CATALOGUE_API_GQL_ADDRESS=http://localhost:3000/graphql
+CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS=ws://localhost:3000/graphql
+CATALOGUE_SOURCE_CODE_URI=https://github.com/SAEONData/catalogue/tree/master/src/@saeon/client
 ```
 
 ## Docker deployment

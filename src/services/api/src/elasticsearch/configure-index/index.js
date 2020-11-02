@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { ES_INDEX, ES_HOST_ADDRESS } from '../../config.js'
+import { CATALOGUE_API_ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_ADDRESS } from '../../config.js'
 import makeOdpIterator from './iterator/index.js'
 
 export default async () => {
@@ -14,14 +14,16 @@ export default async () => {
      * For now, just delete and recreate the index on app start
      * Updating documents doesn't seem to update the mapping
      */
-    await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}`, {
+    await fetch(`${ELASTICSEARCH_ADDRESS}/${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then(res => res.json())
-      .then(json => console.log(`${ES_INDEX} deleted on refresh`, json))
+      .then(json =>
+        console.log(`${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} deleted on refresh`, json)
+      )
       .catch(error => {
         throw error
       })
@@ -31,15 +33,18 @@ export default async () => {
      */
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
-      const response = await fetch(`${ES_HOST_ADDRESS}/${ES_INDEX}/_bulk`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-ndjson',
-        },
-        body: iterator.data
-          .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
-          .join(''),
-      })
+      const response = await fetch(
+        `${ELASTICSEARCH_ADDRESS}/${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME}/_bulk`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-ndjson',
+          },
+          body: iterator.data
+            .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
+            .join(''),
+        }
+      )
         .then(res => res.json())
         .then(json => {
           if (json.errors) {
@@ -52,7 +57,9 @@ export default async () => {
           throw new Error(`Unable to refresh ES index :: ${error.message}`)
         })
 
-      console.log(`Processed ${response.items.length} docs into the ${ES_INDEX} index`)
+      console.log(
+        `Processed ${response.items.length} docs into the ${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} index`
+      )
       response.items.forEach(({ index }) => (result[index.result] += 1))
 
       iterator = await iterator.next()

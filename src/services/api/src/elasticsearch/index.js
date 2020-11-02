@@ -1,10 +1,10 @@
 import { CronJob } from 'cron'
 import {
-  ES_TEMPLATE_INTEGRATION_ENABLED,
-  ES_INDEX_INTEGRATION_ENABLED,
-  NODE_ENV,
-  INDEX_BUILD_SCHEDULE,
-  SCHEDULED_INDEX_INTEGRATION,
+  CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE,
+  CATALOGUE_API_RESET_ELASTICSEARCH_INDEX,
+  CATALOGUE_API_NODE_ENV,
+  CATALOGUE_API_INDEX_REBUILD_SCHEDULE,
+  CATALOGUE_API_INDEX_REBUILD,
 } from '../config.js'
 import configTemplate from './configure-template/index.js'
 import configureIndex from './configure-index/index.js'
@@ -13,7 +13,7 @@ export const configure = async () => {
   /**
    * Delete and recreate index template
    */
-  if (ES_TEMPLATE_INTEGRATION_ENABLED === 'enabled') {
+  if (CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE === 'enabled') {
     const result = await configTemplate()
     console.log('Elasticsearch template configured', result)
   }
@@ -21,7 +21,7 @@ export const configure = async () => {
   /**
    * Delete and recreate index on startup
    */
-  if (ES_INDEX_INTEGRATION_ENABLED === 'enabled') {
+  if (CATALOGUE_API_RESET_ELASTICSEARCH_INDEX === 'enabled') {
     const result = await configureIndex()
     console.log(result)
   }
@@ -30,10 +30,10 @@ export const configure = async () => {
    * Scheduled index refreshes
    * 00:00 every day (UTC)
    */
-  if (NODE_ENV === 'production' && SCHEDULED_INDEX_INTEGRATION === 'enabled') {
-    console.log('Scheduled index integration enabled', INDEX_BUILD_SCHEDULE)
+  if (CATALOGUE_API_NODE_ENV === 'production' && CATALOGUE_API_INDEX_REBUILD === 'enabled') {
+    console.log('Scheduled index integration enabled', CATALOGUE_API_INDEX_REBUILD_SCHEDULE)
     new CronJob(
-      INDEX_BUILD_SCHEDULE,
+      CATALOGUE_API_INDEX_REBUILD_SCHEDULE,
       async function () {
         const result = await configureIndex()
         console.log(result)

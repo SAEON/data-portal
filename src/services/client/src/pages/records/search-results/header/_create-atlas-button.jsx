@@ -4,7 +4,7 @@ import { Explore as MapIcon } from '@material-ui/icons'
 import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { MAX_ATLAS_DATASETS } from '../../../../config'
+import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../config'
 import { GlobalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
@@ -41,7 +41,7 @@ const isAtlasAvailable = (selectedDois, atlasLayersCount, records) =>
       ? selectedDois.filter(doi => doiHasMap(doi, records)).length
         ? true
         : false
-      : atlasLayersCount < MAX_ATLAS_DATASETS
+      : atlasLayersCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS
       ? true
       : false
     : false
@@ -80,7 +80,7 @@ export default ({ catalogue }) => {
           : selectedDois.length
           ? 'No atlas preview available'
           : atlasLayersCount
-          ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${MAX_ATLAS_DATASETS}`
+          ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}`
           : 'Search context: no datasets with maps found'
       }
     >

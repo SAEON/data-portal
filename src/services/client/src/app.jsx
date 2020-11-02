@@ -12,7 +12,7 @@ import NativeExtensions from './components/native-extensions'
 import ApplicationLogger from './components/application-logger'
 import DefaultApplicationNotices from './components/default-application-notices'
 import ErrorBoundary from './components/error-boundary'
-import { GQL_PROVIDER, GQL_SUBSCRIPTIONS_PROVIDER } from './config'
+import { CATALOGUE_API_GQL_ADDRESS, CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS } from './config'
 import { HttpLink, split } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/link-ws'
@@ -33,13 +33,13 @@ export default () => {
                 )
               },
               new WebSocketLink({
-                uri: GQL_SUBSCRIPTIONS_PROVIDER,
+                uri: CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS,
                 options: {
                   reconnect: true,
                 },
               }),
               new HttpLink({
-                uri: GQL_PROVIDER,
+                uri: CATALOGUE_API_GQL_ADDRESS,
                 credentials: 'include',
               })
             ),

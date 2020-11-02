@@ -8,7 +8,7 @@ const packageJson = require('./package.json')
 // const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
-const { NODE_ENV: mode, DEPLOYMENT_ENV, LATEST_COMMIT = '' } = process.env
+const { NODE_ENV: mode, CATALOGUE_DEPLOYMENT_ENV, CATALOGUE_LATEST_COMMIT = '' } = process.env
 
 module.exports = () => {
   const output = 'dist'
@@ -151,9 +151,9 @@ module.exports = () => {
       new Dotenv(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode),
-        'process.env.LATEST_COMMIT': JSON.stringify(LATEST_COMMIT),
-        'process.env.DEPLOYMENT_ENV': JSON.stringify(DEPLOYMENT_ENV),
-        'process.env.BACKGROUNDS': JSON.stringify(
+        'process.env.CATALOGUE_LATEST_COMMIT': JSON.stringify(CATALOGUE_LATEST_COMMIT),
+        'process.env.CATALOGUE_DEPLOYMENT_ENV': JSON.stringify(CATALOGUE_DEPLOYMENT_ENV),
+        'process.env.CATALOGUE_CLIENT_BACKGROUNDS': JSON.stringify(
           fs
             .readdirSync('public/bg')
             .filter(f => ['.jpg', '.jpeg'].includes(f.match(/\.[0-9a-z]{1,5}$/i)?.[0] || undefined))

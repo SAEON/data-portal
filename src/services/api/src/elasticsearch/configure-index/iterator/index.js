@@ -1,12 +1,12 @@
 import fetch from 'node-fetch'
-import { SAEON_ODP_PROVIDER } from '../../../config.js'
+import { ODP_ADDRESS } from '../../../config.js'
 import parseDates from './_parse-dates.js'
 import parseSpatial from './_parse-spatial.js'
 
 const ODP_BATCH_SIZE = 100
 
 const iterate = (offset = 0) =>
-  fetch(`${SAEON_ODP_PROVIDER}?limit=${ODP_BATCH_SIZE}&offset=${offset}`, {
+  fetch(`${ODP_ADDRESS}?limit=${ODP_BATCH_SIZE}&offset=${offset}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',
