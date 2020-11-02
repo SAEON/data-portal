@@ -8,12 +8,12 @@ import clsx from 'clsx'
 import useStyles from './style'
 import { GlobalContext } from '../../../../../../contexts/global'
 
-export default ({ doi, linkedResources }) => {
+export default ({ id, linkedResources }) => {
   const [loading, setLoading] = useState(false)
   const client = useApolloClient()
   const classes = useStyles()
   const { global, setGlobal } = useContext(GlobalContext)
-  const { selectedDois } = global
+  const { selectedIds } = global
   const history = useHistory()
 
   const hasLayers = Boolean(
@@ -34,7 +34,7 @@ export default ({ doi, linkedResources }) => {
           onClick={async e => {
             e.stopPropagation()
             setLoading(true)
-            setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
+            setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
             const { data } = await client.mutate({
               mutation: gql`
                 mutation($state: JSON!, $createdBy: String!) {
@@ -46,7 +46,7 @@ export default ({ doi, linkedResources }) => {
               `,
               variables: {
                 createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: { dois: [doi] },
+                state: { ids: [id] },
               },
             })
             if (data) {

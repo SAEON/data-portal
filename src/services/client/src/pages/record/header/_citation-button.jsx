@@ -1,11 +1,11 @@
 import { FormatQuote as CitationIcon } from '@material-ui/icons'
-import CitationDialog from '../../../components/citation-dialog'
+import CitationDialog from '../../../components/citation-dialogue'
 import { Tooltip, IconButton } from '@material-ui/core'
 
-// TODO shouldn't need both DOI and ID
-export default ({ doi, id }) => {
+export default ({ doi }) => {
+  console.log('doi', doi)
   return (
-    <CitationDialog doi={doi} id={id}>
+    <CitationDialog doi={doi}>
       {({ disabled, onClick }) => (
         <Tooltip placement="left-start" title="Cite this record">
           <span>

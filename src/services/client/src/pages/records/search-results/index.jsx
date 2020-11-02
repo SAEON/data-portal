@@ -26,7 +26,7 @@ export default ({ disableSidebar = false }) => {
   const { showSearchBar } = getUriState()
 
   const { global } = useContext(GlobalContext)
-  const { terms, extent = undefined, text = undefined, dois } = global
+  const { terms, extent = undefined, text = undefined, ids } = global
 
   useEffect(() => {
     if (ref.current) {
@@ -51,7 +51,7 @@ export default ({ disableSidebar = false }) => {
       pageSize={pageSize}
       startCursor={cursors.start}
       endCursor={cursors.end}
-      dois={dois}
+      ids={ids}
       terms={terms}
       extent={extent}
       text={text}

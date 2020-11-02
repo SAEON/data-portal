@@ -9,36 +9,36 @@ import { GlobalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
 
-const doiMapCache = {}
+const cacheOfMappableItems = {}
 
-const doiHasMap = (doi, records) => {
-  if (doiMapCache.hasOwnProperty(doi)) {
-    return doiMapCache[doi]
+const idHasMap = (id, records) => {
+  if (cacheOfMappableItems.hasOwnProperty(id)) {
+    return cacheOfMappableItems[id]
   } else {
     for (let node of records.nodes) {
       var { metadata } = node
       var { _source } = metadata
-      var { linkedResources, doi: itemDoi } = _source
+      var { linkedResources, id: itemId } = _source
 
-      if (!itemDoi) return false
+      if (!itemId) return false
 
-      doiMapCache[itemDoi] = Boolean(
+      cacheOfMappableItems[itemId] = Boolean(
         linkedResources?.find(
           ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
         )
       )
 
-      if (doi === itemDoi) {
-        return doiMapCache[doi]
+      if (id === itemId) {
+        return cacheOfMappableItems[id]
       }
     }
   }
 }
 
-const isAtlasAvailable = (selectedDois, atlasLayersCount, records) =>
+const isAtlasAvailable = (selectedIds, atlasLayersCount, records) =>
   records && atlasLayersCount
-    ? selectedDois?.length
-      ? selectedDois.filter(doi => doiHasMap(doi, records)).length
+    ? selectedIds?.length
+      ? selectedIds.filter(id => idHasMap(id, records)).length
         ? true
         : false
       : atlasLayersCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS
@@ -46,16 +46,16 @@ const isAtlasAvailable = (selectedDois, atlasLayersCount, records) =>
       : false
     : false
 
-const removeSelectedDois = obj =>
+const removeSelectedIds = obj =>
   Object.fromEntries(
     Object.entries(
-      obj.selectedDois?.length ? Object.assign({ ...obj }, { dois: obj.selectedDois }) : obj
-    ).filter(([key]) => key !== 'selectedDois')
+      obj.selectedIds?.length ? Object.assign({ ...obj }, { ids: obj.selectedIds }) : obj
+    ).filter(([key]) => key !== 'selectedIds')
   )
 
 export default ({ catalogue }) => {
   const { global } = useContext(GlobalContext)
-  const { selectedDois } = global
+  const { selectedIds } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
   const history = useHistory()
@@ -73,11 +73,11 @@ export default ({ catalogue }) => {
   ) : (
     <Tooltip
       title={
-        isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+        isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)
           ? `Configure atlas from ${
-              selectedDois?.filter(doi => doiMapCache[doi]).length || atlasLayersCount
+              selectedIds?.filter(id => cacheOfMappableItems[id]).length || atlasLayersCount
             } mappable search results`
-          : selectedDois.length
+          : selectedIds.length
           ? 'No atlas preview available'
           : atlasLayersCount
           ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}`
@@ -86,7 +86,7 @@ export default ({ catalogue }) => {
     >
       <span style={{ display: 'flex', alignContent: 'center' }}>
         <IconButton
-          disabled={!isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)}
+          disabled={!isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)}
           onClick={async e => {
             e.stopPropagation()
             setSavedSearchLoading(true)
@@ -100,7 +100,7 @@ export default ({ catalogue }) => {
               `,
               variables: {
                 createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: removeSelectedDois(global),
+                state: removeSelectedIds(global),
               },
             })
             if (data) {
@@ -115,13 +115,15 @@ export default ({ catalogue }) => {
         >
           <StyledBadge
             color={
-              isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
+              isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)
                 ? 'primary'
                 : 'default'
             }
             badgeContent={
-              isAtlasAvailable(selectedDois, atlasLayersCount, catalogue?.records)
-                ? selectedDois?.filter(doi => doiMapCache[doi]).length || atlasLayersCount || 0
+              isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)
+                ? selectedIds?.filter(id => cacheOfMappableItems[id]).length ||
+                  atlasLayersCount ||
+                  0
                 : 0
             }
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

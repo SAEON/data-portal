@@ -2,9 +2,9 @@ import { useContext } from 'react'
 import { Tooltip, Checkbox } from '@material-ui/core'
 import { GlobalContext } from '../../../../../../contexts/global'
 
-export default ({ doi }) => {
+export default ({ id }) => {
   const { global, setGlobal } = useContext(GlobalContext)
-  const { selectedDois } = global
+  const { selectedIds } = global
 
   return (
     <Tooltip title={'Select record'} placement="left-start">
@@ -12,11 +12,11 @@ export default ({ doi }) => {
         style={{ marginRight: 4 }}
         size="small"
         color="primary"
-        checked={selectedDois.includes(doi)}
+        checked={selectedIds.includes(id)}
         onChange={(e, checked) =>
           checked
-            ? setGlobal({ selectedDois: [...new Set([...selectedDois, doi])] })
-            : setGlobal({ selectedDois: selectedDois.filter(selectedDoi => selectedDoi !== doi) })
+            ? setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
+            : setGlobal({ selectedIds: selectedIds.filter(selectedId => selectedId !== id) })
         }
       />
     </Tooltip>

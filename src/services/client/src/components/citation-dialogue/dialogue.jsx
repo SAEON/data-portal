@@ -10,12 +10,12 @@ import {
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import { gql } from '@apollo/client'
 import { WithQglQuery } from '../../hooks'
-import Autocomplete from '../../components/autocomplete/autocomplete'
+import Autocomplete from '../autocomplete/autocomplete'
 
 const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'
 
-export default ({ doi, id, open, setOpen, citationStyles, citationLocales }) => {
+export default ({ doi, open, setOpen, citationStyles, citationLocales }) => {
   const [citationParams, setCitationParams] = useState({
     style: DEFAULT_CITATION_STYLE,
     language: DEFAULT_CITATION_LANG,
@@ -25,10 +25,10 @@ export default ({ doi, id, open, setOpen, citationStyles, citationLocales }) => 
   return (
     <WithQglQuery
       QUERY={gql`
-        query($ids: [ID!], $style: CitationStyle, $language: CitationLocale) {
+        query($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
           catalogue {
             id
-            records(ids: $ids) {
+            records(dois: $dois) {
               nodes {
                 citation(style: $style, language: $language)
               }
@@ -37,7 +37,7 @@ export default ({ doi, id, open, setOpen, citationStyles, citationLocales }) => 
         }
       `}
       variables={{
-        ids: [id],
+        dois: [doi],
         style: citationParams.style,
         language: citationParams.language,
       }}

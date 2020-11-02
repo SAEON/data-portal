@@ -1,6 +1,6 @@
 export default dois => ({
   terms: {
-    'identifier.identifier.raw': dois,
+    'doi.raw': dois,
     boost: 100,
   },
 })

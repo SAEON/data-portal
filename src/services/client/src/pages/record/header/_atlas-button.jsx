@@ -5,7 +5,7 @@ import { useApolloClient, gql } from '@apollo/client'
 import packageJson from '../../../../package.json'
 import { useHistory } from 'react-router-dom'
 
-export default ({ linkedResources, doi }) => {
+export default ({ linkedResources, id }) => {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
   const client = useApolloClient()
@@ -38,7 +38,7 @@ export default ({ linkedResources, doi }) => {
               `,
               variables: {
                 createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: { dois: [doi] },
+                state: { ids: [id] },
               },
             })
             if (data) {

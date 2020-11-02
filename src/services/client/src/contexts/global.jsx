@@ -43,8 +43,7 @@ export default ({ children }) => {
           extent={state?.extent || undefined}
           terms={state?.terms || []}
           ids={state?.ids || []}
-          dois={state?.dois || []}
-          selectedDois={state?.selectedDois || []}
+          selectedIds={state?.selectedIds || []}
         >
           {(setGlobal, global) => {
             return (

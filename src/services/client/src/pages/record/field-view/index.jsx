@@ -1,7 +1,5 @@
 import { Grid, Fade } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-
-// Metadata fields
 import Titles from './_titles'
 import Creators from './_creators'
 import GeoLocations from './_geo-locations'
@@ -14,22 +12,7 @@ import LinkedResources from './_linked-resources'
 import Identifiers from './_identifiers'
 import RightsList from './_rights-list'
 
-export default ({
-  codeView,
-  titles,
-  creators,
-  geoLocations,
-  dates,
-  publisher,
-  publicationYear,
-  contributors,
-  descriptions,
-  subjects,
-  linkedResources,
-  identifier,
-  alternateIdentifiers,
-  rightsList,
-}) => {
+export default ({ codeView, ..._source }) => {
   return (
     <div style={{ margin: isMobile ? '16px 0 16px' : '32px 0px 32px' }}>
       <Grid container justify="center">
@@ -42,17 +25,17 @@ export default ({
               alignItems="stretch"
               spacing={isMobile ? 2 : 3}
             >
-              {titles?.length && <Titles titles={titles} />}
-              {creators?.length && <Creators creators={creators} />}
-              {rightsList?.length && <RightsList rightsList={rightsList} />}
-              {geoLocations?.length && <GeoLocations geoLocations={geoLocations} />}
-              {dates?.length && <Dates dates={dates} />}
-              {publisher && <Publisher publisher={publisher} publicationYear={publicationYear} />}
-              {contributors?.length && <Contributors contributors={contributors} />}
-              {descriptions?.length && <Descriptions descriptions={descriptions} />}
-              {subjects?.length && <Subjects subjects={subjects} />}
-              {linkedResources?.length && <LinkedResources linkedResources={linkedResources} />}
-              <Identifiers identifier={identifier} alternateIdentifiers={alternateIdentifiers} />
+              {_source.titles?.length && <Titles {..._source} />}
+              {_source.creators?.length && <Creators {..._source} />}
+              {_source.rightsList?.length && <RightsList {..._source} />}
+              {_source.geoLocations?.length && <GeoLocations {..._source} />}
+              {_source.dates?.length && <Dates {..._source} />}
+              {_source.publisher && <Publisher {..._source} />}
+              {_source.contributors?.length && <Contributors {..._source} />}
+              {_source.descriptions?.length && <Descriptions {..._source} />}
+              {_source.subjects?.length && <Subjects {..._source} />}
+              {_source.linkedResources?.length && <LinkedResources {..._source} />}
+              {_source.identifiers?.length && <Identifiers {..._source} />}
             </Grid>
           </Fade>
         </Grid>

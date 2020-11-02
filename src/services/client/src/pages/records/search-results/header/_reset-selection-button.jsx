@@ -5,15 +5,15 @@ import { GlobalContext } from '../../../../contexts/global'
 
 export default () => {
   const { global, setGlobal } = useContext(GlobalContext)
-  const { selectedDois } = global
+  const { selectedIds } = global
 
   return (
     <Tooltip title={`Unselect all datasets`}>
       <span style={{ display: 'flex', alignContent: 'center' }}>
         <IconButton
-          disabled={!selectedDois?.length}
+          disabled={!selectedIds?.length}
           onClick={() => {
-            setGlobal({ selectedDois: [] })
+            setGlobal({ selectedIds: [] })
           }}
         >
           <RefreshIcon />

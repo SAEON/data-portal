@@ -10,7 +10,7 @@ export default _source => {
   const classes = useStyles()
 
   return (
-    <Fade in={true} timeout={(Math.floor(Math.random() * 1.5) + 0.1) * 1000} key={_source.doi}>
+    <Fade in={true} timeout={(Math.floor(Math.random() * 1.5) + 0.1) * 1000} key={_source.id}>
       <span>
         <Card className={clsx(classes.card)} variant="outlined">
           <Header {..._source} />

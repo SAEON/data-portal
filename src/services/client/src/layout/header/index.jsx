@@ -13,7 +13,7 @@ import { GlobalContext } from '../../contexts/global'
 export default () => {
   const classes = useStyles()
   const { global } = useContext(GlobalContext)
-  const { selectedDois } = global
+  const { selectedIds } = global
 
   return (
     <>
@@ -50,8 +50,8 @@ export default () => {
               </Tooltip> */}
               <ShareOrEmbed
                 state={
-                  selectedDois.length && window.location.pathname.includes('atlas')
-                    ? { dois: selectedDois }
+                  selectedIds.length && window.location.pathname.includes('atlas')
+                    ? { ids: selectedIds }
                     : global
                 }
               />

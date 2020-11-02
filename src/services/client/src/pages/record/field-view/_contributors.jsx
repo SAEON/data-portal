@@ -20,7 +20,7 @@ export default ({ contributors }) => (
             ?.replace(/([A-Z])/g, ' $1')
             .trim()
             .toUpperCase()}{' '}
-          {contributor.affiliations?.map(aff => aff.affiliation)}
+          {contributor.affiliation?.map(aff => aff.affiliation)}
         </Typography>
       </div>
     ))}

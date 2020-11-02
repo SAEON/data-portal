@@ -17,15 +17,17 @@ export default ({
           immutableResource?.resourceDescription
         } (${immutableResource?.resourceURL?.replace(/.*\./, '')})`}
       >
-        {children ? (
-          <Button {...props} startIcon={<GetAppIcon />}>
-            {children}
-          </Button>
-        ) : (
-          <IconButton disabled={!immutableResource?.resourceURL} {...props}>
-            <GetAppIcon fontSize={fontSize} />
-          </IconButton>
-        )}
+        <span>
+          {children ? (
+            <Button {...props} startIcon={<GetAppIcon />}>
+              {children}
+            </Button>
+          ) : (
+            <IconButton disabled={!immutableResource?.resourceURL} {...props}>
+              <GetAppIcon fontSize={fontSize} />
+            </IconButton>
+          )}
+        </span>
       </Tooltip>
     </SimpleLink>
   )
