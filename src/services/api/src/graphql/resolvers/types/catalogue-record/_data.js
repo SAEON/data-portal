@@ -1,11 +1,10 @@
 import fetch from 'node-fetch'
-import { join, basename } from 'path'
-import { mkdirSync, existsSync, createWriteStream, rmdirSync } from 'fs'
-import getCurrentDirectory from '../../../../lib/get-current-directory.js'
+import { join, basename, sep } from 'path'
+import { createWriteStream, mkdtemp } from 'fs'
+import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../config.js'
 import unzipper from 'unzipper' // https://github.com/ZJONSSON/node-unzipper#readme
 
-const __dirname = getCurrentDirectory(import.meta)
-
+const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 const spatialFileExtensions = ['.dbf', '.shp', '.shx', '.qpj', '.prj', '.cpg']
 
 // https://www.gispo.fi/en/open-software/importing-spatial-data-to-postgis/
@@ -16,18 +15,16 @@ export default async ({ _source }, args, ctx) => {
   const { immutableResource, id } = _source
   const { downloadURL } = immutableResource.resourceDownload
 
-  const p = join(__dirname, id)
-
-  if (existsSync(p))
-    rmdirSync(p, {
-      recursive: true,
-    })
-  mkdirSync(p)
+  // Get a temp directory for caching
+  const cacheDir = await new Promise((resolve, reject) =>
+    mkdtemp(_temp, (error, directory) => (error ? reject(error) : resolve(directory)))
+  )
 
   /**
    * Stream the contents of the zip archive to the folder
    * Shapefile contents must be top-level
    * This normalizes the format of the directory
+   * (the archive structure is not controlled)
    */
   const res = await fetch(downloadURL)
   const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
@@ -45,7 +42,7 @@ export default async ({ _source }, args, ctx) => {
 
     if (includeFile) {
       await new Promise(resolve => {
-        const dest = createWriteStream(join(p, basename(path)))
+        const dest = createWriteStream(join(cacheDir, basename(path)))
         entry.pipe(dest)
         dest.on('finish', resolve)
       })
@@ -53,6 +50,10 @@ export default async ({ _source }, args, ctx) => {
       entry.autodrain()
     }
   }
+
+  /**
+   * Read the Shapefile into PostGIS
+   */
 
   return 'hi'
 }

@@ -50,14 +50,19 @@ export default ({ cachePath, contentUri }) => {
     .catch(async error => {
       let setCache = true
       if (error.code === 'ENOENT' || error.code === 'EXPIRED') {
-        const json = await _fetch(contentUri).catch(error => {
-          if (staleData) {
-            console.log('datacite', contentUri, error.message, 'Using stale data')
-            setCache = false
-          } else {
-            throw error
-          }
-        })
+        const json = await _fetch(contentUri)
+          .then(res => {
+            console.log('datacite', contentUri, 'new data')
+            return res
+          })
+          .catch(error => {
+            if (staleData) {
+              console.log('datacite', contentUri, error.message, 'Using stale data')
+              setCache = false
+            } else {
+              throw error
+            }
+          })
         return setCache
           ? await new Promise((resolve, reject) =>
               writeFile(cachePath, JSON.stringify(json), { encoding: 'utf8' }, error =>

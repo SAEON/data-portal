@@ -1,6 +1,7 @@
 import getCurrentDirectory from './lib/get-current-directory.js'
 import { join, normalize } from 'path'
 import { mkdirSync, existsSync } from 'fs'
+import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
 
@@ -74,13 +75,10 @@ export const CATALOGUE_API_RESET_ELASTICSEARCH_INDEX =
   process.env.CATALOGUE_API_RESET_ELASTICSEARCH_INDEX || 'enabled'
 
 export const CATALOGUE_API_TEMP_DIRECTORY =
-  process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(__dirname, '../.catalogue-api-temp'))
+  process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))
 
 if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
-  console.log('Creating temp directory', CATALOGUE_API_TEMP_DIRECTORY)
   mkdirSync(CATALOGUE_API_TEMP_DIRECTORY)
-} else {
-  console.log('Temp directory already exists', CATALOGUE_API_TEMP_DIRECTORY)
 }
 
 const mask = str => str?.replace(/./g, '*')
@@ -110,4 +108,5 @@ console.log('Configuration', {
   CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE,
   CATALOGUE_API_RESET_ELASTICSEARCH_INDEX,
   CATALOGUE_API_INDEX_REBUILD,
+  CATALOGUE_API_TEMP_DIRECTORY,
 })
