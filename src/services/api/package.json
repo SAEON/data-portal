@@ -47,6 +47,7 @@
     "nanoid": "^3.1.16",
     "node-fetch": "^2.6.1",
     "object-hash": "^2.0.3",
+    "ogr2ogr": "file:../../../../ogr2ogr",
     "pg": "^8.4.2",
     "shpjs": "^3.6.2",
     "sift": "^13.3.5",

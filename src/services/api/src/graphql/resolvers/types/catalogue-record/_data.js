@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
-import { join, basename, sep } from 'path'
+import ogr2ogr from 'ogr2ogr'
+import { join, basename, sep, extname } from 'path'
 import { createWriteStream, mkdtemp } from 'fs'
 import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../config.js'
 import unzipper from 'unzipper' // https://github.com/ZJONSSON/node-unzipper#readme
@@ -26,23 +27,18 @@ export default async ({ _source }, args, ctx) => {
    * This normalizes the format of the directory
    * (the archive structure is not controlled)
    */
+  var shpFilePath
   const res = await fetch(downloadURL)
   const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
   for await (const entry of zip) {
-    const { path } = entry
-    if (path.includes('MACOSX')) continue
-
-    let includeFile = false
-    for (const ext of spatialFileExtensions) {
-      if (path.includes(ext)) {
-        includeFile = true
-        break
-      }
-    }
-
-    if (includeFile) {
+    const { path: filename } = entry
+    const ext = extname(filename)
+    if (filename.includes('MACOSX')) continue
+    if (spatialFileExtensions.includes(ext)) {
+      const writePath = join(cacheDir, basename(filename))
+      if (ext === '.shp') shpFilePath = writePath
       await new Promise(resolve => {
-        const dest = createWriteStream(join(cacheDir, basename(path)))
+        const dest = createWriteStream(writePath)
         entry.pipe(dest)
         dest.on('finish', resolve)
       })
@@ -54,6 +50,9 @@ export default async ({ _source }, args, ctx) => {
   /**
    * Read the Shapefile into PostGIS
    */
+  console.log(shpFilePath)
+  var ogr2 = ogr2ogr(shpFilePath)
+  ogr2.stream().pipe(createWriteStream('./test')) // TODO https://stackoverflow.com/questions/27688804/how-do-i-debug-error-spawn-enoent-on-node-js#:~:text=The%20absence%20of%20PATH%20(i.e.,Last%20case%20is%20the%20usual.
 
   return 'hi'
 }
