@@ -27,7 +27,7 @@
     "prettier": "^2.1.2"
   },
   "dependencies": {
-    "@koa/router": "^9.4.0",
+    "@koa/router": "^10.0.0",
     "@saeon/logger": "^6.1.2",
     "apollo-server-koa": "^2.19.0",
     "bcrypt": "^5.0.0",
