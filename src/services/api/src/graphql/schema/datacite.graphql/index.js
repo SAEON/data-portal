@@ -1,21 +1,20 @@
-import fetch from 'node-fetch'
-const _fetch = p => fetch(p).then(res => res.json())
+import fetchContent from './_fetch-content.js'
+import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../config.js'
 
-console.log('Building datacite citation schema')
+const CITATION_STYLES_URI = 'https://citation.crosscite.org/styles/'
+const CITATION_STYLES_PATH = `${CATALOGUE_API_TEMP_DIRECTORY}/datacite-citation-styles.json`
+const CITATION_LOCALES_URI = 'https://citation.crosscite.org/locales/'
+const CITATION_LOCALES_PATH = `${CATALOGUE_API_TEMP_DIRECTORY}/datacite-citation-locales.json`
 
 const dataciteCitationStyles = `
 enum CitationStyle {
-  ${(await _fetch('https://citation.crosscite.org/styles/'))
-    .map(str => str.replace(/-/g, '_'))
-    .join('\n')}
+  ${await fetchContent({ cachePath: CITATION_STYLES_PATH, contentUri: CITATION_STYLES_URI })}
 }
 `
 
 const dataciteCitationLocales = `
 enum CitationLocale {
-  ${(await _fetch('https://citation.crosscite.org/locales/'))
-    .map(str => str.replace(/-/g, '_'))
-    .join('\n')}
+  ${await fetchContent({ cachePath: CITATION_LOCALES_PATH, contentUri: CITATION_LOCALES_URI })}
 }
 `
 

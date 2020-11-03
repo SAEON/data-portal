@@ -39,6 +39,6 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "npm-check-updates": "^9.2.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.1"
+    "rollup": "^2.33.1"
   }
 }
