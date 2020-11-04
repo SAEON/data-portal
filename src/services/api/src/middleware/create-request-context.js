@@ -1,4 +1,5 @@
 import { db as mongoDb, collections, getDataFinders, getDataInserters } from '../mongo/index.js'
+import { query as postgisQuery } from '../postgis/index.js'
 import Catalogue from '../lib/catalogue.js'
 import { CATALOGUE_PROXY_ADDRESS, CATALOGUE_API_ELASTICSEARCH_INDEX_NAME } from '../config.js'
 
@@ -22,7 +23,7 @@ export default app => async (_, next) => {
     dataInserters,
   }
   app.context.pg = {
-    // db: postgisDb
+    query: postgisQuery,
   }
   await next()
 }

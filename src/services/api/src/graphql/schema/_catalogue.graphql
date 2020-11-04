@@ -64,7 +64,18 @@ type CatalogueRecordEdge implements Edge {
 
 type CatalogueRecord implements Node {
   id: ID!
+
+  # Dataset descriptive record
   metadata: JSON!
-  data: String
-  citation(style: CitationStyle, language: CitationLocale): String! # CitationStyle and CitationLocale are enums defined at runtime
+
+  # GIS layer identifier
+  data: ID!
+
+  # DOI-based citation via the Datacite citation API
+  citation(
+    # Journal-specific formatting rules
+    style: CitationStyle
+    # Citation language (?)
+    language: CitationLocale
+  ): String!
 }
