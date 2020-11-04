@@ -1,11 +1,8 @@
-import getCurrentDirectory from './lib/get-current-directory.js'
 import { join, normalize } from 'path'
 import { mkdirSync, existsSync } from 'fs'
 import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
-
-const __dirname = getCurrentDirectory(import.meta)
 
 export const CATALOGUE_LATEST_COMMIT = process.env.CATALOGUE_LATEST_COMMIT || ''
 

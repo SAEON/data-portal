@@ -1,6 +1,7 @@
 An interactive tool for searching and exploring SAEON-curated datasets
 
 # Deployment status
+
 ![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
 ![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
@@ -19,8 +20,9 @@ An interactive tool for searching and exploring SAEON-curated datasets
 Setup the repository for development
 
 #### System requirements
+
 1. Docker Desktop
-2. Node.js __v14.13__ (Lower versions simply won't work)
+2. Node.js **v14.13** (Lower versions simply won't work)
 
 ```sh
 # Download the source code
@@ -39,34 +41,39 @@ npm run configure-git
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies
 ```
- 
+
 ### Start the services
 
 The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
 
+#### Create a Docker network
+
+Setup a Docker network so that related services can communicate with each other
+
+```sh
+docker network create --driver bridge catalogue
+```
+
 #### MongoDB
 
 ```sh
-docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
+docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
 ```
 
 #### Postgis
 
 ```sh
-docker run --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5432:5432  postgis/postgis:12-3.0
+docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=catalogue -d -p 5432:5432  postgis/postgis:12-3.0
 ```
 
 #### Elasticsearch
 
 ```sh
-# Setup a Docker network so that related services can communicate with each other
-docker network create --driver bridge elk
-
 # Elasticsearch
-docker run --net=elk --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.9.2
 
 # Kibana (optional)
-docker run --net=elk --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.2
+docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.2
 ```
 
 #### [@saeon/api](/src/services/api)
@@ -99,6 +106,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 6. Push from local to your forked repository to trigger a deployment
 
 # Deployment
+
 Deploy the software stack via the `docker-compose` CLI. From the root directory of the source code run the following shell command:
 
 ```sh
@@ -148,7 +156,6 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 5. http://proxy.catalogue.saeon.int (for proxy logs)
 6. http://elasticsearch.saeon.int
 7. http://kibana.saeon.int
-
 
 # NPM packages
 
