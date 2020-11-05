@@ -7,6 +7,7 @@ const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
 const Render = lazy(() => import('../../pages/render'))
 const AtlasPage = lazy(() => import('../../pages/atlas'))
+const DataExplorerPage = lazy(() => import('../../pages/data-explorer'))
 
 export default withRouter(() => {
   return (
@@ -21,6 +22,18 @@ export default withRouter(() => {
         render={props => (
           <Transition tKey="render">
             <Render {...props} />
+          </Transition>
+        )}
+      />
+
+      {/* HOME */}
+      <Route
+        key={'home'}
+        path={'/'}
+        exact={true}
+        render={() => (
+          <Transition>
+            <HomePage />
           </Transition>
         )}
       />
@@ -49,6 +62,17 @@ export default withRouter(() => {
         )}
       />
 
+      <Route
+        key={'data-explorer'}
+        path={'/data-explorer'}
+        exact={false}
+        render={props => (
+          <Transition tKey={'data-explorer'}>
+            <DataExplorerPage {...props} />
+          </Transition>
+        )}
+      />
+
       {/* ATLAS */}
       <Route
         key={'atlas'}
@@ -72,18 +96,6 @@ export default withRouter(() => {
             </Transition>
           )
         }}
-      />
-
-      {/* HOME */}
-      <Route
-        key={'home'}
-        path={'/'}
-        exact={true}
-        render={() => (
-          <Transition>
-            <HomePage />
-          </Transition>
-        )}
       />
     </Switch>
   )
