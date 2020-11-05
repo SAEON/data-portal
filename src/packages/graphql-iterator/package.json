@@ -37,7 +37,7 @@
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
-    "npm-check-updates": "^9.2.3",
+    "npm-check-updates": "^9.2.4",
     "rimraf": "^3.0.2",
     "rollup": "^2.33.1"
   }

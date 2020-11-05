@@ -68,7 +68,7 @@ type CatalogueRecord implements Node {
   # Dataset descriptive record
   metadata: JSON!
 
-  # GIS layer identifier
+  # Returns an identifier that a client can subscribe to for data
   data: ID!
 
   # DOI-based citation via the Datacite citation API
