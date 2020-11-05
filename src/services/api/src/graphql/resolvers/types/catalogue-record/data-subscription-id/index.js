@@ -6,6 +6,13 @@ import unzipper from 'unzipper'
 import gisExtensions from './_gis-extensions.js'
 import ogr2ogr from './_ogr2ogr.js'
 import checkPostgisTable from './_check-postgis-table.js'
+import rimraf from 'rimraf'
+import pubSub, { POSTGIS_TABLE_EXISTS } from '../../../../pubsub.js'
+import {
+  get as isLayerCaching,
+  set as setLayerCaching,
+  rm as rmLayerCaching,
+} from './_op-status-cache.js'
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
@@ -15,15 +22,19 @@ export default async ({ _source }) => {
   const layerId = `layer_${id.replace(/\W/g, '')}`
 
   /**
-   * Datasets are cached to PostGIS
+   * Checking PostGIS directly can be expensive if there is a read lock
+   * on the table.
    *
-   * If the relevant PostGIS table exists
-   * then the GIS cache either already exists
-   * or is currently being created
+   * Instead, first check if this layer is currently being cached. If it's
+   * not, then check if it's in PostGIS. If it's not in PostGIS and it's not
+   * currently being cached, then the layer needs to be cached
    */
-  const dataCached = await checkPostgisTable({ layerId })
+  const dataCache = isLayerCaching(layerId) || (await checkPostgisTable({ layerId }))
 
-  if (!dataCached) {
+  if (dataCache) {
+    console.log(layerId, 'PostGIS cache hit')
+  } else {
+    setLayerCaching(layerId)
     /**
      * Stream the contents of the zip archive to a caching directory
      * to ensure that a dataset is a shapefile at the top level. This
@@ -68,7 +79,10 @@ export default async ({ _source }) => {
     ogr2ogr({
       layerId,
       shpFilePath,
-      cacheDir,
+    }).then(code => {
+      rimraf(cacheDir, () => console.log(layerId, 'Caching complete', code))
+      pubSub.publish(POSTGIS_TABLE_EXISTS, { postgisTableReady: layerId })
+      rmLayerCaching(layerId)
     })
   }
 

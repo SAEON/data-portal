@@ -69,7 +69,7 @@ type CatalogueRecord implements Node {
   metadata: JSON!
 
   # Returns an identifier that a client can subscribe to for data
-  data: ID!
+  dataSubscriptionId: ID!
 
   # DOI-based citation via the Datacite citation API
   citation(
