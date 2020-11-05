@@ -1,6 +1,6 @@
-import { query } from '../../../../../postgis/index.js'
+import { query } from '../postgis/index.js'
 
-export default async ({ layerId }) =>
+export default async tableName =>
   (
     await query({
       text: `select exists (
@@ -8,7 +8,7 @@ export default async ({ layerId }) =>
               where table_schema = 'public'
               and table_name = $1
             )`,
-      values: [layerId],
-      name: layerId,
+      values: [tableName],
+      name: tableName,
     })
   ).rows[0].exists

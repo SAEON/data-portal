@@ -4,4 +4,4 @@ const { PubSub } = apolloServerKoa
 
 export default new PubSub()
 
-export const POSTGIS_TABLE_EXISTS = 'POSTGIS_TABLE_EXISTS'
+export const DATA_READY = 'DATA_READY'
