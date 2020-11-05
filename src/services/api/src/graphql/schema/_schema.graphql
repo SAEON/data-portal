@@ -43,7 +43,7 @@ type Query {
 
 type Subscription {
   # Subscribe to a notification of when a PostGIS table is ready for querying
-  dataReady(id: ID!): Boolean
+  dataReady: ID!
 }
 
 type Mutation {

@@ -1,6 +1,6 @@
 import { spawn } from 'child_process'
 
-export default ({ layerId, shpFilePath }) =>
+export default ({ id, shpFilePath }) =>
   new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', [
       'run',
@@ -18,13 +18,13 @@ export default ({ layerId, shpFilePath }) =>
       '-lco',
       'PRECISION=NO',
       '-nln',
-      layerId,
+      id,
       'PG:host=postgis port=5432 user=admin password=password dbname=catalogue',
       shpFilePath,
     ])
 
     ogr2ogrProcess.stdout.on('data', data => console.log(`stdout: ${data}`))
-    ogr2ogrProcess.stderr.on('data', data => console.error(layerId, `stderr: ${data}`))
+    ogr2ogrProcess.stderr.on('data', data => console.error(id, `stderr: ${data}`))
     ogr2ogrProcess.on('close', code => resolve(code))
     ogr2ogrProcess.on('error', error => reject(error))
   })
