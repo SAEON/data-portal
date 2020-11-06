@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import MessageDialogue from '../message-dialogue'
 import { Tabs, Tab } from '@material-ui/core'
-import { Share as ShareIcon } from '@material-ui/icons'
+import ShareIcon from 'mdi-react/LinkPlusIcon'
 import DialogueContents from './_dialogue-contents'
 
 export default ({ icon, iconProps, tooltipProps, badgeProps, state, params }) => {

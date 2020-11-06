@@ -14,10 +14,14 @@ import {
   CircularProgress,
   Tooltip,
 } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { CATALOGUE_LATEST_COMMIT } from '../../config'
-import { Feedback as FeedbackIcon, Done as DoneIcon, Error as ErrorIcon } from '@material-ui/icons'
+import ErrorIcon from 'mdi-react/ErrorIcon'
+import FeedbackIcon from 'mdi-react/FeedbackIcon'
+import DoneIcon from 'mdi-react/CheckIcon'
 
 export default () => {
+  const theme = useTheme()
   const [feedbackDialogueOpen, setFeedbackDialogueOpen] = useState(false)
   return (
     <span>
@@ -82,10 +86,10 @@ export default () => {
                   {loading ? (
                     <CircularProgress size={20} />
                   ) : data ? (
-                    <DoneIcon color="secondary" />
+                    <DoneIcon style={{ color: theme.palette.success.main }} />
                   ) : error ? (
                     <Tooltip title={error.message}>
-                      <ErrorIcon color="error" />
+                      <ErrorIcon style={{ color: theme.palette.error.main }} />
                     </Tooltip>
                   ) : undefined}
 
