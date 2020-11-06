@@ -41,10 +41,10 @@ type Query {
   browserClient: BrowserClient!
 }
 
-type Subscription {
-  # Subscribe to a notification of when a PostGIS table is ready for querying
-  dataReady: ID!
-}
+# type Subscription {
+# Subscribe to a notification of when a PostGIS table is ready for querying
+# dataReady: ID!
+# }
 
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): Void
