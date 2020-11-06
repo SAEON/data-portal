@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/client",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Browser-based client for searching SAEON's metadata repository, and for previewing related, OGC-compliant spatial data",
   "keywords": [
     "@saeon/client",
@@ -64,11 +64,13 @@
     "notistack": "^1.0.1",
     "ol": "^6.4.3",
     "react": "^17.0.1",
+    "react-ace": "^9.2.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-device-detect": "^1.14.0",
     "react-dom": "^17.0.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-split-pane": "^0.1.92",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.6",
     "regenerator-runtime": "^0.13.7",

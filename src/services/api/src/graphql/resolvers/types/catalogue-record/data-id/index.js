@@ -4,7 +4,7 @@ import { createWriteStream, mkdtemp } from 'fs'
 import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../config.js'
 import unzipper from 'unzipper'
 import gisExtensions from './_gis-extensions.js'
-import ogr2ogr from './_ogr2ogr.js'
+import ogr2ogr from './ogr2ogr/index.js'
 import checkPostgisTable from '../../../../../lib/table-exists.js'
 import rimraf from 'rimraf'
 import pubSub, { DATA_READY } from '../../../../pubsub.js'
@@ -16,10 +16,14 @@ import {
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
+/**
+ * TODO - extend the return to provide information on the caching status so that an additional database hit is not required
+ */
+
 export default async ({ _source }) => {
   let { immutableResource, id } = _source
   const { downloadURL } = immutableResource.resourceDownload
-  id = `postgis_${id.replace(/-/g, '_')}`
+  id = `odp_${id.replace(/-/g, '_')}`
 
   /**
    * Checking PostGIS directly can be expensive if there is a read lock

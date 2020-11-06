@@ -1,5 +1,7 @@
 import { spawn } from 'child_process'
 
+// TODO. Spawned processes must be batched (limited to N children at any one time)
+
 export default ({ id, shpFilePath }) =>
   new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', [

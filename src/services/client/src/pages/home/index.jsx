@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Grid, useMediaQuery, Typography, Fade, Divider } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { gql } from '@apollo/client'
-import RecordsSearch from '../../components/records-search'
+import Search from '../../components/search'
 import Loading from '../../components/loading'
 import { GlobalContext } from '../../contexts/global'
 import useStyles from './style'
@@ -88,7 +88,7 @@ export default () => {
                   )}
                 </Grid>
                 <Grid item style={{ flexGrow: 2 }}>
-                  <RecordsSearch resetGlobalStateOnSearch={true} autofocus={true}>
+                  <Search resetGlobalStateOnSearch={true} autofocus={true}>
                     <Typography variant="overline">
                       {loading ? (
                         <Fade key="waiting" in={loading}>
@@ -100,7 +100,7 @@ export default () => {
                         </Fade>
                       )}
                     </Typography>
-                  </RecordsSearch>
+                  </Search>
                 </Grid>
               </Grid>
             </Grid>
