@@ -68,9 +68,6 @@ type CatalogueRecord implements Node {
   # Dataset descriptive record
   metadata: JSON!
 
-  # Identifier for PostGIS layer
-  dataId: ID!
-
   # DOI-based citation via the Datacite citation API
   citation(
     # Journal-specific formatting rules

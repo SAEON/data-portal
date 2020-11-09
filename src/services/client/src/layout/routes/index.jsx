@@ -7,7 +7,7 @@ const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
 const Render = lazy(() => import('../../pages/render'))
 const AtlasPage = lazy(() => import('../../pages/atlas'))
-const DataPage = lazy(() => import('../../pages/data'))
+const DatabookPage = lazy(() => import('../../pages/databook'))
 
 export default withRouter(() => {
   return (
@@ -62,13 +62,14 @@ export default withRouter(() => {
         )}
       />
 
+      {/* DATABOOK */}
       <Route
-        key={'data'}
-        path={'/data'}
+        key={'databooks'}
+        path={'/databooks/:id'}
         exact={false}
         render={props => (
-          <Transition tKey={'data'}>
-            <DataPage {...props} />
+          <Transition tKey={'databooks'}>
+            <DatabookPage id={props.match.params.id} {...props} />
           </Transition>
         )}
       />

@@ -1,53 +1,21 @@
+import mongodb from 'mongodb'
+const { ObjectID } = mongodb
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
-import { createWriteStream, mkdtemp } from 'fs'
-import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../config.js'
-import unzipper from 'unzipper'
 import gisExtensions from './_gis-extensions.js'
-import ogr2ogr from './ogr2ogr/index.js'
-import checkPostgisTable from '../../../../../lib/table-exists.js'
+import { createWriteStream, mkdtemp } from 'fs'
+import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../../../../config.js'
+import unzipper from 'unzipper'
 import rimraf from 'rimraf'
-import pubSub, { DATA_READY } from '../../../../pubsub.js'
-import {
-  get as isLayerCaching,
-  set as setLayerCaching,
-  rm as rmLayerCaching,
-} from '../../../../../lib/operation-status-cache.js'
+import ogr2ogr from './ogr2ogr/index.js'
+import { collections } from '../../../../../../../../mongo/index.js'
+import getTableName from '../../../_get-table-name.js'
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
-/**
- * TODO - extend the return to provide information on the caching status so that an additional database hit is not required
- */
-
-export default async ({ _source }) => {
-  let { immutableResource, id } = _source
+export default async ({ immutableResource, id, dbName }) => {
   const { downloadURL } = immutableResource.resourceDownload
-  id = `odp_${id.replace(/-/g, '_')}`
-
-  /**
-   * Checking PostGIS directly can be expensive if there is a read lock
-   * on the table.
-   *
-   * Instead, first check if this layer is currently being cached. If it's
-   * not, then check if it's in PostGIS. If it's not in PostGIS and it's not
-   * currently being cached, then the layer needs to be cached
-   *
-   * Either way, return the ID of the expected data layer
-   */
-
-  if (isLayerCaching(id)) {
-    console.log(id, 'PostGIS caching...')
-    return id
-  }
-
-  if (await checkPostgisTable(id)) {
-    console.log(id, 'PostGIS cache hit')
-    return id
-  }
-
-  console.log(id, 'PostGIS cache miss')
-  setLayerCaching(id)
+  const tableName = getTableName(id)
 
   /**
    * Stream the contents of the zip archive to a caching directory
@@ -89,18 +57,25 @@ export default async ({ _source }) => {
 
   /**
    * Process the cache into PostGIS, then clean
-   * up the temp directory, then clean up the
-   * process cache object and publish that the
-   * table is created
+   * up the temp directory, update the Mongo document to
+   * indicate that this table is ready
    */
-  ogr2ogr({
-    id,
+  await ogr2ogr({
+    dbName,
+    tableName,
     shpFilePath,
-  }).then(code => {
-    rimraf(cacheDir, () => console.log(id, 'Caching complete. Code', code))
-    pubSub.publish(DATA_READY, { dataReady: id })
-    rmLayerCaching(id)
+  }).then(async code => {
+    rimraf(cacheDir, () => console.log(tableName, 'Caching complete. Code', code))
+    const { Databooks } = await collections
+    await Databooks.findOneAndUpdate(
+      { _id: ObjectID(dbName) },
+      {
+        $set: {
+          [`tables.${tableName}`]: {
+            ready: true,
+          },
+        },
+      }
+    )
   })
-
-  return id
 }

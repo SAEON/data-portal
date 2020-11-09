@@ -5,6 +5,7 @@ import Title from './_title'
 import AtlasButton from './_atlas-button'
 import CitationButton from './_citation-button'
 import ToggleItemButton from './_toggle-item-button'
+import DatabookButton from './_databook-button'
 
 export default _source => {
   const classes = useStyles()
@@ -17,6 +18,7 @@ export default _source => {
       style={{ display: 'flex', justifyContent: 'flex-end' }}
     >
       <Title {..._source} />
+      <DatabookButton {..._source} />
       <AtlasButton {..._source} />
       <CitationButton {..._source} />
       <Divider orientation="vertical" style={{ height: 16, margin: 16 }} />

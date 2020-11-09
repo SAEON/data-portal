@@ -1,8 +1,6 @@
 import { spawn } from 'child_process'
 
-// TODO. Spawned processes must be batched (limited to N children at any one time)
-
-export default ({ id, shpFilePath }) =>
+export default ({ dbName, tableName, shpFilePath }) =>
   new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', [
       'run',
@@ -20,13 +18,13 @@ export default ({ id, shpFilePath }) =>
       '-lco',
       'PRECISION=NO',
       '-nln',
-      id,
-      'PG:host=postgis port=5432 user=admin password=password dbname=catalogue',
+      tableName,
+      `PG:host=postgis port=5432 user=admin password=password dbname=${dbName}`,
       shpFilePath,
     ])
 
     ogr2ogrProcess.stdout.on('data', data => console.log(`stdout: ${data}`))
-    ogr2ogrProcess.stderr.on('data', data => console.error(id, `stderr: ${data}`))
+    ogr2ogrProcess.stderr.on('data', data => console.error(tableName, `stderr: ${data}`))
     ogr2ogrProcess.on('close', code => resolve(code))
     ogr2ogrProcess.on('error', error => reject(error))
   })

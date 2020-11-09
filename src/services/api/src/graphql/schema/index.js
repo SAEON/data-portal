@@ -16,8 +16,10 @@ const typeDefs = `
   ${_import('./_browser.graphql')}
   ${datacite}`
 
-export default makeExecutableSchema({
+const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
   inheritResolversFromInterfaces: true,
 })
+
+export default schema

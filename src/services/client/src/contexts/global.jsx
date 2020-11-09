@@ -13,7 +13,7 @@ const FromSavedSearch = ({ id, children }) =>
       QUERY={gql`
         query($id: ID!) {
           browserClient {
-            findSearchState(id: $id)
+            searchState(id: $id)
           }
         }
       `}
@@ -23,7 +23,7 @@ const FromSavedSearch = ({ id, children }) =>
         if (error) {
           throw new Error('Unable to load saved search')
         } else {
-          return loading ? <Loading /> : children(data?.browserClient.findSearchState)
+          return loading ? <Loading /> : children(data?.browserClient.searchState.state)
         }
       }}
     </WithQglQuery>
@@ -43,7 +43,7 @@ export default ({ children }) => {
           extent={state?.extent || undefined}
           terms={state?.terms || []}
           ids={state?.ids || []}
-          dois={state?.dois || []} 
+          dois={state?.dois || []}
           selectedIds={state?.selectedIds || []}
         >
           {(setGlobal, global) => {

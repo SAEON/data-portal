@@ -3,6 +3,7 @@ import { isMobile } from 'react-device-detect'
 import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
 import RefreshSelectionButton from './_reset-selection-button'
+import CreateDatabookButton from './_create-databook-button'
 import CreateAtlasButton from './_create-atlas-button'
 import CreateListButton from './_create-list-button'
 import ConfigurePaginationButton from './_configure-pagination-button'
@@ -42,6 +43,7 @@ export default ({
             {/* RIGHT */}
             <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
               <RefreshSelectionButton />
+              <CreateDatabookButton catalogue={catalogue} />
               <CreateAtlasButton catalogue={catalogue} />
               <CreateListButton catalogue={catalogue} />
               {!isMobile && (
