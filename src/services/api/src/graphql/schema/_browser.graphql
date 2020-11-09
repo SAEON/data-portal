@@ -11,7 +11,12 @@ type BrowserClient {
   # Save a web-browser's search context for retrieving as a databook
   createDatabook(state: JSON!, createdBy: String!): ID!
   # Retrieve a web-browser's previously saved databook
-  databook(id: ID!): JSON
+  databook(id: ID!): Databook
+}
+
+type Databook {
+  id: ID!
+  doc: JSON
 }
 
 type BrowserEvent implements Node {
