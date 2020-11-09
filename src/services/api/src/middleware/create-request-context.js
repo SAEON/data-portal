@@ -22,7 +22,7 @@ export default app => async (_, next) => {
     dataFinders: getDataFinders(), // Request level batching
     dataInserters,
   }
-  app.context.pg = {
+  app.context.postgis = {
     query: postgisQuery,
   }
   await next()
