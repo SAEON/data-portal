@@ -5,6 +5,7 @@ import {
   POSTGIS_FOREIGN_HOST,
   POSTGIS_FOREIGN_PASSWORD,
 } from '../config.js'
+
 export default () =>
   Promise.resolve(
     (async () => {

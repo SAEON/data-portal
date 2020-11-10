@@ -25,7 +25,7 @@ export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
 export const CATALOGUE_API_RESET_POSTGIS = process.env.CATALOGUE_API_RESET_POSTGIS || 'disabled'
 
-export const POSTGIS_DB = process.env.POSTGIS_DB || 'catalogue'
+export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
 
 export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
 

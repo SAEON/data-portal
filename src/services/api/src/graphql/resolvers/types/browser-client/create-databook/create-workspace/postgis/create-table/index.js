@@ -9,13 +9,13 @@ import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import ogr2ogr from './ogr2ogr/index.js'
 import { collections } from '../../../../../../../../mongo/index.js'
-import getTableName from '../../../_get-table-name.js'
+import createDataName from '../../../_create-data-name.js'
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
-export default async ({ immutableResource, id, dbName }) => {
+export default async (databook, { immutableResource, id }) => {
   const { downloadURL } = immutableResource.resourceDownload
-  const tableName = getTableName(id)
+  const tableName = createDataName(id)
 
   /**
    * Stream the contents of the zip archive to a caching directory
@@ -56,19 +56,21 @@ export default async ({ immutableResource, id, dbName }) => {
   }
 
   /**
-   * Process the cache into PostGIS, then clean
-   * up the temp directory, update the Mongo document to
-   * indicate that this table is ready
+   * Process .shp into PostGIS
    */
-  await ogr2ogr({
-    dbName,
-    tableName,
-    shpFilePath,
-  }).then(async code => {
+  await ogr2ogr(databook, tableName, shpFilePath).then(async code => {
+    /**
+     * Clean up the tmp directory
+     */
     rimraf(cacheDir, () => console.log(tableName, 'Caching complete. Code', code))
+
+    /**
+     * Update the databook (Mongo doc) to
+     * indicate that this table is ready
+     */
     const { Databooks } = await collections
     await Databooks.findOneAndUpdate(
-      { _id: ObjectID(dbName) },
+      { _id: ObjectID(databook._id) },
       {
         $set: {
           [`tables.${tableName}`]: {
