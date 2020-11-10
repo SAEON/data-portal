@@ -12,8 +12,8 @@ export default async (records, ctx, createdBy) => {
     hash: hash(recordsIds),
     type: 'postgis',
     authentication: {
-      username: _id,
-      password: _id,
+      username: _id.toString(),
+      password: _id.toString(),
     },
     tables: Object.fromEntries(recordsIds.map(id => [[createDataName(id)], { ready: false }])),
     createdBy,

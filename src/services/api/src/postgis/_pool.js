@@ -3,11 +3,11 @@ const { Pool } = pg
 
 export default (host, user, database, password, port) =>
   new Pool({
-    host: host,
-    user: user,
-    database: database,
-    password: password,
-    port: port,
+    host,
+    user,
+    database,
+    password,
+    port,
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
