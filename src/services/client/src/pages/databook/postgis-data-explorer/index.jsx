@@ -3,16 +3,11 @@ import WithGqlQuery from '../../../hooks/_with-gql-query'
 import SplitPane from 'react-split-pane'
 import useStyles from './style'
 import clsx from 'clsx'
-import AceEditor from 'react-ace'
-import 'ace-builds/src-noconflict/mode-sql'
-import 'ace-builds/src-noconflict/theme-sqlserver'
-import 'ace-builds/src-noconflict/ext-language_tools'
-import { Toolbar } from '@material-ui/core'
-import 'ace-builds/src-noconflict/mode-sql'
-import 'ace-builds/src-noconflict/theme-sqlserver'
-import 'ace-builds/src-noconflict/ext-language_tools'
 import Loading from '../../../components/loading'
-import TreeView from './tree-view'
+import TreeView from './schema'
+import SqlEditor from './sql-editor'
+import ResultsTable from './results-table'
+import DashboardBuilder from './dashboard-builder'
 
 export default ({ databook }) => {
   const classes = useStyles()
@@ -50,29 +45,11 @@ export default ({ databook }) => {
           <SplitPane primary="first" split="vertical" defaultSize={1000}>
             <SplitPane split="horizontal" minSize={400}>
               <div className={clsx(classes.root)}>
-                <Toolbar variant="dense" className={clsx(classes.toolbar)} />
-                <AceEditor
-                  setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                  }}
-                  tabSize={2}
-                  placeholder="Select * from ..."
-                  scrollMargin={[0]}
-                  showPrintMargin={false}
-                  height="calc(100% - 48px)"
-                  width="100%"
-                  mode="sql"
-                  theme="sql-server"
-                  onChange={() => console.log('hi')}
-                  name="UNIQUE_ID_OF_DIV"
-                  editorProps={{ $blockScrolling: true }}
-                />
+                <SqlEditor />
               </div>
-              <div>{JSON.stringify(databook)}</div>
+              <ResultsTable>{JSON.stringify(databook)}</ResultsTable>
             </SplitPane>
-            <div>Dashboard builder</div>
+            <DashboardBuilder />
           </SplitPane>
         </div>
       </SplitPane>
