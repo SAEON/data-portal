@@ -29,12 +29,12 @@ export default async ({ text, values, name, client = undefined }) =>
       }).then(
         client =>
           new Promise((resolve, reject) =>
-            client.query(text, (error, res) => {
+            client.query(text, values, (error, res) => {
               if (error) {
                 reject(error)
               } else {
                 resolve(res)
-                client.end()
+                client.end() // TODO - this might allow for ending the client connection before all data is retrieved
               }
             })
           )

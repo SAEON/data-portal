@@ -18,6 +18,7 @@ type Databook {
   id: ID!
   doc: JSON
   execute(sql: String!): JSON
+  schema: JSON
 }
 
 type BrowserEvent implements Node {

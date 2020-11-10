@@ -1,5 +1,5 @@
 export default async (self, args, ctx) => {
-  const { _id: schema, authentication } = self.doc
+  const { authentication } = self.doc
   const { username, password } = authentication
   const { query } = ctx.postgis
   const { sql: text } = args

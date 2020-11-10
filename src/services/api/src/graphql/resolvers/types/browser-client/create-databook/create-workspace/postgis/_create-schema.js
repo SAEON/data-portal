@@ -19,7 +19,7 @@ export default async databook => {
       text: `
         create user "${username}" with encrypted password '${password}';
         create schema "${schema}" authorization "${username}";
-        alter user "${username}" set search_path = "${schema}";`,
+        alter user "${username}" set search_path = public,"${schema}";`,
     })
   } catch (error) {
     console.error(error)
