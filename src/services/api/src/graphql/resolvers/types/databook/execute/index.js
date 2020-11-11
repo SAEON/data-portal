@@ -4,7 +4,7 @@ export default async (self, args, ctx) => {
   const { query } = ctx.postgis
   const { sql: text } = args
 
-  const rows = await query({
+  const response = await query({
     text,
     client: {
       user: username,
@@ -12,5 +12,5 @@ export default async (self, args, ctx) => {
     },
   })
 
-  return rows
+  return response.rows
 }

@@ -4,13 +4,13 @@ import SplitPane from 'react-split-pane'
 import useStyles from './style'
 import clsx from 'clsx'
 import Loading from '../../../components/loading'
-import SchemaExplorer from './schema-explorer'
-import SqlEditor from './sql-editor'
-import ResultsTable from './results-table'
+import SchemaExplorer from './schema'
 import DashboardBuilder from './dashboard-builder'
+import DataExplorer from './data-explorer'
 
 export default ({ databook }) => {
   const classes = useStyles()
+  console.log('rendering postgis')
 
   return (
     <div className={clsx(classes.root)} style={{ marginTop: 48 }}>
@@ -54,12 +54,7 @@ export default ({ databook }) => {
 
         <div>
           <SplitPane primary="first" split="vertical" defaultSize={1000}>
-            <SplitPane split="horizontal" minSize={400}>
-              <div className={clsx(classes.root)}>
-                <SqlEditor />
-              </div>
-              <ResultsTable>{JSON.stringify(databook)}</ResultsTable>
-            </SplitPane>
+            <DataExplorer databook={databook} />
             <DashboardBuilder />
           </SplitPane>
         </div>

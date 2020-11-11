@@ -16,6 +16,9 @@ const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 export default async (databook, { immutableResource, id }) => {
   const { downloadURL } = immutableResource.resourceDownload
   const tableName = createDataName(id)
+  const cacheDir = await new Promise((resolve, reject) =>
+    mkdtemp(_temp, (error, directory) => (error ? reject(error) : resolve(directory)))
+  )
 
   /**
    * Stream the contents of the zip archive to a caching directory
@@ -31,9 +34,6 @@ export default async (databook, { immutableResource, id }) => {
   var shpFilePath
   const res = await fetch(downloadURL)
   const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
-  const cacheDir = await new Promise((resolve, reject) =>
-    mkdtemp(_temp, (error, directory) => (error ? reject(error) : resolve(directory)))
-  )
 
   /**
    * Process the archive into the cache

@@ -4,5 +4,7 @@ export default makeStyles(theme => ({
   toolbar: {
     backgroundColor: theme.palette.common.white,
     borderBottom: `1px solid ${theme.palette.grey[200]}`,
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }))
