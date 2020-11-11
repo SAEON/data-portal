@@ -14,13 +14,6 @@ type BrowserClient {
   databook(id: ID!): Databook
 }
 
-type Databook {
-  id: ID!
-  doc: JSON
-  execute(sql: String!): JSON
-  schema: JSON
-}
-
 type BrowserEvent implements Node {
   id: ID!
   type: String!

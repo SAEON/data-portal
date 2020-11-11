@@ -54,7 +54,9 @@ export default ({ id }) => (
         startPolling(POLLING_INTERVAL)
       }
 
-      return !ready ? (
+      return ready ? (
+        <DataExplorer databook={data.browserClient.databook} />
+      ) : (
         <div>
           <Loading />
           <Grid container justify="center">
@@ -71,8 +73,6 @@ export default ({ id }) => (
             </Grid>
           </Grid>
         </div>
-      ) : (
-        <DataExplorer databook={data.browserClient.databook} />
       )
     }}
   </WithGqlQuery>

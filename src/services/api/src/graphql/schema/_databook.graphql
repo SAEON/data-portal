@@ -1,0 +1,28 @@
+type Databook {
+  id: ID!
+  doc: JSON
+  execute(sql: String!): JSON
+  schema: PostgisDatabookSchema!
+}
+
+type PostgisDatabookSchema {
+  id: ID!
+  updateSchemaName(name: String!): Boolean!
+  tables(id: ID): [PostgisDatabookTable]!
+}
+
+type PostgisDatabookTable {
+  id: ID!
+  table_name: String!
+  updateTableName(name: String!): Boolean!
+  fields(id: ID): [PostgisDatabookField]
+}
+
+type PostgisDatabookField {
+  id: ID!
+  column_name: String!
+  # Change column name
+  updateFieldName(name: String!): Boolean!
+  data_type: String!
+  column_description: String
+}
