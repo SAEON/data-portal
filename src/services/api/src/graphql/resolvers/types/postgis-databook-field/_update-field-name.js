@@ -14,7 +14,8 @@
  * as is from shapefiles. Please use
  * {column_name, data_type} as a compound identifier
  */
-export default async (self, args) => {
+export default async (self, args, ctx) => {
+  const { query } = ctx.postgis // use query({client: {...}}), get username / password from mongo
   const { column_name, data_type } = self
   const { name: newColumnName } = args
   return false

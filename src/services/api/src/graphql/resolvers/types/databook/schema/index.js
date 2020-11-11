@@ -27,5 +27,13 @@ export default async (self, args, ctx) => {
     },
   })
 
-  return response.rows
+  return {
+    id: schema,
+    tables: response.rows.reduce((a, c) => {
+      return [
+        ...(a || []),
+        Object.fromEntries(Object.entries(c).filter(([k]) => !['table_schema'].includes(k))),
+      ]
+    }, []),
+  }
 }

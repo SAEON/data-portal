@@ -4,7 +4,7 @@ import SplitPane from 'react-split-pane'
 import useStyles from './style'
 import clsx from 'clsx'
 import Loading from '../../../components/loading'
-import TreeView from './schema'
+import SchemaExplorer from './schema-explorer'
 import SqlEditor from './sql-editor'
 import ResultsTable from './results-table'
 import DashboardBuilder from './dashboard-builder'
@@ -21,7 +21,18 @@ export default ({ databook }) => {
               browserClient {
                 databook(id: $id) {
                   id
-                  schema
+                  schema {
+                    id
+                    tables {
+                      id
+                      fields {
+                        id
+                        column_name
+                        data_type
+                        column_description
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -37,7 +48,7 @@ export default ({ databook }) => {
               return <Loading />
             }
 
-            return <TreeView data={data} />
+            return <SchemaExplorer data={data} />
           }}
         </WithGqlQuery>
 
