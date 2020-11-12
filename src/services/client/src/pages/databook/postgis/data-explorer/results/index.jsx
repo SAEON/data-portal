@@ -1,3 +1,3 @@
-import Table from '../../../../../components/table'
+import VirtualTable from '../../../../../components/virtual-table'
 
-export default data => <Table />
+export default ({ data }) => <VirtualTable data={data} />

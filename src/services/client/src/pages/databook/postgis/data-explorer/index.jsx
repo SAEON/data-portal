@@ -10,8 +10,9 @@ import { gql } from '@apollo/client'
 
 export default ({ databook }) => {
   const classes = useStyles()
-  const [sql, setSql] = useState('')
-  console.log('rendering', databook)
+  const [sql, setSql] = useState(`select *
+from odp_be8a4ccb_4afa_47ae_8445_2e56496533e9 obacaaee 
+limit 500`)
 
   return (
     <SplitPane split="horizontal" minSize={400}>
@@ -44,8 +45,8 @@ export default ({ databook }) => {
           if (loading) {
             return <Loading />
           }
-          return JSON.stringify(data.browserClient.databook.execute)
-          // return <ResultsTable>{JSON.stringify(data)}</ResultsTable>
+
+          return <ResultsTable data={data.browserClient.databook.execute} />
         }}
       </WithQglQuery>
     </SplitPane>
