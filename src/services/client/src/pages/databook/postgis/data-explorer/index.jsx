@@ -7,8 +7,11 @@ import useStyles from './style'
 import { WithQglQuery } from '../../../../hooks'
 import Loading from '../../../../components/loading'
 import { gql } from '@apollo/client'
+import { useTheme } from '@material-ui/core/styles'
+import { Fade } from '@material-ui/core'
 
 export default ({ databook }) => {
+  const theme = useTheme()
   const classes = useStyles()
   const [sql, setSql] = useState(`select
 *,
@@ -26,6 +29,7 @@ limit 500`)
           }}
         />
       </div>
+
       <WithQglQuery
         QUERY={gql`
           query($id: ID!, $sql: String!) {
@@ -48,7 +52,22 @@ limit 500`)
             return <Loading />
           }
 
-          return <ResultsTable data={data.browserClient.databook.execute} />
+          return (
+            <Fade in={data}>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  backgroundColor: theme.palette.common.white,
+                }}
+              >
+                <ResultsTable data={data.browserClient.databook.execute} />
+              </div>
+            </Fade>
+          )
         }}
       </WithQglQuery>
     </SplitPane>

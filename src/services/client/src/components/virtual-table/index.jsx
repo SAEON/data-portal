@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { VariableSizeGrid } from 'react-window'
 import useStyles from './style'
 import Draggable from 'react-draggable'
@@ -39,97 +39,94 @@ export default ({ data }) => {
     if (name) {
       return (columnWidths[name] < 5 ? 5 : columnWidths[name]) * 20
     } else {
-      console.log(dimensions.width)
-      return (
-        dimensions.width -
-        Object.entries(columnWidths)
-          .map(([, width]) => width)
-          .reduce((a, c) => a + c, 0)
-      )
+      const total = Object.entries(columnWidths)
+        .map(([, width]) => (width < 5 ? 5 : width * 20))
+        .reduce((a, c) => a + c, 0)
+      const remaining = dimensions.width - total
+      return remaining < 100 ? 100 : remaining
     }
   }
 
   return (
-    <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
-      <Measure bounds onResize={({ bounds }) => setDimensions({ ...bounds })}>
-        {({ measureRef }) => {
-          return (
-            <div ref={measureRef} style={{ position: 'relative', height: '100%' }}>
-              <div className={clsx(classes.gridRoot)}>
-                <VariableSizeGrid
-                  style={{
-                    overflowX: 'hidden',
-                    overflowY: 'hidden',
-                  }}
-                  columnCount={columnCount + 1}
-                  rowCount={1}
-                  height={ROW_HEIGHT}
-                  rowHeight={() => ROW_HEIGHT}
-                  columnWidth={getColumnWidth}
-                  width={dimensions.width}
-                  ref={headerGrid}
-                >
-                  {({ columnIndex, style }) => {
-                    const fieldName = Object.entries(headers).find(
-                      ([, i]) => columnIndex === i
-                    )?.[0]
-
-                    return (
-                      <div className={classes.headerRow} style={Object.assign({}, style)}>
-                        <div>{fieldName || ''}</div>
-                        <Draggable
-                          axis="x"
-                          defaultClassName="DragHandle"
-                          defaultClassNameDragging="DragHandleActive"
-                          onDrag={(event, { deltaX }) => {
-                            //  TODO
-                          }}
-                          position={{ x: 0, y: 0 }}
-                        >
-                          <span className={classes.dragHandleIcon}>⋮</span>
-                        </Draggable>
-                      </div>
-                    )
-                  }}
-                </VariableSizeGrid>
-                <VariableSizeGrid
-                  style={{
-                    overflow: 'auto',
-                  }}
-                  columnCount={columnCount + 1}
-                  rowCount={data.length}
-                  columnWidth={getColumnWidth}
-                  rowHeight={() => ROW_HEIGHT}
-                  width={dimensions.width}
-                  height={dimensions.height - ROW_HEIGHT}
-                  ref={bodyGrid}
-                  onScroll={({ scrollLeft }) => {
-                    headerGrid?.current?.scrollTo({ scrollLeft, scrollTop: 0 })
-                  }}
-                >
-                  {({ columnIndex, rowIndex, style }) => {
-                    const row = data[rowIndex]
-                    const fieldName = Object.entries(headers).find(
-                      ([, i]) => i === columnIndex
-                    )?.[0]
-                    const value = row[fieldName] || ''
-                    return (
-                      <div
-                        className={clsx(classes.tableRow, {
-                          [classes.tableRowHovered]: rowIndex % 2 === 0,
-                        })}
-                        style={Object.assign({}, style)}
+    <Measure
+      bounds
+      onResize={({ bounds }) => {
+        console.log('setting', bounds.width)
+        setDimensions({ ...bounds })
+      }}
+    >
+      {({ measureRef }) => {
+        return (
+          <div ref={measureRef} style={{ position: 'relative', height: '100%' }}>
+            <div className={clsx(classes.gridRoot)}>
+              <VariableSizeGrid
+                style={{
+                  overflowX: 'hidden',
+                  overflowY: 'hidden',
+                }}
+                columnCount={columnCount + 1}
+                rowCount={1}
+                height={ROW_HEIGHT}
+                rowHeight={() => ROW_HEIGHT}
+                columnWidth={getColumnWidth}
+                width={dimensions.width}
+                ref={headerGrid}
+              >
+                {({ columnIndex, style }) => {
+                  const fieldName = Object.entries(headers).find(([, i]) => columnIndex === i)?.[0]
+                  return (
+                    <div className={classes.headerRow} style={Object.assign({}, style)}>
+                      <div>{fieldName || ''}</div>
+                      <Draggable
+                        axis="x"
+                        defaultClassName="DragHandle"
+                        defaultClassNameDragging="DragHandleActive"
+                        onDrag={(event, { deltaX }) => {
+                          console.log('todo')
+                        }}
+                        position={{ x: 0, y: 0 }}
                       >
-                        <div>{value.toString().truncate(15)}</div>
-                      </div>
-                    )
-                  }}
-                </VariableSizeGrid>
-              </div>
+                        <span className={classes.dragHandleIcon}>⋮</span>
+                      </Draggable>
+                    </div>
+                  )
+                }}
+              </VariableSizeGrid>
+              <VariableSizeGrid
+                style={{
+                  overflow: 'auto',
+                }}
+                columnCount={columnCount + 1}
+                rowCount={data.length}
+                columnWidth={getColumnWidth}
+                rowHeight={() => ROW_HEIGHT}
+                width={dimensions.width}
+                height={dimensions.height - ROW_HEIGHT}
+                ref={bodyGrid}
+                onScroll={({ scrollLeft }) => {
+                  headerGrid?.current?.scrollTo({ scrollLeft, scrollTop: 0 })
+                }}
+              >
+                {({ columnIndex, rowIndex, style }) => {
+                  const row = data[rowIndex]
+                  const fieldName = Object.entries(headers).find(([, i]) => i === columnIndex)?.[0]
+                  const value = row[fieldName] || ''
+                  return (
+                    <div
+                      className={clsx(classes.tableRow, {
+                        [classes.tableRowHovered]: rowIndex % 2 === 0,
+                      })}
+                      style={Object.assign({}, style)}
+                    >
+                      <div>{value.toString().truncate(15)}</div>
+                    </div>
+                  )
+                }}
+              </VariableSizeGrid>
             </div>
-          )
-        }}
-      </Measure>
-    </div>
+          </div>
+        )
+      }}
+    </Measure>
   )
 }
