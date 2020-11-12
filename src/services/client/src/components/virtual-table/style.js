@@ -6,14 +6,25 @@ export default makeStyles(theme => ({
     top: 0,
     left: 0,
     right: 0,
-    height: 30,
+    height: 30, // TODO should be ROW_HEIGHT
   },
   dragHandleIcon: {
     cursor: 'col-resize',
   },
+  tableRow: {
+    lineHeight: '30px',
+    paddingLeft: '.5rem',
+    paddingRight: '.5rem',
+    display: 'relative',
+    backgroundColor: theme.palette.common.white,
+    borderBottom: `1px solid ${theme.palette.grey[100]}`,
+  },
+  tableRowHovered: {
+    backgroundColor: theme.palette.grey[100],
+  },
   headerRow: {
     lineHeight: '30px',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: theme.palette.grey[100],
     justifyContent: 'space-between',
     borderBottom: '1px solid #CCC',
     display: 'flex',

@@ -10,7 +10,9 @@ import { gql } from '@apollo/client'
 
 export default ({ databook }) => {
   const classes = useStyles()
-  const [sql, setSql] = useState(`select *
+  const [sql, setSql] = useState(`select
+*,
+ST_AsText(wkb_geometry) wkb_geometry  
 from odp_be8a4ccb_4afa_47ae_8445_2e56496533e9 obacaaee 
 limit 500`)
 
