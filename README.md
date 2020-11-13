@@ -44,7 +44,7 @@ npm run install-dependencies
 
 ### Start the services
 
-The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). The first time you start the catalogue services you need to be on the SAEON VPN - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
+The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
 
 #### Create a Docker network
 
