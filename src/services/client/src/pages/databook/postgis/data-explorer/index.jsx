@@ -9,25 +9,25 @@ import Loading from '../../../../components/loading'
 import { gql } from '@apollo/client'
 import { useTheme } from '@material-ui/core/styles'
 import { Fade } from '@material-ui/core'
+import DashboardBuilder from '../dashboard-builder'
 
 export default ({ databook }) => {
   const theme = useTheme()
   const classes = useStyles()
-  const [sql, setSql] = useState(`select
-*,
-ST_AsText(wkb_geometry) wkb_geometry  
-from odp_be8a4ccb_4afa_47ae_8445_2e56496533e9 obacaaee 
-limit 500`)
+  const [sql, setSql] = useState(``)
 
   return (
     <SplitPane split="horizontal" minSize={400}>
       <div className={clsx(classes.root)}>
-        <SqlEditor
-          sql={sql}
-          runQuery={val => {
-            setSql(val)
-          }}
-        />
+        <SplitPane split="vertical" minSize={200} defaultSize={1000}>
+          <SqlEditor
+            sql={sql}
+            runQuery={val => {
+              setSql(val)
+            }}
+          />
+          <DashboardBuilder />
+        </SplitPane>
       </div>
 
       <WithQglQuery
