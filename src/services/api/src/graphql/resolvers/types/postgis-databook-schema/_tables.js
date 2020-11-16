@@ -11,11 +11,9 @@ export default async (self, args) => {
       schema_name: self.id,
       fields: [],
     }
-    a[id].fields = [...a[id].fields, { ...c, schema_name: self.id }]
+    a[id].fields = [...a[id].fields, { ...c, schema_name: self.id }] //BUG STEVEN TO DO: for some reason adding schema_name: self.id causes inability to pull ids. Field Ids seem to not be passed to fields
     return a
   }, {})
-  // console.log('_tables self', self)
-  console.log('tableMap[0].fields', tableMap['anothertesttable2'].fields)
   return Object.entries(tableMap)
     .map(([tblName, table]) => (id ? tblName === id && table : table))
     .filter(_ => _)
