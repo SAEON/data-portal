@@ -9,7 +9,7 @@ import Loading from '../../../../components/loading'
 import { gql } from '@apollo/client'
 import { useTheme } from '@material-ui/core/styles'
 import { Fade } from '@material-ui/core'
-import DashboardBuilder from '../dashboard-builder'
+import DashboardBuilder from './dashboard'
 
 export default ({ databook }) => {
   const theme = useTheme()
@@ -18,6 +18,7 @@ export default ({ databook }) => {
 
   return (
     <SplitPane split="horizontal" minSize={400}>
+      {/* SQL EDITOR */}
       <div className={clsx(classes.root)}>
         <SplitPane split="vertical" minSize={200} defaultSize={1000}>
           <SqlEditor
@@ -30,6 +31,7 @@ export default ({ databook }) => {
         </SplitPane>
       </div>
 
+      {/* QUERY RESULTS */}
       <WithQglQuery
         QUERY={gql`
           query($id: ID!, $sql: String!) {

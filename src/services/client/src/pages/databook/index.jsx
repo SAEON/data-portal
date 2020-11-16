@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import WithGqlQuery from '../../hooks/_with-gql-query'
 import Loading from '../../components/loading'
-import DataExplorer from './postgis'
+import PostgisDataExplorer from './postgis'
 import { Card, CardContent, Grid, Typography } from '@material-ui/core'
 
 const POLLING_INTERVAL = 1000
@@ -55,7 +55,7 @@ export default ({ id }) => (
       }
 
       return ready ? (
-        <DataExplorer databook={data.browserClient.databook} />
+        <PostgisDataExplorer databook={data.browserClient.databook} />
       ) : (
         <div>
           <Loading />

@@ -1,3 +1,5 @@
+// STEVEN TODO
+// Is there a better way of doing this?
 export default async (self, args) => {
   const { id } = args
 
@@ -9,10 +11,7 @@ export default async (self, args) => {
       fields: [],
     }
 
-    a[id].fields = [
-      ...a[id].fields,
-      Object.fromEntries(Object.entries(c).filter(([k]) => !['table_name'].includes(k))),
-    ]
+    a[id].fields = [...a[id].fields, { ...c }]
 
     return a
   }, {})
