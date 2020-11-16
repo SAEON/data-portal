@@ -11,14 +11,14 @@ export default async (self, args) => {
   const { id: currentTableName } = self
   const { name: newTableName } = args
   const sql = `ALTER TABLE ${currentTableName} RENAME TO ${newTableName}`
-  try {
-    await query({
-      text: sql,
-    })
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  // try {
+  //   await query({
+  //     text: sql,
+  //   })
+  // } catch (error) {
+  //   console.error(error)
+  //   throw error
+  // }
 
-  return false
+  // return false
 }
