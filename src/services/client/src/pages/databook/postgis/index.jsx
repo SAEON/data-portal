@@ -5,7 +5,7 @@ import useStyles from './style'
 import clsx from 'clsx'
 import Loading from '../../../components/loading'
 import SchemaExplorer from './schema'
-import DashboardBuilder from './dashboard-builder'
+// import DashboardBuilder from './dashboard-builder'
 import DataExplorer from './data-explorer'
 
 export default ({ databook }) => {
@@ -52,12 +52,12 @@ export default ({ databook }) => {
           }}
         </WithGqlQuery>
 
-        <div>
-          <SplitPane primary="first" split="vertical" defaultSize={1000}>
-            <DataExplorer databook={databook} />
-            <DashboardBuilder />
-          </SplitPane>
-        </div>
+        {/* <div> */}
+        {/* <SplitPane primary="first" split="vertical" defaultSize={1000}> */}
+        <DataExplorer databook={databook} />
+        {/* <DashboardBuilder /> */}
+        {/* </SplitPane> */}
+        {/* </div> */}
       </SplitPane>
     </div>
   )
