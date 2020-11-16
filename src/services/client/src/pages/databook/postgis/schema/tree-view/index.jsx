@@ -22,7 +22,7 @@ export default props => {
               itemDepth={1}
             >
               {/* Mapping array of Columns */}
-              {table.fields.map(col => {
+              {table.fields.map((col, j) => {
                 return (
                   <TreeItem
                     key={j}

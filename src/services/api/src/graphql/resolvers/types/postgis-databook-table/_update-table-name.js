@@ -7,18 +7,22 @@
  *  => already existing) are passed back to
  *  => the client
  */
-export default async (self, args) => {
-  const { id: currentTableName } = self
+export default async (self, args, ctx) => {
+  console.log('update-table self', self)
+  const { id: currentTableName, schema_name } = self
   const { name: newTableName } = args
-  const sql = `ALTER TABLE ${currentTableName} RENAME TO ${newTableName}`
-  // try {
-  //   await query({
-  //     text: sql,
-  //   })
-  // } catch (error) {
-  //   console.error(error)
-  //   throw error
-  // }
+  const { query } = ctx.postgis
+  const sql = `ALTER TABLE "${schema_name}"."${currentTableName}" RENAME TO "${newTableName}"`
 
-  // return false
+  var result
+  try {
+    result = await query({ text: sql }) //client parameter can be set, see query def in .../databook/execute/index.js
+    console.log('result', result)
+  } catch (error) {
+    console.log(error)
+    console.error(error)
+    return false
+  }
+
+  return true
 }

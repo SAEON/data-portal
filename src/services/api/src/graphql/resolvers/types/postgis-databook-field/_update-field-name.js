@@ -16,16 +16,23 @@
  */
 //column names by rule of postgres must be unique within their table, how are column names duplicating?  http://etutorials.org/SQL/Postgresql/Part+I+General+PostgreSQL+Use/Chapter+3.+PostgreSQL+SQL+Syntax+and+Use/PostgreSQL+Naming+Rules/
 export default async (self, args, ctx) => {
-  // const { query } = ctx.postgis // use query({client: {...}}), get username / password from mongo
-  const { column_name /*, data_type*/ } = self
-  const { name: newColumnName } = args
-  console.log('table', self)
-  console.log('testing', newColumnName, column_name, data_type)
-  const tableName = ''
-  // const sql = `ALTER TABLE ${tableName} RENAME COLUMN ${column_name} TO ${newColumnName}`
-
-  console.log('ctx', ctx)
   console.log('self', self)
   console.log('args', args)
+  const { query } = ctx.postgis // use query({client: {...}}), get username / password from mongo
+  const { column_name, data_type, table_name, schema_name } = self
+  const { name: newColumnName } = args
+  const sql = `ALTER TABLE "5fae7017811a701352474d93"."${table_name}" RENAME COLUMN "${column_name}" TO "${newColumnName}"`
+  console.log('update-field self', self)
+
+  var result
+  try {
+    result = await query({ text: sql }) //client parameter can be set, see query def in .../databook/execute/index.js
+    console.log('result', result)
+  } catch (error) {
+    console.log(error)
+    console.error(error)
+    return false
+  }
+
   return true
 }
