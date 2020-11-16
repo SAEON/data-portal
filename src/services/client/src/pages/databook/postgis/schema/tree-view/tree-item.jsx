@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // import { Grid } from '@material-ui/core'
 import OpenIcon from 'mdi-react/MenuDownIcon'
 import ClosedIcon from 'mdi-react/MenuRightIcon'

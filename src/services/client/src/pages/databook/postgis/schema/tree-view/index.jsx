@@ -1,7 +1,7 @@
 // import React, { useState } from 'react';
 // import clsx from 'clsx'
-// import useStyles from './style'
-import TreeItem from '../../components/tree-view/tree-item'
+import useStyles from './style'
+import TreeItem from './tree-item'
 // import { FixedSizeList as List } from 'react-window';
 
 export default props => {
@@ -14,11 +14,18 @@ export default props => {
         {/* Mapping array of Tables */}
         {tables.map(table => {
           return (
-            <TreeItem expandable={true} primaryText={table.id} secondaryText={''} itemDepth={1}>
+            <TreeItem
+              key={table.id}
+              expandable={true}
+              primaryText={table.id}
+              secondaryText={''}
+              itemDepth={1}
+            >
               {/* Mapping array of Columns */}
               {table.fields.map(col => {
                 return (
                   <TreeItem
+                    key={j}
                     expandable={false}
                     primaryText={col.column_name}
                     secondaryText={col.data_type}

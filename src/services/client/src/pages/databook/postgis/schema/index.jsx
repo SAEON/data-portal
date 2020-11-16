@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
-import TreeView from '../../../../components/tree-view/index'
+import TreeView from './tree-view/index'
 
 const useStyles = makeStyles({
   root: {

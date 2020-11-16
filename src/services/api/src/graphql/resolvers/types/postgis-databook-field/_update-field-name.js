@@ -19,6 +19,8 @@ export default async (self, args, ctx) => {
   // const { query } = ctx.postgis // use query({client: {...}}), get username / password from mongo
   const { column_name /*, data_type*/ } = self
   const { name: newColumnName } = args
+  console.log('table', self)
+  console.log('testing', newColumnName, column_name, data_type)
   const tableName = ''
   // const sql = `ALTER TABLE ${tableName} RENAME COLUMN ${column_name} TO ${newColumnName}`
 
