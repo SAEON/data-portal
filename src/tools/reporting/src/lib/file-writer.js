@@ -2,20 +2,25 @@ import stringify from 'csv-stringify'
 import format from 'date-fns/format/index.js'
 import { OUTPUT_FILEPATH } from '../config.js'
 import { createWriteStream } from 'fs'
+import ensureDirectory from './ensure-directory.js'
 
+// Open the path for writing
 const stream = createWriteStream(OUTPUT_FILEPATH)
 
 export default () => {
+  // Ensure the output path exists
+  ensureDirectory(OUTPUT_FILEPATH)
+
   var header = true
   return {
     setIncludeHeaderRow: val => {
       header = val
     },
-    writeToFile: ({ data, filterNodes, mapProperties }) => {
+    writeToFile: ({ data, filter, mapProperties }) => {
       stringify(
         data
           .map(({ node }) => node)
-          .filter(filterNodes)
+          .filter(filter)
           .map(mapProperties),
         {
           header,
@@ -30,11 +35,11 @@ export default () => {
                 return format(new Date(value), 'yyyy-MM-dd')
               }
               return value
-            },
+            }
           },
           columns: [
             {
-              key: 'committer.date',
+              key: 'committer.date'
             },
             'committer.name',
             'oid',
@@ -42,12 +47,12 @@ export default () => {
             'deletions',
             'commitUrl',
             'message',
-            'issue#',
-          ],
+            'issue#'
+          ]
         }
       ).pipe(stream, {
-        end: false,
+        end: false
       })
-    },
+    }
   }
 }
