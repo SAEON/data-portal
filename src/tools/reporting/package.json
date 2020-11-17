@@ -20,23 +20,23 @@
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.12.1",
-    "@saeon/logger": "^6.1.1",
+    "@saeon/logger": "^6.1.2",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-fetch": "^0.7.0",
     "apollo-link-http": "^1.5.17",
     "copyfiles": "^2.4.0",
-    "csv-stringify": "^5.5.1",
+    "csv-stringify": "^5.5.3",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
-    "graphql": "^15.3.0",
+    "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.1",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.6",
-    "npm-check-updates": "^9.2.2",
+    "npm-check-updates": "^10.2.1",
     "prettier": "^2.1.2"
   }
 }

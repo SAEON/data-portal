@@ -5,13 +5,18 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "TC=utc node index.js"
+    "start": "TC=utc node index.js",
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "googleapis": "^39.2.0",
-    "mongodb": "^3.6.2"
+    "googleapis": "^65.0.0",
+    "mongodb": "^3.6.3"
+  },
+  "devDependencies": {
+    "npm-check-updates": "^10.2.1"
   }
 }

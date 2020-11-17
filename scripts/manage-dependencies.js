@@ -25,3 +25,9 @@ apply({ PATH: PACKAGES_PATH, script: NPM_SCRIPTS.ncu, args: ARGS })
  */
 const SERVICES_PATH = normalize(join(__dirname, '../src/services'))
 apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.ncu, args: ARGS })
+
+/**
+ * Tool dependencies
+ */
+const TOOLS_PATH = normalize(join(__dirname, '../src/tools'))
+apply({PATH: TOOLS_PATH, script: NPM_SCRIPTS.ncu, args: ARGS})
