@@ -90,6 +90,7 @@ services:
       context: src/services/api
       dockerfile: Dockerfile
       args:
+        CATALOGUE_API_ODP_CLIENT_SECRET: $CATALOGUE_API_ODP_CLIENT_SECRET
         MONGO_DB_ADDRESS: $MONGO_DB_ADDRESS
         MONGO_DB_USERNAME: $MONGO_DB_USERNAME
         MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
