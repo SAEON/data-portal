@@ -52,6 +52,7 @@ ARG CATALOGUE_API_ODP_CLIENT_SECRET
 ENV CATALOGUE_API_ODP_CLIENT_SECRET=$CATALOGUE_API_ODP_CLIENT_SECRET
 
 WORKDIR /app
+COPY --from=docker:19.03 /usr/local/bin/docker /usr/local/bin/
 COPY . .
 RUN npm ci --only=production
 EXPOSE 3000
