@@ -21,6 +21,7 @@ jobs:
 
       - name: Deploy services
         run: >-
+          CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_STABLE }}"
           MONGO_DB_ADDRESS="mongodb://mongo:27017"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
