@@ -29,10 +29,6 @@ jobs:
           POSTGIS_PORT="5432"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-          POSTGIS_FOREIGN_HOST="spatialdb.saeon.int"
-          POSTGIS_FOREIGN_DB="BEA"
-          POSTGIS_FOREIGN_USERNAME="${{ secrets.POSTGIS_FOREIGN_USERNAME }}"
-          POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}"
           ELASTICSEARCH_ADDRESS="http://elasticsearch:9200"
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           CATALOGUE_DEPLOYMENT_ENV="production"
@@ -41,7 +37,6 @@ jobs:
           CATALOGUE_API_ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
           CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="disabled"
           CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="disabled"
-          CATALOGUE_API_RESET_POSTGIS="disabled"
           CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.ac.za/graphql"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.ac.za/graphql"
           CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.ac.za/authenticated"

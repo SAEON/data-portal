@@ -36,8 +36,6 @@ export const MONGO_DB_USERNAME = process.env.MONGO_DB_USERNAME || 'admin'
 
 export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
-export const CATALOGUE_API_RESET_POSTGIS = process.env.CATALOGUE_API_RESET_POSTGIS || 'disabled'
-
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
 
 export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
@@ -47,14 +45,6 @@ export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
 export const POSTGIS_USERNAME = process.env.POSTGIS_USERNAME || 'admin'
 
 export const POSTGIS_PASSWORD = process.env.POSTGIS_PASSWORD || 'password'
-
-export const POSTGIS_FOREIGN_HOST = process.env.POSTGIS_FOREIGN_HOST || 'localhost'
-
-export const POSTGIS_FOREIGN_DB = process.env.POSTGIS_FOREIGN_DB || 'public'
-
-export const POSTGIS_FOREIGN_USERNAME = process.env.POSTGIS_FOREIGN_USERNAME || 'postgres'
-
-export const POSTGIS_FOREIGN_PASSWORD = process.env.POSTGIS_FOREIGN_PASSWORD || 'password'
 
 export const CATALOGUE_API_PORT = process.env.CATALOGUE_API_PORT || 3000
 
@@ -97,6 +87,7 @@ console.log('Configuration', {
   CATALOGUE_API_ODP_CLIENT_ID,
   CATALOGUE_API_ODP_AUTH_ADDRESS,
   CATALOGUE_API_ODP_CLIENT_SECRET: mask(CATALOGUE_API_ODP_CLIENT_SECRET),
+  CATALOGUE_API_ODP_AUTH_SCOPE,
   CATALOGUE_API_NODE_ENV,
   CATALOGUE_DEPLOYMENT_ENV,
   MONGO_DB,
@@ -108,10 +99,6 @@ console.log('Configuration', {
   POSTGIS_USERNAME: mask(POSTGIS_USERNAME),
   POSTGIS_PASSWORD: mask(POSTGIS_PASSWORD),
   POSTGIS_PORT,
-  POSTGIS_FOREIGN_HOST,
-  POSTGIS_FOREIGN_DB,
-  POSTGIS_FOREIGN_USERNAME: mask(POSTGIS_FOREIGN_USERNAME),
-  POSTGIS_FOREIGN_PASSWORD: mask(POSTGIS_FOREIGN_PASSWORD),
   CATALOGUE_API_PORT,
   CATALOGUE_PROXY_ADDRESS,
   CATALOGUE_API_ALLOWED_ORIGINS,

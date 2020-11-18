@@ -5,8 +5,8 @@ import {
   POSTGIS_PASSWORD,
   POSTGIS_PORT,
 } from '../config.js'
-import createPool from './_pool.js'
-import createClient from './_client.js'
+import createPool from './pool.js'
+import createClient from './client.js'
 
 const pool = createPool(POSTGIS_HOST, POSTGIS_USERNAME, POSTGIS_DB, POSTGIS_PASSWORD, POSTGIS_PORT)
 

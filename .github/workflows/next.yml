@@ -29,10 +29,6 @@ jobs:
           POSTGIS_PORT="5432"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-          POSTGIS_FOREIGN_HOST="spatialdb.saeon.int"
-          POSTGIS_FOREIGN_DB="BEA"
-          POSTGIS_FOREIGN_USERNAME="${{ secrets.POSTGIS_FOREIGN_USERNAME }}"
-          POSTGIS_FOREIGN_PASSWORD="${{ secrets.POSTGIS_FOREIGN_PASSWORD }}"
           ELASTICSEARCH_ADDRESS="http://elasticsearch:9200"
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           CATALOGUE_DEPLOYMENT_ENV="development"
@@ -41,7 +37,6 @@ jobs:
           CATALOGUE_API_ALLOWED_ORIGINS="http://catalogue.saeon.dvn,http://api.catalogue.saeon.dvn"
           CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
           CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
-          CATALOGUE_API_RESET_POSTGIS="disabled"
           CATALOGUE_API_GQL_ADDRESS="http://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_CLIENT_AUTH_REDIRECT_URL="http://catalogue.saeon.dvn/authenticated"
