@@ -6,8 +6,8 @@ import {
   CATALOGUE_API_INDEX_REBUILD_SCHEDULE,
   CATALOGUE_API_INDEX_REBUILD,
 } from '../config.js'
-import configTemplate from './configure-template/index.js'
-import configureIndex from './configure-index/index.js'
+import configTemplate from './template/index.js'
+import configureIndex from './index/index.js'
 
 export const configure = async () => {
   /**
