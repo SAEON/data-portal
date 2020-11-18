@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
-export const DatabookContext = createContext('someinitialvalue')
-export default DatabookContext
-// export default ({ children }) => {
-//   return <div>{children}</div>
-// }
+export const context = createContext()
+
+export default ({ children, value }) => (
+  <context.Provider value={value}>{children}</context.Provider>
+)

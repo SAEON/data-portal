@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import DatabooksContext from '../../../../../contexts/databooks'
+import { context as databooksContext } from '../../../../../contexts/databooks'
 import StorageIcon from '@material-ui/icons/Storage'
 import OpenIcon from 'mdi-react/MenuDownIcon'
 import ClosedIcon from 'mdi-react/MenuRightIcon'
@@ -20,7 +20,7 @@ export default props => {
   const classes = useStyles()
   const itemType = itemDepth === 0 ? 'schema' : itemDepth === 1 ? 'table' : 'column' // A Tree Item is either a Schema, Table, or Column. Columns are not expandble where as others are.
 
-  const contextTest = useContext(DatabooksContext)
+  const contextTest = useContext(databooksContext)
   console.log('contextTest', contextTest)
   const onEnter = e => {
     setEditing(false)
@@ -89,7 +89,6 @@ export default props => {
         </span>
         {/* Child Tree Items */}
         <div style={expanded ? {} : { visibility: 'hidden', height: '0' }}>{children}</div>
-        {/* {expandable && !expanded ? undefined : children} */}
       </div>
     )
   } //COLUMN

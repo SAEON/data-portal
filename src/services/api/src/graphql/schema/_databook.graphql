@@ -7,11 +7,13 @@ type Databook {
 
 type PostgisDatabookSchema {
   id: ID!
+  databook: JSON!
   tables(id: ID): [PostgisDatabookTable]!
 }
 
 type PostgisDatabookTable {
   id: ID!
+  databook: JSON!
   # Update table name
   updateTableName(name: String!): Boolean!
   fields(id: ID): [PostgisDatabookField]
@@ -19,6 +21,7 @@ type PostgisDatabookTable {
 
 type PostgisDatabookField {
   id: ID!
+  databook: JSON!
   column_name: String!
   # Update database column name
   updateFieldName(name: String!): Boolean!

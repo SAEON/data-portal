@@ -56,9 +56,9 @@ export default ({ id }) => (
       }
 
       return ready ? (
-        <DatabooksContext.Provider value={{ test: 'somevalue', sql: '', someStateValue: true }}>
+        <DatabooksContext value={{ test: 'somevalue', sql: '', someStateValue: true }}>
           <PostgisDataExplorer databook={data.browserClient.databook} />
-        </DatabooksContext.Provider>
+        </DatabooksContext>
       ) : (
         <div>
           <Loading />
