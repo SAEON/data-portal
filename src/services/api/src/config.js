@@ -4,6 +4,16 @@ import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
 
+export const CATALOGUE_API_ODP_CLIENT_ID =
+  process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
+
+export const CATALOGUE_API_ODP_AUTH_ADDRESS =
+  process.env.CATALOGUE_API_ODP_AUTH_ADDRESS || 'https://odp.saeon.dvn/auth/oauth2/token'
+
+export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET
+if (!CATALOGUE_API_ODP_CLIENT_SECRET)
+  throw new Error(`The CATALOGUE_API_ODP_CLIENT_SECRET environment variable must be configured`)
+
 export const CATALOGUE_LATEST_COMMIT = process.env.CATALOGUE_LATEST_COMMIT || ''
 
 export const CATALOGUE_DEPLOYMENT_ENV = process.env.CATALOGUE_DEPLOYMENT_ENV || 'development'

@@ -1,0 +1,51 @@
+{
+  "name": "@single-sign-on/cli-tools",
+  "version": "0.0.10",
+  "description": "Build CLI applications declaratively",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "peerDependencies": {},
+  "scripts": {
+    "build": "rm -rf dist && rollup --config rollup.config.js",
+    "publish:patch": "npm run build && TC=utc node ../../../scripts/publish.js -p @single-sign-on/cli-tools -s patch",
+    "publish:minor": "npm run build && TC=utc node ../../../scripts/publish.js -p @single-sign-on/cli-tools -s minor",
+    "publish:major": "npm run build && TC=utc node ../../../scripts/publish.js -p @single-sign-on/cli-tools -s major",
+    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
+  },
+  "keywords": [
+    "@single-sign-on/cli-tools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/single-sign-on/single-sign-on.git"
+  },
+  "bugs": {
+    "url": "https://github.com/single-sign-on/single-sign-on/issues"
+  },
+  "homepage": "https://github.com/single-sign-on/single-sign-on/tree/master/src/@single-sign-on/cli-tools",
+  "author": "zach@single-sign-on.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "arg": "^5.0.0",
+    "ora": "^5.1.0",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "nodemon": "^2.0.6",
+    "onchange": "^7.1.0",
+    "prettier": "^2.1.2"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/api",
-  "version": "1.0.23",
+  "version": "1.0.25",
   "description": "Node.js/Express.js application supporting the @saeon/client application",
   "main": "index.js",
   "type": "module",
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
     "nodemon": "^2.0.6",
-    "npm-check-updates": "^9.2.4",
+    "npm-check-updates": "^10.2.1",
     "prettier": "^2.1.2"
   },
   "dependencies": {
@@ -43,11 +43,12 @@
     "koa": "^2.13.0",
     "koa-compress": "^5.0.1",
     "koa-proxies": "^0.11.0",
-    "mongodb": "^3.6.2",
+    "mongodb": "^3.6.3",
     "nanoid": "^3.1.16",
     "node-fetch": "^2.6.1",
     "object-hash": "^2.0.3",
-    "pg": "^8.4.2",
+    "pg": "^8.5.1",
+    "request-promise": "^4.2.6",
     "rimraf": "^3.0.2",
     "shpjs": "^3.6.2",
     "sift": "^13.4.0",
