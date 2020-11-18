@@ -12,7 +12,7 @@ export default ({ databook }) => {
 
   return (
     <div className={clsx(classes.root)} style={{ marginTop: 48 }}>
-      <SplitPane minSize={100} defaultSize={250} split="vertical">
+      <SplitPane minSize={130} defaultSize={300} split="vertical">
         {/* <SchemaExplorer /> */}
         <WithGqlQuery
           QUERY={gql`

@@ -15,5 +15,9 @@ export default props => {
 
   /* STEVEN TODO: Map array of databooks passed here as <TreeView/>'s instead of just a single <TreeView/> 
   Its possible the extra databooks aren't being passed here through props. To look into it further*/
-  return <TreeView databook={props.data.browserClient.databook}></TreeView>
+  return (
+    <div style={{ backgroundColor: 'rgb(255,255,255)', height: '100%' }}>
+      <TreeView databook={props.data.browserClient.databook}></TreeView>
+    </div>
+  )
 }

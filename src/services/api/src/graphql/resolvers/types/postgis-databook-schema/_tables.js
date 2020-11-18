@@ -11,7 +11,7 @@ export default async (self, args) => {
       schema_name: self.id,
       fields: [],
     }
-    a[id].fields = [...a[id].fields, { ...c, schema_name: self.id }] //BUG STEVEN TO DO: for some reason adding schema_name: self.id causes inability to pull ids. Field Ids seem to not be passed to fields
+    a[id].fields = [...a[id].fields, { ...c /*, schema_name: self.id*/ }] //BUG STEVEN TO DO: for some reason adding schema_name: self.id causes inability to pull ids. Field Id seems to not be passed to fields
     return a
   }, {})
   return Object.entries(tableMap)
