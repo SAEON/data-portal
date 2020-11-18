@@ -9,7 +9,7 @@ export default () => {
   const classes = useStyles()
 
   return (
-    <SplitPane split="horizontal" minSize={400}>
+    <SplitPane split="horizontal" minSize={600}>
       {/* SQL EDITOR */}
       <div className={clsx(classes.root)}>
         <SplitPane split="vertical" minSize={200} defaultSize={1000}>
