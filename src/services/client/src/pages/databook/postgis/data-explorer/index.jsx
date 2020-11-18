@@ -7,7 +7,7 @@ import useStyles from './style'
 import { WithQglQuery } from '../../../../hooks'
 import Loading from '../../../../components/loading'
 import { gql } from '@apollo/client'
-import { Fade } from '@material-ui/core'
+import { Fade, Typography } from '@material-ui/core'
 import DashboardBuilder from './dashboard'
 import { useTheme } from '@material-ui/core/styles'
 
@@ -17,8 +17,7 @@ export default ({ databook }) => {
   const [sql, setSql] = useState(`select
 *
 from odp_925377aa_6914_41e8_8b92_f448ebe11f9c
-limit 10
-order by area`)
+limit 10`)
 
   return (
     <SplitPane split="horizontal" minSize={400}>
@@ -51,7 +50,7 @@ order by area`)
       >
         {({ error, loading, data }) => {
           if (error) {
-            throw error
+            return <Typography>{error.message}</Typography>
           }
 
           if (loading) {
