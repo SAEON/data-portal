@@ -14,6 +14,9 @@ export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLI
 if (!CATALOGUE_API_ODP_CLIENT_SECRET)
   throw new Error(`The CATALOGUE_API_ODP_CLIENT_SECRET environment variable must be configured`)
 
+export const CATALOGUE_API_ODP_AUTH_SCOPE =
+  process.env.CATALOGUE_API_ODP_AUTH_SCOPE || 'ODP.Catalogue'
+
 export const CATALOGUE_LATEST_COMMIT = process.env.CATALOGUE_LATEST_COMMIT || ''
 
 export const CATALOGUE_DEPLOYMENT_ENV = process.env.CATALOGUE_DEPLOYMENT_ENV || 'development'
@@ -91,6 +94,9 @@ if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
 const mask = str => str?.replace(/./g, '*')
 
 console.log('Configuration', {
+  CATALOGUE_API_ODP_CLIENT_ID,
+  CATALOGUE_API_ODP_AUTH_ADDRESS,
+  CATALOGUE_API_ODP_CLIENT_SECRET: mask(CATALOGUE_API_ODP_CLIENT_SECRET),
   CATALOGUE_API_NODE_ENV,
   CATALOGUE_DEPLOYMENT_ENV,
   MONGO_DB,
