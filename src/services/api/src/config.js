@@ -10,9 +10,7 @@ export const CATALOGUE_API_ODP_CLIENT_ID =
 export const CATALOGUE_API_ODP_AUTH_ADDRESS =
   process.env.CATALOGUE_API_ODP_AUTH_ADDRESS || 'https://odp.saeon.dvn/auth/oauth2/token'
 
-export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET
-if (!CATALOGUE_API_ODP_CLIENT_SECRET)
-  throw new Error(`The CATALOGUE_API_ODP_CLIENT_SECRET environment variable must be configured`)
+export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET || ''
 
 export const CATALOGUE_API_ODP_AUTH_SCOPE =
   process.env.CATALOGUE_API_ODP_AUTH_SCOPE || 'ODP.Catalogue'
