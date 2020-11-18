@@ -7,7 +7,6 @@ import clsx from 'clsx'
 import useStyles from './style'
 import { IconButton } from '@material-ui/core'
 import { gql, useMutation } from '@apollo/client'
-import WithGqlQuery from '../../../../../hooks/_with-gql-query'
 // import { FixedSizeList as List } from 'react-window'
 
 const ICON_SIZE = 22

@@ -26,9 +26,9 @@ export default async (self, args, ctx) => {
       password,
     },
   })
-
   return {
     id: schema,
+    databook: self.doc,
     tables: response.rows.reduce((a, c) => {
       return [
         ...(a || []),
