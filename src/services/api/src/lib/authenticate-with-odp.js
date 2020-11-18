@@ -4,6 +4,7 @@ import {
   CATALOGUE_API_ODP_CLIENT_ID,
   CATALOGUE_API_ODP_CLIENT_SECRET,
   CATALOGUE_API_ODP_AUTH_ADDRESS,
+  CATALOGUE_API_ODP_AUTH_SCOPE,
 } from '../config.js'
 
 const TOKEN = btoa(`${CATALOGUE_API_ODP_CLIENT_ID}:${CATALOGUE_API_ODP_CLIENT_SECRET}`)
@@ -18,6 +19,7 @@ export default async () =>
     },
     form: {
       grant_type: 'client_credentials',
+      scope: CATALOGUE_API_ODP_AUTH_SCOPE,
     },
   })
     .then(({ access_token, expires_in, scope, token_type }) => ({

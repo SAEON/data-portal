@@ -16,7 +16,7 @@ const iterate = ({ offset = 0, token }) =>
   })
     .then(res => res.json())
     .then(json => ({
-      next: () => iterate({ offset: offset + json.length }),
+      next: () => iterate({ offset: offset + json.length, token }),
       data: json
         .map(
           ({ id, doi, institution, collection, projects, schema, metadata, published }) =>
@@ -51,5 +51,5 @@ export default () =>
       iterate({ token: [token_type, access_token].join(' ') })
     )
     .catch(error => {
-      throw error
+      throw new Error(`Error integrating with the ODP. ${error}`)
     })

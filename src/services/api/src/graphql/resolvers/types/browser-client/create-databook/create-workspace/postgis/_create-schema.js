@@ -1,4 +1,4 @@
-import { query } from '../../../../../../../postgis/index.js'
+import query from '../../../../../../../postgis/query.js'
 
 /**
  * Seems like these queries don't work parameterized

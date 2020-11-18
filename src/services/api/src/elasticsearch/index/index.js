@@ -66,6 +66,8 @@ export default async () => {
     }
   } catch (error) {
     result.error = error.message
+    console.log(result)
+    process.exit(1)
   }
 
   return result
