@@ -3,7 +3,7 @@ import { VariableSizeGrid } from 'react-window'
 import useStyles from './style'
 import Draggable from 'react-draggable'
 import Measure from 'react-measure'
-import { debounce } from '../../lib/fns'
+// import { debounce } from '../../lib/fns'
 import clsx from 'clsx'
 const ROW_HEIGHT = 30
 
@@ -20,7 +20,7 @@ export default ({ data }) => {
     width: -1,
     height: -1,
   })
-  const [columnWidths, setColumnWidths] = useState(
+  const [columnWidths /*, setColumnWidths*/] = useState(
     Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length]))
   )
 
@@ -81,9 +81,11 @@ export default ({ data }) => {
                         axis="x"
                         defaultClassName="DragHandle"
                         defaultClassNameDragging="DragHandleActive"
-                        onDrag={(event, { deltaX }) => {
-                          console.log('todo')
-                        }}
+                        onDrag={
+                          (/*event, { deltaX }*/) => {
+                            console.log('todo')
+                          }
+                        }
                         position={{ x: 0, y: 0 }}
                       >
                         <span className={classes.dragHandleIcon}>⋮</span>

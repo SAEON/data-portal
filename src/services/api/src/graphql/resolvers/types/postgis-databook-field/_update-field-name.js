@@ -17,24 +17,17 @@
 //column names by rule of postgres must be unique within their table, how are column names duplicating?  http://etutorials.org/SQL/Postgresql/Part+I+General+PostgreSQL+Use/Chapter+3.+PostgreSQL+SQL+Syntax+and+Use/PostgreSQL+Naming+Rules/
 export default async (self, args, ctx) => {
   const { query } = ctx.postgis // use query({client: {...}}), get username / password from mongo
-  const { column_name, data_type } = self
+  const { column_name, /*data_type,*/ table_name, schema_name } = self //commenting out data_type till the duplicate column issue is confirmed
   const { name: newColumnName } = args
-  console.log('table', self)
-  console.log('testing', newColumnName, column_name, data_type)
-  const tableName = ''
-  const sql = `ALTER TABLE ${tableName} RENAME COLUMN ${column_name} TO ${newColumnName}`
-  // try {
-  //   await query({
-  //     text: `
-  //       create user "${username}" with encrypted password '${password}';`,
-  //   })
-  // } catch (error) {
-  //   console.error(error)
-  //   throw error
-  // }
-  console.log('ctx', ctx)
-  // console.log('ctx.', JSON.stringify(ctx))
-  console.log('self', self)
-  console.log('args', args)
+  const sql = `ALTER TABLE "${schema_name}"."${table_name}" RENAME COLUMN "${column_name}" TO "${newColumnName}"`
+
+  try {
+    await query({ text: sql }) //client parameter can be set, see query def in .../databook/execute/index.js
+  } catch (error) {
+    console.log(error)
+    console.error(error)
+    return false
+  }
+
   return true
 }

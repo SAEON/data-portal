@@ -7,18 +7,20 @@
  *  => already existing) are passed back to
  *  => the client
  */
-export default async (self, args) => {
-  const { id: currentTableName } = self
+export default async (self, args, ctx) => {
+  const { id: currentTableName, schema_name } = self
   const { name: newTableName } = args
-  const sql = `ALTER TABLE ${currentTableName} RENAME TO ${newTableName}`
+  const { query } = ctx.postgis
+  const sql = `ALTER TABLE "${schema_name}"."${currentTableName}" RENAME TO "${newTableName}"`
+
+  //STEVEN TODO: try catch block to be confirmed as actually catching query errors
   try {
-    await query({
-      text: sql,
-    })
+    await query({ text: sql }) //client parameter can be set, see query def in .../databook/execute/index.js
   } catch (error) {
+    console.log(error)
     console.error(error)
-    throw error
+    return false
   }
 
-  return false
+  return true
 }
