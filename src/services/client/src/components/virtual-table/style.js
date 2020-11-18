@@ -26,7 +26,7 @@ export default makeStyles(theme => ({
     lineHeight: '30px',
     backgroundColor: theme.palette.grey[100],
     justifyContent: 'space-between',
-    borderBottom: '1px solid #CCC',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
     display: 'flex',
     fontWeight: 'bold',
     paddingLeft: '.5rem',

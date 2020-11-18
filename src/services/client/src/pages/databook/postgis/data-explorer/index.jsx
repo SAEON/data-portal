@@ -7,14 +7,17 @@ import useStyles from './style'
 import { WithQglQuery } from '../../../../hooks'
 import Loading from '../../../../components/loading'
 import { gql } from '@apollo/client'
-import { useTheme } from '@material-ui/core/styles'
 import { Fade } from '@material-ui/core'
 import DashboardBuilder from './dashboard'
+import { useTheme } from '@material-ui/core/styles'
 
 export default ({ databook }) => {
   const theme = useTheme()
   const classes = useStyles()
-  const [sql, setSql] = useState(``)
+  const [sql, setSql] = useState(`select
+*
+from odp_925377aa_6914_41e8_8b92_f448ebe11f9c
+limit 10`)
 
   return (
     <SplitPane split="horizontal" minSize={400}>
@@ -55,7 +58,7 @@ export default ({ databook }) => {
           }
 
           return (
-            <Fade in={data}>
+            <Fade in={Boolean(data)}>
               <div
                 style={{
                   position: 'absolute',
