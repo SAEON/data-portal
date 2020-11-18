@@ -3,13 +3,13 @@ import QuickForm from '@saeon/quick-form'
 import { getUriState } from '../lib/fns'
 import Loading from '../components/loading'
 import { gql } from '@apollo/client'
-import { WithQglQuery } from '../hooks'
+import { WithGqlQuery } from '../hooks'
 
 export const GlobalContext = createContext()
 
 const FromSavedSearch = ({ id, children }) =>
   id ? (
-    <WithQglQuery
+    <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
           browserClient {
@@ -26,7 +26,7 @@ const FromSavedSearch = ({ id, children }) =>
           return loading ? <Loading /> : children(data?.browserClient.searchState.state)
         }
       }}
-    </WithQglQuery>
+    </WithGqlQuery>
   ) : (
     children()
   )

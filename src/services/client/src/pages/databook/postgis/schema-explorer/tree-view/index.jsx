@@ -1,13 +1,8 @@
-// import React, { useState } from 'react';
-// import clsx from 'clsx'
-// import useStyles from './style'
 import TreeItem from './tree-item'
-// import { FixedSizeList as List } from 'react-window';
 
-export default props => {
-  const schema = props.databook.schema
-  const tables = schema.tables
-  // const classes = useStyles()
+export default ({ schema }) => {
+  const { tables } = schema
+
   return (
     <>
       <TreeItem expandable={true} primaryText={schema.id} secondaryText={''} itemDepth={0}>

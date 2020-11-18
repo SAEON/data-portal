@@ -1,4 +1,4 @@
-import DatabooksContext from '../../contexts/databooks'
+import DatabookContextProvider from './context'
 import { gql } from '@apollo/client'
 import WithGqlQuery from '../../hooks/_with-gql-query'
 import Loading from '../../components/loading'
@@ -56,9 +56,9 @@ export default ({ id }) => (
       }
 
       return ready ? (
-        <DatabooksContext.Provider value={{ test: 'somevalue', sql: '', someStateValue: true }}>
-          <PostgisDataExplorer databook={data.browserClient.databook} />
-        </DatabooksContext.Provider>
+        <DatabookContextProvider databook={data.browserClient.databook}>
+          <PostgisDataExplorer />
+        </DatabookContextProvider>
       ) : (
         <div>
           <Loading />

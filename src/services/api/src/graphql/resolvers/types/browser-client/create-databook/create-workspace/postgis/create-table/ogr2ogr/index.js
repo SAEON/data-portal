@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { POSTGIS_DB } from '../../../../../../../../../config.js'
+import { POSTGIS_DB, CATALOGUE_DOCKER_NETWORK } from '../../../../../../../../../config.js'
 
 export default (databook, tableName, shpFilePath) => {
   const { _id: schema, authentication } = databook
@@ -8,7 +8,7 @@ export default (databook, tableName, shpFilePath) => {
   return new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', [
       'run',
-      '--net=catalogue',
+      `--net=${CATALOGUE_DOCKER_NETWORK}`,
       '-v',
       '/tmp:/tmp',
       '--rm',

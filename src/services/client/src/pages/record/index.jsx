@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { gql } from '@apollo/client'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
-import { WithQglQuery, setShareLink } from '../../hooks'
+import { WithGqlQuery, setShareLink } from '../../hooks'
 import FieldView from './field-view'
 import Header from './header'
 import CodeView from './code-view'
@@ -17,7 +17,7 @@ export default ({ id }) => {
   const [codeView, updateCodeView] = useState(false)
 
   return (
-    <WithQglQuery
+    <WithGqlQuery
       QUERY={gql`
         query catalogue($ids: [ID!], $size: Int) {
           catalogue {
@@ -61,6 +61,6 @@ export default ({ id }) => {
           </>
         )
       }}
-    </WithQglQuery>
+    </WithGqlQuery>
   )
 }
