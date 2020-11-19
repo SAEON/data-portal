@@ -27,7 +27,7 @@ export default props => {
 
   const client = useApolloClient()
 
-  const onEnter = async e => {
+  const onEnter = async () => {
     console.log('mutating!')
     setEditing(false)
     console.log('editing value', editing)
@@ -53,7 +53,7 @@ export default props => {
       },
     })
     console.log('result', result)
-    if (data) {
+    if (result) {
       console.log('success!')
     } else {
       console.log('failed!')
@@ -76,14 +76,14 @@ export default props => {
             }}
           />
         ) : (
-            <ClosedIcon
-              size={iconSizeBig}
-              style={{ verticalAlign: 'middle' }}
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-            />
-          )}
+          <ClosedIcon
+            size={iconSizeBig}
+            style={{ verticalAlign: 'middle' }}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        )}
         <IconButton
           onClick={() => {
             setExpanded(!expanded)
@@ -117,14 +117,14 @@ export default props => {
             }}
           />
         ) : (
-            <ClosedIcon
-              size={iconSizeSmall}
-              className={clsx(classes.icon)}
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-            />
-          )}
+          <ClosedIcon
+            size={iconSizeSmall}
+            className={clsx(classes.icon)}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        )}
         {/* Text */}
         <span
           contentEditable={editing}
