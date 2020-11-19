@@ -60,8 +60,8 @@ export default ({ id }) => (
           <PostgisDataExplorer />
         </DatabookContextProvider>
       ) : (
-        <LoadingDatabook tables={tables} tablesReady={tablesReady} />
-      )
+          <LoadingDatabook tables={tables} tablesReady={tablesReady} />
+        )
     }}
   </WithGqlQuery>
 )
