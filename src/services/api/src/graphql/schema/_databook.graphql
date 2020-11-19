@@ -21,8 +21,7 @@ type PostgisDatabookTable {
 
 type PostgisDatabookField {
   id: ID!
-  username: String!
-  password: String!
+  databook: JSON!
   column_name: String!
   # Update database column name
   updateFieldName(name: String!): Boolean!

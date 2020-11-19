@@ -13,7 +13,6 @@ const iconSizeSmall = 22
 const iconSizeBig = 32
 
 export default props => {
-  // console.log('props', props)
   const context = useContext(databooksContext)
   const { itemDepth, primaryText, secondaryText, children, tableId } = props
 
@@ -31,7 +30,7 @@ export default props => {
   const onEnter = async e => {
     console.log('mutating!')
     setEditing(false)
-
+    console.log('editing value', editing)
     //use mutation
     const result = await client.mutate({
       mutation: gql`
@@ -132,7 +131,6 @@ export default props => {
           className={clsx(classes.text)}
           onClick={() => setExpanded(!expanded)}
           onKeyDown={e => {
-            console.log('onKeyDown e', e)
             if (e.key === 'Enter') {
               onEnter(this, e)
             }

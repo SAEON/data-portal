@@ -17,10 +17,11 @@
 //column names by rule of postgres must be unique within their table, how are column names duplicating?  http://etutorials.org/SQL/Postgresql/Part+I+General+PostgreSQL+Use/Chapter+3.+PostgreSQL+SQL+Syntax+and+Use/PostgreSQL+Naming+Rules/
 export default async (self, args, ctx) => {
   const { query } = ctx.postgis
-  const { column_name, /*data_type,*/ table_name, username, password } = self //commenting out data_type till the duplicate column issue is confirmed
-  // const { username, password } = self.databook.authentication
+  const { column_name, /*data_type,*/ table_name, databook } = self //commenting out data_type till the duplicate column issue is confirmed
+  const { _id: schemaId } = self.databook
+  const { username, password } = self.databook.authentication
   const { name: newColumnName } = args
-  const sql = `ALTER TABLE "${username}"."${table_name}" RENAME COLUMN "${column_name}" TO "${newColumnName}"`
+  const sql = `ALTER TABLE "${schemaId.toString()}"."${table_name}" RENAME COLUMN "${column_name}" TO "${newColumnName}"`
   try {
     await query({ text: sql, client: { username, password } }) //client parameter can be set, see query def in .../databook/execute/index.js
   } catch (error) {

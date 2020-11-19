@@ -5,7 +5,6 @@ import TreeItem from './tree-item'
 // import { FixedSizeList as List } from 'react-window';
 
 export default props => {
-  console.log('tree-view props', props)
   const schema = props.databook.schema
   const tables = schema.tables
   // const classes = useStyles()
