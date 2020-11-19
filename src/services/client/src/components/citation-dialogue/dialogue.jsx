@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import { gql } from '@apollo/client'
-import { WithQglQuery } from '../../hooks'
+import { WithGqlQuery } from '../../hooks'
 import Autocomplete from '../autocomplete/autocomplete'
 
 const DEFAULT_CITATION_STYLE = 'apa'
@@ -23,7 +23,7 @@ export default ({ doi, open, setOpen, citationStyles, citationLocales }) => {
   })
 
   return (
-    <WithQglQuery
+    <WithGqlQuery
       QUERY={gql`
         query($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
           catalogue {
@@ -126,6 +126,6 @@ export default ({ doi, open, setOpen, citationStyles, citationLocales }) => {
           </Dialog>
         </>
       )}
-    </WithQglQuery>
+    </WithGqlQuery>
   )
 }

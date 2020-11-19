@@ -3,13 +3,13 @@ import { Button, CircularProgress } from '@material-ui/core'
 import { FormatQuote as CitationIcon } from '@material-ui/icons'
 import { gql } from '@apollo/client'
 import Dialogue from './dialogue'
-import { WithQglQuery } from '../../hooks'
+import { WithGqlQuery } from '../../hooks'
 
 export default ({ doi, children, ...props }) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <WithQglQuery
+    <WithGqlQuery
       QUERY={gql`
         query {
           citationStyles: __type(name: "CitationStyle") {
@@ -66,6 +66,6 @@ export default ({ doi, children, ...props }) => {
           </>
         )
       }}
-    </WithQglQuery>
+    </WithGqlQuery>
   )
 }

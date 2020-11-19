@@ -9,7 +9,7 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
 import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_API_GQL_ADDRESS } from '../../config'
-import { WithQglQuery, setShareLink } from '../../hooks'
+import { WithGqlQuery, setShareLink } from '../../hooks'
 
 export default () => {
   setShareLink({
@@ -22,7 +22,7 @@ export default () => {
   const { global } = useContext(GlobalContext)
 
   return (
-    <WithQglQuery
+    <WithGqlQuery
       QUERY={gql`
         query catalogue($text: String!) {
           catalogue {
@@ -107,6 +107,6 @@ export default () => {
           </div>
         )
       }}
-    </WithQglQuery>
+    </WithGqlQuery>
   )
 }

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import Loading from '../../components/loading'
 import SideMenu from './side-menu'
-import { useCatalogue as WithCatalogue, WithQglQuery } from '../../hooks'
+import { useCatalogue as WithCatalogue, WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../config'
@@ -36,7 +36,7 @@ export default () => {
         left: 0,
       }}
     >
-      <WithQglQuery
+      <WithGqlQuery
         QUERY={gql`
           query($id: ID!) {
             browserClient {
@@ -91,7 +91,7 @@ export default () => {
             </WithCatalogue>
           )
         }}
-      </WithQglQuery>
+      </WithGqlQuery>
     </div>
   )
 }

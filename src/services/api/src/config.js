@@ -10,12 +10,12 @@ export const CATALOGUE_API_ODP_CLIENT_ID =
 export const CATALOGUE_API_ODP_AUTH_ADDRESS =
   process.env.CATALOGUE_API_ODP_AUTH_ADDRESS || 'https://odp.saeon.dvn/auth/oauth2/token'
 
-export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET
-if (!CATALOGUE_API_ODP_CLIENT_SECRET)
-  throw new Error(`The CATALOGUE_API_ODP_CLIENT_SECRET environment variable must be configured`)
+export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET || ''
 
 export const CATALOGUE_API_ODP_AUTH_SCOPE =
   process.env.CATALOGUE_API_ODP_AUTH_SCOPE || 'ODP.Catalogue'
+
+export const CATALOGUE_DOCKER_NETWORK = process.env.CATALOGUE_DOCKER_NETWORK || 'catalogue'
 
 export const CATALOGUE_LATEST_COMMIT = process.env.CATALOGUE_LATEST_COMMIT || ''
 
@@ -90,6 +90,7 @@ console.log('Configuration', {
   CATALOGUE_API_ODP_AUTH_SCOPE,
   CATALOGUE_API_NODE_ENV,
   CATALOGUE_DEPLOYMENT_ENV,
+  CATALOGUE_DOCKER_NETWORK,
   MONGO_DB,
   MONGO_DB_USERNAME: mask(MONGO_DB_USERNAME),
   MONGO_DB_PASSWORD: mask(MONGO_DB_PASSWORD),
