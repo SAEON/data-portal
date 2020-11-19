@@ -6,36 +6,90 @@ import ClosedIcon from 'mdi-react/MenuRightIcon'
 import clsx from 'clsx'
 import useStyles from './style'
 import { IconButton } from '@material-ui/core'
-import { gql, useMutation } from '@apollo/client'
+import { gql, useApolloClient } from '@apollo/client'
 // import { FixedSizeList as List } from 'react-window'
 
-const ICON_SIZE = 22
+const iconSizeSmall = 22
+const iconSizeBig = 32
 
 export default props => {
-  const { itemDepth, primaryText, secondaryText, children } = props
+  // console.log('props', props)
+  const context = useContext(databooksContext)
+  const { itemDepth, primaryText, secondaryText, children, tableId } = props
+
   const [expanded, setExpanded] = useState(false)
   const [editing, setEditing] = useState(false)
-  const indentation = itemDepth * 13
-  const classes = useStyles()
-  const itemType = itemDepth === 0 ? 'schema' : itemDepth === 1 ? 'table' : 'column' // A Tree Item is either a Schema, Table, or Column. Columns are not expandble where as others are.
+  const [text, setText] = useState(primaryText)
 
-  const contextTest = useContext(databooksContext)
-  console.log('contextTest', contextTest)
-  const onEnter = e => {
+  const indentation = itemDepth * 13
+
+  const itemType = itemDepth === 0 ? 'schema' : itemDepth === 1 ? 'table' : 'column' // A Tree Item is either a Schema, Table, or Column. Columns are not expandble where as others are.
+  const classes = useStyles()
+
+  const client = useApolloClient()
+
+  const onEnter = async e => {
+    console.log('mutating!')
     setEditing(false)
-    //use mutation?
+
+    //use mutation
+    const result = await client.mutate({
+      mutation: gql`
+        mutation($schemaId: String!, $tableId: String!, $newTableName: String!) {
+          browserClient {
+            databook(id: $schemaId) {
+              schema {
+                tables(id: $tableId) {
+                  updateTableName(name: $newTableName)
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        SchemaId: context.databook.authentication.username,
+        tableId: tableId,
+        newTableName: text,
+      },
+    })
+    console.log('result', result)
+    if (data) {
+      console.log('success!')
+    } else {
+      console.log('failed!')
+      throw new Error('Error mutating!')
+    }
+    console.log('end of mutation')
   }
 
   //SCHEMA
   if (itemType === 'schema') {
     return (
-      <div style={{ paddingLeft: indentation, margin: '1px' }}>
+      <div>
         {/* Expansion Icon */}
+        {expanded ? (
+          <OpenIcon
+            size={iconSizeBig}
+            style={{ verticalAlign: 'middle' }}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        ) : (
+          <ClosedIcon
+            size={iconSizeBig}
+            style={{ verticalAlign: 'middle' }}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        )}
         <IconButton
           onClick={() => {
             setExpanded(!expanded)
           }}
-          style={expanded ? { backgroundColor: 'rgba(0,0,0,0.15)' } : undefined}
+          style={{ left: '-10px' }}
         >
           <StorageIcon />
         </IconButton>
@@ -52,14 +106,12 @@ export default props => {
         onDoubleClick={() => {
           setEditing(true)
         }}
-        onBlur={() => {
-          setEditing(false)
-        }}
+        onBlur={onEnter}
       >
         {/* Expansion Icon */}
         {expanded ? (
           <OpenIcon
-            size={ICON_SIZE}
+            size={iconSizeSmall}
             className={clsx(classes.icon)}
             onClick={() => {
               setExpanded(!expanded)
@@ -67,7 +119,7 @@ export default props => {
           />
         ) : (
           <ClosedIcon
-            size={ICON_SIZE}
+            size={iconSizeSmall}
             className={clsx(classes.icon)}
             onClick={() => {
               setExpanded(!expanded)
@@ -76,12 +128,17 @@ export default props => {
         )}
         {/* Text */}
         <span
-          contentEditable={itemType === 'schema' ? false : editing}
+          contentEditable={editing}
           className={clsx(classes.text)}
+          onClick={() => setExpanded(!expanded)}
           onKeyDown={e => {
-            if (e.key === 'Enter' && itemType !== 'schema') {
+            console.log('onKeyDown e', e)
+            if (e.key === 'Enter') {
               onEnter(this, e)
             }
+          }}
+          onInput={e => {
+            setText(e.target.innerHTML)
           }}
         >
           {primaryText}
@@ -98,18 +155,19 @@ export default props => {
         onDoubleClick={() => {
           setEditing(true)
         }}
-        onBlur={() => {
-          onEnter()
-        }}
+        onBlur={onEnter}
       >
         {/* Text */}
         <span
-          contentEditable={itemType === 'schema' ? false : editing}
+          contentEditable={editing}
           className={clsx(classes.text)}
           onKeyDown={e => {
-            if (e.key === 'Enter' && itemType !== 'schema') {
+            if (e.key === 'Enter') {
               onEnter(this, e)
             }
+          }}
+          onInput={e => {
+            setText(e.target.innerHTML)
           }}
         >
           {primaryText}
@@ -119,32 +177,3 @@ export default props => {
     )
   }
 }
-
-//not sure how best to execute such a query (below query is sample update table query)
-// const runQuery = <WithGqlQuery
-//   QUERY={gql`
-//     query($schemaId: String!, $tableId: String!, $newTableName: String!) {
-//       {
-//         browserClient
-//         {
-//           databook(id:$schemaId)
-//           {
-//             schema
-//             {
-//               tables(id:$tableId)
-//               {
-//                 updateTableName(name:$newTableName)
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `}
-//   variables={{
-//     schemaId: schemaId,
-//     tableId: tableId,
-//     newTableName: newTableName,
-//   }}
-// >
-// </WithGqlQuery>
