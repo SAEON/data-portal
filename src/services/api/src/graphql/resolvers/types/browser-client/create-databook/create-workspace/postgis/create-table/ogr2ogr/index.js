@@ -23,8 +23,6 @@ export default (databook, tableName, shpFilePath) => {
       '-f',
       'PostgreSQL',
       '-lco',
-      'UNLOGGED=YES',
-      '-lco',
       'LAUNDER=NO',
       '-lco',
       'PRECISION=NO',
