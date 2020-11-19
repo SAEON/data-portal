@@ -3,7 +3,7 @@ import { useState, createContext } from 'react'
 export const context = createContext()
 
 export default ({ children, databook }) => {
-  const [sql, setSql] = useState('select * from odp_925377aa_6914_41e8_8b92_f448ebe11f9c limit 10')
+  const [sql, setSql] = useState('select * from odp_f6624135_621a_4e67_b491_68bfb5e4914a limit 40')
 
   return (
     <context.Provider

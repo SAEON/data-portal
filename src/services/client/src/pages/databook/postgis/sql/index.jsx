@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { context as databookContext } from '../../../context'
+import { context as databookContext } from '../../context'
 import AceEditor from 'react-ace'
 import 'ace-builds/src-noconflict/mode-sql'
 import 'ace-builds/src-noconflict/theme-sqlserver'

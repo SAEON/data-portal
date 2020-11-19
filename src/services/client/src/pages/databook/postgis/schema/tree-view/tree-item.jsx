@@ -76,14 +76,14 @@ export default props => {
             }}
           />
         ) : (
-            <ClosedIcon
-              size={iconSizeBig}
-              style={{ verticalAlign: 'middle' }}
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-            />
-          )}
+          <ClosedIcon
+            size={iconSizeBig}
+            style={{ verticalAlign: 'middle' }}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        )}
         <IconButton
           onClick={() => {
             setExpanded(!expanded)
@@ -117,14 +117,14 @@ export default props => {
             }}
           />
         ) : (
-            <ClosedIcon
-              size={iconSizeSmall}
-              className={clsx(classes.icon)}
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-            />
-          )}
+          <ClosedIcon
+            size={iconSizeSmall}
+            className={clsx(classes.icon)}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        )}
         {/* Text */}
         <span
           contentEditable={editing}

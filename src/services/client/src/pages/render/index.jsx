@@ -9,6 +9,7 @@ const components = {
   records: lazy(() => import('../records')),
   record: lazy(() => import('../record')),
   atlas: lazy(() => import('../atlas')),
+  databook: lazy(() => import('../databook')),
 }
 
 export default ({ location }) => {

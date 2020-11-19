@@ -39,6 +39,10 @@ type Query {
   catalogue(referrer: String): Catalogue!
   # Return the BrowserClient entity
   browserClient: BrowserClient!
+  # Return a Dashboard entity
+  dashboard(id: ID!): Dashboard
+  # Find a chart
+  charts(id: ID): Chart
 }
 
 # type Subscription {}
