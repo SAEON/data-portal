@@ -27,7 +27,7 @@ export default () => {
     <>
       {/* TOGGLE DIALOGUE */}
       <Tooltip title="Create chart from current data" placement="left-start">
-        <IconButton onClick={() => setOpen(true)} size="small">
+        <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOpen(true)} size="small">
           <AddItemIcon style={{ color: theme.palette.primary.light }} />
         </IconButton>
       </Tooltip>

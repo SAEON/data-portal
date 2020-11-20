@@ -1,5 +1,5 @@
 import Header from './header'
-import useStyles from './style'
+import useStyles from '../../style'
 import clsx from 'clsx'
 import { useState } from 'react'
 import Dashboards from './dashboards'
@@ -9,7 +9,7 @@ export default () => {
   const [active, setActive] = useState('dashboards')
   const classes = useStyles()
   return (
-    <div className={clsx(classes.layout)}>
+    <div className={clsx(classes.layout, classes.bg)}>
       <Header active={active} setActive={setActive} />
       {active === 'dashboards' && <Dashboards />}
       {active === 'charts' && <Charts />}

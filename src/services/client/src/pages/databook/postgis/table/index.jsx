@@ -6,7 +6,7 @@ import Loading from '../../../../components/loading'
 import { gql } from '@apollo/client'
 import { WithGqlQuery } from '../../../../hooks'
 import Header from './header'
-import useStyles from './style'
+import useStyles from '../../style'
 import clsx from 'clsx'
 
 export default () => {

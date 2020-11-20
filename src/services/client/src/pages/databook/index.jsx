@@ -66,9 +66,13 @@ export default ({ id }) => {
 
         return ready ? (
           <div
-            className={clsx(classes.layout, {
-              [classes.pushDown]: !window.location.pathname.includes('/render'),
-            })}
+            className={clsx(
+              classes.layout,
+              {
+                [classes.pushDown]: !window.location.pathname.includes('/render'),
+              },
+              classes.bg
+            )}
           >
             <DatabookContextProvider databook={data.browserClient.databook}>
               <PostgisDataExplorer />

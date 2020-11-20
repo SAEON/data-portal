@@ -1,5 +1,5 @@
 import { Toolbar, IconButton, Tooltip } from '@material-ui/core'
-import useStyles from './style'
+import useStyles from '../../style'
 import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
 import ChartsIcon from 'mdi-react/ChartBellCurveIcon'
 import clsx from 'clsx'
@@ -12,7 +12,11 @@ export default ({ active, setActive }) => {
   return (
     <Toolbar className={clsx(classes.toolbar)} variant="dense">
       <Tooltip title="Show dashboards">
-        <IconButton onClick={() => setActive('dashboards')} size="small">
+        <IconButton
+          style={{ marginLeft: 'auto' }}
+          onClick={() => setActive('dashboards')}
+          size="small"
+        >
           <DashboardsIcon
             style={{
               color:

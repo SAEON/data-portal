@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 import PlayIcon from 'mdi-react/PlayArrowIcon'
 import PlusIcon from 'mdi-react/PlusIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import useStyles from './style'
+import useStyles from '../../style'
 import clsx from 'clsx'
 import { nanoid } from 'nanoid'
 
