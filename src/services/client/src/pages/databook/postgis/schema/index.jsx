@@ -45,8 +45,8 @@ export default () => {
         }
 
         return (
-          <div style={{ backgroundColor: 'rgb(255,255,255)', height: '100%' }}>
-            <TreeView schema={data.browserClient.databook.schema}></TreeView>
+          <div style={{ backgroundColor: 'rgb(255,255,255)', padding: '3px', height: '100%' }}>
+            <TreeView style={{}} schema={data.browserClient.databook.schema}></TreeView>
           </div>
         )
       }}

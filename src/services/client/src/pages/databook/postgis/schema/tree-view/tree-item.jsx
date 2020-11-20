@@ -10,7 +10,7 @@ import { gql, useApolloClient } from '@apollo/client'
 // import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
-const iconSizeBig = 32
+const iconSizeBig = iconSizeSmall //32
 
 export default props => {
   const context = useContext(databooksContext)
@@ -27,7 +27,7 @@ export default props => {
 
   const client = useApolloClient()
 
-  const onEnter = async e => {
+  const onEnter = async () => {
     console.log('mutating!')
     setEditing(false)
     console.log('editing value', editing)
@@ -36,16 +36,28 @@ export default props => {
       mutation: gql`
         mutation($schemaId: String!, $tableId: String!, $newTableName: String!) {
           browserClient {
-            databook(id: $schemaId) {
+            databook(id: "5fae7017811a701352474d93") {
               schema {
-                tables(id: $tableId) {
-                  updateTableName(name: $newTableName)
+                tables(id: "testtable") {
+                  updateTableName(name: "newname")
                 }
               }
             }
           }
         }
       `,
+      //   mutation($schemaId: String!, $tableId: String!, $newTableName: String!) {
+      //     browserClient {
+      //       databook(id: $schemaId) {
+      //         schema {
+      //           tables(id: $tableId) {
+      //             updateTableName(name: $newTableName)
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // `,
       variables: {
         SchemaId: context.databook.authentication.username,
         tableId: tableId,
@@ -53,7 +65,7 @@ export default props => {
       },
     })
     console.log('result', result)
-    if (data) {
+    if (result) {
       console.log('success!')
     } else {
       console.log('failed!')
@@ -70,7 +82,8 @@ export default props => {
         {expanded ? (
           <OpenIcon
             size={iconSizeBig}
-            style={{ verticalAlign: 'middle' }}
+            className={clsx(classes.icon)}
+            // style={{ verticalAlign: 'middle' }}
             onClick={() => {
               setExpanded(!expanded)
             }}
@@ -78,7 +91,8 @@ export default props => {
         ) : (
           <ClosedIcon
             size={iconSizeBig}
-            style={{ verticalAlign: 'middle' }}
+            className={clsx(classes.icon)}
+            // style={{ verticalAlign: 'middle' }}
             onClick={() => {
               setExpanded(!expanded)
             }}
@@ -88,9 +102,10 @@ export default props => {
           onClick={() => {
             setExpanded(!expanded)
           }}
-          style={{ left: '-10px' }}
+          style={{ left: '-5px', padding: '0px' }}
+          size="small" //2px
         >
-          <StorageIcon />
+          <StorageIcon fontSize="small" style={{ padding: '0px' }} />
         </IconButton>
 
         {/* Child Tree Items */}
@@ -101,7 +116,7 @@ export default props => {
   else if (itemType === 'table') {
     return (
       <div
-        style={{ paddingLeft: indentation, margin: '1px' }}
+        style={{ paddingLeft: indentation /*margin: '1px'*/ }}
         onDoubleClick={() => {
           setEditing(true)
         }}
@@ -149,7 +164,7 @@ export default props => {
   else {
     return (
       <div
-        style={{ paddingLeft: indentation, margin: '1px' }}
+        style={{ paddingLeft: indentation /*margin: '1px'*/ }}
         onDoubleClick={() => {
           setEditing(true)
         }}

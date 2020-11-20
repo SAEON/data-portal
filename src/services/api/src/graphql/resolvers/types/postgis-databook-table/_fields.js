@@ -1,5 +1,3 @@
-import hash from 'object-hash'
-
 export default async (self, args) => {
   const { id } = args
   var fields = id ? self.fields.filter(field => field.column_name === id) : self.fields
