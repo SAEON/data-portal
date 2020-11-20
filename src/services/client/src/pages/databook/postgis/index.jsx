@@ -1,8 +1,8 @@
 import SplitPane from 'react-split-pane'
 import SchemaExplorer from './schema'
-import SqlEditor from './sql'
+import QueryEditor from './query-editor'
 import Table from './table'
-import Dashboard from './dashboard'
+import ResourceBuilder from './resource-builder'
 
 export default () => {
   return (
@@ -10,8 +10,8 @@ export default () => {
       <SchemaExplorer />
       <SplitPane split="horizontal" defaultSize={500}>
         <SplitPane split="vertical" minSize={200} defaultSize={600}>
-          <SqlEditor />
-          <Dashboard />
+          <QueryEditor />
+          <ResourceBuilder />
         </SplitPane>
         <Table />
       </SplitPane>
