@@ -5,7 +5,6 @@ import OpenIcon from 'mdi-react/MenuDownIcon'
 import ClosedIcon from 'mdi-react/MenuRightIcon'
 import clsx from 'clsx'
 import useStyles from './style'
-import { IconButton } from '@material-ui/core'
 import { gql, useApolloClient } from '@apollo/client'
 // import { FixedSizeList as List } from 'react-window'
 
@@ -83,7 +82,7 @@ export default props => {
           <OpenIcon
             size={iconSizeBig}
             className={clsx(classes.icon)}
-            // style={{ verticalAlign: 'middle' }}
+            style={{ verticalAlign: 'middle' }}
             onClick={() => {
               setExpanded(!expanded)
             }}
@@ -92,21 +91,11 @@ export default props => {
           <ClosedIcon
             size={iconSizeBig}
             className={clsx(classes.icon)}
-            // style={{ verticalAlign: 'middle' }}
             onClick={() => {
               setExpanded(!expanded)
             }}
           />
         )}
-        <IconButton
-          onClick={() => {
-            setExpanded(!expanded)
-          }}
-          style={{ left: '-5px', padding: '0px' }}
-          size="small" //2px
-        >
-          <StorageIcon fontSize="small" style={{ padding: '0px' }} />
-        </IconButton>
 
         {/* Child Tree Items */}
         <div style={expanded ? {} : { visibility: 'hidden', height: '0' }}>{children}</div>

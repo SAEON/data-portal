@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { fade, makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(() => ({
+export default makeStyles(theme => ({
   sideBar: {},
-  text: { fontFamily: 'monospace', fontSize: 'large' },
+  text: { fontFamily: 'monospace', fontSize: 'small' },
   secondaryText: {
-    color: 'rgba(0, 0, 0, 0.4)',
+    color: fade(theme.palette.common.black, 0.4),
   },
   icon: { marginBottom: -6, marginRight: 0, marginLeft: -6 },
 }))
