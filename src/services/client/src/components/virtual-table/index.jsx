@@ -51,7 +51,6 @@ export default ({ data }) => {
     <Measure
       bounds
       onResize={({ bounds }) => {
-        console.log('setting', bounds.width)
         setDimensions({ ...bounds })
       }}
     >

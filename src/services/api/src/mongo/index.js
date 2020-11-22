@@ -18,6 +18,8 @@ export const _collections = {
   Feedback: 'feedback',
   SavedSearches: 'savedSearches',
   Databooks: 'databooks',
+  Dashboards: 'dashboards',
+  Charts: 'charts',
 }
 
 export const db = MongoClient.connect(CONNECTION_STRING, {

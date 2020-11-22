@@ -56,14 +56,14 @@ export default props => {
             }}
           />
         ) : (
-          <ClosedIcon
-            size={iconSizeSmall}
-            className={clsx(classes.icon)}
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-          />
-        )}
+            <ClosedIcon
+              size={iconSizeSmall}
+              className={clsx(classes.icon)}
+              onClick={() => {
+                setExpanded(!expanded)
+              }}
+            />
+          )}
         {/* Text */}
         <ContexifyMenu uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}>
           {({ renaming, setRenaming }) => {

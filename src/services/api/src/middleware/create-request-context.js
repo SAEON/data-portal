@@ -8,11 +8,7 @@ const catalogue = new Catalogue({
   index: CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
 })
 
-/**
- * Application level batching
- * Used for logging to Mongo
- */
-const dataInserters = getDataInserters()
+const dataInserters = getDataInserters() // App level batching
 
 export default app => async (_, next) => {
   app.context.catalogue = catalogue
