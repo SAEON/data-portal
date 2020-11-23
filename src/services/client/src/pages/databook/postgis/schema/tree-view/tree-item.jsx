@@ -5,25 +5,12 @@ import ClosedIcon from 'mdi-react/MenuRightIcon'
 import clsx from 'clsx'
 import useStyles from './style'
 import { gql, useMutation } from '@apollo/client'
-import ContexifyMenu from './contexify-menu'
+import ContextMenu from './context-menu'
+import MutationTester from './mutation-tester'
 // import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
 // const iconSizeBig = iconSizeSmall //32
-
-const TEST_MUTATION = gql`
-  mutation($schemaId: String!, $tableId: String!, $newTableName: String!) {
-    browserClient {
-      databook(id: "5fae7017811a701352474d93") {
-        schema {
-          tables(id: "testtable") {
-            updateTableName(name: "newname")
-          }
-        }
-      }
-    }
-  }
-`
 
 export default props => {
   const context = useContext(databooksContext)
@@ -45,7 +32,8 @@ export default props => {
 
   return (
     <>
-      <div style={{ paddingLeft: indentation }} onBlur={onEnter}>
+      {/* <MutationTester /> */}
+      <div style={{ paddingLeft: indentation }}>
         {/* Expansion Icon (Tables only) */}
         {itemType === 'column' ? undefined : expanded ? (
           <OpenIcon
@@ -56,16 +44,16 @@ export default props => {
             }}
           />
         ) : (
-            <ClosedIcon
-              size={iconSizeSmall}
-              className={clsx(classes.icon)}
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-            />
-          )}
+          <ClosedIcon
+            size={iconSizeSmall}
+            className={clsx(classes.icon)}
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
+          />
+        )}
         {/* Text */}
-        <ContexifyMenu uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}>
+        <ContextMenu uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}>
           {({ renaming, setRenaming }) => {
             return (
               <>
@@ -84,6 +72,10 @@ export default props => {
                   onInput={e => {
                     setText(e.target.innerHTML)
                   }}
+                  onBlur={() => {
+                    onEnter
+                    setRenaming(false)
+                  }}
                 >
                   {primaryText}
                 </span>
@@ -91,7 +83,7 @@ export default props => {
               </>
             )
           }}
-        </ContexifyMenu>
+        </ContextMenu>
         {/* Child Columns */}
         <div style={expanded ? {} : { visibility: 'hidden', height: '0' }}>{children}</div>
       </div>

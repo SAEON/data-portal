@@ -1,5 +1,5 @@
 import TreeItem from './tree-item'
-import ContexifyMenu from './contexify-menu'
+import ContextMenu from './context-menu'
 import useStyles from './style'
 import { useState } from 'react'
 import clsx from 'clsx'
@@ -44,7 +44,6 @@ export default ({ schema }) => {
 
         {/* Child Tree Items */}
         <div style={expanded ? {} : { visibility: 'hidden', height: '0' }}>
-          {/* <ContexifyMenu> */}
           {/* Mapping array of Tables */}
           {tables.map(table => {
             return (
@@ -71,7 +70,6 @@ export default ({ schema }) => {
               </TreeItem>
             )
           })}
-          {/* </ContexifyMenu> */}
         </div>
       </div>
     </>

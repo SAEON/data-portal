@@ -15,7 +15,7 @@ export default props => {
     <>
       <MenuProvider
         id={uniqueIdentifier}
-        style={{ border: '1px solid purple', display: 'inline-block' }}
+        style={{ /*border: '1px solid purple',*/ display: 'inline-block' }}
       >
         {props.children({ renaming, setRenaming })}
       </MenuProvider>
