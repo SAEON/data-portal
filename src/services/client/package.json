@@ -54,6 +54,8 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^5.1.0",
+    "echarts": "^4.9.0",
+    "echarts-for-react": "^2.0.16",
     "file-loader": "^6.2.0",
     "graphql": "^15.4.0",
     "html-webpack-plugin": "^4.5.0",

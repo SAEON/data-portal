@@ -14,43 +14,51 @@ export default () => {
   const { sql, databook } = useContext(databooksContext)
 
   return (
-    <div className={clsx(classes.layout, classes.bg)}>
-      <Header />
-      <WithGqlQuery
-        QUERY={gql`
-          query($id: ID!, $sql: String!) {
-            databook(id: $id) {
-              id
-              execute(sql: $sql)
-            }
+    <WithGqlQuery
+      QUERY={gql`
+        query($id: ID!, $sql: String!) {
+          databook(id: $id) {
+            id
+            execute(sql: $sql)
           }
-        `}
-        variables={{ id: databook.doc._id, sql }}
-      >
-        {({ error, loading, data }) => {
-          if (error) {
-            return (
-              <Fade in={Boolean(error)}>
-                <Typography>{error.message}</Typography>
-              </Fade>
-            )
-          }
-
-          if (loading) {
-            return <Loading />
-          }
-
+        }
+      `}
+      variables={{ id: databook.doc._id, sql }}
+    >
+      {({ error, loading, data }) => {
+        if (error) {
           return (
+            <Fade in={Boolean(error)}>
+              <Typography>{error.message}</Typography>
+            </Fade>
+          )
+        }
+
+        if (loading) {
+          return (
+            <>
+              <Loading />
+              <Header />
+            </>
+          )
+        }
+
+        const postgisData = data.databook.execute
+
+        return (
+          <div className={clsx(classes.layout, classes.bg)}>
+            <Header data={postgisData} />
+
             <Fade in={Boolean(data)}>
               <div className={clsx(classes.content)}>
                 <div className={clsx(classes.layout)}>
-                  <VirtualTable data={data.databook.execute} />
+                  <VirtualTable data={postgisData} />
                 </div>
               </div>
             </Fade>
-          )
-        }}
-      </WithGqlQuery>
-    </div>
+          </div>
+        )
+      }}
+    </WithGqlQuery>
   )
 }
