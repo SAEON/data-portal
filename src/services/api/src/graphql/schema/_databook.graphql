@@ -41,5 +41,4 @@ type PostgisDatabookField {
   # Update database column name
   updateFieldName(name: String!): Boolean!
   data_type: String!
-  column_description: String
 }

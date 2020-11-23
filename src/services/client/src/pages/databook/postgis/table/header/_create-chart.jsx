@@ -20,8 +20,6 @@ export default () => {
   const client = useApolloClient()
   const id = databook.doc._id
 
-  console.log(id)
-
   const theme = useTheme()
   return (
     <>

@@ -25,7 +25,6 @@ export default () => {
                     id
                     column_name
                     data_type
-                    column_description
                   }
                 }
               }
@@ -46,7 +45,7 @@ export default () => {
 
         return (
           <div style={{ backgroundColor: 'rgb(255,255,255)', padding: '3px', height: '100%' }}>
-            <TreeView style={{}} schema={data.browserClient.databook.schema}></TreeView>
+            <TreeView style={{}} schema={data.browserClient.databook.schema} />
           </div>
         )
       }}
