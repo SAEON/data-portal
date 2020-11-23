@@ -19,11 +19,9 @@ export default () => {
       <WithGqlQuery
         QUERY={gql`
           query($id: ID!, $sql: String!) {
-            browserClient {
-              databook(id: $id) {
-                id
-                execute(sql: $sql)
-              }
+            databook(id: $id) {
+              id
+              execute(sql: $sql)
             }
           }
         `}
@@ -46,7 +44,7 @@ export default () => {
             <Fade in={Boolean(data)}>
               <div className={clsx(classes.content)}>
                 <div className={clsx(classes.layout)}>
-                  <VirtualTable data={data.browserClient.databook.execute} />
+                  <VirtualTable data={data.databook.execute} />
                 </div>
               </div>
             </Fade>

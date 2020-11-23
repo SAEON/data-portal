@@ -64,7 +64,7 @@ export default ({ schema }) => {
                       secondaryText={col.data_type}
                       itemDepth={2}
                       tableId={table.id}
-                    ></TreeItem>
+                    />
                   )
                 })}
               </TreeItem>

@@ -6,12 +6,8 @@ type BrowserClient {
   searchState(id: ID!): JSON
   # Save a web-browser's search context for retrieving as an atlas
   createAtlas(state: JSON!, createdBy: String!): ID!
-  # Retrieve a web-browser's previously saved atlas
+  # Retrieve a web-browser's previously saved atlas TODO - should be on query
   atlas(id: ID!): JSON
-  # Save a web-browser's search context for retrieving as a databook
-  createDatabook(state: JSON!, createdBy: String!): ID!
-  # Retrieve a web-browser's previously saved databook
-  databook(id: ID!): Databook
 }
 
 type BrowserEvent implements Node {

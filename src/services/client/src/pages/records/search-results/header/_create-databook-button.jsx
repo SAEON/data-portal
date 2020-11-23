@@ -93,9 +93,7 @@ export default ({ catalogue }) => {
             const { data } = await client.mutate({
               mutation: gql`
                 mutation($state: JSON!, $createdBy: String!) {
-                  browserClient {
-                    createDatabook(state: $state, createdBy: $createdBy)
-                  }
+                  createDatabook(state: $state, createdBy: $createdBy)
                 }
               `,
               variables: {
@@ -106,8 +104,8 @@ export default ({ catalogue }) => {
             if (data) {
               history.push({
                 pathname: window.location.pathname.includes('render')
-                  ? `/render/databooks/${data.browserClient.createDatabook}`
-                  : `/databooks/${data.browserClient.createDatabook}`,
+                  ? `/render/databooks/${data.createDatabook}`
+                  : `/databooks/${data.createDatabook}`,
               })
             } else {
               throw new Error('Error creating databook')

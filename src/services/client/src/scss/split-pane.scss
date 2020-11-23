@@ -8,6 +8,7 @@
   -moz-background-clip: padding;
   -webkit-background-clip: padding;
   background-clip: padding-box;
+  z-index: 999;
 }
 
 .Resizer:hover {

@@ -62,7 +62,7 @@ export default async (databook, { immutableResource, id }) => {
     /**
      * Clean up the tmp directory
      */
-    rimraf(cacheDir, () => console.log(tableName, 'Caching complete. Code', code))
+    // rimraf(cacheDir, () => console.log(tableName, 'Caching complete. Code', code))
 
     /**
      * Update the databook (Mongo doc) to

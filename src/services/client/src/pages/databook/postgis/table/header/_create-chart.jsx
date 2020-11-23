@@ -20,8 +20,6 @@ export default () => {
   const client = useApolloClient()
   const id = databook.doc._id
 
-  console.log(id)
-
   const theme = useTheme()
   return (
     <>
@@ -43,11 +41,9 @@ export default () => {
               await client.mutate({
                 mutation: gql`
                   mutation($id: ID!, $name: String) {
-                    browserClient {
-                      databook(id: $id) {
-                        createChart(name: $name) {
-                          id
-                        }
+                    databook(id: $id) {
+                      createChart(name: $name) {
+                        id
                       }
                     }
                   }

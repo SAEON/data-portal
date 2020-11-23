@@ -35,7 +35,6 @@ export default () => {
           variant={editors.length > 5 ? 'scrollable' : 'standard'}
           value={activeTabIndex}
           onChange={(event, newValue) => setActiveTabIndex(newValue)}
-          aria-label="simple tabs example"
         >
           {editors.map(({ id }, i) => (
             <Tab
@@ -85,8 +84,6 @@ export default () => {
             style={{ position: 'relative', height: 'calc(100% - 48px)' }}
             role="tabpanel"
             hidden={activeTabIndex !== i}
-            id={`simple-tabpanel-${i}`}
-            aria-labelledby={`simple-tab-${i}`}
           >
             {activeTabIndex === i && (
               <>

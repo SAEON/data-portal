@@ -1,10 +1,14 @@
-import { useContext } from 'react'
+import { useContext, forwardRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { context as databookContext } from '../../../context'
 import { WithGqlQuery } from '../../../../../hooks'
 import { gql } from '@apollo/client'
 import Loading from '../../../../../components/loading'
+import TabHeaders from './_tab-headers'
+import Dashboard from './dashboard'
 
-export default () => {
+export default forwardRef((props, ref) => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
   const { databook } = useContext(databookContext)
   const databookId = databook.doc._id
 
@@ -12,12 +16,10 @@ export default () => {
     <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
-          browserClient {
-            databook(id: $id) {
+          databook(id: $id) {
+            id
+            dashboards {
               id
-              dashboards {
-                id
-              }
             }
           }
         }
@@ -33,10 +35,28 @@ export default () => {
           return <Loading />
         }
 
-        const dashboards = data.browserClient.databook.dashboards
+        const dashboards = data.databook.dashboards
 
-        return JSON.stringify(dashboards)
+        return (
+          <div>
+            {createPortal(
+              <TabHeaders
+                activeTabIndex={activeTabIndex}
+                setActiveTabIndex={setActiveTabIndex}
+                dashboards={dashboards}
+              />,
+              ref.current
+            )}
+            {dashboards.map(({ id }, i) => {
+              return (
+                <div key={id} role="tabpanel" hidden={activeTabIndex !== i}>
+                  {activeTabIndex === i && <Dashboard id={id} />}
+                </div>
+              )
+            })}
+          </div>
+        )
       }}
     </WithGqlQuery>
   )
-}
+})

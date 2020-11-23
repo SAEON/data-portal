@@ -19,7 +19,7 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@babel/cli": "^7.12.1",
+    "@babel/cli": "^7.12.7",
     "@saeon/logger": "^6.1.2",
     "csv-stringify": "^5.5.3",
     "date-fns": "^2.16.1",
@@ -31,6 +31,6 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "npm-check-updates": "^10.2.1"
+    "npm-check-updates": "^10.2.2"
   }
 }
