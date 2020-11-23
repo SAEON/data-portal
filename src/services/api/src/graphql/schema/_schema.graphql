@@ -37,14 +37,16 @@ interface Edge {
 type Query {
   # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
   catalogue(referrer: String): Catalogue!
-  # Return the BrowserClient entity
-  browserClient: BrowserClient!
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
   # Find a chart
   charts(id: ID): Chart
   # Retrieve a web-browser's previously saved databook
   databook(id: ID!): Databook
+  # Retrieve a web-browser's previously saved search context
+  searchState(id: ID!): JSON
+  # Retrieve a web-browser's previously saved atlas TODO - should be on query
+  atlas(id: ID!): JSON
 }
 
 # type Subscription {}
@@ -52,8 +54,36 @@ type Query {
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): Void
   submitFeedback(input: FeedbackInput!): Boolean!
-  # Return the BrowserClient entity
-  browserClient: BrowserClient!
   # Save a web-browser's search context for retrieving as a databook
   createDatabook(state: JSON!, createdBy: String!): ID!
+  # Save a web-browser's search context for retrieving as an atlas
+  createAtlas(state: JSON!, createdBy: String!): ID!
+  # Save a web-browser's search context for retrieving
+  persistSearchState(state: JSON!, createdBy: String!): ID!
+  createDashboard(name: String, databookId: ID!): Dashboard!
+  createChart(name: String, databookId: ID!): Chart!
+}
+
+type BrowserEvent implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime
+  info: JSON!
+  clientVersion: String!
+  commitHash: String!
+}
+
+input BrowserEventInput {
+  type: String!
+  createdAt: DateTime!
+  info: JSON!
+  clientVersion: String!
+  commitHash: String!
+}
+
+input FeedbackInput {
+  text: String!
+  rating: Int!
+  pathname: String!
+  commitHash: String!
 }

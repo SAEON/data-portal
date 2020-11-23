@@ -40,16 +40,14 @@ export default () => {
               setMutationLoading(true)
               await client.mutate({
                 mutation: gql`
-                  mutation($id: ID!, $name: String) {
-                    databook(id: $id) {
-                      createChart(name: $name) {
-                        id
-                      }
+                  mutation($databookId: ID!, $name: String) {
+                    createChart(name: $name, databookId: $databookId) {
+                      id
                     }
                   }
                 `,
                 variables: {
-                  id,
+                  databookId: id,
                   name: 'test',
                 },
               })

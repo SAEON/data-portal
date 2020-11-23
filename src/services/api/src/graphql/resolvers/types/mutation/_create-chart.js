@@ -1,10 +1,13 @@
+import mongo from 'mongodb'
+const { ObjectID } = mongo
+
 export default async (databook, args, ctx) => {
   const { Charts } = await ctx.mongo.collections
-  const { name } = args
+  const { name, databookId } = args
 
   return (
     await Charts.insertOne({
-      databookId: databook.doc._id,
+      databookId: ObjectID(databookId),
       modifiedAt: new Date(),
       name,
     })

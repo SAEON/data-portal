@@ -21,10 +21,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
   const { global } = useContext(GlobalContext)
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
     mutation($state: JSON!, $createdBy: String!) {
-      browserClient {
-        id
-        ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(state: $state, createdBy: $createdBy)
-      }
+      ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(state: $state, createdBy: $createdBy)
     }
   `)
 
@@ -39,7 +36,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
     }
   }, [isAtlasPage, global, persistSearchState, state])
 
-  const id = data?.browserClient.persistSearchState || undefined
+  const id = data?.persistSearchState || undefined
 
   const uri = isAtlasPage
     ? shareLink

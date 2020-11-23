@@ -39,9 +39,7 @@ export default () => {
       <WithGqlQuery
         QUERY={gql`
           query($id: ID!) {
-            browserClient {
-              atlas(id: $id)
-            }
+            atlas(id: $id)
           }
         `}
         variables={{ id: atlasId }}
@@ -54,10 +52,7 @@ export default () => {
           return loading ? (
             <Loading />
           ) : (
-            <WithCatalogue
-              {...data?.browserClient.atlas.state}
-              pageSize={CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}
-            >
+            <WithCatalogue {...data?.atlas.state} pageSize={CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}>
               {({ error, loading, data }) => {
                 if (error) {
                   throw new Error('Error searching catalogue')

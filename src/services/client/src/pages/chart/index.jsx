@@ -5,14 +5,14 @@ import { gql } from '@apollo/client'
 
 export default ({ id }) => {
   setShareLink({
-    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
+    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/chart?id=${id}`,
     params: false,
   })
   return (
     <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
-          dashboard(id: $id) {
+          charts(id: $id) {
             id
           }
         }
