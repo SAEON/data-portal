@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { Toolbar, IconButton, Tooltip } from '@material-ui/core'
 import useStyles from '../../style'
 import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
@@ -5,12 +6,15 @@ import ChartsIcon from 'mdi-react/ChartBellCurveIcon'
 import clsx from 'clsx'
 import { useTheme } from '@material-ui/core/styles'
 
-export default ({ active, setActive }) => {
+export default forwardRef(({ active, setActive }, ref) => {
   const theme = useTheme()
-
   const classes = useStyles()
   return (
-    <Toolbar className={clsx(classes.toolbar)} variant="dense">
+    <Toolbar disableGutters className={clsx(classes.toolbar)} variant="dense">
+      {/* Allow children of sibling to populate the toolbar appropriately */}
+      <div ref={ref} />
+
+      {/* Other buttons */}
       <Tooltip title="Show dashboards">
         <IconButton
           style={{ marginLeft: 'auto' }}
@@ -36,4 +40,4 @@ export default ({ active, setActive }) => {
       </Tooltip>
     </Toolbar>
   )
-}
+})

@@ -13,12 +13,10 @@ const iconSizeSmall = 22
 
 const TEST_MUTATION = gql`
   mutation($schemaId: String!, $tableId: String!, $newTableName: String!) {
-    browserClient {
-      databook(id: "5fae7017811a701352474d93") {
-        schema {
-          tables(id: "testtable") {
-            updateTableName(name: "newname")
-          }
+    databook(id: "5fae7017811a701352474d93") {
+      schema {
+        tables(id: "testtable") {
+          updateTableName(name: "newname")
         }
       }
     }

@@ -43,6 +43,8 @@ type Query {
   dashboard(id: ID!): Dashboard
   # Find a chart
   charts(id: ID): Chart
+  # Retrieve a web-browser's previously saved databook
+  databook(id: ID!): Databook
 }
 
 # type Subscription {}
@@ -52,4 +54,6 @@ type Mutation {
   submitFeedback(input: FeedbackInput!): Boolean!
   # Return the BrowserClient entity
   browserClient: BrowserClient!
+  # Save a web-browser's search context for retrieving as a databook
+  createDatabook(state: JSON!, createdBy: String!): ID!
 }

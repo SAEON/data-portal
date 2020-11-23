@@ -24,11 +24,9 @@ export default ({ id }) => {
     <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
-          browserClient {
-            databook(id: $id) {
-              id
-              doc
-            }
+          databook(id: $id) {
+            id
+            doc
           }
         }
       `}
@@ -43,7 +41,7 @@ export default ({ id }) => {
           return <Loading />
         }
 
-        const { doc: databook } = data.browserClient.databook
+        const { doc: databook } = data.databook
         const { tables } = databook
 
         let tablesReady = 0
@@ -74,7 +72,7 @@ export default ({ id }) => {
               classes.bg
             )}
           >
-            <DatabookContextProvider databook={data.browserClient.databook}>
+            <DatabookContextProvider databook={data.databook}>
               <PostgisDataExplorer />
             </DatabookContextProvider>
           </div>

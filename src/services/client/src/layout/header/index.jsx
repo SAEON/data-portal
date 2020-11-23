@@ -48,13 +48,15 @@ export default () => {
                   <GitHubIcon color="inherit" />
                 </IconButton>
               </Tooltip> */}
-              <ShareOrEmbed
-                state={
-                  selectedIds.length && window.location.pathname.includes('atlas')
-                    ? { ids: selectedIds }
-                    : global
-                }
-              />
+              {window.location.pathname.includes('atlas') && (
+                <ShareOrEmbed
+                  state={
+                    selectedIds.length && window.location.pathname.includes('atlas')
+                      ? { ids: selectedIds }
+                      : global
+                  }
+                />
+              )}
               <FeedbackDialogue />
             </Grid>
           </Grid>

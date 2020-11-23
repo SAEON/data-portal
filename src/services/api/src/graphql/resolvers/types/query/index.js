@@ -5,4 +5,5 @@ export default {
   browserClient: await _import('./_browser-client.js'),
   dashboard: await _import('./_dashboard.js'),
   charts: await _import('./_charts.js'),
+  databook: await _import('./_databook.js'),
 }

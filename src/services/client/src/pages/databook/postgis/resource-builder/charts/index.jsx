@@ -12,13 +12,11 @@ export default () => {
     <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
-          browserClient {
-            databook(id: $id) {
+          databook(id: $id) {
+            id
+            charts {
               id
-              charts {
-                id
-                name
-              }
+              name
             }
           }
         }
@@ -34,7 +32,7 @@ export default () => {
           return <Loading />
         }
 
-        const charts = data.browserClient.databook.charts
+        const charts = data.databook.charts
 
         return JSON.stringify(charts)
       }}

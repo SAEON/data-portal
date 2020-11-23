@@ -41,11 +41,9 @@ export default () => {
               await client.mutate({
                 mutation: gql`
                   mutation($id: ID!, $name: String) {
-                    browserClient {
-                      databook(id: $id) {
-                        createChart(name: $name) {
-                          id
-                        }
+                    databook(id: $id) {
+                      createChart(name: $name) {
+                        id
                       }
                     }
                   }

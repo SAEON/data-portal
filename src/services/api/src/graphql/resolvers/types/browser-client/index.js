@@ -5,6 +5,4 @@ export default {
   searchState: await _import('./_search-state.js'),
   createAtlas: await _import('./_create-atlas.js'),
   atlas: await _import('./_atlas.js'),
-  createDatabook: await _import('./create-databook/index.js'),
-  databook: await _import('./_databook.js'),
 }
