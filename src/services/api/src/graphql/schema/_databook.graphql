@@ -16,6 +16,9 @@ type Dashboard {
 type Chart {
   id: ID!
   name: String
+  xAxis: String!
+  yAxis: String!
+  data: JSON!
 }
 
 type PostgisDatabookSchema {

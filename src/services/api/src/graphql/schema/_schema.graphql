@@ -61,7 +61,14 @@ type Mutation {
   # Save a web-browser's search context for retrieving
   persistSearchState(state: JSON!, createdBy: String!): ID!
   createDashboard(name: String, databookId: ID!): Dashboard!
-  createChart(name: String, databookId: ID!): Chart!
+  createChart(
+    name: String
+    databookId: ID!
+    data: JSON!
+    xAxis: String!
+    yAxis: String!
+    sql: String!
+  ): Chart!
 }
 
 type BrowserEvent implements Node {
