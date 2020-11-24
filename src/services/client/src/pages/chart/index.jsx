@@ -2,18 +2,22 @@ import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink, WithGqlQuery } from '../../hooks'
 import Loading from '../../components/loading'
 import { gql } from '@apollo/client'
+import Scatterplot from '../../components/charts/scatterplot'
 
 export default ({ id }) => {
   setShareLink({
-    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
+    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/chart?id=${id}`,
     params: false,
   })
   return (
     <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
-          dashboard(id: $id) {
+          charts(id: $id) {
             id
+            xAxis
+            yAxis
+            data
           }
         }
       `}
@@ -28,7 +32,7 @@ export default ({ id }) => {
           return <Loading />
         }
 
-        return JSON.stringify(data)
+        return <Scatterplot {...data.charts} />
       }}
     </WithGqlQuery>
   )

@@ -12,9 +12,7 @@ const FromSavedSearch = ({ id, children }) =>
     <WithGqlQuery
       QUERY={gql`
         query($id: ID!) {
-          browserClient {
-            searchState(id: $id)
-          }
+          searchState(id: $id)
         }
       `}
       variables={{ id }}
@@ -23,7 +21,7 @@ const FromSavedSearch = ({ id, children }) =>
         if (error) {
           throw new Error('Unable to load saved search')
         } else {
-          return loading ? <Loading /> : children(data?.browserClient.searchState.state)
+          return loading ? <Loading /> : children(data?.searchState.state)
         }
       }}
     </WithGqlQuery>

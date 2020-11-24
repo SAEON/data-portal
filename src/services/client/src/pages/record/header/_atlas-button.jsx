@@ -30,10 +30,7 @@ export default ({ linkedResources, id }) => {
             const { data } = await client.mutate({
               mutation: gql`
                 mutation($state: JSON!, $createdBy: String!) {
-                  browserClient {
-                    id
-                    createAtlas(state: $state, createdBy: $createdBy)
-                  }
+                  createAtlas(state: $state, createdBy: $createdBy)
                 }
               `,
               variables: {
@@ -44,7 +41,7 @@ export default ({ linkedResources, id }) => {
             if (data) {
               history.push({
                 pathname: window.location.pathname.includes('/render') ? '/render/atlas' : '/atlas',
-                search: `?atlas=${data.browserClient.createAtlas}`,
+                search: `?atlas=${data.createAtlas}`,
               })
             } else {
               throw new Error('Error creating atlas')

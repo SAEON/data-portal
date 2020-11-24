@@ -7,11 +7,9 @@ import PlusIcon from 'mdi-react/PlusIcon'
 import clsx from 'clsx'
 
 const ADD_DASHBOARD = gql`
-  mutation($id: ID!, $name: String) {
-    databook(id: $id) {
-      createDashboard(name: $name) {
-        id
-      }
+  mutation($databookId: ID!, $name: String) {
+    createDashboard(name: $name, databookId: $databookId) {
+      id
     }
   }
 `
@@ -47,7 +45,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
       {/* ADD TAB BUTTON */}
       <IconButton
         onClick={() => {
-          addDashboard({ variables: { id: databook.doc._id, name: 'test' } })
+          addDashboard({ variables: { databookId: databook.doc._id, name: 'test' } })
         }}
         size="small"
       >

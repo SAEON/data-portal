@@ -3,9 +3,7 @@ type Databook {
   doc: JSON
   execute(sql: String!): JSON
   schema: PostgisDatabookSchema!
-  createDashboard(name: String): Dashboard!
   dashboards: [Dashboard!]
-  createChart(name: String): Chart!
   charts: [Chart!]
 }
 
@@ -18,6 +16,9 @@ type Dashboard {
 type Chart {
   id: ID!
   name: String
+  xAxis: String!
+  yAxis: String!
+  data: JSON!
 }
 
 type PostgisDatabookSchema {
