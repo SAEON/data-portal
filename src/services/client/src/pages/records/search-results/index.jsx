@@ -118,12 +118,12 @@ export default ({ disableSidebar = false }) => {
       }}
     >
       {({ error, loading, data }) => {
-        if (error) {
-          throw new Error('We apologise for this unexpected error!.' + error.message)
-        }
-
         if (loading) {
           return <Loading />
+        }
+
+        if (error) {
+          throw new Error('We apologise for this unexpected error!.' + error.message)
         }
 
         const results = cursors.start

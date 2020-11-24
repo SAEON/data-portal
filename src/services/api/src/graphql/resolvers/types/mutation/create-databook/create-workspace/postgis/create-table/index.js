@@ -40,6 +40,8 @@ export default async (databook, { immutableResource, id }) => {
     const res = await fetch(downloadURL)
     const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
 
+    // TODO - non archive files should not be extracted, just stored
+
     /**
      * Process the archive into the cache
      */

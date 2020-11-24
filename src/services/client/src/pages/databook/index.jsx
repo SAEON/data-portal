@@ -34,12 +34,12 @@ export default ({ id }) => {
       variables={{ id }}
     >
       {({ error, loading, data, startPolling, stopPolling }) => {
-        if (error) {
-          throw new Error(`Error loading databook ${id}. ${error}`)
-        }
-
         if (loading) {
           return <Loading />
+        }
+
+        if (error) {
+          throw new Error(`Error loading databook ${id}. ${error}`)
         }
 
         const { doc: databook } = data.databook

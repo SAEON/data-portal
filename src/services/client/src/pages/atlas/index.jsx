@@ -45,12 +45,12 @@ export default () => {
         variables={{ id: atlasId }}
       >
         {({ error, loading, data }) => {
-          if (error) {
-            throw new Error('Error loading search state for Atlas')
-          }
-
           if (loading) {
             return <Loading />
+          }
+
+          if (error) {
+            throw new Error('Error loading search state for Atlas')
           }
 
           const {
@@ -108,12 +108,12 @@ export default () => {
               }}
             >
               {({ error, loading, data }) => {
-                if (error) {
-                  throw new Error('Error searching catalogue on atlas load')
-                }
-
                 if (loading) {
                   return <Loading />
+                }
+
+                if (error) {
+                  throw new Error('Error searching catalogue on atlas load')
                 }
 
                 return (

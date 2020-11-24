@@ -24,12 +24,12 @@ export default () => {
       variables={{ id: databookId }}
     >
       {({ error, loading, data }) => {
-        if (error) {
-          throw error
-        }
-
         if (loading) {
           return <Loading />
+        }
+
+        if (error) {
+          throw error
         }
 
         const charts = data.databook.charts

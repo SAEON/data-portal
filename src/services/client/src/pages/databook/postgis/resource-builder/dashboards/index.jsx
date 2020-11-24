@@ -6,6 +6,7 @@ import { gql } from '@apollo/client'
 import Loading from '../../../../../components/loading'
 import TabHeaders from './_tab-headers'
 import Dashboard from './dashboard'
+import { Fade } from '@material-ui/core'
 
 export default forwardRef((props, ref) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
@@ -15,27 +16,24 @@ export default forwardRef((props, ref) => {
   return (
     <WithGqlQuery
       QUERY={gql`
-        query($id: ID!) {
-          databook(id: $id) {
+        query($databookId: ID!) {
+          dashboards(databookId: $databookId) {
             id
-            dashboards {
-              id
-            }
           }
         }
       `}
-      variables={{ id: databookId }}
+      variables={{ databookId }}
     >
       {({ error, loading, data }) => {
-        if (error) {
-          throw error
-        }
-
         if (loading) {
           return <Loading />
         }
 
-        const dashboards = data.databook.dashboards
+        if (error) {
+          throw error
+        }
+
+        const { dashboards } = data
 
         return (
           <>
@@ -49,9 +47,11 @@ export default forwardRef((props, ref) => {
             )}
             {dashboards.map(({ id }, i) => {
               return (
-                <div key={id} role="tabpanel" hidden={activeTabIndex !== i}>
-                  {activeTabIndex === i && <Dashboard id={id} />}
-                </div>
+                <Fade in={activeTabIndex === i} key={id}>
+                  <div role="tabpanel" hidden={activeTabIndex !== i}>
+                    {activeTabIndex === i && <Dashboard id={id} />}
+                  </div>
+                </Fade>
               )
             })}
           </>

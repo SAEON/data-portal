@@ -14,6 +14,7 @@ export default forwardRef(({ active, setActive }, ref) => {
       <Grid container justify="flex-end" style={{ overflow: 'hidden' }}>
         {/* Allow children of sibling to populate the toolbar appropriately */}
         <Grid item innerRef={ref} style={{ flexGrow: 1 }} />
+
         {/* Other buttons */}
         <Grid item style={{ alignSelf: 'center', textAlign: 'right', flexGrow: 1 }}>
           <Tooltip title="Show dashboards">

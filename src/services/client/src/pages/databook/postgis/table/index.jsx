@@ -26,21 +26,21 @@ export default () => {
       variables={{ id: databook.doc._id, sql }}
     >
       {({ error, loading, data }) => {
+        if (loading) {
+          return (
+            <div className={clsx(classes.layout, classes.bg)}>
+              <Loading />
+              <Header />
+            </div>
+          )
+        }
+
         if (error) {
           return (
             <div className={clsx(classes.layout, classes.bg)}>
               <Fade in={Boolean(error)}>
                 <Typography>{error.message}</Typography>
               </Fade>
-            </div>
-          )
-        }
-
-        if (loading) {
-          return (
-            <div className={clsx(classes.layout, classes.bg)}>
-              <Loading />
-              <Header />
             </div>
           )
         }
