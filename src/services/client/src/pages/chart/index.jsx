@@ -24,12 +24,12 @@ export default ({ id }) => {
       variables={{ id }}
     >
       {({ error, loading, data }) => {
-        if (error) {
-          throw error
-        }
-
         if (loading) {
           return <Loading />
+        }
+
+        if (error) {
+          throw error
         }
 
         return <Scatterplot {...data.charts} />

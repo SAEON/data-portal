@@ -30,12 +30,12 @@ export default () => {
       variables={{ id: databook.doc._id }}
     >
       {({ error, loading, data }) => {
-        if (error) {
-          throw error
-        }
-
         if (loading) {
           return <Loading />
+        }
+
+        if (error) {
+          throw error
         }
 
         return (

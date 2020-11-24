@@ -4,7 +4,6 @@ import {
   IconButton,
   Dialog,
   DialogTitle,
-  DialogContent,
   DialogActions,
   Button,
   Tooltip,
@@ -18,6 +17,18 @@ import { useTheme } from '@material-ui/core/styles'
 import { context as databookContext } from '../../../context'
 
 const choices = ['LENGTH', 'FNODE_']
+
+const CHARTS_QUERY = gql`
+  query($id: ID!) {
+    databook(id: $id) {
+      id
+      charts {
+        id
+        name
+      }
+    }
+  }
+`
 
 export default ({ data }) => {
   const { databook, sql } = useContext(databookContext)
@@ -96,6 +107,26 @@ export default ({ data }) => {
                   xAxis: x,
                   yAxis: y,
                   sql,
+                },
+                update: (cache, { data }) => {
+                  try {
+                    const { databook } = cache.read({
+                      query: CHARTS_QUERY,
+                      variables: {
+                        id,
+                      },
+                    })
+
+                    cache.writeQuery({
+                      query: CHARTS_QUERY,
+                      data: {
+                        databook: {
+                          ...databook,
+                          charts: [data.createChart, ...databook.charts],
+                        },
+                      },
+                    })
+                  } catch {}
                 },
               })
 

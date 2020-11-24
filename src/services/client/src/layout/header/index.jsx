@@ -1,9 +1,7 @@
 import { useContext } from 'react'
 import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
-// import { GitHub as GitHubIcon } from '@material-ui/icons'
 import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
-// import {CATALOGUE_SOURCE_CODE_URI} from '../../config'
 import FeedbackDialogue from './_feedback-dialogue'
 import ShareOrEmbed from '../../components/share-or-embed'
 import useStyles from './style'
@@ -40,14 +38,6 @@ export default () => {
 
             {/* TOP-RIGHT */}
             <Grid container justify="flex-end" alignItems="center" item xs>
-              {/* <Tooltip placement="left" title="MIT-licensed source code">
-                <IconButton
-                  onClick={() => window.open(CATALOGUE_SOURCE_CODE_URI, 'catalogue-source-code')}
-                  color="inherit"
-                >
-                  <GitHubIcon color="inherit" />
-                </IconButton>
-              </Tooltip> */}
               {window.location.pathname.includes('atlas') && (
                 <ShareOrEmbed
                   state={

@@ -33,13 +33,15 @@ export default ({ id }) => {
       variables={{ ids: [id], size: 1 }}
     >
       {({ loading, error, data }) => {
+        if (loading) {
+          return <Loading />
+        }
+
         if (error) {
           throw new Error(`Error retrieving record ${id}. ${error}`)
         }
 
-        return loading ? (
-          <Loading />
-        ) : (
+        return (
           <>
             <Header
               codeView={codeView}

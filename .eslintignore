@@ -4,4 +4,4 @@
 
 src/services/api/src/graphql/resolvers/types/**/*/index.js
 src/services/api/src/graphql/schema/datacite.graphql/index.js
-src/tools/reporting/src/index.js
+src/tools/source-analysis/src/index.js

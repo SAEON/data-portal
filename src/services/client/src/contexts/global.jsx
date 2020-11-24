@@ -18,11 +18,15 @@ const FromSavedSearch = ({ id, children }) =>
       variables={{ id }}
     >
       {({ error, loading, data }) => {
-        if (error) {
-          throw new Error('Unable to load saved search')
-        } else {
-          return loading ? <Loading /> : children(data?.searchState.state)
+        if (loading) {
+          return <Loading />
         }
+
+        if (error) {
+          throw new Error('Unable to load saved search.' + error.message)
+        }
+
+        return children(data?.searchState.state)
       }}
     </WithGqlQuery>
   ) : (
