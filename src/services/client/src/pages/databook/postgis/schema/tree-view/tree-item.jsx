@@ -6,7 +6,6 @@ import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './context-menu'
 import { RenameTable } from './rename-entities'
-import { useEffect } from 'react'
 // import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
@@ -23,9 +22,6 @@ export default props => {
   const itemType = itemDepth === 1 ? 'table' : 'column'
   const classes = useStyles()
   const inputRef = useRef(null)
-  useEffect(() => {
-    inputRef.current.focus()
-  }, [])
 
   const handleFocus = () => {
     inputRef.current.focus()
@@ -73,7 +69,9 @@ export default props => {
                       e.preventDefault()
                       setRenaming(false)
                       const result = renameEntityLazy()
-                      //STEVEN TO DO: if error: setText(originalText) & warn user
+                      if (result.error) {
+                        //STEVEN TO DO: if error: setText(originalText) & warn user
+                      }
                     }
 
                     return (

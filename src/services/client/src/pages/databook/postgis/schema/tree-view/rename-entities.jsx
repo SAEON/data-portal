@@ -27,14 +27,18 @@ const RENAME_COLUMN = gql`
 `
 const RenameEntity = props => {
   const { query, variables, children } = props
-  const [renameEntityLazy, { loading, data }] = useLazyQuery(query, {
+  const [renameEntityLazy, result] = useLazyQuery(query, {
     variables,
     fetchPolicy: 'network-only',
   })
+  const { called, loading, error } = result
 
   if (loading) console.log('Renaming Entity..')
-  if (data) {
-    console.log('Renamed Entity data', data)
+  else if (called && !loading) {
+    console.log('Rename Entity result', result)
+  }
+  if (error) {
+    console.log('mutation error!', error)
   }
   //STEVEN TO DO: ERROR HANDLING!
   return children(renameEntityLazy)
