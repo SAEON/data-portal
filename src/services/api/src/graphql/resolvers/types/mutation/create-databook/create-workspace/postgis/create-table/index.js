@@ -14,8 +14,12 @@ import createDataName from '../../../_create-data-name.js'
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
 export default async (databook, { immutableResource, id }) => {
+  const { Databooks } = await collections
   const { downloadURL } = immutableResource.resourceDownload
   const tableName = createDataName(id)
+
+  console.log(databook._id, 'Creating table', tableName)
+
   const cacheDir = await new Promise((resolve, reject) =>
     mkdtemp(_temp, (error, directory) => (error ? reject(error) : resolve(directory)))
   )
@@ -32,52 +36,66 @@ export default async (databook, { immutableResource, id }) => {
    * exists
    */
   var shpFilePath
-  const res = await fetch(downloadURL)
-  const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
+  try {
+    const res = await fetch(downloadURL)
+    const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
 
-  /**
-   * Process the archive into the cache
-   */
-  for await (const entry of zip) {
-    const { path: filename } = entry
-    const ext = extname(filename)
-    if (filename.includes('MACOSX')) continue
-    if (gisExtensions.includes(ext)) {
-      const writePath = join(cacheDir, basename(filename))
-      if (ext === '.shp') shpFilePath = writePath
-      await new Promise(resolve => {
-        const dest = createWriteStream(writePath)
-        entry.pipe(dest)
-        dest.on('finish', resolve)
-      })
-    } else {
-      entry.autodrain()
+    /**
+     * Process the archive into the cache
+     */
+    for await (const entry of zip) {
+      const { path: filename } = entry
+      const ext = extname(filename)
+      if (filename.includes('MACOSX')) continue
+      if (gisExtensions.includes(ext)) {
+        const writePath = join(cacheDir, basename(filename))
+        if (ext === '.shp') shpFilePath = writePath
+        await new Promise(resolve => {
+          const dest = createWriteStream(writePath)
+          entry.pipe(dest)
+          dest.on('finish', resolve)
+        })
+      } else {
+        entry.autodrain()
+      }
     }
-  }
-
-  /**
-   * Process .shp into PostGIS
-   */
-  await ogr2ogr(databook, tableName, shpFilePath).then(async code => {
-    /**
-     * Clean up the tmp directory
-     */
-    // rimraf(cacheDir, () => console.log(tableName, 'Caching complete. Code', code))
 
     /**
-     * Update the databook (Mongo doc) to
-     * indicate that this table is ready
+     * Process .shp into PostGIS
      */
-    const { Databooks } = await collections
+    await ogr2ogr(databook, tableName, shpFilePath).then(async code => {
+      /**
+       * Update the databook (Mongo doc) to
+       * indicate that this table is ready
+       */
+      await Databooks.findOneAndUpdate(
+        { _id: ObjectID(databook._id) },
+        {
+          $set: {
+            [`tables.${tableName}`]: {
+              ready: true,
+            },
+          },
+        }
+      )
+    })
+  } catch (error) {
+    console.error(tableName, 'Error creating table for', databook._id, 'Resource download failed')
     await Databooks.findOneAndUpdate(
       { _id: ObjectID(databook._id) },
       {
         $set: {
           [`tables.${tableName}`]: {
-            ready: true,
+            ready: false,
+            error: error.message,
           },
         },
       }
     )
-  })
+  } finally {
+    /**
+     * Clean up the tmp directory
+     */
+    rimraf(cacheDir, () => console.log(tableName, 'Removing temporary directory', cacheDir))
+  }
 }

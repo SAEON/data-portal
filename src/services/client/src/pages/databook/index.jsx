@@ -4,9 +4,10 @@ import { WithGqlQuery, setShareLink } from '../../hooks'
 import LoadingDatabook from './loading'
 import Loading from '../../components/loading'
 import PostgisDataExplorer from './postgis'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
+import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 import useStyles from './style'
 import clsx from 'clsx'
+import { Box, Typography } from '@material-ui/core'
 
 const POLLING_INTERVAL = 1000
 
@@ -46,11 +47,16 @@ export default ({ id }) => {
 
         let tablesReady = 0
         let tablesNotReady = 0
-        Object.entries(tables).forEach(([, { ready }]) => {
+        let errors = []
+        Object.entries(tables).forEach(([tableName, { ready, error }]) => {
           if (ready) {
-            tablesReady += 1
+            tablesReady++
           } else {
-            tablesNotReady += 1
+            if (error) {
+              errors.push({ tableName, error })
+            } else {
+              tablesNotReady++
+            }
           }
         })
 
@@ -72,9 +78,29 @@ export default ({ id }) => {
               classes.bg
             )}
           >
-            <DatabookContextProvider databook={data.databook}>
-              <PostgisDataExplorer />
-            </DatabookContextProvider>
+            {errors ? (
+              <Box m={2}>
+                <Typography>
+                  Error preparing data. Please send the message below to a system administrator (
+                  {CATALOGUE_TECHNICAL_CONTACT})
+                </Typography>
+                <pre>
+                  {JSON.stringify(
+                    {
+                      message: 'Error creating databook',
+                      uri: window.location,
+                      errors,
+                    },
+                    null,
+                    2
+                  )}
+                </pre>
+              </Box>
+            ) : (
+              <DatabookContextProvider databook={data.databook}>
+                <PostgisDataExplorer />
+              </DatabookContextProvider>
+            )}
           </div>
         ) : (
           <LoadingDatabook tables={tables} tablesReady={tablesReady} />
