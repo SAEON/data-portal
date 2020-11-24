@@ -10,26 +10,15 @@ const iconSizeSmall = 22
 
 export default ({ schema }) => {
   const { tables } = schema
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const classes = useStyles()
 
   return (
     <>
-      <div
-        style={{
-          inlineSize: 'max-content',
-          paddingLeft: 0,
-        }}
-      >
+      <div>
         <StorageIcon
           onClick={() => {
             setExpanded(!expanded)
-          }}
-          style={{
-            // paddingLeft: '10px',
-            marignLeft: '5px',
-            marginRight: '5px',
-            verticalAlign: 'middle',
           }}
           fontSize="small"
         />
@@ -37,7 +26,6 @@ export default ({ schema }) => {
         {expanded ? (
           <OpenIcon
             size={iconSizeSmall}
-            className={clsx(classes.icon)}
             onClick={() => {
               setExpanded(!expanded)
             }}
@@ -45,7 +33,6 @@ export default ({ schema }) => {
         ) : (
           <ClosedIcon
             size={iconSizeSmall}
-            className={clsx(classes.icon)}
             onClick={() => {
               setExpanded(!expanded)
             }}
@@ -53,8 +40,9 @@ export default ({ schema }) => {
         )}
 
         {/* Child Tree Items */}
-        <div className={expanded ? {} : clsx(classes.hidden)}>
+        <div style={{ marginLeft: '6px' }} className={expanded ? undefined : clsx(classes.hidden)}>
           {/* Mapping array of Tables */}
+          {/* STEVEN TO DO: sort tables and sort columns */}
           {tables.map(table => {
             return (
               <TreeItem

@@ -9,7 +9,7 @@ import { RenameTable } from './rename-entities'
 // import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
-// const iconSizeBig = iconSizeSmall //32
+const inputMinSize = 21
 
 export default props => {
   const context = useContext(databooksContext)
@@ -17,8 +17,7 @@ export default props => {
   const [expanded, setExpanded] = useState(false)
   const [text, setText] = useState(primaryText)
 
-  const indentation = itemDepth * 13
-
+  const indentation = itemDepth * 15
   const itemType = itemDepth === 1 ? 'table' : 'column'
   const classes = useStyles()
   const inputRef = useRef(null)
@@ -29,7 +28,12 @@ export default props => {
 
   return (
     <>
-      <div style={{ paddingLeft: indentation /* inlineSize: 'max-content'*/ }}>
+      <div
+        style={{
+          paddingLeft: indentation,
+          inlineSize: 'max-content',
+        }}
+      >
         {/* EXPANSION ICON (Tables only) */}
         {itemType === 'column' ? undefined : expanded ? (
           <OpenIcon
@@ -55,7 +59,7 @@ export default props => {
         >
           {({ renaming, setRenaming }) => {
             return (
-              <>
+              <div className={clsx(classes.hoverHighlight)}>
                 <RenameTable
                   variables={{
                     id: context.databook.doc._id,
@@ -76,8 +80,10 @@ export default props => {
                     }
 
                     return (
-                      <>
+                      <div className={clsx(classes.hoverHighlight)}>
                         <input
+                          // size={text.length + 1}
+                          size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
                           autoComplete={'off'}
                           readOnly={!renaming}
                           value={text}
@@ -99,17 +105,24 @@ export default props => {
                             setText(primaryText)
                           }}
                         ></input>
-                        <span className={clsx(classes.secondaryText)}>{secondaryText}</span>
-                      </>
+                        {secondaryText ? (
+                          <span
+                            style={{ display: 'contents' }}
+                            className={clsx(classes.secondaryText)}
+                          >
+                            {secondaryText}
+                          </span>
+                        ) : undefined}
+                      </div>
                     )
                   }}
                 </RenameTable>
-              </>
+              </div>
             )
           }}
         </ContextMenu>
         {/* CHILD COLUMNS */}
-        <div className={expanded ? {} : clsx(classes.hidden)}>{children}</div>
+        <div className={expanded ? undefined : clsx(classes.hidden)}>{children}</div>
       </div>
     </>
   )
