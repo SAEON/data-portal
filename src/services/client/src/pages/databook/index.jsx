@@ -78,7 +78,7 @@ export default ({ id }) => {
               classes.bg
             )}
           >
-            {errors ? (
+            {errors.length ? (
               <Box m={2}>
                 <Typography>
                   Error preparing data. Please send the message below to a system administrator (
