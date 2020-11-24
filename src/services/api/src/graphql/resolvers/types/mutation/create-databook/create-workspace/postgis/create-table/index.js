@@ -64,6 +64,9 @@ export default async (databook, { immutableResource, id }) => {
      * Process .shp into PostGIS
      */
     await ogr2ogr(databook, tableName, shpFilePath).then(async code => {
+      if (code !== 0) {
+        throw new Error(`Non-zero exit code (${code}) from GDAL ogr2ogr process`)
+      }
       /**
        * Update the databook (Mongo doc) to
        * indicate that this table is ready
@@ -80,7 +83,13 @@ export default async (databook, { immutableResource, id }) => {
       )
     })
   } catch (error) {
-    console.error(tableName, 'Error creating table for', databook._id, 'Resource download failed')
+    console.error(
+      tableName,
+      'Error creating table for',
+      databook._id,
+      'Resource download failed',
+      error.message
+    )
     await Databooks.findOneAndUpdate(
       { _id: ObjectID(databook._id) },
       {
