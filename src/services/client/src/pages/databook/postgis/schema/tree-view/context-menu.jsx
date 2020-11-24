@@ -7,7 +7,13 @@ export default props => {
   const [renaming, setRenaming] = useState(false)
   return (
     <>
-      <MenuProvider id={uniqueIdentifier} style={{ display: 'inline-block' }}>
+      <MenuProvider
+        id={uniqueIdentifier}
+        style={{
+          display: 'inline-block',
+          width: '94%',
+        }}
+      >
         {props.children({ renaming, setRenaming })}
       </MenuProvider>
       <Menu id={uniqueIdentifier} style={{ zIndex: 4 }}>

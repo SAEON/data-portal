@@ -12,9 +12,27 @@ export default ({ schema }) => {
   const { tables } = schema
   const [expanded, setExpanded] = useState(true)
   const classes = useStyles()
+
   return (
     <>
-      <div style={{ inlineSize: 'max-content', paddingLeft: 0 }}>
+      <div
+        style={{
+          inlineSize: 'max-content',
+          paddingLeft: 0,
+        }}
+      >
+        <StorageIcon
+          onClick={() => {
+            setExpanded(!expanded)
+          }}
+          style={{
+            // paddingLeft: '10px',
+            marignLeft: '5px',
+            marginRight: '5px',
+            verticalAlign: 'middle',
+          }}
+          fontSize="small"
+        />
         {/* Expansion Icon */}
         {expanded ? (
           <OpenIcon
@@ -33,13 +51,6 @@ export default ({ schema }) => {
             }}
           />
         )}
-        <StorageIcon
-          onClick={() => {
-            setExpanded(!expanded)
-          }}
-          style={{ left: '-10px', padding: '0px', verticalAlign: 'middle' }}
-          fontSize="small"
-        />
 
         {/* Child Tree Items */}
         <div className={expanded ? {} : clsx(classes.hidden)}>

@@ -5,6 +5,7 @@ export default makeStyles(theme => ({
   text: {
     fontFamily: 'monospace',
     fontSize: 'small',
+    width: '100%',
     border: 'none',
     outline: 'none',
   },
@@ -16,6 +17,7 @@ export default makeStyles(theme => ({
   },
   renamingText: {
     padding: '5px',
+    width: '100%',
     fontFamily: 'monospace',
     fontSize: 'small',
   },
