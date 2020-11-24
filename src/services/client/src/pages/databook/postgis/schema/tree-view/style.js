@@ -33,5 +33,6 @@ export default makeStyles(theme => ({
     fontFamily: 'monospace',
     fontSize: 'small',
   },
+  button: {},
   hidden: { visibility: 'hidden', height: '0' },
 }))

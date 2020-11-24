@@ -2,6 +2,7 @@ import { useState, useContext, useRef } from 'react'
 import { context as databooksContext } from '../../../context'
 import OpenIcon from 'mdi-react/MenuDownIcon'
 import ClosedIcon from 'mdi-react/MenuRightIcon'
+import InfoIcon from '@material-ui/icons/InfoOutlined'
 import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './context-menu'
@@ -16,6 +17,7 @@ export default props => {
   const { itemDepth, primaryText, secondaryText, children, uniqueIdentifier } = props
   const [expanded, setExpanded] = useState(false)
   const [text, setText] = useState(primaryText)
+  const [hovered, setHovered] = useState(false)
 
   const indentation = itemDepth * 15
   const itemType = itemDepth === 1 ? 'table' : 'column'
@@ -34,93 +36,113 @@ export default props => {
           inlineSize: 'max-content',
         }}
       >
-        {/* EXPANSION ICON (Tables only) */}
-        {itemType === 'column' ? undefined : expanded ? (
-          <OpenIcon
-            size={iconSizeSmall}
-            className={clsx(classes.icon)}
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-          />
-        ) : (
-          <ClosedIcon
-            size={iconSizeSmall}
-            className={clsx(classes.icon)}
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-          />
-        )}
-        {/* TEXT */}
-        <ContextMenu
-          uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}
-          handleFocus={handleFocus}
-        >
-          {({ renaming, setRenaming }) => {
-            return (
-              <div className={clsx(classes.hoverHighlight)}>
-                <RenameTable
-                  variables={{
-                    id: context.databook.doc._id,
-                    tableName: primaryText,
-                    newName: text,
-                  }}
-                  inputRef={inputRef}
-                >
-                  {renameEntityLazy => {
-                    const onEnter = e => {
-                      e.preventDefault()
-                      setRenaming(false)
-                      const result = renameEntityLazy()
-                      if (result?.error) {
-                        //STEVEN TO DO: if error: setText(originalText) & warn user
-                        console.log('onEnter error', result?.error)
-                      }
-                    }
-
-                    return (
-                      <div className={clsx(classes.hoverHighlight)}>
-                        <input
-                          // size={text.length + 1}
-                          size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
-                          autoComplete={'off'}
-                          readOnly={!renaming}
-                          value={text}
-                          ref={inputRef}
-                          className={renaming ? clsx(classes.renamingText) : clsx(classes.text)}
-                          onClick={() => {
-                            if (!renaming) setExpanded(!expanded)
-                          }}
-                          onInput={e => {
-                            setText(e.target.value)
-                          }}
-                          onKeyDown={e => {
-                            if (e.key === 'Enter') {
-                              onEnter(e)
-                            }
-                          }}
-                          onBlur={() => {
-                            setRenaming(false)
-                            setText(primaryText)
-                          }}
-                        ></input>
-                        {secondaryText ? (
-                          <span
-                            style={{ display: 'contents' }}
-                            className={clsx(classes.secondaryText)}
-                          >
-                            {secondaryText}
-                          </span>
-                        ) : undefined}
-                      </div>
-                    )
-                  }}
-                </RenameTable>
-              </div>
-            )
+        <div
+          onMouseOver={() => {
+            setHovered(true)
           }}
-        </ContextMenu>
+          onMouseLeave={() => {
+            setHovered(false)
+          }}
+        >
+          {/* EXPANSION ICON (Tables only) */}
+          {itemType === 'column' ? undefined : expanded ? (
+            <OpenIcon
+              size={iconSizeSmall}
+              className={clsx(classes.icon)}
+              onClick={() => {
+                setExpanded(!expanded)
+              }}
+            />
+          ) : (
+            <ClosedIcon
+              size={iconSizeSmall}
+              className={clsx(classes.icon)}
+              onClick={() => {
+                setExpanded(!expanded)
+              }}
+            />
+          )}
+          {/* TEXT */}
+          <ContextMenu
+            uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}
+            handleFocus={handleFocus}
+          >
+            {({ renaming, setRenaming }) => {
+              return (
+                <div className={clsx(classes.hoverHighlight)}>
+                  <RenameTable
+                    variables={{
+                      id: context.databook.doc._id,
+                      tableName: primaryText,
+                      newName: text,
+                    }}
+                    inputRef={inputRef}
+                  >
+                    {renameEntityLazy => {
+                      const onEnter = e => {
+                        e.preventDefault()
+                        setRenaming(false)
+                        const result = renameEntityLazy()
+                        if (result?.error) {
+                          //STEVEN TO DO: if error: setText(originalText) & warn user
+                          console.log('onEnter error', result?.error)
+                        }
+                      }
+
+                      return (
+                        <div className={clsx(classes.hoverHighlight)}>
+                          <input
+                            size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
+                            autoComplete={'off'}
+                            readOnly={!renaming}
+                            value={text}
+                            ref={inputRef}
+                            className={renaming ? clsx(classes.renamingText) : clsx(classes.text)}
+                            onClick={() => {
+                              if (!renaming) setExpanded(!expanded)
+                            }}
+                            onInput={e => {
+                              setText(e.target.value)
+                            }}
+                            onKeyDown={e => {
+                              if (e.key === 'Enter') {
+                                onEnter(e)
+                              }
+                            }}
+                            onBlur={() => {
+                              setRenaming(false)
+                              setText(primaryText)
+                            }}
+                          ></input>
+                          {secondaryText ? (
+                            <span
+                              style={{ display: 'contents' }}
+                              className={clsx(classes.secondaryText)}
+                            >
+                              {secondaryText}
+                            </span>
+                          ) : undefined}
+                          <InfoIcon
+                            style={{ position: 'absolute' }}
+                            style={{
+                              visibility: hovered ? 'visible' : 'hidden',
+                              position: 'absolute',
+                            }}
+                            fontSize={'small'}
+                            className={clsx(classes.button)}
+                            onClick={() => {
+                              console.log('button clicked')
+                            }}
+                          />
+                        </div>
+                      )
+                    }}
+                  </RenameTable>
+                </div>
+              )
+            }}
+          </ContextMenu>
+        </div>
         {/* CHILD COLUMNS */}
         <div className={expanded ? undefined : clsx(classes.hidden)}>{children}</div>
       </div>
