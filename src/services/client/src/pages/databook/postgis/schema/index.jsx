@@ -5,9 +5,6 @@ import Loading from '../../../../components/loading'
 import { WithGqlQuery } from '../../../../hooks'
 import TreeView from './tree-view/index'
 
-/* STEVEN TODO: Map array of databooks passed here as <TreeView/>'s instead of just a single <TreeView/> 
-  Its possible the extra databooks aren't being passed here through props. To look into it further*/
-
 export default () => {
   const { databook } = useContext(databookContext)
   return (
@@ -40,10 +37,16 @@ export default () => {
         if (loading) {
           return <Loading />
         }
-
         return (
-          <div style={{ backgroundColor: 'rgb(255,255,255)', padding: '3px', height: '100%' }}>
-            <TreeView style={{}} schema={data.databook.schema} />
+          <div
+            style={{
+              backgroundColor: 'rgb(255,255,255)',
+              padding: '3px',
+              height: '100%',
+              borderRight: '1px solid rgb(228, 231, 234)',
+            }}
+          >
+            <TreeView schema={data.databook.schema} />
           </div>
         )
       }}
