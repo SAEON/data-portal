@@ -1,5 +1,4 @@
 import TreeItem from './tree-item'
-import ContexifyMenu from './contexify-menu'
 import useStyles from './style'
 import { useState } from 'react'
 import clsx from 'clsx'
@@ -11,7 +10,7 @@ const iconSizeSmall = 22
 
 export default ({ schema }) => {
   const { tables } = schema
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const classes = useStyles()
   return (
     <>
@@ -43,8 +42,7 @@ export default ({ schema }) => {
         />
 
         {/* Child Tree Items */}
-        <div style={expanded ? {} : { visibility: 'hidden', height: '0' }}>
-          {/* <ContexifyMenu> */}
+        <div className={expanded ? {} : clsx(classes.hidden)}>
           {/* Mapping array of Tables */}
           {tables.map(table => {
             return (
@@ -71,7 +69,6 @@ export default ({ schema }) => {
               </TreeItem>
             )
           })}
-          {/* </ContexifyMenu> */}
         </div>
       </div>
     </>

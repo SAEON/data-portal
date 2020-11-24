@@ -1,50 +1,36 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 import { context as databooksContext } from '../../../context'
 import OpenIcon from 'mdi-react/MenuDownIcon'
 import ClosedIcon from 'mdi-react/MenuRightIcon'
 import clsx from 'clsx'
 import useStyles from './style'
-import { gql } from '@apollo/client'
-import ContexifyMenu from './contexify-menu'
+import ContextMenu from './context-menu'
+import { RenameTable } from './rename-entities'
 // import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
 // const iconSizeBig = iconSizeSmall //32
 
-const TEST_MUTATION = gql`
-  mutation($schemaId: String!, $tableId: String!, $newTableName: String!) {
-    databook(id: "5fae7017811a701352474d93") {
-      schema {
-        tables(id: "testtable") {
-          updateTableName(name: "newname")
-        }
-      }
-    }
-  }
-`
-
 export default props => {
   const context = useContext(databooksContext)
-  const { itemDepth, primaryText, secondaryText, children, tableId, uniqueIdentifier } = props
-
+  const { itemDepth, primaryText, secondaryText, children, uniqueIdentifier } = props
   const [expanded, setExpanded] = useState(false)
-  const [editing, setEditing] = useState(false)
   const [text, setText] = useState(primaryText)
 
   const indentation = itemDepth * 13
 
   const itemType = itemDepth === 1 ? 'table' : 'column'
   const classes = useStyles()
+  const inputRef = useRef(null)
 
-  const onEnter = async () => {
-    setEditing(false)
-    //use mutation
+  const handleFocus = () => {
+    inputRef.current.focus()
   }
 
   return (
     <>
-      <div style={{ paddingLeft: indentation }} onBlur={onEnter}>
-        {/* Expansion Icon (Tables only) */}
+      <div style={{ paddingLeft: indentation }}>
+        {/* EXPANSION ICON (Tables only) */}
         {itemType === 'column' ? undefined : expanded ? (
           <OpenIcon
             size={iconSizeSmall}
@@ -62,36 +48,67 @@ export default props => {
             }}
           />
         )}
-        {/* Text */}
-        <ContexifyMenu uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}>
+        {/* TEXT */}
+        <ContextMenu
+          uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}
+          handleFocus={handleFocus}
+        >
           {({ renaming, setRenaming }) => {
             return (
               <>
-                <span
-                  style={renaming ? { color: '#00b4ff' } : {}}
-                  id={`rename-friendly-${uniqueIdentifier}`}
-                  contentEditable={renaming}
-                  className={clsx(classes.text)}
-                  onClick={() => setExpanded(!expanded)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      onEnter(this, e)
-                      setRenaming(false)
-                    }
+                <RenameTable
+                  variables={{
+                    id: context.databook.doc._id,
+                    tableName: primaryText,
+                    newName: text,
                   }}
-                  onInput={e => {
-                    setText(e.target.innerHTML)
-                  }}
+                  inputRef={inputRef}
                 >
-                  {primaryText}
-                </span>
-                <span style={{ color: 'rgba(0, 0, 0, 0.4)' }}> {secondaryText}</span>
+                  {renameEntityLazy => {
+                    const onEnter = e => {
+                      e.preventDefault()
+                      setRenaming(false)
+                      const result = renameEntityLazy()
+                      if (result.error) {
+                        //STEVEN TO DO: if error: setText(originalText) & warn user
+                      }
+                    }
+
+                    return (
+                      <>
+                        <input
+                          autoComplete={'off'}
+                          readOnly={!renaming}
+                          value={text}
+                          ref={inputRef}
+                          className={renaming ? clsx(classes.renamingText) : clsx(classes.text)}
+                          onClick={() => {
+                            if (!renaming) setExpanded(!expanded)
+                          }}
+                          onInput={e => {
+                            setText(e.target.value)
+                          }}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                              onEnter(e)
+                            }
+                          }}
+                          onBlur={() => {
+                            setRenaming(false)
+                            setText(primaryText)
+                          }}
+                        ></input>
+                        <span className={clsx(classes.secondaryText)}>{secondaryText}</span>
+                      </>
+                    )
+                  }}
+                </RenameTable>
               </>
             )
           }}
-        </ContexifyMenu>
-        {/* Child Columns */}
-        <div style={expanded ? {} : { visibility: 'hidden', height: '0' }}>{children}</div>
+        </ContextMenu>
+        {/* CHILD COLUMNS */}
+        <div className={expanded ? {} : clsx(classes.hidden)}>{children}</div>
       </div>
     </>
   )
