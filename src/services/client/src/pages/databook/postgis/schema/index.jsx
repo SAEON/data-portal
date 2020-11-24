@@ -37,13 +37,17 @@ export default () => {
         if (loading) {
           return <Loading />
         }
+
         return (
           <div
             style={{
               backgroundColor: 'rgb(255,255,255)',
               padding: '3px',
               height: '100%',
+              width: '100%',
               borderRight: '1px solid rgb(228, 231, 234)',
+              overflow: 'auto',
+              overflowX: 'scroll',
             }}
           >
             <TreeView schema={data.databook.schema} />

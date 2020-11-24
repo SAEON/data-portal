@@ -29,7 +29,7 @@ export default props => {
 
   return (
     <>
-      <div style={{ paddingLeft: indentation }}>
+      <div style={{ paddingLeft: indentation /* inlineSize: 'max-content'*/ }}>
         {/* EXPANSION ICON (Tables only) */}
         {itemType === 'column' ? undefined : expanded ? (
           <OpenIcon
@@ -69,8 +69,9 @@ export default props => {
                       e.preventDefault()
                       setRenaming(false)
                       const result = renameEntityLazy()
-                      if (result.error) {
+                      if (result?.error) {
                         //STEVEN TO DO: if error: setText(originalText) & warn user
+                        console.log('onEnter error', result?.error)
                       }
                     }
 
