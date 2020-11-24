@@ -102,7 +102,7 @@ export default ({ doi, open, setOpen, citationStyles, citationLocales }) => {
 
               {/* CITATION TEXT */}
               {error ? (
-                'Error'
+                <samp>{error.message}</samp>
               ) : loading ? (
                 <CircularProgress />
               ) : (
