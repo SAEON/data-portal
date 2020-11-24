@@ -4,7 +4,6 @@ import {
   IconButton,
   Dialog,
   DialogTitle,
-  DialogContent,
   DialogActions,
   Button,
   Tooltip,

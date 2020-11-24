@@ -38,7 +38,7 @@ export default forwardRef((props, ref) => {
         const dashboards = data.databook.dashboards
 
         return (
-          <div>
+          <>
             {createPortal(
               <TabHeaders
                 activeTabIndex={activeTabIndex}
@@ -54,7 +54,7 @@ export default forwardRef((props, ref) => {
                 </div>
               )
             })}
-          </div>
+          </>
         )
       }}
     </WithGqlQuery>

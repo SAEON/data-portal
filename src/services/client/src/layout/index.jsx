@@ -4,8 +4,7 @@ import Routes from './routes'
 
 export default () => {
   const { pathname } = window.location
-  // eslint-disable-next-line no-useless-escape
-  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0]
+  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0] // eslint-disable-line
 
   return (
     <Router>

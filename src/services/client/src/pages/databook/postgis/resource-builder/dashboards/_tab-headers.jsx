@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Tabs, Tab, Avatar, Tooltip, IconButton } from '@material-ui/core'
+import { Tabs, Tab, Avatar, Tooltip, IconButton, CircularProgress } from '@material-ui/core'
 import { context as databookContext } from '../../../context'
 import { gql, useMutation } from '@apollo/client'
 import useStyles from '../../../style'
@@ -18,6 +18,20 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
   const { databook } = useContext(databookContext)
   const classes = useStyles()
   const [addDashboard, { error, loading, data }] = useMutation(ADD_DASHBOARD)
+
+  if (error) {
+    throw error
+  }
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', paddingLeft: 16 }}>
+        <CircularProgress thickness={2} size={18} />
+      </div>
+    )
+  }
+
+  // TODO - data should merge into dashboards
 
   return (
     <div style={{ display: 'flex' }}>
@@ -43,14 +57,16 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
       </Tabs>
 
       {/* ADD TAB BUTTON */}
-      <IconButton
-        onClick={() => {
-          addDashboard({ variables: { databookId: databook.doc._id, name: 'test' } })
-        }}
-        size="small"
-      >
-        <PlusIcon size={14} />
-      </IconButton>
+      <div style={{ alignSelf: 'center' }}>
+        <IconButton
+          onClick={() => {
+            addDashboard({ variables: { databookId: databook.doc._id, name: 'test' } })
+          }}
+          size="small"
+        >
+          <PlusIcon size={14} />
+        </IconButton>
+      </div>
     </div>
   )
 }

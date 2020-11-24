@@ -21,6 +21,7 @@ export default makeStyles(theme => ({
     borderBottom: `1px solid ${theme.palette.secondary.dark}`,
     display: 'flex',
     justifyContent: 'flex-start',
+    boxSizing: 'content-box',
   },
   pushDown: {
     marginTop: 48,

@@ -1,6 +1,6 @@
-import { useRef, useLayoutEffect } from 'react'
 import ReactEcharts from 'echarts-for-react'
 
+// eslint-disable-next-line
 export default ({ xAxis, yAxis, data, name }) => {
   console.log(data)
   return (
