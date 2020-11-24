@@ -28,18 +28,20 @@ export default () => {
       {({ error, loading, data }) => {
         if (error) {
           return (
-            <Fade in={Boolean(error)}>
-              <Typography>{error.message}</Typography>
-            </Fade>
+            <div className={clsx(classes.layout, classes.bg)}>
+              <Fade in={Boolean(error)}>
+                <Typography>{error.message}</Typography>
+              </Fade>
+            </div>
           )
         }
 
         if (loading) {
           return (
-            <>
+            <div className={clsx(classes.layout, classes.bg)}>
               <Loading />
               <Header />
-            </>
+            </div>
           )
         }
 
