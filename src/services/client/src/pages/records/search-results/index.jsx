@@ -3,12 +3,13 @@ import Header from './header'
 import Filters from './filters'
 import Records from './records'
 import { GlobalContext } from '../../../contexts/global'
-import { Typography, Grid, Collapse } from '@material-ui/core'
+import { Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
 import Loading from '../../../components/loading'
-import { useCatalogue as WithCatalogue } from '../../../hooks'
+import { WithGqlQuery } from '../../../hooks'
 import { getUriState } from '../../../lib/fns'
+import { gql } from '@apollo/client'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -16,15 +17,21 @@ const DEFAULT_CURSORS = {
   currentPage: 0,
 }
 
+const FILTERS = [
+  'linkedResources.linkedResourceType.raw',
+  'publicationYear',
+  'publisher.raw',
+  'subjects.subject.raw',
+  'creators.name.raw',
+]
+
 export default ({ disableSidebar = false }) => {
   const [showSidebar, setShowSidebar] = useState(!disableSidebar && !isMobile)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
-
   const showTopMenu = !window.location.pathname.includes('/render')
-  const { showSearchBar } = getUriState()
-
+  const { showSearchBar, referrer } = getUriState()
   const { global } = useContext(GlobalContext)
   const { terms, extent = undefined, text = undefined, ids = [], dois = [] } = global
 
@@ -45,26 +52,85 @@ export default ({ disableSidebar = false }) => {
    * cursors.start is only set when navigating BACK,
    * data items must be reversed when paged BACK
    */
-
   return (
-    <WithCatalogue
-      pageSize={pageSize}
-      startCursor={cursors.start}
-      endCursor={cursors.end}
-      ids={ids}
-      dois={dois}
-      terms={terms}
-      extent={extent}
-      text={text}
+    <WithGqlQuery
+      QUERY={gql`
+        query(
+          $extent: WKT_4326
+          $text: String
+          $terms: [TermInput!]
+          $size: Int
+          $before: ES_Cursor
+          $after: ES_Cursor
+          $fields: [String!]
+          $summaryLimit: Int
+          $ids: [ID!]
+          $dois: [String!]
+          $referrer: String
+        ) {
+          catalogue(referrer: $referrer) {
+            id
+            summary(
+              fields: $fields
+              filterByText: $text
+              filterByExtent: $extent
+              filterByTerms: $terms
+              limit: $summaryLimit
+              filterByIds: $ids
+              filterByDois: $dois
+            )
+            records(
+              extent: $extent
+              text: $text
+              terms: $terms
+              size: $size
+              before: $before
+              after: $after
+              ids: $ids
+              dois: $dois
+            ) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+              }
+              totalCount
+              nodes {
+                metadata
+              }
+            }
+          }
+        }
+      `}
+      variables={{
+        fields: FILTERS,
+        ids,
+        dois,
+        extent,
+        terms,
+        text,
+        size: pageSize,
+        after: cursors.end,
+        before: cursors.start,
+        summaryLimit: 50,
+        referrer,
+      }}
     >
       {({ error, loading, data }) => {
-        const results = cursors.start
-          ? data?.catalogue.records.nodes.slice(0).reverse()
-          : data?.catalogue.records.nodes
+        if (error) {
+          throw new Error('We apologise for this unexpected error!.' + error.message)
+        }
 
-        return error ? (
-          <Typography>{JSON.stringify(error)}</Typography>
-        ) : (
+        if (loading) {
+          return <Loading />
+        }
+
+        const results = cursors.start
+          ? data.catalogue.records.nodes.slice(0).reverse()
+          : data.catalogue.records.nodes
+
+        return (
           <Header
             disableSidebar={disableSidebar}
             showSidebar={showSidebar}
@@ -136,6 +202,6 @@ export default ({ disableSidebar = false }) => {
           </Header>
         )
       }}
-    </WithCatalogue>
+    </WithGqlQuery>
   )
 }

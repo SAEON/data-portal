@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import Loading from '../../components/loading'
 import SideMenu from './side-menu'
-import { useCatalogue as WithCatalogue, WithGqlQuery } from '../../hooks'
+import { WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../config'
@@ -13,7 +13,7 @@ import Map from './map'
 
 export default () => {
   const snapMenusContainer = useRef()
-  const atlasId = getUriState().atlas
+  const { atlas: atlasId, referrer } = getUriState()
   if (!atlasId) {
     throw new Error(
       `The ATLAS requires prior-configuration of what layers to show. This is done at ${CATALOGUE_CLIENT_ADDRESS}/records`
@@ -49,24 +49,74 @@ export default () => {
             throw new Error('Error loading search state for Atlas')
           }
 
-          return loading ? (
-            <Loading />
-          ) : (
-            <WithCatalogue {...data?.atlas.state} pageSize={CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}>
+          if (loading) {
+            return <Loading />
+          }
+
+          const {
+            ids = undefined,
+            dois = undefined,
+            extent = undefined,
+            terms = undefined,
+            text = undefined,
+          } = data.atlas.state
+
+          return (
+            <WithGqlQuery
+              QUERY={gql`
+                query(
+                  $extent: WKT_4326
+                  $text: String
+                  $terms: [TermInput!]
+                  $size: Int
+                  $ids: [ID!]
+                  $dois: [String!]
+                  $referrer: String
+                ) {
+                  catalogue(referrer: $referrer) {
+                    id
+                    records(
+                      extent: $extent
+                      text: $text
+                      terms: $terms
+                      size: $size
+                      ids: $ids
+                      dois: $dois
+                    ) {
+                      pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                      }
+                      totalCount
+                      nodes {
+                        metadata
+                      }
+                    }
+                  }
+                }
+              `}
+              variables={{
+                ids,
+                dois,
+                extent,
+                terms,
+                text,
+                size: CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
+                referrer,
+              }}
+            >
               {({ error, loading, data }) => {
                 if (error) {
-                  throw new Error('Error searching catalogue')
+                  throw new Error('Error searching catalogue on atlas load')
                 }
 
-                if (data?.catalogue.records.totalCount > CATALOGUE_CLIENT_MAX_ATLAS_LAYERS) {
-                  throw new Error(
-                    `Atlas supports a maximum of ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS} datasets. ${data.catalogue.records.totalCount} datasets were specified`
-                  )
+                if (loading) {
+                  return <Loading />
                 }
 
-                return loading ? (
-                  <Loading />
-                ) : (
+                return (
                   <StateProvider data={data}>
                     <OlReactProvider>
                       <MenuProvider
@@ -83,7 +133,7 @@ export default () => {
                   </StateProvider>
                 )
               }}
-            </WithCatalogue>
+            </WithGqlQuery>
           )
         }}
       </WithGqlQuery>
