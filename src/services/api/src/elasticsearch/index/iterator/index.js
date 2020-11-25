@@ -6,44 +6,59 @@ import authenticateWithOdp from '../../../lib/authenticate-with-odp.js'
 
 const ODP_BATCH_SIZE = 100
 
-const iterate = ({ offset = 0, token }) =>
-  fetch(`${ODP_ADDRESS}?limit=${ODP_BATCH_SIZE}&offset=${offset}`, {
+const iterate = async ({ offset = 0, token }) => {
+  const odpResponse = await fetch(`${ODP_ADDRESS}?limit=${ODP_BATCH_SIZE}&offset=${offset}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',
       Authorization: token,
     },
   })
-    .then(res => res.json())
-    .then(json => ({
-      next: () => iterate({ offset: offset + json.length, token }),
-      data: json
-        .map(
-          ({ id, doi, institution, collection, projects, schema, metadata, published }) =>
-            published
-              ? {
-                  id,
-                  doi,
-                  institution,
-                  collection,
-                  projects,
-                  schema,
-                  ...Object.fromEntries(
-                    Object.entries(metadata).map(([key, value]) =>
-                      key === 'dates'
-                        ? [key, parseDates(value)]
-                        : key === 'geoLocations'
-                        ? [key, parseSpatial(value)]
-                        : [key, value]
-                    )
-                  ),
-                }
-              : undefined // publised === false
+
+  const odpResponseJson = await odpResponse.json()
+  const next = () => iterate({ offset: offset + odpResponseJson.length, token })
+  const done = !odpResponseJson.length
+
+  const data = odpResponseJson
+    .map(({ id, doi, institution, collection, projects, schema, metadata, published }) => {
+      try {
+        return published
+          ? {
+              id,
+              doi,
+              institution,
+              collection,
+              projects,
+              schema,
+              ...Object.fromEntries(
+                Object.entries(metadata).map(([key, value]) =>
+                  key === 'dates'
+                    ? [key, parseDates(value)]
+                    : key === 'geoLocations'
+                    ? [key, parseSpatial(value)]
+                    : [key, value]
+                )
+              ),
+            }
+          : undefined // publised === false
+      } catch (error) {
+        console.error(
+          'Error processing published metadata record into Elasticsearch. ID',
+          id,
+          error
         )
-        // Filter away published === false
-        .filter(_ => _),
-      done: !json.length,
-    }))
+        return undefined
+      }
+    })
+    // Filter away published === false
+    .filter(_ => _)
+
+  return {
+    next,
+    data,
+    done,
+  }
+}
 
 export default () =>
   authenticateWithOdp()
