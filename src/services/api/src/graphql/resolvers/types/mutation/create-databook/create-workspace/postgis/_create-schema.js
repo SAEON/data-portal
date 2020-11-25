@@ -14,15 +14,12 @@ export default async databook => {
 
   console.log(schema, 'Creating schema')
 
-  try {
-    await query({
-      text: `
+  await query({
+    text: `
         create user "${username}" with encrypted password '${password}';
         create schema "${schema}" authorization "${username}";
-        alter user "${username}" set search_path = public,"${schema}";`,
-    })
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+        grant usage on schema public to "${username}";
+        alter role "${username}" set search_path = "${schema}", public;
+        grant select on all tables in schema public to "${username}";`,
+  })
 }

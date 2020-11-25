@@ -1,20 +1,24 @@
 import {
   POSTGIS_DB,
   POSTGIS_HOST,
+  POSTGIS_HOST_DEV,
   POSTGIS_USERNAME,
   POSTGIS_PASSWORD,
   POSTGIS_PORT,
+  CATALOGUE_API_NODE_ENV,
 } from '../config.js'
 import createPool from './pool.js'
 import createClient from './client.js'
 
-const pool = createPool(POSTGIS_HOST, POSTGIS_USERNAME, POSTGIS_DB, POSTGIS_PASSWORD, POSTGIS_PORT)
+const PG_HOST = CATALOGUE_API_NODE_ENV === 'production' ? POSTGIS_HOST : POSTGIS_HOST_DEV
+
+const pool = createPool(PG_HOST, POSTGIS_USERNAME, POSTGIS_DB, POSTGIS_PASSWORD, POSTGIS_PORT)
 
 export default async ({ text, values, name, client = undefined }) =>
   client
     ? new Promise((resolve, reject) => {
         const _client = createClient({
-          host: client.host || POSTGIS_HOST,
+          host: client.host || PG_HOST,
           user: client.user || POSTGIS_USERNAME,
           password: client.password || POSTGIS_PASSWORD,
           database: client.database || POSTGIS_DB,
@@ -34,7 +38,7 @@ export default async ({ text, values, name, client = undefined }) =>
                 reject(error)
               } else {
                 resolve(res)
-                client.end() // TODO - this might allow for ending the client connection before all data is retrieved
+                return client.end() // TODO - this might allow for ending the client connection before all data is retrieved
               }
             })
           )

@@ -9,8 +9,14 @@ import home from './http/home.js'
 import zlib from 'zlib'
 import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
+import configurePostgis from './postgis/setup/index.js'
 import { configure as configureElasticsearch } from './elasticsearch/index.js'
-import { CATALOGUE_API_NODE_ENV, CATALOGUE_API_PORT, CATALOGUE_PROXY_ADDRESS } from './config.js'
+import {
+  CATALOGUE_API_NODE_ENV,
+  CATALOGUE_API_PORT,
+  CATALOGUE_PROXY_ADDRESS,
+  CATALOGUE_API_SEED_POSTGIS_LAYERS,
+} from './config.js'
 import clientSession from './middleware/client-session.js'
 
 if (!CATALOGUE_API_NODE_ENV || !['production', 'development'].includes(CATALOGUE_API_NODE_ENV)) {
@@ -24,6 +30,11 @@ if (!CATALOGUE_API_NODE_ENV || !['production', 'development'].includes(CATALOGUE
 
 // Configure Elasticsearch
 configureElasticsearch().then(() => console.log('Elasticsearch configured'))
+
+// Configure PostGIS
+if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
+  configurePostgis().then(() => console.log('PostGIS configured'))
+}
 
 /**
  * Setup HTTP server (Koa)
