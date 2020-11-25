@@ -1,13 +1,13 @@
 import { spawn } from 'child_process'
 import { CATALOGUE_DOCKER_NETWORK, POSTGIS_DB, POSTGIS_HOST } from '../config.js'
 
-export default ({ tableName, username, password, pathToShapefile, schema }) => {
+export default ({ tableName, username, password, pathToShapefile, schema, mntRoot = '/tmp' }) => {
   return new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', [
       'run',
       `--net=${CATALOGUE_DOCKER_NETWORK}`,
       '-v',
-      '/tmp:/tmp',
+      `${mntRoot}:${mntRoot}`,
       '--rm',
       'osgeo/gdal:alpine-small-latest',
       'ogr2ogr',
