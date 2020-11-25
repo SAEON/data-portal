@@ -3,10 +3,10 @@ import { useState, createContext } from 'react'
 export const context = createContext()
 
 export default ({ children, databook, schema }) => {
-  const tableId = schema.tables[0].id
+  const tableId = Object.keys(databook.doc.tables)[0] // TODO should come from the sql schema query
   const [sql, setSql] = useState(`select *
 from "${tableId}"
-limit 50`)
+limit 20`)
 
   return (
     <context.Provider
