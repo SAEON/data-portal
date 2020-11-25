@@ -122,18 +122,20 @@ export default props => {
                               {secondaryText}
                             </span>
                           ) : undefined}
-                          <InfoIcon
-                            style={{ position: 'absolute' }}
-                            style={{
-                              visibility: hovered ? 'visible' : 'hidden',
-                              position: 'absolute',
-                            }}
-                            fontSize={'small'}
-                            className={clsx(classes.button)}
-                            onClick={() => {
-                              console.log('button clicked')
-                            }}
-                          />
+                          {itemType === 'table' ? (
+                            <InfoIcon
+                              style={{ position: 'absolute' }}
+                              style={{
+                                visibility: hovered ? 'visible' : 'hidden',
+                                position: 'absolute',
+                              }}
+                              fontSize={'small'}
+                              className={clsx(classes.button)}
+                              onClick={() => {
+                                console.log('button clicked')
+                              }}
+                            />
+                          ) : undefined}
                         </div>
                       )
                     }}
