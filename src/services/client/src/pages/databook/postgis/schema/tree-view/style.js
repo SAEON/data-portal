@@ -20,6 +20,13 @@ export default makeStyles(theme => ({
     background: 'none',
     border: 'none',
     outline: 'none',
+    marginRight: '5px',
+  },
+  renamingText: {
+    fontFamily: 'monospace',
+    fontSize: 'small',
+    padding: '5px',
+    paddingLeft: '0px',
   },
   secondaryText: {
     color: fade(theme.palette.common.black, 0.4),
@@ -27,11 +34,6 @@ export default makeStyles(theme => ({
     fontFamily: 'monospace',
     fontSize: 'small',
     float: 'right',
-  },
-  renamingText: {
-    padding: '5px',
-    fontFamily: 'monospace',
-    fontSize: 'small',
   },
   button: {},
   hidden: { visibility: 'hidden', height: '0' },
