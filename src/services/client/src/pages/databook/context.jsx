@@ -2,10 +2,11 @@ import { useState, createContext } from 'react'
 
 export const context = createContext()
 
-export default ({ children, databook }) => {
+export default ({ children, databook, schema }) => {
+  const tableId = schema.tables[0].id
   const [sql, setSql] = useState(`select *
-from odp_925377aa_6914_41e8_8b92_f448ebe11f9c
-limit 40`)
+from "${tableId}"
+limit 50`)
 
   return (
     <context.Provider
@@ -13,6 +14,7 @@ limit 40`)
         sql,
         setSql,
         databook,
+        schema,
       }}
     >
       {children}
