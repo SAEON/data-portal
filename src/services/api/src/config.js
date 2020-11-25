@@ -38,6 +38,9 @@ export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
 
+export const CATALOGUE_API_SEED_POSTGIS_LAYERS =
+  process.env.CATALOGUE_API_SEED_POSTGIS_LAYERS || 'enabled'
+
 /**
  * Local development the API doesn't run dockerized,
  * so PostGIS is on local. However the ogr2ogr
@@ -98,6 +101,7 @@ console.log('Configuration', {
   CATALOGUE_API_NODE_ENV,
   CATALOGUE_DEPLOYMENT_ENV,
   CATALOGUE_DOCKER_NETWORK,
+  CATALOGUE_API_SEED_POSTGIS_LAYERS,
   MONGO_DB,
   MONGO_DB_USERNAME: mask(MONGO_DB_USERNAME),
   MONGO_DB_PASSWORD: mask(MONGO_DB_PASSWORD),
