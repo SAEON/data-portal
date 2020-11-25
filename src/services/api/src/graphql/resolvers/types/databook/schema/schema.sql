@@ -1,13 +1,31 @@
 select
 	c.table_schema,
 	c.table_name,
-	c.column_name ,
+	c.column_name,
 	c.data_type 
 
 from information_schema."columns" c 
 
 where
 	c.table_schema = $1
+	or (
+		c.table_schema = 'public'
+		and c.table_name in ( -- TODO these should be dynamic
+			'local-municipality-boundaries-2016',
+			'district-municipality-boundaries-2016'
+		)
+	)
+
+-- select
+-- 	c.table_schema,
+-- 	c.table_name,
+-- 	c.column_name ,
+-- 	c.data_type 
+
+-- from information_schema."columns" c 
+
+-- where
+-- 	c.table_schema = $1
 
 
 -- select

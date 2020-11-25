@@ -2,10 +2,10 @@ export default async (self, args, ctx) => {
   const { authentication } = self.doc
   const { username, password } = authentication
   const { query } = ctx.postgis
-  const { sql: text } = args
+  const { sql } = args
 
   const response = await query({
-    text,
+    text: `${sql}`,
     client: {
       user: username,
       password,

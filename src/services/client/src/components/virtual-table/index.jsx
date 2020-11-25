@@ -119,7 +119,7 @@ export default ({ data }) => {
                       })}
                       style={Object.assign({}, style)}
                     >
-                      <div>{value.toString().truncate(15)}</div>
+                      <div>{value.toString()}</div>
                     </div>
                   )
                 }}

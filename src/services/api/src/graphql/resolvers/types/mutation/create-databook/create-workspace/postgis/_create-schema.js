@@ -19,7 +19,9 @@ export default async databook => {
       text: `
         create user "${username}" with encrypted password '${password}';
         create schema "${schema}" authorization "${username}";
-        alter user "${username}" set search_path = public,"${schema}";`,
+        grant usage on schema public to "${username}";
+        alter role "${username}" set search_path = "${schema}", public;
+        grant select on all tables in schema public to "${username}";`,
     })
   } catch (error) {
     console.error(error)

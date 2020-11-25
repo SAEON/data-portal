@@ -38,7 +38,14 @@ export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
 
-export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'localhost'
+/**
+ * Local development the API doesn't run dockerized,
+ * so PostGIS is on local. However the ogr2ogr
+ * commands still require addressing PostGIS via the
+ * Docker network
+ */
+export const POSTGIS_HOST_DEV = process.env.POSTGIS_HOST_DEV || 'localhost'
+export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'postgis'
 
 export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
 
