@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 import Loading from './components/loading'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
-import 'webcrypto-shim' // TODO - probably better to use self signed certificates on staging. This likely adds to the bundle on production
 import 'typeface-roboto'
 import './index.scss'
 import { render } from 'react-dom'

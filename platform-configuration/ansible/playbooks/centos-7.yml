@@ -31,6 +31,18 @@
         state: directory
         mode: '0755'
 
+    - name: Ensure /opt/ssl-keys directory
+      file:
+        path: /opt/ssl-keys
+        state: directory
+        mode: '0751'
+
+    - name: Create dhparam.pem (for SSL)
+      shell: |
+        openssl dhparam -out /opt/ssl-keys/dhparam.pem 2048
+
+# TODO. self signed or letsencrypt - openssl req -x509 -nodes -days 358000 -newkey rsa:2048 -keyout /opt/ssl-keys/catalogue.saeon.dvn.key -out /opt/ssl-keys/catalogue.saeon.dvn.crt 
+
     - name: Install latest Git
       yum:
         name: https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm

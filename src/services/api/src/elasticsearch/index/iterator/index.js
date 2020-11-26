@@ -42,11 +42,7 @@ const iterate = async ({ offset = 0, token }) => {
             }
           : undefined // publised === false
       } catch (error) {
-        console.error(
-          'Error processing published metadata record into Elasticsearch. ID',
-          id,
-          error
-        )
+        console.error(id, error.message)
         return undefined
       }
     })
