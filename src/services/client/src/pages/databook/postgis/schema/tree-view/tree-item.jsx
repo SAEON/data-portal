@@ -6,7 +6,7 @@ import InfoIcon from '@material-ui/icons/InfoOutlined'
 import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './context-menu'
-import { RenameTable } from './rename-entities'
+import RenameEntity from './rename-entity'
 // import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
@@ -14,7 +14,8 @@ const inputMinSize = 21
 
 export default props => {
   const context = useContext(databooksContext)
-  const { itemDepth, primaryText, secondaryText, children, uniqueIdentifier } = props
+  const { itemDepth, primaryText, secondaryText, children, uniqueIdentifier, tableId } = props
+  // console.log('props', props)
   const [expanded, setExpanded] = useState(false)
   const [text, setText] = useState(primaryText)
   const [hovered, setHovered] = useState(false)
@@ -66,17 +67,20 @@ export default props => {
           <ContextMenu
             uniqueIdentifier={`contexify-menu-${uniqueIdentifier}`}
             handleFocus={handleFocus}
+            tableName={tableId}
           >
             {({ renaming, setRenaming }) => {
               return (
                 <div className={clsx(classes.hoverHighlight)}>
-                  <RenameTable
+                  <RenameEntity
                     variables={{
                       id: context.databook.doc._id,
-                      tableName: primaryText,
+                      tableName: tableId,
                       newName: text,
+                      columnName: primaryText,
                     }}
                     inputRef={inputRef}
+                    entityType={itemType}
                   >
                     {renameEntityLazy => {
                       const onEnter = e => {
@@ -107,6 +111,9 @@ export default props => {
                             onKeyDown={e => {
                               if (e.key === 'Enter') {
                                 onEnter(e)
+                              } else if (['Escape', 'Tab'].includes(e.key)) {
+                                setRenaming(false)
+                                setText(primaryText)
                               }
                             }}
                             onBlur={() => {
@@ -122,22 +129,23 @@ export default props => {
                               {secondaryText}
                             </span>
                           ) : undefined}
-                          <InfoIcon
-                            style={{ position: 'absolute' }}
-                            style={{
-                              visibility: hovered ? 'visible' : 'hidden',
-                              position: 'absolute',
-                            }}
-                            fontSize={'small'}
-                            className={clsx(classes.button)}
-                            onClick={() => {
-                              console.log('button clicked')
-                            }}
-                          />
+                          {itemType === 'table' ? (
+                            <InfoIcon
+                              style={{
+                                visibility: hovered ? 'visible' : 'hidden',
+                                position: 'absolute',
+                              }}
+                              fontSize={'small'}
+                              className={clsx(classes.button)}
+                              onClick={() => {
+                                console.log('button clicked')
+                              }}
+                            />
+                          ) : undefined}
                         </div>
                       )
                     }}
-                  </RenameTable>
+                  </RenameEntity>
                 </div>
               )
             }}

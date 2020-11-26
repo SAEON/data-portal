@@ -25,7 +25,7 @@ const RENAME_COLUMN = gql`
     }
   }
 `
-const RenameEntity = props => {
+const QueryOperator = props => {
   const { query, variables, children } = props
   const [renameEntityLazy, result] = useLazyQuery(query, {
     variables,
@@ -39,28 +39,30 @@ const RenameEntity = props => {
   }
   if (error) {
     console.log('mutation error!', error)
+    console.error(error)
   }
-  //STEVEN TO DO: ERROR HANDLING!
+  //STEVEN TO DO: more error handling
   return children(renameEntityLazy)
 }
 
-const RenameTable = ({ variables, children, inputRef }) => {
+const RenameEntity = ({ variables, children, inputRef, entityType }) => {
+  if (!['table', 'column'].includes(entityType)) {
+    console.log('RenameEntity requires a valid entityType')
+    return children
+  }
+
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+
   return (
-    <RenameEntity query={RENAME_TABLE} variables={variables}>
+    <QueryOperator
+      query={entityType === 'table' ? RENAME_TABLE : RENAME_COLUMN}
+      variables={variables}
+    >
       {children}
-    </RenameEntity>
+    </QueryOperator>
   )
 }
 
-const RenameColumn = ({ variables, children }) => {
-  return (
-    <RenameEntity query={RENAME_COLUMN} variables={variables}>
-      {children}
-    </RenameEntity>
-  )
-}
-
-export { RenameTable, RenameColumn }
+export default RenameEntity

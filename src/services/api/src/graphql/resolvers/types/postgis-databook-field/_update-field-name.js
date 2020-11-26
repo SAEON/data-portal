@@ -23,7 +23,7 @@ export default async (self, args, ctx) => {
   const { name: newColumnName } = args
   const sql = `ALTER TABLE "${schemaId.toString()}"."${table_name}" RENAME COLUMN "${column_name}" TO "${newColumnName}"`
   try {
-    await query({ text: sql, client: { username, password } }) //client parameter can be set, see query def in .../databook/execute/index.js
+    await query({ text: sql, client: { user: username, password } }) //client parameter can be set, see query def in .../databook/execute/index.js
   } catch (error) {
     console.log(error)
     console.error(error)
