@@ -38,6 +38,9 @@ export default ({
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
+    headers: {
+      'Content-type': 'application/json',
+    },
   }).catch(error => {
     throw new Error('Unable to authenticate user', error)
   })
