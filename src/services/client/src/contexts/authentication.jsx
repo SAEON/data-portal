@@ -2,15 +2,15 @@ import { useState, useEffect, createContext } from 'react'
 import {
   CATALOGUE_CLIENT_AUTH_ID as clientId,
   CATALOGUE_CLIENT_AUTH_REDIRECT_URL as redirectUrl,
-  AUTHENTICATION_ENDPOINT as authenticationEndpoint,
-  TOKEN_ENDPOINT as tokenEndpoint,
-  REQUESTED_SCOPES as requestedScopes,
-  LOGOUT_ENDPOINT as logoutEndpoint,
-  ENABLE_LOGIN,
+  CATALOGUE_CLIENT_AUTH_ENDPOINT as authenticationEndpoint,
+  CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT as tokenEndpoint,
+  CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES as requestedScopes,
+  CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT as logoutEndpoint,
+  CATALOGUE_CLIENT_AUTH,
 } from '../config'
 import authClient from '@saeon/pkce-client'
 
-const USE_LOGIN = ENABLE_LOGIN === 'enabled'
+const USE_LOGIN = CATALOGUE_CLIENT_AUTH === 'enabled'
 
 const { authenticate, logout, getBearerToken } = authClient({
   clientId,

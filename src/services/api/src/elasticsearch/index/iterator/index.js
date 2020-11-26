@@ -17,7 +17,7 @@ const iterate = async ({ offset = 0, token }) => {
 
   const odpResponseJson = await odpResponse.json()
   const next = () => iterate({ offset: offset + odpResponseJson.length, token })
-  const done = !odpResponseJson.length
+  const done = !odpResponseJson?.length
 
   const data = odpResponseJson
     .map(({ id, doi, institution, collection, projects, schema, metadata, published }) => {

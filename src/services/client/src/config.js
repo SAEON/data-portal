@@ -33,18 +33,20 @@ export const CATALOGUE_CLIENT_AUTH_ID = process.env.CATALOGUE_CLIENT_AUTH_ID || 
 export const CATALOGUE_CLIENT_AUTH_REDIRECT_URL =
   process.env.CATALOGUE_CLIENT_AUTH_REDIRECT_URL || 'http://localhost:3001/authenticated'
 
-export const AUTHENTICATION_ENDPOINT =
-  process.env.AUTHENTICATION_ENDPOINT || 'https://odp.saeon.ac.za/auth/oauth2/auth' // 'https://odp.saeon.dvn/auth/oauth2/auth'
+export const CATALOGUE_CLIENT_AUTH_ENDPOINT =
+  process.env.CATALOGUE_CLIENT_AUTH_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/auth'
 
-export const LOGOUT_ENDPOINT =
-  process.env.LOGOUT_ENDPOINT || 'https://odp.saeon.ac.za/auth/oauth2/sessions/logout' // 'https://odp.saeon.dvn/auth/oauth2/sessions/logout'
+export const CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT =
+  process.env.CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT ||
+  'https://odp.saeon.dvn/auth/oauth2/sessions/logout'
 
-export const TOKEN_ENDPOINT =
-  process.env.TOKEN_ENDPOINT || 'https://odp.saeon.ac.za/auth/oauth2/token' // 'https://odp.saeon.dvn/auth/oauth2/token'
+export const CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT =
+  process.env.CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/token'
 
-export const REQUESTED_SCOPES = process.env.REQUESTED_SCOPES || 'ODP.Catalogue' // 'SAEON.atlas
+export const CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES =
+  process.env.CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES || 'SAEON.atlas'
 
-export const ENABLE_LOGIN = process.env.ENABLE_LOGIN || 'enabled'
+export const CATALOGUE_CLIENT_AUTH = process.env.CATALOGUE_CLIENT_AUTH || 'enabled'
 
 if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
   console.log('Configuration', {
@@ -62,10 +64,10 @@ if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
     CATALOGUE_CLIENT_AUTH_ID,
     CATALOGUE_CLIENT_ADDRESS,
     CATALOGUE_CLIENT_AUTH_REDIRECT_URL,
-    AUTHENTICATION_ENDPOINT,
-    LOGOUT_ENDPOINT,
-    TOKEN_ENDPOINT,
-    REQUESTED_SCOPES,
-    ENABLE_LOGIN,
+    CATALOGUE_CLIENT_AUTH_ENDPOINT,
+    CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT,
+    CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT,
+    CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES,
+    CATALOGUE_CLIENT_AUTH,
   })
 }
