@@ -1,4 +1,5 @@
 import { stringify as createWkt_4326 } from 'wkt'
+// TODO - this is broken
 
 export default spatial =>
   spatial.map(({ geoLocationBox, geoLocationPoint }) => ({
