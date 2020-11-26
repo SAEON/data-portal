@@ -25,6 +25,12 @@
         state: directory
         mode: '0755'
 
+    - name: Ensure /app directory
+      file:
+        path: /app
+        state: directory
+        mode: '0755'        
+
     - name: Ensure /opt/dbak directory
       file:
         path: /opt/dbak
