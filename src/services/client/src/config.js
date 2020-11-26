@@ -25,29 +25,26 @@ export const CATALOGUE_API_GQL_ADDRESS =
 export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS =
   process.env.CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS || 'ws://localhost:3000/graphql'
 
-export const CATALOGUE_CLIENT_AUTH_ID =
-  process.env.CATALOGUE_CLIENT_AUTH_ID || 'saeonatlasclienttest'
-
 export const CATALOGUE_CLIENT_ADDRESS =
   process.env.CATALOGUE_CLIENT_ADDRESS || 'http://localhost:3001'
+
+export const CATALOGUE_CLIENT_AUTH_ID = process.env.CATALOGUE_CLIENT_AUTH_ID || 'saeon-data-portal' // 'saeonatlasclienttest'
 
 export const CATALOGUE_CLIENT_AUTH_REDIRECT_URL =
   process.env.CATALOGUE_CLIENT_AUTH_REDIRECT_URL || 'http://localhost:3001/authenticated'
 
 export const AUTHENTICATION_ENDPOINT =
-  process.env.AUTHENTICATION_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/auth'
+  process.env.AUTHENTICATION_ENDPOINT || 'https://odp.saeon.ac.za/auth/oauth2/auth' // 'https://odp.saeon.dvn/auth/oauth2/auth'
 
 export const LOGOUT_ENDPOINT =
-  process.env.LOGOUT_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/sessions/logout'
+  process.env.LOGOUT_ENDPOINT || 'https://odp.saeon.ac.za/auth/oauth2/sessions/logout' // 'https://odp.saeon.dvn/auth/oauth2/sessions/logout'
 
 export const TOKEN_ENDPOINT =
-  process.env.TOKEN_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/token'
+  process.env.TOKEN_ENDPOINT || 'https://odp.saeon.ac.za/auth/oauth2/token' // 'https://odp.saeon.dvn/auth/oauth2/token'
 
-export const REQUESTED_SCOPES = process.env.REQUESTED_SCOPES || ''
+export const REQUESTED_SCOPES = process.env.REQUESTED_SCOPES || 'ODP.Catalogue' // 'SAEON.atlas
 
-export const ENABLE_LOGIN = process.env.ENABLE_LOGIN
-  ? process.env.ENABLE_LOGIN.toLowerCase() === 'true'
-  : false
+export const ENABLE_LOGIN = process.env.ENABLE_LOGIN || 'enabled'
 
 if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
   console.log('Configuration', {

@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
 import Transition from './_transition'
+import Loading from '../../components/loading'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
@@ -14,7 +15,8 @@ const ChartPage = lazy(() => import('../../pages/chart'))
 export default withRouter(() => {
   return (
     <Switch key={location.pathname || '/'}>
-      <Route key={'authenticated'} path={'/authenticated'} render={() => <Redirect to={'/'} />} />
+      <Route key={'authenticated'} path={'/authenticated'} render={() => <Loading />} />
+      <Route key={'logout'} path={'/logout'} render={() => <Redirect to={'/'} />} />
 
       {/* Render individual components */}
       <Route

@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
 import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
 import FeedbackDialogue from './_feedback-dialogue'
+import AccountMenu from './_account-menu'
 import ShareOrEmbed from '../../components/share-or-embed'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -47,6 +48,7 @@ export default () => {
                   }
                 />
               )}
+              <AccountMenu />
               <FeedbackDialogue />
             </Grid>
           </Grid>

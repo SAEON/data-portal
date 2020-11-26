@@ -114,7 +114,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
-      - /app:/app
     depends_on:
       - proxy
       - mongo

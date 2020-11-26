@@ -10,6 +10,8 @@ import {
 } from '../config'
 import authClient from '@saeon/pkce-client'
 
+const USE_LOGIN = ENABLE_LOGIN === 'enabled'
+
 const { authenticate, logout, getBearerToken } = authClient({
   clientId,
   redirectUrl,
@@ -23,10 +25,20 @@ export const AuthContext = createContext()
 
 export default ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false)
+  const [loggingIn, setLoggingIn] = useState(false)
 
   useEffect(() => {
-    if (ENABLE_LOGIN) {
-      authenticate({ forceLogin: false }).then(({ loggedIn }) => setLoggedIn(loggedIn))
+    if (USE_LOGIN) {
+      setLoggingIn(true)
+      authenticate({ forceLogin: false })
+        .then(({ loggedIn }) => {
+          setLoggingIn(false)
+          setLoggedIn(loggedIn)
+        })
+        .catch(error => {
+          setLoggingIn(false)
+          throw error
+        })
     }
   }, [])
 
@@ -34,17 +46,36 @@ export default ({ children }) => {
     <AuthContext.Provider
       value={{
         login: ({ savePath = true } = {}) => {
-          if (ENABLE_LOGIN) {
-            authenticate({ redirectToCurrentPath: savePath }).then(({ loggedIn }) =>
-              setLoggedIn(loggedIn)
-            )
+          if (USE_LOGIN) {
+            setLoggingIn(true)
+            authenticate({ redirectToCurrentPath: savePath })
+              .then(({ loggedIn }) => {
+                setLoggingIn(false)
+                setLoggedIn(loggedIn)
+              })
+              .catch(error => {
+                setLoggingIn(false)
+                throw error
+              })
           } else {
-            alert('This feature is only available in development environments for now')
+            alert('This feature is currently disabled')
           }
         },
-        logout: () => logout().then(({ loggedIn }) => setLoggedIn(loggedIn)),
+        logout: () => {
+          setLoggingIn(true)
+          logout()
+            .then(({ loggedIn }) => {
+              setLoggingIn(false)
+              setLoggedIn(loggedIn)
+            })
+            .catch(error => {
+              setLoggingIn(false)
+              throw error
+            })
+        },
         getBearerToken,
         loggedIn,
+        loggingIn,
       }}
     >
       {children}
