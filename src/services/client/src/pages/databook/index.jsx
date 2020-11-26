@@ -110,6 +110,7 @@ export default ({ id }) => {
                             id
                             column_name
                             data_type
+                            ordinal_position
                           }
                         }
                       }

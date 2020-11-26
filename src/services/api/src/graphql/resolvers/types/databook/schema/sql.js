@@ -3,7 +3,8 @@ export default preparedTables =>
 		c.table_schema,
 		c.table_name,
 		c.column_name,
-		c.data_type 
+		c.data_type,
+		c.ordinal_position
 
 	from information_schema."columns" c 
 
@@ -13,6 +14,9 @@ export default preparedTables =>
 			c.table_schema = 'public'
 			and c.table_name in (${preparedTables.map((t, i) => `$${i + 2}`).join(',')})
 		)
+
+		order by
+			ordinal_position asc
 	`
 
 // -- select
