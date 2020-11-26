@@ -1,17 +1,7 @@
-import { readFile } from 'fs'
-import getCurrentDirectory from '../../../../../lib/get-current-directory.js'
-import { join } from 'path'
-const __dirname = getCurrentDirectory(import.meta)
+import { defaultDiskLayers, defaultWebLayers } from '../../../../../postgis/setup/default-layers.js'
+import makeSql from './sql.js'
 
-/**
- * Load the SQL string on startup and just keep
- * it cached
- */
-const sql = await new Promise((resolve, reject) =>
-  readFile(join(__dirname, './schema.sql'), { encoding: 'utf8' }, (error, data) =>
-    error ? reject(error) : resolve(data)
-  )
-)
+const sharedTables = Object.keys(Object.assign({}, defaultWebLayers, defaultDiskLayers))
 
 export default async (self, args, ctx) => {
   const { _id: schema, authentication } = self.doc
@@ -19,8 +9,8 @@ export default async (self, args, ctx) => {
   const { query } = ctx.postgis
 
   const response = await query({
-    text: sql,
-    values: [schema.toString()],
+    text: makeSql(sharedTables),
+    values: [schema.toString(), ...sharedTables],
     client: {
       user: username,
       password,

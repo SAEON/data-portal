@@ -14,26 +14,24 @@ export default async () => {
      * For now, just delete and recreate the index on app start
      * Updating documents doesn't seem to update the mapping
      */
-    await fetch(`${ELASTICSEARCH_ADDRESS}/${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(json =>
-        console.log(`${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} deleted on refresh`, json)
-      )
-      .catch(error => {
-        throw error
-      })
+    const elasticsearchTemplateResponse = await fetch(
+      `${ELASTICSEARCH_ADDRESS}/${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    const odpJson = await elasticsearchTemplateResponse.json()
+    console.log(`${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} deleted on refresh`, odpJson)
 
     /**
      * Fetch from the source, and push to the destination in batches
      */
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
-      const response = await fetch(
+      const elasticsResponse = await fetch(
         `${ELASTICSEARCH_ADDRESS}/${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME}/_bulk`,
         {
           method: 'POST',
@@ -45,23 +43,16 @@ export default async () => {
             .join(''),
         }
       )
-        .then(res => res.json())
-        .then(json => {
-          if (json.errors) {
-            throw new Error(JSON.stringify(json.items))
-          } else {
-            return json
-          }
-        })
-        .catch(error => {
-          throw new Error(`Unable to refresh ES index :: ${error.message}`)
-        })
+      const elasticsResponseJson = await elasticsResponse.json()
+      if (elasticsResponseJson.errors) {
+        throw new Error(JSON.stringify(elasticsResponseJson.items))
+      }
 
       console.log(
-        `Processed ${response.items.length} docs into the ${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} index`
+        `Processed ${elasticsResponseJson.items.length} docs into the ${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} index`
       )
-      response.items.forEach(({ index }) => (result[index.result] += 1))
 
+      elasticsResponseJson.items.forEach(({ index }) => (result[index.result] += 1))
       iterator = await iterator.next()
     }
   } catch (error) {

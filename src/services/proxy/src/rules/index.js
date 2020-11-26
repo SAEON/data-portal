@@ -19,7 +19,7 @@ const beforeSendRequest = async requestDetail => {
       proxiedRequest = elasticsearchRule({ path, requestDetail })
     } else if (path.includes('/proxy/saeon-spatialdata/spatialdata.saeon.ac.za')) {
       proxiedRequest = saeonGeoServersRule({ path, requestDetail })
-    } else if (path.includes('/proxy/saeon-spatialdata/196.21.191.55')) {
+    } else if (path.includes('/proxy/saeon-spatialdata/geoserver.saeon.ac.za')) {
       proxiedRequest = saeonGeoServerApp04Rule({ path, requestDetail })
     } else {
       throw new Error('No rule found')

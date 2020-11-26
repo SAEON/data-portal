@@ -1,1 +1,1 @@
-export default id => `odp_${id.replace(/-/g, '_')}`
+export default id => `odp-${id}`

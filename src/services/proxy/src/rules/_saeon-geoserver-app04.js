@@ -12,7 +12,7 @@ export default ({ path, requestDetail }) => {
     host,
     path: proxyPath,
   } = CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04_PARSED
-  const port = path.match(/^\/proxy\/saeon-spatialdata\/196.21.191.55\/\d{4}/)[0].slice(-4)
+  const port = path.match(/^\/proxy\/saeon-spatialdata\/geoserver.saeon.ac.za\/\d{4}/)[0].slice(-4)
   requestDetail.protocol = protocol
   console.log(requestDetail.protocol)
   return {
@@ -20,7 +20,10 @@ export default ({ path, requestDetail }) => {
     hostname,
     port,
     path: normalize(
-      `${proxyPath}${path.replace(/\/proxy\/saeon-spatialdata\/196.21.191.55\/\d{4}\//, '/')}`
+      `${proxyPath}${path.replace(
+        /\/proxy\/saeon-spatialdata\/geoserver.saeon.ac.za\/\d{4}\//,
+        '/'
+      )}`
     ),
   }
 }

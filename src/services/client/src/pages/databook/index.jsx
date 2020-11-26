@@ -97,9 +97,45 @@ export default ({ id }) => {
                 </pre>
               </Box>
             ) : (
-              <DatabookContextProvider databook={data.databook}>
-                <PostgisDataExplorer />
-              </DatabookContextProvider>
+              <WithGqlQuery
+                QUERY={gql`
+                  query($id: ID!) {
+                    databook(id: $id) {
+                      id
+                      schema {
+                        id
+                        tables {
+                          id
+                          fields {
+                            id
+                            column_name
+                            data_type
+                          }
+                        }
+                      }
+                    }
+                  }
+                `}
+                variables={{ id: data.databook.doc._id }}
+              >
+                {({ error, loading, data: schemaData }) => {
+                  if (loading) {
+                    return <Loading />
+                  }
+                  if (error) {
+                    throw error
+                  }
+
+                  return (
+                    <DatabookContextProvider
+                      schema={schemaData.databook.schema}
+                      databook={data.databook}
+                    >
+                      <PostgisDataExplorer />
+                    </DatabookContextProvider>
+                  )
+                }}
+              </WithGqlQuery>
             )}
           </div>
         ) : (
