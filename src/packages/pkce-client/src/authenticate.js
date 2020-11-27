@@ -5,6 +5,21 @@ import { parse } from 'url'
 import createKey from './lib/create-key'
 import { setState, getState, clearState, CACHE_KEYS } from './state-manager'
 
+/**
+ * TODO
+ *
+ * The problem is that I'm trying to consume the /auth endpoint
+ * from the client. This should be redirected to, rather than via
+ * a programmatic CORS request. The solution is to cache token to
+ * local storage. If that token ever fails (on the API), errors
+ * should bubble up to the user who is then redirected to the /auth
+ * endpoint, and the token is removed from local storage
+ *
+ * (1) Change token cache to be permanent browser storage
+ * (2) Instead of GET /auth, try validate the token
+ * (3) Change the /auth request to be a redirect
+ */
+
 export default ({
   AUTHENTICATION_ENDPOINT,
   CLIENT_ID,

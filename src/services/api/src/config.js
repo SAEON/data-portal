@@ -39,7 +39,7 @@ export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
 
 export const CATALOGUE_API_SEED_POSTGIS_LAYERS =
-  process.env.CATALOGUE_API_SEED_POSTGIS_LAYERS || 'enabled'
+  process.env.CATALOGUE_API_SEED_POSTGIS_LAYERS || 'disabled'
 
 /**
  * Local development the API doesn't run dockerized,
@@ -79,10 +79,10 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
 }`
 
 export const CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE =
-  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE || 'enabled'
+  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE || 'disabled'
 
 export const CATALOGUE_API_RESET_ELASTICSEARCH_INDEX =
-  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_INDEX || 'enabled'
+  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_INDEX || 'disabled'
 
 export const CATALOGUE_API_TEMP_DIRECTORY =
   process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))

@@ -45,7 +45,7 @@ jobs:
           CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/sessions/logout"
           CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token"
           CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue"
-          CATALOGUE_CLIENT_AUTH="enabled"
+          CATALOGUE_CLIENT_AUTH=disabled
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

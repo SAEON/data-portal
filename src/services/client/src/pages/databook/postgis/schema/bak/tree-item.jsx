@@ -7,7 +7,6 @@ import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './context-menu'
 import RenameEntity from './rename-entity'
-// import { FixedSizeList as List } from 'react-window'
 
 const iconSizeSmall = 22
 const inputMinSize = 21
@@ -15,7 +14,6 @@ const inputMinSize = 21
 export default props => {
   const context = useContext(databooksContext)
   const { itemDepth, primaryText, secondaryText, children, uniqueIdentifier, tableId } = props
-  // console.log('props', props)
   const [expanded, setExpanded] = useState(false)
   const [text, setText] = useState(primaryText)
   const [hovered, setHovered] = useState(false)
