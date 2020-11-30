@@ -1,7 +1,7 @@
 version: '3.8'
 
 networks:
-  default:
+  catalogue_default:
     name: $CATALOGUE_DOCKER_NETWORK
 
 volumes:
