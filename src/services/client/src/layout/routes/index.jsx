@@ -14,7 +14,6 @@ const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
 
 export default withRouter(() => {
-  console.log(location.pathname)
   return (
     <Switch key={location.pathname || '/'}>
       <Route key={'authenticated'} path={'/authenticated'} render={() => <Loading />} />

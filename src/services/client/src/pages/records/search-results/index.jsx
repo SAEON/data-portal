@@ -10,20 +10,13 @@ import Loading from '../../../components/loading'
 import { WithGqlQuery } from '../../../hooks'
 import { getUriState } from '../../../lib/fns'
 import { gql } from '@apollo/client'
+import FILTERS_CONFIG from './filters/config'
 
 const DEFAULT_CURSORS = {
   start: undefined,
   end: undefined,
   currentPage: 0,
 }
-
-const FILTERS = [
-  'linkedResources.linkedResourceType.raw',
-  'publicationYear',
-  'publisher.raw',
-  'subjects.subject.raw',
-  'creators.name.raw',
-]
 
 export default ({ disableSidebar = false }) => {
   const [showSidebar, setShowSidebar] = useState(!disableSidebar && !isMobile)
@@ -104,7 +97,10 @@ export default ({ disableSidebar = false }) => {
         }
       `}
       variables={{
-        fields: FILTERS,
+        fields: [
+          'linkedResources.linkedResourceType.raw', // This is used to count Atlases
+          ...FILTERS_CONFIG.map(({ field }) => field),
+        ],
         ids,
         dois,
         extent,
