@@ -13,9 +13,11 @@ type Catalogue {
 
   # Fetch metadata records from SAEON's data catalogue
   records(
-    # Fetch a single record by SAEON IDs (other arguments are ignored)
+    # Fetch records by either SAEON IDs or DOIs (other arguments ignored)
+    identifiers: [String!]
+    # Fetch records by SAEON IDs (other arguments are ignored)
     ids: [ID!]
-    # Fetch a single record by DOIs (other arguments are ignored)
+    # Fetch records by DOIs (other arguments are ignored)
     dois: [String!]
     # Fulltext search for provided string
     text: String
@@ -33,9 +35,11 @@ type Catalogue {
 
   # Get count aggregation of records by fields, with optional filters
   summary(
-    # Filter by a single record (ID). Other filters are ignored
+    # Filter by ID or DOI. Other filters are ignored
+    filterByIdentifiers: [String!]
+    # Filter by ID. Other filters are ignored
     filterByIds: [ID!]
-    # Filter by a single record (DOI). Other filters are ignored
+    # Filter by DOI. Other filters are ignored
     filterByDois: [String!]
     # Filter on full text search
     filterByText: String

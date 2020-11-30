@@ -5,9 +5,9 @@ import doisQuery from './_dois.js'
 import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
 
-export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) => {
+export default ({ dsl, ids, dois, text, terms, extent, identifiers, isAggregation = false }) => {
   if (isAggregation) {
-    if (extent || terms?.length || text || ids?.length || dois?.length) {
+    if (extent || terms?.length || text || ids?.length || dois?.length || identifiers?.length) {
       dsl.query = {
         bool: {
           must: [],
@@ -21,7 +21,16 @@ export default ({ dsl, ids, dois, text, terms, extent, isAggregation = false }) 
     dsl.min_score = min_score
   }
 
-  if (ids && ids.length) {
+  if (identifiers && identifiers.length) {
+    dsl.query.bool.should = [idsQuery(identifiers), doisQuery(identifiers)]
+    dsl.query.bool.filter = [
+      {
+        bool: {
+          should: [idsQuery(identifiers), doisQuery(identifiers)],
+        },
+      },
+    ]
+  } else if (ids && ids.length) {
     dsl.query.bool.must = [idsQuery(ids)]
     dsl.query.bool.filter = [idsQuery(ids)]
   } else if (dois && dois.length) {

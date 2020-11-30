@@ -179,7 +179,9 @@ module.exports = () => {
     ].filter(_ => _),
     devServer: {
       contentBase: path.join(__dirname, output),
-      historyApiFallback: true,
+      historyApiFallback: {
+        disableDotRule: true
+      },
       compress: true,
       allowedHosts: ['.localhost'],
       headers: {

@@ -12,6 +12,7 @@ export default async (_, args, ctx) => {
     terms = undefined,
     before = undefined,
     after = undefined,
+    identifiers = undefined,
   } = args
 
   if (size < 1 || size > 10000) {
@@ -44,7 +45,7 @@ export default async (_, args, ctx) => {
   }
 
   const data = await catalogue.query(
-    buildDsl({ dsl, ids, dois, text, terms, extent, isAggregation: false })
+    buildDsl({ dsl, ids, dois, text, terms, extent, identifiers, isAggregation: false })
   )
 
   return {

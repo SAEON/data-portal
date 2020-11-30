@@ -14,6 +14,7 @@ const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
 
 export default withRouter(() => {
+  console.log(location.pathname)
   return (
     <Switch key={location.pathname || '/'}>
       <Route key={'authenticated'} path={'/authenticated'} render={() => <Loading />} />
@@ -35,7 +36,7 @@ export default withRouter(() => {
       <Route
         key={'home'}
         path={'/'}
-        exact={true}
+        exact
         render={() => (
           <Transition>
             <HomePage />
@@ -46,7 +47,7 @@ export default withRouter(() => {
       {/* RECORDS */}
       <Route
         key={'records'}
-        exact={true}
+        exact
         path={'/records'}
         render={() => (
           <Transition tKey="records">
@@ -58,8 +59,8 @@ export default withRouter(() => {
       {/* RECORD */}
       <Route
         key={'record'}
-        path={'/records/:id'}
-        exact={false}
+        path={'/records/:id+'}
+        exact={true}
         render={props => (
           <Transition tKey="record">
             <RecordPage id={props.match.params.id} {...props} />
@@ -70,7 +71,7 @@ export default withRouter(() => {
       {/* COMPACT RECORD */}
       <Route
         key={'compact-record'}
-        exact={true}
+        exact
         path={'/compact-record'}
         render={() => (
           <Transition tKey="compact-record">
@@ -83,7 +84,7 @@ export default withRouter(() => {
       <Route
         key={'databook'}
         path={'/databooks/:id'}
-        exact={false}
+        exact
         render={props => (
           <Transition tKey={'databook'}>
             <DatabookPage id={props.match.params.id} {...props} />
@@ -95,7 +96,7 @@ export default withRouter(() => {
       <Route
         key={'dashboard'}
         path={'/dashboards/:id'}
-        exact={false}
+        exact
         render={props => (
           <Transition tKey={'dashboard'}>
             <DashboardPage id={props.match.params.id} {...props} />
@@ -107,7 +108,7 @@ export default withRouter(() => {
       <Route
         key={'chart'}
         path={'/charts/:id'}
-        exact={false}
+        exact
         render={props => (
           <Transition tKey={'chart'}>
             <ChartPage id={props.match.params.id} {...props} />
@@ -119,7 +120,7 @@ export default withRouter(() => {
       <Route
         key={'atlas'}
         path={'/atlas'}
-        exact={true}
+        exact
         render={() => {
           return (
             <Transition tKey="atlas">

@@ -7,6 +7,7 @@ export default async (_, args, ctx) => {
     filterByText: text = undefined,
     filterByExtent: extent = undefined,
     filterByIds: ids = undefined,
+    identifiers = undefined,
     filterByDois: dois = undefined,
     filterByTerms: terms = undefined,
     limit: size,
@@ -30,7 +31,7 @@ export default async (_, args, ctx) => {
   }
 
   const result = await catalogue.query(
-    buildDsl({ dsl, ids, dois, text, terms, extent, isAggregation: true })
+    buildDsl({ dsl, ids, dois, text, terms, identifiers, extent, isAggregation: true })
   )
 
   return Object.entries(result.aggregations).map(([name, { buckets }]) => ({
