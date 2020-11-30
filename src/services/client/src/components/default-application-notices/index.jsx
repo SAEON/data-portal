@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import { CATALOGUE_CLIENT_DEFAULT_NOTICES } from '../../config'
+import { getUriState } from '../../lib/fns'
 
 /**
  * Example of a notice:
@@ -8,6 +9,7 @@ import { CATALOGUE_CLIENT_DEFAULT_NOTICES } from '../../config'
  */
 export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
+  const { disableNotices } = getUriState()
 
   useEffect(() => {
     const _ = async () => {
@@ -26,7 +28,9 @@ export default ({ children }) => {
         await new Promise(res => setTimeout(res, 250))
       }
     }
-    _()
+    if (disableNotices !== 'true') {
+      _()
+    }
   })
 
   return children

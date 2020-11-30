@@ -11,6 +11,7 @@ const components = {
   atlas: lazy(() => import('../atlas')),
   databook: lazy(() => import('../databook')),
   chart: lazy(() => import('../chart')),
+  'compact-record': lazy(() => import('../compact-record')),
 }
 
 export default ({ location }) => {

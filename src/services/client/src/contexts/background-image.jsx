@@ -1,12 +1,12 @@
+import { createContext } from 'react'
+import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
+import { getUriState } from '../lib/fns'
 /**
  * Provides some measure of control over which background
  * image is displayed throughout the application. This
  * is not yet fully implemented - current the background
  * is chosen at random.
  */
-
-import { createContext } from 'react'
-import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
 
 const getBackgroundImagePath = () => {
   const backgrounds = CATALOGUE_CLIENT_BACKGROUNDS.split(',')
@@ -19,6 +19,12 @@ const getBackgroundImagePath = () => {
 export const BgImageContext = createContext()
 
 export default ({ children }) => {
+  const { disableBackground = false } = getUriState()
+
+  if (disableBackground === 'true') {
+    return children
+  }
+
   return (
     <>
       <div

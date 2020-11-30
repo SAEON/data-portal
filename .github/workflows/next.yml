@@ -3,7 +3,7 @@ name: deployment@next
 on:
   push:
     branches:
-      - next
+      - claire-share-box
 
 jobs:
   deploy:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: next
+          ref: claire-share-box
 
       - name: Configure Nginx (server entry)
         run: |
