@@ -46,8 +46,9 @@
           "type": "keyword",
           "normalizer": "keyword_trimmed_lower",
           "fields": {
-            "geo_shape": {
-              "type": "geo_shape"
+            "geometry": {
+              "type": "geo_shape",
+              "orientation": "counterclockwise"
             }
           }
         },

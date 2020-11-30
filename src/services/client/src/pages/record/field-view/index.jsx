@@ -12,6 +12,12 @@ import LinkedResources from './_linked-resources'
 import Identifiers from './_identifiers'
 import RightsList from './_rights-list'
 
+/**
+ * Fields correlate to fields in the metadata docs
+ * i.e. 'Abstract', and 'Methodology' are both in
+ * the descriptions field. Therefore there is a
+ * single component for both these fields (Descriptions)
+ */
 export default ({ codeView, ..._source }) => {
   return (
     <div style={{ margin: isMobile ? '16px 0 16px' : '32px 0px 32px' }}>

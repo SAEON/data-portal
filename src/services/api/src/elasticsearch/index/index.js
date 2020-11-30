@@ -6,7 +6,7 @@ export default async () => {
   const result = {
     updated: 0,
     created: 0,
-    error: false,
+    errors: false,
   }
 
   try {
@@ -44,19 +44,39 @@ export default async () => {
         }
       )
       const elasticsResponseJson = await elasticsResponse.json()
+
       if (elasticsResponseJson.errors) {
-        throw new Error(JSON.stringify(elasticsResponseJson.items))
+        console.log(
+          'Failure integrating the following ODP records into the Elasticsearch index',
+          JSON.stringify(
+            elasticsResponseJson.items
+              .filter(({ index: doc }) => doc.error)
+              .map(({ index: doc }) => ({
+                [doc._id]: JSON.stringify(doc.error),
+              })),
+            null,
+            2
+          )
+        )
       }
 
       console.log(
         `Processed ${elasticsResponseJson.items.length} docs into the ${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} index`
       )
 
-      elasticsResponseJson.items.forEach(({ index }) => (result[index.result] += 1))
+      elasticsResponseJson.items.forEach(({ index }) => {
+        if (index.result) {
+          result[index.result]++
+        }
+
+        if (index.error) {
+          result.errors++
+        }
+      })
       iterator = await iterator.next()
     }
   } catch (error) {
-    result.error = error.message
+    result.errors = error.message
     console.log(result)
     process.exit(1)
   }

@@ -1,26 +1,43 @@
 import fetch from 'node-fetch'
-import { ODP_ADDRESS } from '../../../config.js'
+import {
+  ODP_ADDRESS,
+  CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE,
+  CATALOGUE_API_ODP_DEBUG_IDS,
+} from '../../../config.js'
 import parseDates from './_parse-dates.js'
 import parseSpatial from './_parse-spatial.js'
 import authenticateWithOdp from '../../../lib/authenticate-with-odp.js'
 
-const ODP_BATCH_SIZE = 100
+const DEBUG_IDS = CATALOGUE_API_ODP_DEBUG_IDS.split(',')
+  .filter(_ => _)
+  .map(id => id.trim())
+
+if (DEBUG_IDS) {
+  console.log('Debugging ODP integration ids', DEBUG_IDS)
+}
 
 const iterate = async ({ offset = 0, token }) => {
-  const odpResponse = await fetch(`${ODP_ADDRESS}?limit=${ODP_BATCH_SIZE}&offset=${offset}`, {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: token,
-    },
-  })
+  const odpResponse = await fetch(
+    `${ODP_ADDRESS}?limit=${CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE}&offset=${offset}`,
+    {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: token,
+      },
+    }
+  )
 
   const odpResponseJson = await odpResponse.json()
   const next = () => iterate({ offset: offset + odpResponseJson.length, token })
   const done = !odpResponseJson?.length
 
   const data = odpResponseJson
-    .map(({ id, doi, institution, collection, projects, schema, metadata, published }) => {
+    .map(({ id, doi, institution, collection, projects, schema, metadata, published }, i) => {
+      if (DEBUG_IDS.includes(id)) {
+        console.log(id, JSON.stringify(odpResponseJson[i], null, 2))
+      }
+
       try {
         return published
           ? {
@@ -33,9 +50,9 @@ const iterate = async ({ offset = 0, token }) => {
               ...Object.fromEntries(
                 Object.entries(metadata).map(([key, value]) =>
                   key === 'dates'
-                    ? [key, parseDates(value)]
+                    ? [key, parseDates(id, value)]
                     : key === 'geoLocations'
-                    ? [key, parseSpatial(value)]
+                    ? [key, parseSpatial(id, value)]
                     : [key, value]
                 )
               ),
