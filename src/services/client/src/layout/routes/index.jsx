@@ -4,6 +4,7 @@ import Transition from './_transition'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
+const CompactRecordPage = lazy(() => import('../../pages/compact-record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
 const Render = lazy(() => import('../../pages/render'))
 const AtlasPage = lazy(() => import('../../pages/atlas'))
@@ -58,6 +59,18 @@ export default withRouter(() => {
         render={props => (
           <Transition tKey="record">
             <RecordPage id={props.match.params.id} {...props} />
+          </Transition>
+        )}
+      />
+
+      {/* RECORDS */}
+      <Route
+        key={'compact-record'}
+        exact={true}
+        path={'/compact-record'}
+        render={() => (
+          <Transition tKey="compact-record">
+            <CompactRecordPage />
           </Transition>
         )}
       />
