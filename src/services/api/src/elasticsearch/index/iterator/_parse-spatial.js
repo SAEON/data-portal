@@ -1,8 +1,7 @@
 import { stringify as createWkt_4326 } from 'wkt'
-// TODO - this is broken
 
-export default spatial =>
-  spatial.map(({ geoLocationBox, geoLocationPoint }) => ({
+export default spatial => {
+  return spatial.map(({ geoLocationBox, geoLocationPoint }) => ({
     geoLocationBox: geoLocationBox
       ? createWkt_4326({
           type: 'Polygon',
@@ -24,3 +23,4 @@ export default spatial =>
         })
       : undefined,
   }))
+}
