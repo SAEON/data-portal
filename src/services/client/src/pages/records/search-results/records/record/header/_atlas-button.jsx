@@ -6,13 +6,13 @@ import { gql, useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import useStyles from './style'
-import { GlobalContext } from '../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../contexts/global'
 
 export default ({ id, linkedResources }) => {
   const [loading, setLoading] = useState(false)
   const client = useApolloClient()
   const classes = useStyles()
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(globalContext)
   const { selectedIds } = global
   const history = useHistory()
 

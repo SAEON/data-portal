@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useRef } from 'react'
 import Header from './header'
 import Filters from './filters'
 import Records from './records'
-import { GlobalContext } from '../../../contexts/global'
+import { context as globalContext } from '../../../contexts/global'
 import { Grid, Collapse } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
@@ -25,7 +25,7 @@ export default ({ disableSidebar = false }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   const showTopMenu = !window.location.pathname.includes('/render')
   const { showSearchBar, referrer } = getUriState()
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
   const { terms, extent = undefined, text = undefined, ids = [], dois = [] } = global
 
   useEffect(() => {

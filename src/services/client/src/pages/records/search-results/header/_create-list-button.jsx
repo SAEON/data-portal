@@ -1,21 +1,24 @@
 import { useContext } from 'react'
 import { List as ListIcon } from '@material-ui/icons'
-import { GlobalContext } from '../../../../contexts/global'
+import { context as globalContext } from '../../../../contexts/global'
 import ShareOrEmbed from '../../../../components/share-or-embed'
 import StyledBadge from './components/styled-badge'
 
-const removeSelectedIds = obj =>
-  Object.fromEntries(Object.entries(obj).filter(([key]) => key !== 'selectedIds'))
-
 export default ({ catalogue }) => {
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
   const { selectedIds } = global
   const resultCount = catalogue?.records.totalCount
 
   return (
     <ShareOrEmbed
       params={{ showSearchBar: false }}
-      state={selectedIds.length ? { ids: selectedIds } : removeSelectedIds(global)}
+      state={
+        selectedIds.length
+          ? { ids: selectedIds }
+          : Object.fromEntries(
+              Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
+            )
+      }
       icon={<ListIcon />}
       iconProps={{
         color: 'default',

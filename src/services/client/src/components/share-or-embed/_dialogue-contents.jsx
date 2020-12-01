@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { Fade, CircularProgress } from '@material-ui/core'
-import { GlobalContext } from '../../contexts/global'
+import { context as globalContext } from '../../contexts/global'
 import Link from '../link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
@@ -18,7 +18,7 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
   const { uri: shareLink, params: includeParams } = getShareLink()
   const isAtlasPage = window.location.pathname.includes('atlas')
 
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
     mutation($state: JSON!, $createdBy: String!) {
       ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(state: $state, createdBy: $createdBy)

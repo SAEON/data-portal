@@ -10,6 +10,7 @@ import ConfigurePaginationButton from './_configure-pagination-button'
 import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
 import CurrentPageInfo from './_current-page-info'
+import DownloadRecords from './_download-records-button'
 
 export default ({
   catalogue,
@@ -44,6 +45,7 @@ export default ({
             <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
               <RefreshSelectionButton />
               <CreateDatabookButton catalogue={catalogue} />
+              <DownloadRecords catalogue={catalogue} />
               <CreateAtlasButton catalogue={catalogue} />
               <CreateListButton catalogue={catalogue} />
               {!isMobile && (

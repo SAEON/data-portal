@@ -5,7 +5,7 @@ import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { CATALOGUE_CLIENT_MAX_DATABOOK_TABLES } from '../../../../config'
-import { GlobalContext } from '../../../../contexts/global'
+import { context as globalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
 
@@ -54,7 +54,7 @@ const removeSelectedIds = obj =>
   )
 
 export default ({ catalogue }) => {
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
   const { selectedIds } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()

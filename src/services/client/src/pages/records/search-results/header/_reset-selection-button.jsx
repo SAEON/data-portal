@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { Tooltip, IconButton } from '@material-ui/core'
 import { Refresh as RefreshIcon } from '@material-ui/icons'
-import { GlobalContext } from '../../../../contexts/global'
+import { context as globalContext } from '../../../../contexts/global'
 
 export default () => {
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(globalContext)
   const { selectedIds } = global
 
   return (

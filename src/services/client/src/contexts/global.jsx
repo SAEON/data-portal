@@ -5,7 +5,7 @@ import Loading from '../components/loading'
 import { gql } from '@apollo/client'
 import { WithGqlQuery } from '../hooks'
 
-export const GlobalContext = createContext()
+export const context = createContext()
 
 const FromSavedSearch = ({ id, children }) =>
   id ? (
@@ -50,7 +50,7 @@ export default ({ children }) => {
         >
           {(setGlobal, global) => {
             return (
-              <GlobalContext.Provider
+              <context.Provider
                 value={{
                   global,
                   setGlobal: (obj, clearHistory = false, cb) => {
@@ -72,7 +72,7 @@ export default ({ children }) => {
                 }}
               >
                 {children}
-              </GlobalContext.Provider>
+              </context.Provider>
             )
           }}
         </QuickForm>

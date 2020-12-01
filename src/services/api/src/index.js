@@ -6,6 +6,7 @@ import koaCompress from 'koa-compress'
 import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
 import home from './http/home.js'
+import metadataRecords from './http/metadata-records/index.js'
 import zlib from 'zlib'
 import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
@@ -51,6 +52,7 @@ app.proxy = true
 const router = new KoaRouter()
 router.get('/', home)
 router.post('/', home)
+router.get('/metadata-records', metadataRecords)
 
 /**
  * Create the Node.js HTTP server callback

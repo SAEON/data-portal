@@ -6,7 +6,7 @@ import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
-import { GlobalContext } from '../../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../../contexts/global'
 
 const wkt = new WKT()
 
@@ -25,7 +25,7 @@ export default ({ proxy }) => {
   defaultZoom = defaultZoom || proxy.getView().getZoom()
   defaultCenter = defaultCenter || proxy.getView().getCenter()
   const [selectActive, setSelectActive] = useState(false)
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(globalContext)
   const [extent, setExtent] = useState(global.extent)
 
   /**

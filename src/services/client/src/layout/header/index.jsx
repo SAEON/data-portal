@@ -7,11 +7,11 @@ import AccountMenu from './_account-menu'
 import ShareOrEmbed from '../../components/share-or-embed'
 import useStyles from './style'
 import clsx from 'clsx'
-import { GlobalContext } from '../../contexts/global'
+import { context as globalContext } from '../../contexts/global'
 
 export default () => {
   const classes = useStyles()
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
   const { selectedIds } = global
 
   return (

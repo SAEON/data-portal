@@ -13,13 +13,13 @@ import { useTheme } from '@material-ui/core/styles'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import useStyles from '../style'
 import clsx from 'clsx'
-import { GlobalContext } from '../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../contexts/global'
 import Loading from '../../../../../../components/loading'
 
 const Map = lazy(() => import('./map'))
 
 export default ({ title }) => {
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
   const [collapsed, setCollapsed] = useState(!global?.extent)
   const classes = useStyles()
   const theme = useTheme()

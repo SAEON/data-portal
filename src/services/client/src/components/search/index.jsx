@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { TextField, InputAdornment } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
-import { GlobalContext } from '../../contexts/global'
+import { context as globalContext } from '../../contexts/global'
 import { debounce } from '../../lib/fns'
 
 export default ({
@@ -18,7 +18,7 @@ export default ({
   ...props
 }) => {
   const history = useHistory()
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(globalContext)
 
   return (
     <div {...props}>

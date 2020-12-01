@@ -13,7 +13,7 @@ import {
   Fade,
 } from '@material-ui/core'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
-import { GlobalContext } from '../../../../../contexts/global'
+import { context as globalContext } from '../../../../../contexts/global'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -21,7 +21,7 @@ const LIST_SIZE = 3
 
 export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', style = {} }) => {
   const [showAll, toggleShowAll] = useState(false)
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(globalContext)
   const { terms } = global
   const classes = useStyles()
 

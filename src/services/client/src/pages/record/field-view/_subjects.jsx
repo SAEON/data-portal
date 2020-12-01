@@ -1,11 +1,11 @@
 import { useContext } from 'react'
 import Row from '../_row'
 import { Grid, Chip } from '@material-ui/core'
-import { GlobalContext } from '../../../contexts/global'
+import { context as globalContext } from '../../../contexts/global'
 import { useHistory } from 'react-router-dom'
 
 export default ({ subjects }) => {
-  const { setGlobal } = useContext(GlobalContext)
+  const { setGlobal } = useContext(globalContext)
   const history = useHistory()
   return (
     <Row title="Keywords">

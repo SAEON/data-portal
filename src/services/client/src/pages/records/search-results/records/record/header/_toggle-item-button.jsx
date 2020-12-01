@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { Tooltip, Checkbox } from '@material-ui/core'
-import { GlobalContext } from '../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../contexts/global'
 
 export default ({ id }) => {
-  const { global, setGlobal } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(globalContext)
   const { selectedIds } = global
 
   return (

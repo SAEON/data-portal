@@ -12,7 +12,7 @@ const DEBUG_IDS = CATALOGUE_API_ODP_DEBUG_IDS.split(',')
   .filter(_ => _)
   .map(id => id.trim())
 
-if (DEBUG_IDS) {
+if (DEBUG_IDS?.length) {
   console.log('Debugging ODP integration ids', DEBUG_IDS)
 }
 

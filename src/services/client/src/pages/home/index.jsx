@@ -4,7 +4,7 @@ import { useTheme } from '@material-ui/core/styles'
 import { gql } from '@apollo/client'
 import Search from '../../components/search'
 import Loading from '../../components/loading'
-import { GlobalContext } from '../../contexts/global'
+import { context as globalContext } from '../../contexts/global'
 import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
@@ -19,7 +19,7 @@ export default () => {
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
-  const { global } = useContext(GlobalContext)
+  const { global } = useContext(globalContext)
 
   return (
     <WithGqlQuery
