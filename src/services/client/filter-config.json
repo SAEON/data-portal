@@ -1,0 +1,21 @@
+[
+  {
+     "title":"Keywords",
+     "field":"subjects.subject.raw",
+     "sortOrder":"desc",
+     "sortBy":"doc_count"
+  },
+  {
+     "title":"Publication Year",
+     "field":"publicationYear",
+     "sortOrder":"desc"
+  },
+  {
+     "title":"Publisher",
+     "field":"publisher.raw"
+  },
+  {
+     "title":"Creators",
+     "field":"creators.name.raw"
+  }
+]

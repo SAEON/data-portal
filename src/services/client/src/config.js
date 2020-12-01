@@ -48,6 +48,31 @@ export const CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES =
 
 export const CATALOGUE_CLIENT_AUTH = process.env.CATALOGUE_CLIENT_AUTH || 'enabled'
 
+export const CATALOGUE_CLIENT_FILTER_CONFIG =
+  CATALOGUE_DEPLOYMENT_ENV === 'local'
+    ? [
+        {
+          title: 'Keywords',
+          field: 'subjects.subject.raw',
+          sortOrder: 'desc',
+          sortBy: 'doc_count',
+        },
+        {
+          title: 'Publication Year',
+          field: 'publicationYear',
+          sortOrder: 'desc',
+        },
+        {
+          title: 'Publisher',
+          field: 'publisher.raw',
+        },
+        {
+          title: 'Creators',
+          field: 'creators.name.raw',
+        },
+      ]
+    : JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
+
 if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
   console.log('Configuration', {
     CATALOGUE_CURATOR_CONTACT,
@@ -69,5 +94,6 @@ if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
     CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT,
     CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES,
     CATALOGUE_CLIENT_AUTH,
+    CATALOGUE_CLIENT_FILTER_CONFIG,
   })
 }

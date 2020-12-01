@@ -4,7 +4,7 @@ import TagFilter from './items/tag-filter'
 import ExtentFilter from './items/extent-filter'
 import useStyles from './style'
 import clsx from 'clsx'
-import FILTERS_CONFIG from './config'
+import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
 
 export default ({ catalogue }) => {
   const classes = useStyles()
@@ -19,8 +19,8 @@ export default ({ catalogue }) => {
         </Grid>
 
         {/* CONFIGURABLE FILTERS */}
-        {FILTERS_CONFIG.map(({ title, field, sortBy, sortOrder }, i) => {
-          const isLastFilter = i === FILTERS_CONFIG.length - 1
+        {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ title, field, sortBy, sortOrder }, i) => {
+          const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
           return (
             <Grid key={field} item xs={12}>
               <TagFilter

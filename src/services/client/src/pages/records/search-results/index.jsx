@@ -10,7 +10,7 @@ import Loading from '../../../components/loading'
 import { WithGqlQuery } from '../../../hooks'
 import { getUriState } from '../../../lib/fns'
 import { gql } from '@apollo/client'
-import FILTERS_CONFIG from './filters/config'
+import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -99,7 +99,7 @@ export default ({ disableSidebar = false }) => {
       variables={{
         fields: [
           'linkedResources.linkedResourceType.raw', // This is used to count Atlases
-          ...FILTERS_CONFIG.map(({ field }) => field),
+          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field }) => field),
         ],
         ids,
         dois,

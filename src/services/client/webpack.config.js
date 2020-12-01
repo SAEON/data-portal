@@ -8,7 +8,12 @@ const packageJson = require('./package.json')
 // const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
-const { NODE_ENV: mode, CATALOGUE_DEPLOYMENT_ENV, CATALOGUE_LATEST_COMMIT = '' } = process.env
+const {
+  NODE_ENV: mode,
+  CATALOGUE_DEPLOYMENT_ENV,
+  CATALOGUE_LATEST_COMMIT = '',
+  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = 'filter-config.json',
+} = process.env
 
 module.exports = () => {
   const output = 'dist'
@@ -159,6 +164,9 @@ module.exports = () => {
             .filter(f => ['.jpg', '.jpeg'].includes(f.match(/\.[0-9a-z]{1,5}$/i)?.[0] || undefined))
             .join(',')
         ),
+        'process.env.CATALOGUE_CLIENT_FILTER_CONFIG': JSON.stringify(
+          fs.readFileSync(CATALOGUE_CLIENT_FILTER_CONFIG_PATH, {encoding: 'utf8'}).toString()
+        ),
       }),
       new CopyPlugin({
         patterns: [
@@ -180,7 +188,7 @@ module.exports = () => {
     devServer: {
       contentBase: path.join(__dirname, output),
       historyApiFallback: {
-        disableDotRule: true
+        disableDotRule: true,
       },
       compress: true,
       allowedHosts: ['.localhost'],

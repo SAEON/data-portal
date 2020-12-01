@@ -10,7 +10,7 @@ export default args =>
         dependencies: importFrom('./cli-modules/dependencies.js'),
         api: describe(
           {
-            connections: () => console.log('hi'), // TODO - this POC should work 
+            connections: () => console.log('hi'), // TODO - this POC should work
           },
           { title: 'sdp :: api :: connections', description: 'Check current API connections' }
         ),
