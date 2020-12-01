@@ -1,4 +1,31 @@
 {
+  "properties": {
+    "subjects": {
+      "type": "nested",
+      "properties": {
+        "subject": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        },
+        "subjectScheme": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        }
+      }
+    }
+  },
   "dynamic_templates": [
     {
       "booleans": {

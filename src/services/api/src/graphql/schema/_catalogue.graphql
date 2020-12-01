@@ -8,6 +8,16 @@ input TermInput {
   value: String!
 }
 
+input TermsFilterInput {
+  field: String!
+  values: [String!]!
+}
+
+input FieldInput {
+  field: String!
+  filter: TermsFilterInput
+}
+
 type Catalogue {
   id: ID!
 
@@ -48,7 +58,9 @@ type Catalogue {
     # List of terms to filter on
     filterByTerms: [TermInput!]
     # A list of fields to perform term agggregation on
-    fields: [String!]
+    fields: [FieldInput!]
+    # Aggregations are performed on sub-documents
+    path: String!
     # Limit of aggregation items to return
     limit: Int
   ): JSON!
