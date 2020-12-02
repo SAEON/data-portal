@@ -52,6 +52,7 @@ const RenameEntity = ({ variables, children, inputRef, entityType }) => {
   }
 
   // useEffect(() => {
+  //   console.log('inputRef', inputRef)
   //   inputRef.current.focus()
   // }, [])
 

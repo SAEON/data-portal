@@ -1,18 +1,34 @@
-import { useContext } from 'react'
-import { context as databooksContext } from '../..//context'
+import { useContext, useRef } from 'react'
 import { Typography } from '@material-ui/core'
-import ContextMenu from './_context-menu'
 import QuickForm from '@saeon/quick-form'
 import clsx from 'clsx'
 import useStyles from './style'
+import { context as databooksContext } from '../..//context'
 import RenameEntity from './bak/rename-entity'
+import ContextMenu from './_context-menu'
+import Field from './_field'
 
 export default ({ tableName, fields }) => {
   const classes = useStyles()
   const context = useContext(databooksContext)
+
   return [...fields]
     .sort(({ ordinal_position: a }, { ordinal_position: b }) => (a > b ? 1 : -1))
     .map(({ id, column_name, data_type }) => {
+      return (
+        <Field
+          key={id}
+          id={id}
+          tableName={tableName}
+          column_name={column_name}
+          data_type={data_type}
+        />
+      )
+
+      const inputRef = useRef(null)
+      const handleFocus = () => {
+        inputRef.current.focus()
+      }
       return (
         <li key={id} className={clsx(classes.hoverHighlight)}>
           <div style={{ display: 'flex', inlineSize: 'max-content' }}>
@@ -26,26 +42,38 @@ export default ({ tableName, fields }) => {
                       newName: text,
                       columnName: column_name,
                     }}
+                    inputRef={inputRef}
                     entityType="column"
                   >
                     {renameEntityLazy => {
-                      // TEXT WHILE RENAMING
-                      if (editActive) {
-                        const onEnter = e => {
-                          update({ editActive: false })
-                          const result = renameEntityLazy()
-                          if (result?.error) {
-                            //STEVEN TO DO: if error: warn user
-                            console.log('onEnter error', result?.error)
-                            update({ text: column_name })
-                          }
+                      const onEnter = e => {
+                        update({ editActive: false })
+                        const result = renameEntityLazy()
+                        if (result?.error) {
+                          //STEVEN TO DO: if error: warn user
+                          console.log('onEnter error', result?.error)
+                          update({ text: column_name })
                         }
-                        return (
+                      }
+                      return (
+                        <ContextMenu
+                          uniqueIdentifier={`${tableName}-${column_name}`}
+                          menuItems={[
+                            {
+                              value: 'Rename',
+                              onClick: () => {
+                                update({ editActive: true })
+                                handleFocus()
+                              },
+                            },
+                          ]}
+                        >
                           <input
-                            size={text.length + 1} //giving a minimum size to smooth out list of secondaryText's
+                            size={text.length} //giving a minimum size to smooth out list of secondaryText's
                             autoComplete={'off'}
                             value={text}
-                            className={clsx(classes.renamingText)}
+                            ref={inputRef}
+                            className={editActive ? clsx(classes.renamingText) : clsx(classes.text)}
                             onInput={e => {
                               update({ text: e.target.value })
                             }}
@@ -55,10 +83,7 @@ export default ({ tableName, fields }) => {
                               } else if (['Escape', 'Tab'].includes(e.key)) {
                                 update({ editActive: false })
                                 update({ text: column_name })
-                                setTimeout(() => {
-                                  update({ editActive: false })
-                                  console.log('editActive', editActive)
-                                }, 50) //NOT ideal. To be reworked asap to avoid needing a timeout. editActive is not changing value otherwise currently
+                                console.log('editActive', editActive)
                               }
                             }}
                             onBlur={() => {
@@ -66,20 +91,8 @@ export default ({ tableName, fields }) => {
                               update({ text: column_name })
                             }}
                           />
-                        )
-                      }
-                      // STANDARD TEXT
-                      else
-                        return (
-                          <ContextMenu
-                            uniqueIdentifier={`${tableName}-${column_name}`}
-                            menuItems={[
-                              { value: 'Rename', onClick: () => update({ editActive: true }) },
-                            ]}
-                          >
-                            <Typography className={clsx(classes.text)}>{column_name}</Typography>
-                          </ContextMenu>
-                        )
+                        </ContextMenu>
+                      )
                     }}
                   </RenameEntity>
                 )
