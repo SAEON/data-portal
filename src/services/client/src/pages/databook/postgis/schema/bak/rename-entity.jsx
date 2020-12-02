@@ -51,9 +51,9 @@ const RenameEntity = ({ variables, children, inputRef, entityType }) => {
     return children
   }
 
-  useEffect(() => {
-    inputRef.current.focus()
-  }, [])
+  // useEffect(() => {
+  //   inputRef.current.focus()
+  // }, [])
 
   return (
     <QueryOperator

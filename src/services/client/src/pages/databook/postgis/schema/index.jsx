@@ -7,16 +7,16 @@ import ListOfTables from './_table-list'
 
 export default () => {
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const { schema } = useContext(databookContext)
   const { tables } = schema
 
   return (
     <div className={clsx(classes.layout)}>
-      <ul>
-        <li>
+      <ul className={clsx(classes.ulReset)}>
+        <li className={clsx(classes.liReset)}>
           <StorageIcon onClick={() => setExpanded(!expanded)} size={22} />
-          <ul style={expanded ? {} : { display: 'none' }}>
+          <ul className={clsx(classes.ulReset)} style={{ display: expanded ? undefined : 'none' }}>
             <ListOfTables tables={tables} />
           </ul>
         </li>

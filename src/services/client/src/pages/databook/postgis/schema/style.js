@@ -6,15 +6,15 @@ export default makeStyles(theme => ({
     height: '100%',
     overflow: 'auto',
   },
+  ulReset: { margin: 'unset', paddingLeft: 15 },
+  liReset: {
+    listStyleType: 'none',
+  },
   icon: {
     float: 'left',
   },
-  schemaIcon: {
-    '&:hover': {
-      background: '#efefef',
-    },
-  },
   hoverHighlight: {
+    listStyleType: 'none',
     '&:hover': {
       background: '#efefef',
     },

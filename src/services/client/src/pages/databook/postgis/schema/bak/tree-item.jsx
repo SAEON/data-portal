@@ -118,7 +118,7 @@ export default props => {
                               setRenaming(false)
                               setText(primaryText)
                             }}
-                          ></input>
+                          />
                           {secondaryText ? (
                             <span
                               style={{ display: 'contents' }}
