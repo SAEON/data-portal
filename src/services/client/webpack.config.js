@@ -165,7 +165,7 @@ module.exports = () => {
             .join(',')
         ),
         'process.env.CATALOGUE_CLIENT_FILTER_CONFIG': JSON.stringify(
-          fs.readFileSync(CATALOGUE_CLIENT_FILTER_CONFIG_PATH, {encoding: 'utf8'}).toString()
+          fs.readFileSync(CATALOGUE_CLIENT_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
         ),
       }),
       new CopyPlugin({

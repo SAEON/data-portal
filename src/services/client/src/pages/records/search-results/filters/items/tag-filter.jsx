@@ -113,6 +113,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', styl
                           color="primary"
                           checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
                           onChange={() => {
+                            console.log('hi', terms)
                             if (terms?.map(({ value }) => value)?.includes(key)) {
                               setGlobal({
                                 terms: terms?.filter(({ value }) => value !== key),

@@ -52,10 +52,26 @@ export const CATALOGUE_CLIENT_FILTER_CONFIG =
   CATALOGUE_DEPLOYMENT_ENV === 'local'
     ? [
         {
+          title: 'Places',
+          field: 'subjects.subject.raw',
+          sortOrder: 'desc',
+          sortBy: 'doc_count',
+          path: 'subjects',
+          filter: {
+            field: 'subjects.subjectScheme.raw',
+            values: ['SANS1878 keywordType place'],
+          },
+        },
+        {
           title: 'Keywords',
           field: 'subjects.subject.raw',
           sortOrder: 'desc',
           sortBy: 'doc_count',
+          path: 'subjects',
+          filter: {
+            field: 'subjects.subjectScheme.raw',
+            values: ['SANS1878 keywordType general'],
+          },
         },
         {
           title: 'Publication Year',
@@ -69,6 +85,7 @@ export const CATALOGUE_CLIENT_FILTER_CONFIG =
         {
           title: 'Creators',
           field: 'creators.name.raw',
+          path: 'creators',
         },
       ]
     : JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)

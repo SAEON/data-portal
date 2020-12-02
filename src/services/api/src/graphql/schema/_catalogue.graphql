@@ -14,7 +14,10 @@ input TermsFilterInput {
 }
 
 input FieldInput {
+  # Name of field to aggregate on (this is probabably a .raw field)
   field: String!
+  # Aggregations are performed on sub-documents
+  path: String
   filter: TermsFilterInput
 }
 
@@ -59,8 +62,6 @@ type Catalogue {
     filterByTerms: [TermInput!]
     # A list of fields to perform term agggregation on
     fields: [FieldInput!]
-    # Aggregations are performed on sub-documents
-    path: String!
     # Limit of aggregation items to return
     limit: Int
   ): JSON!

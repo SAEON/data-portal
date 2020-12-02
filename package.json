@@ -12,7 +12,7 @@
     "************ REPOSITORY TOOLING **********": "",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|cjs|graphql)\"",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "bump-patch": "TC=utc node scripts/bump-patch.js",
     "configure-git": "git config --local include.path ../.gitconfig",
     "update-git-snapshot": "git add .",
