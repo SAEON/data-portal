@@ -76,7 +76,7 @@ etc
 ```
 
 ### Filter configuration
-The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](filter-config.json) is included in the source. To update this, set the path to a new JSON configuration file in the `.env` file: `CATALOGUE_CLIENT_FILTER_CONFIG=/path/to/file.json`. This is an example of a more advanced configuration that showcases all possible options:
+The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](filter-config.json) is included in the source. To update this, set the path to a new JSON configuration file in the `.env` file: `CATALOGUE_CLIENT_FILTER_CONFIG_PATH=/path/to/file.json` (Webpack reads the JSON at build time from this path). This is an example of a more advanced configuration that showcases all possible options:
 
 ```json
 [
