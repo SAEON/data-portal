@@ -27,7 +27,7 @@
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "@apollo/client": "^3.2.9",
+    "@apollo/client": "^3.3.2",
     "@apollo/link-ws": "^2.0.0-beta.3",
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
@@ -45,7 +45,7 @@
     "@saeon/quick-form": "3.1.2",
     "@saeon/snap-menus": "^5.1.2",
     "@svgr/webpack": "^5.5.0",
-    "babel-loader": "^8.2.1",
+    "babel-loader": "^8.2.2",
     "babel-plugin-transform-imports": "^2.0.0",
     "clsx": "^1.1.1",
     "copy-webpack-plugin": "^6.3.2",
@@ -54,14 +54,14 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^6.0.0",
-    "echarts": "^4.9.0",
+    "echarts": "^5.0.0",
     "echarts-for-react": "^2.0.16",
     "file-loader": "^6.2.0",
     "graphql": "^15.4.0",
     "html-webpack-plugin": "^4.5.0",
     "mdi-react": "^7.4.0",
     "minisearch": "^3.0.2",
-    "nanoid": "^3.1.18",
+    "nanoid": "^3.1.20",
     "node-sass": "^5.0.0",
     "notistack": "^1.0.2",
     "object-hash": "^2.0.3",
@@ -69,7 +69,7 @@
     "react": "^17.0.1",
     "react-ace": "^9.2.0",
     "react-beautiful-dnd": "^13.0.0",
-    "react-contexify": "^4.1.1",
+    "react-contexify": "^5.0.0",
     "react-device-detect": "^1.14.0",
     "react-dom": "^17.0.1",
     "react-measure": "^2.5.2",
@@ -86,14 +86,14 @@
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
-    "webpack-bundle-analyzer": "^4.1.0",
+    "webpack-bundle-analyzer": "^4.2.0",
     "webpack-cli": "^3.3.12",
-    "workbox-webpack-plugin": "^5.1.4"
+    "workbox-webpack-plugin": "^6.0.0"
   },
   "devDependencies": {
     "npm-check-updates": "^10.2.2",
     "onchange": "^7.1.0",
-    "prettier": "^2.2.0",
+    "prettier": "^2.2.1",
     "webpack-dev-server": "^3.11.0"
   }
 }
