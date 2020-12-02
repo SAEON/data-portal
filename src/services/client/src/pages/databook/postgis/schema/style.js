@@ -31,7 +31,8 @@ export default makeStyles(theme => ({
     fontFamily: 'monospace',
     fontSize: 'small',
     padding: '5px',
-    paddingLeft: '0px',
+    marginRight: '-5px',
+    // paddingLeft: '0px',
   },
   secondaryText: {
     color: fade(theme.palette.common.black, 0.4),
@@ -39,6 +40,7 @@ export default makeStyles(theme => ({
     fontFamily: 'monospace',
     fontSize: 'small',
     float: 'right',
+    alignSelf: 'center',
   },
   button: {},
   hidden: { visibility: 'hidden', height: '0' },

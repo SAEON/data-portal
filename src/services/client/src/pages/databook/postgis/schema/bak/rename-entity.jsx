@@ -1,5 +1,5 @@
 import { gql, useLazyQuery } from '@apollo/client'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 
 const RENAME_TABLE = gql`
   query($id: ID!, $tableName: ID!, $newName: String!) {
@@ -50,11 +50,6 @@ const RenameEntity = ({ variables, children, inputRef, entityType }) => {
     console.log('RenameEntity requires a valid entityType')
     return children
   }
-
-  // useEffect(() => {
-  //   console.log('inputRef', inputRef)
-  //   inputRef.current.focus()
-  // }, [])
 
   return (
     <QueryOperator

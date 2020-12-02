@@ -6,7 +6,7 @@ import ResourceBuilder from './resource-builder'
 
 export default () => {
   return (
-    <SplitPane minSize={130} defaultSize={500} split="vertical">
+    <SplitPane minSize={130} defaultSize={300} split="vertical">
       <SchemaExplorer />
       <SplitPane split="horizontal" defaultSize={500}>
         <SplitPane split="vertical" minSize={200} defaultSize={600}>

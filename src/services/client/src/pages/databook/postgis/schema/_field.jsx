@@ -1,23 +1,26 @@
-import { useState, useContext, useRef } from 'react'
+import { useState, useContext } from 'react'
 import { context as databooksContext } from '../..//context'
 import { Typography } from '@material-ui/core'
 import ContextMenu from './_context-menu'
-import QuickForm from '@saeon/quick-form'
 import clsx from 'clsx'
 import useStyles from './style'
 import RenameEntity from './bak/rename-entity'
+
+const inputMinSize = 22
 
 export default ({ id, tableName, column_name, data_type }) => {
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(column_name)
   const classes = useStyles()
   const context = useContext(databooksContext)
-  const inputRef = useRef(null)
   const handleFocus = () => {
-    inputRef.current.focus()
+    const result = document.getElementById(id).focus()
+    console.log('result', result)
+    console.log('id', id)
   }
+
   return (
-    <li key={id} className={clsx(classes.hoverHighlight)}>
+    <li className={clsx(classes.hoverHighlight)}>
       <div style={{ display: 'flex', inlineSize: 'max-content' }}>
         <RenameEntity
           variables={{
@@ -26,11 +29,11 @@ export default ({ id, tableName, column_name, data_type }) => {
             newName: text,
             columnName: column_name,
           }}
-          inputRef={inputRef}
           entityType="column"
         >
           {renameEntityLazy => {
             const onEnter = e => {
+              //   e.preventDefault()
               setEditActive(false)
               const result = renameEntityLazy()
               if (result?.error) {
@@ -53,11 +56,16 @@ export default ({ id, tableName, column_name, data_type }) => {
                 ]}
               >
                 <input
-                  size={text.length} //giving a minimum size to smooth out list of secondaryText's
+                  id={id}
+                  size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
                   autoComplete={'off'}
+                  readOnly={!editActive}
                   value={text}
-                  ref={inputRef}
+                  //   className={editActive}
                   className={editActive ? clsx(classes.renamingText) : clsx(classes.text)}
+                  onFocus={e => {
+                    if (editActive) e.currentTarget.select()
+                  }}
                   onInput={e => {
                     setText(e.target.value)
                   }}
@@ -67,14 +75,13 @@ export default ({ id, tableName, column_name, data_type }) => {
                     } else if (['Escape', 'Tab'].includes(e.key)) {
                       setEditActive(false)
                       setText(column_name)
-                      console.log('editActive', editActive)
                     }
                   }}
                   onBlur={() => {
                     setEditActive(false)
                     setText(column_name)
                   }}
-                />
+                ></input>
               </ContextMenu>
             )
           }}
