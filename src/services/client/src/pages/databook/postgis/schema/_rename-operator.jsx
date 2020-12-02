@@ -1,5 +1,4 @@
 import { gql, useLazyQuery } from '@apollo/client'
-// import { useEffect } from 'react'
 
 const RENAME_TABLE = gql`
   query($id: ID!, $tableName: ID!, $newName: String!) {
@@ -39,13 +38,12 @@ const QueryOperator = props => {
   }
   if (error) {
     console.log('mutation error!', error)
-    console.error(error)
   }
   //STEVEN TO DO: more error handling
   return children(renameEntityLazy)
 }
 
-const RenameEntity = ({ variables, children, inputRef, entityType }) => {
+export default ({ variables, children, inputRef, entityType }) => {
   if (!['table', 'column'].includes(entityType)) {
     console.log('RenameEntity requires a valid entityType')
     return children
@@ -60,5 +58,3 @@ const RenameEntity = ({ variables, children, inputRef, entityType }) => {
     </QueryOperator>
   )
 }
-
-export default RenameEntity
