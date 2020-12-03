@@ -6,8 +6,6 @@ import {
 } from '../../config.js'
 import makeOdpIterator from './iterator/index.js'
 
-console.log('filter', CATALOGUE_API_ODP_FILTER)
-
 const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
 
 export default async () => {

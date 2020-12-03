@@ -12,7 +12,7 @@ const {
   NODE_ENV: mode,
   CATALOGUE_DEPLOYMENT_ENV,
   CATALOGUE_LATEST_COMMIT = '',
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = 'filter-config.json',
+  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = 'default-filter-config.json',
 } = process.env
 
 module.exports = () => {
