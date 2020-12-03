@@ -55,7 +55,7 @@ export default ({ disableSidebar = false }) => {
           $size: Int
           $before: ES_Cursor
           $after: ES_Cursor
-          $fields: [String!]
+          $fields: [FieldInput!]
           $summaryLimit: Int
           $ids: [ID!]
           $dois: [String!]
@@ -98,8 +98,13 @@ export default ({ disableSidebar = false }) => {
       `}
       variables={{
         fields: [
-          'linkedResources.linkedResourceType.raw', // This is used to count Atlases
-          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field }) => field),
+          {
+            field: 'linkedResources.linkedResourceType.raw',
+            path: 'linkedResources',
+          },
+          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field, path, filter }) => {
+            return { field, path, filter }
+          }),
         ],
         ids,
         dois,
@@ -119,7 +124,10 @@ export default ({ disableSidebar = false }) => {
         }
 
         if (error) {
-          throw new Error('We apologise for this unexpected error!.' + error.message)
+          throw new Error(
+            'We apologise for this unexpected error!. Error rendering research results: ' +
+              error.message
+          )
         }
 
         const results = cursors.start

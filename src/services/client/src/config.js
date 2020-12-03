@@ -4,7 +4,7 @@ export const CATALOGUE_CLIENT_BACKGROUNDS = process.env.CATALOGUE_CLIENT_BACKGRO
 
 export const CATALOGUE_DEPLOYMENT_ENV = process.env.CATALOGUE_DEPLOYMENT_ENV || 'local'
 
-export const CATALOGUE_CLIENT_DEFAULT_NOTICES = process.env.CATALOGUE_CLIENT_DEFAULT_NOTICES || ''
+export const CATALOGUE_CLIENT_DEFAULT_NOTICES = process.env.CATALOGUE_CLIENT_DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
 
 export const CATALOGUE_SOURCE_CODE_URI =
   process.env.CATALOGUE_SOURCE_CODE_URI || 'https://github.com/SAEONData/catalogue'
@@ -28,7 +28,7 @@ export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS =
 export const CATALOGUE_CLIENT_ADDRESS =
   process.env.CATALOGUE_CLIENT_ADDRESS || 'http://localhost:3001'
 
-export const CATALOGUE_CLIENT_AUTH_ID = process.env.CATALOGUE_CLIENT_AUTH_ID || 'saeon-data-portal' // 'saeonatlasclienttest'
+export const CATALOGUE_CLIENT_AUTH_ID = process.env.CATALOGUE_CLIENT_AUTH_ID || 'saeon-data-portal' // 'saeonatlasclienttest' on dev, but should change
 
 export const CATALOGUE_CLIENT_AUTH_REDIRECT_URL =
   process.env.CATALOGUE_CLIENT_AUTH_REDIRECT_URL || 'http://localhost:3001/authenticated'
@@ -48,30 +48,7 @@ export const CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES =
 
 export const CATALOGUE_CLIENT_AUTH = process.env.CATALOGUE_CLIENT_AUTH || 'enabled'
 
-export const CATALOGUE_CLIENT_FILTER_CONFIG =
-  CATALOGUE_DEPLOYMENT_ENV === 'local'
-    ? [
-        {
-          title: 'Keywords',
-          field: 'subjects.subject.raw',
-          sortOrder: 'desc',
-          sortBy: 'doc_count',
-        },
-        {
-          title: 'Publication Year',
-          field: 'publicationYear',
-          sortOrder: 'desc',
-        },
-        {
-          title: 'Publisher',
-          field: 'publisher.raw',
-        },
-        {
-          title: 'Creators',
-          field: 'creators.name.raw',
-        },
-      ]
-    : JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
+export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
 
 if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
   console.log('Configuration', {
@@ -80,12 +57,12 @@ if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
     CATALOGUE_DEPLOYMENT_ENV,
     CATALOGUE_SOURCE_CODE_URI,
     CATALOGUE_LATEST_COMMIT,
-    CATALOGUE_CLIENT_BACKGROUNDS,
-    CATALOGUE_CLIENT_DEFAULT_NOTICES,
-    CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
     CATALOGUE_API_ADDRESS,
     CATALOGUE_API_GQL_ADDRESS,
     CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS,
+    CATALOGUE_CLIENT_BACKGROUNDS,
+    CATALOGUE_CLIENT_DEFAULT_NOTICES,
+    CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
     CATALOGUE_CLIENT_AUTH_ID,
     CATALOGUE_CLIENT_ADDRESS,
     CATALOGUE_CLIENT_AUTH_REDIRECT_URL,

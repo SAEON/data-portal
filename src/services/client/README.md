@@ -60,24 +60,62 @@ The client should be accessible at http://localhost:3001
 
 ## Configuration
 
-Optionally create a `.env` file in the root of this package:
+Configuration can be passed to the build context via a `.env`:
 
 ```sh
-cd src/@saeon/client
+cd src/services/client
 touch .env
 ```
-
-This is a list of configuration options available (with default values indicated)
+The full list of possible configuration options and default values is logged to the console in non-production environments. Then update values as required. 
 
 ```sh
-CATALOGUE_API_ADDRESS=http://localhost:3000
-DEFAULT_ERROR= # default error message shown on startup
-DEFAULT_WARNING= # default warning message shown on startup
-DEFAULT_INFO= # default info message shown on startup
-DEFAULT_SUCCESS=# default success message shown on startup
-CATALOGUE_API_GQL_ADDRESS=http://localhost:3000/graphql
-CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS=ws://localhost:3000/graphql
-CATALOGUE_SOURCE_CODE_URI=https://github.com/SAEONData/catalogue/tree/master/src/@saeon/client
+# .env
+CATALOGUE_API_ADDRESS=...
+DEFAULT_ERROR=...
+etc
+```
+
+### Filter configuration
+The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](filter-config.json) is included in the source. To update this, set the path to a new JSON configuration file in the `.env` file: `CATALOGUE_CLIENT_FILTER_CONFIG_PATH=/path/to/file.json` (Webpack reads the JSON at build time from this path). This is an example of a more advanced configuration that showcases all possible options:
+
+```json
+[
+  {
+    "title": "Keywords",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "doc_count",
+    "path": "subjects",
+    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType general"] }
+  },
+  {
+    "title": "Places",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "doc_count",
+    "path": "subjects",
+    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType place"] }
+  },
+  {
+    "title": "Themes",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "doc_count",
+    "path": "subjects",
+    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType theme"] }
+  },
+  {
+    "title": "Stratums",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "doc_count",
+    "path": "subjects",
+    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType stratum"] }
+  },
+  { "title": "Publication Year", "field": "publicationYear", "sortOrder": "desc" },
+  { "title": "Publisher", "field": "publisher.raw" },
+  { "title": "Creators", "field": "creators.name.raw", "path": "creators" }
+]
 ```
 
 ## Docker deployment

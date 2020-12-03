@@ -12,7 +12,7 @@
     "************ REPOSITORY TOOLING **********": "",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|cjs|graphql)\"",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "bump-patch": "TC=utc node scripts/bump-patch.js",
     "configure-git": "git config --local include.path ../.gitconfig",
     "update-git-snapshot": "git add .",
@@ -46,7 +46,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.3.0",
     "npm-check-updates": "^10.2.2",
-    "prettier": "^2.2.0",
+    "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0"
   },
   "dependencies": {

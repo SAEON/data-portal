@@ -1,4 +1,65 @@
 {
+  "properties": {
+    "creators": {
+      "type": "nested",
+      "include_in_parent": true,
+      "properties": {
+        "name": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        }
+      }
+    },
+    "linkedResources": {
+      "type": "nested",
+      "include_in_parent": true,
+      "properties": {
+        "linkedResourceType": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        }
+      }
+    },
+    "subjects": {
+      "type": "nested",
+      "include_in_parent": true,
+      "properties": {
+        "subject": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        },
+        "subjectScheme": {
+          "type": "text",
+          "include_in_parent": true,
+          "fields": {
+            "raw": {
+              "ignore_above": 256,
+              "type": "keyword",
+              "normalizer": "keyword_trimmed_lower"
+            }
+          }
+        }
+      }
+    }
+  },
   "dynamic_templates": [
     {
       "booleans": {
