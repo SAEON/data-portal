@@ -1,17 +1,8 @@
 import { Menu, Item, useContextMenu } from 'react-contexify'
 import 'react-contexify/dist/ReactContexify.css'
 
-export default ({ menuItems, uniqueIdentifier, children, renameDisabled }) => {
+export default ({ menuItems, uniqueIdentifier, children, }) => {
   const { show } = useContextMenu({ id: uniqueIdentifier })
-
-  const isItemDisabled = ({ props, data, triggerEvent }) => {
-    // use the parameters to determine if you want to disable the item or not
-    // you get the idea
-    console.log('props', props)
-    console.log('data', data)
-    return true
-  }
-
   return (
     <>
       <div onContextMenu={show}>{children}</div>
