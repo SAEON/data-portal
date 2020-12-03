@@ -6,15 +6,15 @@ export default makeStyles(theme => ({
     height: '100%',
     overflow: 'auto',
   },
+  ulReset: { margin: 'unset', paddingLeft: 15 },
+  liReset: {
+    listStyleType: 'none',
+  },
   icon: {
     float: 'left',
   },
-  schemaIcon: {
-    '&:hover': {
-      background: '#efefef',
-    },
-  },
   hoverHighlight: {
+    listStyleType: 'none',
     '&:hover': {
       background: '#efefef',
     },
@@ -31,7 +31,8 @@ export default makeStyles(theme => ({
     fontFamily: 'monospace',
     fontSize: 'small',
     padding: '5px',
-    paddingLeft: '0px',
+    marginRight: '-5px',
+    // paddingLeft: '0px',
   },
   secondaryText: {
     color: fade(theme.palette.common.black, 0.4),
@@ -39,6 +40,7 @@ export default makeStyles(theme => ({
     fontFamily: 'monospace',
     fontSize: 'small',
     float: 'right',
+    alignSelf: 'center',
   },
   button: {},
   hidden: { visibility: 'hidden', height: '0' },

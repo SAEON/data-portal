@@ -1,12 +1,13 @@
-import { Menu, Item, MenuProvider } from 'react-contexify'
-import 'react-contexify/dist/ReactContexify.min.css'
+import { Menu, Item, useContextMenu } from 'react-contexify'
+import 'react-contexify/dist/ReactContexify.css'
 
-export default ({ menuItems, uniqueIdentifier, children }) => {
+export default ({ menuItems, uniqueIdentifier, children, }) => {
+  const { show } = useContextMenu({ id: uniqueIdentifier })
   return (
     <>
-      <MenuProvider id={uniqueIdentifier}>{children}</MenuProvider>
-      <Menu id={uniqueIdentifier} style={{ zIndex: 9999 }}>
-        {menuItems.map(({ value, onClick }) => {
+      <div onContextMenu={show}>{children}</div>
+      <Menu id={uniqueIdentifier} style={{ zIndex: 9999 }} animation={false}>
+        {menuItems.map(({ value, onClick, disabled = false }) => {
           if (!onClick) {
             throw new Error('Context menu requires onClick handler per menu item')
           }
@@ -16,7 +17,7 @@ export default ({ menuItems, uniqueIdentifier, children }) => {
           }
 
           return (
-            <Item onClick={onClick} key={value}>
+            <Item onClick={onClick} key={value} disabled={disabled}>
               {value}
             </Item>
           )
