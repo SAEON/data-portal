@@ -49,7 +49,9 @@ export default forwardRef((props, ref) => {
               return (
                 <Fade in={activeTabIndex === i} key={id}>
                   <div role="tabpanel" hidden={activeTabIndex !== i}>
-                    {activeTabIndex === i && <Dashboard id={id} />}
+                    {activeTabIndex === i && (
+                      <Dashboard setActiveTabIndex={setActiveTabIndex} id={id} />
+                    )}
                   </div>
                 </Fade>
               )

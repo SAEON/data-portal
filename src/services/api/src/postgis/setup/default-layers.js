@@ -1,3 +1,10 @@
+/**
+ * TODO
+ *
+ * The github shapefiles really should be in this respository,
+ * otherwise unforseen bugs will result. But I was struggling to
+ * get authentication to work (especially with gdal vsicurl)
+ */
 export default {
   'sa-municipality-boundaries-2016': {
     source: 'public',
