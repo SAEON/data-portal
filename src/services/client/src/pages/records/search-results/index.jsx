@@ -125,8 +125,7 @@ export default ({ disableSidebar = false }) => {
 
         if (error) {
           throw new Error(
-            'We apologise for this unexpected error!. Error rendering research results: ' +
-              error.message
+            'We apologise for this unexpected error!. Error rendering search results: ' + error
           )
         }
 
