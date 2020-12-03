@@ -1,7 +1,7 @@
-import { defaultDiskLayers, defaultWebLayers } from '../../../../../postgis/setup/default-layers.js'
+import defaultLayers from '../../../../../postgis/setup/default-layers.js'
 import makeSql from './sql.js'
 
-const sharedTables = Object.keys(Object.assign({}, defaultWebLayers, defaultDiskLayers))
+const sharedTables = Object.keys(Object.assign({}, defaultLayers))
 
 export default async (self, args, ctx) => {
   const { _id: schema, authentication } = self.doc

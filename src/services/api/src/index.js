@@ -35,6 +35,8 @@ configureElasticsearch().then(() => console.log('Elasticsearch configured'))
 // Configure PostGIS
 if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
   configurePostgis().then(() => console.log('PostGIS configured'))
+} else {
+  console.log('Skipping postgis data seeding')
 }
 
 /**

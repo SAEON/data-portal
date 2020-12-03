@@ -16,7 +16,8 @@ export default preparedTables =>
 		)
 
 		order by
-			ordinal_position asc
+			ordinal_position asc,
+			table_name asc
 	`
 
 // -- select
