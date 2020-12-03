@@ -141,11 +141,11 @@ const Table = ({ tableName, fields }) => {
               style={{
                 marginLeft: 'auto',
                 marginRight: 0,
-                visibility: hovered ? 'inherit' : 'hidden',
+                display: hovered ? 'inherit' : 'none',
               }}
             >
               <MessageDialogue
-                icon={<InfoIcon />}
+                icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
                 title={onClose => (
                   <div style={{ display: 'flex' }}>
                     <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
@@ -169,7 +169,7 @@ const Table = ({ tableName, fields }) => {
                     ? `Read-only shared table`
                     : `Show metadata information for this table`,
                 }}
-                iconProps={{ size: 'small', fontSize: 'small' }}
+                iconProps={{ size: 'small' }}
                 dialogueContentProps={{ style: { padding: 0 } }}
                 dialogueProps={{ fullWidth: true }}
                 paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
