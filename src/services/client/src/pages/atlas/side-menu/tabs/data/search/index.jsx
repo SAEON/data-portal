@@ -179,7 +179,6 @@ export default () => {
                             {DOI.truncate(30)}
                           </Typography>
                           <MessageDialogue
-                            onClick
                             title={onClose => (
                               <div style={{ display: 'flex' }}>
                                 <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>

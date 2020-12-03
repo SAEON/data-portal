@@ -35,7 +35,7 @@ export default makeStyles(theme => ({
     outline: `1px solid ${theme.palette.grey[500]} !important`,
   },
   secondaryText: {
-    color: fade(theme.palette.common.black, 0.4),
+    color: theme.palette.grey[300],
     paddingLeft: '5px',
     fontFamily: 'monospace',
     fontSize: 'small',

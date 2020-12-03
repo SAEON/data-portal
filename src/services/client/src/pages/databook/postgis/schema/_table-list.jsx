@@ -1,31 +1,46 @@
 import { useState, useContext } from 'react'
-import { IconButton } from '@material-ui/core'
+import { IconButton, Typography } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import InfoIcon from 'mdi-react/InformationVariantIcon'
+import CloseIcon from 'mdi-react/CloseIcon'
 import TableIcon from 'mdi-react/TableIcon'
 import clsx from 'clsx'
 import ListOfFields from './_field-list'
 import useStyles from './style'
 import ContextMenu from './_context-menu'
 import RenameOperator from './_rename-operator'
-import { context as databooksContext } from '../..//context'
+import { context as databooksContext } from '../../context'
+import MessageDialogue from '../../../../components/message-dialogue'
+import Record from '../../../record'
 
 export default ({ tables }) => {
-  return tables.map(({ id: tableName, fields }) => {
-    return <Table key={tableName} tableName={tableName} fields={fields} />
-  })
+  const { databook } = useContext(databooksContext)
+
+  const isSharedTable = t => !Object.keys(databook.doc.tables).includes(t)
+
+  return [...tables]
+    .sort(({ id: tableName }) => {
+      return isSharedTable(tableName) ? 1 : -1
+    })
+    .map(({ id: tableName, fields }) => {
+      return <Table key={tableName} tableName={tableName} fields={fields} />
+    })
 }
 
 const Table = ({ tableName, fields }) => {
+  const theme = useTheme()
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(tableName)
   const [hovered, setHovered] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const classes = useStyles()
-  const context = useContext(databooksContext)
-  const inputId = `${context.databook.doc._id}-${tableName}`
+  const { databook } = useContext(databooksContext)
+  const inputId = `${databook.doc._id}-${tableName}`
   const handleFocus = () => {
     document.getElementById(inputId).focus()
   }
+
+  const isSharedTable = t => !Object.keys(databook.doc.tables).includes(t)
 
   return (
     <li key={tableName} className={clsx(classes.liReset)}>
@@ -40,7 +55,7 @@ const Table = ({ tableName, fields }) => {
                 setEditActive(true)
                 handleFocus()
               },
-              disabled: !Object.keys(context.databook.doc.tables).includes(tableName),
+              disabled: isSharedTable(tableName),
             },
           ]}
         >
@@ -67,7 +82,7 @@ const Table = ({ tableName, fields }) => {
               />
               <RenameOperator
                 variables={{
-                  id: context.databook.doc._id,
+                  id: databook.doc._id,
                   tableName: tableName,
                   newName: text,
                 }}
@@ -85,7 +100,11 @@ const Table = ({ tableName, fields }) => {
                   }
                   return (
                     <input
-                      style={{ width: '100%', textOverflow: 'ellipsis' }}
+                      style={{
+                        width: '100%',
+                        textOverflow: 'ellipsis',
+                        color: isSharedTable(tableName) ? theme.palette.grey[500] : 'inherit',
+                      }}
                       id={inputId}
                       autoComplete="off"
                       readOnly={!editActive}
@@ -125,9 +144,43 @@ const Table = ({ tableName, fields }) => {
                 visibility: hovered ? 'inherit' : 'hidden',
               }}
             >
-              <IconButton size={'small'}>
-                <InfoIcon />
-              </IconButton>
+              <MessageDialogue
+                icon={<InfoIcon />}
+                title={onClose => (
+                  <div style={{ display: 'flex' }}>
+                    <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
+                      METADATA RECORD
+                    </Typography>
+                    <IconButton
+                      onClick={e => {
+                        e.stopPropagation()
+                        onClose()
+                        setHovered(false)
+                      }}
+                      style={{ marginLeft: 'auto', alignSelf: 'center' }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                )}
+                tooltipProps={{
+                  placement: 'right',
+                  title: isSharedTable(tableName)
+                    ? `Read-only shared table`
+                    : `Show metadata information for this table`,
+                }}
+                iconProps={{ size: 'small', fontSize: 'small' }}
+                dialogueContentProps={{ style: { padding: 0 } }}
+                dialogueProps={{ fullWidth: true }}
+                paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
+              >
+                {isSharedTable(tableName) ? (
+                  <div>Some kind of information should be here regarding this shared layer</div>
+                ) : (
+                  // TODO - this should not be static
+                  <Record id={'10.15493/SARVA.DWS.10000001'} />
+                )}
+              </MessageDialogue>
             </span>
           </span>
         </ContextMenu>

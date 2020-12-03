@@ -4,7 +4,8 @@ import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './_context-menu'
 import RenameOperator from './_rename-operator'
-import { context as databooksContext } from '../..//context'
+import { useTheme } from '@material-ui/core/styles'
+import { context as databooksContext } from '../../context'
 
 export default ({ tableName, fields }) => {
   return [...fields]
@@ -23,14 +24,17 @@ export default ({ tableName, fields }) => {
 }
 
 const Field = ({ id, tableName, column_name, data_type }) => {
+  const theme = useTheme()
   const inputMinSize = 22
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(column_name)
   const classes = useStyles()
-  const context = useContext(databooksContext)
+  const { databook } = useContext(databooksContext)
   const handleFocus = () => {
     document.getElementById(id).focus()
   }
+
+  const isSharedTable = t => !Object.keys(databook.doc.tables).includes(t)
 
   return (
     <li className={clsx(classes.hoverHighlight)}>
@@ -44,12 +48,13 @@ const Field = ({ id, tableName, column_name, data_type }) => {
                 setEditActive(true)
                 handleFocus()
               },
+              disabled: isSharedTable(tableName),
             },
           ]}
         >
           <RenameOperator
             variables={{
-              id: context.databook.doc._id,
+              id: databook.doc._id,
               tableName: tableName,
               newName: text,
               columnName: column_name,
@@ -69,6 +74,9 @@ const Field = ({ id, tableName, column_name, data_type }) => {
               return (
                 <input
                   id={id}
+                  style={{
+                    color: isSharedTable(tableName) ? theme.palette.grey[500] : 'inherit',
+                  }}
                   size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
                   autoComplete="off"
                   readOnly={!editActive}

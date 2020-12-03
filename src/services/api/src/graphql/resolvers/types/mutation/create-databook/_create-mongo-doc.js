@@ -15,7 +15,9 @@ export default async (records, ctx, createdBy) => {
       username: _id.toString(),
       password: _id.toString(),
     },
-    tables: Object.fromEntries(recordsIds.map(id => [[createDataName(id)], { ready: false }])),
+    tables: Object.fromEntries(
+      recordsIds.map(id => [[createDataName(id)], { ready: false, recordId: id }])
+    ),
     createdBy,
     modifiedAt: new Date(),
   })
