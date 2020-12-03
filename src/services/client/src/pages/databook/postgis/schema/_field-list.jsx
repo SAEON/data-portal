@@ -57,14 +57,13 @@ const Field = ({ id, tableName, column_name, data_type }) => {
             entityType="column"
           >
             {renameEntityLazy => {
-              const onEnter = e => {
-                //   e.preventDefault()
+              const onEnter = () => {
                 setEditActive(false)
                 const result = renameEntityLazy()
                 if (result?.error) {
                   //STEVEN TO DO: if error: warn user
                   console.log('onEnter error', result?.error)
-                  SetText(column_name)
+                  setText(column_name)
                 }
               }
               return (
@@ -74,7 +73,9 @@ const Field = ({ id, tableName, column_name, data_type }) => {
                   autoComplete="off"
                   readOnly={!editActive}
                   value={text}
-                  className={editActive ? clsx(classes.renamingText) : clsx(classes.text)}
+                  className={clsx(classes.inputField, {
+                    [classes.inputFieldActive]: editActive,
+                  })}
                   onFocus={e => {
                     if (editActive) e.currentTarget.select() //STEVEN TODO: bug editActive always seen as false
                   }}

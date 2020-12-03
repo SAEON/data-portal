@@ -1,7 +1,7 @@
 import { Menu, Item, useContextMenu } from 'react-contexify'
 import 'react-contexify/dist/ReactContexify.css'
 
-export default ({ menuItems, uniqueIdentifier, children, }) => {
+export default ({ menuItems, uniqueIdentifier, children }) => {
   const { show } = useContextMenu({ id: uniqueIdentifier })
   return (
     <>

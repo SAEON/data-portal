@@ -2,7 +2,7 @@ import { makeStyles, fade } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
   layout: {
-    padding: '3px',
+    padding: '4px 0 0 4px',
     height: '100%',
     overflow: 'auto',
   },
@@ -19,20 +19,20 @@ export default makeStyles(theme => ({
       background: '#efefef',
     },
   },
-  text: {
-    fontFamily: 'monospace',
-    fontSize: 'small',
+  inputField: {
     background: 'none',
     border: 'none',
     outline: 'none',
-    marginRight: '5px',
-  },
-  renamingText: {
     fontFamily: 'monospace',
     fontSize: 'small',
     padding: '5px',
     marginRight: '-5px',
-    // paddingLeft: '0px',
+    '&:focus': {
+      outline: `1px solid ${theme.palette.grey[200]}`,
+    },
+  },
+  inputFieldActive: {
+    outline: `1px solid ${theme.palette.grey[500]} !important`,
   },
   secondaryText: {
     color: fade(theme.palette.common.black, 0.4),

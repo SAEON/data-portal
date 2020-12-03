@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import StorageIcon from 'mdi-react/StorageIcon'
+import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import { context as databookContext } from '../../context'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -13,9 +14,18 @@ export default () => {
 
   return (
     <div className={clsx(classes.layout)}>
-      <ul className={clsx(classes.ulReset)}>
+      <ul style={{ padding: 0 }} className={clsx(classes.ulReset)}>
         <li className={clsx(classes.liReset)}>
-          <StorageIcon onClick={() => setExpanded(!expanded)} size={22} />
+          <StorageIcon
+            style={{ cursor: 'pointer', float: expanded ? 'unset' : 'left' }}
+            onClick={() => setExpanded(!expanded)}
+            size={22}
+          />
+          <ExpandIcon
+            style={{ cursor: 'pointer', display: expanded ? 'none' : 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+            size={22}
+          />
           <ul className={clsx(classes.ulReset)} style={{ display: expanded ? undefined : 'none' }}>
             <ListOfTables tables={tables} />
           </ul>

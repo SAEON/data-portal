@@ -26,7 +26,7 @@ const Table = ({ tableName, fields }) => {
   const handleFocus = () => {
     document.getElementById(inputId).focus()
   }
-  console.log('THIS THING', context)
+
   return (
     <li key={tableName} className={clsx(classes.liReset)}>
       {/* if (editActive)  <input defaultValue="text" /> // TODO handle table mutation here */}
@@ -47,7 +47,7 @@ const Table = ({ tableName, fields }) => {
           <span
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            style={{ display: 'flex', inlineSize: 'max-content' }}
+            style={{ display: 'flex', inlineSize: 'auto' }}
             className={clsx(classes.hoverHighlight)}
           >
             {/* Table Icon and text */}
@@ -58,9 +58,13 @@ const Table = ({ tableName, fields }) => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
+                flexGrow: 1,
               }}
             >
-              <TableIcon size={20} style={{ minWidth: 20, marginRight: '2px' }} />
+              <TableIcon
+                size={20}
+                style={{ minWidth: 20, marginRight: '2px', cursor: 'pointer' }}
+              />
               <RenameOperator
                 variables={{
                   id: context.databook.doc._id,
@@ -70,24 +74,25 @@ const Table = ({ tableName, fields }) => {
                 entityType="table"
               >
                 {renameEntityLazy => {
-                  const onEnter = e => {
-                    //   e.preventDefault()
+                  const onEnter = () => {
                     setEditActive(false)
                     const result = renameEntityLazy()
                     if (result?.error) {
                       //STEVEN TO DO: if error: warn user
                       console.log('onEnter error', result?.error)
-                      SetText(tableName)
+                      setText(tableName)
                     }
                   }
                   return (
                     <input
+                      style={{ width: '100%', textOverflow: 'ellipsis' }}
                       id={inputId}
-                      size={text.length + 1} //giving a minimum size to smooth out list of secondaryText's
                       autoComplete="off"
                       readOnly={!editActive}
                       value={text}
-                      className={editActive ? clsx(classes.renamingText) : clsx(classes.text)}
+                      className={clsx(classes.inputField, {
+                        [classes.inputFieldActive]: editActive,
+                      })}
                       onFocus={e => {
                         console.log('editActive', editActive)
                         if (editActive) e.currentTarget.select() //STEVEN TODO: bug: editActive being seen as false always
@@ -113,7 +118,13 @@ const Table = ({ tableName, fields }) => {
               </RenameOperator>
             </span>
             {/* View Metadata (i) button */}
-            <span style={hovered ? {} : { visibility: 'hidden' }}>
+            <span
+              style={{
+                marginLeft: 'auto',
+                marginRight: 0,
+                visibility: hovered ? 'inherit' : 'hidden',
+              }}
+            >
               <IconButton size={'small'}>
                 <InfoIcon />
               </IconButton>
