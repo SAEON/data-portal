@@ -33,6 +33,8 @@ jobs:
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           CATALOGUE_DEPLOYMENT_ENV="production"
           CATALOGUE_PROXY_ADDRESS="http://proxy:8001"
+          ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
+          CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.ac.za"
           CATALOGUE_API_ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
           CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="disabled"
@@ -48,4 +50,5 @@ jobs:
           CATALOGUE_CLIENT_AUTH=disabled
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
+          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
