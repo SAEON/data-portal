@@ -1,6 +1,14 @@
 import fetch from 'node-fetch'
-import { CATALOGUE_API_ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_ADDRESS } from '../../config.js'
+import {
+  CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
+  ELASTICSEARCH_ADDRESS,
+  CATALOGUE_API_ODP_FILTER,
+} from '../../config.js'
 import makeOdpIterator from './iterator/index.js'
+
+console.log('filter', CATALOGUE_API_ODP_FILTER)
+
+const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
 
 export default async () => {
   const result = {
@@ -38,7 +46,7 @@ export default async () => {
           headers: {
             'Content-Type': 'application/x-ndjson',
           },
-          body: iterator.data
+          body: filter(iterator.data)
             .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
             .join(''),
         }
@@ -61,10 +69,12 @@ export default async () => {
       }
 
       console.log(
-        `Processed ${elasticsResponseJson.items.length} docs into the ${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} index`
+        `Processed ${
+          elasticsResponseJson.items?.length || 0
+        } docs into the ${CATALOGUE_API_ELASTICSEARCH_INDEX_NAME} index`
       )
 
-      elasticsResponseJson.items.forEach(({ index }) => {
+      elasticsResponseJson.items?.forEach(({ index }) => {
         if (index.result) {
           result[index.result]++
         }

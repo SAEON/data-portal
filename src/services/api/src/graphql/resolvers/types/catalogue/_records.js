@@ -1,3 +1,4 @@
+import { GraphQLError } from 'graphql'
 import buildDsl from './dsl/index.js'
 
 export default async (_, args, ctx) => {
@@ -47,6 +48,10 @@ export default async (_, args, ctx) => {
   const data = await catalogue.query(
     buildDsl({ dsl, ids, dois, text, terms, extent, identifiers, isAggregation: false })
   )
+
+  if (data.error) {
+    return new GraphQLError(`${JSON.stringify(data.error, null, 2)}`)
+  }
 
   return {
     _firstResult:

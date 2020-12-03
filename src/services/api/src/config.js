@@ -1,8 +1,11 @@
 import { join, normalize } from 'path'
 import { mkdirSync, existsSync } from 'fs'
+import getCurrentDirectory from './lib/get-current-directory.js'
 import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
+
+const __dirname = getCurrentDirectory(import.meta)
 
 export const CATALOGUE_API_ODP_CLIENT_ID =
   process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
@@ -68,6 +71,12 @@ export const CATALOGUE_API_ALLOWED_ORIGINS =
   process.env.CATALOGUE_API_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
 export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.dvn/api/catalogue'
+
+export const CATALOGUE_API_ODP_FILTER = process.env.CATALOGUE_API_ODP_FILTER_PATH
+  ? await import(normalize(join(__dirname, '../', process.env.CATALOGUE_API_ODP_FILTER_PATH))).then(
+      ({ default: fn }) => fn
+    )
+  : undefined
 
 export const CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE =
   process.env.CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE || 100

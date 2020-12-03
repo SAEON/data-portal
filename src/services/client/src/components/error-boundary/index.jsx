@@ -25,9 +25,6 @@ export default class extends Component {
         title="Application Error"
         text={
           <>
-            <DialogContentText variant="body2" gutterBottom style={{ marginBottom: 16 }}>
-              {error}
-            </DialogContentText>
             <DialogContentText variant="body2" gutterBottom>
               Please try refreshing this page in a few minutes. If the error persists, or if
               assistance is required, please contact{' '}
@@ -37,6 +34,9 @@ export default class extends Component {
                 </Link>
               }{' '}
               with a screenshot of this page so that we may resolve the issue speedily
+            </DialogContentText>
+            <DialogContentText variant="body2" gutterBottom style={{ marginBottom: 16 }}>
+              <pre>{error}</pre>
             </DialogContentText>
           </>
         }
