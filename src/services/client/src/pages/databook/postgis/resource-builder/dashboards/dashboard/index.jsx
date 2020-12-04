@@ -17,7 +17,7 @@ export default ({ dashboard, setActiveTabIndex }) => {
 
       {charts?.map(({ id }) => {
         return (
-          <div key={id} item xs={12}>
+          <div key={id} xs={12}>
             Chart: {id}
           </div>
         )

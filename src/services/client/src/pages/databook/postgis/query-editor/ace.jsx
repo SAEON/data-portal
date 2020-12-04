@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import AceEditor from 'react-ace'
-import 'ace-builds/src-noconflict/mode-sql'
+import 'ace-builds/webpack-resolver'
+import 'ace-builds/src-noconflict/mode-pgsql'
 import 'ace-builds/src-noconflict/theme-sqlserver'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
@@ -20,8 +21,8 @@ export default forwardRef(({ sql }, ref) => {
         showPrintMargin={false}
         height="100%"
         width="100%"
-        mode="sql"
-        theme="sql-server"
+        mode="pgsql"
+        theme="sqlserver"
         onChange={val => {
           ref.current.sql = val
         }}
