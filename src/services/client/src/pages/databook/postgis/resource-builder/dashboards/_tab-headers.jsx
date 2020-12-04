@@ -72,7 +72,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
               className={clsx(classes.tab)}
               label={
                 <Tooltip title={`Dashboard ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar, classes.blue)} variant="circle">
+                  <Avatar className={clsx(classes.smallAvatar, classes.blue)} variant="circular">
                     {i + 1}
                   </Avatar>
                 </Tooltip>

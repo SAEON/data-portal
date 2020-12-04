@@ -1,10 +1,12 @@
-import { makeStyles, fade } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
   layout: {
     padding: '4px 0 0 4px',
     height: '100%',
-    overflow: 'auto',
+    width: '100%',
+    overflowY: 'auto',
+    overflowX: 'hidden',
   },
   ulReset: { margin: 'unset', paddingLeft: 15 },
   liReset: {

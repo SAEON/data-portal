@@ -64,6 +64,8 @@ type Mutation {
   persistSearchState(state: JSON!, createdBy: String!): ID!
   createDashboard(name: String, databookId: ID!): Dashboard!
   deleteDashboard(id: ID): Boolean!
+  # Add a chart to dashboard, and get the new count of a dashboard's charts
+  addChartToDashboard(chartId: ID!, dashboardId: ID!): Chart!
   createChart(
     name: String
     databookId: ID!

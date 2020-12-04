@@ -70,7 +70,8 @@ export default ({
           </DialogTitle>
         ) : undefined}
         <div style={{ position: 'relative' }}>
-          {children || <DialogContent {...dialogueContentProps}>{text}</DialogContent>}
+          {children && typeof children === 'function' ? children(() => setOpen(false)) : children}
+          {children ? null : <DialogContent {...dialogueContentProps}>{text}</DialogContent>}
         </div>
       </Dialog>
     </span>

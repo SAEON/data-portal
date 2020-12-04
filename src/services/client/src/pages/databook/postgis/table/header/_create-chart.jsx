@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import AddItemIcon from 'mdi-react/ViewGridAddIcon'
+import CreateChartIcon from 'mdi-react/ChartBoxPlusOutlineIcon'
 import {
   IconButton,
   Dialog,
@@ -35,7 +35,7 @@ export default ({ data }) => {
   const [open, setOpen] = useState(false)
   const [x, setX] = useState(choices[0])
   const [y, setY] = useState(choices[1])
-  const [mutationLoading, setMutationLoading] = useState(false)
+  const [, setMutationLoading] = useState(false)
   const client = useApolloClient()
   const id = databook.doc._id
 
@@ -45,7 +45,7 @@ export default ({ data }) => {
       {/* TOGGLE DIALOGUE */}
       <Tooltip title="Create chart from current data" placement="left-start">
         <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOpen(true)} size="small">
-          <AddItemIcon style={{ color: theme.palette.primary.light }} />
+          <CreateChartIcon style={{ color: theme.palette.primary.light }} />
         </IconButton>
       </Tooltip>
 
@@ -126,7 +126,9 @@ export default ({ data }) => {
                         },
                       },
                     })
-                  } catch {}
+                  } catch {
+                    // TODO - why is this here?
+                  }
                 },
               })
 

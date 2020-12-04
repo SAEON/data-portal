@@ -43,7 +43,7 @@ export default () => {
               className={clsx(classes.tab)}
               label={
                 <Tooltip title={`Query editor ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar)} variant="circle">
+                  <Avatar className={clsx(classes.smallAvatar)} variant="circular">
                     {i + 1}
                   </Avatar>
                 </Tooltip>
