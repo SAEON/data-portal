@@ -1,5 +1,3 @@
-// STEVEN TODO
-// Is there a better way of doing this?
 export default async (self, args) => {
   const { id } = args
   const tableMap = self.tables.reduce((a, c) => {
@@ -13,6 +11,7 @@ export default async (self, args) => {
     a[id].fields = [...a[id].fields, { ...c }]
     return a
   }, {})
+
   return Object.entries(tableMap)
     .map(([tblName, table]) => (id ? tblName === id && table : table))
     .filter(_ => _)

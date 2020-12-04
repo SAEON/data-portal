@@ -29,6 +29,7 @@ type PostgisDatabookSchema {
 
 type PostgisDatabookTable {
   id: ID!
+  table_schema: String!
   databook: JSON!
   # Update table name
   updateTableName(name: String!): Boolean!

@@ -61,6 +61,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
     <Fade in={!error && !loading} key="data-in">
       <div style={{ display: 'flex' }}>
         <Tabs
+          indicatorColor="primary"
           variant={dashboards.length > 5 ? 'scrollable' : 'standard'}
           value={activeTabIndex}
           onChange={(event, newValue) => setActiveTabIndex(newValue)}

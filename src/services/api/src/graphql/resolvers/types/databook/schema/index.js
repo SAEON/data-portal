@@ -16,14 +16,14 @@ export default async (self, args, ctx) => {
       password,
     },
   })
+
+  const tables = response.rows.reduce((a, c) => {
+    return [...(a || []), Object.fromEntries(Object.entries(c))]
+  }, [])
+
   return {
     id: schema,
     databook: self.doc,
-    tables: response.rows.reduce((a, c) => {
-      return [
-        ...(a || []),
-        Object.fromEntries(Object.entries(c).filter(([k]) => !['table_schema'].includes(k))),
-      ]
-    }, []),
+    tables,
   }
 }

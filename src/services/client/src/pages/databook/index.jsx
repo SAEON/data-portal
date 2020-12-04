@@ -106,6 +106,7 @@ export default ({ id }) => {
                         id
                         tables {
                           id
+                          table_schema
                           fields {
                             id
                             column_name

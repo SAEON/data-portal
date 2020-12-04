@@ -32,6 +32,7 @@ export default () => {
       <Toolbar disableGutters variant="dense" className={clsx(classes.toolbar)}>
         {/* EDITORS */}
         <Tabs
+          indicatorColor="primary"
           variant={editors.length > 5 ? 'scrollable' : 'standard'}
           value={activeTabIndex}
           onChange={(event, newValue) => setActiveTabIndex(newValue)}
