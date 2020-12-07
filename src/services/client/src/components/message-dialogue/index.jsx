@@ -17,7 +17,7 @@ export default ({
   hideIcon = false,
   defaultOpen = false,
   permanent = false,
-  handleClose = () => { },
+  handleClose = () => {},
 }) => {
   const [open, setOpen] = useState(defaultOpen)
 
@@ -45,13 +45,13 @@ export default ({
                     {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
                   </badgeProps._component>
                 ) : (
-                    <Badge {...badgeProps}>
-                      {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
-                    </Badge>
-                  )
+                  <Badge {...badgeProps}>
+                    {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
+                  </Badge>
+                )
               ) : (
-                  icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
-                )}
+                icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
+              )}
             </IconButton>
           </span>
         </Tooltip>

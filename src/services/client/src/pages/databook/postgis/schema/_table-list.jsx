@@ -153,6 +153,7 @@ const Table = ({ tableName, fields, tableSchema }) => {
                     <IconButton
                       onClick={e => {
                         e.stopPropagation()
+                        setHovered(false)
                         onClose()
                       }}
                       style={{ marginLeft: 'auto', alignSelf: 'center' }}
@@ -175,9 +176,9 @@ const Table = ({ tableName, fields, tableSchema }) => {
                 {isSharedTable ? (
                   <div>Some kind of information should be here regarding this shared layer</div>
                 ) : (
-                    // TODO - this should not be static
-                    <Record id={'10.15493/SARVA.DWS.10000001'} />
-                  )}
+                  // TODO - this should not be static
+                  <Record id={'10.15493/SARVA.DWS.10000001'} />
+                )}
               </MessageDialogue>
             </span>
           </span>
