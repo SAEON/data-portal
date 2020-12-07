@@ -31,5 +31,18 @@ export default makeStyles(theme => ({
     fontWeight: 'bold',
     paddingLeft: '.5rem',
     paddingRight: '.5rem',
+    //STEVEN
+    fontFamily: 'monospace',
+    fontSize: 'small',
+  },
+  gridItem: {
+    overflowX: 'auto',
+    textOverflow: 'ellipsis',
+    fontFamily: 'monospace',
+    fontSize: 'small',
+    '&:focus': {
+      backgroundColor: 'red',
+      textOverflow: 'unset',
+    },
   },
 }))
