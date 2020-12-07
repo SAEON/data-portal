@@ -144,6 +144,7 @@ const Table = ({ tableName, fields, tableSchema }) => {
             >
               <MessageDialogue
                 icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
+                handleClose={() => setHovered(false)}
                 title={onClose => (
                   <div style={{ display: 'flex' }}>
                     <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
@@ -153,7 +154,6 @@ const Table = ({ tableName, fields, tableSchema }) => {
                       onClick={e => {
                         e.stopPropagation()
                         onClose()
-                        setHovered(false)
                       }}
                       style={{ marginLeft: 'auto', alignSelf: 'center' }}
                     >

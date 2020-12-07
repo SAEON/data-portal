@@ -17,6 +17,7 @@ export default ({
   hideIcon = false,
   defaultOpen = false,
   permanent = false,
+  handleClose = () => {},
 }) => {
   const [open, setOpen] = useState(defaultOpen)
 
@@ -61,7 +62,10 @@ export default ({
         disableEscapeKeyDown={permanent}
         {...dialogueProps}
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          handleClose()
+          setOpen(false)
+        }}
         PaperProps={paperProps}
       >
         {title ? (
