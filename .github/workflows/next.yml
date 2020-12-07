@@ -41,6 +41,7 @@ jobs:
           CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
           CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.dvn/graphql"
+          CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
           CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.dvn/authenticated"
           CATALOGUE_CLIENT_AUTH_ID="saeon-data-portal"
           CATALOGUE_CLIENT_AUTH_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/auth"

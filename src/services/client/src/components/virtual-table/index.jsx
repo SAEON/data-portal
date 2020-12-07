@@ -29,8 +29,6 @@ export default ({ data }) => {
     width: -1,
     height: -1,
   })
-  const [dragging, setDragging] = useState(false)
-  const [dragIndicatorPos, setDragIndicatorPos] = useState({ x: -1, y: -1 })
   //STEVEN
   /* columnWidths is Object with structure 
   {
@@ -40,6 +38,8 @@ export default ({ data }) => {
   const [columnWidths, setColumnWidths] = useState(
     Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length]))
   )
+  const [dragging, setDragging] = useState(false)
+  const [dragIndicatorXPos, setDragIndicatorXPos] = useState(-1)
   const headerGrid = useRef()
   const bodyGrid = useRef()
 
@@ -49,11 +49,11 @@ export default ({ data }) => {
   //     bodyGrid?.current?.resetAfterColumnIndex(columnIndex)
   //   }
   // }, 100)
-  const clearColumnWidthCache = () => {
+  const clearColumnWidthCache = index => {
     if (headerGrid.current != null) {
-      headerGrid.current.resetAfterColumnIndex(0)
+      headerGrid.current.resetAfterColumnIndex(index)
       if (bodyGrid.current != null) {
-        bodyGrid.current.resetAfterColumnIndex(0)
+        bodyGrid.current.resetAfterColumnIndex(index)
       }
     }
   }
@@ -104,7 +104,7 @@ export default ({ data }) => {
                 backgroundColor: 'red',
                 position: 'absolute',
                 zIndex: 9999,
-                left: dragIndicatorPos.x,
+                left: dragIndicatorXPos,
               }}
             />
             <div className={clsx(classes.gridRoot)}>
@@ -124,6 +124,16 @@ export default ({ data }) => {
               >
                 {({ columnIndex, style }) => {
                   const fieldName = Object.entries(headers).find(([, i]) => columnIndex === i)?.[0]
+
+                  const handleDrag = (event, { deltaX }) => {
+                    const { offsetX, offsetY, pageX, pageY, screenX, screenY, x, y } = event
+                    console.log('offsetX', offsetX)
+                    setDragIndicatorXPos(offsetX)
+                    let newColumnWidths = columnWidths
+                    newColumnWidths[fieldName] = columnWidths[fieldName] + deltaX / 20 //ugly way of writting this. refactor
+                    // setColumnWidths(newColumnWidths)
+                    return true
+                  }
                   return (
                     // individual header
                     <div className={classes.headerRow} style={Object.assign({}, style)}>
@@ -132,19 +142,13 @@ export default ({ data }) => {
                         axis="x"
                         defaultClassName="DragHandle"
                         defaultClassNameDragging="DragHandleActive"
-                        onDrag={(event, { deltaX }) => {
-                          const { offsetX, offsetY, pageX, pageY, screenX, screenY, x, y } = event
-                          setDragIndicatorPos({ x: offsetX, y: y })
-                          let newColumnWidths = columnWidths
-                          newColumnWidths[fieldName] = columnWidths[fieldName] + deltaX / 20 //ugly way of writting this. refactor
-                          setColumnWidths(newColumnWidths)
-                          // clearColumnWidthCache() //very bad performance to constantly clear cache. much better done onStop
-                        }}
-                        onStart={() => {
-                          /**TODO: show column indicator/bar for better UX */
-                        }}
+                        onDrag={handleDrag}
+                        // onStart={() => {
+                        //   /**TODO: show column indicator/bar for better UX */
+                        // }}
                         onStop={() => {
                           clearColumnWidthCache(columnIndex)
+                          // return false
                         }}
                         position={{ x: 0, y: 0 }}
                       >

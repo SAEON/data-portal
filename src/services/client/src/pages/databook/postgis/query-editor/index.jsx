@@ -32,6 +32,7 @@ export default () => {
       <Toolbar disableGutters variant="dense" className={clsx(classes.toolbar)}>
         {/* EDITORS */}
         <Tabs
+          indicatorColor="primary"
           variant={editors.length > 5 ? 'scrollable' : 'standard'}
           value={activeTabIndex}
           onChange={(event, newValue) => setActiveTabIndex(newValue)}
@@ -42,7 +43,7 @@ export default () => {
               className={clsx(classes.tab)}
               label={
                 <Tooltip title={`Query editor ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar)} variant="circle">
+                  <Avatar className={clsx(classes.smallAvatar)} variant="circular">
                     {i + 1}
                   </Avatar>
                 </Tooltip>

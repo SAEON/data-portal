@@ -1,28 +1,26 @@
-import { Grid, IconButton, Card, CardContent } from '@material-ui/core'
-import ShareIcon from 'mdi-react/LinkPlusIcon'
-import AddChartIcon from 'mdi-react/ChartPieIcon'
-import DeleteIcon from 'mdi-react/DeleteIcon'
+import { Toolbar, Typography } from '@material-ui/core'
+import AddChartButton from './_add-chart-button'
+import DeleteButton from './_delete-button'
+import ShareButton from './_share-button'
+import Chart from './chart'
 
-export default ({ id }) => {
+export default ({ dashboard, setActiveTabIndex }) => {
+  const { id, charts = [] } = dashboard
   return (
-    <Grid container spacing={2}>
-      <Grid container item justify="flex-end">
-        <IconButton>
-          <DeleteIcon />
-        </IconButton>
-        <IconButton>
-          <AddChartIcon />
-        </IconButton>
-        <IconButton>
-          <ShareIcon />
-        </IconButton>
-      </Grid>
-      <Grid item xs={12}>
-        <Card style={{ margin: 36 }}>
-          <CardContent>{id}</CardContent>
-          <CardContent>DnD list of charts, filters, etc</CardContent>
-        </Card>
-      </Grid>
-    </Grid>
+    <>
+      <Toolbar variant={'dense'}>
+        <Typography>{id}</Typography>
+        <span style={{ marginLeft: 'auto' }} />
+        <AddChartButton dashboard={dashboard} />
+        <span style={{ marginRight: 16 }} />
+        <ShareButton id={id} />
+      </Toolbar>
+
+      {charts?.map(chart => (
+        <Chart key={chart.id} chart={chart} dashboard={dashboard} />
+      ))}
+
+      <DeleteButton id={id} setActiveTabIndex={setActiveTabIndex} />
+    </>
   )
 }

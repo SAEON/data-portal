@@ -14,20 +14,18 @@ import MessageDialogue from '../../../../components/message-dialogue'
 import Record from '../../../record'
 
 export default ({ tables }) => {
-  const { databook } = useContext(databooksContext)
-
-  const isSharedTable = t => !Object.keys(databook.doc.tables).includes(t)
-
   return [...tables]
-    .sort(({ id: tableName }) => {
-      return isSharedTable(tableName) ? 1 : -1
+    .sort(({ table_schema }) => {
+      return table_schema === 'public' ? 1 : -1
     })
-    .map(({ id: tableName, fields }) => {
-      return <Table key={tableName} tableName={tableName} fields={fields} />
+    .map(({ id: tableName, fields, table_schema }) => {
+      return (
+        <Table key={tableName} tableName={tableName} fields={fields} tableSchema={table_schema} />
+      )
     })
 }
 
-const Table = ({ tableName, fields }) => {
+const Table = ({ tableName, fields, tableSchema }) => {
   const theme = useTheme()
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(tableName)
@@ -40,7 +38,7 @@ const Table = ({ tableName, fields }) => {
     document.getElementById(inputId).focus()
   }
 
-  const isSharedTable = t => !Object.keys(databook.doc.tables).includes(t)
+  const isSharedTable = tableSchema === 'public'
 
   return (
     <li key={tableName} className={clsx(classes.liReset)}>
@@ -55,7 +53,7 @@ const Table = ({ tableName, fields }) => {
                 setEditActive(true)
                 handleFocus()
               },
-              disabled: isSharedTable(tableName),
+              disabled: isSharedTable,
             },
           ]}
         >
@@ -103,7 +101,7 @@ const Table = ({ tableName, fields }) => {
                       style={{
                         width: '100%',
                         textOverflow: 'ellipsis',
-                        color: isSharedTable(tableName) ? theme.palette.grey[500] : 'inherit',
+                        color: isSharedTable ? theme.palette.grey[500] : 'inherit',
                       }}
                       id={inputId}
                       autoComplete="off"
@@ -141,11 +139,11 @@ const Table = ({ tableName, fields }) => {
               style={{
                 marginLeft: 'auto',
                 marginRight: 0,
-                visibility: hovered ? 'inherit' : 'hidden',
+                display: hovered ? 'inherit' : 'none',
               }}
             >
               <MessageDialogue
-                icon={<InfoIcon />}
+                icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
                 handleClose={() => setHovered(false)}
                 title={onClose => (
                   <div style={{ display: 'flex' }}>
@@ -165,21 +163,21 @@ const Table = ({ tableName, fields }) => {
                 )}
                 tooltipProps={{
                   placement: 'right',
-                  title: isSharedTable(tableName)
+                  title: isSharedTable
                     ? `Read-only shared table`
                     : `Show metadata information for this table`,
                 }}
-                iconProps={{ size: 'small', fontSize: 'small' }}
+                iconProps={{ size: 'small' }}
                 dialogueContentProps={{ style: { padding: 0 } }}
                 dialogueProps={{ fullWidth: true }}
                 paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
               >
-                {isSharedTable(tableName) ? (
+                {isSharedTable ? (
                   <div>Some kind of information should be here regarding this shared layer</div>
                 ) : (
-                  // TODO - this should not be static
-                  <Record id={'10.15493/SARVA.DWS.10000001'} />
-                )}
+                    // TODO - this should not be static
+                    <Record id={'10.15493/SARVA.DWS.10000001'} />
+                  )}
               </MessageDialogue>
             </span>
           </span>
@@ -189,7 +187,7 @@ const Table = ({ tableName, fields }) => {
           className={clsx(classes.ulReset)}
           style={{ marginLeft: '5px', display: expanded ? undefined : 'none' }}
         >
-          <ListOfFields tableName={tableName} fields={fields} />
+          <ListOfFields tableName={tableName} fields={fields} tableSchema={tableSchema} />
         </ul>
       </>
     </li>

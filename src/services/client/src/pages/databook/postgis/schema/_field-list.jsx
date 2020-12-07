@@ -7,7 +7,7 @@ import RenameOperator from './_rename-operator'
 import { useTheme } from '@material-ui/core/styles'
 import { context as databooksContext } from '../../context'
 
-export default ({ tableName, fields }) => {
+export default ({ tableName, fields, tableSchema }) => {
   return [...fields]
     .sort(({ ordinal_position: a }, { ordinal_position: b }) => (a > b ? 1 : -1))
     .map(({ id, column_name, data_type }) => {
@@ -18,12 +18,13 @@ export default ({ tableName, fields }) => {
           tableName={tableName}
           column_name={column_name}
           data_type={data_type}
+          tableSchema={tableSchema}
         />
       )
     })
 }
 
-const Field = ({ id, tableName, column_name, data_type }) => {
+const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
   const theme = useTheme()
   const inputMinSize = 22
   const [editActive, setEditActive] = useState(false)
@@ -34,7 +35,7 @@ const Field = ({ id, tableName, column_name, data_type }) => {
     document.getElementById(id).focus()
   }
 
-  const isSharedTable = t => !Object.keys(databook.doc.tables).includes(t)
+  const isSharedTable = tableSchema === 'public'
 
   return (
     <li className={clsx(classes.hoverHighlight)}>
@@ -48,7 +49,7 @@ const Field = ({ id, tableName, column_name, data_type }) => {
                 setEditActive(true)
                 handleFocus()
               },
-              disabled: isSharedTable(tableName),
+              disabled: isSharedTable,
             },
           ]}
         >
@@ -75,7 +76,7 @@ const Field = ({ id, tableName, column_name, data_type }) => {
                 <input
                   id={id}
                   style={{
-                    color: isSharedTable(tableName) ? theme.palette.grey[500] : 'inherit',
+                    color: isSharedTable ? theme.palette.grey[500] : 'inherit',
                   }}
                   size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
                   autoComplete="off"

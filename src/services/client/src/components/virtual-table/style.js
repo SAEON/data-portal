@@ -36,7 +36,7 @@ export default makeStyles(theme => ({
     fontSize: 'small',
   },
   gridItem: {
-    overflowX: 'auto',
+    overflowX: 'hidden',
     textOverflow: 'ellipsis',
     fontFamily: 'monospace',
     fontSize: 'small',

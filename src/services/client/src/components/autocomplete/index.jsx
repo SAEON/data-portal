@@ -3,17 +3,27 @@ import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
 
-export default ({ id, options, setOption, selectedOptions = [], ...props }) => {
+export default ({
+  id,
+  options,
+  setOption,
+  getOptionSelected = undefined,
+  selectedOptions = [],
+  ...props
+}) => {
   return (
     <Autocomplete
-      style={{ zIndex: 5000 }}
+      // From parent
+      id={id}
+      value={selectedOptions?.length ? selectedOptions : null}
+      options={options}
+      onChange={(ev, newVal) => setOption(newVal)}
+      getOptionSelected={getOptionSelected}
+      // Internal
       fullWidth
       ListboxComponent={ListboxComponent}
       size="small"
-      id={id}
-      value={selectedOptions}
-      options={options}
-      onChange={(ev, newVal) => setOption(newVal)}
+      style={{ zIndex: 5000 }}
       getOptionLabel={option => `${option}`}
       renderInput={params => (
         <QuickForm inputValue="">

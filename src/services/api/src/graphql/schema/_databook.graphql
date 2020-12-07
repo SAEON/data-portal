@@ -16,6 +16,7 @@ type Dashboard {
 type Chart {
   id: ID!
   name: String
+  description: String
   xAxis: String!
   yAxis: String!
   data: JSON!
@@ -29,6 +30,7 @@ type PostgisDatabookSchema {
 
 type PostgisDatabookTable {
   id: ID!
+  table_schema: String!
   databook: JSON!
   # Update table name
   updateTableName(name: String!): Boolean!

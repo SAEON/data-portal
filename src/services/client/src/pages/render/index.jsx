@@ -10,6 +10,7 @@ const components = {
   record: lazy(() => import('../record')),
   atlas: lazy(() => import('../atlas')),
   databook: lazy(() => import('../databook')),
+  dashboard: lazy(() => import('../dashboard')),
   chart: lazy(() => import('../chart')),
   'compact-record': lazy(() => import('../compact-record')),
 }

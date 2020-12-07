@@ -48,7 +48,6 @@
         },
         "subjectScheme": {
           "type": "text",
-          "include_in_parent": true,
           "fields": {
             "raw": {
               "ignore_above": 256,

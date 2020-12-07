@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
-import { deepOrange } from '@material-ui/core/colors'
+import { blue, deepOrange, green } from '@material-ui/core/colors'
 
 export default makeStyles(theme => ({
   layout: {
@@ -31,6 +31,12 @@ export default makeStyles(theme => ({
     height: theme.spacing(2),
     fontSize: 10,
     backgroundColor: deepOrange[500],
+  },
+  blue: {
+    backgroundColor: blue[500],
+  },
+  green: {
+    backgroundColor: green[500],
   },
   playButton: {
     marginLeft: 'auto',

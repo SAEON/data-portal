@@ -21,7 +21,11 @@ const DASHBOARDS = gql`
     }
   }
 `
-
+/**
+ * TODO. Perhaps a better option then manually updating the cache is to specify
+ * that a query should be rerun. There is a problem here where the active tab index is updated
+ * BEFORE the component is rerendered with the new dashboards
+ */
 export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
   const { databook } = useContext(databookContext)
   const classes = useStyles()
@@ -38,9 +42,8 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
         query: DASHBOARDS,
         data: { dashboards: [data.createDashboard, ...existingDashboards.dashboards] },
       })
-
-      setActiveTabIndex(dashboards.length)
     },
+    onCompleted: () => setActiveTabIndex(dashboards.length),
   })
 
   if (error) {
@@ -61,6 +64,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
     <Fade in={!error && !loading} key="data-in">
       <div style={{ display: 'flex' }}>
         <Tabs
+          indicatorColor="primary"
           variant={dashboards.length > 5 ? 'scrollable' : 'standard'}
           value={activeTabIndex}
           onChange={(event, newValue) => setActiveTabIndex(newValue)}
@@ -71,7 +75,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
               className={clsx(classes.tab)}
               label={
                 <Tooltip title={`Dashboard ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar)} variant="circle">
+                  <Avatar className={clsx(classes.smallAvatar, classes.blue)} variant="circular">
                     {i + 1}
                   </Avatar>
                 </Tooltip>

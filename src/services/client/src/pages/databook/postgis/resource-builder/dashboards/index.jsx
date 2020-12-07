@@ -19,6 +19,11 @@ export default forwardRef((props, ref) => {
         query($databookId: ID!) {
           dashboards(databookId: $databookId) {
             id
+            charts {
+              id
+              name
+              description
+            }
           }
         }
       `}
@@ -45,11 +50,13 @@ export default forwardRef((props, ref) => {
               />,
               ref.current
             )}
-            {dashboards.map(({ id }, i) => {
+            {dashboards.map((dashboard, i) => {
               return (
-                <Fade in={activeTabIndex === i} key={id}>
+                <Fade in={activeTabIndex === i} key={dashboard.id}>
                   <div role="tabpanel" hidden={activeTabIndex !== i}>
-                    {activeTabIndex === i && <Dashboard id={id} />}
+                    {activeTabIndex === i && (
+                      <Dashboard setActiveTabIndex={setActiveTabIndex} dashboard={dashboard} />
+                    )}
                   </div>
                 </Fade>
               )

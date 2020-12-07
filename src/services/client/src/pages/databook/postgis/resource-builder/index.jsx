@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import Dashboards from './dashboards'
 import Charts from './charts'
+import { Fade } from '@material-ui/core'
 
 export default () => {
   const [active, setActive] = useState('dashboards')
@@ -13,8 +14,20 @@ export default () => {
   return (
     <div className={clsx(classes.layout, classes.bg)}>
       <Header ref={tabsContainerRef} active={active} setActive={setActive} />
-      {active === 'dashboards' && <Dashboards ref={tabsContainerRef} />}
-      {active === 'charts' && <Charts />}
+      {active === 'dashboards' && (
+        <Fade in={active === 'dashboards'} key="dasboards-in">
+          <span>
+            <Dashboards ref={tabsContainerRef} />
+          </span>
+        </Fade>
+      )}
+      {active === 'charts' && (
+        <Fade in={active === 'charts'} key="charts-in">
+          <span>
+            <Charts ref={tabsContainerRef} />
+          </span>
+        </Fade>
+      )}
     </div>
   )
 }

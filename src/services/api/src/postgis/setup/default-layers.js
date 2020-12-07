@@ -1,33 +1,45 @@
-import getCurrentDirectory from '../../lib/get-current-directory.js'
-import { join } from 'path'
-
-const __dirname = getCurrentDirectory(import.meta)
-
-export const defaultWebLayers = {
-  'sa-municipality-boundaries-2016':
-    'http://www.demarcation.org.za/site/wp-content/uploads/2016/12/2016-Boundaries-Local.zip',
-  'sa-district-boundaries-2016':
-    'http://www.demarcation.org.za/site/wp-content/uploads/2016/12/2016-Boundaries-District.zip',
-}
-
-export const defaultDiskLayers = {
-  // 'sa-provinces-2011': join(__dirname, './lib/provinces-sa-2011/PR_SA_2011.shp'),
-  // 'sa-provinces-2011-simplified': join(
-  //   __dirname,
-  //   './lib/provinces-sa-simplified/provinces generalised2.shp'
-  // ),
-  // 'africa-countries-simplified': join(
-  //   __dirname,
-  //   './lib/africa-countries-simplified/africa countries simplified2.shp'
-  // ),
-  // biomes: join(__dirname, './lib/biomes/biomes.shp'),
-  // 'continents-simplified': join(__dirname, './lib/continents-simplified/kontinente simple.shp'),
-  // 'sa-district-boundaries-2011-simplified': join(
-  //   __dirname,
-  //   './lib/districts-sa-2011-simplified/DC_SA_2011_simplified.shp'
-  // ),
-  // 'sa-municipality-boundaries-2011-simplified': join(
-  //   __dirname,
-  //   './lib/municipalities-sa-2011-simplified/MN_SA_2011_simplified.shp'
-  // ),
+/**
+ * TODO
+ *
+ * The github shapefiles really should be in this respository,
+ * otherwise unforseen bugs will result. But I was struggling to
+ * get authentication to work (especially with gdal vsicurl)
+ */
+export default {
+  'sa-municipality-boundaries-2016': {
+    source: 'public',
+    uri: 'http://www.demarcation.org.za/site/wp-content/uploads/2016/12/2016-Boundaries-Local.zip',
+  },
+  'sa-district-boundaries-2016': {
+    source: 'public',
+    uri:
+      'http://www.demarcation.org.za/site/wp-content/uploads/2016/12/2016-Boundaries-District.zip',
+  },
+  'sa-provinces-2011-simplified': {
+    source: 'github',
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/provinces-sa-simplified.zip',
+  },
+  'africa-countries-simplified': {
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/africa-countries-simplified.zip',
+  },
+  biomes: {
+    source: 'github',
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/biomes.zip',
+  },
+  'continents-simplified': {
+    source: 'github',
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/continents-simplified.zip',
+  },
+  'sa-district-boundaries-2011-simplified': {
+    source: 'github',
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/districts-sa-2011-simplified.zip',
+  },
+  'sa-municipality-boundaries-2011-simplified': {
+    source: 'github',
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/municipalities-sa-2011-simplified.zip',
+  },
+  'sa-provinces-2011': {
+    source: 'github',
+    uri: 'https://github.com/SAEON/shapefiles/raw/stable/provinces-sa-2011.zip',
+  },
 }
