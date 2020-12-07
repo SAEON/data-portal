@@ -2,6 +2,7 @@ import { Toolbar, Typography } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
+import Chart from './chart'
 
 export default ({ dashboard, setActiveTabIndex }) => {
   const { id, charts = [] } = dashboard
@@ -15,13 +16,9 @@ export default ({ dashboard, setActiveTabIndex }) => {
         <ShareButton id={id} />
       </Toolbar>
 
-      {charts?.map(({ id }) => {
-        return (
-          <div key={id} xs={12}>
-            Chart: {id}
-          </div>
-        )
-      })}
+      {charts?.map(chart => (
+        <Chart key={chart.id} chart={chart} dashboard={dashboard} />
+      ))}
 
       <DeleteButton id={id} setActiveTabIndex={setActiveTabIndex} />
     </>

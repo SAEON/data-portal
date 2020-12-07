@@ -24,7 +24,7 @@ export default () => {
       {active === 'charts' && (
         <Fade in={active === 'charts'} key="charts-in">
           <span>
-            <Charts />
+            <Charts ref={tabsContainerRef} />
           </span>
         </Fade>
       )}

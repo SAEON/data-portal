@@ -28,6 +28,10 @@ export default ({ id }) => {
           databook(id: $id) {
             id
             doc
+            charts {
+              id
+              name
+            }
           }
         }
       `}

@@ -13,18 +13,16 @@ export default async (_, { chartId, dashboardId }, ctx) => {
   const dashboard = await Dashboards.findOne({ _id: ObjectID(dashboardId) })
 
   if (!chartExists || !dashboard) {
-    throw new Error(
-      'Unable to find either the chart or the dashboard specified. Both must already exist'
-    )
+    throw new Error('Unable to find either the chart or the dashboard specified. Both must exist')
   }
 
   const { charts = [] } = dashboard
 
-  if (charts.map(chart => chart.toString()).includes(chartId.toString())) {
-    throw new Error('Cannot add duplicate chart to dashboard')
+  if (!charts.map(chart => chart.toString()).includes(chartId.toString())) {
+    throw new Error('Chart is not associated with this dashboard')
   }
 
-  const newCharts = [...charts, chartId]
+  const newCharts = [...charts].filter(id => id.toString() !== chartId.toString())
 
   await Dashboards.findOneAndUpdate(
     { _id: ObjectID(dashboardId) },

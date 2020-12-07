@@ -33,10 +33,10 @@ export default ({ cachePath, contentUri }) => {
               const daysOld = differenceInDays(mtime, new Date())
               if (daysOld > MAX_CACHE_AGE_DAYS) {
                 staleData = data
-                console.log('datacite', contentUri, 'cache expired')
+                console.log('GraphQL schema', contentUri, 'cache expired')
                 return reject(new ExpiredException(`${cachePath} is expired`))
               } else {
-                console.log('datacite', contentUri, 'using cache')
+                console.log('GraphQL schema', contentUri, 'from cache')
                 return resolve(formatJson(JSON.parse(data)))
               }
             }

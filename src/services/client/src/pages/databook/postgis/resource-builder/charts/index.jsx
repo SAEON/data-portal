@@ -1,41 +1,36 @@
-import { useContext } from 'react'
+import { useState, useContext, forwardRef } from 'react'
+import { createPortal } from 'react-dom'
 import { context as databookContext } from '../../../context'
-import { WithGqlQuery } from '../../../../../hooks'
-import { gql } from '@apollo/client'
-import Loading from '../../../../../components/loading'
+import TabHeaders from './_tab-headers'
+import Chart from './chart'
+import { Fade } from '@material-ui/core'
 
-export default () => {
+export default forwardRef((props, ref) => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
   const { databook } = useContext(databookContext)
-  const databookId = databook.doc._id
+  const charts = databook.charts
 
   return (
-    <WithGqlQuery
-      QUERY={gql`
-        query($id: ID!) {
-          databook(id: $id) {
-            id
-            charts {
-              id
-              name
-            }
-          }
-        }
-      `}
-      variables={{ id: databookId }}
-    >
-      {({ error, loading, data }) => {
-        if (loading) {
-          return <Loading />
-        }
-
-        if (error) {
-          throw error
-        }
-
-        const charts = data.databook.charts
-
-        return JSON.stringify(charts)
-      }}
-    </WithGqlQuery>
+    <>
+      {createPortal(
+        <TabHeaders
+          activeTabIndex={activeTabIndex}
+          setActiveTabIndex={setActiveTabIndex}
+          charts={charts}
+        />,
+        ref.current
+      )}
+      {charts.map((chart, i) => {
+        return (
+          <Fade in={activeTabIndex === i} key={chart.id}>
+            <div role="tabpanel" hidden={activeTabIndex !== i}>
+              {activeTabIndex === i && (
+                <Chart setActiveTabIndex={setActiveTabIndex} chart={chart} />
+              )}
+            </div>
+          </Fade>
+        )
+      })}
+    </>
   )
-}
+})

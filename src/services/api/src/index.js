@@ -30,13 +30,13 @@ if (!CATALOGUE_API_NODE_ENV || !['production', 'development'].includes(CATALOGUE
 }
 
 // Configure Elasticsearch
-configureElasticsearch().then(() => console.log('Elasticsearch configured'))
+configureElasticsearch().then(() => console.log('Elasticsearch', 'configured'))
 
 // Configure PostGIS
 if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
   configurePostgis().then(() => console.log('PostGIS configured'))
 } else {
-  console.log('Skipping postgis data seeding')
+  console.log('PostGIS', 'seeding disabled')
 }
 
 /**
