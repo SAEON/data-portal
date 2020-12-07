@@ -12,6 +12,10 @@ export default forwardRef(({ active, setActive }, ref) => {
   return (
     <Toolbar disableGutters className={clsx(classes.toolbar)} variant="dense">
       <Grid container justify="flex-start" style={{ overflow: 'hidden' }}>
+        {/* Allow children of sibling to populate the toolbar appropriately */}
+        <Grid item innerRef={ref} style={{ flexGrow: 1 }} />
+
+        {/* Toggle charts / dashboards */}
         <Grid
           item
           style={{
@@ -50,9 +54,6 @@ export default forwardRef(({ active, setActive }, ref) => {
             </IconButton>
           </Tooltip>
         </Grid>
-
-        {/* Allow children of sibling to populate the toolbar appropriately */}
-        <Grid item innerRef={ref} style={{ flexGrow: 1 }} />
       </Grid>
     </Toolbar>
   )

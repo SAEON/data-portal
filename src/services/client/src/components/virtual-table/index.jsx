@@ -128,7 +128,7 @@ export default ({ data }) => {
                   const handleDrag = (event, { deltaX }) => {
                     const { offsetX, offsetY, pageX, pageY, screenX, screenY, x, y } = event
                     console.log('offsetX', offsetX)
-                    setDragIndicatorXPos(offsetX)
+                    // setDragIndicatorXPos(offsetX)
                     let newColumnWidths = columnWidths
                     newColumnWidths[fieldName] = columnWidths[fieldName] + deltaX / 20 //ugly way of writting this. refactor
                     // setColumnWidths(newColumnWidths)
