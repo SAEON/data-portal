@@ -25,7 +25,11 @@ export default forwardRef((props, ref) => {
           <Fade in={activeTabIndex === i} key={chart.id}>
             <div role="tabpanel" hidden={activeTabIndex !== i}>
               {activeTabIndex === i && (
-                <Chart setActiveTabIndex={setActiveTabIndex} chart={chart} />
+                <Chart
+                  activeTabIndex={activeTabIndex}
+                  setActiveTabIndex={setActiveTabIndex}
+                  chart={chart}
+                />
               )}
             </div>
           </Fade>

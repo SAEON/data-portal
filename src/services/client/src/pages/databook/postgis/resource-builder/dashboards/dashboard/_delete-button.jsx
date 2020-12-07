@@ -12,7 +12,7 @@ const DASHBOARDS = gql`
   }
 `
 
-export default ({ id, setActiveTabIndex }) => {
+export default ({ id, activeTabIndex, setActiveTabIndex }) => {
   const { databook } = useContext(databookContext)
   const [deleteDashboard] = useMutation(
     gql`
@@ -36,7 +36,9 @@ export default ({ id, setActiveTabIndex }) => {
           data: { dashboards: remainingDashboards },
         })
 
-        setActiveTabIndex(remainingDashboards.length - 1)
+        if (activeTabIndex) {
+          setActiveTabIndex(activeTabIndex - 1)
+        }
       },
     }
   )

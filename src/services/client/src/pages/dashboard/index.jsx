@@ -3,6 +3,8 @@ import { setShareLink, WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import Loading from '../../components/loading'
 import { gql } from '@apollo/client'
+import Chart from './chart'
+import { Card, Grid } from '@material-ui/core'
 
 const POLLING_INTERVAL = 500
 
@@ -39,7 +41,17 @@ export default ({ id }) => {
           startPolling(POLLING_INTERVAL)
         }
 
-        return JSON.stringify(data)
+        const { charts } = data.dashboard
+
+        return (
+          <div style={{ position: 'relative', width: `80%`, margin: 'auto' }}>
+            <Card variant="outlined" style={{ height: '100%' }}>
+              {charts.map(chart => (
+                <div key={chart.id}>{<Chart chart={chart} />}</div>
+              ))}
+            </Card>
+          </div>
+        )
       }}
     </WithGqlQuery>
   )

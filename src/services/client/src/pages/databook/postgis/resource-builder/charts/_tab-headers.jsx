@@ -7,29 +7,27 @@ export default ({ charts, activeTabIndex, setActiveTabIndex }) => {
 
   return (
     <Fade in={true} key={'charts-in'}>
-      <div style={{ display: 'flex' }}>
-        <Tabs
-          indicatorColor="primary"
-          variant={charts.length > 5 ? 'scrollable' : 'standard'}
-          value={activeTabIndex}
-          onChange={(event, newValue) => setActiveTabIndex(newValue)}
-        >
-          {charts.map(({ id }, i) => (
-            <Tab
-              key={id}
-              className={clsx(classes.tab)}
-              label={
-                <Tooltip title={`Dashboard ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar, classes.green)} variant="circular">
-                    {i + 1}
-                  </Avatar>
-                </Tooltip>
-              }
-              id={`tab-${id}`}
-            />
-          ))}
-        </Tabs>
-      </div>
+      <Tabs
+        indicatorColor="primary"
+        variant={charts.length > 5 ? 'scrollable' : 'standard'}
+        value={activeTabIndex}
+        onChange={(event, newValue) => setActiveTabIndex(newValue)}
+      >
+        {charts.map(({ id }, i) => (
+          <Tab
+            key={id}
+            className={clsx(classes.tab)}
+            label={
+              <Tooltip title={`Chart ${id}`}>
+                <Avatar className={clsx(classes.smallAvatar, classes.green)} variant="circular">
+                  {i + 1}
+                </Avatar>
+              </Tooltip>
+            }
+            id={`tab-${id}`}
+          />
+        ))}
+      </Tabs>
     </Fade>
   )
 }

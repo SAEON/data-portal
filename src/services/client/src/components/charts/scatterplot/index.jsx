@@ -1,11 +1,12 @@
 import ReactEcharts from 'echarts-for-react'
+import theme from '../../../lib/echarts-theme'
 
 // eslint-disable-next-line
 export default ({ xAxis, yAxis, data, name }) => {
-  console.log(data)
   return (
     <div style={{ position: 'absolute', top: 100, bottom: 0, left: 0, right: 0 }}>
       <ReactEcharts
+        theme={theme}
         option={{
           title: {
             text: 'Chart title',
