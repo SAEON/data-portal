@@ -16,7 +16,7 @@ const CHARTS = gql`
   }
 `
 
-export default ({ id, setActiveTabIndex }) => {
+export default ({ id, setActiveTabIndex, activeTabIndex }) => {
   const client = useApolloClient()
   const { databook } = useContext(databookContext)
 
@@ -50,6 +50,10 @@ export default ({ id, setActiveTabIndex }) => {
                   query: CHARTS,
                   data: { databook: newDatabook },
                 })
+
+                if (activeTabIndex) {
+                  setActiveTabIndex(activeTabIndex - 1)
+                }
               },
             })
           }}

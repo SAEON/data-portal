@@ -35,8 +35,12 @@ export default class extends Component {
               }{' '}
               with a screenshot of this page so that we may resolve the issue speedily
             </DialogContentText>
-            <DialogContentText variant="body2" gutterBottom style={{ marginBottom: 16 }}>
-              <pre>{error}</pre>
+            <DialogContentText
+              component={({ children }) => <pre>{children}</pre>}
+              gutterBottom
+              style={{ marginBottom: 16 }}
+            >
+              {error}
             </DialogContentText>
           </>
         }

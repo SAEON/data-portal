@@ -14,7 +14,7 @@
     "build": "rimraf ./dist && NODE_ENV=production webpack",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../../packages/catalogue-search/src/**/*.@(js|jsx)\" \"../../packages/snap-menus/src/**/*.@(js|jsx)\" \"../../packages/logger/src/**/*.@(js|jsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx)\" \"../../packages/ol-react/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack-dev-server --port 3001 --open",
     "ncu": "ncu --reject @date-io/date-fns,webpack,webpack-cli",
-    "ncu -u": "ncu -u --reject @date-io/date-fns,webpack,webpack-cli"
+    "ncu -u": "ncu -u --reject @date-io/date-fns,webpack,webpack-cli,echarts"
   },
   "repository": {
     "type": "git",
@@ -55,7 +55,7 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^6.0.0",
-    "echarts": "^5.0.0",
+    "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
     "file-loader": "^6.2.0",
     "graphql": "^15.4.0",

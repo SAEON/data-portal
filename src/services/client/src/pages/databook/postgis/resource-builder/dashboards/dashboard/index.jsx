@@ -4,7 +4,7 @@ import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
 import Chart from './chart'
 
-export default ({ dashboard, setActiveTabIndex }) => {
+export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const { id, charts = [] } = dashboard
   return (
     <>
@@ -20,7 +20,7 @@ export default ({ dashboard, setActiveTabIndex }) => {
         <Chart key={chart.id} chart={chart} dashboard={dashboard} />
       ))}
 
-      <DeleteButton id={id} setActiveTabIndex={setActiveTabIndex} />
+      <DeleteButton id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
     </>
   )
 }
