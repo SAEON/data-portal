@@ -15,7 +15,7 @@ export default ({ data }) => {
   )
   const columnCount = useMemo(() => Object.keys(headers).length, [headers])
 
-  const classes = useStyles()
+  const classes = useStyles({ ROW_HEIGHT: ROW_HEIGHT })
 
   //dimensions value matches to bounds supplied by react-measure. dimensions consists of width, height, top, bottom,left,right. All values are in pixels
   const [dimensions, setDimensions] = useState({
@@ -24,17 +24,11 @@ export default ({ data }) => {
   })
 
   const [columnWidths, setColumnWidths] = useState(
-    Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length / 2 + 1]))
+    Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length / 2 + 2]))
   )
   const headerGrid = useRef()
   const bodyGrid = useRef()
 
-  // const recalc = debounce(columnIndex => {
-  //   if (headerGrid?.current?.resetAfterColumnIndex) {
-  //     headerGrid.current.resetAfterColumnIndex(columnIndex)
-  //     bodyGrid?.current?.resetAfterColumnIndex(columnIndex)
-  //   }
-  // }, 100)
   const clearColumnWidthCache = index => {
     if (headerGrid.current != null) {
       headerGrid.current.resetAfterColumnIndex(index)
@@ -44,15 +38,14 @@ export default ({ data }) => {
     }
   }
 
-  // STEVEN
   const minColWidth = 2
-  const gridMarginRight = 300
+  const gridMarginRight = 500
   const getColumnWidth = columnIndex => {
     const name = Object.entries(headers).find(([, i]) => i === columnIndex)?.[0]
     if (name) {
-      return columnWidths[name] * 20 //< minColWidth ? minColWidth * 20 : columnWidths[name] * 20
+      return columnWidths[name] * 20
     }
-    //if final column (acts as right margin)
+    //when final column (acts as right margin)
     else {
       return gridMarginRight
     }
@@ -75,7 +68,6 @@ export default ({ data }) => {
     <Measure
       bounds
       onResize={({ bounds }) => {
-        // STEVEN
         setDimensions({ ...bounds })
       }}
     >
@@ -95,13 +87,13 @@ export default ({ data }) => {
                   overflowX: 'hidden',
                   overflowY: 'hidden',
                 }}
-                columnCount={columnCount + 1}
+                columnCount={columnCount + 1} //extra column for easier resizing of final column
                 rowCount={1}
                 height={ROW_HEIGHT}
                 rowHeight={() => ROW_HEIGHT}
-                columnWidth={getColumnWidth} //STEVEN
+                columnWidth={getColumnWidth}
                 width={dimensions.width}
-                ref={headerGrid} //STEVEN
+                ref={headerGrid}
               >
                 {({ columnIndex, style }) => {
                   const fieldName = Object.entries(headers).find(([, i]) => columnIndex === i)?.[0]
@@ -109,7 +101,7 @@ export default ({ data }) => {
                   return (
                     // individual header
                     <div className={classes.headerRow} style={Object.assign({}, style)}>
-                      <div className={classes.TEST}>{fieldName}</div>
+                      <div>{fieldName}</div>
                       {columnIndex !== columnCount ? (
                         <Draggable
                           axis="x"
@@ -159,6 +151,7 @@ export default ({ data }) => {
                   const fieldName = Object.entries(headers).find(([, i]) => i === columnIndex)?.[0]
                   const value = row[fieldName] || ''
                   return (
+                    // individual data row
                     <div
                       className={clsx(classes.tableRow, {
                         [classes.tableRowHovered]: rowIndex % 2 === 0,
