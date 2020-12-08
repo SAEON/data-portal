@@ -67,8 +67,16 @@ docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admi
 ```
 
 #### Elasticsearch
+Either run the Elasticsearch containers locally, or specify a remote address by configuring the api environment
 
 ```sh
+# src/services/api/.env
+ELASTICSEARCH_ADDRESS=http://elasticsearch.saeon.dvn
+```
+
+```sh
+# Docker services
+
 # Elasticsearch
 docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 

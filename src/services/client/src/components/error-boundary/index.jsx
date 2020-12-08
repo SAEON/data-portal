@@ -36,7 +36,9 @@ export default class extends Component {
               with a screenshot of this page so that we may resolve the issue speedily
             </DialogContentText>
             <DialogContentText
-              component={({ children }) => <pre>{children}</pre>}
+              component={({ children }) => (
+                <pre style={{ whiteSpace: 'break-spaces' }}>{children}</pre>
+              )}
               gutterBottom
               style={{ marginBottom: 16 }}
             >
