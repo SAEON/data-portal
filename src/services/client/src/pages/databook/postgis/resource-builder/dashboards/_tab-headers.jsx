@@ -61,7 +61,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
   }
 
   return (
-    <Fade in={!error && !loading} key="data-in">
+    <Fade timeout={1000} in={!error && !loading} key="data-in">
       <div style={{ display: 'flex' }}>
         <Tabs
           indicatorColor="primary"

@@ -4,6 +4,7 @@ import { setShareLink, WithGqlQuery } from '../../hooks'
 import Loading from '../../components/loading'
 import { gql } from '@apollo/client'
 import chartDefinitions from '../../components/charts'
+import { Fade } from '@material-ui/core'
 
 export default ({ id }) => {
   setShareLink({
@@ -40,9 +41,13 @@ export default ({ id }) => {
         const Chart = lazy(() => chartDefinition.getComponent())
 
         return (
-          <Suspense fallback={<Loading />}>
-            <Chart {...chart} />
-          </Suspense>
+          <Fade timeout={1000} in={Boolean(data)} key={`chart-${id}`}>
+            <span>
+              <Suspense fallback={<Loading />}>
+                <Chart {...chart} />
+              </Suspense>
+            </span>
+          </Fade>
         )
       }}
     </WithGqlQuery>
