@@ -30,7 +30,7 @@
     "publish-all-packages:minor": "TC=utc node scripts/publish-all.js -s minor",
     "publish-all-packages:major": "TC=utc node scripts/publish-all.js -s major",
     "************ DEPLOYMENT **********": "",
-    "configure-centos-7-server": "ansible-playbook platform-configuration/ansible/playbooks/centos-7.yml -i platform-configuration/ansible/inventories/centos-7"
+    "configure-centos-7-server": "ansible-playbook platform/ansible/playbooks/centos-7.yml -i platform/ansible/inventories/centos-7"
   },
   "husky": {
     "hooks": {

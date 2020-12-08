@@ -130,7 +130,7 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 
 #### Execute an Ansible playbook
 ```sh
-# Execute this command from <repo-root>/src/platform-configuration/ansible
+# Execute this command from <repo-root>/src/platform/ansible
 ansible-playbook playbooks/centos-7.yml -i inventories/centos-7
 ```
 
