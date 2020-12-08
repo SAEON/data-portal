@@ -47,9 +47,4 @@ export default {
     uri: 'https://github.com/SAEON/shapefiles/raw/stable/municipalities-sa-2011-simplified.zip',
     description: '...',
   },
-  'sa-provinces-2011': {
-    source: 'github',
-    uri: 'https://github.com/SAEON/shapefiles/raw/stable/provinces-sa-2011.zip',
-    description: '...',
-  },
 }

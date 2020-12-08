@@ -21,7 +21,7 @@ export default forwardRef((props, ref) => {
             id
             charts {
               id
-              name
+              title
               description
             }
           }

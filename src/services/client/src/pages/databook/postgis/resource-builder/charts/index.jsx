@@ -6,9 +6,9 @@ import Chart from './chart'
 import { Fade } from '@material-ui/core'
 
 export default forwardRef((props, ref) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
   const { databook } = useContext(databookContext)
   const charts = databook.charts
+  const [activeTabIndex, setActiveTabIndex] = useState(charts.length - 1 || 0)
 
   return (
     <>

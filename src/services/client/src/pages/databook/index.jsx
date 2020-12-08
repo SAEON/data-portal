@@ -30,7 +30,7 @@ export default ({ id }) => {
             doc
             charts {
               id
-              name
+              title
             }
           }
         }

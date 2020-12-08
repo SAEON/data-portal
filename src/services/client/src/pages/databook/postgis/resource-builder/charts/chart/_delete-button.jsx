@@ -10,7 +10,7 @@ const CHARTS = gql`
       id
       charts {
         id
-        name
+        title
       }
     }
   }

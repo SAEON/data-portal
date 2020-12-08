@@ -52,7 +52,7 @@ export default ({ dashboard }) => {
                   id
                   charts {
                     id
-                    name
+                    title
                     description
                   }
                 }

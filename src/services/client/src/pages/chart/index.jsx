@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink, WithGqlQuery } from '../../hooks'
 import Loading from '../../components/loading'
@@ -12,17 +13,18 @@ export default ({ id }) => {
   return (
     <WithGqlQuery
       QUERY={gql`
-        query($id: ID!) {
-          charts(id: $id) {
+        query($ids: [ID!]) {
+          charts(ids: $ids) {
             id
+            title
+            description
             type
-            xAxis
-            yAxis
+            config
             data
           }
         }
       `}
-      variables={{ id }}
+      variables={{ ids: [id] }}
     >
       {({ error, loading, data }) => {
         if (loading) {
@@ -33,9 +35,15 @@ export default ({ id }) => {
           throw error
         }
 
-        return JSON.stringify(chartDefinitions)
+        const chart = data.charts.find(({ id: _id }) => _id === id)
+        const chartDefinition = chartDefinitions.find(({ type }) => type === chart.type)
+        const Chart = lazy(() => chartDefinition.getComponent())
 
-        // return <pieChart.Component {...data.charts} />
+        return (
+          <Suspense fallback={<Loading />}>
+            <Chart {...chart} />
+          </Suspense>
+        )
       }}
     </WithGqlQuery>
   )

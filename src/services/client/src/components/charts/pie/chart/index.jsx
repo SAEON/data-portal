@@ -2,15 +2,17 @@ import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
 
 // eslint-disable-next-line
-export default ({ xAxis, yAxis, data, name }) => {
+export default ({ config, data, title, description }) => {
+  const namesField = config['series-names']
+  const valuesField = config['series-values']
   return (
     <div style={{ position: 'absolute', top: 100, bottom: 0, left: 0, right: 0 }}>
       <ReactEcharts
         theme={theme}
         option={{
           title: {
-            text: 'Chart title',
-            subtext: 'Chart subtitle',
+            text: title,
+            subtext: description,
             left: 'center',
           },
           tooltip: {
@@ -30,7 +32,7 @@ export default ({ xAxis, yAxis, data, name }) => {
               type: 'pie',
               radius: '55%',
               center: ['50%', '60%'],
-              data: data.map(({ reservoir_type: name, total_perimeter: value }) => ({
+              data: data.map(({ [namesField]: name, [valuesField]: value }) => ({
                 value,
                 name,
               })),

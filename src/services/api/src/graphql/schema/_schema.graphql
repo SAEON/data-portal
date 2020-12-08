@@ -40,7 +40,7 @@ type Query {
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
   # Find a chart
-  charts(id: ID): Chart
+  charts(ids: [ID!]): [Chart!]
   # Retrieve a web-browser's previously saved databook
   databook(id: ID!): Databook
   # Retrieve a web-browser's previously saved search context
@@ -68,12 +68,12 @@ type Mutation {
   addChartToDashboard(chartId: ID!, dashboardId: ID!): Chart!
   removeChartFromDashboard(chartId: ID!, dashboardId: ID!): Chart!
   createChart(
-    name: String
+    title: String
+    description: String
     databookId: ID!
     data: JSON!
     type: ChartType!
-    xAxis: String!
-    yAxis: String!
+    config: JSON!
     sql: String!
   ): Chart!
   deleteChart(id: ID!): Boolean!
