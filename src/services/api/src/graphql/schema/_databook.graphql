@@ -13,15 +13,6 @@ type Dashboard {
   charts: [Chart!]
 }
 
-type Chart {
-  id: ID!
-  name: String
-  description: String
-  xAxis: String!
-  yAxis: String!
-  data: JSON!
-}
-
 type PostgisDatabookSchema {
   id: ID!
   databook: JSON!

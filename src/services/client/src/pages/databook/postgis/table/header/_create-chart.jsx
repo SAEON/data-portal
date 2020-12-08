@@ -7,16 +7,14 @@ import {
   DialogActions,
   Button,
   Tooltip,
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
+  DialogContent,
+  DialogContentText,
 } from '@material-ui/core'
 import { useApolloClient, gql } from '@apollo/client'
 import { useTheme } from '@material-ui/core/styles'
 import { context as databookContext } from '../../../context'
-
-const choices = ['LENGTH', 'FNODE_']
+import chartDefinitions from '../../../../../components/charts'
+import Autocomplete from '../../../../../components/autocomplete'
 
 const CHARTS_QUERY = gql`
   query($id: ID!) {
@@ -31,15 +29,15 @@ const CHARTS_QUERY = gql`
 `
 
 export default ({ data }) => {
-  const { databook, sql } = useContext(databookContext)
-  const [open, setOpen] = useState(false)
-  const [x, setX] = useState(choices[0])
-  const [y, setY] = useState(choices[1])
-  const [, setMutationLoading] = useState(false)
+  const theme = useTheme()
   const client = useApolloClient()
+  const { databook, sql } = useContext(databookContext)
   const id = databook.doc._id
 
-  const theme = useTheme()
+  const [open, setOpen] = useState(false)
+  const [chartType, setChartType] = useState('')
+  const [formValues, setFormValues] = useState({})
+
   return (
     <>
       {/* TOGGLE DIALOGUE */}
@@ -50,91 +48,35 @@ export default ({ data }) => {
       </Tooltip>
 
       {/* DIALOGUE */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Add chart to dashboard</DialogTitle>
+        <DialogContent>
+          {/* CHART TYPE */}
+          <DialogContentText>Select chart type</DialogContentText>
+          <Autocomplete
+            id="select-chart-type"
+            options={chartDefinitions.map(({ type }) => type)}
+            setOption={val => setChartType(val)}
+            selectedOptions={chartType}
+          />
 
-        <FormControl>
-          <InputLabel id="x-axis">X axis</InputLabel>
-          <Select labelId="x-axis" id="x-axis" value={x} onChange={val => setX(val)}>
-            {choices.map(choice => (
-              <MenuItem key={choice} value={choice}>
-                {choice}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel id="y-axis">X axis</InputLabel>
-          <Select labelId="y-axis" id="y-axis" value={y} onChange={val => setY(val)}>
-            {choices.map(choice => (
-              <MenuItem key={choice} value={choice}>
-                {choice}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+          {/* CHART CONFIG */}
+          {chartType &&
+            chartDefinitions
+              .find(({ type }) => type === chartType)
+              .form.map(({ Component, description }, i) => {
+                return (
+                  <div key={i} style={{ marginTop: 16 }}>
+                    <DialogContentText>{description}</DialogContentText>
+                    <Component data={data} />
+                  </div>
+                )
+              })}
+        </DialogContent>
 
         <DialogActions>
           <Button
-            onClick={async () => {
-              setMutationLoading(true)
-              await client.mutate({
-                mutation: gql`
-                  mutation(
-                    $databookId: ID!
-                    $name: String
-                    $data: JSON!
-                    $xAxis: String!
-                    $yAxis: String!
-                    $sql: String!
-                  ) {
-                    createChart(
-                      name: $name
-                      databookId: $databookId
-                      data: $data
-                      xAxis: $xAxis
-                      yAxis: $yAxis
-                      sql: $sql
-                    ) {
-                      id
-                    }
-                  }
-                `,
-                variables: {
-                  databookId: id,
-                  name: 'test',
-                  data: data,
-                  xAxis: x,
-                  yAxis: y,
-                  sql,
-                },
-                update: (cache, { data }) => {
-                  try {
-                    const { databook } = cache.read({
-                      query: CHARTS_QUERY,
-                      variables: {
-                        id,
-                      },
-                    })
-
-                    cache.writeQuery({
-                      query: CHARTS_QUERY,
-                      data: {
-                        databook: {
-                          ...databook,
-                          charts: [data.createChart, ...databook.charts],
-                        },
-                      },
-                    })
-                  } catch {
-                    // TODO - why is this here?
-                  }
-                },
-              })
-
-              setMutationLoading(false)
-              setOpen(false)
-            }}
+            onClick={undefined}
             size="small"
             variant="contained"
             color="primary"
