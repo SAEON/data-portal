@@ -41,11 +41,11 @@
   "license": "MIT",
   "devDependencies": {
     "arg": "^5.0.0",
-    "eslint": "^7.14.0",
+    "eslint": "^7.15.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.0",
-    "npm-check-updates": "^10.2.2",
+    "husky": "^4.3.5",
+    "npm-check-updates": "^10.2.3",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0"
   },

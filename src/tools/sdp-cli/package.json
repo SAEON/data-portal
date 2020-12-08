@@ -14,7 +14,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "npm-check-updates": "^10.2.2",
+    "npm-check-updates": "^10.2.3",
     "prettier": "^2.2.1"
   }
 }
