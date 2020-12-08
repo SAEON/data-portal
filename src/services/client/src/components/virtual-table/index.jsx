@@ -5,15 +5,8 @@ import Draggable from 'react-draggable'
 import Measure from 'react-measure'
 // import { debounce } from '../../lib/fns'
 import clsx from 'clsx'
-import QuickForm from '@saeon/quick-form'
 const ROW_HEIGHT = 30
 
-/***
- * STEVEN NOTES: setting overscrollX of gridItem stop the issue of extremely long text spanning extreme lengths within column. Next to figure out is how to reset
- * variablesizegrid cache. Columnwidths are cached, meaning getColumnWidth probably doesnt get called again after render. docs have methods for reseting cache
- * https://react-window.now.sh/#/api/VariableSizeGrid
- * but it is unclear how to call these methods. This is to be done next
- */
 export default ({ data }) => {
   if (!data || !data.length) return 'no data'
   const headers = useMemo(
@@ -23,23 +16,16 @@ export default ({ data }) => {
   const columnCount = useMemo(() => Object.keys(headers).length, [headers])
 
   const classes = useStyles()
-  //STEVEN
-  //dimensions value matches to bounds supplied by react-measure. dimensions consists of width and heighttop,bottom,left,right All values are in pix
+
+  //dimensions value matches to bounds supplied by react-measure. dimensions consists of width, height, top, bottom,left,right. All values are in pixels
   const [dimensions, setDimensions] = useState({
     width: -1,
     height: -1,
   })
-  //STEVEN
-  /* columnWidths is Object with structure 
-  {
-    columnName1: columnWidth1, //int //default is columnName.length
-    columnName2: columnWidth2  //int
-  }    */
+
   const [columnWidths, setColumnWidths] = useState(
-    Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length]))
+    Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length / 2 + 1]))
   )
-  const [dragging, setDragging] = useState(false)
-  const [dragIndicatorXPos, setDragIndicatorXPos] = useState(-1)
   const headerGrid = useRef()
   const bodyGrid = useRef()
 
@@ -59,32 +45,32 @@ export default ({ data }) => {
   }
 
   // STEVEN
-  const minColWidth = 5
-  const maxColWidth = 15
+  const minColWidth = 2
+  const gridMarginRight = 300
   const getColumnWidth = columnIndex => {
-    //finding name of column
     const name = Object.entries(headers).find(([, i]) => i === columnIndex)?.[0]
-    // console.log(`${name},${columnIndex}`)
-    //if name was found: width = state.columnWidths[name]*20
     if (name) {
-      return columnWidths[name] < minColWidth
-        ? minColWidth * 20
-        : columnWidths[name] > maxColWidth
-          ? maxColWidth * 20
-          : columnWidths[name] * 20
+      return columnWidths[name] * 20 //< minColWidth ? minColWidth * 20 : columnWidths[name] * 20
     }
-    //if name not found
+    //if final column (acts as right margin)
     else {
-      console.log('unexpected column at index: ', columnIndex)
-      return 0
-      // const total = Object.entries(columnWidths)
-      //   .map(([, width]) => (width < 5 ? 5 : width * 20))
-      //   .reduce((a, c) => a + c, 0)
-      // const remaining = dimensions.width - total
-      // return remaining < 100 ? 100 : remaining
+      return gridMarginRight
     }
   }
+  const handleDrag = (fieldName, deltaX) => {
+    // let newColumnWidths = JSON.parse(JSON.stringify(columnWidths))
+    // newColumnWidths[fieldName] = columnWidths[fieldName] + deltaX / 20
+    // setColumnWidths(newColumnWidths)
 
+    //This is editing state directly. This is not ideal. To be swapped for the above ASAP if react-draggable state usage errors are solved
+    const newWidth = columnWidths[fieldName] + deltaX / 20
+    columnWidths[fieldName] = newWidth > minColWidth ? newWidth : minColWidth
+  }
+
+  const handleDoubleClick = fieldName => {
+    const newWidth = fieldName.length / 2
+    columnWidths[fieldName] = newWidth > minColWidth ? newWidth : minColWidth
+  }
   return (
     <Measure
       bounds
@@ -95,18 +81,13 @@ export default ({ data }) => {
     >
       {({ measureRef }) => {
         return (
-          <div ref={measureRef} style={{ position: 'relative', height: '100%' }}>
-            {/* bar displaying draggable position WHILE dragging */}
-            <span
-              style={{
-                height: '500px',
-                width: '3px',
-                backgroundColor: 'red',
-                position: 'absolute',
-                zIndex: 9999,
-                left: dragIndicatorXPos,
-              }}
-            />
+          <div
+            ref={measureRef}
+            style={{
+              position: 'relative',
+              height: '100%',
+            }}
+          >
             <div className={clsx(classes.gridRoot)}>
               {/* This grid is column headers */}
               <VariableSizeGrid
@@ -114,7 +95,7 @@ export default ({ data }) => {
                   overflowX: 'hidden',
                   overflowY: 'hidden',
                 }}
-                columnCount={columnCount}
+                columnCount={columnCount + 1}
                 rowCount={1}
                 height={ROW_HEIGHT}
                 rowHeight={() => ROW_HEIGHT}
@@ -125,37 +106,34 @@ export default ({ data }) => {
                 {({ columnIndex, style }) => {
                   const fieldName = Object.entries(headers).find(([, i]) => columnIndex === i)?.[0]
 
-                  const handleDrag = (event, { deltaX }) => {
-                    const { offsetX, offsetY, pageX, pageY, screenX, screenY, x, y } = event
-                    console.log('offsetX', offsetX)
-                    // setDragIndicatorXPos(offsetX)
-                    let newColumnWidths = columnWidths
-                    newColumnWidths[fieldName] = columnWidths[fieldName] + deltaX / 20 //ugly way of writting this. refactor
-                    // setColumnWidths(newColumnWidths)
-                    return true
-                  }
                   return (
                     // individual header
                     <div className={classes.headerRow} style={Object.assign({}, style)}>
-                      <div>{fieldName}</div>
-                      <Draggable
-                        axis="x"
-                        defaultClassName="DragHandle"
-                        defaultClassNameDragging="DragHandleActive"
-                        onDrag={handleDrag}
-                        // onStart={() => {
-                        //   /**TODO: show column indicator/bar for better UX */
-                        // }}
-                        onStop={() => {
-                          clearColumnWidthCache(columnIndex)
-                          // return false
-                        }}
-                        position={{ x: 0, y: 0 }}
-                      >
-                        <div>
-                          <span className={classes.dragHandleIcon}>⋮</span>
-                        </div>
-                      </Draggable>
+                      <div className={classes.TEST}>{fieldName}</div>
+                      {columnIndex !== columnCount ? (
+                        <Draggable
+                          axis="x"
+                          defaultClassName="DragHandle"
+                          defaultClassNameDragging="DragHandleActive"
+                          onStop={(event, data) => {
+                            handleDrag(fieldName, data.x)
+                            clearColumnWidthCache(columnIndex)
+                          }}
+                          position={{ x: 0, y: 0 }}
+                        >
+                          {
+                            <span
+                              className={classes.dragHandleIcon}
+                              onDoubleClick={() => {
+                                handleDoubleClick(fieldName)
+                                clearColumnWidthCache(columnIndex)
+                              }}
+                            >
+                              ⋮
+                            </span>
+                          }
+                        </Draggable>
+                      ) : undefined}
                     </div>
                   )
                 }}
@@ -165,13 +143,13 @@ export default ({ data }) => {
                 style={{
                   overflow: 'auto',
                 }}
-                columnCount={columnCount}
+                columnCount={columnCount + 1}
                 rowCount={data.length}
-                columnWidth={getColumnWidth} //STEVEN
+                columnWidth={getColumnWidth}
                 rowHeight={() => ROW_HEIGHT}
                 width={dimensions.width}
                 height={dimensions.height - ROW_HEIGHT}
-                ref={bodyGrid} //STEVEN
+                ref={bodyGrid}
                 onScroll={({ scrollLeft }) => {
                   headerGrid?.current?.scrollTo({ scrollLeft, scrollTop: 0 })
                 }}
@@ -187,8 +165,7 @@ export default ({ data }) => {
                       })}
                       style={Object.assign({}, style)}
                     >
-                      {/*STEVEN:placed overflow on columns longer than max column width */}
-                      <div className={clsx(classes.gridItem)} /*STEVEN*/>{value.toString()}</div>
+                      <div className={clsx(classes.gridItem)}>{value.toString()}</div>
                     </div>
                   )
                 }}

@@ -9,7 +9,14 @@ export default makeStyles(theme => ({
     height: 30, // TODO should be ROW_HEIGHT
   },
   dragHandleIcon: {
+    // paddingLeft: 1,
+    // paddingRight: 1,
+    backgroundColor: theme.palette.grey[100],
+    position: 'absolute',
+    right: 0,
     cursor: 'col-resize',
+    zIndex: 2,
+    fontSize: 'large',
   },
   tableRow: {
     lineHeight: '30px',
@@ -31,18 +38,15 @@ export default makeStyles(theme => ({
     fontWeight: 'bold',
     paddingLeft: '.5rem',
     paddingRight: '.5rem',
-    //STEVEN
     fontFamily: 'monospace',
-    fontSize: 'small',
   },
   gridItem: {
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
     fontFamily: 'monospace',
-    fontSize: 'small',
-    '&:focus': {
-      backgroundColor: 'red',
-      textOverflow: 'unset',
-    },
+  },
+  TEST: {
+    marginRight: '10px',
+    textOverflow: 'ellipsis' /*width: '-webkit-fill-available'*/,
   },
 }))
