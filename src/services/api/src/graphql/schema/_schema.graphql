@@ -71,6 +71,7 @@ type Mutation {
     name: String
     databookId: ID!
     data: JSON!
+    type: ChartType!
     xAxis: String!
     yAxis: String!
     sql: String!

@@ -2,7 +2,7 @@ import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink, WithGqlQuery } from '../../hooks'
 import Loading from '../../components/loading'
 import { gql } from '@apollo/client'
-import Scatterplot from '../../components/charts/scatterplot'
+import chartDefinitions from '../../components/charts'
 
 export default ({ id }) => {
   setShareLink({
@@ -15,6 +15,7 @@ export default ({ id }) => {
         query($id: ID!) {
           charts(id: $id) {
             id
+            type
             xAxis
             yAxis
             data
@@ -32,7 +33,9 @@ export default ({ id }) => {
           throw error
         }
 
-        return <Scatterplot {...data.charts} />
+        return JSON.stringify(chartDefinitions)
+
+        // return <pieChart.Component {...data.charts} />
       }}
     </WithGqlQuery>
   )
