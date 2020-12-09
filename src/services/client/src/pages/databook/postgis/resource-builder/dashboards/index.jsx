@@ -52,7 +52,7 @@ export default forwardRef((props, ref) => {
             )}
             {dashboards.map((dashboard, i) => {
               return (
-                <Fade timeout={1000} in={activeTabIndex === i} key={dashboard.id}>
+                <Fade in={activeTabIndex === i} key={dashboard.id}>
                   <div role="tabpanel" hidden={activeTabIndex !== i}>
                     {activeTabIndex === i && (
                       <Dashboard

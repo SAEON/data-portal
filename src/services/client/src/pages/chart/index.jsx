@@ -41,7 +41,7 @@ export default ({ id }) => {
         const Chart = lazy(() => chartDefinition.getComponent())
 
         return (
-          <Fade timeout={1000} in={Boolean(data)} key={`chart-${id}`}>
+          <Fade in={Boolean(data)} key={`chart-${id}`}>
             <span>
               <Suspense fallback={<Loading />}>
                 <Chart {...chart} />

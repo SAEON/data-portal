@@ -22,7 +22,7 @@ export default forwardRef((props, ref) => {
       )}
       {charts.map((chart, i) => {
         return (
-          <Fade timeout={1000} in={activeTabIndex === i} key={chart.id}>
+          <Fade in={activeTabIndex === i} key={chart.id}>
             <div role="tabpanel" hidden={activeTabIndex !== i}>
               {activeTabIndex === i && (
                 <Chart

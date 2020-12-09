@@ -6,7 +6,7 @@ export default ({ charts, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
 
   return (
-    <Fade timeout={1000} in={true} key={'charts-in'}>
+    <Fade in={true} key={'charts-in'}>
       <Tabs
         indicatorColor="primary"
         variant={charts.length > 5 ? 'scrollable' : 'standard'}
