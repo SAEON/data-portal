@@ -11,6 +11,7 @@ import {
   DialogContentText,
   CircularProgress,
   TextField,
+  Typography,
 } from '@material-ui/core'
 import { useApolloClient, gql } from '@apollo/client'
 import { useTheme } from '@material-ui/core/styles'
@@ -40,6 +41,7 @@ export default ({ data }) => {
   const databookId = databook.doc._id
 
   const [open, setOpen] = useState(false)
+  const [error, setError] = useState(false)
   const [chartType, setChartType] = useState('')
   const [chartTitle, setChartTitle] = useState('')
   const [chartDescription, setChartDescription] = useState('')
@@ -58,6 +60,13 @@ export default ({ data }) => {
       <Dialog fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Add chart to dashboard</DialogTitle>
         <DialogContent>
+          {/* ERROR MSG */}
+          {error && (
+            <Typography variant="body2" style={{ color: theme.palette.error.main }}>
+              {JSON.stringify(error)}
+            </Typography>
+          )}
+
           {/* CHART TITLE */}
           <TextField
             id="chart-title"
@@ -127,73 +136,79 @@ export default ({ data }) => {
                 <Button
                   onClick={async () => {
                     update({ loading: true })
+
                     const saveFilter =
-                      chartDefinitions.find(({ type }) => type === chartType).saveFilter ||
+                      chartDefinitions.find(({ type }) => type === chartType)?.saveFilter ||
                       function (data) {
                         return data
                       }
 
-                    await client.mutate({
-                      mutation: gql`
-                        mutation(
-                          $databookId: ID!
-                          $title: String
-                          $description: String
-                          $data: JSON!
-                          $config: JSON!
-                          $sql: String!
-                          $type: ChartType!
-                        ) {
-                          createChart(
-                            databookId: $databookId
-                            title: $title
-                            description: $description
-                            type: $type
-                            data: $data
-                            config: $config
-                            sql: $sql
+                    try {
+                      await client.mutate({
+                        mutation: gql`
+                          mutation(
+                            $databookId: ID!
+                            $title: String
+                            $description: String
+                            $data: JSON!
+                            $config: JSON!
+                            $sql: String!
+                            $type: ChartType!
                           ) {
-                            id
+                            createChart(
+                              databookId: $databookId
+                              title: $title
+                              description: $description
+                              type: $type
+                              data: $data
+                              config: $config
+                              sql: $sql
+                            ) {
+                              id
+                            }
                           }
-                        }
-                      `,
-                      variables: {
-                        ...Object.assign(
-                          {
-                            type: chartType,
-                            title: chartTitle,
-                            description: chartDescription,
-                            databookId,
-                            data: saveFilter(data, formValues),
-                            sql,
-                          },
-                          { config: formValues }
-                        ),
-                      },
-                      update: (cache, { data }) => {
-                        const { databook } = cache.read({
-                          query: CHARTS_QUERY,
-                          variables: {
-                            id: databookId,
-                          },
-                        })
-
-                        cache.writeQuery({
-                          query: CHARTS_QUERY,
-                          variables: {
-                            id: databookId,
-                          },
-                          data: {
-                            databook: {
-                              ...databook,
-                              charts: [data.createChart, ...databook.charts],
+                        `,
+                        variables: {
+                          ...Object.assign(
+                            {
+                              type: chartType,
+                              title: chartTitle,
+                              description: chartDescription,
+                              databookId,
+                              data: saveFilter(data, formValues),
+                              sql,
                             },
-                          },
-                        })
-                      },
-                    })
-                    update({ loading: false })
-                    setOpen(false)
+                            { config: formValues }
+                          ),
+                        },
+                        update: (cache, { data }) => {
+                          const { databook } = cache.read({
+                            query: CHARTS_QUERY,
+                            variables: {
+                              id: databookId,
+                            },
+                          })
+
+                          cache.writeQuery({
+                            query: CHARTS_QUERY,
+                            variables: {
+                              id: databookId,
+                            },
+                            data: {
+                              databook: {
+                                ...databook,
+                                charts: [data.createChart, ...databook.charts],
+                              },
+                            },
+                          })
+                        },
+                      })
+                      setOpen(false)
+                    } catch (error) {
+                      setError(error.message)
+                    } finally {
+                      update({ loading: false })
+                    }
                   }}
                   size="small"
                   variant="contained"

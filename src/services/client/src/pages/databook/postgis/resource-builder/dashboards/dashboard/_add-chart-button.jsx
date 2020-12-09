@@ -156,7 +156,9 @@ export default ({ dashboard }) => {
                                             })
                                           },
                                         })
-                                        .then(() => closeDialogue())
+                                        .then(() => {
+                                          closeDialogue()
+                                        })
                                         .catch(error => {
                                           update({
                                             error: error.message,
