@@ -1,15 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
-  gridRoot: {
+  gridRoot: ({ ROW_HEIGHT }) => ({
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    height: 30, // TODO should be ROW_HEIGHT
-  },
+    height: ROW_HEIGHT,
+  }),
   dragHandleIcon: {
+    backgroundColor: theme.palette.grey[100],
+    position: 'absolute',
+    right: 0,
+    paddingLeft: 1,
+    paddingRight: 1,
+    zIndex: 2,
     cursor: 'col-resize',
+    fontSize: 'large',
   },
   tableRow: {
     lineHeight: '30px',
@@ -31,18 +38,11 @@ export default makeStyles(theme => ({
     fontWeight: 'bold',
     paddingLeft: '.5rem',
     paddingRight: '.5rem',
-    //STEVEN
     fontFamily: 'monospace',
-    fontSize: 'small',
   },
   gridItem: {
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
     fontFamily: 'monospace',
-    fontSize: 'small',
-    '&:focus': {
-      backgroundColor: 'red',
-      textOverflow: 'unset',
-    },
   },
 }))
