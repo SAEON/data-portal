@@ -20,7 +20,6 @@ export default forwardRef(({ active, setActive }, ref) => {
           item
           style={{
             padding: '0 24px',
-            backgroundColor: theme.palette.grey[300],
             height: 48,
             lineHeight: `48px`,
             alignSelf: 'center',
