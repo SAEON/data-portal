@@ -1,3 +1,4 @@
 import pieChart from './pie'
-
-export default [pieChart]
+import barChart from './bar'
+import mapChart from './map'
+export default [pieChart, barChart, mapChart]
