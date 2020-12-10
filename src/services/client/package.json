@@ -61,6 +61,7 @@
     "echarts-for-react": "^2.0.16",
     "file-loader": "^6.2.0",
     "graphql": "^15.4.0",
+    "gridstack": "^3.1.2",
     "html-webpack-plugin": "^4.5.0",
     "mdi-react": "^7.4.0",
     "minisearch": "^3.0.2",
