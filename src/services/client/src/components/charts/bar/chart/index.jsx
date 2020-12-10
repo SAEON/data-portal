@@ -2,9 +2,22 @@ import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
 import catalogueTheme from '../../../../theme'
 
+/*
+select "NAME", ogc_fid
+from "odp-925377aa-6914-41e8-8b92-f448ebe11f9c"
+ORDER BY ogc_fid
+limit 55
+ */
 export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
   const valuesField = config['series-values']
+
+  const target1 = config['series-target-1']
+  const target2 = config['series-target-2']
+  let targetsArr = []
+  if (target1) targetsArr.push(target1)
+  if (target2) targetsArr.push(target2)
+
   return (
     <div style={{ position: 'absolute', top: 100, bottom: 0, left: 0, right: 0 }}>
       <ReactEcharts
@@ -54,6 +67,7 @@ export default ({ config, data, title, description }) => {
           ],
           //https://echarts.apache.org/en/option.html#series
           series: [
+            // Bar data
             {
               data: data.map(entry => entry[valuesField]),
               type: 'bar',
@@ -75,6 +89,19 @@ export default ({ config, data, title, description }) => {
                   shadowOffsetX: 0,
                   shadowColor: 'rgba(0, 0, 0, 0.5)',
                 },
+              },
+              // Target Line
+              // https://echarts.apache.org/en/option.html#series-bar.markLine
+              markLine: {
+                lineStyle: {
+                  type: 'dotted',
+                  color: 'orange',
+                  width: 2,
+                },
+                symbol: 'none',
+                data: targetsArr.map(target => {
+                  return { name: target.name, yAxis: target.value }
+                }),
               },
             },
           ],

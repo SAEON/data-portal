@@ -1,4 +1,5 @@
 import Autocomplete from '../../../components/autocomplete'
+import { TextField } from '@material-ui/core'
 
 export default {
   type: 'BAR', // NOTE - this value must also be defined on the ChartType enum in the API
@@ -53,12 +54,26 @@ export default {
       description: 'Enter value for first target',
       Component: ({ data, value, setValue }) => {
         return (
-          <Autocomplete
-            id="bar-chart-select-target-1"
-            options={Object.keys(data[0])}
-            selectedOptions={value}
-            setOption={setValue}
-          />
+          <>
+            <TextField
+              id="bar-chart-select-target-1-name"
+              autoFocus
+              size="small"
+              fullWidth
+              onChange={event => setValue({ name: event.target.value, value: value?.value })}
+              value={value?.name}
+            />
+            <TextField
+              id="bar-chart-select-target-1-value"
+              autoFocus
+              size="small"
+              onChange={event => {
+                setValue({ name: value?.name, value: event.target.value })
+              }}
+              value={value?.value}
+              type="number"
+            />
+          </>
         )
       },
     },
@@ -67,12 +82,28 @@ export default {
       description: 'Enter value for second target',
       Component: ({ data, value, setValue }) => {
         return (
-          <Autocomplete
-            id="bar-chart-select-target-2"
-            options={Object.keys(data[0])}
-            selectedOptions={value}
-            setOption={setValue}
-          />
+          <>
+            <TextField
+              id="bar-chart-select-target-2-name"
+              autoFocus
+              size="small"
+              fullWidth
+              onChange={event => {
+                setValue({ name: event.target.value, value: value?.value })
+              }}
+              value={value?.name}
+            />
+            <TextField
+              id="bar-chart-select-target-2-value"
+              autoFocus
+              size="small"
+              onChange={event => {
+                setValue({ name: value?.name, value: event.target.value })
+              }}
+              value={value?.value}
+              type="number"
+            />
+          </>
         )
       },
     },
