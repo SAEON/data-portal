@@ -5,6 +5,13 @@ import catalogueTheme from '../../../../theme'
 
 require('echarts/map/js/china.js')
 
+/*
+select 
+wkb_geometry,
+ST_AsText(wkb_geometry)
+from "odp-925377aa-6914-41e8-8b92-f448ebe11f9c"
+limit 5
+*/
 const MapFunc = () => {
   const getOption = {
     title: {

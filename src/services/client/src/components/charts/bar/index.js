@@ -50,13 +50,14 @@ export default {
       },
     },
     {
-      id: 'series-target-1',
-      description: 'Enter value for first target',
+      id: 'series-markline-1',
+      description: 'Name and quantify first line marking',
       Component: ({ data, value, setValue }) => {
         return (
           <>
             <TextField
-              id="bar-chart-select-target-1-name"
+              id="bar-chart-select-markline-1-name"
+              label="Name (e.g. Expected Value)"
               autoFocus
               size="small"
               fullWidth
@@ -65,6 +66,7 @@ export default {
             />
             <TextField
               id="bar-chart-select-target-1-value"
+              label="Value (Numeric)"
               autoFocus
               size="small"
               onChange={event => {
@@ -78,13 +80,14 @@ export default {
       },
     },
     {
-      id: 'series-target-2',
-      description: 'Enter value for second target',
+      id: 'series-markline-2',
+      description: 'Name and quantify second line marking',
       Component: ({ data, value, setValue }) => {
         return (
           <>
             <TextField
               id="bar-chart-select-target-2-name"
+              label="Name (e.g. Expected Value)"
               autoFocus
               size="small"
               fullWidth
@@ -95,8 +98,10 @@ export default {
             />
             <TextField
               id="bar-chart-select-target-2-value"
+              label="Value (Numeric)"
               autoFocus
               size="small"
+              label=""
               onChange={event => {
                 setValue({ name: value?.name, value: event.target.value })
               }}
