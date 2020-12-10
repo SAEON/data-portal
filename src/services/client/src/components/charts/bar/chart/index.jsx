@@ -12,11 +12,11 @@ export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
   const valuesField = config['series-values']
 
-  const target1 = config['series-target-1']
-  const target2 = config['series-target-2']
+  const markline1 = config['series-markline-1']
+  const markline2 = config['series-markline-2']
   let targetsArr = []
-  if (target1) targetsArr.push(target1)
-  if (target2) targetsArr.push(target2)
+  if (markline1) targetsArr.push(markline1)
+  if (markline2) targetsArr.push(markline2)
 
   return (
     <div style={{ position: 'absolute', top: 100, bottom: 0, left: 0, right: 0 }}>
@@ -90,7 +90,6 @@ export default ({ config, data, title, description }) => {
                   shadowColor: 'rgba(0, 0, 0, 0.5)',
                 },
               },
-              // Target Line
               // https://echarts.apache.org/en/option.html#series-bar.markLine
               markLine: {
                 lineStyle: {
