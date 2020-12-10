@@ -11,6 +11,7 @@ type Dashboard {
   id: ID!
   databookId: ID!
   charts: [Chart!]
+  layout: JSON
 }
 
 type PostgisDatabookSchema {

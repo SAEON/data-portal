@@ -7,9 +7,11 @@ export default {
   createAtlas: await _import('./_create-atlas.js'),
   persistSearchState: await _import('./_persist-search-state.js'),
   createDashboard: await _import('./_create-dashboard.js'),
+  updateDashboard: await _import('./_update-dashboard.js'),
+  deleteDashboard: await _import('./_delete-dashboard.js'),
   addChartToDashboard: await _import('./_add-chart-to-dashboard.js'),
   removeChartFromDashboard: await _import('./_remove-chart-from-dashboard.js'),
-  deleteDashboard: await _import('./_delete-dashboard.js'),
+
   createChart: await _import('./_create-chart.js'),
   deleteChart: await _import('./_delete-chart.js'),
 }

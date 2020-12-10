@@ -63,6 +63,7 @@ type Mutation {
   # Save a web-browser's search context for retrieving
   persistSearchState(state: JSON!, createdBy: String!): ID!
   createDashboard(name: String, databookId: ID!): Dashboard!
+  updateDashboard(id: ID!, layout: JSON): Dashboard!
   deleteDashboard(id: ID!): Boolean!
   # Add a chart to dashboard, and get the new count of a dashboard's charts
   addChartToDashboard(chartId: ID!, dashboardId: ID!): Chart!

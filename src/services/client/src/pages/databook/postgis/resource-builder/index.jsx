@@ -13,21 +13,25 @@ export default () => {
   const tabsContainerRef = useRef()
   return (
     <div className={clsx(classes.layout, classes.bg)}>
-      <Header ref={tabsContainerRef} active={active} setActive={setActive} />
-      {active === 'dashboards' && (
-        <Fade in={active === 'dashboards'} key="dasboards-in">
-          <span>
-            <Dashboards ref={tabsContainerRef} />
-          </span>
-        </Fade>
-      )}
-      {active === 'charts' && (
-        <Fade in={active === 'charts'} key="charts-in">
-          <span>
-            <Charts ref={tabsContainerRef} />
-          </span>
-        </Fade>
-      )}
+      <div style={{ position: 'relative', height: '100%' }}>
+        <Header ref={tabsContainerRef} active={active} setActive={setActive} />
+        <div style={{ height: 'calc(100% - 48px)', position: 'relative' }}>
+          {active === 'dashboards' && (
+            <Fade in={active === 'dashboards'} key="dasboards-in">
+              <span>
+                <Dashboards ref={tabsContainerRef} />
+              </span>
+            </Fade>
+          )}
+          {active === 'charts' && (
+            <Fade in={active === 'charts'} key="charts-in">
+              <span>
+                <Charts ref={tabsContainerRef} />
+              </span>
+            </Fade>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
