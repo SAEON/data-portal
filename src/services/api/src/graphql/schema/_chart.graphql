@@ -1,5 +1,7 @@
 enum ChartType {
   PIE
+  BAR
+  MAP
 }
 
 type Chart {
