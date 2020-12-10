@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Deployment status](#deployment-status)
+- [Tech Stack](#tech-stack)
+- [Quick start](#quick-start)
+      - [System requirements](#system-requirements)
+    - [Start the services](#start-the-services)
+      - [Create a Docker network](#create-a-docker-network)
+      - [MongoDB](#mongodb)
+      - [Postgis](#postgis)
+      - [Elasticsearch](#elasticsearch)
+      - [@saeon/api](#saeonapi)
+      - [@saeon/proxy](#saeonproxy)
+      - [@saeon/catalogue](#saeoncatalogue)
+    - [Continuous deployment](#continuous-deployment)
+- [Deployment](#deployment)
+- [SAEON deployment](#saeon-deployment)
+      - [Development endpoints](#development-endpoints)
+      - [Production endpoints](#production-endpoints)
+- [NPM packages](#npm-packages)
+    - [Publishing packages to NPM](#publishing-packages-to-npm)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 An interactive tool for searching and exploring SAEON-curated datasets
 
 # Deployment status

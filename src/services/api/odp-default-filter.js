@@ -1,4 +1,4 @@
 // eslint-disable-next-line
-export default (record) => {
+export default record => {
   return true
 }

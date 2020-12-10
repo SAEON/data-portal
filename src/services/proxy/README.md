@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [@saeon/proxy](#saeonproxy)
+- [Quick start](#quick-start)
+- [Deployment](#deployment)
+      - [Install global repository packages](#install-global-repository-packages)
+      - [Install local packages](#install-local-packages)
+      - [Start the application](#start-the-application)
+      - [Run as a Docker container](#run-as-a-docker-container)
+      - [Check that the application is working!](#check-that-the-application-is-working)
+- [Configuration](#configuration)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # @saeon/proxy
 
 This package runs an instance of the MIT-licensed `anyproxy` Node.js proxy server, with rules specific to the SAEON deployment. Depending on specific deployment environments, this package may or may not be required.

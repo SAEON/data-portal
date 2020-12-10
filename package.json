@@ -10,6 +10,7 @@
     "start:proxy": "npm --prefix src/services/proxy start",
     "start:doi-resolver": "npm --prefix src/services/doi-resolver start",
     "************ REPOSITORY TOOLING **********": "",
+    "doc": "doctoc ./README.md && doctoc ./src/services/client/README.md && doctoc ./src/services/api/README.md && doctoc ./src/services/proxy/README.md",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
@@ -41,6 +42,7 @@
   "license": "MIT",
   "devDependencies": {
     "arg": "^5.0.0",
+    "doctoc": "^2.0.0",
     "eslint": "^7.15.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",

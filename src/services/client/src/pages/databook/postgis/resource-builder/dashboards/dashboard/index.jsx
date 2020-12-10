@@ -8,6 +8,7 @@ import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
 import ChartStub from './chart-stub'
 import clsx from 'clsx'
+import { useState } from 'react'
 
 function createElement(str) {
   var frag = document.createDocumentFragment()
@@ -21,8 +22,12 @@ function createElement(str) {
   return frag
 }
 
+const gridCache = {}
+
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
-  const { id, charts = [] } = dashboard
+  const { id: dashboardId, charts = [] } = dashboard
+  const [gridState, saveGridState] = useState({})
+  const gridStackRef = useRef()
   const refs = useRef({})
 
   if (Object.keys(refs.current).length !== charts.length) {
@@ -31,40 +36,57 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     })
   }
 
+  const saveGrid = () =>
+    gridStackRef.current.save().map(item => {
+      const span = createElement(item.content).querySelector('span')
+      const id = span.id
+      const itemType = span.getAttribute('data-item')
+      return {
+        ...item,
+        content: { id, itemType },
+      }
+    })
+
   useEffect(() => {
-    const grid = GridStack.init()
+    gridStackRef.current =
+      gridStackRef.current ||
+      GridStack.init({
+        alwaysShowResizeHandle: false,
+        animate: true,
+        float: false,
+      })
+    const grid = gridStackRef.current
+
+    console.log('existing state', gridCache[dashboardId])
+
+    grid.batchUpdate()
     grid.removeAll(false)
     charts.forEach(({ id }) => {
       grid.makeWidget(refs.current[id].current)
     })
-    grid.on('change', () => {
-      const items = grid.save().map(item => {
-        const span = createElement(item.content).querySelector('span')
-        const id = span.id
-        const itemType = span.getAttribute('data-item')
-        return {
-          ...item,
-          content: { id, itemType },
-        }
-      })
+    grid.commit()
+    saveGridState(saveGrid())
 
-      console.log(items)
-    })
+    grid.on('change', () => saveGrid())
+
+    return () => {
+      gridCache[dashboardId] = saveGrid()
+      grid.destroy(false)
+    }
   }, [charts])
 
   return (
     <>
       <Toolbar variant={'dense'}>
-        <Typography>{id}</Typography>
+        <Typography>{dashboardId}</Typography>
         <span style={{ marginLeft: 'auto' }} />
         <AddChartButton dashboard={dashboard} />
         <span style={{ marginRight: 16 }} />
-        <ShareButton id={id} />
+        <ShareButton id={dashboardId} />
       </Toolbar>
 
       <div className="grid-stack">
         {charts?.map((chart, i) => {
-          console.log()
           return (
             <div
               ref={refs.current[chart.id]}
@@ -82,7 +104,11 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         })}
       </div>
 
-      <DeleteButton id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+      <DeleteButton
+        id={dashboardId}
+        activeTabIndex={activeTabIndex}
+        setActiveTabIndex={setActiveTabIndex}
+      />
     </>
   )
 }

@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [@saeon/api](#saeonapi)
+      - [Run as a Docker container](#run-as-a-docker-container)
+  - [Configure the integration](#configure-the-integration)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # @saeon/api
 Node.js GraphQL API
 
