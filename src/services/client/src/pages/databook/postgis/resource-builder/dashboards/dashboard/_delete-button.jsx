@@ -44,7 +44,7 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
   )
   return (
     <Tooltip title="Delete current dashboard" placement="left-start">
-      <span style={{ zIndex: 99, position: 'absolute', right: 4, bottom: 4 }}>
+      <span>
         <IconButton
           onClick={() => {
             deleteDashboard({ variables: { id } })

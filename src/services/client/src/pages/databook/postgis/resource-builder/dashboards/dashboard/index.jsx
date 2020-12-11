@@ -102,7 +102,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
   return (
     <>
-      <Toolbar variant={'dense'}>
+      <Toolbar className={classes.toolbar} variant={'dense'}>
         <Typography>{dashboardId}</Typography>
         <span style={{ marginLeft: 'auto' }} />
         <SaveLayoutButton dashboard={dashboard} gridState={gridState} />
@@ -112,41 +112,39 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         <ShareButton id={dashboardId} />
         <span style={{ marginRight: 8 }} />
         <PreviewBurron id={dashboardId} />
+        <span style={{ marginRight: 8 }} />
+        <DeleteButton
+          id={dashboardId}
+          activeTabIndex={activeTabIndex}
+          setActiveTabIndex={setActiveTabIndex}
+        />
       </Toolbar>
-      <div style={{ height: 'calc(100% - 48px)', margin: '0px 16px', position: 'relative' }}>
-        <Box m={0} p={0} className={clsx(classes.box)}>
-          <div className="grid-stack">
-            {charts?.map((id, i) => {
-              const hydratedState = (gridCache[dashboardId] || []).find(
-                ({ content }) => content.id === id
-              )
+      <div className={clsx(classes.gridContainer)}>
+        <div className={clsx('grid-stack', classes.grid)}>
+          {charts?.map(id => {
+            const hydratedState = (gridCache[dashboardId] || []).find(
+              ({ content }) => content.id === id
+            )
 
-              return (
-                <div
-                  ref={refs.current[id]}
-                  key={id}
-                  className={clsx('grid-stack-item', classes.grid)}
-                  {...Object.fromEntries(
-                    Object.entries(hydratedState || {}).map(([key, value]) => [`gs-${key}`, value])
-                  )}
-                >
-                  <div className={clsx('grid-stack-item-content', classes.gridItem)}>
-                    <span id={id} data-type={'Chart'}>
-                      <ChartStub chart={id} dashboard={dashboard} />
-                    </span>
-                  </div>
+            return (
+              <div
+                ref={refs.current[id]}
+                key={id}
+                className={clsx('grid-stack-item', classes.gridItem)}
+                {...Object.fromEntries(
+                  Object.entries(hydratedState || {}).map(([key, value]) => [`gs-${key}`, value])
+                )}
+              >
+                <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>
+                  <span id={id} data-type={'Chart'}>
+                    <ChartStub chart={id} dashboard={dashboard} />
+                  </span>
                 </div>
-              )
-            })}
-          </div>
-        </Box>
+              </div>
+            )
+          })}
+        </div>
       </div>
-
-      <DeleteButton
-        id={dashboardId}
-        activeTabIndex={activeTabIndex}
-        setActiveTabIndex={setActiveTabIndex}
-      />
     </>
   )
 }

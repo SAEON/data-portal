@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { useApolloClient, gql } from '@apollo/client'
 import { IconButton, Tooltip } from '@material-ui/core'
-import DeleteIcon from 'mdi-react/DeleteIcon'
+import CloseIcon from 'mdi-react/CloseIcon'
 import { context as databookContext } from '../../../../../context'
 
 const DASHBOARDS = gql`
@@ -57,7 +57,7 @@ export default ({ chartId, dashboard }) => {
           })
         }}
       >
-        <DeleteIcon size={20} />
+        <CloseIcon size={20} />
       </IconButton>
     </Tooltip>
   )

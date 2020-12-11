@@ -21,8 +21,8 @@ export default ({ id, setActiveTabIndex, activeTabIndex }) => {
   const { databook } = useContext(databookContext)
 
   return (
-    <Tooltip title="Delete current dashboard" placement="left-start">
-      <span style={{ zIndex: 99, position: 'absolute', right: 4, bottom: 4 }}>
+    <Tooltip title="Delete current chart" placement="left-start">
+      <span>
         <IconButton
           onClick={async () => {
             await client.mutate({

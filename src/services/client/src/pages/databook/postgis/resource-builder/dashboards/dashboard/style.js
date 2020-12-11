@@ -1,13 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
-  gridItem: {
-    margin: 4,
-    border: `1px solid ${theme.palette.grey[300]}`,
+  toolbar: {
+    backgroundColor: theme.palette.grey[100],
+    borderBottom: `1px solid ${theme.palette.grey[200]}`,
   },
-  grid: {},
-  box: {
+  gridContainer: {
     height: 'calc(100% - 48px)',
-    // border: `1px solid ${theme.palette.grey[500]}`,
+    position: 'relative',
+    padding: 8,
+  },
+  grid: {
+    height: '100% !important', // Overides the gridstack height
+    width: '100%',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  gridItem: {},
+  gridItemContent: {
+    border: `1px solid ${theme.palette.grey[300]}`,
   },
 }))

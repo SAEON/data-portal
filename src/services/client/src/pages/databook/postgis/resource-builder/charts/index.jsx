@@ -23,7 +23,7 @@ export default forwardRef((props, ref) => {
       {charts.map((chart, i) => {
         return (
           <Fade in={activeTabIndex === i} key={chart.id}>
-            <div role="tabpanel" hidden={activeTabIndex !== i}>
+            <div style={{ height: '100%' }} role="tabpanel" hidden={activeTabIndex !== i}>
               {activeTabIndex === i && (
                 <Chart
                   activeTabIndex={activeTabIndex}
