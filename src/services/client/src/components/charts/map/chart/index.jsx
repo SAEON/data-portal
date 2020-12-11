@@ -156,13 +156,11 @@ const MapFunc = () => {
     ],
   }
   return (
-    <div style={{ position: 'absolute', top: 100, bottom: 0, left: 0, right: 0 }}>
-      <ReactEcharts
-        option={getOption}
-        style={{ height: '500px', width: '100%' }}
-        className="react_for_echarts"
-      />
-    </div>
+    <ReactEcharts
+      option={getOption}
+      style={{ height: '100%', width: '100%' }}
+      className="react_for_echarts"
+    />
   )
 }
 

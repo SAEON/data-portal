@@ -6,6 +6,7 @@ import { Box, Toolbar, Typography } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
+import PreviewBurron from './_preview-button'
 import SaveLayoutButton from './_save-layout'
 import ChartStub from './chart-stub'
 import useStyles from './style'
@@ -109,6 +110,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         <AddChartButton dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
         <ShareButton id={dashboardId} />
+        <span style={{ marginRight: 8 }} />
+        <PreviewBurron id={dashboardId} />
       </Toolbar>
       <div style={{ height: 'calc(100% - 48px)', margin: '0px 16px', position: 'relative' }}>
         <Box m={0} p={0} className={clsx(classes.box)}>
