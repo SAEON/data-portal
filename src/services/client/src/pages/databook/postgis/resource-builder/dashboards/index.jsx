@@ -20,11 +20,6 @@ export default forwardRef((props, ref) => {
           dashboards(databookId: $databookId) {
             id
             layout
-            charts {
-              id
-              title
-              description
-            }
           }
         }
       `}

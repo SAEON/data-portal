@@ -20,9 +20,7 @@ const DASHBOARDS_QUERY = gql`
   query($databookId: ID!) {
     dashboards(databookId: $databookId) {
       id
-      charts {
-        id
-      }
+      layout
     }
   }
 `
@@ -144,10 +142,18 @@ export default ({ dashboard }) => {
                                                       {},
                                                       { ...d },
                                                       {
-                                                        charts:
+                                                        layout:
                                                           d.id === dashboardId
-                                                            ? [...d.charts, newChart]
-                                                            : d.charts,
+                                                            ? [
+                                                                ...d.layout,
+                                                                {
+                                                                  content: {
+                                                                    id: newChart.id,
+                                                                    type: 'Chart',
+                                                                  },
+                                                                },
+                                                              ]
+                                                            : d.layout,
                                                       }
                                                     )
                                                   }),

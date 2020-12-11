@@ -16,19 +16,21 @@ export default async (_, { chartId, dashboardId }, ctx) => {
     throw new Error('Unable to find either the chart or the dashboard specified. Both must exist')
   }
 
-  const { charts = [] } = dashboard
+  const layout = dashboard.layout || []
 
-  if (!charts.map(chart => chart.toString()).includes(chartId.toString())) {
+  if (!layout.map(({ content }) => content.id.toString()).includes(chartId.toString())) {
     throw new Error('Chart is not associated with this dashboard')
   }
 
-  const newCharts = [...charts].filter(id => id.toString() !== chartId.toString())
+  const newLayout = [...layout].filter(
+    ({ content }) => content.id.toString() !== chartId.toString()
+  )
 
   await Dashboards.findOneAndUpdate(
     { _id: ObjectID(dashboardId) },
     {
       $set: {
-        charts: newCharts,
+        layout: newLayout,
         modifiedAt: new Date(),
       },
     }

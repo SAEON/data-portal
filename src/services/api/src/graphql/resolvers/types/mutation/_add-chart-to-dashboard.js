@@ -2,8 +2,10 @@ import mongo from 'mongodb'
 const { ObjectID } = mongo
 
 /**
- * Check the chart and dashsboard exists, if so
- * add the chart to the dashboard
+ * Check the chart and dashboard exists, if so
+ * add the chart to the dashboard.layout field.
+ * This field is an array of objects that can
+ * describe GridStack.js widgets
  */
 export default async (_, { chartId, dashboardId }, ctx) => {
   const { Charts, Dashboards } = await ctx.mongo.collections
@@ -18,19 +20,19 @@ export default async (_, { chartId, dashboardId }, ctx) => {
     )
   }
 
-  const { charts = [] } = dashboard
+  const layout = dashboard.layout || []
 
-  if (charts.map(chart => chart.toString()).includes(chartId.toString())) {
+  if (layout.map(({ content }) => content.id.toString()).includes(chartId.toString())) {
     throw new Error('Cannot add duplicate chart to dashboard')
   }
 
-  const newCharts = [...charts, chartId]
+  const newLayout = [...layout, { content: { id: chartId, type: 'Chart' } }]
 
   await Dashboards.findOneAndUpdate(
     { _id: ObjectID(dashboardId) },
     {
       $set: {
-        charts: newCharts,
+        layout: newLayout,
         modifiedAt: new Date(),
       },
     }

@@ -1,11 +1,10 @@
 import RemoveChartButton from './_remove-chart-button'
 
-export default ({ chart, dashboard }) => {
-  const { id } = chart
+export default ({ chart: id, dashboard }) => {
   return (
     <div>
       <div key={id}>Chart: {id}</div>
-      <RemoveChartButton chart={chart} dashboard={dashboard} />
+      <RemoveChartButton chartId={id} dashboard={dashboard} />
     </div>
   )
 }

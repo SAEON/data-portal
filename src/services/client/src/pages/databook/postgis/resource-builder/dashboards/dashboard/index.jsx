@@ -29,29 +29,38 @@ const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id: dashboardId, charts = [], layout } = dashboard
+  const { id: dashboardId, layout = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const refs = useRef({})
 
   gridCache[dashboardId] = layout
 
+  const charts =
+    layout
+      ?.map(({ content }) => {
+        if (content.type.toUpperCase() === 'CHART') {
+          return content.id
+        } else {
+          return undefined
+        }
+      })
+      .filter(_ => _) || []
+
   if (Object.keys(refs.current).length !== charts.length) {
-    charts.forEach(({ id }) => {
+    charts.forEach(id => {
       refs.current[id] = refs.current[id] || createRef()
     })
   }
-
-  // TODO Sometimes cache is out of date
 
   const saveGrid = () =>
     gridStackRef.current.save().map(item => {
       const span = createElement(item.content).querySelector('span')
       const id = span.id
-      const itemType = span.getAttribute('data-item')
+      const type = span.getAttribute('data-type')
       return {
         ...item,
-        content: { id, itemType },
+        content: { id, type },
       }
     })
 
@@ -68,9 +77,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     const grid = gridStackRef.current
 
     grid.removeAll(false)
-
     grid.batchUpdate()
-    charts.forEach(({ id }) => {
+    charts.forEach(id => {
       grid.makeWidget(refs.current[id].current)
     })
     grid.commit()
@@ -83,7 +91,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [charts])
+  }, [layout])
 
   return (
     <>
@@ -99,23 +107,23 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       <div style={{ height: 'calc(100% - 48px)', margin: '0px 16px', position: 'relative' }}>
         <Box m={0} p={0} className={clsx(classes.box)}>
           <div className="grid-stack">
-            {charts?.map((chart, i) => {
+            {charts?.map((id, i) => {
               const hydratedState = (gridCache[dashboardId] || []).find(
-                ({ content }) => content.id === chart.id
+                ({ content }) => content.id === id
               )
 
               return (
                 <div
-                  ref={refs.current[chart.id]}
-                  key={chart.id}
+                  ref={refs.current[id]}
+                  key={id}
                   className={clsx('grid-stack-item', classes.grid)}
                   {...Object.fromEntries(
                     Object.entries(hydratedState || {}).map(([key, value]) => [`gs-${key}`, value])
                   )}
                 >
                   <div className={clsx('grid-stack-item-content', classes.gridItem)}>
-                    <span id={chart.id} data-item={'chart'}>
-                      <ChartStub chart={chart} dashboard={dashboard} />
+                    <span id={id} data-type={'Chart'}>
+                      <ChartStub chart={id} dashboard={dashboard} />
                     </span>
                   </div>
                 </div>

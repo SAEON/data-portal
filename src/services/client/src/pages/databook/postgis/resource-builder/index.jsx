@@ -11,6 +11,7 @@ export default () => {
   const [active, setActive] = useState('dashboards')
   const classes = useStyles()
   const tabsContainerRef = useRef()
+
   return (
     <div className={clsx(classes.layout, classes.bg)}>
       <div style={{ position: 'relative', height: '100%' }}>

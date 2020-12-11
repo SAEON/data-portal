@@ -8,14 +8,12 @@ const DASHBOARDS = gql`
   query($databookId: ID!) {
     dashboards(databookId: $databookId) {
       id
-      charts {
-        id
-      }
+      layout
     }
   }
 `
 
-export default ({ chart, dashboard }) => {
+export default ({ chartId, dashboard }) => {
   const { databook } = useContext(databookContext)
   const client = useApolloClient()
 
@@ -32,7 +30,7 @@ export default ({ chart, dashboard }) => {
                 }
               }
             `,
-            variables: { chartId: chart.id, dashboardId: dashboard.id },
+            variables: { chartId, dashboardId: dashboard.id },
             update: (cache, { data }) => {
               const { dashboards } = cache.read({
                 query: DASHBOARDS,
@@ -46,7 +44,7 @@ export default ({ chart, dashboard }) => {
               const updatedDashbaords = [...dashboards].map(item => {
                 item = { ...item }
                 if (item.id === dashboard.id) {
-                  item.charts = [...item.charts].filter(({ id }) => id !== removedId)
+                  item.layout = [...item.layout].filter(({ content }) => content.id !== removedId)
                 }
                 return item
               })

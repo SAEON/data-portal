@@ -9,9 +9,7 @@ const DASHBOARDS_QUERY = gql`
   query($databookId: ID!) {
     dashboards(databookId: $databookId) {
       id
-      charts {
-        id
-      }
+      layout
     }
   }
 `
@@ -61,25 +59,27 @@ export default ({ gridState, dashboard }) => {
                       databookId,
                     },
                   })
+
+                  const updatedDashboards = [
+                    ...dashboards.map(d => {
+                      return Object.assign(
+                        {},
+                        { ...d },
+                        {
+                          layout: gridState, // TODO. for some reason the second time this mutation is called, data.updatedDashboard.layout is stale
+                        }
+                      )
+                    }),
+                  ]
+
                   cache.writeQuery({
                     query: DASHBOARDS_QUERY,
                     data: {
-                      dashboards: [
-                        ...dashboards.map(d => {
-                          return Object.assign(
-                            {},
-                            { ...d },
-                            {
-                              layout: data.updateDashboard.layout,
-                            }
-                          )
-                        }),
-                      ],
+                      dashboards: updatedDashboards,
                     },
                   })
                 },
               })
-              await new Promise(res => setTimeout(res, 2000))
               setLoading(false)
             }}
             size="small"
