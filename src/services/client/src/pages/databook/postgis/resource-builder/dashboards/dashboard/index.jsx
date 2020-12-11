@@ -27,6 +27,17 @@ function createElement(str) {
 
 const gridCache = {}
 
+const getChartIds = layout =>
+  layout
+    ?.map(({ content }) => {
+      if (content.type.toUpperCase() === 'CHART') {
+        return content.id
+      } else {
+        return undefined
+      }
+    })
+    .filter(_ => _) || []
+
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
   const { id: dashboardId, layout = [] } = dashboard
@@ -36,16 +47,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
   gridCache[dashboardId] = layout
 
-  const charts =
-    layout
-      ?.map(({ content }) => {
-        if (content.type.toUpperCase() === 'CHART') {
-          return content.id
-        } else {
-          return undefined
-        }
-      })
-      .filter(_ => _) || []
+  const charts = getChartIds(layout)
 
   if (Object.keys(refs.current).length !== charts.length) {
     charts.forEach(id => {
@@ -65,13 +67,17 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     })
 
   useEffect(() => {
+    const charts = getChartIds(layout)
+
     gridStackRef.current =
       gridStackRef.current ||
       GridStack.init({
-        column: 12,
+        disableOneColumnMode: true,
         alwaysShowResizeHandle: false,
         animate: true,
-        float: true,
+        float: false,
+        margin: 8,
+        cellHeight: '36px',
       })
 
     const grid = gridStackRef.current
@@ -91,7 +97,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [layout])
+  }, [dashboardId, layout])
 
   return (
     <>

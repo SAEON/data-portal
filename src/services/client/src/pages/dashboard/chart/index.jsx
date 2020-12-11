@@ -1,5 +1,5 @@
 import Chart from '../../chart'
 
-export default ({ chart }) => {
-  return <Chart id={chart.id} />
+export default ({ id }) => {
+  return <Chart id={id} />
 }
