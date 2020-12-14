@@ -5,13 +5,14 @@
 - [Deployment status](#deployment-status)
 - [Tech Stack](#tech-stack)
 - [Quick start](#quick-start)
-    - [System requirements](#system-requirements)
-    - [Local development](#local-development)
+  - [System requirements](#system-requirements)
+  - [Local development](#local-development)
 - [Deployment and installation](#deployment-and-installation)
-    - [Continuous deployment](#continuous-deployment)
-- [SAEON deployment](#saeon-deployment)
-      - [Development endpoints](#development-endpoints)
-      - [Production endpoints](#production-endpoints)
+  - [Docker-compose](#docker-compose)
+  - [Continuous deployment](#continuous-deployment)
+  - [SAEON deployment information](#saeon-deployment-information)
+    - [Development endpoints](#development-endpoints)
+    - [Production endpoints](#production-endpoints)
 - [NPM packages](#npm-packages)
     - [Publishing packages to NPM](#publishing-packages-to-npm)
 
@@ -36,7 +37,7 @@
 
 Setup the repository for development
 
-### System requirements
+## System requirements
 
 1. Docker Desktop
 2. Node.js **v14.13** (Lower versions simply won't work)
@@ -59,7 +60,7 @@ npm run configure-git
 npm run install-dependencies
 ```
 
-### Local development
+## Local development
 
 The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
@@ -91,7 +92,8 @@ npm run start:client
 
 # Deployment and installation
 
-Deploy the software stack via the `docker-compose` CLI. From the root directory of the source code run the following shell command:
+## Docker-compose
+From the root directory of the source code run the following shell command:
 
 ```sh
 MONGO_DB_ADDRESS="mongodb://mongo:27017" \
@@ -119,7 +121,7 @@ CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
 
-### Continuous deployment
+## Continuous deployment
 
 A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
@@ -130,9 +132,9 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
 
-# SAEON deployment
+## SAEON deployment information
 
-#### Development endpoints
+### Development endpoints
 
 1. http://catalogue.saeon.dvn
 2. http://api.catalogue.saeon.dvn
@@ -142,7 +144,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 6. http://elasticsearch.saeon.dvn
 7. http://kibana.saeon.dvn
 
-#### Production endpoints
+### Production endpoints
 
 1. https://catalogue.saeon.ac.za
 2. https://api.catalogue.saeon.ac.za
