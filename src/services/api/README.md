@@ -1,25 +1,22 @@
+
+# API
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [@saeon/api](#saeonapi)
-      - [Run as a Docker container](#run-as-a-docker-container)
-  - [Configure the integration](#configure-the-integration)
+- [Configuration](#configuration)
+  - [Environment](#environment)
+  - [ODP integration](#odp-integration)
+- [Docker](#docker)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# @saeon/api
-Node.js GraphQL API
+## Configuration
 
-#### Run as a Docker container
+### Environment
 
-```sh
-cd src/services/api
-docker build -t api . --build-arg ELASTICSEARCH_ADDRESS=http://elasticsearch:9200 --build-arg MONGO_DB_ADDRESS=mongodb://mongo:27017
-docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -d api
-```
-
-## Configure the integration
+### ODP integration
 The API integrates with the ODP. This process can be configured to include/exclude certain records by providing a JavaScript filter function. The default filter is defined in the API source code root folder - [this file](odp-default-filter.js)
 
 Provide a path to a different filter function to configure this filter:
@@ -41,3 +38,13 @@ export default (record) => {
   }
 }
 ```
+
+## Docker
+
+```sh
+cd src/services/api
+docker build -t api . --build-arg ELASTICSEARCH_ADDRESS=http://elasticsearch:9200 --build-arg MONGO_DB_ADDRESS=mongodb://mongo:27017
+docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -d api
+```
+
+
