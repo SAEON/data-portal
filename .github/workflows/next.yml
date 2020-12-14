@@ -3,7 +3,7 @@ name: deployment@next
 on:
   push:
     branches:
-      - next_
+      - next
 
 jobs:
   deploy:
