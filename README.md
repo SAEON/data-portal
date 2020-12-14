@@ -16,11 +16,6 @@
     - [Development endpoints](#development-endpoints)
     - [Production endpoints](#production-endpoints)
 - [Software documentation](#software-documentation)
-    - [API](#api)
-    - [Proxy](#proxy)
-    - [Client](#client)
-    - [NPM packages](#npm-packages)
-    - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -156,8 +151,9 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 7. http://kibana.saeon.int
 
 # Software documentation
-### [API](src/services/api/README.md)
-### [Proxy](src/services/proxy/README.md)
-### [Client](src/services/client/README.md)
-### [NPM packages](src/packages/README.md)
-### [Repository tools](src/tools/README.md)
+
+- [API](src/services/api/README.md)
+- [Proxy](src/services/proxy/README.md)
+- [Client](src/services/client/README.md)
+- [NPM packages](src/packages/README.md)
+- [Repository tools](src/tools/README.md)
