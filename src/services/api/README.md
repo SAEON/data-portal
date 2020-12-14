@@ -4,6 +4,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Start the service](#start-the-service)
+  - [Endpoints](#endpoints)
 - [Environment configuration](#environment-configuration)
 - [ODP integration configuration](#odp-integration-configuration)
 - [Docker](#docker)
@@ -12,8 +13,15 @@
 
 # Start the service
 ```sh
-npm start # From the API service directory root
+# From the API service directory root
+npm install
+npm start
 ```
+
+## Endpoints
+- http://localhost:3000
+- http://localhost:8000/graphql (GraphQL Playground)
+- http://localhost:3000/proxy (Address for proxying)
 
 # Environment configuration
 Default configuration values can be found in [src/config.js](src/config.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly
