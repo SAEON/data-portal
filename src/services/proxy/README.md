@@ -10,8 +10,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
-
 # Start the service
 ```sh
 # From the proxy service directory root
