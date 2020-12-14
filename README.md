@@ -6,9 +6,9 @@
 - [Tech Stack](#tech-stack)
 - [Quick start](#quick-start)
     - [System requirements](#system-requirements)
-    - [Local development environment](#local-development-environment)
+    - [Local development](#local-development)
+- [Deployment and installation](#deployment-and-installation)
     - [Continuous deployment](#continuous-deployment)
-- [Deployment](#deployment)
 - [SAEON deployment](#saeon-deployment)
       - [Development endpoints](#development-endpoints)
       - [Production endpoints](#production-endpoints)
@@ -16,8 +16,6 @@
     - [Publishing packages to NPM](#publishing-packages-to-npm)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-An interactive tool for searching and exploring SAEON-curated datasets
 
 # Deployment status
 
@@ -61,7 +59,7 @@ npm run configure-git
 npm run install-dependencies
 ```
 
-### Local development environment
+### Local development
 
 The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
@@ -91,18 +89,7 @@ npm run start:api
 npm run start:client
 ```
 
-### Continuous deployment
-
-A continuous deployment workflow is supported for a CentOS 7.6 deployment server
-
-1. Fork the repository, and clone the new fork to your local machine
-2. Follow the [instructions](/platform/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
-3. Run the command: `npm run configure-centos-7-server` from the root of the repository
-4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
-5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
-6. Push from local to your forked repository to trigger a deployment
-
-# Deployment
+# Deployment and installation
 
 Deploy the software stack via the `docker-compose` CLI. From the root directory of the source code run the following shell command:
 
@@ -131,6 +118,17 @@ CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
 CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
+
+### Continuous deployment
+
+A continuous deployment workflow is supported for a CentOS 7.6 deployment server
+
+1. Fork the repository, and clone the new fork to your local machine
+2. Follow the [instructions](/platform/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
+3. Run the command: `npm run configure-centos-7-server` from the root of the repository
+4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
+5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
+6. Push from local to your forked repository to trigger a deployment
 
 # SAEON deployment
 
