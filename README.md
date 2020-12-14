@@ -9,7 +9,7 @@
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Local development](#local-development)
-    - [The following endpoints should be available](#the-following-endpoints-should-be-available)
+    - [Endpoints](#endpoints)
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose](#docker-compose)
   - [Continuous deployment](#continuous-deployment)
@@ -87,7 +87,7 @@ npm run start:api
 npm run start:client
 ```
 
-### The following endpoints should be available
+### Endpoints
 
 - http://localhost:3001
 - http://localhost:3000
@@ -100,7 +100,7 @@ npm run start:client
 # Deployment and installation
 
 ## Docker-compose
-From the root directory of the source code run the following shell command:
+From the root of the source code directory run the following shell command:
 
 ```sh
 MONGO_DB_ADDRESS="mongodb://mongo:27017" \
