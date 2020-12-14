@@ -31,7 +31,7 @@
 
 # Quick start
 
-Setup the repository for development
+Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependant services (Mongo, Elasticsearh, PostGIS, GDAL) are run via Docker containers
 
 ## System requirements
 
