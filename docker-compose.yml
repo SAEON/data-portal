@@ -68,10 +68,11 @@ services:
   postgis:
     image: $POSTGIS_IMAGE
     container_name: postgis
+    restart: always
     environment:
       POSTGRES_USER: $POSTGIS_USERNAME
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
-      POSTGRES_DB: catalogue
+      POSTGRES_DB: $POSTGIS_DB
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5442:5432
@@ -113,6 +114,7 @@ services:
         POSTGIS_PORT: $POSTGIS_PORT            
         POSTGIS_USERNAME: $POSTGIS_USERNAME
         POSTGIS_PASSWORD: $POSTGIS_PASSWORD
+        POSTGIS_DB: $POSTGIS_DB
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
         CATALOGUE_PROXY_ADDRESS: $CATALOGUE_PROXY_ADDRESS
         CATALOGUE_DEPLOYMENT_ENV: $CATALOGUE_DEPLOYMENT_ENV

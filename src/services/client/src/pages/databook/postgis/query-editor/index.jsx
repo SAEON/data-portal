@@ -1,5 +1,6 @@
 import Ace from './ace'
-import { useState, useContext, useRef, useEffect } from 'react'
+import { useContext, useRef, useEffect } from 'react'
+import { useLocalStorage } from '../../../../hooks'
 import { context as databookContext } from '../../context'
 import { Toolbar, IconButton, Tabs, Tab, Avatar, Tooltip } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
@@ -13,18 +14,25 @@ import { nanoid } from 'nanoid'
 export default () => {
   const { sql, setSql } = useContext(databookContext)
   const activeEditorRef = useRef()
-  const [editors, setEditors] = useState([
+  const classes = useStyles()
+  const theme = useTheme()
+
+  /**
+   * Editor state uses localstorage
+   */
+  const [activeTabIndex, setActiveTabIndex] = useLocalStorage('activeEditorIndex', 0)
+  const [editors, setEditors] = useLocalStorage('editors', [
     {
       id: nanoid(4),
       sql,
     },
   ])
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
-  const classes = useStyles()
-  const theme = useTheme()
 
+  /**
+   * Set the active editor on component load
+   */
   useEffect(() => {
-    activeEditorRef.current = editors[activeTabIndex]
+    activeEditorRef.current = editors[activeTabIndex] || -1
   }, [activeTabIndex, editors])
 
   return (
@@ -78,7 +86,9 @@ export default () => {
           </IconButton>
         </Tooltip>
       </Toolbar>
-      {editors.map(({ id, sql }, i) => {
+      {editors.map((editor, i) => {
+        const { id } = editor
+
         return (
           <div
             key={id}
@@ -88,7 +98,20 @@ export default () => {
           >
             {activeTabIndex === i && (
               <>
-                <Ace ref={activeEditorRef} key={id} sql={sql} />
+                <Ace
+                  editor={editor}
+                  updateCache={sql => {
+                    setImmediate(() => {
+                      setEditors(
+                        [...editors].map(editor =>
+                          editor.id === id ? Object.assign({ ...editor }, { sql }) : editor
+                        )
+                      )
+                    })
+                  }}
+                  ref={activeEditorRef}
+                  key={id}
+                />
                 <Tooltip title="Close current editor" placement="left-start">
                   <span style={{ zIndex: 99, position: 'absolute', right: 4, bottom: 4 }}>
                     <IconButton

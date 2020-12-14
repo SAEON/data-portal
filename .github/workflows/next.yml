@@ -37,8 +37,8 @@ jobs:
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
-          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
-          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
+          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="disabled"
+          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="disabled"
           CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled

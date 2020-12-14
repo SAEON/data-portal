@@ -5,29 +5,47 @@ import 'ace-builds/src-noconflict/mode-pgsql'
 import 'ace-builds/src-noconflict/theme-sqlserver'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
-export default forwardRef(({ sql }, ref) => {
+export default forwardRef(({ editor, updateCache }, ref) => {
+  const { sql, id } = editor
+
   return (
     <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
       <AceEditor
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: true,
-        }}
+        name={id}
         value={sql}
-        tabSize={2}
-        placeholder="Select * from ..."
         scrollMargin={[0]}
-        showPrintMargin={false}
         height="100%"
         width="100%"
         mode="pgsql"
         theme="sqlserver"
         onChange={val => {
           ref.current.sql = val
+          updateCache(val)
         }}
-        name="UNIQUE_ID_OF_DIV"
-        editorProps={{ $blockScrolling: true }}
+        editorProps={{ $blockScrolling: false, $blockSelectEnabled: true }}
+        setOptions={{
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: true,
+          enableSnippets: true,
+          firstLineNumber: 1,
+          newLineMode: 'unix',
+          useSoftTabs: true,
+          tabSize: 2,
+          scrollPastEnd: 8,
+          selectionStyle: 'line',
+          highlightActiveLine: true,
+          highlightSelectedWord: true,
+          cursorStyle: 'ace',
+          animatedScroll: true,
+          displayIndentGuides: true,
+          fadeFoldWidgets: true,
+          vScrollBarAlwaysVisible: true,
+          scrollSpeed: 1,
+          highlightGutterLine: true,
+          fontSize: 12,
+          fixedWidthGutter: true,
+          showPrintMargin: false,
+        }}
       />
     </div>
   )

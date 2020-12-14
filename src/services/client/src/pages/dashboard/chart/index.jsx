@@ -1,4 +1,4 @@
-import Chart from '../../chart'
+import Chart from '../../../components/chart'
 
 export default ({ id }) => {
   return <Chart id={id} />

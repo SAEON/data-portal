@@ -10,7 +10,7 @@
     "start:proxy": "npm --prefix src/services/proxy start",
     "start:doi-resolver": "npm --prefix src/services/doi-resolver start",
     "************ REPOSITORY TOOLING **********": "",
-    "doc": "doctoc ./README.md && doctoc ./src/services/client/README.md && doctoc ./src/services/api/README.md && doctoc ./src/services/proxy/README.md",
+    "doc": "doctoc ./README.md && doctoc ./src/packages/README.md && doctoc src/tools/README.md && doctoc ./src/services/client/README.md && doctoc ./src/services/api/README.md && doctoc ./src/services/proxy/README.md",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
@@ -35,7 +35,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run bump-patch && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
+      "pre-commit": "npm run doc && npm run bump-patch && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",

@@ -2,82 +2,62 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [@saeon/client](#saeonclient)
 - [Browser support](#browser-support)
-- [Quick start](#quick-start)
-- [Deployment](#deployment)
-      - [Install global repository packages](#install-global-repository-packages)
-      - [Install local packages](#install-local-packages)
-      - [Build the application](#build-the-application)
-      - [Run as a Docker container](#run-as-a-docker-container)
-      - [Check that the application is working!](#check-that-the-application-is-working)
-  - [Configuration](#configuration)
-    - [Filter configuration](#filter-configuration)
-  - [Docker deployment](#docker-deployment)
+- [Start the service](#start-the-service)
+- [Build the service](#build-the-service)
+- [Docker](#docker)
+- [Environment configuration](#environment-configuration)
+- [Filter configuration](#filter-configuration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# @saeon/client
-
 # Browser support
+Babel is configured to support the following browser targets:
 
-Builds are configured to support browsers with over 1% market share, excluding Internet Explorer, as configured in the [@saeon/client build](.browserslistrc). As of 11 May 2020, these include:
+```txt
+> 1%
+not dead
+not IE 11
+```
 
-- chrome: 80
-- edge: 18
-- firefox: 74
-- ios: 12.2
-- safari: 13
-- samsung: 11.1
-
-# Quick start
-
+# Start the service
 The client needs an API - start an instance of the @saeon/api software to begin with. Then, from the root of the repository:
 
 ```sh
-npm install
-cd src/@saeon/client
+# From the client service directory root
 npm install
 npm start
+
+# The client should be accessible at http://localhost:3001
 ```
 
-# Deployment
-
-#### Install global repository packages
+# Build the service
+Create static files for deploying to a webserver. Nginx configuration is [included](nginx) in this project
 
 ```sh
-npm ci --only=production
+# From the client service directory root
+npm ci --only==production
+npm run build # outputs to ./dist. Serve the entire ./dist directory (entry point is index.html)
 ```
 
-#### Install local packages
+# Docker
+
+For a full list of `--build-arg`'s that is accepted refer to the [Dockerfile](Dockerfile)
 
 ```sh
-cd src/@saeon/client
-npm ci --only=production
-```
+# Create a Docker image
+docker build -t client . \
+--build-arg CATALOGUE_CLIENT_ADDRESS=http://localhost:3001 \
+--build-arg CATALOGUE_DEPLOYMENT_ENV=development \
+... etc
 
-#### Build the application
-
-Serving the web client involves setting up a webserver to serve static files. This is easiest to do via Nginx since the configuration required for Nginx is [included](/nginx) in this repository. The static files need to be built:
-
-```sh
-cd src/@saeon/api
-npm run build # output is /dist, the entry point is /dist/index.html
-```
-
-#### Run as a Docker container
-
-```sh
-cd . # From the root of the repository
-docker build -t client -f ./src/@saeon/api/Dockerfile .
+# Run as a Docker container
 docker run -p 3001:3001 -d client
+
+# The client should be accessible at http://localhost:3001
 ```
 
-#### Check that the application is working!
-
-The client should be accessible at http://localhost:3001
-
-## Configuration
+# Environment configuration
 
 Configuration can be passed to the build context via a `.env`:
 
@@ -85,7 +65,7 @@ Configuration can be passed to the build context via a `.env`:
 cd src/services/client
 touch .env
 ```
-The full list of possible configuration options and default values is logged to the console in non-production environments. Then update values as required. 
+The full list of possible configuration options and default values is logged to the console in non-production environments. Adjust these values by updating the `.env` file (and restarting the Webpack dev server)
 
 ```sh
 # .env
@@ -94,7 +74,7 @@ DEFAULT_ERROR=...
 etc
 ```
 
-### Filter configuration
+# Filter configuration
 The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](default-filter-config.json) is included in the source. To update this, set the path to a new JSON configuration file in the `.env` file: `CATALOGUE_CLIENT_FILTER_CONFIG_PATH=/path/to/file.json` (Webpack reads the JSON at build time from this path). This is an example of a more advanced configuration that showcases all possible options:
 
 ```json
@@ -135,10 +115,4 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
   { "title": "Publisher", "field": "publisher.raw" },
   { "title": "Creators", "field": "creators.name.raw", "path": "creators" }
 ]
-```
-
-## Docker deployment
-
-```
-docker build -t client -f ./src/services/client/Dockerfile .
 ```
