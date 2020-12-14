@@ -9,6 +9,7 @@
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Local development](#local-development)
+    - [The following endpoints should be available](#the-following-endpoints-should-be-available)
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose](#docker-compose)
   - [Continuous deployment](#continuous-deployment)
@@ -86,6 +87,16 @@ npm run start:api
 npm run start:client
 ```
 
+### The following endpoints should be available
+
+- http://localhost:3001
+- http://localhost:3000
+- http://localhost:3000/graphql
+- http://localhost:3000/proxy (also http://localhost:8001)
+- http://localhost:8002 (for proxy logs)
+- http://localhost:9200
+- http://localhost:5601
+
 # Deployment and installation
 
 ## Docker-compose
@@ -132,23 +143,23 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
 ### Development endpoints
 
-1. http://catalogue.saeon.dvn
-2. http://api.catalogue.saeon.dvn
-3. http://api.catalogue.saeon.dvn/proxy
-4. http://api.catalogue.saeon.dvn/graphql
-5. http://proxy.catalogue.saeon.dvn (for proxy logs)
-6. http://elasticsearch.saeon.dvn
-7. http://kibana.saeon.dvn
+- http://catalogue.saeon.dvn
+- http://api.catalogue.saeon.dvn
+- http://api.catalogue.saeon.dvn/proxy
+- http://api.catalogue.saeon.dvn/graphql
+- http://proxy.catalogue.saeon.dvn (for proxy logs)
+- http://elasticsearch.saeon.dvn
+- http://kibana.saeon.dvn
 
 ### Production endpoints
 
-1. https://catalogue.saeon.ac.za
-2. https://api.catalogue.saeon.ac.za
-3. https://api.catalogue.saeon.ac.za/proxy
-4. https://api.catalogue.saeon.ac.za/graphql
-5. http://proxy.catalogue.saeon.int (for proxy logs)
-6. http://elasticsearch.saeon.int
-7. http://kibana.saeon.int
+- https://catalogue.saeon.ac.za
+- https://api.catalogue.saeon.ac.za
+- https://api.catalogue.saeon.ac.za/proxy
+- https://api.catalogue.saeon.ac.za/graphql
+- http://proxy.catalogue.saeon.int (for proxy logs)
+- http://elasticsearch.saeon.int
+- http://kibana.saeon.int
 
 # Documentation
 
