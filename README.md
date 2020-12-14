@@ -15,7 +15,7 @@
   - [SAEON deployment information](#saeon-deployment-information)
     - [Development endpoints](#development-endpoints)
     - [Production endpoints](#production-endpoints)
-- [Software documentation](#software-documentation)
+- [Documentation](#documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -150,7 +150,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 6. http://elasticsearch.saeon.int
 7. http://kibana.saeon.int
 
-# Software documentation
+# Documentation
 
 - [API](src/services/api/README.md)
 - [Proxy](src/services/proxy/README.md)
