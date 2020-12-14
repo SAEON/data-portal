@@ -1,5 +1,5 @@
 import Ace from './ace'
-import { useState, useContext, useRef, useEffect } from 'react'
+import { useContext, useRef, useEffect } from 'react'
 import { useLocalStorage } from '../../../../hooks'
 import { context as databookContext } from '../../context'
 import { Toolbar, IconButton, Tabs, Tab, Avatar, Tooltip } from '@material-ui/core'
