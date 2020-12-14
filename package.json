@@ -35,7 +35,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run bump-patch && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
+      "pre-commit": "npm run doc && npm run bump-patch && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",

@@ -7,6 +7,7 @@
   - [Endpoints](#endpoints)
 - [Environment configuration](#environment-configuration)
 - [ODP integration configuration](#odp-integration-configuration)
+  - [ODP integration schedule](#odp-integration-schedule)
 - [Docker](#docker)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -52,6 +53,15 @@ export default (record) => {
     return false
   }
 }
+```
+
+## ODP integration schedule
+To adjust the schedule of the ODP integration, specify a different schedule to the default, and make sure that rebuilding the index is enabled
+
+```sh
+# .env
+CATALOGUE_API_INDEX_REBUILD_SCHEDULE='0 0 0 * * *'
+CATALOGUE_API_INDEX_REBUILD=enabled
 ```
 
 # Docker
