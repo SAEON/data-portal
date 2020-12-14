@@ -145,7 +145,7 @@ export default ({ dashboard }) => {
                                                         layout:
                                                           d.id === dashboardId
                                                             ? [
-                                                                ...d.layout,
+                                                                ...(d.layout || []),
                                                                 {
                                                                   content: {
                                                                     id: newChart.id,

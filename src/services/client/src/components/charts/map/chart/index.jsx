@@ -157,6 +157,7 @@ const MapFunc = () => {
   }
   return (
     <ReactEcharts
+      theme={theme}
       option={getOption}
       style={{ height: '100%', width: '100%' }}
       className="react_for_echarts"
