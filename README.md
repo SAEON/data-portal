@@ -6,14 +6,7 @@
 - [Tech Stack](#tech-stack)
 - [Quick start](#quick-start)
     - [System requirements](#system-requirements)
-    - [Start the services](#start-the-services)
-      - [Create a Docker network](#create-a-docker-network)
-      - [MongoDB](#mongodb)
-      - [Postgis](#postgis)
-      - [Elasticsearch](#elasticsearch)
-      - [api](#api)
-      - [proxy](#proxy)
-      - [client](#client)
+    - [Local development environment](#local-development-environment)
     - [Continuous deployment](#continuous-deployment)
 - [Deployment](#deployment)
 - [SAEON deployment](#saeon-deployment)
@@ -68,63 +61,33 @@ npm run configure-git
 npm run install-dependencies
 ```
 
-### Start the services
+### Local development environment
 
-The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine. Note that there is also a docker-compose file available, which is employed within the Deployment section.
-
-#### Create a Docker network
-
-Setup a Docker network so that related services can communicate with each other
+The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
 ```sh
+# Create a Docker network (required on local since GDAL is run Dockerized)
 docker network create --driver bridge catalogue
-```
 
-#### MongoDB
-
-```sh
+# Start a MongoDB server
 docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
-```
 
-#### Postgis
-
-```sh
+# Start a PostGIS server
 docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d -p 5432:5432  postgis/postgis:12-3.0
-```
 
-#### Elasticsearch
-Either run the Elasticsearch containers locally, or specify a remote address by configuring the api environment
-
-```sh
-# src/services/api/.env
-ELASTICSEARCH_ADDRESS=http://elasticsearch.saeon.dvn
-```
-
-```sh
-# Docker services
-
-# Elasticsearch
+# Start an Elasticsearch server (you can connect to elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
 docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 
-# Kibana (optional)
+# Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)
 docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.0
-```
 
-#### [api](/src/services/api)
-
-```sh
-npm run start:api
-```
-
-#### [proxy](/src/services/proxy)
-
-```sh
+# Start the Node.js proxy server
 npm run start:proxy
-```
 
-#### [client](/src/services/client)
+# Start the Node.js API server
+npm run start:api
 
-```sh
+# Start the React.js client
 npm run start:client
 ```
 
