@@ -27,7 +27,7 @@ export default forwardRef(({ editor, updateCache }, ref) => {
           enableBasicAutocompletion: true,
           enableLiveAutocompletion: true,
           enableSnippets: true,
-          firstLineNumber: 4,
+          firstLineNumber: 1,
           newLineMode: 'unix',
           useSoftTabs: true,
           tabSize: 2,
