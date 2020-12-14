@@ -1,20 +1,18 @@
 
-# API
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Configuration](#configuration)
   - [Environment](#environment)
-  - [ODP integration](#odp-integration)
+    - [ODP integration](#odp-integration)
 - [Docker](#docker)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Configuration
+# Configuration
 
-### Environment
+## Environment
 
 ### ODP integration
 The API integrates with the ODP. This process can be configured to include/exclude certain records by providing a JavaScript filter function. The default filter is defined in the API source code root folder - [this file](odp-default-filter.js)
@@ -39,7 +37,7 @@ export default (record) => {
 }
 ```
 
-## Docker
+# Docker
 
 ```sh
 cd src/services/api
