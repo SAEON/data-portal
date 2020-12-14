@@ -1,8 +1,10 @@
+![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
+![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Deployment status](#deployment-status)
 - [Tech Stack](#tech-stack)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
@@ -13,15 +15,14 @@
   - [SAEON deployment information](#saeon-deployment-information)
     - [Development endpoints](#development-endpoints)
     - [Production endpoints](#production-endpoints)
-- [NPM packages](#npm-packages)
-    - [Publishing packages to NPM](#publishing-packages-to-npm)
+- [Software documentation](#software-documentation)
+  - [API](#api)
+  - [Proxy](#proxy)
+  - [Client](#client)
+  - [NPM packages](#npm-packages)
+  - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Deployment status
-
-![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
-![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
 # Tech Stack
 
@@ -154,40 +155,10 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 6. http://elasticsearch.saeon.int
 7. http://kibana.saeon.int
 
-# NPM packages
+# Software documentation
 
-This project includes some bespoke NPM package development:
-
-- [@saeon/ol-react](/src/packages/ol-react)
-- [@saeon/snap-menus](/src/packages/snap-menus)
-- [@saeon/logger](/src/packages/logger)
-
-To publish packages to the public NPM registry (where all the @saeon packages are published) you need to [create an NPM account](https://docs.npmjs.com/creating-a-new-npm-user-account). This allows you to publish the packages - you will also need to make sure that you are part of the @saeon organization. To publish these packages under new names you will need to fork the repository, and then update the `name` fields in all the `package.json` files.
-
-Once you have an account you should be able to login via the CLI:
-
-```sh
-npm login
-```
-
-### Publishing packages to NPM
-
-During development packages are referenced directly via the source code entry point. During deployment packages are consumed from the NPM registry. This means that when making changes to dependency packages, these packages need to be re-published. This is straightforward; from the root of a package that supports publishing to NPM, these scripts are available:
-
-- `npm run publish:patch`
-- `npm run publish:minor`
-- `npm run publish:major`
-
-It's also possible to publish all packages at once; from the root of this repository, these scripts are available:
-
-- `npm run publish-all-packages:patch`
-- `npm run publish-all-packages:minor`
-- `npm run publish-all-packages:major`
-
-Running one of these scripts will result in all other packages updating their dependency lists to use the newly published package versions. **However**. If you published a package individually, then you will need to update the dependency version where the package is used. This can either be done manually via updating the appropriate `package.json` file, or all at once:
-
-- `npm run update-packages`
-
-It's also useful to see which packages will be updated by this script. To do that, run:
-
-- `npm run check-package-updates`
+## [API](src/services/api/README.md)
+## [Proxy](src/services/proxy/README.md)
+## [Client](src/services/client/README.md)
+## [NPM packages](src/packages/README.md)
+## [Repository tools](src/tools/README.md)
