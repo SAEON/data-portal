@@ -12,16 +12,17 @@ import clsx from 'clsx'
 import { nanoid } from 'nanoid'
 
 export default () => {
-  const { sql, setSql } = useContext(databookContext)
+  const { sql, setSql, databook } = useContext(databookContext)
   const activeEditorRef = useRef()
   const classes = useStyles()
   const theme = useTheme()
+  const { _id: databookId } = databook.doc
 
   /**
    * Editor state uses localstorage
    */
-  const [activeTabIndex, setActiveTabIndex] = useLocalStorage('activeEditorIndex', 0)
-  const [editors, setEditors] = useLocalStorage('editors', [
+  const [activeTabIndex, setActiveTabIndex] = useLocalStorage(`${databookId}-activeEditorIndex`, 0)
+  const [editors, setEditors] = useLocalStorage(`${databookId}-editors`, [
     {
       id: nanoid(4),
       sql,
