@@ -42,7 +42,7 @@ npm run build # outputs to ./dist. Serve the entire ./dist directory (entry poin
 
 # Docker
 
-For a full list of `--build-arg`s that is accepted refer to the [Dockerfile](Dockerfile)
+For a full list of `--build-arg`'s that is accepted refer to the [Dockerfile](Dockerfile)
 
 ```sh
 # Create a Docker image
