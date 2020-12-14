@@ -5,7 +5,7 @@
 - [Deployment status](#deployment-status)
 - [Tech Stack](#tech-stack)
 - [Quick start](#quick-start)
-      - [System requirements](#system-requirements)
+    - [System requirements](#system-requirements)
     - [Start the services](#start-the-services)
       - [Create a Docker network](#create-a-docker-network)
       - [MongoDB](#mongodb)
@@ -45,7 +45,7 @@ An interactive tool for searching and exploring SAEON-curated datasets
 
 Setup the repository for development
 
-#### System requirements
+### System requirements
 
 1. Docker Desktop
 2. Node.js **v14.13** (Lower versions simply won't work)

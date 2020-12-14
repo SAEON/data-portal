@@ -68,6 +68,7 @@ services:
   postgis:
     image: $POSTGIS_IMAGE
     container_name: postgis
+    restart: always
     environment:
       POSTGRES_USER: $POSTGIS_USERNAME
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
