@@ -110,19 +110,19 @@ docker run --net=catalogue --name elasticsearch --restart always -e xpack.licens
 docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.0
 ```
 
-#### [@saeon/api](/src/services/api)
+#### [api](/src/services/api)
 
 ```sh
 npm run start:api
 ```
 
-#### [@saeon/proxy](/src/services/proxy)
+#### [proxy](/src/services/proxy)
 
 ```sh
 npm run start:proxy
 ```
 
-#### [@saeon/catalogue](/src/services/client)
+#### [client](/src/services/client)
 
 ```sh
 npm run start:client
