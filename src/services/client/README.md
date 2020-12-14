@@ -6,7 +6,7 @@
 - [Start the service](#start-the-service)
 - [Build the service](#build-the-service)
 - [Docker](#docker)
-- [Environment Configuration](#environment-configuration)
+- [Environment configuration](#environment-configuration)
 - [Filter configuration](#filter-configuration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -40,8 +40,6 @@ npm ci --only==production
 npm run build # outputs to ./dist. Serve the entire ./dist directory (entry point is index.html)
 ```
 
-
-
 # Docker
 
 For a full list of `--build-arg`s that is accepted refer to the [Dockerfile](Dockerfile)
@@ -59,8 +57,7 @@ docker run -p 3001:3001 -d client
 # The client should be accessible at http://localhost:3001
 ```
 
-
-# Environment Configuration
+# Environment configuration
 
 Configuration can be passed to the build context via a `.env`:
 

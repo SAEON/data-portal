@@ -2,18 +2,10 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [NPM packages](#npm-packages)
-    - [Publishing packages to NPM](#publishing-packages-to-npm)
+- [Publishing packages to NPM](#publishing-packages-to-npm)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# NPM packages
-
-This project includes some bespoke NPM package development:
-
-- [@saeon/ol-react](/src/packages/ol-react)
-- [@saeon/snap-menus](/src/packages/snap-menus)
-- [@saeon/logger](/src/packages/logger)
 
 To publish packages to the public NPM registry (where all the @saeon packages are published) you need to [create an NPM account](https://docs.npmjs.com/creating-a-new-npm-user-account). This allows you to publish the packages - you will also need to make sure that you are part of the @saeon organization. To publish these packages under new names you will need to fork the repository, and then update the `name` fields in all the `package.json` files.
 
@@ -39,8 +31,10 @@ It's also possible to publish all packages at once; from the root of this reposi
 
 Running one of these scripts will result in all other packages updating their dependency lists to use the newly published package versions. **However**. If you published a package individually, then you will need to update the dependency version where the package is used. This can either be done manually via updating the appropriate `package.json` file, or all at once:
 
-- `npm run update-packages`
+- `npm run update-dependencies`
 
 It's also useful to see which packages will be updated by this script. To do that, run:
 
-- `npm run check-package-updates`
+- `npm run check-dependency-updates`
+
+Sometimes it's necessary to fix a dependency version. All packages and service contain a JSON configuration file (package.json), with the scripts `ncu` and `ncu -u` defined. Refer to the [npm-check-updates](https://github.com/raineorshine/npm-check-updates) documentation for further information on whitelisting/blacklisting certain packages from automatic updating
