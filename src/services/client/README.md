@@ -7,12 +7,12 @@
 - [Build the service](#build-the-service)
 - [Docker](#docker)
 - [Environment Configuration](#environment-configuration)
-    - [Filter configuration](#filter-configuration)
+- [Filter configuration](#filter-configuration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Browser support
-Support is target at the following browsers:
+Babel is configured to support the following browser targets:
 
 ```txt
 > 1%
@@ -77,7 +77,7 @@ DEFAULT_ERROR=...
 etc
 ```
 
-### Filter configuration
+# Filter configuration
 The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](default-filter-config.json) is included in the source. To update this, set the path to a new JSON configuration file in the `.env` file: `CATALOGUE_CLIENT_FILTER_CONFIG_PATH=/path/to/file.json` (Webpack reads the JSON at build time from this path). This is an example of a more advanced configuration that showcases all possible options:
 
 ```json
