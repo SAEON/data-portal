@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
 import catalogueTheme from '../../../../theme'
+import USA from './USA.json'
 
-require('echarts/map/js/china.js')
-
+require('echarts/map/json/china.json')
+// require('echarts/map/js/china.js')
+// require('echarts/map/json/china.json')
+require('./USA.json')
 /*
 select 
 wkb_geometry,
@@ -12,156 +15,120 @@ ST_AsText(wkb_geometry)
 from "odp-925377aa-6914-41e8-8b92-f448ebe11f9c"
 limit 5
 */
+
+//https://echarts.apache.org/en/option.html#geo
+//https://echarts.apache.org/en/tutorial.html#Use%20ECharts%20with%20webpack
+
+var echarts = require('echarts')
+
+// $.get('echarts/map/json/china.json')
+// $.get('map/json/china.json', function (chinaJson) {
+//   echarts.registerMap('china', chinaJson)
+//   var chart = echarts.init(document.getElementById('testid'))
+//   chart.setOption({
+//     series: [
+//       {
+//         type: 'map',
+//         map: 'china',
+//       },
+//     ],
+//   })
+// })
+
 const MapFunc = () => {
+  echarts.registerMap('USA', USA)
+  var myChart = echarts.init(document.getElementById('testid'))
+  myChart.setOption({
+    series: [
+      {
+        type: 'map',
+        map: 'USA',
+      },
+    ],
+  })
   const getOption = {
     title: {
       text: 'title',
       subtext: 'subtitle',
       left: 'center',
     },
-    tooltip: {
-      trigger: 'item',
-    },
-    legend: {
-      orient: 'vertical',
-      left: 'left',
-      data: ['iphone3', 'iphone4', 'iphone5'],
-    },
-    visualMap: {
-      min: 0,
-      max: 2500,
-      left: 'left',
-      top: 'bottom',
-      text: ['visualMapText1', 'visualMapText2'],
-      calculable: true,
-    },
-    toolbox: {
-      show: true,
-      orient: 'vertical',
-      left: 'right',
-      top: 'center',
-      feature: {
-        dataView: { readOnly: false },
-        restore: {},
-        saveAsImage: {},
-      },
-    },
     series: [
       {
-        name: 'iphone3',
         type: 'map',
         mapType: 'china',
-        roam: false,
+        roam: true, //allows dragging of map
         label: {
           normal: {
             show: true,
           },
-          emphasis: {
-            show: true,
-          },
         },
+
         data: [
-          { name: '1', value: 20 },
-          { name: '2', value: 20 },
-          { name: '3', value: 20 },
-          { name: '4', value: 20 },
-          { name: '5', value: 20 },
-          { name: '6', value: 20 },
-          { name: '7', value: 20 },
-          { name: '8', value: 20 },
-          { name: '9', value: 20 },
-          { name: '10', value: 20 },
-          { name: '11', value: 20 },
-          { name: '12', value: 20 },
-          { name: '13', value: 20 },
-          { name: '14', value: 20 },
-          { name: '15', value: 20 },
-          { name: '16', value: 20 },
-          { name: '17', value: 20 },
-          { name: '18', value: 20 },
-          { name: '19', value: 20 },
-          { name: '20', value: 20 },
-          { name: '21', value: 20 },
-          { name: '22', value: 20 },
-          { name: '23', value: 20 },
-          { name: '24', value: 20 },
-          { name: '25', value: 20 },
-          { name: '26', value: 20 },
-          { name: '27', value: 20 },
-          { name: '28', value: 20 },
-          { name: '29', value: 20 },
-          { name: '30', value: 20 },
-          { name: '31', value: 20 },
-          { name: '32', value: 20 },
-          { name: '33', value: 20 },
-          { name: '34', value: 20 },
-        ],
-      },
-      {
-        name: 'iphone4',
-        type: 'map',
-        mapType: 'china',
-        label: {
-          normal: {
-            show: true,
-          },
-          emphasis: {
-            show: true,
-          },
-        },
-        data: [
-          { name: '35', value: 20 },
-          { name: '36', value: 20 },
-          { name: '37', value: 20 },
-          { name: '38', value: 20 },
-          { name: '39', value: 20 },
-          { name: '40', value: 20 },
-          { name: '41', value: 20 },
-          { name: '42', value: 20 },
-          { name: '43', value: 20 },
-          { name: '44', value: 20 },
-          { name: '45', value: 20 },
-          { name: '46', value: 20 },
-          { name: '47', value: 20 },
-          { name: '48', value: 20 },
-          { name: '49', value: 20 },
-          { name: '50', value: 20 },
-          { name: '51', value: 20 },
-          { name: '52', value: 20 },
-          { name: '53', value: 20 },
-        ],
-      },
-      {
-        name: 'iphone5',
-        type: 'map',
-        mapType: 'china',
-        label: {
-          normal: {
-            show: true,
-          },
-          emphasis: {
-            show: true,
-          },
-        },
-        data: [
-          { name: '54', value: 20 },
-          { name: '55', value: 20 },
-          { name: '56', value: 20 },
-          { name: '57', value: 20 },
-          { name: '58', value: 20 },
-          { name: '59', value: 20 },
-          { name: '60', value: 20 },
+          { name: 'Alabama', value: 4822023 },
+          { name: 'Alaska', value: 731449 },
+          { name: 'Arizona', value: 6553255 },
+          { name: 'Arkansas', value: 2949131 },
+          { name: 'California', value: 38041430 },
+          { name: 'Colorado', value: 5187582 },
+          { name: 'Connecticut', value: 3590347 },
+          { name: 'Delaware', value: 917092 },
+          { name: 'District of Columbia', value: 632323 },
+          { name: 'Florida', value: 19317568 },
+          { name: 'Georgia', value: 9919945 },
+          { name: 'Hawaii', value: 1392313 },
+          { name: 'Idaho', value: 1595728 },
+          { name: 'Illinois', value: 12875255 },
+          { name: 'Indiana', value: 6537334 },
+          { name: 'Iowa', value: 3074186 },
+          { name: 'Kansas', value: 2885905 },
+          { name: 'Kentucky', value: 4380415 },
+          { name: 'Louisiana', value: 4601893 },
+          { name: 'Maine', value: 1329192 },
+          { name: 'Maryland', value: 5884563 },
+          { name: 'Massachusetts', value: 6646144 },
+          { name: 'Michigan', value: 9883360 },
+          { name: 'Minnesota', value: 5379139 },
+          { name: 'Mississippi', value: 2984926 },
+          { name: 'Missouri', value: 6021988 },
+          { name: 'Montana', value: 1005141 },
+          { name: 'Nebraska', value: 1855525 },
+          { name: 'Nevada', value: 2758931 },
+          { name: 'New Hampshire', value: 1320718 },
+          { name: 'New Jersey', value: 8864590 },
+          { name: 'New Mexico', value: 2085538 },
+          { name: 'New York', value: 19570261 },
+          { name: 'North Carolina', value: 9752073 },
+          { name: 'North Dakota', value: 699628 },
+          { name: 'Ohio', value: 11544225 },
+          { name: 'Oklahoma', value: 3814820 },
+          { name: 'Oregon', value: 3899353 },
+          { name: 'Pennsylvania', value: 12763536 },
+          { name: 'Rhode Island', value: 1050292 },
+          { name: 'South Carolina', value: 4723723 },
+          { name: 'South Dakota', value: 833354 },
+          { name: 'Tennessee', value: 6456243 },
+          { name: 'Texas', value: 26059203 },
+          { name: 'Utah', value: 2855287 },
+          { name: 'Vermont', value: 626011 },
+          { name: 'Virginia', value: 8185867 },
+          { name: 'Washington', value: 6897012 },
+          { name: 'West Virginia', value: 1855413 },
+          { name: 'Wisconsin', value: 5726398 },
+          { name: 'Wyoming', value: 576412 },
+          { name: 'Puerto Rico', value: 3667084 },
         ],
       },
     ],
   }
   return (
-    <ReactEcharts
-      theme={theme}
-      option={getOption}
-      style={{ height: '100%', width: '100%' }}
-      className="react_for_echarts"
-    />
+    <div id="testid">
+      {/* <ReactEcharts
+        theme={theme}
+        option={getOption}
+        style={{ height: '100%', width: '100%' }}
+        className="react_for_echarts"
+      /> */}
+    </div>
   )
 }
 
