@@ -37,11 +37,11 @@
         state: directory
         mode: '0751'
 
-    - name: Create dhparam.pem (for SSL)
+    - name: Generate dhparams
       shell: |
         openssl dhparam -out /opt/ssl-keys/dhparam.pem 2048
-
-# TODO. self signed or letsencrypt - openssl req -x509 -nodes -days 358000 -newkey rsa:2048 -keyout /opt/ssl-keys/catalogue.saeon.dvn.key -out /opt/ssl-keys/catalogue.saeon.dvn.crt 
+      args:
+        creates: /opt/ssl-keys/dhparam.pem      
 
     - name: Install latest Git
       yum:
