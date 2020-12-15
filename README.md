@@ -2,7 +2,7 @@
 ![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
 # SAEON Catalogue software
-A suite of services that provide a platform for searching and exploring SAEON-curated datasets.
+A suite of services that provide a platform for searching and exploring SAEON-curated datasets. The tech stack is as listed below. This document shows how to setup a development environment for contributions, and also explains how to build and deploy the services.
 
 - Docker
 - MongoDB
@@ -137,7 +137,7 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
 1. Fork the repository, and clone the new fork to your local machine
-2. Follow the [instructions](/platform/ansible/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
+2. Follow the [instructions](/platform/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
 3. Run the command: `npm run configure-centos-7-server` from the root of the repository
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
