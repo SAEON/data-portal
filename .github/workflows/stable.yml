@@ -11,13 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: stable  
-
-      - name: Configure Nginx (server entry)
-        run: |
-          sudo /opt/copy-nginx-config.sh # cp ./platform/nginx/stable/nginx.conf /etc/nginx/
-          sudo /opt/copy-nginx-server-blocks.sh # cp ./platform/nginx/stable/server-blocks/* /etc/nginx/conf.d/
-          sudo /opt/reload-nginx.sh # service nginx reload
+          ref: stable
 
       - name: Deploy services
         run: >-

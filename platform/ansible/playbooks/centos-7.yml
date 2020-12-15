@@ -3,17 +3,21 @@
   hosts: catalogue
   become: yes
   vars_prompt:
-    - name: CATALOGUE_DEPLOYMENT_ENVironment
+    - name: CATALOGUE_DEPLOYMENT_ENV
       prompt: Which deployment environment is this for? [next, stable]
       default: "next"
       private: no
 
-    - name: MONGO_DB_USERNAMEname
+    - name: CATALOGUE_HOSTNAME
+      prompt: What hostname or IP address will this deployment be on?
+      private: no
+
+    - name: MONGO_DB_USERNAME
       prompt: Provide a MongoDB username
       default: ""
       private: no
 
-    - name: mongo_password
+    - name: MONGO_DB_PASSWORD
       prompt: Provide a MongoDB password
       default: ""
       private: yes      
@@ -76,7 +80,7 @@
         day: "*"
         month: "*"
         weekday: "*"
-        job: docker exec mongo sh -c 'exec mongodump --username {{ MONGO_DB_USERNAMEname }} --password {{ mongo_password }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1
+        job: docker exec mongo sh -c 'exec mongodump --username {{ MONGO_DB_USERNAME }} --password {{ MONGO_DB_PASSWORD }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1
     
     - name: Prune MongoDB backups
       cron:
@@ -100,6 +104,63 @@
         systemctl enable nginx
         systemctl start nginx
 
+    - name: Copy Nginx config
+      template:
+        src: templates/nginx/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes
+
+    - name: Copy Nginx config (API)
+      template:
+        src: templates/nginx/server-blocks/api.conf
+        dest: /etc/nginx/conf.d/api.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes
+        
+    - name: Copy Nginx config (Client)
+      template:
+        src: templates/nginx/server-blocks/client.conf
+        dest: /etc/nginx/conf.d/client.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes
+        
+    - name: Copy Nginx config (Elasticsearch)
+      template:
+        src: templates/nginx/server-blocks/elasticsearch.conf
+        dest: /etc/nginx/conf.d/elasticsearch.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes
+
+    - name: Copy Nginx config (Kibana)
+      template:
+        src: templates/nginx/server-blocks/kibana.conf
+        dest: /etc/nginx/conf.d/kibana.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes        
+
+    - name: Copy Nginx config (Proxy)
+      template:
+        src: templates/nginx/server-blocks/proxy.conf
+        dest: /etc/nginx/conf.d/proxy.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes
+
+    # TODO https://docs.ansible.com/ansible/2.7/modules/openssl_certificate_module.html
+    # TODO https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-ansible-on-ubuntu-18-04
+  
     - name: Install and configure firewalld
       shell: |
         yum -y install firewalld
@@ -115,7 +176,7 @@
     
     - name: copy-nginx-config.sh
       copy:
-        content: "cp ./platform/nginx/{{ CATALOGUE_DEPLOYMENT_ENVironment }}/nginx.conf /etc/nginx/"
+        content: "cp ./platform/nginx/{{ CATALOGUE_DEPLOYMENT_ENV }}/nginx.conf /etc/nginx/"
         dest: /opt/copy-nginx-config.sh
         owner: root
         group: root
@@ -123,7 +184,7 @@
 
     - name: copy-nginx-server-blocks.sh
       copy:
-        content: "cp ./platform/nginx/{{ CATALOGUE_DEPLOYMENT_ENVironment }}/server-blocks/* /etc/nginx/conf.d/" 
+        content: "cp ./platform/nginx/{{ CATALOGUE_DEPLOYMENT_ENV }}/server-blocks/* /etc/nginx/conf.d/" 
         dest: /opt/copy-nginx-server-blocks.sh
         owner: root
         group: root
@@ -143,36 +204,12 @@
         group: docker
         comment: Limited-privilege User for running Github Actions
 
-    - name: GitHub Actions-runner 1/4 (sudo svc)
+    - name: GitHub Actions-runner (sudo svc)
       lineinfile:
         path: /etc/sudoers
         state: present
         regexp: '^%runner ALL=NOPASSWD: /home/runner/svc.sh'
         line: 'runner ALL=NOPASSWD: /home/runner/svc.sh'
-        validate: /usr/sbin/visudo -cf %s
-
-    - name: GitHub Actions-runner 2/4 (copy Nginx config)
-      lineinfile:
-        path: /etc/sudoers
-        state: present
-        regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
-        line: 'runner ALL=NOPASSWD: /opt/copy-nginx-config.sh'
-        validate: /usr/sbin/visudo -cf %s
-
-    - name: GitHub Actions-runner 3/4 (copy Nginx blocks)
-      lineinfile:
-        path: /etc/sudoers
-        state: present
-        regexp: '^%runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
-        line: 'runner ALL=NOPASSWD: /opt/copy-nginx-server-blocks.sh'
-        validate: /usr/sbin/visudo -cf %s
-
-    - name: GitHub Actions-runner 4/4 (reload Nginx)
-      lineinfile:
-        path: /etc/sudoers
-        state: present
-        regexp: '^%runner ALL=NOPASSWD: /opt/reload-nginx.sh'
-        line: 'runner ALL=NOPASSWD: /opt/reload-nginx.sh'
         validate: /usr/sbin/visudo -cf %s
     
     - name: Ensure SELinux is disabled

@@ -138,8 +138,10 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
 1. Fork the repository, and clone the new fork to your local machine
-2. Follow the [instructions](/platform/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
-3. Run the command: `npm run configure-centos-7-server` from the root of the repository
+2. Follow the [instructions](/platform/README.md) to install and configure Ansible on your local machine
+3. Setup a CentOS 7 server with a user and SSH login without a password
+4. Run the command: `npm run configure-centos-7-server` from the root of the repository
+5. Configure [SSL]() appropriately
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
