@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
+import { context as databooksContext } from '../../../../pages/databook/context'
 import ReactEcharts from 'echarts-for-react'
+import { gql } from '@apollo/client'
 import theme from '../../../../lib/echarts-theme'
-import catalogueTheme from '../../../../theme'
+import { WithGqlQuery } from '../../../../hooks'
+import usaJson from './USA.json'
 
-require('echarts/map/js/china.js')
+var echarts = require('echarts')
 
 /*
 select 
@@ -12,157 +15,168 @@ ST_AsText(wkb_geometry)
 from "odp-925377aa-6914-41e8-8b92-f448ebe11f9c"
 limit 5
 */
-const MapFunc = () => {
-  const getOption = {
-    title: {
-      text: 'title',
-      subtext: 'subtitle',
-      left: 'center',
-    },
-    tooltip: {
-      trigger: 'item',
-    },
-    legend: {
-      orient: 'vertical',
-      left: 'left',
-      data: ['iphone3', 'iphone4', 'iphone5'],
-    },
-    visualMap: {
-      min: 0,
-      max: 2500,
-      left: 'left',
-      top: 'bottom',
-      text: ['visualMapText1', 'visualMapText2'],
-      calculable: true,
-    },
-    toolbox: {
-      show: true,
-      orient: 'vertical',
-      left: 'right',
-      top: 'center',
-      feature: {
-        dataView: { readOnly: false },
-        restore: {},
-        saveAsImage: {},
-      },
-    },
-    series: [
-      {
-        name: 'iphone3',
-        type: 'map',
-        mapType: 'china',
-        roam: false,
-        label: {
-          normal: {
-            show: true,
-          },
-          emphasis: {
-            show: true,
-          },
-        },
-        data: [
-          { name: '1', value: 20 },
-          { name: '2', value: 20 },
-          { name: '3', value: 20 },
-          { name: '4', value: 20 },
-          { name: '5', value: 20 },
-          { name: '6', value: 20 },
-          { name: '7', value: 20 },
-          { name: '8', value: 20 },
-          { name: '9', value: 20 },
-          { name: '10', value: 20 },
-          { name: '11', value: 20 },
-          { name: '12', value: 20 },
-          { name: '13', value: 20 },
-          { name: '14', value: 20 },
-          { name: '15', value: 20 },
-          { name: '16', value: 20 },
-          { name: '17', value: 20 },
-          { name: '18', value: 20 },
-          { name: '19', value: 20 },
-          { name: '20', value: 20 },
-          { name: '21', value: 20 },
-          { name: '22', value: 20 },
-          { name: '23', value: 20 },
-          { name: '24', value: 20 },
-          { name: '25', value: 20 },
-          { name: '26', value: 20 },
-          { name: '27', value: 20 },
-          { name: '28', value: 20 },
-          { name: '29', value: 20 },
-          { name: '30', value: 20 },
-          { name: '31', value: 20 },
-          { name: '32', value: 20 },
-          { name: '33', value: 20 },
-          { name: '34', value: 20 },
-        ],
-      },
-      {
-        name: 'iphone4',
-        type: 'map',
-        mapType: 'china',
-        label: {
-          normal: {
-            show: true,
-          },
-          emphasis: {
-            show: true,
-          },
-        },
-        data: [
-          { name: '35', value: 20 },
-          { name: '36', value: 20 },
-          { name: '37', value: 20 },
-          { name: '38', value: 20 },
-          { name: '39', value: 20 },
-          { name: '40', value: 20 },
-          { name: '41', value: 20 },
-          { name: '42', value: 20 },
-          { name: '43', value: 20 },
-          { name: '44', value: 20 },
-          { name: '45', value: 20 },
-          { name: '46', value: 20 },
-          { name: '47', value: 20 },
-          { name: '48', value: 20 },
-          { name: '49', value: 20 },
-          { name: '50', value: 20 },
-          { name: '51', value: 20 },
-          { name: '52', value: 20 },
-          { name: '53', value: 20 },
-        ],
-      },
-      {
-        name: 'iphone5',
-        type: 'map',
-        mapType: 'china',
-        label: {
-          normal: {
-            show: true,
-          },
-          emphasis: {
-            show: true,
-          },
-        },
-        data: [
-          { name: '54', value: 20 },
-          { name: '55', value: 20 },
-          { name: '56', value: 20 },
-          { name: '57', value: 20 },
-          { name: '58', value: 20 },
-          { name: '59', value: 20 },
-          { name: '60', value: 20 },
-        ],
-      },
-    ],
-  }
+
+//https://echarts.apache.org/en/option.html#geo
+//https://echarts.apache.org/en/tutorial.html#Use%20ECharts%20with%20webpack
+/*
+TODO
+-Create materialized view that stores wkb_geometry as ST_AsText or ST_Transform
+ALTERNATIVELY test if wkb_geometry format is acceptable to echarts-for-react
+-There is probably a way of registering SA maps outside of this file and simply 
+importing it like USA.json (e.g. simply storing the JSON server-side)
+*/
+export default props => {
+  console.log('props', props)
+  const { databook } = useContext(databooksContext)
+
+  const sql_continents = `select 
+  "CONTINENT" AS name,
+  "ogc_fid",
+  ST_AsGeoJSON("wkb_geometry") AS geojson
+  from "continents-simplified"
+  where "wkb_geometry" IS NOT NULL` //does not have antarctica
+
+  const sql_municipality_simplified = `select 
+  ogc_fid,
+  "MN_NAME" as name,
+  "DC_NAME",
+  ST_AsGeoJSON("wkb_geometry") as geojson
+  from "sa-municipality-boundaries-2011-simplified"
+  where wkb_geometry is not null `
+
+  const sql_provinces_simplified = `select 
+  ogc_fid,
+  "PROVINCE" as name,
+  ST_AsGeoJSON("wkb_geometry") as geojson
+  from "sa-provinces-2011-simplified"
+  where wkb_geometry is not null`
+
+  const sql_district_simplified = `select 
+  "DC_NAME" as name,
+  "MAP_TITLE",
+  "PR_NAME",
+  ST_AsGeoJSON("wkb_geometry")  AS geojson
+  from "sa-district-boundaries-2011-simplified"
+  where wkb_geometry is not null`
+
+  // super slow. definitely not performant enough to be usable
+  const sql_district = `select 
+  ogc_fid,
+  "PROVINCE",
+  "DISTRICT",
+  "DISTRICT_N" as name,
+  ST_AsGeoJSON("wkb_geometry") as geojson
+  from "sa-district-boundaries-2016"
+  where wkb_geometry is not null `
   return (
-    <ReactEcharts
-      theme={theme}
-      option={getOption}
-      style={{ height: '100%', width: '100%' }}
-      className="react_for_echarts"
-    />
+    <WithGqlQuery
+      QUERY={gql`
+        query($id: ID!, $sql: String!) {
+          databook(id: $id) {
+            id
+            execute(sql: $sql)
+          }
+        }
+      `}
+      variables={{ id: databook.doc._id, sql: sql_district_simplified }}
+    >
+      {({ error, loading, data }) => {
+        if (loading) {
+          return 'loading..'
+        }
+        if (error) {
+          console.log('error', error)
+          return 'error!'
+        }
+        const customMapJson = {
+          type: 'FeatureCollection',
+          features: data.databook.execute.map((entry, i) => {
+            return {
+              type: 'Feature',
+              id: i, //maybe replace with ogc_fid. much of a muchness
+              properties: { name: entry.name },
+              geometry: JSON.parse(entry.geojson),
+            }
+          }),
+        }
+
+        const fakeData = data.databook.execute.map((entry, i) => {
+          return { name: entry.name, value: i * 3 }
+        })
+        console.log('fakseData', fakeData)
+        echarts.registerMap('customMap', customMapJson)
+
+        return (
+          <div
+            id="testid"
+            style={{
+              position: 'absolute',
+              top: 40,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          >
+            <ReactEcharts
+              theme={theme}
+              option={{
+                title: {
+                  text: 'hot dog strength by simplified districts (2011)',
+                  subtext: 'Data from www.google.com',
+                  sublink: 'https://www.google.com',
+                  left: 'right',
+                },
+                tooltip: {
+                  trigger: 'item',
+                  showDelay: 0,
+                  transitionDuration: 0.2,
+                  formatter: '{b} : {c}',
+                },
+                visualMap: {
+                  left: 'right',
+                  inRange: {
+                    color: [
+                      '#313695',
+                      '#4575b4',
+                      '#74add1',
+                      '#abd9e9',
+                      '#e0f3f8',
+                      '#ffffbf',
+                      '#fee090',
+                      '#fdae61',
+                      '#f46d43',
+                      '#d73027',
+                      '#a50026',
+                    ],
+                  },
+                  text: ['High', 'Low'],
+                  // calculable: true
+                },
+                series: [
+                  {
+                    type: 'map',
+                    mapType: 'customMap',
+                    roam: true, //allows dragging of map
+                    label: {
+                      normal: {
+                        show: false,
+                      },
+                    },
+                    emphasis: {
+                      label: {
+                        show: true,
+                      },
+                    },
+                    data: fakeData,
+                  },
+                ],
+              }}
+              style={{ height: '100%', width: '100%' }}
+              className="react_for_echarts"
+            />
+          </div>
+        )
+      }}
+    </WithGqlQuery>
   )
 }
-
-export default MapFunc
