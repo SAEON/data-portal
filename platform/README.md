@@ -138,7 +138,7 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 ## <group name>
 ### => The name of the group in the inventories file (I haven't used groups in the inventory file)
 
-# Execute the Ansible playbook in this repository, with the example inventory
+# Execute the Ansible playbook in this repository, with the example inventory (from platform/ansible/)
 ansible-playbook playbooks/centos-7.yml -i inventories/centos-7
 ```
 

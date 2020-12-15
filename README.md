@@ -24,6 +24,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose](#docker-compose)
   - [Continuous deployment](#continuous-deployment)
+    - [Gotchas](#gotchas)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
@@ -142,6 +143,9 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
+
+### Gotchas
+One would think that configuring the server would include Nginx configuration. Currently Nginx is configured by GitHub actions. This is definitely not very intuitive and will change in the future. But for now the only way of completing the deployment is by setting up GitHub actions after setting up the server
 
 ## SAEON Data Portal endpoints
 
