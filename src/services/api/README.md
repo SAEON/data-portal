@@ -14,6 +14,8 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Start the service
+Some configuration is required (refer to "Environment configuration" below). After adding an appropriate .env file, control the service via NPM.
+
 ```sh
 # From the API service directory root
 npm install
@@ -26,11 +28,14 @@ npm start
 - http://localhost:3000/proxy (Address for proxying)
 
 # Environment configuration
-Default configuration values can be found in [src/config.js](src/config.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly
+Default configuration values can be found in [src/config.js](src/config.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly. At a minimum, to use the service for the first time you will need to include the following configuration
 
-```txt
-MONGO_DB_USERNAME=...
-MONGO_DB_PASSWORD=...
+```sh
+# src/services/api/.env
+CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
+CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE=enabled
+CATALOGUE_API_RESET_ELASTICSEARCH_INDEX=enabled
+CATALOGUE_API_ODP_CLIENT_SECRET=<some secret>
 ```
 
 # ODP integration configuration

@@ -69,6 +69,8 @@ npm run install-dependencies
 
 The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](https://github.com/SAEON/catalogue/tree/docs/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
+
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
 docker network create --driver bridge catalogue
@@ -113,6 +115,7 @@ npm run start:client
 From the root of the source code directory run the following shell command:
 
 ```sh
+CATALOGUE_API_ODP_CLIENT_SECRET="<secret>"
 MONGO_DB_USERNAME="<username>" \
 MONGO_DB_PASSWORD="<password>" \
 POSTGIS_USERNAME="<username>" \
