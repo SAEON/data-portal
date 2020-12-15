@@ -22,17 +22,12 @@ jobs:
       - name: Deploy services
         run: >-
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
-          MONGO_DB_ADDRESS="mongodb://mongo:27017"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
-          POSTGIS_HOST="postgis"
-          POSTGIS_PORT="5432"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-          ELASTICSEARCH_ADDRESS="http://elasticsearch:9200"
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           CATALOGUE_DEPLOYMENT_ENV="development"
-          CATALOGUE_PROXY_ADDRESS="http://proxy:8001"
           ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn"

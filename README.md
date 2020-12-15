@@ -13,9 +13,9 @@
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose](#docker-compose)
   - [Continuous deployment](#continuous-deployment)
-  - [SAEON deployment information](#saeon-deployment-information)
-    - [Development endpoints](#development-endpoints)
-    - [Production endpoints](#production-endpoints)
+  - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
+    - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
+    - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
 - [Documentation](#documentation)
   - [API](#api)
   - [Proxy](#proxy)
@@ -103,6 +103,8 @@ npm run start:client
 - http://localhost:8002 (for proxy logs)
 - http://localhost:9200
 - http://localhost:5601
+- postgis://localhost:5432
+- mongodb://localhost:27017
 
 # Deployment and installation
 
@@ -110,18 +112,13 @@ npm run start:client
 From the root of the source code directory run the following shell command:
 
 ```sh
-MONGO_DB_ADDRESS="mongodb://mongo:27017" \
 MONGO_DB_USERNAME="<username>" \
 MONGO_DB_PASSWORD="<password>" \
-POSTGIS_HOST="postgis" \
-POSTGIS_PORT="5432" \
 POSTGIS_USERNAME="<username>" \
 POSTGIS_PASSWORD="<password>" \
 CATALOGUE_API_RESET_POSTGIS="disabled"
-ELASTICSEARCH_ADDRESS="http://elasticsearch:9200" \
-CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD) \ # GIT is required
+CATALOGUE_LATEST_COMMIT= \
 CATALOGUE_DEPLOYMENT_ENV="development" \
-CATALOGUE_PROXY_ADDRESS="http://proxy:8001" \
 CATALOGUE_API_ADDRESS="http://localhost:3000" \
 CATALOGUE_API_ALLOWED_ORIGINS="http://localhost:3001,http://localhost:3000" \
 CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled" \
@@ -146,9 +143,9 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
 
-## SAEON deployment information
+## SAEON Data Portal endpoints
 
-### Development endpoints
+### catalogue.saeon.dvn (`next` branch)
 
 - http://catalogue.saeon.dvn
 - http://api.catalogue.saeon.dvn
@@ -157,8 +154,10 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - http://proxy.catalogue.saeon.dvn (for proxy logs)
 - http://elasticsearch.saeon.dvn
 - http://kibana.saeon.dvn
+- postgis://catalogue.saeon.dvn:5442
+- mongodb://catalogue.saeon.dvn:27017
 
-### Production endpoints
+### catalogue.saeon.ac.za (`stable` branch)
 
 - https://catalogue.saeon.ac.za
 - https://api.catalogue.saeon.ac.za
@@ -167,6 +166,8 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - http://proxy.catalogue.saeon.int (for proxy logs)
 - http://elasticsearch.saeon.int
 - http://kibana.saeon.int
+- postgis://catalogue.saeon.int:5442
+- mongodb://catalogue.saeon.int:27017
 
 # Documentation
 
