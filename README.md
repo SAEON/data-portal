@@ -40,7 +40,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 # Quick start
 
-Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependant services (Mongo, Elasticsearh, PostGIS, GDAL) are run via Docker containers
+Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (Mongo, Elasticsearch, PostGIS, GDAL) are run via Docker containers
 
 ## System requirements
 
@@ -67,7 +67,7 @@ npm run install-dependencies
 
 ## Local development
 
-The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
+The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
@@ -79,7 +79,7 @@ docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_US
 # Start a PostGIS server
 docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d -p 5432:5432  postgis/postgis:12-3.0
 
-# Start an Elasticsearch server (you can connect to elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
+# Start an Elasticsearch server (you can connect to Elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
 docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 
 # Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)

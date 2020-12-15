@@ -150,8 +150,8 @@ Using the ansible script in this repository will configure Nginx such that non-h
 
 Currently setting up SSL is a manual process. After running the Ansible playbook, the Nginx service will fail until the appropriate certificates are created. Two certificates are required, these are:
 
-- <hostname> (for example, catalogue.saeon.ac.za)
-- api.<hostname> (for example, api.catalogue.saeon.ac.za)
+- `<hostname>` (for example, catalogue.saeon.ac.za)
+- api.`<hostname>` (for example, api.catalogue.saeon.ac.za)
 
 ## Self-signed SSL
 You can generate appropriate self-signed SSL certs via the following commands:
@@ -162,7 +162,7 @@ sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/a
 sudo service nginx restart
 ```
 
-> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. api.<some IPv4 address> is not valid and will not work. Nginx server blocks route requests based on subdomain.
+> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. Nginx server blocks route requests based on subdomain.
 
 ## SAEON SSL certificates
 This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be differet to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/).
