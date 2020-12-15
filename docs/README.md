@@ -1,41 +1,35 @@
 # Source code
-A public release of the source code is available [HERE](https://github.com/SAEONData/catalogue)
-
-# Tech Stack
-
-- Docker
-- MongoDB
-- Elasticsearch
-- PostGIS
-- GraphQL API (Node.js)
-- Proxy API (Node.js / [anyproxy](http://anyproxy.io/))
-- Browser client ([React.js](https://reactjs.org/) / [Material UI](https://material-ui.com/))
+A public release of the latest stable source code is available [HERE](https://github.com/SAEONData/catalogue)
 
 # Deployment
 Deploy the software stack via the `docker-compose` CLI. From the root directory of the source code run the following shell command:
 
 ```sh
-MONGO_DB_ADDRESS="mongodb://mongo:27017" \
-MONGO_DB_USERNAME="<username>" \
-MONGO_DB_PASSWORD="<password>" \
-POSTGIS_HOST="postgis" \
-POSTGIS_PORT="5432" \
-POSTGIS_USERNAME="<username>" \
-POSTGIS_PASSWORD="<password>" \
-CATALOGUE_API_RESET_POSTGIS="disabled"
-ELASTICSEARCH_ADDRESS="http://elasticsearch:9200" \
-CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD) \ # GIT is required
+CATALOGUE_API_ODP_CLIENT_SECRET="<sensible value>" \
+MONGO_DB_USERNAME="<sensible value>" \
+MONGO_DB_PASSWORD="<sensible value>" \
+POSTGIS_USERNAME="<sensible value>" \
+POSTGIS_PASSWORD="<sensible value>" \
+CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD) \ # For logging purposes, but can be omitted
 CATALOGUE_DEPLOYMENT_ENV="development" \
-CATALOGUE_PROXY_ADDRESS="http://proxy:8001" \
-CATALOGUE_API_ADDRESS="http://localhost:3000" \
-CATALOGUE_API_ALLOWED_ORIGINS="http://localhost:3001,http://localhost:3000" \
-CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled" \
-CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled" \
-CATALOGUE_API_RESET_POSTGIS="disabled" \
-CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
-CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
-CATALOGUE_CLIENT_AUTH_REDIRECT_URL="http://localhost:3001/authenticated" \
-CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
-CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
-docker-compose --env-file docker-compose.env up -d --force-recreate --build
+ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue" \
+CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js \
+CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn" \
+CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn" \
+CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="disabled" \
+CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="disabled" \
+CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.dvn/graphql" \
+CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.dvn/graphql" \
+CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled \
+CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.dvn/authenticated" \
+CATALOGUE_CLIENT_AUTH_ID="saeon-data-portal" \
+CATALOGUE_CLIENT_AUTH_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/auth" \
+CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/sessions/logout" \
+CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token" \
+CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue" \
+CATALOGUE_CLIENT_AUTH=disabled \
+CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn" \
+CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info" \
+CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json" \
+/usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
