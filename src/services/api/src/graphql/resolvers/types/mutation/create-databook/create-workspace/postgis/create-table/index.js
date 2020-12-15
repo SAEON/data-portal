@@ -14,7 +14,7 @@ export default async (databook, { immutableResource, id }) => {
     /**
      * .nc (THREDDS) resources
      */
-    if (fileFormat.includes('nc')) {
+    if (fileFormat?.includes('nc')) {
       throw new Error('.nc files are not supported yet')
     }
 
@@ -28,7 +28,7 @@ export default async (databook, { immutableResource, id }) => {
     /**
      * Resource is an archived shapefile
      */
-    if (archive && archivedFormats.includes('shp')) {
+    if (archive && archivedFormats?.includes('shp')) {
       console.log(databook._id, 'shapefile archive')
       return await loadShapefileArchive(databook, { immutableResource, id })
     }
@@ -36,7 +36,7 @@ export default async (databook, { immutableResource, id }) => {
     /**
      * Resource is an archived ESRI .asc
      */
-    if (archive && archivedFormats.includes('asc')) {
+    if (archive && archivedFormats?.includes('asc')) {
       throw new Error('ASC files are not supported yet')
     }
 

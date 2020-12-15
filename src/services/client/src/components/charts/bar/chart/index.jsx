@@ -1,6 +1,5 @@
 import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
-import catalogueTheme from '../../../../theme'
 
 /*
 select "NAME", ogc_fid
@@ -37,14 +36,12 @@ export default ({ config, data, title, description }) => {
     >
       <ReactEcharts
         style={{ height: '400px' }} // component default styling is {height:'300px'} https://www.npmjs.com/package/echarts-for-react
-        // theme={theme}
+        theme={theme}
         option={{
           // https://echarts.apache.org/en/option.html#grid
           grid: {
             bottom: 100, //giving wiggle room for larger x axis labels
           },
-          //https://echarts.apache.org/en/option.html#color
-          color: catalogueTheme.palette.primary.main,
           // https://echarts.apache.org/en/option.html#title
           title: {
             text: title,
@@ -100,8 +97,6 @@ export default ({ config, data, title, description }) => {
                 distance: -10,
                 formatter: '{b}',
                 fontSize: 11,
-
-                color: catalogueTheme.palette.primary.main,
               },
               emphasis: {
                 itemStyle: {
