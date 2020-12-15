@@ -12,7 +12,6 @@ Configuring servers comes down to running a number of shell commands. Together, 
 - [Setup your Ansible inventory](#setup-your-ansible-inventory)
 - [Use Ansible!](#use-ansible)
 - [SSL](#ssl)
-  - [Self-signed SSL](#self-signed-ssl)
   - [SAEON SSL certificates](#saeon-ssl-certificates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -153,6 +152,7 @@ Currently setting up SSL is a manual process. After running the Ansible playbook
 - `<hostname>` (for example, catalogue.saeon.ac.za)
 - api.`<hostname>` (for example, api.catalogue.saeon.ac.za)
 
+> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. Nginx server blocks route requests based on subdomain.
 ## Self-signed SSL
 You can generate appropriate self-signed SSL certs via the following commands:
 
@@ -161,8 +161,5 @@ sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<
 sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/api.<hostname>.key -out  /opt/ssl-keys/api.<hostname>.cer
 sudo service nginx restart
 ```
-
-> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. Nginx server blocks route requests based on subdomain.
-
 ## SAEON SSL certificates
 This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be differet to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/).
