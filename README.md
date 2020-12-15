@@ -17,6 +17,12 @@
     - [Development endpoints](#development-endpoints)
     - [Production endpoints](#production-endpoints)
 - [Documentation](#documentation)
+  - [API](#api)
+  - [Proxy](#proxy)
+  - [Client](#client)
+  - [Server configuration](#server-configuration)
+  - [NPM packages](#npm-packages)
+  - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
