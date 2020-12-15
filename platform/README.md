@@ -152,7 +152,7 @@ Currently setting up SSL is a manual process. After running the Ansible playbook
 - `<hostname>` (for example, catalogue.saeon.ac.za)
 - api.`<hostname>` (for example, api.catalogue.saeon.ac.za)
 
-> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. Nginx server blocks route requests based on subdomain.
+> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. The Nginx server blocks that Ansible installs route requests based on subdomain. To install and test this software __without__ a domain, adjust the files that Ansible copied to `/etc/nginx/conf.f/*.conf` manually. (And provide sensible alternatives to the default service environment variables).
 ## Self-signed SSL
 You can generate appropriate self-signed SSL certs via the following commands:
 
