@@ -1,11 +1,22 @@
 ![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
 ![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
+# SAEON Catalogue software
+A suite of services that provide a platform for searching and exploring SAEON-curated datasets.
+
+- Docker
+- MongoDB
+- Elasticsearch & Kibana
+- Postgres + PostGIS
+- GDAL (Docker image)
+- GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
+- Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
+- Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Tech Stack](#tech-stack)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Local development](#local-development)
@@ -25,17 +36,6 @@
   - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Tech Stack
-
-- Docker
-- MongoDB
-- Elasticsearch & Kibana
-- Postgres + PostGIS
-- GDAL (Docker image)
-- GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
-- Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
-- Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 # Quick start
 
