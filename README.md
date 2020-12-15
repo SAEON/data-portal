@@ -171,14 +171,14 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 # Documentation
 
 ## API
-[src/services/api/README.md](src/services/api/README.md)
+[src/services/api/README.md](src/services/api/)
 ## Proxy
-[src/services/proxy/README.md](src/services/proxy/README.md)
+[src/services/proxy/README.md](src/services/proxy/)
 ## Client
-[src/services/client/README.md](src/services/client/README.md)
+[src/services/client/README.md](src/services/client/)
 ## Server configuration
-[platform/README.md](platform/README.md)
+[platform/README.md](platform/)
 ## NPM packages
-[src/packages/README.md](src/packages/README.md)
+[src/packages/README.md](src/packages/)
 ## Repository tools
-[src/tools/README.md](src/tools/README.md)
+[src/tools/README.md](src/tools/)
