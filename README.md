@@ -24,6 +24,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose](#docker-compose)
   - [Continuous deployment](#continuous-deployment)
+    - [Gotchas](#gotchas)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
@@ -39,7 +40,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 # Quick start
 
-Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependant services (Mongo, Elasticsearh, PostGIS, GDAL) are run via Docker containers
+Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (Mongo, Elasticsearch, PostGIS, GDAL) are run via Docker containers
 
 ## System requirements
 
@@ -66,7 +67,9 @@ npm run install-dependencies
 
 ## Local development
 
-The catalogue software comprises three services, and is dependant on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
+The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
+
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](https://github.com/SAEON/catalogue/tree/docs/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
 
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
@@ -78,7 +81,7 @@ docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_US
 # Start a PostGIS server
 docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d -p 5432:5432  postgis/postgis:12-3.0
 
-# Start an Elasticsearch server (you can connect to elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
+# Start an Elasticsearch server (you can connect to Elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
 docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 
 # Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)
@@ -112,6 +115,7 @@ npm run start:client
 From the root of the source code directory run the following shell command:
 
 ```sh
+CATALOGUE_API_ODP_CLIENT_SECRET="<secret>"
 MONGO_DB_USERNAME="<username>" \
 MONGO_DB_PASSWORD="<password>" \
 POSTGIS_USERNAME="<username>" \
@@ -137,11 +141,16 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
 1. Fork the repository, and clone the new fork to your local machine
-2. Follow the [instructions](/platform/README.md) to install and configure Ansible on your local machine, and setup a CentOS 7 server with a user and SSH login without a password
-3. Run the command: `npm run configure-centos-7-server` from the root of the repository
+2. Follow the [instructions](/platform/README.md) to install and configure Ansible on your local machine
+3. Setup a CentOS 7 server with a user and SSH login without a password
+4. Run the command: `npm run configure-centos-7-server` from the root of the repository
+5. Configure [SSL](platform/README.md#ssl) appropriately
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
+
+### Gotchas
+One would think that configuring the server would include Nginx configuration. Currently Nginx is configured by GitHub actions. This is definitely not very intuitive and will change in the future. But for now the only way of completing the deployment is by setting up GitHub actions after setting up the server
 
 ## SAEON Data Portal endpoints
 

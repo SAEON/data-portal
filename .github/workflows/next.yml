@@ -13,12 +13,6 @@ jobs:
         with:
           ref: next
 
-      - name: Configure Nginx (server entry)
-        run: |
-          sudo /opt/copy-nginx-config.sh # cp ./platform/nginx/next/nginx.conf /etc/nginx/
-          sudo /opt/copy-nginx-server-blocks.sh # cp ./platform/nginx/next/server-blocks/* /etc/nginx/conf.d/
-          sudo /opt/reload-nginx.sh # service nginx reload
-
       - name: Deploy services
         run: >-
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"

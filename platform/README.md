@@ -12,6 +12,7 @@ Configuring servers comes down to running a number of shell commands. Together, 
 - [Setup your Ansible inventory](#setup-your-ansible-inventory)
 - [Use Ansible!](#use-ansible)
 - [SSL](#ssl)
+  - [SAEON SSL certificates](#saeon-ssl-certificates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -138,16 +139,27 @@ ansible -m shell -a 'sudo ls -lsa' <group-name>
 ## <group name>
 ### => The name of the group in the inventories file (I haven't used groups in the inventory file)
 
-# Execute the Ansible playbook in this repository, with the example inventory
+# Execute the Ansible playbook in this repository, with the example inventory (from platform/ansible/)
 ansible-playbook playbooks/centos-7.yml -i inventories/centos-7
 ```
 
 # SSL
-Using the ansible script in this repository will configure Nginx such that non-https traffic is redirected to https for all public facing host addresses (the client and api). If you look at the [Nginx configuration files](nginx) you will see that server blocks for both the `next` and the `stable` branches specify paths to SSL certificates as well as the path to dhparam.pem, used for the [Diffie–Hellman key exchange
-](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange).
+Using the ansible script in this repository will configure Nginx such that non-https traffic is redirected to https for all public facing host addresses (the client and api). If you look at the [Nginx configuration files](playbooks/templates/nginx) you will see that the Nginx server blocks specify paths to SSL certificates as well as the path to dhparam.pem, used for the [Diffie–Hellman key exchange
+](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange). The `dhparam.pem` file is created during Ansible configuration, however, the SSL certificates are NOT!
 
-The `dhparam.pem` file is created during Ansible configuration, however, the SSL certificates are NOT! (TODO - actually the dhparam file is NOT currently done automatically)
+Currently setting up SSL is a manual process. After running the Ansible playbook, the Nginx service will fail until the appropriate certificates are created. Two certificates are required, these are:
 
-It's only possible to automate SSL setup if the certificate authority allows for this (such as Let's Encrypt does). Currently setting up SSL is a manual process. And specifically with regards to setting up our SSL it's worth noting that Nginx requires SSL certificates in a specific order that seems to be differet to order in which they are generated at SAEON.
+- `<hostname>` (for example, catalogue.saeon.ac.za)
+- api.`<hostname>` (for example, api.catalogue.saeon.ac.za)
 
-Stay sane. Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/).
+> NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. The Nginx server blocks that Ansible installs route requests based on subdomain. To install and test this software __without__ a domain, adjust the files that Ansible copied to `/etc/nginx/conf.f/*.conf` manually. (And provide sensible alternatives to the default service environment variables).
+## Self-signed SSL
+You can generate appropriate self-signed SSL certs via the following commands:
+
+```sh
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<hostname>.key -out  /opt/ssl-keys/<hostname>.cer
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/api.<hostname>.key -out  /opt/ssl-keys/api.<hostname>.cer
+sudo service nginx restart
+```
+## SAEON SSL certificates
+This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be differet to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/).
