@@ -111,7 +111,6 @@ const Table = ({ tableName, fields, tableSchema }) => {
                         [classes.inputFieldActive]: editActive,
                       })}
                       onFocus={e => {
-                        console.log('editActive', editActive)
                         if (editActive) e.currentTarget.select() //STEVEN TODO: bug: editActive being seen as false always
                       }}
                       onInput={e => {

@@ -4,15 +4,21 @@ import echarts from 'echarts'
 import { nanoid } from 'nanoid'
 
 export default ({ config, data, title, description }) => {
+  const geoNamesField = config['series-geo-names']
+  const geoValuesField = config['series-geo-values']
+  const geoJsonField = config['series-geo-json']
+
+  console.log('config', config)
   const nano = nanoid()
   const customMapJson = {
     type: 'FeatureCollection',
     features: data.map((row, i) => {
+      console.log('row', row)
       return {
         type: 'Feature',
         id: i,
-        properties: { name: row.name }, // TODO row.name => this is explicit column name usage. should come from config object instead
-        geometry: JSON.parse(row.geojson),
+        properties: { name: row[geoNamesField] }, // TODO row.name => this is explicit column name usage. should come from config object instead
+        geometry: JSON.parse(row[geoJsonField]),
       }
     }),
   }
@@ -20,10 +26,10 @@ export default ({ config, data, title, description }) => {
   // TODO, if echarts DOESN"T already have customeMap, register it
   echarts.registerMap(nano, customMapJson)
 
-  const fakeData = data.map((row, i) => {
-    return { name: row.name, value: i * 3 }
+  const chartData = data.map((row, i) => {
+    return { name: row[geoNamesField], value: row[geoValuesField] }
   })
-
+  console.log('data', data)
   return (
     <div
       id="testid"
@@ -50,7 +56,6 @@ export default ({ config, data, title, description }) => {
           },
           visualMap: {
             left: 'right',
-            inRange: {},
             text: ['High', 'Low'],
             // calculable: true
           },
@@ -69,7 +74,7 @@ export default ({ config, data, title, description }) => {
                   show: true,
                 },
               },
-              data: fakeData,
+              data: chartData,
             },
           ],
         }}
