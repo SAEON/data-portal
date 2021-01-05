@@ -1,4 +1,4 @@
-import { useEffect, createRef, useRef } from 'react'
+import { useEffect, createRef, useRef, useMemo } from 'react'
 import 'gridstack/dist/gridstack.min.css'
 import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
@@ -28,17 +28,6 @@ function createElement(str) {
 
 const gridCache = {}
 
-const getChartIds = layout =>
-  layout
-    ?.map(({ content }) => {
-      if (content.type.toUpperCase() === 'CHART') {
-        return content.id
-      } else {
-        return undefined
-      }
-    })
-    .filter(_ => _) || []
-
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
   const { id: dashboardId, layout = [] } = dashboard
@@ -49,10 +38,22 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
   gridCache[dashboardId] = layout
 
-  const charts = getChartIds(layout)
+  const itemIds = useMemo(() => {
+    return (
+      layout
+        ?.map(({ content }) => {
+          if (content.type.toUpperCase() === 'CHART') {
+            return content.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(_ => _) || []
+    )
+  }, [layout])
 
-  if (Object.keys(refs.current).length !== charts.length) {
-    charts.forEach(id => {
+  if (Object.keys(refs.current).length !== itemIds.length) {
+    itemIds.forEach(id => {
       refs.current[id] = refs.current[id] || createRef()
     })
   }
@@ -69,8 +70,6 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     })
 
   useEffect(() => {
-    const charts = getChartIds(layout)
-
     gridStackRef.current =
       gridStackRef.current ||
       GridStack.init(
@@ -89,10 +88,15 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
     grid.removeAll(false)
     grid.batchUpdate()
-    charts.forEach(id => {
-      grid.makeWidget(refs.current[id].current)
+    itemIds.forEach(id => {
+      if (refs.current[id].current.gridstackNode) {
+        console.log('ahah')
+      } else {
+        grid.makeWidget(refs.current[id].current)
+      }
     })
     grid.commit()
+
     updateGridState(saveGrid())
 
     const onChange = () => updateGridState(saveGrid())
@@ -102,7 +106,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [dashboardId, layout])
+  }, [dashboardId, layout, itemIds])
 
   return (
     <>
@@ -125,7 +129,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       </Toolbar>
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
-          {charts?.map(id => {
+          {itemIds?.map(id => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
             )

@@ -73,7 +73,6 @@ export default ({ items }) => {
       <div ref={gridRef} className={clsx('grid-stack', classes.grid)}>
         {itemIds.map(id => {
           const hydratedState = items.find(({ content }) => content.id === id)
-          console.log(hydratedState)
           const { type } = hydratedState.content
           const Component = components[type.toUpperCase().trim()]
 
