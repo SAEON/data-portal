@@ -2,7 +2,7 @@ import { useEffect, createRef, useRef } from 'react'
 import 'gridstack/dist/gridstack.min.css'
 import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
-import { Box, Toolbar, Typography } from '@material-ui/core'
+import { Toolbar, Typography } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
@@ -44,6 +44,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const { id: dashboardId, layout = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
+  const gridElRef = useRef()
   const refs = useRef({})
 
   gridCache[dashboardId] = layout
@@ -72,14 +73,17 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
     gridStackRef.current =
       gridStackRef.current ||
-      GridStack.init({
-        disableOneColumnMode: true,
-        alwaysShowResizeHandle: false,
-        animate: true,
-        float: false,
-        margin: 8,
-        cellHeight: '36px',
-      })
+      GridStack.init(
+        {
+          disableOneColumnMode: true,
+          alwaysShowResizeHandle: false,
+          animate: true,
+          float: false,
+          margin: 8,
+          cellHeight: '36px',
+        },
+        gridElRef.current
+      )
 
     const grid = gridStackRef.current
 
@@ -120,7 +124,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         />
       </Toolbar>
       <div className={clsx(classes.gridContainer)}>
-        <div className={clsx('grid-stack', classes.grid)}>
+        <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
           {charts?.map(id => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
@@ -132,7 +136,9 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
                 key={id}
                 className={clsx('grid-stack-item', classes.gridItem)}
                 {...Object.fromEntries(
-                  Object.entries(hydratedState || {}).map(([key, value]) => [`gs-${key}`, value])
+                  Object.entries(hydratedState || {})
+                    .filter(([key]) => key !== 'content')
+                    .map(([key, value]) => [`gs-${key}`, value])
                 )}
               >
                 <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>

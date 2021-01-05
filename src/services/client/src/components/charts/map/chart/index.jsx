@@ -5,16 +5,26 @@ import { nanoid } from 'nanoid'
 
 export default ({ config, data, title, description }) => {
   const nano = nanoid()
+
   const customMapJson = {
     type: 'FeatureCollection',
-    features: data.map((row, i) => {
-      return {
-        type: 'Feature',
-        id: i,
-        properties: { name: row.name }, // TODO row.name => this is explicit column name usage. should come from config object instead
-        geometry: JSON.parse(row.geojson),
-      }
-    }),
+    features: data
+      .map((row, i) => {
+        if (!row.geojson) {
+          return null
+        }
+        return {
+          type: 'Feature',
+          id: i,
+          properties: { name: row.name }, // TODO row.name => this is explicit column name usage. should come from config object instead
+          geometry: JSON.parse(row.geojson),
+        }
+      })
+      .filter(_ => _),
+  }
+
+  if (!customMapJson.features.length) {
+    return <div>Cannot render map. Are you sure it&apos;s configured properly?</div>
   }
 
   // TODO, if echarts DOESN"T already have customeMap, register it
@@ -25,56 +35,45 @@ export default ({ config, data, title, description }) => {
   })
 
   return (
-    <div
-      id="testid"
-      style={{
-        position: 'absolute',
-        top: 40,
-        bottom: 0,
-        left: 0,
-        right: 0,
-      }}
-    >
-      <ReactEcharts
-        theme={theme}
-        option={{
-          title: {
-            text: title,
-            subtext: description,
-          },
-          tooltip: {
-            trigger: 'item',
-            showDelay: 0,
-            transitionDuration: 0.2,
-            formatter: '{b} : {c}',
-          },
-          visualMap: {
-            left: 'right',
-            inRange: {},
-            text: ['High', 'Low'],
-            // calculable: true
-          },
-          series: [
-            {
-              type: 'map',
-              mapType: nano,
-              roam: true, //allows dragging of map
-              label: {
-                normal: {
-                  show: false,
-                },
+    <ReactEcharts
+      theme={theme}
+      option={{
+        title: {
+          text: title,
+          subtext: description,
+        },
+        tooltip: {
+          trigger: 'item',
+          showDelay: 0,
+          transitionDuration: 0.2,
+          formatter: '{b} : {c}',
+        },
+        visualMap: {
+          left: 'right',
+          inRange: {},
+          text: ['High', 'Low'],
+          // calculable: true
+        },
+        series: [
+          {
+            type: 'map',
+            mapType: nano,
+            roam: true, //allows dragging of map
+            label: {
+              normal: {
+                show: false,
               },
-              emphasis: {
-                label: {
-                  show: true,
-                },
-              },
-              data: fakeData,
             },
-          ],
-        }}
-        style={{ height: '100%', width: '100%' }}
-      />
-    </div>
+            emphasis: {
+              label: {
+                show: true,
+              },
+            },
+            data: fakeData,
+          },
+        ],
+      }}
+      style={{ height: '100%', width: '100%' }}
+    />
   )
 }
