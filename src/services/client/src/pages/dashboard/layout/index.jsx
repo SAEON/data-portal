@@ -60,7 +60,7 @@ export default ({ items }) => {
     grid.batchUpdate()
     itemIds.forEach(id => {
       if (refs.current[id].current.gridstackNode) {
-        // TODO - ?
+        // TODO - ? should the node be updated?
       } else {
         grid.makeWidget(refs.current[id].current)
       }

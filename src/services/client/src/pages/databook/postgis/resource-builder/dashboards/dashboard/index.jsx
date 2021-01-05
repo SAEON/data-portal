@@ -89,8 +89,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     grid.removeAll(false)
     grid.batchUpdate()
     itemIds.forEach(id => {
-      if (refs.current[id].current.gridstackNode) {
-        console.log('ahah')
+      if (refs.current[id].current?.gridstackNode) {
+        // TODO - ? should the node be updated?
       } else {
         grid.makeWidget(refs.current[id].current)
       }
