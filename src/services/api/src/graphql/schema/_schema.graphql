@@ -78,6 +78,19 @@ type Mutation {
     sql: String!
   ): Chart!
   deleteChart(id: ID!): Boolean!
+  # Add a filter to dashboard, and get the new count of a dashboard's filters
+  addFilterToDashboard(filterId: ID!, dashboardId: ID!): Filter!
+  removeFilterFromDashboard(filterId: ID!, dashboardId: ID!): Filter!
+  createFilter(
+    name: String
+    filteredColumn: String
+    databookId: ID!
+    data: JSON!
+    type: FilterType!
+    config: JSON!
+    sql: String!
+  ): Filter!
+  deleteFilter(id: ID!): Boolean!
 }
 
 type BrowserEvent implements Node {

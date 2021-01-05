@@ -1,0 +1,12 @@
+enum FilterType {
+  equals
+}
+
+type Filter {
+  id: ID!
+  name: String
+  columnFiltered: String
+  type: FilterType!
+  config: JSON!
+  data: JSON!
+}
