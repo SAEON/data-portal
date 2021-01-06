@@ -1,6 +1,6 @@
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks'
-import RenderChart from '../../components/chart'
+import RenderChart from '../../components/chartController'
 import useStyles from './style'
 import clsx from 'clsx'
 

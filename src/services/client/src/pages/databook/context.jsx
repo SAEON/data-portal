@@ -10,13 +10,14 @@ export default ({ children, databook, schema }) => {
 )
 
 select * from cte limit 20`)
-
+  const filters = []
   return (
     <context.Provider
       value={{
         sql,
         setSql,
         databook,
+        filters,
         schema,
       }}
     >

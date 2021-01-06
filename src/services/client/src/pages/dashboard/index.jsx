@@ -102,7 +102,6 @@ export default ({ id }) => {
                   <Toolbar variant="dense">
                     {/*** */}
                     {/* Filters go here */}
-                    {/* <div id="filter-buttons" className={classes.wrapper}> */}
                     <Button
                       onClick={handleClick}
                       className={clsx(classes.button)}
@@ -139,50 +138,6 @@ export default ({ id }) => {
                         ))}
                       </Select>
                     </FormControl>
-                    {/* </div> */}
-                    {/* Menu displayed after filter button onCLick */}
-                    {/* <Menu
-                      id="simple-menu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    > */}
-                    {/* Filter choices */}
-                    {/* <FormGroup row={false}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={false}
-                              // onChange={}
-                              name="A"
-                            />
-                          }
-                          label="2018"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={false}
-                              // onChange={}
-                              name="B"
-                            />
-                          }
-                          label="2019"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={false}
-                              // onChange={}
-                              name="C"
-                            />
-                          }
-                          label="2020"
-                        />
-                      </FormGroup> */}
-                    {/* </Menu> */}
-                    {/*** */}
                   </Toolbar>
                 </div>
               </Grid>

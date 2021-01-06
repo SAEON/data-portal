@@ -1,5 +1,5 @@
-import Chart from '../../../components/chart'
+import ChartController from '../../../components/chartController'
 
 export default ({ id }) => {
-  return <Chart id={id} />
+  return <ChartController id={id} />
 }

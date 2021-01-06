@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { WithGqlQuery } from '../../hooks'
-import Loading from '../../components/loading'
+import Loading from '../loading'
 import { gql } from '@apollo/client'
-import chartDefinitions from '../../components/charts'
+import chartDefinitions from '../charts'
 import { Fade } from '@material-ui/core'
 
-export default ({ id, style = {} }) => {
+export default ({ id, style = {}, filters }) => {
   return (
     <WithGqlQuery
       QUERY={gql`
@@ -31,10 +31,16 @@ export default ({ id, style = {} }) => {
           throw error
         }
 
-        const chart = data.charts.find(({ id: _id }) => _id === id)
-        const chartDefinition = chartDefinitions.find(({ type }) => type === chart.type)
+        const chartDoc = data.charts.find(({ id: _id }) => _id === id)
+        const chartDefinition = chartDefinitions.find(({ type }) => type === chartDoc.type)
         const Chart = lazy(() => chartDefinition.getComponent())
-
+        //foreach filter in filers:
+        //filter chart data
+        /**<Chart {Object.assign({}, chartDoc, {chartDoc.data.filter(datum => {
+          then apply each filter. Try to loop over data only once
+          It's okay to loop over the filters multiple times since there will be few of them 
+          return true | false
+        })})} /> */
         return (
           <Fade in={Boolean(data)} key={`chart-${id}`}>
             <span>
@@ -45,7 +51,7 @@ export default ({ id, style = {} }) => {
                     style
                   )}
                 >
-                  <Chart {...chart} />
+                  <Chart {...chartDoc} />
                 </div>
               </Suspense>
             </span>

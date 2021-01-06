@@ -5,6 +5,7 @@ type Databook {
   schema: PostgisDatabookSchema!
   dashboards: [Dashboard!]
   charts: [Chart!]
+  filters: [Filter!]
 }
 
 type Dashboard {

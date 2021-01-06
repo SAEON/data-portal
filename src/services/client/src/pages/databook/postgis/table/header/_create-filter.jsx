@@ -16,7 +16,6 @@ import {
 import { useApolloClient, gql } from '@apollo/client'
 import { useTheme } from '@material-ui/core/styles'
 import { context as databookContext } from '../../../context'
-import filterDefinitions from '../../../../../components/filters'
 import Autocomplete from '../../../../../components/autocomplete'
 import QuickForm from '@saeon/quick-form'
 
@@ -34,7 +33,6 @@ const FILTERS_QUERY = gql`
 const FIELD_SPACING = 32
 
 export default ({ data }) => {
-  console.log('filterDefinitions', filterDefinitions)
   const theme = useTheme()
   const client = useApolloClient()
   const { databook, sql } = useContext(databookContext)
@@ -42,7 +40,6 @@ export default ({ data }) => {
 
   const [open, setOpen] = useState(false)
   const [error, setError] = useState(false)
-  const [filterType, setFilterType] = useState('')
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
   const [formValues, setFormValues] = useState({})
@@ -86,39 +83,7 @@ export default ({ data }) => {
             selectedOptions={columnFiltered}
           />
 
-          {/* FILTER TYPE */}
-          <DialogContentText>Select filter type</DialogContentText>
-          <Autocomplete
-            id="select-filter-type"
-            options={filterDefinitions.map(({ type }) => type)}
-            setOption={val => setFilterType(val)}
-            selectedOptions={filterType}
-          />
-
           <div style={{ marginBottom: FIELD_SPACING }} />
-
-          {/* FILTER CONFIG */}
-          {/* WILL LIKELY THROW BUGS. TO BE COMMENTED OUT IN MEANTIME */}
-          {filterType &&
-            filterDefinitions
-              .find(({ type }) => type === filterType)
-              .config.map(({ id, Component, description }) => {
-                return (
-                  <div key={id} style={{ marginBottom: FIELD_SPACING }}>
-                    <DialogContentText>{description}</DialogContentText>
-                    <Component
-                      value={formValues[id]}
-                      setValue={val =>
-                        setFormValues({
-                          ...formValues,
-                          [id]: val,
-                        })
-                      }
-                      data={data}
-                    />
-                  </div>
-                )
-              })}
         </DialogContent>
 
         <DialogActions>
@@ -138,7 +103,7 @@ export default ({ data }) => {
                     update({ loading: true })
 
                     const saveFilter =
-                      filterDefinitions.find(({ type }) => type === filterType)?.saveFilter ||
+                      filterDefinitions.find(({ name }) => name === name)?.saveFilter ||
                       function (data) {
                         return data
                       }
@@ -154,13 +119,11 @@ export default ({ data }) => {
                             $data: JSON!
                             $config: JSON!
                             $sql: String!
-                            $type: FilterType!
                           ) {
                             createFilter(
                               databookId: $databookId
                               name: $name
                               columnFiltered: $columnFiltered
-                              type: $type
                               data: $data
                               config: $config
                               sql: $sql
@@ -172,7 +135,6 @@ export default ({ data }) => {
                         variables: {
                           ...Object.assign(
                             {
-                              type: filterType,
                               name: filterName,
                               columnFiltered: columnFiltered,
                               databookId,

@@ -86,7 +86,6 @@ type Mutation {
     filteredColumn: String
     databookId: ID!
     data: JSON!
-    type: FilterType!
     config: JSON!
     sql: String!
   ): Filter!
