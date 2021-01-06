@@ -5,7 +5,8 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const fs = require('fs')
 const packageJson = require('./package.json')
-// const { GenerateSW } = require('workbox-webpack-plugin')
+// eslint-disable-next-line
+const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
 const {
@@ -17,6 +18,7 @@ const {
 
 module.exports = () => {
   const output = 'dist'
+
   return {
     mode,
     entry: {
@@ -27,9 +29,10 @@ module.exports = () => {
       chunkFilename: '[name].[contenthash].js',
       path: path.join(__dirname, output),
       publicPath: '/',
+      assetModuleFilename: 'assets/[hash][ext][query]',
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".js", ".jsx"],
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
       alias: {
         // OpenLayers
         'ol/control': path.resolve(__dirname, './node_modules/ol/control'),
@@ -73,12 +76,6 @@ module.exports = () => {
           __dirname,
           mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react/src'
         ),
-        // '@saeon/catalogue-search': path.resolve(
-        //   __dirname,
-        //   mode === 'production'
-        //     ? './node_modules/@saeon/catalogue-search/dist/catalogueReact'
-        //     : '../../packages/catalogue-search/src'
-        // ),
         '@saeon/logger': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/src'
@@ -86,31 +83,11 @@ module.exports = () => {
       },
     },
     optimization: {
-      runtimeChunk: 'single',
-      splitChunks: {
-        minSize: 0,
-        maxInitialRequests: Infinity,
-        automaticNameDelimiter: '~',
-        cacheGroups: {
-          vendor: {
-            chunks: 'all',
-            minChunks: 1,
-            reuseExistingChunk: true,
-            test: /[\\/]node_modules[\\/](react|react-dom|@material-ui|ol|@apollo|react-beautiful-dnd|@mapbox|core-js|graphql|webcrypto-shim)/,
-            name: module =>
-              `npm.${module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]}`,
-          },
-          saeon: {
-            chunks: 'all',
-            minChunks: 2,
-            reuseExistingChunk: true,
-          },
-        },
-      },
+      splitChunks: { chunks: 'all' },
     },
     module: {
       rules: [
-        { test: /\.m?js$/, type: "javascript/auto" },
+        { test: /\.m?js$/, type: 'javascript/auto' },
         {
           test: /\.(js|jsx)$/,
           exclude: mode === 'production' ? undefined : /node_modules/,
@@ -153,11 +130,7 @@ module.exports = () => {
         },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
-          use: [
-            {
-              loader: 'file-loader',
-            },
-          ],
+          type: 'asset/resource',
         },
         {
           test: /\.svg$/,
@@ -165,17 +138,7 @@ module.exports = () => {
         },
         {
           test: /\.(png|jpg|gif)$/,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                fallback: 'file-loader',
-                name: '[name][md5:hash].[ext]',
-                outputPath: 'assets/',
-                publicPath: '/assets/',
-              },
-            },
-          ],
+          type: 'asset/inline',
         },
       ],
     },
