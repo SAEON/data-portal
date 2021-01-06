@@ -61,7 +61,7 @@
     "npm-check-updates": "^10.2.5",
     "postcss": "^8.2.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.35.1",
+    "rollup": "^2.36.0",
     "rollup-plugin-postcss": "^4.0.0"
   }
 }
