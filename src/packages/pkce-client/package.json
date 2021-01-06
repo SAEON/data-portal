@@ -35,7 +35,11 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/pkce-client",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "url": "^0.11.0"
+  },
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "npm-check-updates": "^10.2.5",
