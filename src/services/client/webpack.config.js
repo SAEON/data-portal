@@ -20,6 +20,7 @@ module.exports = () => {
   const output = 'dist'
 
   return {
+    devtool: 'inline-source-map',
     mode,
     entry: {
       index: './src/index.jsx',
@@ -87,7 +88,6 @@ module.exports = () => {
     },
     module: {
       rules: [
-        { test: /\.m?js$/, type: 'javascript/auto' },
         {
           test: /\.(js|jsx)$/,
           exclude: mode === 'production' ? undefined : /node_modules/,
