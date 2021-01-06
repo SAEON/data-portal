@@ -1,6 +1,6 @@
 {
   "name": "@saeon/logger",
-  "version": "6.1.2",
+  "version": "6.2.0",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
   "main": "src/index.js",
@@ -58,6 +58,6 @@
     "npm-check-updates": "^10.2.5",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.35.1"
+    "rollup": "^2.36.0"
   }
 }

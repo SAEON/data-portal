@@ -1,9 +1,9 @@
-import parseQueryString from './lib/parse-query-string'
-import buildAuthenticationUrl from './lib/build-authentication-url'
-import { setToken } from './token-manager'
+import parseQueryString from './lib/parse-query-string.js'
+import buildAuthenticationUrl from './lib/build-authentication-url.js'
+import { setToken } from './token-manager.js'
 import { parse } from 'url'
-import createKey from './lib/create-key'
-import { setState, getState, clearState, CACHE_KEYS } from './state-manager'
+import createKey from './lib/create-key.js'
+import { setState, getState, clearState, CACHE_KEYS } from './state-manager.js'
 
 /**
  * TODO

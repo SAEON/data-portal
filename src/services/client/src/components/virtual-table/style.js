@@ -25,6 +25,7 @@ export default makeStyles(theme => ({
     display: 'relative',
     backgroundColor: theme.palette.common.white,
     borderBottom: `1px solid ${theme.palette.grey[100]}`,
+    overflow: 'hidden',
   },
   tableRowHovered: {
     backgroundColor: theme.palette.grey[100],

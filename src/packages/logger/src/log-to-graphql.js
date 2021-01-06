@@ -1,4 +1,4 @@
-import DataLoader from './_data-loader'
+import DataLoader from './_data-loader.js'
 import { execute, toPromise } from '@apollo/client'
 
 const createArrayFromLength = l => {

@@ -1,8 +1,8 @@
-import { useEffect, createRef, useRef } from 'react'
+import { useEffect, createRef, useRef, useMemo } from 'react'
 import 'gridstack/dist/gridstack.min.css'
 import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
-import { Box, Toolbar, Typography } from '@material-ui/core'
+import { Toolbar, Typography } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
@@ -28,30 +28,32 @@ function createElement(str) {
 
 const gridCache = {}
 
-const getChartIds = layout =>
-  layout
-    ?.map(({ content }) => {
-      if (content.type.toUpperCase() === 'CHART') {
-        return content.id
-      } else {
-        return undefined
-      }
-    })
-    .filter(_ => _) || []
-
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
   const { id: dashboardId, layout = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
+  const gridElRef = useRef()
   const refs = useRef({})
 
   gridCache[dashboardId] = layout
 
-  const charts = getChartIds(layout)
+  const itemIds = useMemo(() => {
+    return (
+      layout
+        ?.map(({ content }) => {
+          if (content.type.toUpperCase() === 'CHART') {
+            return content.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(_ => _) || []
+    )
+  }, [layout])
 
-  if (Object.keys(refs.current).length !== charts.length) {
-    charts.forEach(id => {
+  if (Object.keys(refs.current).length !== itemIds.length) {
+    itemIds.forEach(id => {
       refs.current[id] = refs.current[id] || createRef()
     })
   }
@@ -68,27 +70,33 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     })
 
   useEffect(() => {
-    const charts = getChartIds(layout)
-
     gridStackRef.current =
       gridStackRef.current ||
-      GridStack.init({
-        disableOneColumnMode: true,
-        alwaysShowResizeHandle: false,
-        animate: true,
-        float: false,
-        margin: 8,
-        cellHeight: '36px',
-      })
+      GridStack.init(
+        {
+          disableOneColumnMode: true,
+          alwaysShowResizeHandle: false,
+          animate: true,
+          float: false,
+          margin: 8,
+          cellHeight: '36px',
+        },
+        gridElRef.current
+      )
 
     const grid = gridStackRef.current
 
     grid.removeAll(false)
     grid.batchUpdate()
-    charts.forEach(id => {
-      grid.makeWidget(refs.current[id].current)
+    itemIds.forEach(id => {
+      if (refs.current[id].current?.gridstackNode) {
+        // TODO - ? should the node be updated?
+      } else {
+        grid.makeWidget(refs.current[id].current)
+      }
     })
     grid.commit()
+
     updateGridState(saveGrid())
 
     const onChange = () => updateGridState(saveGrid())
@@ -98,7 +106,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [dashboardId, layout])
+  }, [dashboardId, layout, itemIds])
 
   return (
     <>
@@ -120,8 +128,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         />
       </Toolbar>
       <div className={clsx(classes.gridContainer)}>
-        <div className={clsx('grid-stack', classes.grid)}>
-          {charts?.map(id => {
+        <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
+          {itemIds?.map(id => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
             )
@@ -132,7 +140,9 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
                 key={id}
                 className={clsx('grid-stack-item', classes.gridItem)}
                 {...Object.fromEntries(
-                  Object.entries(hydratedState || {}).map(([key, value]) => [`gs-${key}`, value])
+                  Object.entries(hydratedState || {})
+                    .filter(([key]) => key !== 'content')
+                    .map(([key, value]) => [`gs-${key}`, value])
                 )}
               >
                 <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>

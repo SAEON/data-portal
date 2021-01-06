@@ -24,14 +24,11 @@ import {
   ListItemText,
 } from '@material-ui/core'
 import { ExpandLess } from '@material-ui/icons'
+import Layout from './layout'
 import useStyles from './style'
 import clsx from 'clsx'
 
 const POLLING_INTERVAL = 500
-
-const components = {
-  CHART: Chart,
-}
 
 export default ({ id }) => {
   const classes = useStyles()
@@ -50,6 +47,7 @@ export default ({ id }) => {
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
     params: false,
   })
+
   return (
     <WithGqlQuery
       QUERY={gql`
@@ -141,41 +139,9 @@ export default ({ id }) => {
                   </Toolbar>
                 </div>
               </Grid>
-              {[...layout]
-                .sort(({ y: aY, x: aX }, { y: bY, x: bX }) => {
-                  /**
-                   * Items on the same row
-                   * Sort by (x)
-                   */
-                  if (aY == bY) {
-                    // Items are on the same level
-                    if (bX > aX) return -1
-                    if (aX > bX) return 1
-                    return 0
-                  }
-
-                  /**
-                   * Items on different rows
-                   * sort by (y)
-                   */
-                  if (bY > aY) return -1
-                  if (aY > bY) return 1
-                  return 0
-                })
-                .map(item => {
-                  // eslint-disable-next-line no-unused-vars
-                  const { content, x, y, w, h = 1 } = item
-                  const { id, type } = content
-                  const Component = components[type.toUpperCase().trim()]
-
-                  return (
-                    <Grid item xs={12} sm={12} md={w} key={id}>
-                      <div className={clsx(classes.layout)} style={{ height: 150 * h }}>
-                        <Component id={id} />
-                      </div>
-                    </Grid>
-                  )
-                })}
+              <div style={{ position: 'relative', width: '100%' }}>
+                <Layout items={layout} />
+              </div>
             </Grid>
             <Grid item xs={12} style={{ margin: '16px 0' }} />
             <Grid item xs={12}>

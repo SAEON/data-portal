@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import mapProxy from './ol-map'
+import mapProxy from './ol-map/index.js'
 
 export default ({ map, children }) => {
   const [_, rerender] = useState(0)
