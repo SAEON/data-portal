@@ -29,6 +29,7 @@ module.exports = () => {
       publicPath: '/',
     },
     resolve: {
+      extensions: [".ts", ".tsx", ".js", ".jsx"],
       alias: {
         // OpenLayers
         'ol/control': path.resolve(__dirname, './node_modules/ol/control'),
@@ -83,7 +84,6 @@ module.exports = () => {
           mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/src'
         ),
       },
-      extensions: ['.js', '.jsx'],
     },
     optimization: {
       runtimeChunk: 'single',
@@ -110,6 +110,7 @@ module.exports = () => {
     },
     module: {
       rules: [
+        { test: /\.m?js$/, type: "javascript/auto" },
         {
           test: /\.(js|jsx)$/,
           exclude: mode === 'production' ? undefined : /node_modules/,

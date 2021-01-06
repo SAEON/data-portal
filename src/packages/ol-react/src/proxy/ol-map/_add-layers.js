@@ -1,4 +1,4 @@
-import descriptor from '../../lib/proxy-descriptor'
+import descriptor from '../../lib/proxy-descriptor.js'
 import LayerGroup from 'ol/layer/Group'
 import packageJson from '../../../package.json'
 

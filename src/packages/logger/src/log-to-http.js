@@ -1,4 +1,4 @@
-import DataLoader from './_data-loader'
+import DataLoader from './_data-loader.js'
 
 export const logToHttp = (uri, client = fetch, opts = {}, interval) => {
   const logBatch = msgs =>

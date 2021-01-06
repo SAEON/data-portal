@@ -1,4 +1,4 @@
-import descriptor from '../../lib/proxy-descriptor'
+import descriptor from '../../lib/proxy-descriptor.js'
 
 export default (map, rerender) => {
   return {

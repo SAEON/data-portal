@@ -1,6 +1,6 @@
-import authenticate from './authenticate'
-import { getToken } from './token-manager'
-import logout from './logout'
+import authenticate from './authenticate.js'
+import { getToken } from './token-manager.js'
+import logout from './logout.js'
 
 export default ({
   clientId: CLIENT_ID,

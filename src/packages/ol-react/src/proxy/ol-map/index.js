@@ -1,12 +1,12 @@
-import addLayer from './_add-layer'
-import addLayers from './_add-layers'
-import reorderLayers from './_reorder-layers'
-import getLayers from './_get-layers'
-import getLayerById from './_get-layer-by-id'
-import removeLayerById from './_remove-layer-by-id'
-import removeLayer from './_remove-layer'
-import addInteraction from './_add-interaction'
-import removeInteraction from './_remove-interaction'
+import addLayer from './_add-layer.js'
+import addLayers from './_add-layers.js'
+import reorderLayers from './_reorder-layers.js'
+import getLayers from './_get-layers.js'
+import getLayerById from './_get-layer-by-id.js'
+import removeLayerById from './_remove-layer-by-id.js'
+import removeLayer from './_remove-layer.js'
+import addInteraction from './_add-interaction.js'
+import removeInteraction from './_remove-interaction.js'
 
 /**
  * Function that returns a proxy of an ol/Map instance

@@ -1,4 +1,4 @@
-import createVerificationCode from './create-verification-code'
+import createVerificationCode from './create-verification-code.js'
 
 export default async ({
   AUTHENTICATION_ENDPOINT,
