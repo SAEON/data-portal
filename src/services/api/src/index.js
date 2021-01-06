@@ -3,10 +3,13 @@ import { createServer } from 'http'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
 import koaCompress from 'koa-compress'
+import bodyParser from 'koa-bodyparser'
+import authenticate from './middleware/authenticate.js'
 import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
-import home from './http/home.js'
-import metadataRecords from './http/metadata-records/index.js'
+import homeRoute from './http/home.js'
+import authGoogleRedirect from './http/auth-google-redirect.js'
+import metadataRecordsRoute from './http/metadata-records/index.js'
 import zlib from 'zlib'
 import configureApolloServer from './graphql/index.js'
 import proxy from 'koa-proxies'
@@ -17,8 +20,12 @@ import {
   CATALOGUE_API_PORT,
   CATALOGUE_PROXY_ADDRESS,
   CATALOGUE_API_SEED_POSTGIS_LAYERS,
+  CATALOGUE_API_GOOGLE_CLIENT_SECRET,
+  CATALOGUE_API_GOOGLE_CLIENT_ID,
 } from './config.js'
 import clientSession from './middleware/client-session.js'
+import passport from 'koa-passport'
+import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
 
 if (!CATALOGUE_API_NODE_ENV || !['production', 'development'].includes(CATALOGUE_API_NODE_ENV)) {
   console.error(
@@ -49,12 +56,31 @@ const app = new Koa()
 app.proxy = true
 
 /**
+ * Setup authentication
+ */
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: CATALOGUE_API_GOOGLE_CLIENT_ID,
+      clientSecret: CATALOGUE_API_GOOGLE_CLIENT_SECRET,
+      callbackURL: '/auth/google/redirect',
+    },
+    (accessToken, refreshToken, profile, done) => {
+      console.log('hi')
+      return done(null, {})
+    }
+  )
+)
+
+/**
  * Setup HTTP routes
  */
 const router = new KoaRouter()
-router.get('/', home)
-router.post('/', home)
-router.get('/metadata-records', metadataRecords)
+router.get('/', homeRoute)
+router.post('/', homeRoute)
+router.get('/metadata-records', metadataRecordsRoute)
+router.get('/auth/google/redirect', passport.authenticate('google'), authGoogleRedirect)
+router.get('/auth/google', passport.authenticate('google', { scope: ['email'] }))
 
 /**
  * Create the Node.js HTTP server callback
@@ -62,7 +88,10 @@ router.get('/metadata-records', metadataRecords)
  */
 app
   .use(cors)
+  .use(bodyParser())
   .use(clientSession)
+  .use(passport.initialize())
+  .use(authenticate)
   .use(createRequestContext(app))
   .use(router.routes())
   .use(

@@ -7,6 +7,11 @@ config()
 
 const __dirname = getCurrentDirectory(import.meta)
 
+export const CATALOGUE_API_GOOGLE_CLIENT_ID = process.env.CATALOGUE_API_GOOGLE_CLIENT_ID || ''
+
+export const CATALOGUE_API_GOOGLE_CLIENT_SECRET =
+  process.env.CATALOGUE_API_GOOGLE_CLIENT_SECRET || ''
+
 export const CATALOGUE_API_ODP_CLIENT_ID =
   process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
 
@@ -106,12 +111,14 @@ if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
   mkdirSync(CATALOGUE_API_TEMP_DIRECTORY)
 }
 
-const mask = str => str?.replace(/./g, '*')
+const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
 console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_API_GOOGLE_CLIENT_ID,
+      CATALOGUE_API_GOOGLE_CLIENT_SECRET: mask(CATALOGUE_API_GOOGLE_CLIENT_SECRET),
       CATALOGUE_API_ODP_CLIENT_ID,
       CATALOGUE_API_ODP_AUTH_ADDRESS,
       CATALOGUE_API_ODP_CLIENT_SECRET: mask(CATALOGUE_API_ODP_CLIENT_SECRET),
