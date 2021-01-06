@@ -8,12 +8,12 @@ export default {
     {
       exports: 'auto',
       dir: 'dist',
-      format: 'cjs',
+      format: 'esm',
     },
   ],
   plugins: [
     resolve({
-      preferBuiltins: false
+      preferBuiltins: false,
     }),
     commonjs(),
     json({
