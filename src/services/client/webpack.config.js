@@ -57,30 +57,38 @@ module.exports = () => {
         react: path.resolve(__dirname, './node_modules/react'),
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
 
-        // @saeon
+        // @saeon/quick-form
         '@saeon/quick-form': path.resolve(
           __dirname,
           mode === 'production'
             ? './node_modules/@saeon/quick-form'
             : '../../packages/quick-form/src'
         ),
+
+        // @saeon/pkce-client
         '@saeon/pkce-client': path.resolve(
           __dirname,
           mode === 'production'
             ? './node_modules/@saeon/pkce-client'
             : '../../packages/pkce-client/src'
         ),
+
+        // @saeon/snap-menus
         '@saeon/snap-menus': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus'
         ),
+
+        // @saeon/ol-react
         '@saeon/ol-react': path.resolve(
           __dirname,
           mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react/src'
         ),
+
+        // @saeon/logger
         '@saeon/logger': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/src'
+          mode === 'production' ? './node_modules/@saeon/logger/src' : '../../packages/logger/src'
         ),
       },
     },

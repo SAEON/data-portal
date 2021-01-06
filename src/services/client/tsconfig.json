@@ -1,20 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "umd",
-    "lib": [
-      "ES2015",
-      "ES2016",
-      "ES2017",
-      "ES2018",
-      "ES2019",
-      "ES2020",
-      "ESNext",
-      "dom"
-    ],
+    "module": "ESNext",
+    "allowJs": true,
     "jsx": "react",
     "noEmit": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -22,5 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
