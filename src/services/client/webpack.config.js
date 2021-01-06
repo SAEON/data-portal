@@ -21,6 +21,7 @@ module.exports = () => {
 
   return {
     devtool: 'inline-source-map',
+    target: 'web',
     mode,
     entry: {
       index: './src/index.jsx',
@@ -89,7 +90,7 @@ module.exports = () => {
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: mode === 'production' ? undefined : /node_modules/,
           use: {
             loader: 'babel-loader',
