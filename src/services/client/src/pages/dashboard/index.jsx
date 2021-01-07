@@ -4,8 +4,9 @@ import { setShareLink, WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
+import AutoComplete from '../../components/autocomplete'
 import { gql } from '@apollo/client'
-import Chart from './chart'
+import Chart from './layout/chart'
 import {
   AppBar,
   Grid,
@@ -27,6 +28,7 @@ import { ExpandLess } from '@material-ui/icons'
 import Layout from './layout'
 import useStyles from './style'
 import clsx from 'clsx'
+import QuickForm from '@saeon/quick-form'
 
 const POLLING_INTERVAL = 500
 
@@ -100,42 +102,66 @@ export default ({ id }) => {
                   <Toolbar variant="dense">
                     {/*** */}
                     {/* Filters go here */}
-                    <Button
-                      onClick={handleClick}
-                      className={clsx(classes.button)}
-                      endIcon={<ExpandLess />}
-                    >
-                      REGION
-                    </Button>
-
-                    <FormControl className={clsx(classes.formControl)}>
-                      <InputLabel
-                        variant="filled"
-                        style={{ color: 'white' }}
-                        classes={{ icon: { color: 'white', fontcolor: 'white' } }}
-                      >
-                        YEAR
-                      </InputLabel>
-                      <Select
-                        multiple
-                        value={filterYears}
-                        renderValue={selected => selected.join(', ')}
-                        onChange={handleChange}
-                        input={<Input />}
-                        MenuProps={MenuProps}
-                        className={clsx(classes.select)}
-                        classes={{
-                          icon: classes.icon,
-                        }}
-                      >
-                        {years.map(year => (
-                          <MenuItem key={year} value={year}>
-                            <Checkbox checked={filterYears.indexOf(year) > -1} />
-                            <ListItemText primary={year} />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <QuickForm value={undefined}>
+                      {(update, { value }) => {
+                        return (
+                          <AutoComplete
+                            id="region-filter"
+                            options={['Cape Town', 'Joburg', 'Pretoria', 'Durban']}
+                            selectedOptions={value}
+                            setOption={newVal => {
+                              update({ value: newVal })
+                            }}
+                            label="REGION"
+                          />
+                        )
+                      }}
+                    </QuickForm>
+                    <QuickForm value={undefined}>
+                      {(update, { value }) => {
+                        return (
+                          <AutoComplete
+                            id="indicator-filter"
+                            options={[]}
+                            selectedOptions={value}
+                            setOption={newVal => {
+                              update({ value: newVal })
+                            }}
+                            label="INDICATOR"
+                          />
+                        )
+                      }}
+                    </QuickForm>
+                    <QuickForm value={undefined}>
+                      {(update, { value }) => {
+                        return (
+                          <AutoComplete
+                            id="year-filter"
+                            options={[2015, 2016, 2017, 2018, 2019, 2020]}
+                            selectedOptions={value}
+                            setOption={newVal => {
+                              update({ value: newVal })
+                            }}
+                            label="YEAR"
+                          />
+                        )
+                      }}
+                    </QuickForm>
+                    <QuickForm value={undefined}>
+                      {(update, { value }) => {
+                        return (
+                          <AutoComplete
+                            id="program-filter"
+                            options={[]}
+                            selectedOptions={value}
+                            setOption={newVal => {
+                              update({ value: newVal })
+                            }}
+                            label="PROGRAM"
+                          />
+                        )
+                      }}
+                    </QuickForm>
                   </Toolbar>
                 </div>
               </Grid>

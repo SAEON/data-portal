@@ -14,4 +14,6 @@ export default {
 
   createChart: await _import('./_create-chart.js'),
   deleteChart: await _import('./_delete-chart.js'),
+  createFilter: await _import('./_create-filter.js'),
+  deleteFilter: await _import('./_delete-filter.js'),
 }

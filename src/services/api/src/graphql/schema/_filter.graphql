@@ -2,6 +2,5 @@ type Filter {
   id: ID!
   name: String
   columnFiltered: String
-  config: JSON!
-  data: JSON!
+  sql: String
 }
