@@ -1,10 +1,10 @@
 import { nanoid } from 'nanoid'
-import { CATALOGUE_DEPLOYMENT_ENV } from '../config.js'
+import { CATALOGUE_API_NODE_ENV, CATALOGUE_CLIENT_ID } from '../config.js'
 
 export default async (ctx, next) => {
-  if (!ctx.cookies.get('ClientSession')) {
+  if (!ctx.cookies.get(CATALOGUE_CLIENT_ID)) {
     ctx.cookies.set(
-      'ClientSession',
+      CATALOGUE_CLIENT_ID,
       Buffer.from(
         JSON.stringify({
           date: new Date(),
@@ -12,9 +12,10 @@ export default async (ctx, next) => {
         })
       ).toString('base64'),
       {
+        signed: true,
         httpOnly: true,
-        secure: CATALOGUE_DEPLOYMENT_ENV === 'development' ? false : true,
-        sameSite: CATALOGUE_DEPLOYMENT_ENV === 'development' ? 'lax' : 'none',
+        secure: CATALOGUE_API_NODE_ENV === 'development' ? false : true,
+        sameSite: CATALOGUE_API_NODE_ENV === 'development' ? 'lax' : 'none',
       }
     )
   }

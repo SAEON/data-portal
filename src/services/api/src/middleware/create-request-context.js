@@ -11,19 +11,25 @@ const catalogue = new Catalogue({
 
 const dataInserters = getDataInserters() // App level batching
 
-export default app => async (_, next) => {
+export default app => async (ctx, next) => {
+  app.context.userInfo = ctx.state.user
+
   app.context.catalogue = catalogue
+
   app.context.mongo = {
     db: mongoDb,
     collections,
     dataFinders: getDataFinders(), // Request level batching
     dataInserters,
   }
+
   app.context.postgis = {
     query: postgisQuery,
   }
+
   app.context.gql = {
     schema,
   }
+
   await next()
 }
