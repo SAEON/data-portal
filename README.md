@@ -59,7 +59,7 @@ sudo apt-get install -y nodejs
 ## Install source code and dependencies
 ```sh
 # Download the source code
-git clone git@github.com:SAEONData/catalogue.git catalogue
+git clone git@github.com:SAEON/catalogue.git catalogue
 cd catalogue
 
 # Update repository git configuration
