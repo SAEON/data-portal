@@ -9,12 +9,15 @@ const packageJson = require('./package.json')
 const { GenerateSW } = require('workbox-webpack-plugin')
 require('dotenv').config()
 
-const {
+let {
   NODE_ENV: mode,
   CATALOGUE_DEPLOYMENT_ENV,
   CATALOGUE_LATEST_COMMIT = '',
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = 'default-filter-config.json',
+  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
 } = process.env
+
+CATALOGUE_CLIENT_FILTER_CONFIG_PATH =
+  CATALOGUE_CLIENT_FILTER_CONFIG_PATH || path.join(__dirname, './default-filter-config.json')
 
 module.exports = () => {
   const output = 'dist'
