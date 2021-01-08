@@ -4,7 +4,6 @@ import useStyles from './style'
 import { CATALOGUE_API_ADDRESS } from '../../../config'
 
 export default ({ userInfo }) => {
-  console.log(userInfo)
   const classes = useStyles()
   return (
     <Tooltip title="Logout of the SAEON Data Portal">
@@ -14,7 +13,7 @@ export default ({ userInfo }) => {
         variant="overline"
         href={`${CATALOGUE_API_ADDRESS}/logout`}
       >
-        Logout (hi)
+        Logout {userInfo.email}
       </Link>
     </Tooltip>
   )
