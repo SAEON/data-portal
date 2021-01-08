@@ -120,12 +120,12 @@ npm run start:client
 From the root of the source code directory run the following shell command:
 
 ```sh
-CATALOGUE_API_ODP_CLIENT_SECRET="<secret>"
+CATALOGUE_API_ODP_CLIENT_SECRET="<secret>" \
 MONGO_DB_USERNAME="<username>" \
 MONGO_DB_PASSWORD="<password>" \
 POSTGIS_USERNAME="<username>" \
 POSTGIS_PASSWORD="<password>" \
-CATALOGUE_API_RESET_POSTGIS="disabled"
+CATALOGUE_API_RESET_POSTGIS="disabled" \
 CATALOGUE_LATEST_COMMIT= \
 CATALOGUE_DEPLOYMENT_ENV="development" \
 CATALOGUE_API_ADDRESS="http://localhost:3000" \
