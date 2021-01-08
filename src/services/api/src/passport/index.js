@@ -9,6 +9,8 @@ import {
 
 const callbackURL = 'http://localhost:3000/authenticate/redirect'
 
+const hoursToMilliseconds = hrs => hrs * 60 * 60 * 1000
+
 export default () => {
   passport.use(
     new GoogleStrategy(
@@ -21,8 +23,6 @@ export default () => {
         const { id: googleId, ..._profile } = profile
         const { Users } = await collections
 
-        console.log(accessToken)
-        console.log(refreshToken)
         try {
           cb(
             null,
@@ -33,7 +33,10 @@ export default () => {
                 },
                 null,
                 {
-                  $setOnInsert: { google: _profile },
+                  $setOnInsert: {
+                    email: _profile._json.email,
+                    google: { accessToken, ..._profile },
+                  },
                   $set: { modifiedAt: new Date() },
                 },
                 {
@@ -59,13 +62,13 @@ export default () => {
   })
 }
 
-export const login = passport.authenticate('google')
+export const authenticate = passport.authenticate('google')
 
-export const authenticateUser = passport.authenticate('google', { scope: ['email'] })
+export const login = passport.authenticate('google', { scope: ['email'] })
 
 export const passportCookieConfig = {
   key: 'koa.sess',
-  maxAge: 86400000,
+  maxAge: hoursToMilliseconds(12),
   autoCommit: true,
   overwrite: true,
   httpOnly: true,

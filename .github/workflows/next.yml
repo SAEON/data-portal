@@ -15,30 +15,29 @@ jobs:
 
       - name: Deploy services
         run: >-
-          MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
-          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
-          POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
-          POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-          CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
-          CATALOGUE_DEPLOYMENT_ENV="development"
-          ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
-          CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
-          CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
-          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
-          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
           CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.dvn/graphql"
+          CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
+          CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
+          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
+          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
           CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
-          CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.dvn/authenticated"
-          CATALOGUE_CLIENT_AUTH_ID="saeon-data-portal"
-          CATALOGUE_CLIENT_AUTH_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/auth"
-          CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/sessions/logout"
-          CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token"
-          CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue"
-          CATALOGUE_CLIENT_AUTH=disabled
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
+          CATALOGUE_CLIENT_AUTH_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/auth"
+          CATALOGUE_CLIENT_AUTH_ID="saeon-data-portal"
+          CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/sessions/logout"
+          CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.dvn/authenticated"
+          CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue"
+          CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token"
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
+          CATALOGUE_DEPLOYMENT_ENV="development"
+          CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
+          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
+          MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
+          ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
+          POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
+          POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

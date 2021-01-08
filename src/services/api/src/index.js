@@ -12,15 +12,14 @@ import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
 import homeRoute from './http/home.js'
+import authenticateRoute from './http/authenticate.js'
+import logoutRoute from './http/logout.js'
+import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
 import configureApolloServer from './graphql/index.js'
 import configurePostgis from './postgis/setup/index.js'
 import { configure as configureElasticsearch } from './elasticsearch/index.js'
-import configurePassport, {
-  authenticateUser,
-  login,
-  passportCookieConfig,
-} from './passport/index.js'
+import configurePassport, { login, authenticate, passportCookieConfig } from './passport/index.js'
 import { applyIndices } from './mongo/index.js'
 import {
   CATALOGUE_API_PORT,
@@ -69,8 +68,10 @@ app
       .get('/', homeRoute)
       .post('/', homeRoute)
       .get('/metadata-records', metadataRecordsRoute)
-      .get('/authenticate/redirect', login, async ctx => ctx.redirect('/'))
-      .get('/authenticate', authenticateUser)
+      .get('/authenticate/redirect', authenticate, loginSuccessRoute) // passport
+      .get('/login', login) // passport
+      .get('/authenticate', authenticateRoute)
+      .get('/logout', logoutRoute)
       .routes()
   )
   .use(
