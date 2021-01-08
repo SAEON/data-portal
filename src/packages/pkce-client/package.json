@@ -1,6 +1,6 @@
 {
   "name": "@saeon/pkce-client",
-  "version": "0.7.0",
+  "version": "0.10.0",
   "description": "Oauth2 PKCE browser client specifically for paring SPAs with SAEON's identity server",
   "main": "dist/index.js",
   "type": "module",
@@ -36,6 +36,8 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
     "url": "^0.11.0"
   },
   "devDependencies": {

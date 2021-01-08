@@ -5,14 +5,14 @@
   "keywords": [
     "@saeon/client",
     "GIS",
-    "OGC-compliant",
+    "OGC atlas",
     "Catalogue",
     "SAEON",
     "ULWAZI"
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|css|scss)\" \"../../packages/catalogue-search/src/**/*.@(js|jsx)\" \"../../packages/snap-menus/src/**/*.@(js|jsx)\" \"../../packages/logger/src/**/*.@(js|jsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx)\" \"../../packages/ol-react/src/**/*.@(js|jsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --open",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../../packages/snap-menus/src/**/*.@(js|jsx|ts|tsx)\" \"../../packages/logger/src/**/*.@(js|jsx|ts|tsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx|ts|tsx)\" \"../../packages/ol-react/src/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --open",
     "ncu": "ncu --reject echarts,copy-webpack-plugin",
     "ncu -u": "ncu -u --reject echarts,copy-webpack-plugin"
   },
@@ -34,12 +34,13 @@
     "@babel/plugin-proposal-optional-chaining": "^7.12.7",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
     "@saeon/logger": "^6.2.0",
     "@saeon/ol-react": "^10.2.0",
-    "@saeon/pkce-client": "0.7.0",
+    "@saeon/pkce-client": "0.10.0",
     "@saeon/quick-form": "3.1.3",
     "@saeon/snap-menus": "^5.2.0",
     "@svgr/webpack": "^5.5.0",
