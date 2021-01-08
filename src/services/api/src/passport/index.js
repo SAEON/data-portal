@@ -20,6 +20,9 @@ export default () => {
       async (accessToken, refreshToken, profile, cb) => {
         const { id: googleId, ..._profile } = profile
         const { Users } = await collections
+
+        console.log(accessToken)
+        console.log(refreshToken)
         try {
           cb(
             null,

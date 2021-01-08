@@ -1,9 +1,11 @@
 import { useContext } from 'react'
 import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
 import FeedbackDialogue from './_feedback-dialogue'
 import AccountMenu from './_account-menu'
+import Login from './auth/login'
 import ShareOrEmbed from '../../components/share-or-embed'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -11,6 +13,7 @@ import { context as globalContext } from '../../contexts/global'
 
 export default () => {
   const classes = useStyles()
+  const theme = useTheme()
   const { global } = useContext(globalContext)
   const { selectedIds } = global
 
@@ -49,7 +52,9 @@ export default () => {
                 />
               )}
               {/* <AccountMenu /> */}
-              <FeedbackDialogue />
+              {/* <FeedbackDialogue /> */}
+              <Login />
+              <div style={{ marginRight: theme.spacing(1) }} />
             </Grid>
           </Grid>
         </Toolbar>
