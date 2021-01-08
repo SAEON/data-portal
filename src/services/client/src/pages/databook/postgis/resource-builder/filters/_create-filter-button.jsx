@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import CreateFilterIcon from 'mdi-react/FilterPlusOutlineIcon'
+import PlusIcon from 'mdi-react/PlusIcon'
 import {
   IconButton,
   Dialog,
@@ -32,30 +32,29 @@ const FILTERS_QUERY = gql`
 `
 const FIELD_SPACING = 32
 
-export default ({ data }) => {
+export default () => {
   const theme = useTheme()
   const client = useApolloClient()
-  const { databook, sql } = useContext(databookContext)
+  const { databook, sql, sqlResult } = useContext(databookContext)
   const databookId = databook.doc._id
 
   const [open, setOpen] = useState(false)
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
-  const [formValues, setFormValues] = useState({})
-
+  const [columnValues, setColumnValues] = useState([])
   return (
     <>
       {/* TOGGLE DIALOGUE */}
       <Tooltip title="Create filter from current data" /*placement="left-start"*/>
         <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOpen(true)} size="small">
-          <CreateFilterIcon style={{ color: theme.palette.primary.light }} />
+          <PlusIcon size={14} />
         </IconButton>
       </Tooltip>
 
       {/* DIALOGUE */}
       <Dialog fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add filter to dashboard</DialogTitle>
+        <DialogTitle>Add filter to databook</DialogTitle>
         <DialogContent>
           {/* ERROR MSG */}
           {error && (
@@ -78,8 +77,10 @@ export default ({ data }) => {
           <DialogContentText>Select column filtered</DialogContentText>
           <Autocomplete
             id="select-column-filtered"
-            options={data ? Object.keys(data[0]) : undefined}
-            setOption={val => setColumnFiltered(val)}
+            options={sqlResult ? Object.keys(sqlResult[0]) : undefined}
+            setOption={val => {
+              setColumnFiltered(val)
+            }}
             selectedOptions={columnFiltered}
           />
 
@@ -101,31 +102,21 @@ export default ({ data }) => {
                 <Button
                   onClick={async () => {
                     update({ loading: true })
-
-                    const saveFilter =
-                      filterDefinitions.find(({ name }) => name === name)?.saveFilter ||
-                      function (data) {
-                        return data
-                      }
-
                     try {
-                      // graphql query likely to be updated once API side has been changed
                       await client.mutate({
                         mutation: gql`
                           mutation(
                             $databookId: ID!
                             $name: String
                             $columnFiltered: String
-                            $data: JSON!
-                            $config: JSON!
-                            $sql: String!
+                            $columnValues: [String]
+                            $sql: String
                           ) {
                             createFilter(
                               databookId: $databookId
                               name: $name
                               columnFiltered: $columnFiltered
-                              data: $data
-                              config: $config
+                              columnValues: $columnValues
                               sql: $sql
                             ) {
                               id
@@ -133,16 +124,15 @@ export default ({ data }) => {
                           }
                         `,
                         variables: {
-                          ...Object.assign(
-                            {
-                              name: filterName,
-                              columnFiltered: columnFiltered,
-                              databookId,
-                              data: saveFilter(data, formValues),
-                              sql,
-                            },
-                            { config: formValues }
-                          ),
+                          ...Object.assign({
+                            databookId,
+                            name: filterName,
+                            columnFiltered: columnFiltered,
+                            columnValues: [
+                              ...new Set(sqlResult.map(row => String(row[columnFiltered]))),
+                            ], //grabbing column values and removing duplicates
+                            sql,
+                          }),
                         },
                         update: (cache, { data }) => {
                           const { databook } = cache.read({
@@ -169,6 +159,7 @@ export default ({ data }) => {
                       setOpen(false)
                     } catch (error) {
                       setError(error.message)
+                      console.error(error)
                     } finally {
                       update({ loading: false })
                     }

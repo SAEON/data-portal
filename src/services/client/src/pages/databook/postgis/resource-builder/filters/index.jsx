@@ -6,8 +6,9 @@ import Filter from './filter'
 import { Fade } from '@material-ui/core'
 
 export default forwardRef((props, ref) => {
-  const { databook, filters } = useContext(databookContext) //eventually changed to databook.filters
+  const { databook } = useContext(databookContext)
   console.log('databook', databook)
+  const filters = databook.filters
   const [activeTabIndex, setActiveTabIndex] = useState(filters.length - 1 || 0)
 
   return (
@@ -16,7 +17,7 @@ export default forwardRef((props, ref) => {
         <TabHeaders
           activeTabIndex={activeTabIndex}
           setActiveTabIndex={setActiveTabIndex}
-          charts={filters}
+          filters={filters}
         />,
         ref.current
       )}

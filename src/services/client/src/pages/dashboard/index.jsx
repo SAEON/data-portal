@@ -6,45 +6,18 @@ import Loading from '../../components/loading'
 import Footer from '../../components/footer'
 import AutoComplete from '../../components/autocomplete'
 import { gql } from '@apollo/client'
-import Chart from './layout/chart'
-import {
-  AppBar,
-  Grid,
-  Toolbar,
-  Menu,
-  MenuItem,
-  Icon,
-  Button,
-  FormGroup,
-  FormControl,
-  FormControlLabel,
-  Checkbox,
-  Select,
-  Input,
-  InputLabel,
-  ListItemText,
-} from '@material-ui/core'
-import { ExpandLess } from '@material-ui/icons'
+import { AppBar, Grid, Toolbar } from '@material-ui/core'
 import Layout from './layout'
 import useStyles from './style'
 import clsx from 'clsx'
 import QuickForm from '@saeon/quick-form'
 
 const POLLING_INTERVAL = 500
-
+//STEVEN TO-DO: Accidentally removed charts from dashboard. To recover previous version which had charts
 export default ({ id }) => {
   const classes = useStyles()
   const { poll } = getUriState()
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [filterYears, setFilterYears] = useState([])
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
-  const years = ['2015', '2016', '2017', '2018', '2019', '2020']
-  const handleChange = event => {
-    setFilterYears(event.target.value)
-    console.log('filterYears', filterYears)
-  }
+  const [filterYears, setFilterYears] = useState(['2015', '2016', '2017', '2018', '2019', '2020'])
   setShareLink({
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
     params: false,
@@ -76,7 +49,7 @@ export default ({ id }) => {
         }
 
         const { layout } = data.dashboard
-
+        console.log('dashboard data', data)
         const MenuProps = {
           PaperProps: {
             style: {
@@ -102,7 +75,8 @@ export default ({ id }) => {
                   <Toolbar variant="dense">
                     {/*** */}
                     {/* Filters go here */}
-                    <QuickForm value={undefined}>
+                    {/* TO-DO: fix dashboard query then map returned filters here */}
+                    <QuickForm value={''}>
                       {(update, { value }) => {
                         return (
                           <AutoComplete
@@ -117,7 +91,7 @@ export default ({ id }) => {
                         )
                       }}
                     </QuickForm>
-                    <QuickForm value={undefined}>
+                    <QuickForm value={''}>
                       {(update, { value }) => {
                         return (
                           <AutoComplete
@@ -128,36 +102,6 @@ export default ({ id }) => {
                               update({ value: newVal })
                             }}
                             label="INDICATOR"
-                          />
-                        )
-                      }}
-                    </QuickForm>
-                    <QuickForm value={undefined}>
-                      {(update, { value }) => {
-                        return (
-                          <AutoComplete
-                            id="year-filter"
-                            options={[2015, 2016, 2017, 2018, 2019, 2020]}
-                            selectedOptions={value}
-                            setOption={newVal => {
-                              update({ value: newVal })
-                            }}
-                            label="YEAR"
-                          />
-                        )
-                      }}
-                    </QuickForm>
-                    <QuickForm value={undefined}>
-                      {(update, { value }) => {
-                        return (
-                          <AutoComplete
-                            id="program-filter"
-                            options={[]}
-                            selectedOptions={value}
-                            setOption={newVal => {
-                              update({ value: newVal })
-                            }}
-                            label="PROGRAM"
                           />
                         )
                       }}

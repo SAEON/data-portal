@@ -8,6 +8,7 @@ import clsx from 'clsx'
 const ROW_HEIGHT = 30
 
 export default ({ data }) => {
+  //STEVEN TO-DO: get data (sqlResult) from context rather than prop
   if (!data || !data.length) return 'no data'
   const headers = useMemo(
     () => Object.fromEntries(Object.keys(data[0]).map((name, i) => [name, i])),

@@ -91,7 +91,7 @@ export default ({ items }) => {
             >
               <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>
                 <span id={id} data-type={'Chart'} className={clsx(classes.item)}>
-                  <Component id={id} />
+                  <Component id={id} filters={[]} />
                 </span>
               </div>
             </div>

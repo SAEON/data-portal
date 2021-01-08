@@ -83,7 +83,13 @@ type Mutation {
   # Add a filter to dashboard, and get the new count of a dashboard's filters
   addFilterToDashboard(filterId: ID!, dashboardId: ID!): Filter!
   removeFilterFromDashboard(filterId: ID!, dashboardId: ID!): Filter!
-  createFilter(name: String, databookId: ID!, filteredColumn: String, sql: String): Filter!
+  createFilter(
+    name: String
+    databookId: ID!
+    columnFiltered: String
+    columnValues: [String]
+    sql: String
+  ): Filter!
   deleteFilter(id: ID!): Boolean!
 }
 

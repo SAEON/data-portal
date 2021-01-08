@@ -10,14 +10,15 @@ export default ({ children, databook, schema }) => {
 )
 
 select * from cte limit 20`)
-  const filters = []
+  const [sqlResult, setSqlResult] = useState(null)
   return (
     <context.Provider
       value={{
         sql,
         setSql,
+        sqlResult,
+        setSqlResult,
         databook,
-        filters,
         schema,
       }}
     >

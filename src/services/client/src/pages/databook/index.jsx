@@ -35,6 +35,9 @@ export default ({ id }) => {
             filters {
               id
               name
+              columnFiltered
+              columnValues
+              sql
             }
           }
         }

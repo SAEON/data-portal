@@ -4,6 +4,7 @@ import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
 import { Toolbar, Typography } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
+import AddFilterButton from './_add-filter-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
 import PreviewBurron from './_preview-button'
@@ -117,6 +118,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         <span style={{ marginRight: 8 }} />
         <AddChartButton dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
+        <AddFilterButton dashboard={dashboard} />
+        <span style={{ marginRight: 8 }} />
         <ShareButton id={dashboardId} />
         <span style={{ marginRight: 8 }} />
         <PreviewBurron id={dashboardId} />
@@ -127,13 +130,14 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
           setActiveTabIndex={setActiveTabIndex}
         />
       </Toolbar>
+      <p>Filters here</p>
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
           {itemIds?.map(id => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
             )
-
+            console.log('dashboard', dashboard)
             return (
               <div
                 ref={refs.current[id]}

@@ -5,7 +5,10 @@ import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'
 import { Fade } from '@material-ui/core'
 
-export default ({ id, style = {}, filters }) => {
+// export default ({ id, style = {}, filters }) => {
+export default props => {
+  console.log('props', props)
+  const { id, style = {}, filters } = props
   return (
     <WithGqlQuery
       QUERY={gql`
@@ -30,10 +33,11 @@ export default ({ id, style = {}, filters }) => {
         if (error) {
           throw error
         }
-
+        console.log('data', data)
         const chartDoc = data.charts.find(({ id: _id }) => _id === id)
         const chartDefinition = chartDefinitions.find(({ type }) => type === chartDoc.type)
         const Chart = lazy(() => chartDefinition.getComponent())
+        console.log('chartDoc', chartDoc)
         //foreach filter in filers:
         //filter chart data
         /**<Chart {Object.assign({}, chartDoc, {chartDoc.data.filter(datum => {

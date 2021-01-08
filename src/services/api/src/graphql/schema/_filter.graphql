@@ -2,5 +2,6 @@ type Filter {
   id: ID!
   name: String
   columnFiltered: String
+  columnValues: [String]
   sql: String
 }
