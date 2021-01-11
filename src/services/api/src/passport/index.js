@@ -1,11 +1,13 @@
 import passport from 'koa-passport'
 import { collections } from '../mongo/index.js'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
+import base64url from 'base64url'
 import {
   CATALOGUE_API_GOOGLE_CLIENT_SECRET,
   CATALOGUE_API_GOOGLE_CLIENT_ID,
   CATALOGUE_API_OAUTH_REDIRECT_ADDRESS,
   CATALOGUE_API_NODE_ENV,
+  CATALOGUE_API_ADDRESS,
 } from '../config.js'
 
 const hoursToMilliseconds = hrs => hrs * 60 * 60 * 1000
@@ -63,7 +65,13 @@ export default () => {
 
     return {
       authenticate: passport.authenticate('google'),
-      login: passport.authenticate('google', { scope: ['email'] }),
+      login: async (ctx, next) =>
+        passport.authenticate('google', {
+          scope: ['email'],
+          state: base64url(
+            JSON.stringify({ redirect: ctx.request.query.redirect || CATALOGUE_API_ADDRESS })
+          ),
+        })(ctx, next),
     }
   } else {
     console.info('Google API OAUTH credentials not provided. Skipping setup')

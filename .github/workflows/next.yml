@@ -17,6 +17,7 @@ jobs:
         run: >-
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
+          CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           CATALOGUE_API_GOOGLE_CLIENT_ID=
           CATALOGUE_API_GOOGLE_CLIENT_SECRET=
           CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=
@@ -32,6 +33,7 @@ jobs:
           CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.dvn/authenticated"
           CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue"
           CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token"
+          CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
           CATALOGUE_DEPLOYMENT_ENV="development"
@@ -40,5 +42,6 @@ jobs:
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
           ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
+          POSTGIS_PORT=5442
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

@@ -67,7 +67,7 @@ services:
 
   postgis:
     image: $POSTGIS_IMAGE
-    container_name: postgis
+    container_name: postgis2
     restart: always
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
@@ -75,7 +75,7 @@ services:
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
       POSTGRES_USER: $POSTGIS_USERNAME
     ports:
-      - 5442:5432 # TODO - specify the host mapped port as variable?
+      - $POSTGIS_PORT:5432
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
     networks:
@@ -96,7 +96,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK      
+      - $CATALOGUE_DOCKER_NETWORK
 
   api:
     container_name: api
@@ -131,7 +131,7 @@ services:
         POSTGIS_PORT: $POSTGIS_PORT            
         POSTGIS_USERNAME: $POSTGIS_USERNAME
     ports:
-      - 5000:3000
+      - $CATALOGUE_API_CONTAINER_PORT_MAPPING:3000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
@@ -163,7 +163,7 @@ services:
         CATALOGUE_DEPLOYMENT_ENV: $CATALOGUE_DEPLOYMENT_ENV
         CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
     ports:
-      - 5001:80
+      - $CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING:80
     depends_on:
       - api
     networks:
