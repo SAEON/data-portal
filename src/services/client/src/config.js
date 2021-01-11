@@ -19,11 +19,12 @@ export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 10
 
 export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 
-export const CATALOGUE_API_GQL_ADDRESS =
-  process.env.CATALOGUE_API_GQL_ADDRESS || 'http://localhost:3000/graphql'
+export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
 
-export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS =
-  process.env.CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS || 'ws://localhost:3000/graphql'
+const url = new URL(CATALOGUE_API_ADDRESS)
+export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS = `${
+  url.protocol === 'http:' ? 'ws:' : 'wss:'
+}//${url.hostname}${url.port ? `:${url.port}` : ''}/graphql`
 
 export const CATALOGUE_CLIENT_ADDRESS =
   process.env.CATALOGUE_CLIENT_ADDRESS || 'http://localhost:3001'

@@ -20,8 +20,6 @@ jobs:
           CATALOGUE_API_GOOGLE_CLIENT_ID=
           CATALOGUE_API_GOOGLE_CLIENT_SECRET=
           CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=
-          CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.dvn/graphql"
-          CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.dvn/graphql"
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
