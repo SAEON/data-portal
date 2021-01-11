@@ -18,5 +18,7 @@ export default () =>
       onConnect: () => null,
       onDisconnect: () => null,
     },
-    context: ({ ctx }) => ctx,
+    context: ({ ctx }) => {
+      return ctx
+    },
   })

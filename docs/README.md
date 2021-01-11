@@ -27,7 +27,6 @@ CATALOGUE_CLIENT_AUTH_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/auth" \
 CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/sessions/logout" \
 CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token" \
 CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue" \
-CATALOGUE_CLIENT_AUTH=disabled \
 CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn" \
 CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info" \
 CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json" \

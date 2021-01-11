@@ -19,6 +19,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
+  - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
     - [Endpoints](#endpoints)
 - [Deployment and installation](#deployment-and-installation)
@@ -48,15 +49,18 @@ Setup the repository for development on a local machine. The Node.js and React s
 2. Node.js **v14.15.1** (Versions lower than **v14.13** will not work. I have not tested newer versions yet)
 
 ```sh
-# Download the source code
-git clone git@github.com:SAEONData/catalogue.git catalogue
-cd catalogue
-
-# Make sure that Node.js ^14.13 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^14.15 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
 sudo apt-get install -y nodejs
+```
+
+## Install source code and dependencies
+```sh
+# Download the source code
+git clone git@github.com:SAEON/catalogue.git catalogue
+cd catalogue
 
 # Update repository git configuration
 npm run configure-git
@@ -64,6 +68,7 @@ npm run configure-git
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies
 ```
+
 
 ## Local development
 
@@ -115,12 +120,12 @@ npm run start:client
 From the root of the source code directory run the following shell command:
 
 ```sh
-CATALOGUE_API_ODP_CLIENT_SECRET="<secret>"
+CATALOGUE_API_ODP_CLIENT_SECRET="<secret>" \
 MONGO_DB_USERNAME="<username>" \
 MONGO_DB_PASSWORD="<password>" \
 POSTGIS_USERNAME="<username>" \
 POSTGIS_PASSWORD="<password>" \
-CATALOGUE_API_RESET_POSTGIS="disabled"
+CATALOGUE_API_RESET_POSTGIS="disabled" \
 CATALOGUE_LATEST_COMMIT= \
 CATALOGUE_DEPLOYMENT_ENV="development" \
 CATALOGUE_API_ADDRESS="http://localhost:3000" \

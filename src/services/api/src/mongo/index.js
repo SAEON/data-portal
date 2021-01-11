@@ -13,6 +13,8 @@ import configureDataInserters from './_data-inserters.js'
 const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
 
 export const _collections = {
+  UserInfo: 'userInfo',
+  Users: 'users',
   Atlases: 'atlases',
   Logs: 'logs',
   Feedback: 'feedback',
@@ -37,6 +39,25 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
     console.error('Unable to connect to MongoDB', error)
     if (CATALOGUE_API_NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
   })
+
+const indices = [
+  {
+    collection: _collections.SavedSearches,
+    index: 'hashedState',
+    options: {
+      unique: true,
+    },
+  },
+]
+
+export const applyIndices = () =>
+  db.then(db =>
+    Promise.all(
+      indices.map(({ collection, index, options }) =>
+        db.collection(collection).createIndex(index, options)
+      )
+    )
+  )
 
 export const collections = getCollections({ db, _collections })
 export const getDataFinders = configureDataFinders({ db, _collections })

@@ -1,6 +1,8 @@
 # @saeon/pkce-client
 A JavaScript browser oauth2 (PKCE) client for user-authentication/authorization against SAEON's identity service, based on a [proof-of-concept PKCE implementation](https://github.com/aaronpk/pkce-vanilla-js) provided by [Aaron Parecki](https://github.com/aaronpk).
 
+NOTE - not working yet
+
 ```sh
 npm install --save @saeon/pkce-client
 ```

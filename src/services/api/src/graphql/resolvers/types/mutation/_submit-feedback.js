@@ -1,3 +1,5 @@
+import { CATALOGUE_CLIENT_ID } from '../../../../config.js'
+
 export default async (self, args, ctx) => {
   const { input } = args
   const { Feedback } = await ctx.mongo.collections
@@ -5,7 +7,7 @@ export default async (self, args, ctx) => {
   const { result } = await Feedback.insertOne(
     Object.assign(
       {
-        clientSession: ctx.cookies.get('ClientSession'),
+        clientSession: ctx.cookies.get(CATALOGUE_CLIENT_ID),
         createdAt: new Date(),
       },
       input
