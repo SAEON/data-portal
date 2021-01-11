@@ -19,6 +19,7 @@ jobs:
           CATALOGUE_API_ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
           CATALOGUE_API_GOOGLE_CLIENT_ID="${{ secrets.CATALOGUE_API_GOOGLE_CLIENT_ID }}"
           CATALOGUE_API_GOOGLE_CLIENT_SECRET="${{ secrets.CATALOGUE_API_GOOGLE_CLIENT_SECRET }}"
+          CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect
           CATALOGUE_API_GQL_ADDRESS="https://api.catalogue.saeon.ac.za/graphql"
           CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="wss://api.catalogue.saeon.ac.za/graphql"
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_STABLE }}"

@@ -14,6 +14,9 @@ export const CATALOGUE_API_GOOGLE_CLIENT_ID = process.env.CATALOGUE_API_GOOGLE_C
 export const CATALOGUE_API_GOOGLE_CLIENT_SECRET =
   process.env.CATALOGUE_API_GOOGLE_CLIENT_SECRET || ''
 
+export const CATALOGUE_API_OAUTH_REDIRECT_ADDRESS =
+  process.env.CATALOGUE_API_OAUTH_REDIRECT_ADDRESS || 'http://localhost:3000/authenticate/redirect'
+
 export const CATALOGUE_API_ODP_CLIENT_ID =
   process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
 
@@ -121,6 +124,7 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_API_OAUTH_REDIRECT_ADDRESS,
       CATALOGUE_API_KEY: mask(CATALOGUE_API_KEY),
       CATALOGUE_API_GOOGLE_CLIENT_ID,
       CATALOGUE_CLIENT_ID,

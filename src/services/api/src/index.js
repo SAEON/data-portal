@@ -19,7 +19,7 @@ import metadataRecordsRoute from './http/metadata-records/index.js'
 import configureApolloServer from './graphql/index.js'
 import configurePostgis from './postgis/setup/index.js'
 import { configure as configureElasticsearch } from './elasticsearch/index.js'
-import configurePassport, { login, authenticate, passportCookieConfig } from './passport/index.js'
+import configurePassport, { passportCookieConfig } from './passport/index.js'
 import { applyIndices } from './mongo/index.js'
 import {
   CATALOGUE_API_PORT,
@@ -43,7 +43,7 @@ if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
 }
 
 // Configure passport authentication
-configurePassport()
+const { login, authenticate } = configurePassport()
 
 const app = new Koa()
 app.keys = [CATALOGUE_API_KEY]
