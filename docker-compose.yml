@@ -67,7 +67,7 @@ services:
 
   postgis:
     image: $POSTGIS_IMAGE
-    container_name: postgis2
+    container_name: postgis
     restart: always
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
