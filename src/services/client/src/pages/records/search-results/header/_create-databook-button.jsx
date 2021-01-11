@@ -8,6 +8,7 @@ import { CATALOGUE_CLIENT_MAX_DATABOOK_TABLES } from '../../../../config'
 import { context as globalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
+import { AuthContext } from '../../../../contexts/authentication'
 
 const cacheOfMappableItems = {}
 
@@ -55,6 +56,7 @@ const removeSelectedIds = obj =>
 
 export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
+  const { userInfo } = useContext(AuthContext)
   const { selectedIds } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
@@ -66,11 +68,19 @@ export default ({ catalogue }) => {
       ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
       ?.doc_count || 0
 
-  return savedSearchLoading ? (
-    <Fade key="loading" in={savedSearchLoading}>
-      <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
-    </Fade>
-  ) : (
+  if (!userInfo) {
+    return null
+  }
+
+  if (savedSearchLoading) {
+    return (
+      <Fade key="loading" in={savedSearchLoading}>
+        <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+      </Fade>
+    )
+  }
+
+  return (
     <Tooltip
       title={
         isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)

@@ -23,7 +23,9 @@ export default () => {
         },
         async (accessToken, refreshToken, profile, cb) => {
           const { id: googleId, ..._profile } = profile
-          const { Users } = await collections
+          const { Users, UserRoles } = await collections
+
+          const datascientistRole = (await UserRoles.find({ name: 'datascientist' }).toArray())[0]
 
           try {
             cb(
@@ -36,10 +38,14 @@ export default () => {
                   null,
                   {
                     $setOnInsert: {
+                      googleId,
+                    },
+                    $set: {
+                      modifiedAt: new Date(),
                       email: _profile._json.email,
                       google: { accessToken, ..._profile },
+                      userRoles: [datascientistRole._id],
                     },
-                    $set: { modifiedAt: new Date() },
                   },
                   {
                     new: true,
