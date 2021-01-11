@@ -75,7 +75,11 @@ export default ({ id }) => {
                   <Toolbar variant="dense">
                     {/*** */}
                     {/* Filters go here */}
-                    {/* TO-DO: fix dashboard query then map returned filters here */}
+                    {/* TO-DO 0.5: does Filter graphql type need columnValues back? will client side be able to display all columnValues without it? */}
+                    {/* TO-DO 1: fix dashboard query then map returned filters here */}
+                    {/* TO-DO 2: change charts query(wherever it is) to use filteredCharts instead.
+                                Somehow need to pass list of filters to that query(hopefully with dashboard query) */}
+                    {/* TO-DO 3: Have client-side filter component run updateFilter mutation on user selection to visually update chart  */}
                     <QuickForm value={''}>
                       {(update, { value }) => {
                         return (

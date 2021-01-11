@@ -23,3 +23,6 @@ export default async (_, args, ctx) => {
   const { value } = test
   return value
 }
+
+//STEVEN: running this mutation killed my API and forced a recreation of mongo image.
+//It may have been a memory shortage issue(only 8gb) since VS Code became buggy till a restart.
