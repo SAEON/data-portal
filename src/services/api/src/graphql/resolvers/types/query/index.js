@@ -6,6 +6,7 @@ export default {
   dashboards: await _import('./_dashboards.js'),
   charts: await _import('./_charts.js'),
   filters: await _import('./_filters.js'),
+  filterCharts: await _import('./_filter-charts.js'),
   databook: await _import('./_databook.js'),
   searchState: await _import('./_search-state.js'),
   atlas: await _import('./_atlas.js'),

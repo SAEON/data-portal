@@ -42,7 +42,7 @@ export default () => {
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
-  const [columnValues, setColumnValues] = useState([])
+  const [selectedValues, setSelectedValues] = useState([])
   return (
     <>
       {/* TOGGLE DIALOGUE */}
@@ -109,14 +109,14 @@ export default () => {
                             $databookId: ID!
                             $name: String
                             $columnFiltered: String
-                            $columnValues: [String]
+                            $selectedValues: [String]
                             $sql: String
                           ) {
                             createFilter(
                               databookId: $databookId
                               name: $name
                               columnFiltered: $columnFiltered
-                              columnValues: $columnValues
+                              selectedValues: $selectedValues
                               sql: $sql
                             ) {
                               id
@@ -128,9 +128,9 @@ export default () => {
                             databookId,
                             name: filterName,
                             columnFiltered: columnFiltered,
-                            columnValues: [
+                            selectedValues: [
                               ...new Set(sqlResult.map(row => String(row[columnFiltered]))),
-                            ], //grabbing column values and removing duplicates
+                            ], //grabbing column values and removing duplicates //due to reworking, this can probably be replaced with nothing or empty array. to confirm
                             sql,
                           }),
                         },

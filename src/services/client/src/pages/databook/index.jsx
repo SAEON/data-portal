@@ -36,7 +36,7 @@ export default ({ id }) => {
               id
               name
               columnFiltered
-              columnValues
+              selectedValues
               sql
             }
           }

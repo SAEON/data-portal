@@ -7,7 +7,7 @@ import { Fade } from '@material-ui/core'
 
 // export default ({ id, style = {}, filters }) => {
 export default props => {
-  console.log('props', props)
+  console.log('chartController props', props)
   const { id, style = {}, filters } = props
   return (
     <WithGqlQuery

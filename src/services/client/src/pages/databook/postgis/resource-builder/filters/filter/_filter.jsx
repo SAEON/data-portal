@@ -5,7 +5,7 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { context as databookContext } from '../../../../context'
 export default ({ filter }) => {
-  const { id, name, columnValues } = filter
+  const { id, name, selectedValues } = filter
   const classes = useStyles()
   const [selectedValue, setSelectedValue] = useState('')
   const context = useContext(databookContext)
@@ -15,7 +15,7 @@ export default ({ filter }) => {
   return (
     <AutoComplete
       id="region-filter"
-      options={columnValues}
+      options={selectedValues}
       selectedOptions={selectedValue}
       setOption={newVal => {
         setSelectedValue(newVal)

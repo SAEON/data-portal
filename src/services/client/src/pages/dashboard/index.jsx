@@ -49,7 +49,7 @@ export default ({ id }) => {
         }
 
         const { layout } = data.dashboard
-        console.log('dashboard data', data)
+        console.log('.../dashboard/ layout', layout)
         const MenuProps = {
           PaperProps: {
             style: {
