@@ -135,7 +135,6 @@ CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled" \
 CATALOGUE_API_RESET_POSTGIS="disabled" \
 CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
 CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
-CATALOGUE_CLIENT_AUTH_REDIRECT_URL="http://localhost:3001/authenticated" \
 CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
 CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build

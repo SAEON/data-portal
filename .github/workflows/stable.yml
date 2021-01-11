@@ -20,6 +20,7 @@ jobs:
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           CATALOGUE_API_GOOGLE_CLIENT_ID="${{ secrets.CATALOGUE_API_GOOGLE_CLIENT_ID }}"
           CATALOGUE_API_GOOGLE_CLIENT_SECRET="${{ secrets.CATALOGUE_API_GOOGLE_CLIENT_SECRET }}"
+          CATALOGUE_API_NODE_ENV=production
           CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_STABLE }}"
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
@@ -27,12 +28,6 @@ jobs:
           CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="disabled"
           CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
-          CATALOGUE_CLIENT_AUTH_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/auth"
-          CATALOGUE_CLIENT_AUTH_ID="saeon-data-portal"
-          CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/sessions/logout"
-          CATALOGUE_CLIENT_AUTH_REDIRECT_URL="https://catalogue.saeon.ac.za/authenticated"
-          CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES="ODP.Catalogue"
-          CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT="https://odp.saeon.ac.za/auth/oauth2/token"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
