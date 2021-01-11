@@ -29,15 +29,29 @@ import {
 } from './config.js'
 
 // Configure MongoDB
-await applyIndices()
-console.info('Mongo indices configured')
+applyIndices()
+  .then(() => console.info('Mongo indices configured'))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
 
 // Configure Elasticsearch
-configureElasticsearch().then(() => console.info('Elasticsearch', 'configured'))
+configureElasticsearch()
+  .then(() => console.info('Elasticsearch', 'configured'))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
 
 // Configure PostGIS
 if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
-  configurePostgis().then(() => console.info('PostGIS configured'))
+  configurePostgis()
+    .then(() => console.info('PostGIS configured'))
+    .catch(error => {
+      console.error(error)
+      process.exit(1)
+    })
 } else {
   console.info('PostGIS', 'seeding disabled')
 }

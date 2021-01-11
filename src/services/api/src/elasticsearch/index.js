@@ -15,7 +15,7 @@ export const configure = async () => {
    */
   if (CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE === 'enabled') {
     const result = await configTemplate()
-    console.log('Elasticsearch template configured', result)
+    console.log('Configuring Elasticsearch template', result)
   }
 
   /**
@@ -23,7 +23,7 @@ export const configure = async () => {
    */
   if (CATALOGUE_API_RESET_ELASTICSEARCH_INDEX === 'enabled') {
     const result = await configureIndex()
-    console.log(result)
+    console.log('Configuring Elasticsearch index', result)
   }
 
   /**
