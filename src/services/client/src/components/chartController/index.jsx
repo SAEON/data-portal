@@ -5,14 +5,14 @@ import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'
 import { Fade } from '@material-ui/core'
 
-export default ({ id, style = {}, filters }) => {
+export default ({ id, style = {}, filterIds, selectedFilters }) => {
   // export default props => {
   // const { id, style = {}, filters } = props
   return (
     <WithGqlQuery
       QUERY={gql`
-        query($ids: [ID!]) {
-          charts(ids: $ids) {
+        query($chartIds: [ID!], $filterIds: [ID!]) {
+          charts(ids: $chartIds) {
             id
             title
             description
@@ -20,9 +20,17 @@ export default ({ id, style = {}, filters }) => {
             config
             data
           }
+          filters(ids: $filterIds) {
+            id
+            name
+            columnFiltered
+            sql
+            selectedValues
+            values
+          }
         }
       `}
-      variables={{ ids: [id] }}
+      variables={{ chartIds: [id], filterIds }}
     >
       {({ error, loading, data }) => {
         if (loading) {
@@ -32,11 +40,39 @@ export default ({ id, style = {}, filters }) => {
         if (error) {
           throw error
         }
-        console.log('data', data)
-        const chartDoc = data.charts.find(({ id: _id }) => _id === id)
+        const { charts, filters } = data
+
+        let chartDoc = charts.find(({ id: _id }) => _id === id)
         const chartDefinition = chartDefinitions.find(({ type }) => type === chartDoc.type)
         const Chart = lazy(() => chartDefinition.getComponent())
-        console.log('chartDoc', chartDoc)
+
+        let filteredData = chartDoc.data
+        console.log('initial filteredData', filteredData)
+        for (var i = 0; i < filters.length; i++) {
+          const { columnFiltered, id: filterId } = filters[i]
+          const { selectedValues } = selectedFilters[filterId]
+          console.log('selectedValues', selectedValues)
+          filteredData =
+            selectedValues === []
+              ? filteredData
+              : filteredData.filter(row => {
+                  //potential to-do: if chart.data column names don't include columnFiltered: Skip this filter (possibly help performance if needed)
+                  if (!row[columnFiltered]) {
+                    console.log('1')
+                    return true
+                  }
+                  if (selectedValues.includes(row[columnFiltered])) {
+                    console.log('2')
+                    return true
+                  }
+                  console.log('3')
+                  return false
+                })
+        }
+        let filteredChartDoc = Object.assign({}, chartDoc, {
+          data: filteredData,
+        })
+        console.log('filteredChartDoc', filteredChartDoc)
         //foreach filter in filers:
         //filter chart data
         /**<Chart {Object.assign({}, chartDoc, {chartDoc.data.filter(datum => {
@@ -54,7 +90,7 @@ export default ({ id, style = {}, filters }) => {
                     style
                   )}
                 >
-                  <Chart {...chartDoc} />
+                  <Chart {...filteredChartDoc} />
                 </div>
               </Suspense>
             </span>

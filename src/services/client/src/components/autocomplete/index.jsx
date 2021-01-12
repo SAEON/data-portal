@@ -12,8 +12,6 @@ export default ({
   multiple = false,
   ...props
 }) => {
-  console.log('options', options)
-  console.log('')
   return (
     <Autocomplete
       // From parent

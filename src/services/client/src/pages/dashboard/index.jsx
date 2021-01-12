@@ -4,7 +4,7 @@ import { setShareLink, WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
-
+import DashboardContextProvider from './context'
 import { gql } from '@apollo/client'
 import { AppBar, Grid, Toolbar } from '@material-ui/core'
 import Layout from './layout'
@@ -17,7 +17,6 @@ const POLLING_INTERVAL = 500
 export default ({ id }) => {
   const classes = useStyles()
   const { poll } = getUriState()
-  const [filterYears, setFilterYears] = useState(['2015', '2016', '2017', '2018', '2019', '2020'])
   setShareLink({
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
     params: false,
@@ -49,11 +48,13 @@ export default ({ id }) => {
         }
 
         const { layout } = data.dashboard
-        console.log('.../dashboard/ layout', layout)
+        console.log('.../dashboard layout', layout)
         const filterIds = layout
           .filter(entry => entry.content.type === 'Filter')
-          .map(entry => entry.content.id)
-        console.log('filterIds declaration', filterIds)
+          .map(entry => {
+            return entry.content.id
+          })
+
         const MenuProps = {
           PaperProps: {
             style: {
@@ -74,25 +75,26 @@ export default ({ id }) => {
             </Grid>
             <Grid item xs={12} style={{ margin: '36px 0' }} />
             <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
-              <Grid item xs={12}>
-                <div className={clsx(classes.layout)}>
-                  <Toolbar variant="dense">
-                    {/*** */}
-                    {/* Filters go here */}
-                    {/* DONE! TO-DO 0.5: does Filter graphql type need columnValues back? will client side be able to display all columnValues without it? */}
-                    {/* 0.5.2 Probably shouldn't have actually added selectedValues to graphql. I dont think this will be functional for multiple users.
+              <DashboardContextProvider filterIds={filterIds}>
+                <Grid item xs={12}>
+                  <div className={clsx(classes.layout)}>
+                    <Toolbar variant="dense">
+                      {/*** */}
+                      {/* Filters go here */}
+                      {/* 0.5.2 Probably shouldn't have actually added selectedValues to graphql. I dont think this will be functional for multiple users.
                             selectedValues should be an arg passed to the filterCharts query instead. therefore also delete mutatoinupdateFilter(or flesh out for future use of editing old filters) */}
-                    {/* DONE! TO-DO 1: fix dashboard query then map returned filters here */}
-                    {/* TO-DO 2: change charts query(wherever it is) to use filteredCharts instead.
+                      {/* TO-DO 2: change charts query(wherever it is) to use filteredCharts instead.
                                 Somehow need to pass filters selectedValues(maybe a common parent/ancestor with state) */}
-                    {/* TO-DO 3: Flesh out visuals of filter(perhaps a checkbox dropdown list instead of chips) */}
-                    <Filters filterIds={filterIds} />
-                  </Toolbar>
+                      {/* TO-DO 3: Flesh out visuals of filter(perhaps a checkbox dropdown list instead of chips) */}
+
+                      <Filters filterIds={filterIds} />
+                    </Toolbar>
+                  </div>
+                </Grid>
+                <div style={{ position: 'relative', width: '100%' }}>
+                  <Layout items={layout} />
                 </div>
-              </Grid>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <Layout items={layout} />
-              </div>
+              </DashboardContextProvider>
             </Grid>
             <Grid item xs={12} style={{ margin: '16px 0' }} />
             <Grid item xs={12}>

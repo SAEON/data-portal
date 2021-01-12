@@ -1,5 +1,8 @@
 import ChartController from '../../../../components/chartController'
+import { useContext } from 'react'
+import { context as dashboardContext } from '../../context'
 
 export default ({ id }) => {
-  return <ChartController id={id} />
+  const { filterIds, selectedFilters } = useContext(dashboardContext)
+  return <ChartController id={id} filterIds={filterIds} selectedFilters={selectedFilters} />
 }

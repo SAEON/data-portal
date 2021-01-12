@@ -1,10 +1,12 @@
+import { useContext } from 'react'
+import { context as dashboardContext } from '../../context'
 import AutoComplete from '../../../../components/autocomplete'
-import QuickForm from '@saeon/quick-form'
 import { WithGqlQuery } from '../../../../hooks'
 import { gql } from '@apollo/client'
 import Loading from '../../../../components/loading'
-export default ({ filterIds }) => {
-  console.log('filterIds', filterIds)
+
+export default () => {
+  const { selectedFilters, setSelectedFilters, filterIds } = useContext(dashboardContext)
   return (
     <>
       <WithGqlQuery
@@ -15,7 +17,6 @@ export default ({ filterIds }) => {
               name
               columnFiltered
               sql
-              selectedValues
               values
             }
           }
@@ -24,83 +25,34 @@ export default ({ filterIds }) => {
       >
         {({ error, loading, data }) => {
           if (loading) {
-            return <Loading />
+            return '' //<Loading />
           }
 
           if (error) {
             console.error(error)
             throw error
           }
-          console.log('my data', data)
+          console.log('selectedFilters', selectedFilters)
           const { filters } = data
           return filters.map((filter, i) => {
             return (
-              <QuickForm selectedValues={[]} key={i}>
-                {(update, { selectedValues }) => {
-                  return (
-                    <AutoComplete
-                      multiple
-                      id={`filter-${i}`}
-                      options={filter.values}
-                      selectedOptions={selectedValues}
-                      setOption={newVal => {
-                        update({ selectedValues: newVal })
-                      }}
-                      label={filter.name}
-                    />
-                  )
+              <AutoComplete
+                multiple
+                id={`filter-${filter.id}`}
+                key={i}
+                options={filter.values}
+                selectedOptions={selectedFilters[filter.id].selectedValues}
+                setOption={newValues => {
+                  let newSelectedFilters = JSON.parse(JSON.stringify(selectedFilters))
+                  newSelectedFilters[filter.id].selectedValues = newValues
+                  setSelectedFilters(newSelectedFilters)
                 }}
-              </QuickForm>
+                label={filter.name}
+              />
             )
           })
         }}
       </WithGqlQuery>
     </>
   )
-}
-
-const onClick = async () => {
-  setLoading(true)
-  await client.mutate({
-    mutation: gql`
-      mutation($id: ID!, $layout: JSON) {
-        updateDashboard(id: $id, layout: $layout) {
-          id
-          layout
-        }
-      }
-    `,
-    variables: {
-      id: dashboard.id,
-      layout: gridState,
-    },
-    update: (cache, { data }) => {
-      const { dashboards } = cache.read({
-        query: DASHBOARDS_QUERY,
-        variables: {
-          databookId,
-        },
-      })
-
-      const updatedDashboards = [
-        ...dashboards.map(d => {
-          return Object.assign(
-            {},
-            { ...d },
-            {
-              layout: gridState, // TODO. for some reason the second time this mutation is called, data.updatedDashboard.layout is stale
-            }
-          )
-        }),
-      ]
-
-      cache.writeQuery({
-        query: DASHBOARDS_QUERY,
-        data: {
-          dashboards: updatedDashboards,
-        },
-      })
-    },
-  })
-  setLoading(false)
 }
