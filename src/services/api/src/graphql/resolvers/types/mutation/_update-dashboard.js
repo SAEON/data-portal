@@ -2,6 +2,8 @@ import mongo from 'mongodb'
 const { ObjectID } = mongo
 
 export default async (_, { id, layout }, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { Dashboards } = await ctx.mongo.collections
   const { value } = await Dashboards.findOneAndUpdate(
     { _id: ObjectID(id) },

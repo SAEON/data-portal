@@ -7,6 +7,14 @@ export default ({ children }) => {
   const [userInfo, setUserInfo] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
+  const authenticate = () => {
+    if (userInfo) {
+      return true
+    } else {
+      window.location.href = `${CATALOGUE_API_ADDRESS}/login?redirect=${window.location.href}`
+    }
+  }
+
   useEffect(() => {
     const _ = async () => {
       setAuthenticating(true)
@@ -28,6 +36,7 @@ export default ({ children }) => {
       value={{
         userInfo,
         authenticating,
+        authenticate,
       }}
     >
       {children}

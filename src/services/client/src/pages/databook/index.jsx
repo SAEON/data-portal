@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import DatabookContextProvider from './context'
 import { gql } from '@apollo/client'
 import { WithGqlQuery, setShareLink } from '../../hooks'
@@ -8,14 +9,13 @@ import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_TECHNICAL_CONTACT } from '../../con
 import useStyles from './style'
 import clsx from 'clsx'
 import { Box, Typography } from '@material-ui/core'
+import { AuthContext } from '../../contexts/authentication'
 
 const POLLING_INTERVAL = 1000
 
-/**
- * Get the Mongo doc describing the databook
- * Keep polling until all the tables are ready
- */
 export default ({ id }) => {
+  useContext(AuthContext).authenticate()
+
   const classes = useStyles()
   setShareLink({
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/databook?id=${id}`,
@@ -66,6 +66,10 @@ export default ({ id }) => {
 
         const ready = tablesNotReady > 0 ? false : true
 
+        /**
+         * Get the Mongo doc describing the databook
+         * Keep polling until all the tables are ready
+         */
         if (ready) {
           stopPolling()
         } else {

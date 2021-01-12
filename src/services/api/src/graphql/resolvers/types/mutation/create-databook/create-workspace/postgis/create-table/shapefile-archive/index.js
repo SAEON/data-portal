@@ -13,7 +13,7 @@ import { collections } from '../../../../../../../../../mongo/index.js'
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
-export default async (databook, { immutableResource, id }) => {
+export default async (ctx, databook, { immutableResource, id }) => {
   const { Databooks } = await collections
   const tableName = createDataName(id)
   const { downloadURL } = immutableResource.resourceDownload
@@ -63,7 +63,7 @@ export default async (databook, { immutableResource, id }) => {
     /**
      * Process .shp into PostGIS
      */
-    await ogr2ogr(databook, tableName, shpFilePath).then(async code => {
+    await ogr2ogr(ctx, databook, tableName, shpFilePath).then(async code => {
       if (code !== 0) {
         throw new Error(`Non-zero exit code (${code}) from GDAL ogr2ogr process`)
       }

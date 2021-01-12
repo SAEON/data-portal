@@ -8,9 +8,11 @@ import query from '../../../../../../../postgis/query.js'
  * password => created by API
  * schema => created by API
  */
-export default async databook => {
+export default async (ctx, databook) => {
   const { _id: schema, authentication } = databook
-  const { username, password } = authentication
+  const { username, password: encryptedPassword } = authentication
+  const { decrypt } = ctx.crypto
+  const password = decrypt(encryptedPassword)
 
   console.log(schema, 'Creating schema')
 

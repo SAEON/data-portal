@@ -11,7 +11,6 @@ export default {
   deleteDashboard: await _import('./_delete-dashboard.js'),
   addChartToDashboard: await _import('./_add-chart-to-dashboard.js'),
   removeChartFromDashboard: await _import('./_remove-chart-from-dashboard.js'),
-
   createChart: await _import('./_create-chart.js'),
   deleteChart: await _import('./_delete-chart.js'),
 }

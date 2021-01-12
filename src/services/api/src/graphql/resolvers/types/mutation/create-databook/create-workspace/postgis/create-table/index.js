@@ -4,7 +4,7 @@ const { ObjectID } = mongodb
 import { collections } from '../../../../../../../../mongo/index.js'
 import createDataName from '../../../_create-data-name.js'
 
-export default async (databook, { immutableResource, id }) => {
+export default async (ctx, databook, { immutableResource, id }) => {
   const { Databooks } = await collections
   const { resourceDownload, resourceName } = immutableResource
   const { archive, archivedFormats, fileFormat } = resourceDownload
@@ -30,7 +30,7 @@ export default async (databook, { immutableResource, id }) => {
      */
     if (archive && archivedFormats?.includes('shp')) {
       console.log(databook._id, 'shapefile archive')
-      return await loadShapefileArchive(databook, { immutableResource, id })
+      return await loadShapefileArchive(ctx, databook, { immutableResource, id })
     }
 
     /**

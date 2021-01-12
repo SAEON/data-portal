@@ -3,6 +3,8 @@ const { ObjectID } = mongodb
 import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { id } = args
   const { Databooks } = await ctx.mongo.collections
   const doc = await Databooks.findOne({ _id: ObjectID(id) })

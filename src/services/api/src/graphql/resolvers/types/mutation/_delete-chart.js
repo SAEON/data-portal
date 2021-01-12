@@ -2,6 +2,8 @@ import mongo from 'mongodb'
 const { ObjectID } = mongo
 
 export default async (_, { id }, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { Charts } = await ctx.mongo.collections
   const { result } = await Charts.remove({ _id: ObjectID(id) })
   const { n } = result

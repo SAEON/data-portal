@@ -6,6 +6,8 @@ const { ObjectID } = mongo
  * add the chart to the dashboard
  */
 export default async (_, { chartId, dashboardId }, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { Charts, Dashboards } = await ctx.mongo.collections
   chartId = ObjectID(chartId)
 
