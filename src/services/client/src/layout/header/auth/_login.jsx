@@ -1,7 +1,7 @@
 import { Link, Tooltip } from '@material-ui/core'
 import clsx from 'clsx'
 import useStyles from './style'
-import { CATALOGUE_API_ADDRESS } from '../../../config'
+import { CATALOGUE_API_ADDRESS, CATALOGUE_CLIENT_ADDRESS } from '../../../config'
 
 export default () => {
   const classes = useStyles()
@@ -11,7 +11,7 @@ export default () => {
         className={clsx(classes.link)}
         color="inherit"
         variant="overline"
-        href={`${CATALOGUE_API_ADDRESS}/login`}
+        href={`${CATALOGUE_API_ADDRESS}/login?redirect=${CATALOGUE_CLIENT_ADDRESS}/records`}
       >
         Login
       </Link>

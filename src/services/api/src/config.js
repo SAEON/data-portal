@@ -71,8 +71,9 @@ export const POSTGIS_PASSWORD = process.env.POSTGIS_PASSWORD || 'password'
 
 export const CATALOGUE_API_PORT = process.env.CATALOGUE_API_PORT || 3000
 
-export const CATALOGUE_API_GQL_ADDRESS =
-  process.env.CATALOGUE_API_GQL_ADDRESS || 'http://localhost:3000/graphql'
+export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
+
+export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
 
 export const CATALOGUE_PROXY_ADDRESS =
   process.env.CATALOGUE_PROXY_ADDRESS || 'http://localhost:8001'
@@ -124,6 +125,7 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_API_ADDRESS,
       CATALOGUE_API_OAUTH_REDIRECT_ADDRESS,
       CATALOGUE_API_KEY: mask(CATALOGUE_API_KEY),
       CATALOGUE_API_GOOGLE_CLIENT_ID,

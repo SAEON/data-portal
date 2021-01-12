@@ -14,7 +14,7 @@ export default function Catalogue({ dslAddress = null, index = null }) {
   this.index = index
 }
 
-Catalogue.prototype.query = async function (dsl, abortFetch) {
+Catalogue.prototype.query = async function (dsl) {
   if (!dsl) {
     throw new Error(`${errorHeader}. DSL object is required to query the Elasticsearch instance`)
   } else {
@@ -22,8 +22,7 @@ Catalogue.prototype.query = async function (dsl, abortFetch) {
   }
 
   try {
-    const response = await this.httpClient(`${this.dslAddress}/${this.index}/_search`, {
-      signal: abortFetch?.signal,
+    return await this.httpClient(`${this.dslAddress}/${this.index}/_search`, {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -31,14 +30,12 @@ Catalogue.prototype.query = async function (dsl, abortFetch) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(dsl),
-    })
-    return await response.json()
+    }).then(res => res.json())
   } catch (error) {
-    if (error.name !== 'AbortError')
-      throw new Error(
-        `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${JSON.stringify(
-          dsl
-        )}. ${error}`
-      )
+    throw new Error(
+      `${errorHeader}. class ElasticCatalogue. ERROR: query failed with DSL body ${JSON.stringify(
+        dsl
+      )}. ${error}`
+    )
   }
 }

@@ -3,6 +3,13 @@ import fetchMetadataRecords from './_fetch-metadata-records.js'
 import createMongoDoc from './_create-mongo-doc.js'
 
 export default async (_, args, ctx) => {
+  const { findUserRoles } = ctx.mongo.dataFinders
+  const { userInfo, userModel } = ctx
+  const { checkRole } = userModel
+  if (!(await checkRole(userInfo, (await findUserRoles({ name: 'datascientist' }))[0]))) {
+    ctx.throw(403)
+  }
+
   const { state, createdBy } = args
 
   /**

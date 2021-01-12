@@ -9,11 +9,12 @@ import {
 import getCollections from './_collections.js'
 import configureDataFinders from './_data-finders.js'
 import configureDataInserters from './_data-inserters.js'
+import userRoles from './setup/user-roles.js'
 
 const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
 
 export const _collections = {
-  UserInfo: 'userInfo',
+  UserRoles: 'userRoles',
   Users: 'users',
   Atlases: 'atlases',
   Logs: 'logs',
@@ -48,7 +49,29 @@ const indices = [
       unique: true,
     },
   },
+  {
+    collection: _collections.UserRoles,
+    index: 'name',
+    options: {
+      unique: true,
+    },
+  },
 ]
+
+export const setupUserRoles = () =>
+  db.then(db =>
+    Promise.all(
+      userRoles.map(userRole => {
+        const { name, ...other } = userRole
+        db.collection(_collections.UserRoles).findAndModify(
+          { name },
+          null,
+          { $setOnInsert: { name }, $set: { ...other } },
+          { upsert: true }
+        )
+      })
+    )
+  )
 
 export const applyIndices = () =>
   db.then(db =>

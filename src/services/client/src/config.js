@@ -19,32 +19,15 @@ export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 10
 
 export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 
-export const CATALOGUE_API_GQL_ADDRESS =
-  process.env.CATALOGUE_API_GQL_ADDRESS || 'http://localhost:3000/graphql'
+export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
 
-export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS =
-  process.env.CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS || 'ws://localhost:3000/graphql'
+const url = new URL(CATALOGUE_API_ADDRESS)
+export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS = `${
+  url.protocol === 'http:' ? 'ws:' : 'wss:'
+}//${url.hostname}${url.port ? `:${url.port}` : ''}/graphql`
 
 export const CATALOGUE_CLIENT_ADDRESS =
   process.env.CATALOGUE_CLIENT_ADDRESS || 'http://localhost:3001'
-
-export const CATALOGUE_CLIENT_AUTH_ID = process.env.CATALOGUE_CLIENT_AUTH_ID || 'saeon-data-portal' // 'saeonatlasclienttest' on dev, but should change
-
-export const CATALOGUE_CLIENT_AUTH_REDIRECT_URL =
-  process.env.CATALOGUE_CLIENT_AUTH_REDIRECT_URL || 'http://localhost:3001/authenticated'
-
-export const CATALOGUE_CLIENT_AUTH_ENDPOINT =
-  process.env.CATALOGUE_CLIENT_AUTH_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/auth'
-
-export const CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT =
-  process.env.CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT ||
-  'https://odp.saeon.dvn/auth/oauth2/sessions/logout'
-
-export const CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT =
-  process.env.CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT || 'https://odp.saeon.dvn/auth/oauth2/token'
-
-export const CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES =
-  process.env.CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES || 'SAEON.atlas'
 
 export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
 
@@ -64,13 +47,7 @@ if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
         CATALOGUE_CLIENT_BACKGROUNDS,
         CATALOGUE_CLIENT_DEFAULT_NOTICES,
         CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
-        CATALOGUE_CLIENT_AUTH_ID,
         CATALOGUE_CLIENT_ADDRESS,
-        CATALOGUE_CLIENT_AUTH_REDIRECT_URL,
-        CATALOGUE_CLIENT_AUTH_ENDPOINT,
-        CATALOGUE_CLIENT_AUTH_LOGOUT_ENDPOINT,
-        CATALOGUE_CLIENT_AUTH_TOKEN_ENDPOINT,
-        CATALOGUE_CLIENT_AUTH_REQUESTED_SCOPES,
         CATALOGUE_CLIENT_FILTER_CONFIG,
       }).sort(([aKey], [bKey]) => {
         if (aKey > bKey) return 1

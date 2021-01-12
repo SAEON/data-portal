@@ -1,5 +1,7 @@
-// TODO the redirect address should be configured as a URL client param. NOT static or api config
+import { CATALOGUE_API_ADDRESS } from '../config.js'
+
 export default async ctx => {
+  const { redirect = CATALOGUE_API_ADDRESS } = ctx.request.query
   ctx.session = null
-  ctx.redirect('http://localhost:3001')
+  ctx.redirect(redirect)
 }

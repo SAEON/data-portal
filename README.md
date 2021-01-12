@@ -117,7 +117,7 @@ npm run start:client
 # Deployment and installation
 
 ## Docker-compose
-From the root of the source code directory run the following shell command:
+From the root of the source code directory run the following shell command to start the services:
 
 ```sh
 CATALOGUE_API_ODP_CLIENT_SECRET="<secret>" \
@@ -135,11 +135,20 @@ CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled" \
 CATALOGUE_API_RESET_POSTGIS="disabled" \
 CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
 CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
-CATALOGUE_CLIENT_AUTH_REDIRECT_URL="http://localhost:3001/authenticated" \
 CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
 CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
+
+Check that the services started successfully: `docker container ls`. There should be running instances of the following services:
+
+- MongoDB
+- PostGIS
+- Elasticsearch
+- Kibana
+- API
+- Proxy
+- Client
 
 ## Continuous deployment
 
@@ -153,9 +162,6 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
 5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
 6. Push from local to your forked repository to trigger a deployment
-
-### Gotchas
-One would think that configuring the server would include Nginx configuration. Currently Nginx is configured by GitHub actions. This is definitely not very intuitive and will change in the future. But for now the only way of completing the deployment is by setting up GitHub actions after setting up the server
 
 ## SAEON Data Portal endpoints
 

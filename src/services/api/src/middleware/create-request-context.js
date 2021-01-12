@@ -3,6 +3,7 @@ import postgisQuery from '../postgis/query.js'
 import Catalogue from '../lib/catalogue.js'
 import { CATALOGUE_PROXY_ADDRESS, CATALOGUE_API_ELASTICSEARCH_INDEX_NAME } from '../config.js'
 import { schema } from '../graphql/index.js'
+import userModel from '../user-model/index.js'
 
 const catalogue = new Catalogue({
   dslAddress: `${CATALOGUE_PROXY_ADDRESS}/proxy/elasticsearch`,
@@ -30,6 +31,8 @@ export default app => async (ctx, next) => {
   app.context.gql = {
     schema,
   }
+
+  app.context.userModel = userModel
 
   await next()
 }

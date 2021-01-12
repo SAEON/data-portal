@@ -7,12 +7,14 @@ import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import useStyles from './style'
 import { context as globalContext } from '../../../../../../contexts/global'
+import { AuthContext } from '../../../../../../contexts/authentication'
 
 export default ({ id, linkedResources }) => {
   const [loading, setLoading] = useState(false)
   const client = useApolloClient()
   const classes = useStyles()
   const { global, setGlobal } = useContext(globalContext)
+  const { userInfo } = useContext(AuthContext)
   const { selectedIds } = global
   const history = useHistory()
 
@@ -20,11 +22,19 @@ export default ({ id, linkedResources }) => {
     linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
   )
 
-  return loading ? (
-    <Fade in={true}>
-      <CircularProgress thickness={2} size={18} style={{ margin: '0 6px' }} />
-    </Fade>
-  ) : (
+  if (!userInfo) {
+    return null
+  }
+
+  if (loading) {
+    return (
+      <Fade in={true}>
+        <CircularProgress thickness={2} size={18} style={{ margin: '0 6px' }} />
+      </Fade>
+    )
+  }
+
+  return (
     <Tooltip title={hasLayers ? 'Analyze dataset' : 'Data not available'} placement="left-start">
       <span>
         <IconButton
