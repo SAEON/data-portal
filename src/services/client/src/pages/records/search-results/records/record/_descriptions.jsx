@@ -15,7 +15,7 @@ export default ({ descriptions, id }) => {
         className={clsx(classes.description)}
         variant="body2"
       >
-        {descriptions?.[0]?.description.truncate(530) || 'No description'}
+        {descriptions?.[0]?.description?.truncate(530) || 'No description'}
       </Typography>
     </CardContent>
   )
