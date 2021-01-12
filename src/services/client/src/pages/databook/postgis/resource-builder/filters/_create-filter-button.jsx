@@ -110,6 +110,7 @@ export default () => {
                             $name: String
                             $columnFiltered: String
                             $selectedValues: [String]
+                            $values: [String]
                             $sql: String
                           ) {
                             createFilter(
@@ -117,6 +118,7 @@ export default () => {
                               name: $name
                               columnFiltered: $columnFiltered
                               selectedValues: $selectedValues
+                              values: $values
                               sql: $sql
                             ) {
                               id
@@ -130,7 +132,8 @@ export default () => {
                             columnFiltered: columnFiltered,
                             selectedValues: [
                               ...new Set(sqlResult.map(row => String(row[columnFiltered]))),
-                            ], //grabbing column values and removing duplicates //due to reworking, this can probably be replaced with nothing or empty array. to confirm
+                            ],
+                            values: [...new Set(sqlResult.map(row => String(row[columnFiltered])))], //grabbing column values and removing duplicates //due to reworking,
                             sql,
                           }),
                         },

@@ -5,7 +5,7 @@ const { ObjectID } = mongodb
 export default async (_, args, ctx) => {
   const { findCharts, findFilters } = ctx.mongo.dataFinders
 
-  const { chartIds, filterIds } = args
+  const { chartIds, filterIds, selectedFilterValues } = args
   if (!chartIds || !filterIds) {
     throw new Error('Please specify IDs of charts and filters')
   }
@@ -23,11 +23,8 @@ export default async (_, args, ctx) => {
     console.log('chart stuff', chart)
     for (var j = 0; j < filters.length; j++) {
       let { columnFiltered, selectedValues } = filters[j]
-      //potential to-do: if chart.data column names don't include columnFiltered: Skip this filter
+      //potential to-do: if chart.data column names don't include columnFiltered: Skip this filter (possibly help performance if needed)
 
-      if (selectedValues === []) {
-        continue //Interpreting emtpy selectedValues as `Show All`. May change this to `Show None` in the future
-      }
       chart.data = chart.data.filter(entry => {
         if (!entry[columnFiltered] || selectedValues.includes(entry[columnFiltered])) return true
         //TO-DO: confirm type differences are accounted for, e.g. comparing "1" to 1

@@ -90,6 +90,7 @@ type Mutation {
     databookId: ID!
     columnFiltered: String
     selectedValues: [String]
+    values: [String]
     sql: String
   ): Filter!
   updateFilter(id: ID!, selectedValues: [String]): Filter!

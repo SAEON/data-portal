@@ -9,16 +9,22 @@ export default ({
   setOption,
   getOptionSelected = undefined,
   selectedOptions = [],
+  multiple = false,
   ...props
 }) => {
+  console.log('options', options)
+  console.log('')
   return (
     <Autocomplete
       // From parent
       id={id}
-      value={selectedOptions?.length ? selectedOptions : null}
+      value={selectedOptions?.length ? selectedOptions : multiple ? [] : null}
       options={options}
       onChange={(ev, newVal) => setOption(newVal)}
       getOptionSelected={getOptionSelected}
+      //multiple related
+      multiple={multiple}
+      disableCloseOnSelect={multiple}
       // Internal
       fullWidth
       ListboxComponent={ListboxComponent}

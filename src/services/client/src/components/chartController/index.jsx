@@ -5,10 +5,9 @@ import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'
 import { Fade } from '@material-ui/core'
 
-// export default ({ id, style = {}, filters }) => {
-export default props => {
-  console.log('chartController props', props)
-  const { id, style = {}, filters } = props
+export default ({ id, style = {}, filters }) => {
+  // export default props => {
+  // const { id, style = {}, filters } = props
   return (
     <WithGqlQuery
       QUERY={gql`

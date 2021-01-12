@@ -30,6 +30,7 @@ function createElement(str) {
 const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
+  console.log('dashboard preview - dashboard', dashboard)
   const classes = useStyles()
   const { id: dashboardId, layout = [] } = dashboard
   const [gridState, updateGridState] = useState({})
@@ -39,7 +40,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
   gridCache[dashboardId] = layout
 
-  const itemIds = useMemo(() => {
+  const chartIds = useMemo(() => {
     return (
       layout
         ?.map(({ content }) => {
@@ -52,9 +53,22 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         .filter(_ => _) || []
     )
   }, [layout])
+  const filterIds = useMemo(() => {
+    return (
+      layout
+        ?.map(({ content }) => {
+          if (content.type.toUpperCase() === 'FILTER') {
+            return content.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(_ => _) || []
+    )
+  }, [layout])
 
-  if (Object.keys(refs.current).length !== itemIds.length) {
-    itemIds.forEach(id => {
+  if (Object.keys(refs.current).length !== chartIds.length) {
+    chartIds.forEach(id => {
       refs.current[id] = refs.current[id] || createRef()
     })
   }
@@ -89,7 +103,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
     grid.removeAll(false)
     grid.batchUpdate()
-    itemIds.forEach(id => {
+    chartIds.forEach(id => {
       if (refs.current[id].current?.gridstackNode) {
         // TODO - ? should the node be updated?
       } else {
@@ -107,7 +121,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [dashboardId, layout, itemIds])
+  }, [dashboardId, layout, chartIds])
 
   return (
     <>
@@ -130,10 +144,17 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
           setActiveTabIndex={setActiveTabIndex}
         />
       </Toolbar>
-      <p>Filters here</p>
+      <div>
+        {filterIds.map(id => (
+          // STEVEN TO-DO: flesh this out more and move styling to classes
+          <div style={{ border: '1px solid grey', display: 'inline', marginRight: '5px' }}>
+            {id}
+          </div>
+        ))}
+      </div>
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
-          {itemIds?.map(id => {
+          {chartIds?.map(id => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
             )

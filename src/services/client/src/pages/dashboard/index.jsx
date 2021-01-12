@@ -4,13 +4,13 @@ import { setShareLink, WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
-import AutoComplete from '../../components/autocomplete'
+
 import { gql } from '@apollo/client'
 import { AppBar, Grid, Toolbar } from '@material-ui/core'
 import Layout from './layout'
+import Filters from './layout/filters/_filters'
 import useStyles from './style'
 import clsx from 'clsx'
-import QuickForm from '@saeon/quick-form'
 
 const POLLING_INTERVAL = 500
 //STEVEN TO-DO: Accidentally removed charts from dashboard. To recover previous version which had charts
@@ -50,6 +50,10 @@ export default ({ id }) => {
 
         const { layout } = data.dashboard
         console.log('.../dashboard/ layout', layout)
+        const filterIds = layout
+          .filter(entry => entry.content.type === 'Filter')
+          .map(entry => entry.content.id)
+        console.log('filterIds declaration', filterIds)
         const MenuProps = {
           PaperProps: {
             style: {
@@ -75,41 +79,14 @@ export default ({ id }) => {
                   <Toolbar variant="dense">
                     {/*** */}
                     {/* Filters go here */}
-                    {/* TO-DO 0.5: does Filter graphql type need columnValues back? will client side be able to display all columnValues without it? */}
-                    {/* TO-DO 1: fix dashboard query then map returned filters here */}
+                    {/* DONE! TO-DO 0.5: does Filter graphql type need columnValues back? will client side be able to display all columnValues without it? */}
+                    {/* 0.5.2 Probably shouldn't have actually added selectedValues to graphql. I dont think this will be functional for multiple users.
+                            selectedValues should be an arg passed to the filterCharts query instead. therefore also delete mutatoinupdateFilter(or flesh out for future use of editing old filters) */}
+                    {/* DONE! TO-DO 1: fix dashboard query then map returned filters here */}
                     {/* TO-DO 2: change charts query(wherever it is) to use filteredCharts instead.
-                                Somehow need to pass list of filters to that query(hopefully with dashboard query) */}
-                    {/* TO-DO 3: Have client-side filter component run updateFilter mutation on user selection to visually update chart  */}
-                    <QuickForm value={''}>
-                      {(update, { value }) => {
-                        return (
-                          <AutoComplete
-                            id="region-filter"
-                            options={['Cape Town', 'Joburg', 'Pretoria', 'Durban']}
-                            selectedOptions={value}
-                            setOption={newVal => {
-                              update({ value: newVal })
-                            }}
-                            label="REGION"
-                          />
-                        )
-                      }}
-                    </QuickForm>
-                    <QuickForm value={''}>
-                      {(update, { value }) => {
-                        return (
-                          <AutoComplete
-                            id="indicator-filter"
-                            options={[]}
-                            selectedOptions={value}
-                            setOption={newVal => {
-                              update({ value: newVal })
-                            }}
-                            label="INDICATOR"
-                          />
-                        )
-                      }}
-                    </QuickForm>
+                                Somehow need to pass filters selectedValues(maybe a common parent/ancestor with state) */}
+                    {/* TO-DO 3: Flesh out visuals of filter(perhaps a checkbox dropdown list instead of chips) */}
+                    <Filters filterIds={filterIds} />
                   </Toolbar>
                 </div>
               </Grid>
