@@ -52,7 +52,7 @@ export default {
     {
       id: 'series-markline-1',
       description: 'Name and quantify first line marking',
-      Component: ({ data, value, setValue }) => {
+      Component: ({  value, setValue }) => {
         return (
           <>
             <TextField
@@ -82,7 +82,7 @@ export default {
     {
       id: 'series-markline-2',
       description: 'Name and quantify second line marking',
-      Component: ({ data, value, setValue }) => {
+      Component: ({  value, setValue }) => {
         return (
           <>
             <TextField
@@ -101,7 +101,6 @@ export default {
               label="Value (Numeric)"
               autoFocus
               size="small"
-              label=""
               onChange={event => {
                 setValue({ name: value?.name, value: event.target.value })
               }}

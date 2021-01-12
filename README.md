@@ -2,6 +2,7 @@
 ![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
 # SAEON Catalogue software
+
 A suite of services that provide a platform for searching and exploring SAEON-curated datasets. The tech stack is as listed below. This document shows how to setup a development environment for contributions, and also explains how to build and deploy the services.
 
 - Docker
@@ -15,7 +16,6 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
@@ -25,7 +25,6 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose](#docker-compose)
   - [Continuous deployment](#continuous-deployment)
-    - [Gotchas](#gotchas)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
@@ -57,6 +56,7 @@ sudo apt-get install -y nodejs
 ```
 
 ## Install source code and dependencies
+
 ```sh
 # Download the source code
 git clone git@github.com:SAEON/catalogue.git catalogue
@@ -68,7 +68,6 @@ npm run configure-git
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies
 ```
-
 
 ## Local development
 
@@ -117,6 +116,7 @@ npm run start:client
 # Deployment and installation
 
 ## Docker-compose
+
 From the root of the source code directory run the following shell command to start the services:
 
 ```sh
@@ -159,9 +159,9 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 3. Setup a CentOS 7 server with a user and SSH login without a password
 4. Run the command: `npm run configure-centos-7-server` from the root of the repository
 5. Configure [SSL](platform/README.md#ssl) appropriately
-4. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
-5. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
-6. Push from local to your forked repository to trigger a deployment
+6. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
+7. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
+8. Push from local to your forked repository to trigger a deployment
 
 ## SAEON Data Portal endpoints
 
@@ -192,14 +192,25 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 # Documentation
 
 ## API
+
 [src/services/api/README.md](src/services/api/)
+
 ## Proxy
+
 [src/services/proxy/README.md](src/services/proxy/)
+
 ## Client
+
 [src/services/client/README.md](src/services/client/)
+
 ## Server configuration
+
 [platform/README.md](platform/)
+
 ## NPM packages
+
 [src/packages/README.md](src/packages/)
+
 ## Repository tools
+
 [src/tools/README.md](src/tools/)

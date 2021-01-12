@@ -43,9 +43,9 @@ const QueryOperator = props => {
   return children(renameEntityLazy)
 }
 
-export default ({ variables, children, inputRef, entityType }) => {
+export default ({ variables, children, entityType }) => {
   if (!['table', 'column'].includes(entityType)) {
-    console.log('RenameEntity requires a valid entityType')
+    console.log('renameEntity requires a valid entityType')
     return children
   }
 

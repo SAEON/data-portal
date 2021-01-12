@@ -25,8 +25,8 @@ jobs:
           CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_STABLE }}"
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
-          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="disabled"
-          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="disabled"
+          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
+          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
           CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
@@ -34,13 +34,9 @@ jobs:
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
           CATALOGUE_DEPLOYMENT_ENV="production"
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
-          CATALOGUE_PROXY_ADDRESS="http://proxy:8001"
-          ELASTICSEARCH_ADDRESS="http://elasticsearch:9200"
-          MONGO_DB_ADDRESS="mongodb://mongo:27017"
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
           ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
-          POSTGIS_HOST="postgis"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_PORT=5442
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"

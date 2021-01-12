@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink, WithGqlQuery } from '../../hooks'
 import { getUriState } from '../../lib/fns'
