@@ -52,7 +52,7 @@ export default {
     {
       id: 'series-markline-1',
       description: 'Name and quantify first line marking',
-      Component: ({  value, setValue }) => {
+      Component: ({ value, setValue }) => {
         return (
           <>
             <TextField
@@ -82,7 +82,7 @@ export default {
     {
       id: 'series-markline-2',
       description: 'Name and quantify second line marking',
-      Component: ({  value, setValue }) => {
+      Component: ({ value, setValue }) => {
         return (
           <>
             <TextField

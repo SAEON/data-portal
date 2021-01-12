@@ -1,11 +1,7 @@
 import fetch from 'node-fetch'
 import mappings from './mappings.json'
 import settings from './settings.json'
-import {
-  ELASTICSEARCH_ADDRESS,
-  CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME,
-} from '../../config.js'
-
+import { ELASTICSEARCH_ADDRESS, CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME } from '../../config.js'
 
 export default async () => {
   return fetch(
