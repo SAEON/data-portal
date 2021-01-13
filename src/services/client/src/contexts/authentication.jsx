@@ -18,15 +18,17 @@ export default ({ children }) => {
   useEffect(() => {
     const _ = async () => {
       setAuthenticating(true)
-      fetch(`${CATALOGUE_API_ADDRESS}/authenticate`, {
-        credentials: 'include',
-        mode: 'cors',
-      })
-        .then(res => res.json())
-        .then(userInfo => {
-          setUserInfo(userInfo)
-          setAuthenticating(false)
+      try {
+        const response = await fetch(`${CATALOGUE_API_ADDRESS}/authenticate`, {
+          credentials: 'include',
+          mode: 'cors',
         })
+        const userInfo = await response.json()
+        setUserInfo(userInfo)
+        setAuthenticating(false)
+      } catch (error) {
+        throw new Error('Error authenticating user ::' + error.message)
+      }
     }
     _()
   }, [])

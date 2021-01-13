@@ -12,6 +12,7 @@ import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
 import homeRoute from './http/home.js'
+import downloadProxyRoute from './http/download-proxy.js'
 import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
@@ -89,6 +90,7 @@ app
     new KoaRouter()
       .get('/', homeRoute)
       .post('/', homeRoute)
+      .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
       .get('/authenticate/redirect', authenticate, loginSuccessRoute) // passport
       .get('/login', login) // passport
