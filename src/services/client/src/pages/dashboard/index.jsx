@@ -29,9 +29,6 @@ export default ({ id }) => {
             layout
             filters {
               id
-              name
-              columnFiltered
-              values
             }
           }
         }
@@ -64,17 +61,19 @@ export default ({ id }) => {
         }
         return (
           <Grid container justify="center">
-            <Grid item xs={12}>
-              <AppBar
-                style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
-                variant="elevation"
-              >
-                <Toolbar variant="dense">This is the page toolbar</Toolbar>
-              </AppBar>
-            </Grid>
-            <Grid item xs={12} style={{ margin: '36px 0' }} />
-            <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
-              <DashboardContextProvider filterIds={filterIds}>
+            <DashboardContextProvider filterIds={filterIds}>
+              <Grid item xs={12}>
+                <AppBar
+                  style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
+                  variant="elevation"
+                >
+                  <Toolbar variant="dense">
+                    1<Filters filterIds={filterIds} />2
+                  </Toolbar>
+                </AppBar>
+              </Grid>
+              <Grid item xs={12} style={{ margin: '36px 0' }} />
+              <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
                 <Grid item xs={12}>
                   <div className={clsx(classes.layout)}>
                     <Toolbar variant="dense">
@@ -86,12 +85,12 @@ export default ({ id }) => {
                 <div style={{ position: 'relative', width: '100%' }}>
                   <Layout items={layout} />
                 </div>
-              </DashboardContextProvider>
-            </Grid>
-            <Grid item xs={12} style={{ margin: '16px 0' }} />
-            <Grid item xs={12}>
-              <Footer />
-            </Grid>
+              </Grid>
+              <Grid item xs={12} style={{ margin: '16px 0' }} />
+              <Grid item xs={12}>
+                <Footer />
+              </Grid>
+            </DashboardContextProvider>
           </Grid>
         )
       }}

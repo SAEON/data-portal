@@ -7,6 +7,5 @@ export default async (self, args, ctx) => {
   const { filters } = self
   const filterIds = filters.map(({ _id }) => ObjectID(_id))
   const { findFilters } = ctx.mongo.dataFinders
-  const hereFilters = await findFilters({ _id: { $in: filterIds || [] } })
-  return hereFilters
+  return await findFilters({ _id: { $in: filterIds || [] } })
 }
