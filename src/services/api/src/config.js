@@ -7,7 +7,8 @@ config()
 
 const __dirname = getCurrentDirectory(import.meta)
 
-export const CATALOGUE_API_KEY = process.env.CATALOGUE_API_KEY || 'CATALOGUE_API_KEY'
+export const CATALOGUE_API_KEY =
+  process.env.CATALOGUE_API_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0EdIqD3RAUUCU='
 
 export const CATALOGUE_API_GOOGLE_CLIENT_ID = process.env.CATALOGUE_API_GOOGLE_CLIENT_ID || ''
 

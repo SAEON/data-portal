@@ -1,6 +1,10 @@
 export default [
   {
     name: 'datascientist',
-    description: 'Unknown',
+    description: '',
+  },
+  {
+    name: 'admin',
+    description: '',
   },
 ]

@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Toolbar, IconButton, Tooltip, Grid, Divider } from '@material-ui/core'
+import { Toolbar, IconButton, Tooltip, Grid } from '@material-ui/core'
 import useStyles from '../../style'
 import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
 import ChartsIcon from 'mdi-react/ChartBellCurveIcon'

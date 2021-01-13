@@ -24,6 +24,8 @@ export default ({ data }) => {
     height: -1,
   })
 
+  // TODO Why is this in state if it's never updated
+  // eslint-disable-next-line
   const [columnWidths, setColumnWidths] = useState(
     Object.fromEntries(Object.entries(headers).map(([name]) => [name, name.length / 2 + 2]))
   )

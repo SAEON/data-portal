@@ -52,6 +52,8 @@ export default ({ gridState, dashboard }) => {
                   id: dashboard.id,
                   layout: gridState,
                 },
+                // TODO - can't remember why the data value isn't used. probably should be
+                // eslint-disable-next-line
                 update: (cache, { data }) => {
                   const { dashboards } = cache.read({
                     query: DASHBOARDS_QUERY,

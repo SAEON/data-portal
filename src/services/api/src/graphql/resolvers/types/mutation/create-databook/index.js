@@ -3,12 +3,7 @@ import fetchMetadataRecords from './_fetch-metadata-records.js'
 import createMongoDoc from './_create-mongo-doc.js'
 
 export default async (_, args, ctx) => {
-  const { findUserRoles } = ctx.mongo.dataFinders
-  const { userInfo, userModel } = ctx
-  const { checkRole } = userModel
-  if (!(await checkRole(userInfo, (await findUserRoles({ name: 'datascientist' }))[0]))) {
-    ctx.throw(403)
-  }
+  await ctx.userModel.checkRole(ctx, 'datascientist')
 
   const { state, createdBy } = args
 
@@ -37,6 +32,6 @@ export default async (_, args, ctx) => {
    * and so a client can check progress on this method that
    * way (via polling)
    */
-  createPostgisWorkspace({ records, databookId }).catch(error => console.error(error))
+  createPostgisWorkspace(ctx, { records, databookId }).catch(error => console.error(error))
   return databookId
 }

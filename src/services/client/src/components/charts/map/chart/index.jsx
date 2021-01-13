@@ -3,6 +3,7 @@ import theme from '../../../../lib/echarts-theme'
 import echarts from 'echarts'
 import { nanoid } from 'nanoid'
 
+// eslint-disable-next-line
 export default ({ config, data, title, description }) => {
   const geoNamesField = config['series-geo-names']
   const geoValuesField = config['series-geo-values']

@@ -20,6 +20,7 @@ jobs:
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           CATALOGUE_API_GOOGLE_CLIENT_ID=
           CATALOGUE_API_GOOGLE_CLIENT_SECRET=
+          CATALOGUE_API_KEY="${{ secrets.CATALOGUE_API_KEY }}"
           CATALOGUE_API_NODE_ENV=development
           CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
@@ -37,6 +38,5 @@ jobs:
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
           ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-          POSTGIS_PORT=5442
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

@@ -3,23 +3,12 @@ import {
   CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
   ELASTICSEARCH_ADDRESS,
   CATALOGUE_API_ODP_FILTER,
-  CATALOGUE_PROXY_ADDRESS,
 } from '../../config.js'
-import url from 'url'
 import makeOdpIterator from './iterator/index.js'
 
 const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
 
-/**
- * It should only be possible to configure elasticsearch
- *   => With correct authentication TODO
- *   => If the read address (proxy) is the same as the write address
- */
 export default async () => {
-  if (url.parse(ELASTICSEARCH_ADDRESS).hostname !== url.parse(CATALOGUE_PROXY_ADDRESS).hostname) {
-    return 'Aborting! Read / write from separate hostnames'
-  }
-
   const result = {
     updated: 0,
     created: 0,
