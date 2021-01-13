@@ -13,8 +13,6 @@ const getIV = () => crypto.randomBytes(ALGORITHM.IV_BYTE_LEN)
 
 export const getRandomKey = () => crypto.randomBytes(ALGORITHM.KEY_BYTE_LEN)
 
-console.log(getRandomKey().toString('base64'))
-
 /**
  * To prevent rainbow table attacks
  * */
