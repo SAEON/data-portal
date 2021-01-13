@@ -1,6 +1,6 @@
 import Ace from './ace'
 import { useContext, useRef, useEffect } from 'react'
-import { useLocalStorage } from '../../../../hooks'
+import useLocalStorage from '../../../../hooks/use-localstorage'
 import { context as databookContext } from '../../context'
 import { Toolbar, IconButton, Tabs, Tab, Avatar, Tooltip } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'

@@ -1,5 +1,6 @@
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
-import { setShareLink, WithGqlQuery } from '../../hooks'
+import WithGqlQuery from '../../hooks/with-gql-query'
+import { setShareLink } from '../../hooks/use-share-link'
 import { getUriState } from '../../lib/fns'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'

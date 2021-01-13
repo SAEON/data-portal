@@ -2,7 +2,7 @@ import Results from './search-results'
 import SearchBar from './search-bar'
 import { isMobile } from 'react-device-detect'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
-import { setShareLink } from '../../hooks'
+import { setShareLink } from '../../hooks/use-share-link'
 
 export default ({ showSearchBar = true, ...props } = {}) => {
   setShareLink({

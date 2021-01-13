@@ -13,7 +13,7 @@ import Loading from '../../../../../../components/loading'
 import Autocomplete from '../../../../../../components/autocomplete'
 import { context as databookContext } from '../../../../context'
 import { gql, useApolloClient } from '@apollo/client'
-import { WithGqlQuery } from '../../../../../../hooks'
+import WithGqlQuery from '../../../../../../hooks/with-gql-query'
 import QuickForm from '@saeon/quick-form'
 
 const DASHBOARDS_QUERY = gql`

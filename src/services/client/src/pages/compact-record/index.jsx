@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import Loading from '../../components/loading'
-import { WithGqlQuery, setShareLink } from '../../hooks'
+import WithGqlQuery from '../../hooks/with-gql-query'
+import { setShareLink } from '../../hooks/use-share-link'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import CompactRecord from '../records/search-results/records/record'
 

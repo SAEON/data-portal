@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import { gql } from '@apollo/client'
-import { WithGqlQuery } from '../../hooks'
+import WithGqlQuery from '../../hooks/with-gql-query'
 import Autocomplete from '../autocomplete'
 
 const DEFAULT_CITATION_STYLE = 'apa'

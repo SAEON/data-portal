@@ -3,7 +3,7 @@ import { Button, CircularProgress } from '@material-ui/core'
 import { FormatQuote as CitationIcon } from '@material-ui/icons'
 import { gql } from '@apollo/client'
 import Dialogue from './dialogue'
-import { WithGqlQuery } from '../../hooks'
+import WithGqlQuery from '../../hooks/with-gql-query'
 
 export default ({ doi, children, ...props }) => {
   const [open, setOpen] = useState(false)
