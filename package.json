@@ -46,7 +46,7 @@
     "eslint": "^7.17.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.6",
+    "husky": "^4.3.7",
     "npm-check-updates": "^10.2.5",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0"

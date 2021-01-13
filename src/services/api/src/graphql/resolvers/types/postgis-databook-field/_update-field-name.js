@@ -19,9 +19,12 @@ export default async (self, args, ctx) => {
   const { query } = ctx.postgis
   const { column_name, /*data_type,*/ table_name } = self //commenting out data_type till the duplicate column issue is confirmed
   const { _id: schemaId } = self.databook
-  const { username, password } = self.databook.authentication
+  const { username, password: encryptedPassword } = self.databook.authentication
   const { name: newColumnName } = args
+  const password = ctx.crypto.decrypt(encryptedPassword)
+
   const sql = `ALTER TABLE "${schemaId.toString()}"."${table_name}" RENAME COLUMN "${column_name}" TO "${newColumnName}"`
+
   try {
     await query({ text: sql, client: { user: username, password } }) //client parameter can be set, see query def in .../databook/execute/index.js
   } catch (error) {

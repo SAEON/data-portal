@@ -11,6 +11,7 @@ import {
   IconButton,
   Tooltip,
 } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { Search as SearchIcon, Close as CloseIcon, Add as AddIcon } from '@material-ui/icons'
 import MessageDialogue from '../../../../../../components/message-dialogue'
 import Record from '../../../../../record'
@@ -36,6 +37,7 @@ const SEARCH_BOX_MARGIN = 52
 var cachedSearch
 
 export default () => {
+  const theme = useTheme()
   const classes = useStyles()
   const [textSearch, setTextSearch] = useState(cachedSearch || '')
   const { layers } = useContext(AtlasContext)
@@ -178,6 +180,7 @@ export default () => {
                           >
                             {DOI.truncate(30)}
                           </Typography>
+                          {/* TODO this code is defined in 3 places */}
                           <MessageDialogue
                             title={onClose => (
                               <div style={{ display: 'flex' }}>
@@ -185,6 +188,7 @@ export default () => {
                                   METADATA RECORD
                                 </Typography>
                                 <IconButton
+                                  size="small"
                                   onClick={e => {
                                     e.stopPropagation()
                                     onClose()
@@ -195,6 +199,12 @@ export default () => {
                                 </IconButton>
                               </div>
                             )}
+                            titleProps={{
+                              style: {
+                                paddingRight: theme.spacing(2),
+                                paddingLeft: theme.spacing(2),
+                              },
+                            }}
                             tooltipProps={{
                               placement: 'right',
                               title: `${description}`,

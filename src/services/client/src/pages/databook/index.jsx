@@ -50,7 +50,11 @@ export default ({ id }) => {
         }
 
         if (error) {
-          throw new Error(`Error loading databook ${id}. ${error}`)
+          if (error.message.toUpperCase() === 'FORBIDDEN') {
+            return error.message // Otherwise user is flashed an error message before being redirected to login
+          } else {
+            throw new Error(`Error loading databook ${id}. ${error}`)
+          }
         }
 
         const { doc: databook } = data.databook

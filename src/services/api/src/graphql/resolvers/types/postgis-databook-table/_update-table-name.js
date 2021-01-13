@@ -9,9 +9,10 @@
  */
 export default async (self, args, ctx) => {
   const { id: currentTableName } = self
-  const { username, password } = self.databook.authentication
+  const { username, password: encryptedPassword } = self.databook.authentication
   const { name: newTableName } = args
   const { query } = ctx.postgis
+  const password = ctx.crypto.decrypt(encryptedPassword)
 
   const sql = `ALTER TABLE "${username}"."${currentTableName}" RENAME TO "${newTableName}"`
 
