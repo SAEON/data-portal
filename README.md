@@ -14,6 +14,8 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
 - Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
+# README Contents
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -23,7 +25,8 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Local development](#local-development)
     - [Endpoints](#endpoints)
 - [Deployment and installation](#deployment-and-installation)
-  - [Docker-compose](#docker-compose)
+  - [Docker-compose (quick deployment)](#docker-compose-quick-deployment)
+  - [Containerized deployment](#containerized-deployment)
   - [Continuous deployment](#continuous-deployment)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
@@ -115,7 +118,7 @@ npm run start:client
 
 # Deployment and installation
 
-## Docker-compose
+## Docker-compose (quick deployment)
 
 From the root of the source code directory run the following shell command to start the services:
 
@@ -149,6 +152,9 @@ Check that the services started successfully: `docker container ls`. There shoul
 - API
 - Proxy
 - Client
+
+## Containerized deployment
+Services can be deployed as individual containers. This is useful for deploying to a an environment with orchestrated container management (such as Kubernetes) and where 3rd party services are managed independently of this deployment (i.e. when connecting to existing MongoDB / PostGIS / Elasticsearch servers). Refer to [individual service documentation](#documentation) for containerizing individual services. Also look at the [docker-compose](docker-compose.yml) configuration to see how Docker images of individual services are built
 
 ## Continuous deployment
 
