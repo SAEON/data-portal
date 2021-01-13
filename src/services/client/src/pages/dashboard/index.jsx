@@ -12,7 +12,6 @@ import useStyles from './style'
 import clsx from 'clsx'
 
 const POLLING_INTERVAL = 500
-//STEVEN TO-DO: Accidentally removed charts from dashboard. To recover previous version which had charts
 export default ({ id }) => {
   const classes = useStyles()
   const { poll } = getUriState()
@@ -79,14 +78,7 @@ export default ({ id }) => {
                 <Grid item xs={12}>
                   <div className={clsx(classes.layout)}>
                     <Toolbar variant="dense">
-                      {/*** */}
                       {/* Filters go here */}
-                      {/* 0.5.2 Probably shouldn't have actually added selectedValues to graphql. I dont think this will be functional for multiple users.
-                            selectedValues should be an arg passed to the filterCharts query instead. therefore also delete mutatoinupdateFilter(or flesh out for future use of editing old filters) */}
-                      {/* TO-DO 2: change charts query(wherever it is) to use filteredCharts instead.
-                                Somehow need to pass filters selectedValues(maybe a common parent/ancestor with state) */}
-                      {/* TO-DO 3: Flesh out visuals of filter(perhaps a checkbox dropdown list instead of chips) */}
-
                       <Filters filterIds={filterIds} />
                     </Toolbar>
                   </div>
