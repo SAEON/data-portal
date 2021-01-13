@@ -3,8 +3,7 @@ import { context as databooksContext } from '../../context'
 import { Typography, Fade } from '@material-ui/core'
 import VirtualTable from '../../../../components/virtual-table'
 import Loading from '../../../../components/loading'
-import { gql } from '@apollo/client'
-import WithGqlQuery from '../../../../hooks/with-gql-query'
+import WithFetch from '../../../../hooks/with-fetch'
 import Header from './header'
 import useStyles from '../../style'
 import clsx from 'clsx'
@@ -14,16 +13,16 @@ export default () => {
   const { sql, databook } = useContext(databooksContext)
 
   return (
-    <WithGqlQuery
-      QUERY={gql`
-        query($id: ID!, $sql: String!) {
-          databook(id: $id) {
-            id
-            execute(sql: $sql)
-          }
-        }
-      `}
-      variables={{ id: databook.doc._id, sql }}
+    <WithFetch
+      uri={'http://localhost:3000/execute-sql'}
+      method="POST"
+      headers={{
+        'Content-type': 'application/json',
+      }}
+      body={{
+        databookId: databook.doc._id,
+        sql,
+      }}
     >
       {({ error, loading, data }) => {
         if (loading) {
@@ -45,7 +44,7 @@ export default () => {
           )
         }
 
-        const postgisData = data.databook.execute
+        const postgisData = data.rows
 
         return (
           <div className={clsx(classes.layout, classes.bg)}>
@@ -61,6 +60,6 @@ export default () => {
           </div>
         )
       }}
-    </WithGqlQuery>
+    </WithFetch>
   )
 }
