@@ -6,6 +6,7 @@ export default ({
   iconProps,
   tooltipProps,
   title = undefined,
+  titleProps = {},
   text = 'Text missing',
   children = undefined,
   dialogueContentProps,
@@ -69,7 +70,7 @@ export default ({
         PaperProps={paperProps}
       >
         {title ? (
-          <DialogTitle>
+          <DialogTitle {...titleProps}>
             {typeof title === 'function' ? title(() => setOpen(false)) : title}
           </DialogTitle>
         ) : undefined}

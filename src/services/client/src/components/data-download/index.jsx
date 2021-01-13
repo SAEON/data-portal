@@ -3,6 +3,8 @@ import { GetApp as GetAppIcon } from '@material-ui/icons'
 import SimpleLink from '../link'
 import { CATALOGUE_API_ADDRESS } from '../../config'
 
+const PLACEHOLDER_URI = 'http://nothing.com'
+
 export default ({
   immutableResource,
   children,
@@ -12,7 +14,7 @@ export default ({
 }) => {
   const { resourceDescription, resourceDownload } = immutableResource || {}
   const downloadURL =
-    new URL(resourceDownload?.downloadURL || 'http://nothing.com').protocol === 'http:'
+    new URL(resourceDownload?.downloadURL || PLACEHOLDER_URI).protocol === 'http:'
       ? `${CATALOGUE_API_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
       : resourceDownload?.downloadURL
 
@@ -35,7 +37,7 @@ export default ({
               {children}
             </Button>
           ) : (
-            <IconButton disabled={!downloadURL} {...props}>
+            <IconButton disabled={downloadURL === PLACEHOLDER_URI} {...props}>
               <GetAppIcon fontSize={fontSize} />
             </IconButton>
           )}

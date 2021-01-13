@@ -11,6 +11,7 @@ import {
   IconButton,
   Box,
 } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import {
   DragIndicator,
   Close as CloseIcon,
@@ -34,6 +35,7 @@ export default ({
   LegendMenu,
   DataMenu,
 }) => {
+  const theme = useTheme()
   const title = layer.get('title')
   const visible = layer.getVisible()
   const [legendOpen, setLegendOpen] = useState(false)
@@ -107,6 +109,7 @@ export default ({
               {/* LAYER CONTROLS */}
               <CardContent style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {/* Layer info */}
+                {/* TODO repeated code (in databook as well) */}
                 <MessageDialogue
                   onClick
                   title={onClose => (
@@ -115,6 +118,7 @@ export default ({
                         METADATA RECORD
                       </Typography>
                       <IconButton
+                        size="small"
                         onClick={e => {
                           e.stopPropagation()
                           onClose()
@@ -128,6 +132,9 @@ export default ({
                   tooltipProps={{
                     placement: 'top',
                     title: 'Show layer metadata',
+                  }}
+                  titleProps={{
+                    style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
                   }}
                   iconProps={{ size: 'small', fontSize: 'small' }}
                   dialogueContentProps={{ style: { padding: 0 } }}

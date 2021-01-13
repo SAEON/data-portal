@@ -142,6 +142,7 @@ const Table = ({ tableName, fields, tableSchema }) => {
                 display: hovered ? 'inherit' : 'none',
               }}
             >
+              {/* TODO this dialogue is repeated code on the atlas */}
               <MessageDialogue
                 icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
                 handleClose={() => setHovered(false)}
@@ -151,6 +152,7 @@ const Table = ({ tableName, fields, tableSchema }) => {
                       METADATA RECORD
                     </Typography>
                     <IconButton
+                      size="small"
                       onClick={e => {
                         e.stopPropagation()
                         setHovered(false)
@@ -171,7 +173,12 @@ const Table = ({ tableName, fields, tableSchema }) => {
                 iconProps={{ size: 'small' }}
                 dialogueContentProps={{ style: { padding: 0 } }}
                 dialogueProps={{ fullWidth: true }}
-                paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
+                titleProps={{
+                  style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
+                }}
+                paperProps={{
+                  style: { maxWidth: 'none', minHeight: '84px' },
+                }}
               >
                 {isSharedTable ? (
                   <div>Some kind of information should be here regarding this shared layer</div>
