@@ -9,7 +9,6 @@ import clsx from 'clsx'
 export default ({ filter, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
   const { id } = filter
-  console.log('filter', filter)
   return (
     <>
       <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>

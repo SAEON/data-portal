@@ -26,6 +26,9 @@ const FILTERS_QUERY = gql`
       filters {
         id
         name
+        columnFiltered
+        values
+        sql
       }
     }
   }
@@ -42,7 +45,6 @@ export default () => {
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
-  const [selectedValues, setSelectedValues] = useState([])
   return (
     <>
       {/* TOGGLE DIALOGUE */}
@@ -109,7 +111,6 @@ export default () => {
                             $databookId: ID!
                             $name: String
                             $columnFiltered: String
-                            $selectedValues: [String]
                             $values: [String]
                             $sql: String
                           ) {
@@ -117,7 +118,6 @@ export default () => {
                               databookId: $databookId
                               name: $name
                               columnFiltered: $columnFiltered
-                              selectedValues: $selectedValues
                               values: $values
                               sql: $sql
                             ) {
@@ -130,10 +130,7 @@ export default () => {
                             databookId,
                             name: filterName,
                             columnFiltered: columnFiltered,
-                            selectedValues: [
-                              ...new Set(sqlResult.map(row => String(row[columnFiltered]))),
-                            ],
-                            values: [...new Set(sqlResult.map(row => String(row[columnFiltered])))], //grabbing column values and removing duplicates //due to reworking,
+                            values: [...new Set(sqlResult.map(row => String(row[columnFiltered])))], //grabbing column values and removing duplicates
                             sql,
                           }),
                         },

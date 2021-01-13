@@ -27,7 +27,12 @@ export default ({ id }) => {
           dashboard(id: $id) {
             id
             layout
-            filters
+            filters {
+              id
+              name
+              columnFiltered
+              values
+            }
           }
         }
       `}
@@ -46,13 +51,8 @@ export default ({ id }) => {
           startPolling(POLLING_INTERVAL)
         }
 
-        const { layout } = data.dashboard
-        console.log('.../dashboard layout', layout)
-        const filterIds = layout
-          .filter(entry => entry.content.type === 'Filter')
-          .map(entry => {
-            return entry.content.id
-          })
+        const { layout, filters } = data.dashboard
+        const filterIds = filters.map(({ id }) => id) //STEVEN: probably best to refactor this further by just passing filters not filterIds to avoid multiple filters{} requests
 
         const MenuProps = {
           PaperProps: {

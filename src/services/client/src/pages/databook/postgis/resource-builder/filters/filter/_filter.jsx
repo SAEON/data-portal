@@ -5,17 +5,15 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { context as databookContext } from '../../../../context'
 export default ({ filter }) => {
-  const { id, name, selectedValues } = filter
+  const { id, name, values } = filter
   const classes = useStyles()
   const [selectedValue, setSelectedValue] = useState('')
   const context = useContext(databookContext)
-
-  console.log('_filter.jsx context', context)
-  console.log('_filter', filter)
+  //STEVEN TO DO: update this to match dashboard autocomplete
   return (
     <AutoComplete
       id="region-filter"
-      options={selectedValues}
+      options={values}
       selectedOptions={selectedValue}
       setOption={newVal => {
         setSelectedValue(newVal)

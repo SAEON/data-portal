@@ -7,7 +7,6 @@ import { Fade } from '@material-ui/core'
 
 export default forwardRef((props, ref) => {
   const { databook } = useContext(databookContext)
-  console.log('databook', databook)
   const filters = databook.filters
   const [activeTabIndex, setActiveTabIndex] = useState(filters.length - 1 || 0)
 

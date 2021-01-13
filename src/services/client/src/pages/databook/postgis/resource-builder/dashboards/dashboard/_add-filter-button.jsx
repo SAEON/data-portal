@@ -21,6 +21,13 @@ const DASHBOARDS_QUERY = gql`
     dashboards(databookId: $databookId) {
       id
       layout
+      filters {
+        id
+        name
+        columnFiltered
+        values
+        sql
+      }
     }
   }
 `
@@ -51,6 +58,9 @@ export default ({ dashboard }) => {
                   filters {
                     id
                     name
+                    columnFiltered
+                    values
+                    sql
                   }
                 }
               }
@@ -115,6 +125,10 @@ export default ({ dashboard }) => {
                                                 dashboardId: $dashboardId
                                               ) {
                                                 id
+                                                name
+                                                columnFiltered
+                                                values
+                                                sql
                                               }
                                             }
                                           `,
@@ -136,23 +150,18 @@ export default ({ dashboard }) => {
                                               query: DASHBOARDS_QUERY,
                                               data: {
                                                 dashboards: [
-                                                  ...dashboards.map(d => {
+                                                  ...dashboards.map(dashboard => {
                                                     return Object.assign(
                                                       {},
-                                                      { ...d },
+                                                      { ...dashboard },
                                                       {
-                                                        layout:
-                                                          d.id === dashboardId
+                                                        filters:
+                                                          dashboard.id === dashboardId
                                                             ? [
-                                                                ...(d.layout || []),
-                                                                {
-                                                                  content: {
-                                                                    id: newFilter.id,
-                                                                    type: 'Filter',
-                                                                  },
-                                                                },
+                                                                ...(dashboard.filters || []),
+                                                                newFilter,
                                                               ]
-                                                            : d.layout,
+                                                            : dashboard.filters,
                                                       }
                                                     )
                                                   }),

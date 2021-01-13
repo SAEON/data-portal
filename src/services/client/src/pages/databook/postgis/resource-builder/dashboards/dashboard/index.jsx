@@ -30,9 +30,8 @@ function createElement(str) {
 const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
-  console.log('dashboard preview - dashboard', dashboard)
   const classes = useStyles()
-  const { id: dashboardId, layout = [] } = dashboard
+  const { id: dashboardId, layout = [], filters = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const gridElRef = useRef()
@@ -53,19 +52,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         .filter(_ => _) || []
     )
   }, [layout])
-  const filterIds = useMemo(() => {
-    return (
-      layout
-        ?.map(({ content }) => {
-          if (content.type.toUpperCase() === 'FILTER') {
-            return content.id
-          } else {
-            return undefined
-          }
-        })
-        .filter(_ => _) || []
-    )
-  }, [layout])
+  const filterIds = filters.map(filter => filter.id) //STEVEN TODO: filterIds is probably already an array around here somewhere
 
   if (Object.keys(refs.current).length !== chartIds.length) {
     chartIds.forEach(id => {
@@ -158,7 +145,6 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
             )
-            console.log('dashboard', dashboard)
             return (
               <div
                 ref={refs.current[id]}

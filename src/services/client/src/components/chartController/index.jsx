@@ -5,7 +5,7 @@ import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'
 import { Fade } from '@material-ui/core'
 
-export default ({ id, style = {}, filterIds, selectedFilters }) => {
+export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
   return (
     <WithGqlQuery
       QUERY={gql`

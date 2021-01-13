@@ -9,7 +9,6 @@ export default ({ config, data, title, description }) => {
   const geoValuesField = config['series-geo-values']
   const geoJsonField = config['series-geo-json']
 
-  console.log('config', config)
   const nano = nanoid()
 
   const customMapJson = {
@@ -39,7 +38,6 @@ export default ({ config, data, title, description }) => {
   const chartData = data.map((row, i) => {
     return { name: row[geoNamesField], value: row[geoValuesField] }
   })
-  console.log('data', data)
   return (
     <ReactEcharts
       theme={theme}
