@@ -2,7 +2,6 @@ type Filter {
   id: ID!
   name: String
   columnFiltered: String
-  selectedValues: [String]
   values: [String]
   sql: String
 }

@@ -51,8 +51,6 @@ type Query {
   atlas(id: ID!): JSON
   # Retrieve a Databook's dashboards
   dashboards(databookId: ID!): [Dashboard!]
-  # Returns charts with filters applied to them
-  filterCharts(chartIds: [ID!], filterIds: [ID!]): [Chart!]
 }
 
 # type Subscription {}
@@ -89,11 +87,9 @@ type Mutation {
     name: String
     databookId: ID!
     columnFiltered: String
-    selectedValues: [String]
     values: [String]
     sql: String
   ): Filter!
-  updateFilter(id: ID!, selectedValues: [String]): Filter!
   deleteFilter(id: ID!): Boolean!
 }
 

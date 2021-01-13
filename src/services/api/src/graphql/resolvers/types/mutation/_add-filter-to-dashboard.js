@@ -19,23 +19,35 @@ export default async (_, { filterId, dashboardId }, ctx) => {
     )
   }
 
-  const layout = dashboard.layout || []
-
-  if (layout.map(({ content }) => content.id.toString()).includes(filterId.toString())) {
+  const filters = dashboard.filters || []
+  console.log('filters', filters)
+  if (
+    filters
+      .map(filter => {
+        console.log('map filter', filter)
+        const { _id } = filter
+        console.log('map _id', _id)
+        return _id.toString()
+      })
+      .includes(filterId.toString())
+  ) {
     throw new Error('Cannot add duplicate filter to dashboard')
   }
 
-  const newLayout = [...layout, { content: { id: filterId, type: 'Filter' } }]
-
+  const filter = await Filters.findOne({ _id: filterId })
+  console.log('findOne filter', filter)
+  const newFilters = [...filters, filter]
+  console.log('newFilters', newFilters)
   await Dashboards.findOneAndUpdate(
     { _id: ObjectID(dashboardId) },
     {
       $set: {
-        layout: newLayout,
+        filters: newFilters,
         modifiedAt: new Date(),
       },
     }
   )
 
+  console.log('this dashboard', dashboard)
   return await Filters.findOne({ _id: filterId })
 }

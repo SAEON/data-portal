@@ -8,7 +8,7 @@ import DashboardContextProvider from './context'
 import { gql } from '@apollo/client'
 import { AppBar, Grid, Toolbar } from '@material-ui/core'
 import Layout from './layout'
-import Filters from './layout/filters/_filters'
+import Filters from './filters/_filters'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -29,6 +29,7 @@ export default ({ id }) => {
           dashboard(id: $id) {
             id
             layout
+            filters
           }
         }
       `}

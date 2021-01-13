@@ -6,8 +6,6 @@ import chartDefinitions from '../charts'
 import { Fade } from '@material-ui/core'
 
 export default ({ id, style = {}, filterIds, selectedFilters }) => {
-  // export default props => {
-  // const { id, style = {}, filters } = props
   return (
     <WithGqlQuery
       QUERY={gql`
@@ -25,7 +23,6 @@ export default ({ id, style = {}, filterIds, selectedFilters }) => {
             name
             columnFiltered
             sql
-            selectedValues
             values
           }
         }
@@ -47,39 +44,22 @@ export default ({ id, style = {}, filterIds, selectedFilters }) => {
         const Chart = lazy(() => chartDefinition.getComponent())
 
         let filteredData = chartDoc.data
-        console.log('initial filteredData', filteredData)
         for (var i = 0; i < filters.length; i++) {
           const { columnFiltered, id: filterId } = filters[i]
           const { selectedValues } = selectedFilters[filterId]
-          console.log('selectedValues', selectedValues)
-          filteredData =
-            selectedValues === []
-              ? filteredData
-              : filteredData.filter(row => {
-                  //potential to-do: if chart.data column names don't include columnFiltered: Skip this filter (possibly help performance if needed)
-                  if (!row[columnFiltered]) {
-                    console.log('1')
-                    return true
-                  }
-                  if (selectedValues.includes(row[columnFiltered])) {
-                    console.log('2')
-                    return true
-                  }
-                  console.log('3')
-                  return false
-                })
+
+          filteredData = filteredData.filter(row => {
+            return selectedValues.length === 0 || //if filter isn't used
+              !row[columnFiltered] || //if column being filtered isn't in of data
+              selectedValues.includes(String(row[columnFiltered])) //if this data cell was explicitely selected by user
+              ? true
+              : false
+          })
         }
         let filteredChartDoc = Object.assign({}, chartDoc, {
           data: filteredData,
         })
-        console.log('filteredChartDoc', filteredChartDoc)
-        //foreach filter in filers:
-        //filter chart data
-        /**<Chart {Object.assign({}, chartDoc, {chartDoc.data.filter(datum => {
-          then apply each filter. Try to loop over data only once
-          It's okay to loop over the filters multiple times since there will be few of them 
-          return true | false
-        })})} /> */
+
         return (
           <Fade in={Boolean(data)} key={`chart-${id}`}>
             <span>

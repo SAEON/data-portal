@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import { context as dashboardContext } from '../../context'
-import AutoComplete from '../../../../components/autocomplete'
-import { WithGqlQuery } from '../../../../hooks'
+import { context as dashboardContext } from '../context'
+import AutoComplete from '../../../components/autocomplete'
+import { WithGqlQuery } from '../../../hooks'
 import { gql } from '@apollo/client'
-import Loading from '../../../../components/loading'
+import Loading from '../../../components/loading'
 
 export default () => {
   const { selectedFilters, setSelectedFilters, filterIds } = useContext(dashboardContext)
@@ -32,7 +32,6 @@ export default () => {
             console.error(error)
             throw error
           }
-          console.log('selectedFilters', selectedFilters)
           const { filters } = data
           return filters.map((filter, i) => {
             return (
