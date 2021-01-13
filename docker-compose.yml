@@ -75,7 +75,7 @@ services:
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
       POSTGRES_USER: $POSTGIS_USERNAME
     ports:
-      - $POSTGIS_PORT:5432
+      - $POSTGIS_CONTAINER_HOST_PORT:$POSTGIS_PORT
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
     networks:
