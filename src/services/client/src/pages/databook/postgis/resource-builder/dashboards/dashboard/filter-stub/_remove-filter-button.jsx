@@ -9,13 +9,7 @@ const DASHBOARDS = gql`
     dashboards(databookId: $databookId) {
       id
       layout
-      filters {
-        id
-        name
-        columnFiltered
-        values
-        sql
-      }
+      filters
     }
   }
 `
@@ -48,17 +42,17 @@ export default ({ filterId, dashboard }) => {
 
               const { id: removedId } = data.removeFilterFromDashboard
 
-              const updatedDashbaords = [...dashboards].map(item => {
+              const updatedDashboards = [...dashboards].map(item => {
                 item = { ...item }
                 if (item.id === dashboard.id) {
-                  item.filters = [...item.filters].filter(({ id }) => id !== removedId)
+                  item.filters = item.filters.filter(id => id !== removedId)
                 }
                 return item
               })
 
               cache.writeQuery({
                 query: DASHBOARDS,
-                data: { dashboards: updatedDashbaords },
+                data: { dashboards: updatedDashboards },
               })
             },
           })

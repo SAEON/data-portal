@@ -12,10 +12,6 @@ export default ({
   multiple = false,
   ...props
 }) => {
-  console.log('components/autocomplete/ props', props)
-  console.log('components/autocomplete/ options', options)
-  console.log('components/autocomplete/ selectedOptions', selectedOptions)
-
   return (
     <Autocomplete
       // From parent

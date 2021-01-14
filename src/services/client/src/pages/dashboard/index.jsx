@@ -28,9 +28,7 @@ export default ({ id }) => {
           dashboard(id: $id) {
             id
             layout
-            filters {
-              id
-            }
+            filters
           }
         }
       `}
@@ -49,9 +47,7 @@ export default ({ id }) => {
           startPolling(POLLING_INTERVAL)
         }
 
-        const { layout, filters } = data.dashboard
-        const filterIds = filters.map(({ id }) => id)
-
+        const { layout, filters: filterIds } = data.dashboard
         const MenuProps = {
           PaperProps: {
             style: {

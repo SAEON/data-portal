@@ -32,7 +32,7 @@ const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id: dashboardId, layout = [], filters = [] } = dashboard
+  const { id: dashboardId, layout = [], filters: filterIds = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const gridElRef = useRef()
@@ -53,7 +53,6 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         .filter(_ => _) || []
     )
   }, [layout])
-  const filterIds = filters?.map(filter => filter.id) || [] //STEVEN TODO: filterIds is probably already an array around here somewhere
 
   if (Object.keys(refs.current).length !== chartIds.length) {
     chartIds.forEach(id => {
@@ -133,8 +132,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         />
       </Toolbar>
       <Grid container justify="space-around" alignItems="center">
-        {filterIds.map(id => (
-          <FilterStub filterId={id} dashboard={dashboard} />
+        {filterIds?.map(id => (
+          <FilterStub key={id} filterId={id} dashboard={dashboard} />
         ))}
       </Grid>
       <div className={clsx(classes.gridContainer)}>

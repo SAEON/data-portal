@@ -11,7 +11,7 @@ type Dashboard {
   id: ID!
   databookId: ID!
   charts: [Chart!]
-  filters: [Filter!]
+  filters: [ID!]
   layout: JSON
 }
 
