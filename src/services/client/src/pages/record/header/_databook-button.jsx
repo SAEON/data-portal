@@ -19,7 +19,7 @@ export default ({ linkedResources, id }) => {
       <CircularProgress thickness={2} size={18} style={{ margin: '15px 8px' }} />
     </Fade>
   ) : (
-    <Tooltip title={hasTable ? 'Preview dataset' : 'Unable to preview this dataset'}>
+    <Tooltip title={hasTable ? 'Analyze dataset' : 'Unable to analyze this dataset'}>
       <span>
         <IconButton
           disabled={!hasTable}

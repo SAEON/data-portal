@@ -1,5 +1,5 @@
 import { db as mongoDb, collections, getDataFinders, getDataInserters } from '../mongo/index.js'
-import postgisQuery from '../postgis/query.js'
+import postgisQuery, { createClient } from '../postgis/query.js'
 import Catalogue from '../lib/catalogue.js'
 import {
   CATALOGUE_PROXY_ADDRESS,
@@ -31,6 +31,7 @@ export default app => async (ctx, next) => {
 
   app.context.postgis = {
     query: postgisQuery,
+    createClient,
   }
 
   app.context.gql = {

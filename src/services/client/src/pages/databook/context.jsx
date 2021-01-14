@@ -1,5 +1,6 @@
 import { useState, createContext } from 'react'
 import WithFetch from '../../hooks/with-fetch'
+import { CATALOGUE_API_ADDRESS } from '../../config'
 
 export const context = createContext()
 
@@ -15,7 +16,7 @@ select * from cte limit 20`)
 
   return (
     <WithFetch
-      uri={'http://localhost:3000/execute-sql'}
+      uri={`${CATALOGUE_API_ADDRESS}/execute-sql`}
       method="POST"
       headers={{
         'Content-type': 'application/json',
@@ -26,6 +27,8 @@ select * from cte limit 20`)
       }}
     >
       {({ error, loading, data }) => {
+        console.log(data)
+
         return (
           <context.Provider
             value={{
@@ -33,7 +36,9 @@ select * from cte limit 20`)
               setSql,
               databook,
               schema,
-              data,
+              data: {
+                rows: data,
+              },
               error,
               loading,
             }}

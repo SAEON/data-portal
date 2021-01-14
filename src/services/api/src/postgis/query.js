@@ -8,11 +8,20 @@ import {
   CATALOGUE_API_NODE_ENV,
 } from '../config.js'
 import createPool from './pool.js'
-import createClient from './client.js'
+import _createClient from './client.js'
 
 const PG_HOST = CATALOGUE_API_NODE_ENV === 'production' ? POSTGIS_HOST : POSTGIS_HOST_DEV
 
 const pool = createPool(PG_HOST, POSTGIS_USERNAME, POSTGIS_DB, POSTGIS_PASSWORD, POSTGIS_PORT)
+
+export const createClient = cred =>
+  _createClient({
+    host: cred.host || PG_HOST,
+    user: cred.user || POSTGIS_USERNAME,
+    password: cred.password || POSTGIS_PASSWORD,
+    database: cred.database || POSTGIS_DB,
+    port: cred.port || POSTGIS_PORT,
+  })
 
 export default async ({ text, values, name, client = undefined }) =>
   client
