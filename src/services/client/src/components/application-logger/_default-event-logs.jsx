@@ -2,7 +2,7 @@ import RegisterEventLog from '../application-logger/_register-event-log'
 import { CATALOGUE_LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
 import { debounce } from '../../lib/fns'
-import { useWindowSize } from '../../hooks'
+import useWindowSize from '../../hooks/use-window-size'
 
 export default ({ children }) => {
   const [innerHeight, innerWidth] = useWindowSize()

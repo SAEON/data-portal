@@ -5,7 +5,7 @@ import Link from '../link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
-import { getShareLink } from '../../hooks'
+import { getShareLink } from '../../hooks/use-share-link'
 import packageJson from '../../../package.json'
 
 /**

@@ -13,6 +13,7 @@ import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
 import homeRoute from './http/home.js'
 import downloadProxyRoute from './http/download-proxy.js'
+import executeSql from './http/execute-sql.js'
 import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
@@ -68,6 +69,7 @@ if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
 // Configure passport authentication
 const { login, authenticate } = configurePassport()
 
+// Configure app
 const app = new Koa()
 app.keys = [CATALOGUE_API_KEY]
 app.proxy = true // X-Forwarded-* headers can be trusted
@@ -90,6 +92,7 @@ app
     new KoaRouter()
       .get('/', homeRoute)
       .post('/', homeRoute)
+      .post('/execute-sql', executeSql)
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
       .get('/authenticate/redirect', authenticate, loginSuccessRoute) // passport
@@ -107,11 +110,15 @@ app
     })
   )
 
+// Configure HTTP server
 const httpServer = createServer(app.callback())
+
+// Configure Apollo server
 const apolloServer = configureApolloServer()
 apolloServer.applyMiddleware({ app })
 apolloServer.installSubscriptionHandlers(httpServer)
 
+// Start HTTP server
 httpServer.listen(CATALOGUE_API_PORT, () => {
   console.log(`@saeon/catalogue API server ready at ${CATALOGUE_API_PORT}`)
   console.log(`@saeon/catalogue GraphQL server ready at ${apolloServer.graphqlPath}`)

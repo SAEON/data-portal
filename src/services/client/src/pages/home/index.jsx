@@ -8,7 +8,8 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
 import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_API_GQL_ADDRESS } from '../../config'
-import { WithGqlQuery, setShareLink } from '../../hooks'
+import { setShareLink } from '../../hooks/use-share-link'
+import WithGqlQuery from '../../hooks/with-gql-query'
 
 export default () => {
   setShareLink({

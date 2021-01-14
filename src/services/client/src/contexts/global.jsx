@@ -3,7 +3,7 @@ import QuickForm from '@saeon/quick-form'
 import { getUriState } from '../lib/fns'
 import Loading from '../components/loading'
 import { gql } from '@apollo/client'
-import { WithGqlQuery } from '../hooks'
+import WithGqlQuery from '../hooks/with-gql-query'
 
 export const context = createContext()
 

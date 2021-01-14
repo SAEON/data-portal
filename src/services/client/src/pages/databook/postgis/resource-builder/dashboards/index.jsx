@@ -1,7 +1,7 @@
 import { useContext, forwardRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { context as databookContext } from '../../../context'
-import { WithGqlQuery } from '../../../../../hooks'
+import WithGqlQuery from '../../../../../hooks/with-gql-query'
 import { gql } from '@apollo/client'
 import Loading from '../../../../../components/loading'
 import TabHeaders from './_tab-headers'

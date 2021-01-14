@@ -1,7 +1,6 @@
 type Databook {
   id: ID!
   doc: JSON
-  execute(sql: String!): JSON
   schema: PostgisDatabookSchema!
   dashboards: [Dashboard!]
   charts: [Chart!]
