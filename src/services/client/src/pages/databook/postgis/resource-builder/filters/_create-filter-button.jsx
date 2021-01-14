@@ -38,7 +38,7 @@ const FIELD_SPACING = 32
 export default () => {
   const theme = useTheme()
   const client = useApolloClient()
-  const { databook, sql, sqlResult } = useContext(databookContext)
+  const { databook, sql, data } = useContext(databookContext)
   const databookId = databook.doc._id
 
   const [open, setOpen] = useState(false)
@@ -79,7 +79,7 @@ export default () => {
           <DialogContentText>Select column filtered</DialogContentText>
           <Autocomplete
             id="select-column-filtered"
-            options={sqlResult ? Object.keys(sqlResult[0]) : undefined}
+            options={data.rows ? Object.keys(data.rows[0]) : undefined}
             setOption={val => {
               setColumnFiltered(val)
             }}
@@ -130,7 +130,7 @@ export default () => {
                             databookId,
                             name: filterName,
                             columnFiltered: columnFiltered,
-                            values: [...new Set(sqlResult.map(row => String(row[columnFiltered])))], //grabbing column values and removing duplicates
+                            values: [...new Set(data.rows.map(row => String(row[columnFiltered])))], //grabbing column values and removing duplicates
                             sql,
                           }),
                         },

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { WithGqlQuery } from '../../hooks'
+import WithGqlQuery from '../../hooks/with-gql-query'
 import Loading from '../loading'
 import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'

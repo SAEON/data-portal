@@ -24,7 +24,7 @@ const DASHBOARDS = gql`
 /**
  * TODO. Perhaps a better option then manually updating the cache is to specify
  * that a query should be rerun. There is a problem here where the active tab index is updated
- * BEFORE the component is rerendered with the new dashboards
+ * BEFORE the component is re-rendered with the new dashboards
  */
 export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
   const { databook } = useContext(databookContext)

@@ -7,7 +7,7 @@ import AddChartButton from './_add-chart-button'
 import AddFilterButton from './_add-filter-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
-import PreviewBurron from './_preview-button'
+import PreviewButton from './_preview-button'
 import SaveLayoutButton from './_save-layout'
 import ChartStub from './chart-stub'
 import useStyles from './style'
@@ -52,7 +52,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         .filter(_ => _) || []
     )
   }, [layout])
-  const filterIds = filters.map(filter => filter.id) //STEVEN TODO: filterIds is probably already an array around here somewhere
+  const filterIds = filters?.map(filter => filter.id) || [] //STEVEN TODO: filterIds is probably already an array around here somewhere
 
   if (Object.keys(refs.current).length !== chartIds.length) {
     chartIds.forEach(id => {
@@ -123,7 +123,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         <span style={{ marginRight: 8 }} />
         <ShareButton id={dashboardId} />
         <span style={{ marginRight: 8 }} />
-        <PreviewBurron id={dashboardId} />
+        <PreviewButton id={dashboardId} />
         <span style={{ marginRight: 8 }} />
         <DeleteButton
           id={dashboardId}
@@ -132,7 +132,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         />
       </Toolbar>
       <div>
-        {filterIds.map(id => (
+        {filterIds?.map(id => (
           // STEVEN TO-DO: flesh this out more and move styling to classes
           <div style={{ border: '1px solid grey', display: 'inline', marginRight: '5px' }}>
             {id}

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { context as dashboardContext } from '../context'
 import AutoComplete from '../../../components/autocomplete'
-import { WithGqlQuery } from '../../../hooks'
+import WithGqlQuery from '../../../hooks/with-gql-query'
 import { gql } from '@apollo/client'
 import Loading from '../../../components/loading'
 
