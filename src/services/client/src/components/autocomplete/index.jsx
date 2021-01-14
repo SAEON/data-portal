@@ -5,13 +5,17 @@ import ListboxComponent from './list-box-component'
 
 export default ({
   id,
-  options,
+  options = [], //STEVEN: gave default value. On filter creation was throwing error as component was initializing with options=undefined
   setOption,
   getOptionSelected = undefined,
   selectedOptions = [],
   multiple = false,
   ...props
 }) => {
+  console.log('components/autocomplete/ props', props)
+  console.log('components/autocomplete/ options', options)
+  console.log('components/autocomplete/ selectedOptions', selectedOptions)
+
   return (
     <Autocomplete
       // From parent

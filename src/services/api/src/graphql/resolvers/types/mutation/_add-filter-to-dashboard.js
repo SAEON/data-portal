@@ -17,23 +17,24 @@ export default async (_, { filterId, dashboardId }, ctx) => {
       'Unable to find either the filter or the dashboard specified. Both must already exist'
     )
   }
+
   const dashboardFilters = dashboard.filters || []
+
   if (
     dashboardFilters
-      .map(filter => {
-        return filter._id.toString()
+      .map(filterId => {
+        return filterId.toString()
       })
       .includes(filterId.toString())
   ) {
     throw new Error('Cannot add duplicate filter to dashboard')
   }
 
-  const filter = await Filters.findOne({ _id: filterId })
   await Dashboards.findOneAndUpdate(
     { _id: ObjectID(dashboardId) },
     {
       $set: {
-        filters: [...dashboardFilters, filter],
+        filters: [...dashboardFilters, filterId],
         modifiedAt: new Date(),
       },
     }

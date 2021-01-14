@@ -1,10 +1,11 @@
 import mongo from 'mongodb'
 const { ObjectID } = mongo
 
-//STEVEN: Im unsure of the purporse of this actually. self contains all associated filters.
-//Should this not just return self.filters. There is similar logic in _charts.js
-export default async (self, args, ctx) => {
-  const { filters } = self
+/**
+ * TODO - fails if a dashboard doesn't have filters
+ */
+export default async ({ filters }, args, ctx) => {
+  return []
   const filterIds = filters.map(({ _id }) => ObjectID(_id))
   const { findFilters } = ctx.mongo.dataFinders
   return await findFilters({ _id: { $in: filterIds || [] } })

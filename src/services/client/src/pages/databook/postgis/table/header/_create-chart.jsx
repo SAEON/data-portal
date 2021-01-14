@@ -34,10 +34,10 @@ const CHARTS_QUERY = gql`
 
 const FIELD_SPACING = 32
 
-export default ({ data }) => {
+export default () => {
   const theme = useTheme()
   const client = useApolloClient()
-  const { databook, sql } = useContext(databookContext)
+  const { databook, sql, data } = useContext(databookContext)
   const databookId = databook.doc._id
 
   const [open, setOpen] = useState(false)
@@ -114,7 +114,7 @@ export default ({ data }) => {
                           [id]: val,
                         })
                       }
-                      data={data}
+                      data={data.rows}
                     />
                   </div>
                 )
@@ -175,7 +175,7 @@ export default ({ data }) => {
                               title: chartTitle,
                               description: chartDescription,
                               databookId,
-                              data: saveFilter(data, formValues),
+                              data: saveFilter(data.rows, formValues),
                               sql,
                             },
                             { config: formValues }
@@ -205,6 +205,7 @@ export default ({ data }) => {
                       })
                       setOpen(false)
                     } catch (error) {
+                      console.error(error)
                       setError(error.message)
                     } finally {
                       update({ loading: false })

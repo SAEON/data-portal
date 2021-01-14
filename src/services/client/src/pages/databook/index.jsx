@@ -117,8 +117,8 @@ export default ({ id }) => {
                 </pre>
               </Box>
             ) : (
-                <WithGqlQuery
-                  QUERY={gql`
+              <WithGqlQuery
+                QUERY={gql`
                   query($id: ID!) {
                     databook(id: $id) {
                       id
@@ -138,30 +138,30 @@ export default ({ id }) => {
                     }
                   }
                 `}
-                  variables={{ id: data.databook.doc._id }}
-                >
-                  {({ error, loading, data: schemaData }) => {
-                    if (loading) {
-                      return <Loading />
-                    }
-                    if (error) {
-                      throw error
-                    }
-                    return (
-                      <DatabookContextProvider
-                        schema={schemaData.databook.schema}
-                        databook={data.databook}
-                      >
-                        <PostgisDataExplorer />
-                      </DatabookContextProvider>
-                    )
-                  }}
-                </WithGqlQuery>
-              )}
+                variables={{ id: data.databook.doc._id }}
+              >
+                {({ error, loading, data: schemaData }) => {
+                  if (loading) {
+                    return <Loading />
+                  }
+                  if (error) {
+                    throw error
+                  }
+                  return (
+                    <DatabookContextProvider
+                      schema={schemaData.databook.schema}
+                      databook={data.databook}
+                    >
+                      <PostgisDataExplorer />
+                    </DatabookContextProvider>
+                  )
+                }}
+              </WithGqlQuery>
+            )}
           </div>
         ) : (
-            <LoadingDatabook tables={tables} tablesReady={tablesReady} />
-          )
+          <LoadingDatabook tables={tables} tablesReady={tablesReady} />
+        )
       }}
     </WithGqlQuery>
   )

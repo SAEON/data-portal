@@ -12,6 +12,7 @@ export default forwardRef((props, ref) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const { databook } = useContext(databookContext)
   const databookId = databook.doc._id
+
   return (
     <WithGqlQuery
       QUERY={gql`
@@ -40,6 +41,7 @@ export default forwardRef((props, ref) => {
           throw error
         }
         const { dashboards } = data
+
         return (
           <>
             {createPortal(
