@@ -49,7 +49,7 @@ export default ({ id }) => {
         }
 
         const { layout, filters } = data.dashboard
-        const filterIds = filters.map(({ id }) => id) //STEVEN: probably best to refactor this further by just passing filters not filterIds to avoid multiple filters{} requests
+        const filterIds = filters.map(({ id }) => id)
 
         const MenuProps = {
           PaperProps: {

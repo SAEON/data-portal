@@ -2,7 +2,7 @@ import { useEffect, createRef, useRef, useMemo } from 'react'
 import 'gridstack/dist/gridstack.min.css'
 import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
-import { Toolbar, Typography } from '@material-ui/core'
+import { Toolbar, Typography, Grid } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
 import AddFilterButton from './_add-filter-button'
 import DeleteButton from './_delete-button'
@@ -10,6 +10,7 @@ import ShareButton from './_share-button'
 import PreviewBurron from './_preview-button'
 import SaveLayoutButton from './_save-layout'
 import ChartStub from './chart-stub'
+import FilterStub from './filter-stub'
 import useStyles from './style'
 import clsx from 'clsx'
 import { useState } from 'react'
@@ -131,14 +132,11 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
           setActiveTabIndex={setActiveTabIndex}
         />
       </Toolbar>
-      <div>
+      <Grid container justify="space-around" alignItems="center">
         {filterIds.map(id => (
-          // STEVEN TO-DO: flesh this out more and move styling to classes
-          <div style={{ border: '1px solid grey', display: 'inline', marginRight: '5px' }}>
-            {id}
-          </div>
+          <FilterStub filterId={id} dashboard={dashboard} />
         ))}
-      </div>
+      </Grid>
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
           {chartIds?.map(id => {

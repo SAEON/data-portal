@@ -46,7 +46,7 @@ export default () => {
         }
 
         const postgisData = data.databook.execute
-        setSqlResult(postgisData) //STEVEN: THROWS WARNING/ERROR - successfully sets state though
+        setSqlResult(postgisData) //STEVEN TO-DO: THROWS WARNING/ERROR - successfully sets state though
         //STEVEN: moved sql results to context. TO-DO: dont pass data as prop. use context everywhere
         return (
           <div className={clsx(classes.layout, classes.bg)}>
