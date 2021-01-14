@@ -5,7 +5,7 @@ import CreateChart from './_create-chart'
 
 export default ({ data }) => {
   const classes = useStyles()
-
+  //STEVEN TO-DO: retrieve data(sqlResult) from context rather
   return (
     <Toolbar variant="dense" className={clsx(classes.toolbar)}>
       <CreateChart data={data} />

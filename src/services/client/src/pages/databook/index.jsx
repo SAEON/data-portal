@@ -33,6 +33,13 @@ export default ({ id }) => {
               id
               title
             }
+            filters {
+              id
+              name
+              columnFiltered
+              values
+              sql
+            }
           }
         }
       `}
@@ -140,7 +147,6 @@ export default ({ id }) => {
                   if (error) {
                     throw error
                   }
-
                   return (
                     <DatabookContextProvider
                       schema={schemaData.databook.schema}

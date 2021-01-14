@@ -23,6 +23,7 @@ export const _collections = {
   Databooks: 'databooks',
   Dashboards: 'dashboards',
   Charts: 'charts',
+  Filters: 'filters',
 }
 
 export const db = MongoClient.connect(CONNECTION_STRING, {

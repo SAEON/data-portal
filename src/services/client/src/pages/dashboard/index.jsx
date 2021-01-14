@@ -4,18 +4,18 @@ import { setShareLink } from '../../hooks/use-share-link'
 import { getUriState } from '../../lib/fns'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
+import DashboardContextProvider from './context'
 import { gql } from '@apollo/client'
-import Layout from './layout'
 import { AppBar, Grid, Toolbar } from '@material-ui/core'
+import Layout from './layout'
+import Filters from './filters/_filters'
 import useStyles from './style'
 import clsx from 'clsx'
 
 const POLLING_INTERVAL = 500
-
 export default ({ id }) => {
   const classes = useStyles()
   const { poll } = getUriState()
-
   setShareLink({
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
     params: false,
@@ -28,6 +28,12 @@ export default ({ id }) => {
           dashboard(id: $id) {
             id
             layout
+            filters {
+              id
+              name
+              columnFiltered
+              values
+            }
           }
         }
       `}
@@ -46,8 +52,17 @@ export default ({ id }) => {
           startPolling(POLLING_INTERVAL)
         }
 
-        const { layout } = data.dashboard
+        const { layout, filters } = data.dashboard
+        const filterIds = filters.map(({ id }) => id) //STEVEN: probably best to refactor this further by just passing filters not filterIds to avoid multiple filters{} requests
 
+        const MenuProps = {
+          PaperProps: {
+            style: {
+              maxHeight: 48 * 4.5 + 8,
+              width: 250,
+            },
+          },
+        }
         return (
           <Grid container justify="center">
             <Grid item xs={12}>
@@ -60,14 +75,19 @@ export default ({ id }) => {
             </Grid>
             <Grid item xs={12} style={{ margin: '36px 0' }} />
             <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
-              <Grid item xs={12}>
-                <div className={clsx(classes.layout)}>
-                  <Toolbar variant="dense">Filters go here</Toolbar>
+              <DashboardContextProvider filterIds={filterIds}>
+                <Grid item xs={12}>
+                  <div className={clsx(classes.layout)}>
+                    <Toolbar variant="dense">
+                      {/* Filters go here */}
+                      <Filters filterIds={filterIds} />
+                    </Toolbar>
+                  </div>
+                </Grid>
+                <div style={{ position: 'relative', width: '100%' }}>
+                  <Layout items={layout} />
                 </div>
-              </Grid>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <Layout items={layout} />
-              </div>
+              </DashboardContextProvider>
             </Grid>
             <Grid item xs={12} style={{ margin: '16px 0' }} />
             <Grid item xs={12}>

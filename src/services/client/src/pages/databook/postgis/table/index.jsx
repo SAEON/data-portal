@@ -10,7 +10,7 @@ import clsx from 'clsx'
 
 export default () => {
   const classes = useStyles()
-  const { sql, databook } = useContext(databooksContext)
+  const { sql, databook, sqlResult, setSqlResult } = useContext(databooksContext)
 
   return (
     <WithFetch
@@ -45,7 +45,8 @@ export default () => {
         }
 
         const postgisData = data.rows
-
+        setSqlResult(postgisData) //STEVEN: THROWS WARNING/ERROR - successfully sets state though
+        //STEVEN: moved sql results to context. TO-DO: don't pass data as prop. use context everywhere
         return (
           <div className={clsx(classes.layout, classes.bg)}>
             <Header data={postgisData} />

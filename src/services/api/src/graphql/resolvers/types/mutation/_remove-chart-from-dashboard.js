@@ -3,7 +3,7 @@ const { ObjectID } = mongo
 
 /**
  * Check the chart and dashsboard exists, if so
- * add the chart to the dashboard
+ * remove the chart from the dashboard
  */
 export default async (_, { chartId, dashboardId }, ctx) => {
   await ctx.userModel.checkRole(ctx, 'datascientist')

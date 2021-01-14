@@ -3,6 +3,7 @@ import { Toolbar, IconButton, Tooltip, Grid } from '@material-ui/core'
 import useStyles from '../../style'
 import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
 import ChartsIcon from 'mdi-react/ChartBellCurveIcon'
+import FilterIcon from 'mdi-react/FilterOutlineIcon'
 import clsx from 'clsx'
 import { useTheme } from '@material-ui/core/styles'
 
@@ -15,7 +16,7 @@ export default forwardRef(({ active, setActive }, ref) => {
         {/* Allow children of sibling to populate the toolbar appropriately */}
         <Grid item innerRef={ref} style={{ flexGrow: 1 }} />
 
-        {/* Toggle charts / dashboards */}
+        {/* Toggle charts / dashboards / Filters */}
         <Grid
           item
           style={{
@@ -48,6 +49,20 @@ export default forwardRef(({ active, setActive }, ref) => {
                 style={{
                   color:
                     active === 'charts' ? theme.palette.success.main : theme.palette.primary.light,
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Show Filters">
+            <IconButton
+              style={{ marginLeft: 10 }}
+              onClick={() => setActive('filters')}
+              size="small"
+            >
+              <FilterIcon
+                style={{
+                  color:
+                    active === 'filters' ? theme.palette.success.main : theme.palette.primary.light,
                 }}
               />
             </IconButton>

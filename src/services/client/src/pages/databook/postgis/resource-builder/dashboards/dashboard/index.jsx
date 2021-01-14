@@ -4,6 +4,7 @@ import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
 import { Toolbar, Typography } from '@material-ui/core'
 import AddChartButton from './_add-chart-button'
+import AddFilterButton from './_add-filter-button'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
 import PreviewBurron from './_preview-button'
@@ -30,7 +31,7 @@ const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id: dashboardId, layout = [] } = dashboard
+  const { id: dashboardId, layout = [], filters = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const gridElRef = useRef()
@@ -38,7 +39,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
   gridCache[dashboardId] = layout
 
-  const itemIds = useMemo(() => {
+  const chartIds = useMemo(() => {
     return (
       layout
         ?.map(({ content }) => {
@@ -51,9 +52,10 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         .filter(_ => _) || []
     )
   }, [layout])
+  const filterIds = filters.map(filter => filter.id) //STEVEN TODO: filterIds is probably already an array around here somewhere
 
-  if (Object.keys(refs.current).length !== itemIds.length) {
-    itemIds.forEach(id => {
+  if (Object.keys(refs.current).length !== chartIds.length) {
+    chartIds.forEach(id => {
       refs.current[id] = refs.current[id] || createRef()
     })
   }
@@ -88,7 +90,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
     grid.removeAll(false)
     grid.batchUpdate()
-    itemIds.forEach(id => {
+    chartIds.forEach(id => {
       if (refs.current[id].current?.gridstackNode) {
         // TODO - ? should the node be updated?
       } else {
@@ -106,7 +108,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [dashboardId, layout, itemIds])
+  }, [dashboardId, layout, chartIds])
 
   return (
     <>
@@ -116,6 +118,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         <SaveLayoutButton dashboard={dashboard} gridState={gridState} />
         <span style={{ marginRight: 8 }} />
         <AddChartButton dashboard={dashboard} />
+        <span style={{ marginRight: 8 }} />
+        <AddFilterButton dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
         <ShareButton id={dashboardId} />
         <span style={{ marginRight: 8 }} />
@@ -127,13 +131,20 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
           setActiveTabIndex={setActiveTabIndex}
         />
       </Toolbar>
+      <div>
+        {filterIds.map(id => (
+          // STEVEN TO-DO: flesh this out more and move styling to classes
+          <div style={{ border: '1px solid grey', display: 'inline', marginRight: '5px' }}>
+            {id}
+          </div>
+        ))}
+      </div>
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
-          {itemIds?.map(id => {
+          {chartIds?.map(id => {
             const hydratedState = (gridCache[dashboardId] || []).find(
               ({ content }) => content.id === id
             )
-
             return (
               <div
                 ref={refs.current[id]}

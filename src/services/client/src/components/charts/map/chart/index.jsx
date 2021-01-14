@@ -5,6 +5,10 @@ import { nanoid } from 'nanoid'
 
 // eslint-disable-next-line
 export default ({ config, data, title, description }) => {
+  const geoNamesField = config['series-geo-names']
+  const geoValuesField = config['series-geo-values']
+  const geoJsonField = config['series-geo-json']
+
   const nano = nanoid()
 
   const customMapJson = {
@@ -31,10 +35,9 @@ export default ({ config, data, title, description }) => {
   // TODO, if echarts DOESN"T already have customeMap, register it
   echarts.registerMap(nano, customMapJson)
 
-  const fakeData = data.map((row, i) => {
-    return { name: row.name, value: i * 3 }
+  const chartData = data.map((row, i) => {
+    return { name: row[geoNamesField], value: row[geoValuesField] }
   })
-
   return (
     <ReactEcharts
       theme={theme}
@@ -70,7 +73,7 @@ export default ({ config, data, title, description }) => {
                 show: true,
               },
             },
-            data: fakeData,
+            data: chartData,
           },
         ],
       }}

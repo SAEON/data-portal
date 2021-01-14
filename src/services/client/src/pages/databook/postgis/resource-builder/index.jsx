@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import Dashboards from './dashboards'
 import Charts from './charts'
+import Filters from './filters'
 import { Fade } from '@material-ui/core'
 
 export default () => {
@@ -28,6 +29,13 @@ export default () => {
             <Fade in={active === 'charts'} key="charts-in">
               <span>
                 <Charts ref={tabsContainerRef} />
+              </span>
+            </Fade>
+          )}
+          {active === 'filters' && (
+            <Fade in={active === 'filters'} key="filters-in">
+              <span>
+                <Filters ref={tabsContainerRef} />
               </span>
             </Fade>
           )}
