@@ -5,14 +5,8 @@ import { CATALOGUE_API_ADDRESS } from '../../config'
 export const context = createContext()
 
 export default ({ children, databook, schema }) => {
-  // TODO tableId should come from the sql schema query
   const [postGisClient, setPostGisClient] = useState({
-    query: `with cte as (
-  select *
-  from "${Object.keys(databook.doc.tables)[0]}"
-)
-
-select * from cte limit 20`,
+    query: '',
     c: 0,
   })
 

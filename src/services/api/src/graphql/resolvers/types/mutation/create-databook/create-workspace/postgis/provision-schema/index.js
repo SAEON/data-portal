@@ -32,13 +32,14 @@ export default async (ctx, databook) => {
           odp_record_id varchar not null,
           table_name varchar not null,
           constraint odp_map_primary_key primary key (id),
-          constraint odp_map_unique_cols unique (odp_record_id, table_name)
+          constraint odp_map_unique_col_1 unique (odp_record_id),
+          constraint odp_map_unique_col_2 unique (table_name)
         );
 
         -- Grant user access to the new table
-        grant all privileges on "${schema}".odp_map to "${username}";
-        grant all privileges on all sequences in schema "${schema}" to "${username}";
-        alter default privileges in schema "${schema}" grant all privileges on sequences to "${username}";
+        grant select, update, insert on "${schema}".odp_map to "${username}";
+        grant usage, select on all sequences in schema "${schema}" to "${username}";
+        alter default privileges in schema "${schema}" grant usage, select on sequences to "${username}";
       commit;`,
   })
 }

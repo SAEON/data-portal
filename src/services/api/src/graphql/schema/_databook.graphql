@@ -23,9 +23,10 @@ type PostgisDatabookSchema {
 
 type PostgisDatabookTable {
   id: ID!
+  description: String
   table_schema: String!
   databook: JSON!
-  # Update table name
+  odpRecordId: String
   updateTableName(name: String!): Boolean!
   fields(id: ID): [PostgisDatabookField]
 }
@@ -34,7 +35,6 @@ type PostgisDatabookField {
   id: ID!
   databook: JSON!
   column_name: String!
-  # Update database column name
   updateFieldName(name: String!): Boolean!
   data_type: String!
   ordinal_position: Int!

@@ -6,6 +6,8 @@ const { ObjectID } = mongo
  * remove the filter from the dashboard
  */
 export default async (_, { filterId, dashboardId }, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { Filters, Dashboards } = await ctx.mongo.collections
   filterId = ObjectID(filterId)
   const filterExists = Boolean(await Filters.countDocuments({ _id: filterId }))

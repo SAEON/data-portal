@@ -4,12 +4,15 @@ export default preparedTables =>
 		c.table_name,
 		c.column_name,
 		c.data_type,
-		c.ordinal_position
+		c.ordinal_position,
+		o.odp_record_id
 
-	from information_schema."columns" c 
+	from information_schema."columns" c
+	left join odp_map o on c.table_name = o.table_name
 
 	where
 		c.table_schema = $1
+		and c.table_name != 'odp_map'
 		or (
 			c.table_schema = 'public'
 			and c.table_name in (${preparedTables.map((t, i) => `$${i + 2}`).join(',')})

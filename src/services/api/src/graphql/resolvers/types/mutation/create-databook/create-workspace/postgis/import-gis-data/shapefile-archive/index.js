@@ -79,7 +79,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
         text: `
           insert into "${schema}".odp_map (odp_record_id, table_name)
           select
-            '${tableName}' odp_id,
+            '${id}' odp_id,
             '${tableName}' table_name;
         `,
       })

@@ -127,6 +127,8 @@ export default ({ id }) => {
                         tables {
                           id
                           table_schema
+                          odpRecordId
+                          description
                           fields {
                             id
                             column_name

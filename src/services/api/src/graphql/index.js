@@ -11,6 +11,8 @@ export default () =>
     playground: {
       subscriptionEndpoint: `${CATALOGUE_API_GQL_ADDRESS}`,
       settings: {
+        'editor.cursorShape': 'line',
+        'request.credentials': 'include',
         'editor.theme': 'light',
       },
     },
