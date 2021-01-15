@@ -1,7 +1,9 @@
-import { TextField } from '@material-ui/core'
+import { TextField, Checkbox } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
+import CheckboxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
+import CheckboxIcon from '@material-ui/icons/CheckBox'
 
 export default ({
   id,
@@ -20,9 +22,6 @@ export default ({
       options={options}
       onChange={(ev, newVal) => setOption(newVal)}
       getOptionSelected={getOptionSelected}
-      //multiple related
-      multiple={multiple}
-      disableCloseOnSelect={multiple}
       // Internal
       fullWidth
       ListboxComponent={ListboxComponent}
@@ -46,6 +45,28 @@ export default ({
           }}
         </QuickForm>
       )}
+      //multiple related
+      multiple={multiple}
+      disableCloseOnSelect={multiple}
+      limitTags={multiple ? 3 : undefined}
+      renderOption={
+        multiple
+          ? (option, { selected }) => {
+              return (
+                <>
+                  <Checkbox
+                    icon={<CheckboxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckboxIcon fontSize="small" />}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                    color="primary"
+                  />
+                  {option}
+                </>
+              )
+            }
+          : undefined
+      }
     />
   )
 }

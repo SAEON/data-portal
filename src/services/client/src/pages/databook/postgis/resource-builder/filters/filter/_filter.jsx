@@ -7,16 +7,26 @@ import { context as databookContext } from '../../../../context'
 export default ({ filter }) => {
   const { id, name, values } = filter
   const classes = useStyles()
-  const [selectedValue, setSelectedValue] = useState('')
+  const [selectedValues, setSelectedValues] = useState([])
   const context = useContext(databookContext)
   //STEVEN TO DO: update this to match dashboard autocomplete
   return (
+    /* <AutoComplete
+        id="sample-filter"
+        options={values}
+        selectedOptions={selectedValue}
+        setOption={newVal => {
+          setSelectedValue(newVal)
+        }}
+        label={name}
+      /> */
     <AutoComplete
-      id="region-filter"
+      multiple
+      id="sample-filter"
       options={values}
-      selectedOptions={selectedValue}
-      setOption={newVal => {
-        setSelectedValue(newVal)
+      selectedOptions={selectedValues}
+      setOption={newValues => {
+        setSelectedValues(newValues)
       }}
       label={name}
     />
