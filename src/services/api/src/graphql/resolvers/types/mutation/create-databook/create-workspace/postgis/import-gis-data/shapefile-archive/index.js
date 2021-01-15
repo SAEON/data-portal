@@ -77,9 +77,9 @@ export default async (ctx, databook, { immutableResource, id }) => {
       const { query } = ctx.postgis
       await query({
         text: `
-          insert into "${schema}".odp_map (odp_id, table_name)
+          insert into "${schema}".odp_map (odp_record_id, table_name)
           select
-            '${databookId}' odp_id,
+            '${tableName}' odp_id,
             '${tableName}' table_name;
         `,
       })

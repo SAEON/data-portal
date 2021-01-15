@@ -29,10 +29,10 @@ export default async (ctx, databook) => {
         -- Setup odp / postgres table map
         create table "${schema}".odp_map (
           id serial,
-          odp_id varchar not null,
+          odp_record_id varchar not null,
           table_name varchar not null,
           constraint odp_map_primary_key primary key (id),
-          constraint odp_map_unique_cols unique (odp_id, table_name)
+          constraint odp_map_unique_cols unique (odp_record_id, table_name)
         );
 
         -- Grant user access to the new table
