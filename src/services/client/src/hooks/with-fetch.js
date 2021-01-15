@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default ({ uri, method, headers, body, children = null }) => {
+export default ({ uri, method, headers, body, children = null, signal = undefined }) => {
   const [state, setState] = useState({
     error: false,
     loading: false,
@@ -8,8 +8,6 @@ export default ({ uri, method, headers, body, children = null }) => {
   })
 
   useEffect(() => {
-    var abortController = new AbortController()
-
     // eslint-disable-next-line
     ;(async () => {
       setState({ error: false, loading: true, data: false })
@@ -20,7 +18,7 @@ export default ({ uri, method, headers, body, children = null }) => {
           credentials: 'include',
           body: JSON.stringify(body),
           headers,
-          signal: abortController.signal,
+          signal,
         })
 
         const data = await response.json()
@@ -30,11 +28,7 @@ export default ({ uri, method, headers, body, children = null }) => {
         setState({ error, loading: false, data: false })
       }
     })()
-
-    return () => {
-      abortController.abort()
-    }
-  }, [uri, method, headers, body])
+  }, [uri, method, headers, body, signal])
 
   if (children) {
     return children(state)

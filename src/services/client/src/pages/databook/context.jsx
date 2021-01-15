@@ -1,39 +1,57 @@
 import { useState, createContext } from 'react'
 import WithFetch from '../../hooks/with-fetch'
+import { CATALOGUE_API_ADDRESS } from '../../config'
 
 export const context = createContext()
 
 export default ({ children, databook, schema }) => {
-  const tableId = Object.keys(databook.doc.tables)[0] // TODO should come from the sql schema query
-
-  const [sql, setSql] = useState(`with cte as (
+  // TODO tableId should come from the sql schema query
+  const [postGisClient, setPostGisClient] = useState({
+    query: `with cte as (
   select *
-  from "${tableId}"
+  from "${Object.keys(databook.doc.tables)[0]}"
 )
 
-select * from cte limit 20`)
+select * from cte limit 20`,
+    c: 0,
+  })
+
+  const queryPostGis = sql => {
+    setPostGisClient({
+      query: sql,
+      c: postGisClient.c++,
+    })
+  }
+
+  const abortController = new AbortController()
 
   return (
     <WithFetch
-      uri={'http://localhost:3000/execute-sql'}
+      uri={`${CATALOGUE_API_ADDRESS}/execute-sql`}
       method="POST"
+      signal={abortController.signal}
       headers={{
         'Content-type': 'application/json',
       }}
       body={{
         databookId: databook.doc._id,
-        sql,
+        sql: postGisClient.query,
       }}
     >
       {({ error, loading, data }) => {
         return (
           <context.Provider
             value={{
-              sql,
-              setSql,
+              sql: postGisClient.query,
+              setSql: queryPostGis,
+              abortQuery: () => {
+                abortController.abort()
+              },
               databook,
               schema,
-              data,
+              data: {
+                rows: data,
+              },
               error,
               loading,
             }}
