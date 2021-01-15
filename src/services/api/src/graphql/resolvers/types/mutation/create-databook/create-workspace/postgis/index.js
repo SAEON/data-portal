@@ -1,21 +1,24 @@
 import { collections } from '../../../../../../../mongo/index.js'
-import createSchema from './_create-schema.js'
-import createTable from './create-table/index.js'
+import provisionSchema from './provision-schema/index.js'
+import importGisData from './import-gis-data/index.js'
 
 export default async (ctx, { records, databookId }) => {
   const { Databooks } = await collections
   const databook = await Databooks.findOne({ _id: databookId })
 
   /**
-   * Create and PostGIS user and schema
+   * Create a new PostGIS user
+   * Create a schema for new user
+   * Provision other necessary tables
+   * Adjust roles and search path for user
    */
-  await createSchema(ctx, databook)
+  await provisionSchema(ctx, databook)
 
   /**
-   * Cache the metadata records backing data
-   * into the new PostGIS database one at a time
+   * Download the GIS data (immutableResource)
+   * Then import that GIS data into PostGIS using GDAL
    */
   for (const record of records) {
-    await createTable(ctx, databook, { ...record._source })
+    await importGisData(ctx, databook, { ...record._source })
   }
 }
