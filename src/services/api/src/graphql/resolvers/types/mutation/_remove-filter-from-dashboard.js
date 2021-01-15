@@ -13,21 +13,13 @@ export default async (_, { filterId, dashboardId }, ctx) => {
   if (!filterExists || !dashboard) {
     throw new Error('Unable to find either the filter or the dashboard specified. Both must exist')
   }
-  const dashboardFilters = dashboard.filters || []
+  const dashboardFilters = dashboard.filters || [] //an array of IDs
 
-  if (
-    !dashboardFilters
-      .map(filter => {
-        return filter._id.toString()
-      })
-      .includes(filterId.toString())
-  ) {
+  if (!dashboardFilters.map(id => id.toString()).includes(filterId.toString())) {
     throw new Error('Filter is not associated with this dashboard')
   }
 
-  const newFilters = [...dashboardFilters].filter(
-    ({ _id }) => _id.toString() !== filterId.toString()
-  )
+  const newFilters = dashboardFilters.filter(id => id.toString() !== filterId.toString()) //
   await Dashboards.findOneAndUpdate(
     { _id: ObjectID(dashboardId) },
     {

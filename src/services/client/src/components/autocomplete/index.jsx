@@ -5,7 +5,7 @@ import ListboxComponent from './list-box-component'
 
 export default ({
   id,
-  options,
+  options = [], //STEVEN: gave default value. On filter creation was throwing error as component was initializing with options=undefined
   setOption,
   getOptionSelected = undefined,
   selectedOptions = [],

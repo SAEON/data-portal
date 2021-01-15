@@ -21,13 +21,7 @@ const DASHBOARDS_QUERY = gql`
     dashboards(databookId: $databookId) {
       id
       layout
-      filters {
-        id
-        name
-        columnFiltered
-        values
-        sql
-      }
+      filters
     }
   }
 `
@@ -73,6 +67,7 @@ export default ({ dashboard }) => {
               }
 
               if (error) {
+                console.error(error)
                 throw error
               }
 
@@ -88,7 +83,7 @@ export default ({ dashboard }) => {
                           <Autocomplete
                             style={{ margin: '16px 0' }}
                             id={'add-filters-to-dashboard-list'}
-                            options={[...data.databook.filters?.map(({ id }) => id)]}
+                            options={[...data.databook.filters.map(({ id }) => id)]}
                             setOption={selectedOption => update({ selectedOption })}
                             selectedOptions={selectedOption}
                           />

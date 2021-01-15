@@ -10,6 +10,7 @@ const DASHBOARDS_QUERY = gql`
     dashboards(databookId: $databookId) {
       id
       layout
+      filters
     }
   }
 `

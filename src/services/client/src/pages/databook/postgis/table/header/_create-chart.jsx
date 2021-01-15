@@ -175,7 +175,7 @@ export default () => {
                               title: chartTitle,
                               description: chartDescription,
                               databookId,
-                              data: saveFilter(data, formValues),
+                              data: saveFilter(data.rows, formValues),
                               sql,
                             },
                             { config: formValues }
@@ -205,6 +205,7 @@ export default () => {
                       })
                       setOpen(false)
                     } catch (error) {
+                      console.error(error)
                       setError(error.message)
                     } finally {
                       update({ loading: false })

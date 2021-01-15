@@ -20,13 +20,7 @@ export default forwardRef((props, ref) => {
           dashboards(databookId: $databookId) {
             id
             layout
-            filters {
-              id
-              name
-              columnFiltered
-              values
-              sql
-            }
+            filters
           }
         }
       `}
