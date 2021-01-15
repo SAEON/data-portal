@@ -37,7 +37,7 @@
   "license": "MIT",
   "dependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^11.1.0",
     "url": "^0.11.0"
   },
   "devDependencies": {

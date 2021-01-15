@@ -139,7 +139,7 @@ export default ({
                   iconProps={{ size: 'small', fontSize: 'small' }}
                   dialogueContentProps={{ style: { padding: 0 } }}
                   dialogueProps={{ fullWidth: true }}
-                  paperProps={{ style: { maxWidth: 'none', minHeight: '84px' } }}
+                  paperProps={{ style: { maxWidth: 'none', minHeight: '66px' } }}
                 >
                   <Record id={record_id} />
                 </MessageDialogue>

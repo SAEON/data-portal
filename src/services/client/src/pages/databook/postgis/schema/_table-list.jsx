@@ -135,7 +135,7 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
                 title={onClose => (
                   <div style={{ display: 'flex' }}>
                     <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
-                      METADATA RECORD
+                      {isSharedTable ? 'Read-only table' : 'SAEON dataset'}
                     </Typography>
                     <IconButton
                       size="small"
@@ -163,7 +163,7 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
                   style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
                 }}
                 paperProps={{
-                  style: { maxWidth: 'none', minHeight: '84px' },
+                  style: { maxWidth: 'none', minHeight: '66px' },
                 }}
               >
                 {isSharedTable ? (

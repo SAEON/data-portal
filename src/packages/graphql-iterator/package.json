@@ -36,7 +36,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^11.1.0",
     "npm-check-updates": "^10.2.5",
     "rimraf": "^3.0.2",
     "rollup": "^2.36.1"
