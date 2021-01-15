@@ -14,8 +14,10 @@ export default () => {
   if (loading) {
     return (
       <div className={clsx(classes.layout, classes.bg)}>
-        <Loading />
         <Header />
+        <Fade in={Boolean(loading)}>
+          <Loading />
+        </Fade>
       </div>
     )
   }
@@ -23,8 +25,15 @@ export default () => {
   if (error) {
     return (
       <div className={clsx(classes.layout, classes.bg)}>
+        <Header />
         <Fade in={Boolean(error)}>
-          <Typography>{error.message}</Typography>
+          <span>
+            {error.name === 'AbortError' ? (
+              <Typography>Cancelled</Typography>
+            ) : (
+              <Typography>{error.message}</Typography>
+            )}
+          </span>
         </Fade>
       </div>
     )

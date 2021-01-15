@@ -42,8 +42,10 @@ export default makeStyles(theme => ({
     backgroundColor: purple[500],
   },
   playButton: {
-    marginLeft: 'auto',
     marginRight: theme.spacing(1),
+  },
+  cancelButton: {
+    marginLeft: 'auto',
   },
   tab: {
     minWidth: 30,
