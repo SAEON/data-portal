@@ -9,6 +9,8 @@ export default {
    * for filtering shoulg NOT be filtered out
    */
   saveFilter: (data, config) => {
+    console.log('pie data', data)
+    console.log('pie config', config)
     const cols = [config['series-names'], config['series-values']]
     return data.map(row => {
       return Object.fromEntries(Object.entries(row).filter(([k]) => cols.includes(k)))
@@ -23,7 +25,9 @@ export default {
     {
       id: 'series-names',
       description: 'Select column containing series names',
-      Component: ({ data, value, setValue }) => {
+      Component: props => {
+        const { data, value, setValue } = props
+        console.log('component 1 props', props) //for some reason data is coming back as bool false on add chart click
         return (
           <Autocomplete
             id="pie-chart-select-series-names-columns"
@@ -38,6 +42,7 @@ export default {
       id: 'series-values',
       description: 'Select column containing series values',
       Component: ({ data, value, setValue }) => {
+        console.log('component data 2', data)
         return (
           <Autocomplete
             id="pie-chart-select-series-values-columns"

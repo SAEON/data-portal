@@ -25,7 +25,7 @@ export default () => {
       >
         {({ error, loading, data }) => {
           if (loading) {
-            return '' //<Loading />
+            return <Loading />
           }
 
           if (error) {
@@ -35,6 +35,7 @@ export default () => {
           const { filters } = data
           return filters.map((filter, i) => {
             return (
+              // STEVEN TO-DO: Autocomplete starts behaving strangely once many options are selected. To be looked into
               <AutoComplete
                 multiple
                 id={`filter-${filter.id}`}

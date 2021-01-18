@@ -9,26 +9,19 @@ export default ({ filter }) => {
   const classes = useStyles()
   const [selectedValues, setSelectedValues] = useState([])
   const context = useContext(databookContext)
-  //STEVEN TO DO: update this to match dashboard autocomplete
+
   return (
-    /* <AutoComplete
+    <>
+      <AutoComplete
+        multiple
         id="sample-filter"
         options={values}
-        selectedOptions={selectedValue}
-        setOption={newVal => {
-          setSelectedValue(newVal)
+        selectedOptions={selectedValues}
+        setOption={newValues => {
+          setSelectedValues(newValues)
         }}
         label={name}
-      /> */
-    <AutoComplete
-      multiple
-      id="sample-filter"
-      options={values}
-      selectedOptions={selectedValues}
-      setOption={newValues => {
-        setSelectedValues(newValues)
-      }}
-      label={name}
-    />
+      />
+    </>
   )
 }

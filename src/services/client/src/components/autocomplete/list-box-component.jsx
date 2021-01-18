@@ -56,6 +56,8 @@ export default forwardRef(({ children, ...other }, ref) => {
             return <div ref={ref} {...props} {...outerProps} />
           })}
           innerElementType={forwardRef((props, ref) => {
+            console.log('inner props', props)
+            props.style.height = undefined //STEVEN: closest cause to the height issue that I can find
             return <ul ref={ref} {...props} />
           })}
           itemSize={index => getChildSize(itemData[index])}
