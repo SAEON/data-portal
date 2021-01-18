@@ -31,7 +31,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
    * to PostGIS using GDAL
    *
    * Once the shapefile is cached to the server, push the shapefile to
-   * PostGIS. On completing of the import emit an event called <tblname>
+   * PostGIS. On completing of the import emit an event called <tableName>
    * so that clients can subscribe to the data and get notified when it
    * exists
    */
@@ -67,12 +67,29 @@ export default async (ctx, databook, { immutableResource, id }) => {
       if (code !== 0) {
         throw new Error(`Non-zero exit code (${code}) from GDAL ogr2ogr process`)
       }
+
+      /**
+       * Register the ODP ID in the PostGIS odp_map table
+       * This is so that if a user renames the table, the
+       * association between the ODP and the data is kept
+       */
+      const { _id: databookId, _id: schema } = databook
+      const { query } = ctx.postgis
+      await query({
+        text: `
+          insert into "${schema}".odp_map (odp_record_id, table_name)
+          select
+            '${id}' odp_id,
+            '${tableName}' table_name;
+        `,
+      })
+
       /**
        * Update the databook (Mongo doc) to
        * indicate that this table is ready
        */
       await Databooks.findOneAndUpdate(
-        { _id: ObjectID(databook._id) },
+        { _id: ObjectID(databookId) },
         {
           $set: {
             [`tables.${tableName}`]: {

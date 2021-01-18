@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { IconButton, Typography } from '@material-ui/core'
+import { DialogContent, IconButton, Typography } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import InfoIcon from 'mdi-react/InformationVariantIcon'
 import CloseIcon from 'mdi-react/CloseIcon'
@@ -13,19 +13,7 @@ import { context as databooksContext } from '../../context'
 import MessageDialogue from '../../../../components/message-dialogue'
 import Record from '../../../record'
 
-export default ({ tables }) => {
-  return [...tables]
-    .sort(({ table_schema }) => {
-      return table_schema === 'public' ? 1 : -1
-    })
-    .map(({ id: tableName, fields, table_schema }) => {
-      return (
-        <Table key={tableName} tableName={tableName} fields={fields} tableSchema={table_schema} />
-      )
-    })
-}
-
-const Table = ({ tableName, fields, tableSchema }) => {
+const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => {
   const theme = useTheme()
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(tableName)
@@ -42,7 +30,6 @@ const Table = ({ tableName, fields, tableSchema }) => {
 
   return (
     <li key={tableName} className={clsx(classes.liReset)}>
-      {/* if (editActive)  <input defaultValue="text" /> // TODO handle table mutation here */}
       <>
         <ContextMenu
           uniqueIdentifier={tableName}
@@ -141,14 +128,14 @@ const Table = ({ tableName, fields, tableSchema }) => {
                 display: hovered ? 'inherit' : 'none',
               }}
             >
-              {/* TODO this dialogue is repeated code on the atlas */}
+              {/* TODO this dialogue code is repeated 2 other places */}
               <MessageDialogue
                 icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
                 handleClose={() => setHovered(false)}
                 title={onClose => (
                   <div style={{ display: 'flex' }}>
                     <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
-                      METADATA RECORD
+                      {isSharedTable ? 'Read-only table' : 'SAEON dataset'}
                     </Typography>
                     <IconButton
                       size="small"
@@ -171,19 +158,20 @@ const Table = ({ tableName, fields, tableSchema }) => {
                 }}
                 iconProps={{ size: 'small' }}
                 dialogueContentProps={{ style: { padding: 0 } }}
-                dialogueProps={{ fullWidth: true }}
+                dialogueProps={{ fullWidth: !isSharedTable }}
                 titleProps={{
                   style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
                 }}
                 paperProps={{
-                  style: { maxWidth: 'none', minHeight: '84px' },
+                  style: { maxWidth: 'none', minHeight: '66px' },
                 }}
               >
                 {isSharedTable ? (
-                  <div>Some kind of information should be here regarding this shared layer</div>
+                  <DialogContent style={{ padding: theme.spacing(2) }}>
+                    <Typography>{description}</Typography>
+                  </DialogContent>
                 ) : (
-                  // TODO - this should not be static
-                  <Record id={'10.15493/SARVA.DWS.10000001'} />
+                  <Record id={odpRecordId} />
                 )}
               </MessageDialogue>
             </span>
@@ -199,4 +187,23 @@ const Table = ({ tableName, fields, tableSchema }) => {
       </>
     </li>
   )
+}
+
+export default ({ tables }) => {
+  return [...tables]
+    .sort(({ table_schema }) => {
+      return table_schema === 'public' ? 1 : -1
+    })
+    .map(({ id: tableName, fields, table_schema, odpRecordId, description }) => {
+      return (
+        <Table
+          key={tableName}
+          tableName={tableName}
+          fields={fields}
+          tableSchema={table_schema}
+          odpRecordId={odpRecordId}
+          description={description}
+        />
+      )
+    })
 }

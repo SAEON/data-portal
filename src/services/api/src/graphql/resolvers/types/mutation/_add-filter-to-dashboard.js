@@ -7,6 +7,8 @@ const { ObjectID } = mongo
  * describe GridStack.js widgets
  */
 export default async (_, { filterId, dashboardId }, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { Filters, Dashboards } = await ctx.mongo.collections
   filterId = ObjectID(filterId)
 

@@ -68,14 +68,6 @@ module.exports = () => {
             : '../../packages/quick-form/src'
         ),
 
-        // @saeon/pkce-client
-        '@saeon/pkce-client': path.resolve(
-          __dirname,
-          mode === 'production'
-            ? './node_modules/@saeon/pkce-client'
-            : '../../packages/pkce-client/src'
-        ),
-
         // @saeon/snap-menus
         '@saeon/snap-menus': path.resolve(
           __dirname,

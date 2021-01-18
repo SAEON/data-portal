@@ -22,14 +22,14 @@ export default async (ctx, databook, { immutableResource, id }) => {
      * Accession resources
      */
     if (resourceName === 'Accession') {
-      throw new Error('Cannot open accensioned resources')
+      throw new Error('Cannot open accessioned resources')
     }
 
     /**
      * Resource is an archived shapefile
      */
     if (archive && archivedFormats?.includes('shp')) {
-      console.log(databook._id, 'shapefile archive')
+      console.log(databook._id, 'Importing shapefile archive to PostGIS')
       return await loadShapefileArchive(ctx, databook, { immutableResource, id })
     }
 

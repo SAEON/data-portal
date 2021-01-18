@@ -2,6 +2,8 @@ import mongo from 'mongodb'
 const { ObjectID } = mongo
 
 export default async (databook, args, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { Filters } = await ctx.mongo.collections
   const { databookId, ..._args } = args
 

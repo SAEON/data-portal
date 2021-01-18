@@ -22,7 +22,7 @@ import configureApolloServer from './graphql/index.js'
 import configurePostgis from './postgis/setup/index.js'
 import { configure as configureElasticsearch } from './elasticsearch/index.js'
 import configurePassport, { passportCookieConfig } from './passport/index.js'
-import { applyIndices, setupUserRoles } from './mongo/index.js'
+import { applyIndices, setupUserRoles, setupDefaultAdmins } from './mongo/index.js'
 import {
   CATALOGUE_API_PORT,
   CATALOGUE_PROXY_ADDRESS,
@@ -41,6 +41,8 @@ applyIndices()
 // Configure MongoDB userRoles
 setupUserRoles()
   .then(() => console.info('Mongo user roles configured'))
+  .then(() => setupDefaultAdmins())
+  .then(() => console.info('Default users configured'))
   .catch(error => {
     console.error(error)
     process.exit(1)

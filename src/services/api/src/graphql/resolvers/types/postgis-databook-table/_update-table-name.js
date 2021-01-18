@@ -1,35 +1,26 @@
-/**
- * STEVEN TODO
- *  => Please do the SQL to update the
- *  => name of the table in the database
- *  => Update the return type so that useful
- *  => errors (for example fails due to name
- *  => already existing) are passed back to
- *  => the client
- */
 export default async (self, args, ctx) => {
+  await ctx.userModel.checkRole(ctx, 'datascientist')
+
   const { id: currentTableName } = self
-  const { username, password: encryptedPassword } = self.databook.authentication
+  const { authentication, _id: schema } = self.databook
+  const { username, password: encryptedPassword } = authentication
   const { name: newTableName } = args
   const { query } = ctx.postgis
   const password = ctx.crypto.decrypt(encryptedPassword)
 
-  const sql = `ALTER TABLE "${username}"."${currentTableName}" RENAME TO "${newTableName}"`
+  const sql = `
+  begin;
+    alter table "${schema}"."${currentTableName}" rename to "${newTableName}";
+    update "${schema}".odp_map set table_name = '${newTableName}' where table_name = '${currentTableName}';
+  commit;`
 
-  //STEVEN TODO: try catch block to be confirmed as actually catching query errors
-  try {
-    await query({
-      text: sql,
-      client: {
-        user: username,
-        password,
-      },
-    })
-  } catch (error) {
-    console.log(error)
-    console.error(error)
-    return false
-  }
+  await query({
+    text: sql,
+    client: {
+      user: username,
+      password,
+    },
+  })
 
   return true
 }
