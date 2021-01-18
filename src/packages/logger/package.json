@@ -57,6 +57,6 @@
     "npm-check-updates": "^10.2.5",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.36.1"
+    "rollup": "^2.36.2"
   }
 }

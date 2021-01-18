@@ -13,8 +13,8 @@
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../../packages/snap-menus/src/**/*.@(js|jsx|ts|tsx)\" \"../../packages/logger/src/**/*.@(js|jsx|ts|tsx)\"  \"../../packages/pkce-client/src/**/*.@(js|jsx|ts|tsx)\" \"../../packages/ol-react/src/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --open",
-    "ncu": "ncu --reject echarts,copy-webpack-plugin",
-    "ncu -u": "ncu -u --reject echarts,copy-webpack-plugin"
+    "ncu": "ncu --reject echarts",
+    "ncu -u": "ncu -u --reject echarts"
   },
   "repository": {
     "type": "git",
@@ -40,17 +40,16 @@
     "@material-ui/lab": "4.0.0-alpha.57",
     "@saeon/logger": "^6.2.0",
     "@saeon/ol-react": "^10.2.0",
-    "@saeon/pkce-client": "0.10.0",
     "@saeon/quick-form": "3.1.3",
     "@saeon/snap-menus": "^5.2.0",
     "@svgr/webpack": "^5.5.0",
-    "@swc/cli": "^0.1.27",
+    "@swc/cli": "^0.1.28",
     "@swc/core": "^1.2.45",
     "ace-builds": "^1.4.12",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-imports": "^2.0.0",
     "clsx": "^1.1.1",
-    "copy-webpack-plugin": "^6.4.0",
+    "copy-webpack-plugin": "^7.0.0",
     "core-js": "^3.8.2",
     "css-loader": "^5.0.1",
     "date-fns": "^2.16.1",
@@ -89,7 +88,7 @@
     "typeface-roboto": "1.1.13",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
-    "webpack": "^5.14.0",
+    "webpack": "^5.15.0",
     "webpack-bundle-analyzer": "^4.3.0",
     "webpack-cli": "^4.3.1",
     "workbox-webpack-plugin": "^6.0.2"

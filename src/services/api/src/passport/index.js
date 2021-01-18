@@ -22,40 +22,48 @@ export default () => {
           callbackURL: CATALOGUE_API_OAUTH_REDIRECT_ADDRESS,
         },
         async (accessToken, refreshToken, profile, cb) => {
-          const { id: googleId, ..._profile } = profile
           const { Users, UserRoles } = await collections
+          const datascientistRoleId = (await UserRoles.find({ name: 'datascientist' }).toArray())[0]
+            ._id
 
-          const datascientistRole = (await UserRoles.find({ name: 'datascientist' }).toArray())[0]
+          const { id: googleId, _json: googleProfile } = profile
 
-          try {
-            cb(
-              null,
-              (
-                await Users.findAndModify(
-                  {
-                    googleId,
-                  },
-                  null,
-                  {
-                    $setOnInsert: {
-                      googleId,
+          if (!googleProfile.email_verified) {
+            cb(new Error('Google email has not been verified', null))
+          } else {
+            try {
+              cb(
+                null,
+                (
+                  await Users.findAndModify(
+                    {
+                      email: googleProfile.email,
                     },
-                    $set: {
-                      modifiedAt: new Date(),
-                      email: _profile._json.email,
-                      google: { accessToken, ..._profile },
-                      userRoles: [datascientistRole._id],
+                    null,
+                    {
+                      $setOnInsert: {
+                        email: googleProfile.email,
+                      },
+                      $set: {
+                        google: Object.assign(
+                          { googleId, accessToken, modifiedAt: new Date() },
+                          googleProfile
+                        ),
+                      },
+                      $addToSet: {
+                        userRoles: datascientistRoleId,
+                      },
                     },
-                  },
-                  {
-                    new: true,
-                    upsert: true,
-                  }
-                )
-              ).value
-            )
-          } catch (error) {
-            cb(error, null)
+                    {
+                      new: true,
+                      upsert: true,
+                    }
+                  )
+                ).value
+              )
+            } catch (error) {
+              cb(error, null)
+            }
           }
         }
       )

@@ -5,6 +5,7 @@ import {
   MONGO_DB_USERNAME,
   MONGO_DB_PASSWORD,
   CATALOGUE_API_NODE_ENV,
+  CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
 import getCollections from './_collections.js'
 import configureDataFinders from './_data-finders.js'
@@ -72,6 +73,32 @@ export const setupUserRoles = () =>
       })
     )
   )
+
+export const setupDefaultAdmins = async () => {
+  const adminRoleId = (
+    await db.then(db => db.collection(_collections.UserRoles).findOne({ name: 'admin' }))
+  )._id
+
+  db.then(db =>
+    Promise.all(
+      CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(email =>
+        db.collection(_collections.Users).findAndModify(
+          {
+            email,
+          },
+          null,
+          {
+            $setOnInsert: { email },
+            $addToSet: {
+              userRoles: adminRoleId,
+            },
+          },
+          { upsert: true }
+        )
+      )
+    )
+  )
+}
 
 export const applyIndices = () =>
   db.then(db =>
