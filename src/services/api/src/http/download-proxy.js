@@ -2,7 +2,7 @@ import fetch from 'request'
 import { parse } from 'url'
 import { CATALOGUE_CURATOR_CONTACT } from '../config.js'
 
-const HOSTNAME_WHITELIST = ['media.dirisa.org']
+const HOSTNAME_WHITELIST = ['media.dirisa.org', 'dap.saeon.ac.za']
 
 export default async ctx => {
   const { uri } = ctx.request.query
