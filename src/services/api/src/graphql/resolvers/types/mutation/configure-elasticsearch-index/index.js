@@ -9,7 +9,7 @@ import makeOdpIterator from './iterator/index.js'
 const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
 
 export default async (self, args, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'admin')
+  await ctx.userModel.ensureAdmin(ctx)
 
   const result = {
     updated: 0,

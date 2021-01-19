@@ -2,7 +2,7 @@ import mongo from 'mongodb'
 const { ObjectID } = mongo
 
 export default async (databook, args, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'datascientist')
+  await ctx.userModel.ensureDataScientist(ctx)
 
   const { Charts } = await ctx.mongo.collections
   const { databookId, ..._args } = args

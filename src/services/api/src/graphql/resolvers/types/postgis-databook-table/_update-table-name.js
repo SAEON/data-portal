@@ -1,5 +1,5 @@
 export default async (self, args, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'datascientist')
+  await ctx.userModel.ensureDataScientist(ctx)
 
   const { id: currentTableName } = self
   const { authentication, _id: schema } = self.databook

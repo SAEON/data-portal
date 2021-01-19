@@ -3,7 +3,7 @@ import fetchMetadataRecords from './_fetch-metadata-records.js'
 import createMongoDoc from './_create-mongo-doc.js'
 
 export default async (_, args, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'datascientist')
+  await ctx.userModel.ensureDataScientist(ctx)
 
   const { state, createdBy } = args
 

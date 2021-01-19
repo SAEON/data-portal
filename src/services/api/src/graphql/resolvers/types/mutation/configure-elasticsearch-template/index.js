@@ -7,7 +7,7 @@ import {
 } from '../../../../../config.js'
 
 export default async (self, args, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'admin')
+  await ctx.userModel.ensureAdmin(ctx)
 
   return fetch(
     `${ELASTICSEARCH_ADDRESS}/_index_template/${CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME}`,

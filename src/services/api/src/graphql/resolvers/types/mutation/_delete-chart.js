@@ -2,7 +2,7 @@ import mongo from 'mongodb'
 const { ObjectID } = mongo
 
 export default async (_, { id }, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'datascientist')
+  await ctx.userModel.ensureDataScientist(ctx)
 
   const { Charts } = await ctx.mongo.collections
   const { result } = await Charts.remove({ _id: ObjectID(id) })

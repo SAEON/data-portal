@@ -16,7 +16,7 @@
  */
 //column names by rule of postgres must be unique within their table, how are column names duplicating?  http://etutorials.org/SQL/Postgresql/Part+I+General+PostgreSQL+Use/Chapter+3.+PostgreSQL+SQL+Syntax+and+Use/PostgreSQL+Naming+Rules/
 export default async (self, args, ctx) => {
-  await ctx.userModel.checkRole(ctx, 'datascientist')
+  await ctx.userModel.ensureDataScientist(ctx)
 
   const { query } = ctx.postgis
   const { column_name, /*data_type,*/ table_name } = self //commenting out data_type till the duplicate column issue is confirmed

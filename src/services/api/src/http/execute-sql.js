@@ -5,7 +5,7 @@ import JSONStream from 'JSONStream'
 const { ObjectID } = mongo
 
 export default async ctx => {
-  await ctx.userModel.checkRole(ctx, 'datascientist')
+  await ctx.userModel.ensureDataScientist(ctx)
   const { findDatabooks } = ctx.mongo.dataFinders
   const { databookId, sql } = ctx.request.body
   const databook = (await findDatabooks({ _id: ObjectID(databookId) }))[0]

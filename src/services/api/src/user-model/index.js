@@ -1,5 +1,11 @@
-import checkRole from './_check-role.js'
+import ensureRole from './_ensure-role.js'
+
+const ROLES = {
+  datascientist: 'datascientist',
+  admin: 'admin',
+}
 
 export default {
-  checkRole,
+  ensureDataScientist: ctx => ensureRole(ctx, ROLES.datascientist),
+  ensureAdmin: ctx => ensureRole(ctx, ROLES.admin),
 }
