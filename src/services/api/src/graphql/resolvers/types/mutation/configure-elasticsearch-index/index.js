@@ -5,11 +5,13 @@ import {
   CATALOGUE_API_ODP_FILTER,
 } from '../../../../../config.js'
 import makeOdpIterator from './iterator/index.js'
+import { performance } from 'perf_hooks'
 
 const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
 
 export default async (self, args, ctx) => {
   await ctx.userModel.ensureAdmin(ctx)
+  const t0 = performance.now()
 
   const result = {
     updated: 0,
@@ -91,5 +93,7 @@ export default async (self, args, ctx) => {
     process.exit(1)
   }
 
-  return result
+  const t1 = performance.now()
+
+  return { runtime: `${Math.round((t1 - t0) / 1000, 2)} seconds`, ...result }
 }

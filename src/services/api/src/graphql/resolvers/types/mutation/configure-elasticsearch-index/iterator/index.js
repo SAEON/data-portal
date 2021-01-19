@@ -6,6 +6,7 @@ import {
 } from '../../../../../../config.js'
 import parseDates from './_parse-dates.js'
 import parseSpatial from './_parse-spatial.js'
+import parseImmutableResource from './_parse-immutable-resource.js'
 import authenticateWithOdp from '../../../../../../lib/authenticate-with-odp.js'
 
 const DEBUG_IDS = CATALOGUE_API_ODP_DEBUG_IDS.split(',')
@@ -49,7 +50,9 @@ const iterate = async ({ offset = 0, token }) => {
               schema,
               ...Object.fromEntries(
                 Object.entries(metadata).map(([key, value]) =>
-                  key === 'dates'
+                  key === 'immutableResource'
+                    ? [key, parseImmutableResource(id, value)]
+                    : key === 'dates'
                     ? [key, parseDates(id, value)]
                     : key === 'geoLocations'
                     ? [key, parseSpatial(id, value)]
