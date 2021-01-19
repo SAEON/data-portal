@@ -26,9 +26,6 @@ jobs:
           CATALOGUE_API_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
-          CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled"
-          CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled"
-          CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"

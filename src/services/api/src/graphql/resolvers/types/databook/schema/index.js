@@ -1,4 +1,4 @@
-import defaultLayers from '../../../../../postgis/setup/default-layers.js'
+import defaultLayers from '../../../../../lib/default-postgis-layers.js'
 import makeSql from './sql.js'
 
 const sharedTables = Object.keys(Object.assign({}, defaultLayers))

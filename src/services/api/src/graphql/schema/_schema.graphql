@@ -91,6 +91,9 @@ type Mutation {
     sql: String
   ): Filter!
   deleteFilter(id: ID!): Boolean!
+  configureElasticsearchTemplate: JSON!
+  configureElasticsearchIndex: JSON!
+  configureDefaultPostGISLayers: JSON!
 }
 
 type BrowserEvent implements Node {

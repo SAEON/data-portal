@@ -1,4 +1,4 @@
-import defaultLayers from '../../../../postgis/setup/default-layers.js'
+import defaultLayers from '../../../../lib/default-postgis-layers.js'
 
 export default async (self, args) => {
   const { id } = args

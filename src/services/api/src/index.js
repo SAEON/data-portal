@@ -19,16 +19,9 @@ import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
 import configureApolloServer from './graphql/index.js'
-import configurePostgis from './postgis/setup/index.js'
-import { configure as configureElasticsearch } from './elasticsearch/index.js'
 import configurePassport, { passportCookieConfig } from './passport/index.js'
 import { applyIndices, setupUserRoles, setupDefaultAdmins } from './mongo/index.js'
-import {
-  CATALOGUE_API_PORT,
-  CATALOGUE_PROXY_ADDRESS,
-  CATALOGUE_API_SEED_POSTGIS_LAYERS,
-  CATALOGUE_API_KEY,
-} from './config.js'
+import { CATALOGUE_API_PORT, CATALOGUE_PROXY_ADDRESS, CATALOGUE_API_KEY } from './config.js'
 
 // Configure MongoDB indices
 applyIndices()
@@ -47,26 +40,6 @@ setupUserRoles()
     console.error(error)
     process.exit(1)
   })
-
-// Configure Elasticsearch
-configureElasticsearch()
-  .then(() => console.info('Elasticsearch', 'configured'))
-  .catch(error => {
-    console.error(error)
-    process.exit(1)
-  })
-
-// Configure PostGIS
-if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
-  configurePostgis()
-    .then(() => console.info('PostGIS configured'))
-    .catch(error => {
-      console.error(error)
-      process.exit(1)
-    })
-} else {
-  console.info('PostGIS', 'seeding disabled')
-}
 
 // Configure passport authentication
 const { login, authenticate } = configurePassport()

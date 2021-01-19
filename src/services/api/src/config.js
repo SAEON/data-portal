@@ -42,11 +42,6 @@ export const CATALOGUE_DEPLOYMENT_ENV = process.env.CATALOGUE_DEPLOYMENT_ENV || 
 
 export const CATALOGUE_API_NODE_ENV = process.env.CATALOGUE_API_NODE_ENV || 'development'
 
-export const CATALOGUE_API_INDEX_REBUILD_SCHEDULE =
-  process.env.CATALOGUE_API_INDEX_REBUILD_SCHEDULE || '0 0 0 * * *'
-
-export const CATALOGUE_API_INDEX_REBUILD = process.env.CATALOGUE_API_INDEX_REBUILD || 'disabled'
-
 export const MONGO_DB = process.env.MONGO_DB || 'catalogue'
 
 export const MONGO_DB_ADDRESS = process.env.MONGO_DB_ADDRESS || 'mongodb://localhost:27017'
@@ -56,9 +51,6 @@ export const MONGO_DB_USERNAME = process.env.MONGO_DB_USERNAME || 'admin'
 export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
-
-export const CATALOGUE_API_SEED_POSTGIS_LAYERS =
-  process.env.CATALOGUE_API_SEED_POSTGIS_LAYERS || 'disabled'
 
 /**
  * Local development the API doesn't run dockerized,
@@ -110,12 +102,6 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
   process.env.CATALOGUE_API_ELASTICSEARCH_INDEX_NAME || 'catalogue-search'
 }`
 
-export const CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE =
-  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE || 'disabled'
-
-export const CATALOGUE_API_RESET_ELASTICSEARCH_INDEX =
-  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_INDEX || 'disabled'
-
 export const CATALOGUE_API_TEMP_DIRECTORY =
   process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))
 
@@ -151,7 +137,6 @@ console.log(
       CATALOGUE_API_NODE_ENV,
       CATALOGUE_DEPLOYMENT_ENV,
       CATALOGUE_DOCKER_NETWORK,
-      CATALOGUE_API_SEED_POSTGIS_LAYERS,
       MONGO_DB,
       MONGO_DB_USERNAME: mask(MONGO_DB_USERNAME),
       MONGO_DB_PASSWORD: mask(MONGO_DB_PASSWORD),
@@ -167,9 +152,6 @@ console.log(
       CATALOGUE_API_GQL_ADDRESS,
       ELASTICSEARCH_ADDRESS,
       CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
-      CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE,
-      CATALOGUE_API_RESET_ELASTICSEARCH_INDEX,
-      CATALOGUE_API_INDEX_REBUILD,
       CATALOGUE_API_TEMP_DIRECTORY,
     }).sort(([aKey], [bKey]) => {
       if (aKey > bKey) return 1
