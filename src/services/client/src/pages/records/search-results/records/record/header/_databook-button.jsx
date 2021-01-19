@@ -9,7 +9,7 @@ import useStyles from './style'
 import { context as globalContext } from '../../../../../../contexts/global'
 import { AuthContext } from '../../../../../../contexts/authentication'
 
-export default ({ id, linkedResources }) => {
+export default ({ id, immutableResource }) => {
   const [loading, setLoading] = useState(false)
   const client = useApolloClient()
   const classes = useStyles()
@@ -18,9 +18,7 @@ export default ({ id, linkedResources }) => {
   const { selectedIds } = global
   const history = useHistory()
 
-  const hasLayers = Boolean(
-    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-  )
+  const isShapefile = immutableResource?._fileFormat === 'Shapefile'
 
   if (!userInfo) {
     return null
@@ -35,12 +33,15 @@ export default ({ id, linkedResources }) => {
   }
 
   return (
-    <Tooltip title={hasLayers ? 'Analyze dataset' : 'Data not available'} placement="left-start">
+    <Tooltip
+      title={isShapefile ? 'Analyze dataset' : 'Only shapefiles supported currently'}
+      placement="left-start"
+    >
       <span>
         <IconButton
           className={clsx(classes['small-icon-button'])}
           size="small"
-          disabled={!hasLayers}
+          disabled={!isShapefile}
           onClick={async e => {
             e.stopPropagation()
             setLoading(true)

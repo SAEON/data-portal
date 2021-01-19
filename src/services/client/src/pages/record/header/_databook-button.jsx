@@ -5,24 +5,22 @@ import { useApolloClient, gql } from '@apollo/client'
 import packageJson from '../../../../package.json'
 import { useHistory } from 'react-router-dom'
 
-export default ({ linkedResources, id }) => {
+export default ({ immutableResource, id }) => {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
   const client = useApolloClient()
 
-  const hasTable = Boolean(
-    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-  )
+  const isShapefile = immutableResource?._fileFormat === 'Shapefile'
 
   return loading ? (
     <Fade in={loading}>
       <CircularProgress thickness={2} size={18} style={{ margin: '15px 8px' }} />
     </Fade>
   ) : (
-    <Tooltip title={hasTable ? 'Analyze dataset' : 'Unable to analyze this dataset'}>
+    <Tooltip title={isShapefile ? 'Analyze dataset' : 'Only shapefiles supported currently'}>
       <span>
         <IconButton
-          disabled={!hasTable}
+          disabled={!isShapefile}
           color={'primary'}
           onClick={async e => {
             e.stopPropagation()

@@ -146,7 +146,7 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', styl
                     <FormControlLabel
                       label={
                         <Typography variant="overline">{`${
-                          typeof key === 'string' ? key.toUpperCase() : key
+                          typeof key === 'string' ? key.truncate(20).toUpperCase() : key
                         } (${doc_count})`}</Typography>
                       }
                       control={

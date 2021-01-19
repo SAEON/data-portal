@@ -1,15 +1,33 @@
-const chooseFileFormat = (archivedFormats = []) => {
+const chooseFileFormat = format => {
   /**
-   * Check for shapefile
+   * format is an Array type
+   * i.e. archive == true
    */
-  if (archivedFormats.includes('shp')) {
-    return 'shapefile'
+  if (typeof format === 'object') {
+    if (format.includes('shp')) {
+      return 'Shapefile'
+    }
+
+    if (format.includes('nc')) {
+      return 'NetCDF'
+    }
+
+    return format.join('|')
   }
 
   /**
-   * Unknown archive contents
+   * Format is a string type
+   * i.e. archive == false
    */
-  return 'unknown'
+  if (typeof format === 'string') {
+    if (format === 'nc') {
+      return 'NetCDF'
+    }
+
+    return format
+  }
+
+  return 'Unknown'
 }
 
 export default (id, values) => {
@@ -17,8 +35,8 @@ export default (id, values) => {
     values.resourceDownload || {}
 
   return {
-    _archive: archive || (fileFormat ? false : 'unknown'),
-    _fileFormat: fileFormat || chooseFileFormat(archivedFormats),
+    _archive: archive || (fileFormat ? false : 'Unknown'),
+    _fileFormat: chooseFileFormat(fileFormat || archivedFormats),
     ...values,
   }
 }
