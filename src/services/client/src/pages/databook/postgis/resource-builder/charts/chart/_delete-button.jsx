@@ -20,6 +20,8 @@ export default ({ id, setActiveTabIndex, activeTabIndex }) => {
   const client = useApolloClient()
   const { databook } = useContext(databookContext)
 
+  //STEVEN: TO-DO: Bug: Deleting a chart doesn't remove it from dashboard.layout.charts.
+  //Dashboard then throws error since it cant find the chart(Probably same problem with filters)
   return (
     <Tooltip title="Delete current chart" placement="left-start">
       <span>

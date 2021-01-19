@@ -31,152 +31,160 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
   return (
     <li key={tableName} className={clsx(classes.liReset)}>
       <>
-        <ContextMenu
-          uniqueIdentifier={tableName}
-          menuItems={[
-            {
-              value: 'Rename',
-              onClick: () => {
-                setEditActive(true)
-                handleFocus()
-              },
-              disabled: isSharedTable,
-            },
-          ]}
+        <span
+          style={{ display: 'flex' }}
+          className={clsx(classes.hoverHighlight)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
-          <span
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            style={{ display: 'flex', inlineSize: 'auto' }}
-            className={clsx(classes.hoverHighlight)}
+          <ContextMenu
+            uniqueIdentifier={tableName}
+            childrenContainerStyle={{ width: '100%' }}
+            menuItems={[
+              {
+                value: 'Rename',
+                onClick: () => {
+                  setEditActive(true)
+                  handleFocus()
+                },
+                disabled: isSharedTable,
+              },
+            ]}
           >
-            {/* Table Icon and text */}
             <span
-              onClick={() => {
-                if (!editActive) setExpanded(!expanded)
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexGrow: 1,
-              }}
+              // style={{ display: 'flex', inlineSize: 'auto' }}
+              className={clsx(classes.hoverHighlight)}
             >
-              <TableIcon
-                size={20}
-                style={{ minWidth: 20, marginRight: '2px', cursor: 'pointer' }}
-              />
-              <RenameOperator
-                variables={{
-                  id: databook.doc._id,
-                  tableName: tableName,
-                  newName: text,
+              {/* Table Icon and text */}
+              <span
+                onClick={() => {
+                  if (!editActive) setExpanded(!expanded)
                 }}
-                entityType="table"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexGrow: 1,
+                }}
               >
-                {renameEntityLazy => {
-                  const onEnter = () => {
-                    setEditActive(false)
-                    const result = renameEntityLazy()
-                    if (result?.error) {
-                      //STEVEN TO DO: if error: warn user
-                      console.log('onEnter error', result?.error)
-                      setText(tableName)
+                <TableIcon
+                  size={20}
+                  style={{ minWidth: 20, marginRight: '2px', cursor: 'pointer' }}
+                />
+                <RenameOperator
+                  variables={{
+                    id: databook.doc._id,
+                    tableName: tableName,
+                    newName: text,
+                  }}
+                  entityType="table"
+                >
+                  {renameEntityLazy => {
+                    const onEnter = () => {
+                      setEditActive(false)
+                      const result = renameEntityLazy()
+                      if (result?.error) {
+                        //STEVEN TO DO: if error: warn user
+                        console.log('onEnter error', result?.error)
+                        setText(tableName)
+                      }
                     }
-                  }
-                  return (
-                    <input
-                      style={{
-                        width: '100%',
-                        textOverflow: 'ellipsis',
-                        color: isSharedTable ? theme.palette.grey[500] : 'inherit',
-                      }}
-                      id={inputId}
-                      autoComplete="off"
-                      readOnly={!editActive}
-                      value={text}
-                      className={clsx(classes.inputField, {
-                        [classes.inputFieldActive]: editActive,
-                      })}
-                      onFocus={e => {
-                        if (editActive) e.currentTarget.select() //STEVEN TODO: bug: editActive being seen as false always
-                      }}
-                      onInput={e => {
-                        setText(e.target.value)
-                      }}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                          onEnter(e)
-                        } else if (['Escape', 'Tab'].includes(e.key)) {
+                    return (
+                      <input
+                        style={{
+                          width: '100%',
+                          textOverflow: 'ellipsis',
+                          color: isSharedTable ? theme.palette.grey[500] : 'inherit',
+                        }}
+                        id={inputId}
+                        autoComplete="off"
+                        readOnly={!editActive}
+                        value={text}
+                        className={clsx(classes.inputField, {
+                          [classes.inputFieldActive]: editActive,
+                        })}
+                        onFocus={e => {
+                          if (editActive) e.currentTarget.select()
+                        }}
+                        onInput={e => {
+                          setText(e.target.value)
+                        }}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter') {
+                            onEnter(e)
+                          } else if (['Escape', 'Tab'].includes(e.key)) {
+                            setEditActive(false)
+                            setText(tableName)
+                          }
+                        }}
+                        onBlur={() => {
                           setEditActive(false)
                           setText(tableName)
-                        }
-                      }}
-                      onBlur={() => {
-                        setEditActive(false)
-                        setText(tableName)
-                      }}
-                    />
-                  )
-                }}
-              </RenameOperator>
+                        }}
+                      />
+                    )
+                  }}
+                </RenameOperator>
+              </span>
             </span>
-            {/* View Metadata (i) button */}
-            <span
-              style={{
-                marginLeft: 'auto',
-                marginRight: 0,
-                display: hovered ? 'inherit' : 'none',
+          </ContextMenu>
+          {/* View Metadata (i) button */}
+          <span
+            // style={{ display: 'flex', inlineSize: 'auto', position: 'absolute' }}
+            className={clsx(classes.hoverHighlight)}
+            style={{
+              marginLeft: 'auto',
+              marginRight: 0,
+              display: hovered ? 'inherit' : 'none',
+            }}
+          >
+            {/* TODO this dialogue code is repeated 2 other places */}
+            <MessageDialogue
+              icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
+              handleClose={() => setHovered(false)}
+              title={onClose => (
+                <div style={{ display: 'flex' }}>
+                  <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
+                    {isSharedTable ? 'Read-only table' : 'SAEON dataset'}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    onClick={e => {
+                      e.stopPropagation()
+                      setHovered(false)
+                      onClose()
+                    }}
+                    style={{ marginLeft: 'auto', alignSelf: 'center' }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </div>
+              )}
+              tooltipProps={{
+                placement: 'right',
+                title: isSharedTable
+                  ? `Read-only shared table`
+                  : `Show metadata information for this table`,
+              }}
+              iconProps={{ size: 'small' }}
+              dialogueContentProps={{ style: { padding: 0 } }}
+              dialogueProps={{ fullWidth: !isSharedTable }}
+              titleProps={{
+                style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
+              }}
+              paperProps={{
+                style: { maxWidth: 'none', minHeight: '66px' },
               }}
             >
-              {/* TODO this dialogue code is repeated 2 other places */}
-              <MessageDialogue
-                icon={<InfoIcon size={14} style={{ marginRight: 1 }} />}
-                handleClose={() => setHovered(false)}
-                title={onClose => (
-                  <div style={{ display: 'flex' }}>
-                    <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>
-                      {isSharedTable ? 'Read-only table' : 'SAEON dataset'}
-                    </Typography>
-                    <IconButton
-                      size="small"
-                      onClick={e => {
-                        e.stopPropagation()
-                        setHovered(false)
-                        onClose()
-                      }}
-                      style={{ marginLeft: 'auto', alignSelf: 'center' }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                )}
-                tooltipProps={{
-                  placement: 'right',
-                  title: isSharedTable
-                    ? `Read-only shared table`
-                    : `Show metadata information for this table`,
-                }}
-                iconProps={{ size: 'small' }}
-                dialogueContentProps={{ style: { padding: 0 } }}
-                dialogueProps={{ fullWidth: !isSharedTable }}
-                titleProps={{
-                  style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
-                }}
-                paperProps={{
-                  style: { maxWidth: 'none', minHeight: '66px' },
-                }}
-              >
-                {isSharedTable ? (
-                  <DialogContent style={{ padding: theme.spacing(2) }}>
-                    <Typography>{description}</Typography>
-                  </DialogContent>
-                ) : (
-                  <Record id={odpRecordId} />
-                )}
-              </MessageDialogue>
-            </span>
+              {isSharedTable ? (
+                <DialogContent style={{ padding: theme.spacing(2) }}>
+                  <Typography>{description}</Typography>
+                </DialogContent>
+              ) : (
+                <Record id={odpRecordId} />
+              )}
+            </MessageDialogue>
           </span>
-        </ContextMenu>
+        </span>
 
         <ul
           className={clsx(classes.ulReset)}

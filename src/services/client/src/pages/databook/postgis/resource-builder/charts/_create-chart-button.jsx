@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import CreateChartIcon from 'mdi-react/ChartBoxPlusOutlineIcon' //mdi-react/PlusIcon
+import PlusIcon from 'mdi-react/PlusIcon' //mdi-react/PlusIcon
 import {
   IconButton,
   Dialog,
@@ -46,13 +46,18 @@ export default () => {
   const [chartTitle, setChartTitle] = useState('')
   const [chartDescription, setChartDescription] = useState('')
   const [formValues, setFormValues] = useState({})
-
+  if (data.rows.length === 0)
+    return (
+      <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
+        <PlusIcon size={14} />
+      </IconButton>
+    )
   return (
     <>
       {/* TOGGLE DIALOGUE */}
       <Tooltip title="Create chart from current data" placement="left-start">
         <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOpen(true)} size="small">
-          <CreateChartIcon style={{ color: theme.palette.primary.light }} />
+          <PlusIcon size={14} />
         </IconButton>
       </Tooltip>
 
@@ -109,7 +114,6 @@ export default () => {
                     <Component
                       value={formValues[id]}
                       setValue={val => {
-                        console.log('formValues', formValues)
                         return setFormValues({
                           ...formValues,
                           [id]: val,
@@ -136,17 +140,13 @@ export default () => {
               return (
                 <Button
                   onClick={async () => {
-                    console.log('1')
                     update({ loading: true })
-                    console.log('2')
                     const saveFilter =
                       chartDefinitions.find(({ type }) => type === chartType)?.saveFilter ||
                       function (data) {
                         return data
                       }
-                    console.log('3')
                     try {
-                      console.log('4')
                       await client.mutate({
                         mutation: gql`
                           mutation(
@@ -206,14 +206,11 @@ export default () => {
                           })
                         },
                       })
-                      console.log('4')
                       setOpen(false)
                     } catch (error) {
-                      console.log('error here')
                       console.error(error)
                       setError(error.message)
                     } finally {
-                      console.log('5')
                       update({ loading: false })
                     }
                   }}

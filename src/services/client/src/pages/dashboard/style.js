@@ -44,4 +44,10 @@ export default makeStyles(theme => ({
     },
   },
   icon: { color: 'white' },
+  test: {
+    borderColor: 'red',
+    '& label.MuiFocused': {
+      color: 'secondary',
+    },
+  },
 }))

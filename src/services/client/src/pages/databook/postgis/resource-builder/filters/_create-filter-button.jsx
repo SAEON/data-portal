@@ -45,6 +45,13 @@ export default () => {
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
+  console.log('databookContext.data', data)
+  if (data.rows.length === 0)
+    return (
+      <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
+        <PlusIcon size={14} />
+      </IconButton>
+    )
   return (
     <>
       {/* TOGGLE DIALOGUE */}
@@ -79,7 +86,7 @@ export default () => {
           <DialogContentText>Select column filtered</DialogContentText>
           <Autocomplete
             id="select-column-filtered"
-            options={data.rows ? Object.keys(data.rows[0]) : undefined}
+            options={data.rows ? Object.keys(data.rows[0]) : []}
             setOption={val => {
               setColumnFiltered(val)
             }}

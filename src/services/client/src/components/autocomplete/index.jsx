@@ -11,6 +11,7 @@ export default ({
   getOptionSelected = undefined,
   selectedOptions = [],
   multiple = false,
+  inputClassName = undefined,
   ...props
 }) => {
   return (
@@ -40,6 +41,25 @@ export default ({
                 size="small"
                 onChange={inputValue => update({ inputValue })}
                 value={inputValue}
+                // style={{
+                //   color: 'secondary',
+                //   '& label.Mui-focused': {
+                //     color: 'secondary',
+                //   },
+                // }}
+                sx={{
+                  // width: 300,
+                  // color: 'success.main',
+                  // '& .MuiSlider-thumb': {
+                  //   borderRadius: '1px',
+                  // },
+
+                  color: 'secondary',
+                  '& label.Mui-focused': {
+                    color: 'secondary',
+                  },
+                }}
+                className={inputClassName}
                 {...props}
               />
             )

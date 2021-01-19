@@ -4,8 +4,11 @@ import AutoComplete from '../../../components/autocomplete'
 import WithGqlQuery from '../../../hooks/with-gql-query'
 import { gql } from '@apollo/client'
 import Loading from '../../../components/loading'
+import useStyles from '../style'
+import clsx from 'clsx'
 
 export default () => {
+  const classes = useStyles()
   const { selectedFilters, setSelectedFilters, filterIds } = useContext(dashboardContext)
   return (
     <>
@@ -48,6 +51,9 @@ export default () => {
                   setSelectedFilters(newSelectedFilters)
                 }}
                 label={filter.name}
+                inputClassName={clsx(classes.test)}
+                className={clsx(classes.test)}
+                variant="outlined"
               />
             )
           })
