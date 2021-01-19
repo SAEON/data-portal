@@ -4,13 +4,13 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
   const [state, setState] = useState({
     error: false,
     loading: false,
-    data: false,
+    data: [],
   })
 
   useEffect(() => {
     // eslint-disable-next-line
     ;(async () => {
-      setState({ error: false, loading: true, data: false })
+      setState({ error: false, loading: true, data: [] })
       try {
         const response = await fetch(uri, {
           method,
@@ -22,10 +22,11 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
         })
 
         const data = await response.json()
-
+        console.log('with-fetch data', data)
         setState({ error: false, loading: false, data })
       } catch (error) {
-        setState({ error, loading: false, data: false })
+        console.error(error)
+        setState({ error, loading: false, data: [] })
       }
     })()
   }, [uri, method, headers, body, signal])

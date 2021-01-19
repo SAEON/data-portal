@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import PlusIcon from 'mdi-react/PlusIcon'
+import PlusIcon from 'mdi-react/PlusIcon' //mdi-react/PlusIcon
 import {
   IconButton,
   Dialog,
@@ -16,23 +16,22 @@ import {
 import { useApolloClient, gql } from '@apollo/client'
 import { useTheme } from '@material-ui/core/styles'
 import { context as databookContext } from '../../../context'
+import chartDefinitions from '../../../../../components/charts'
 import Autocomplete from '../../../../../components/autocomplete'
 import QuickForm from '@saeon/quick-form'
 
-const FILTERS_QUERY = gql`
+const CHARTS_QUERY = gql`
   query($id: ID!) {
     databook(id: $id) {
       id
-      filters {
+      charts {
         id
-        name
-        columnFiltered
-        values
-        sql
+        title
       }
     }
   }
 `
+
 const FIELD_SPACING = 32
 
 export default () => {
@@ -43,9 +42,10 @@ export default () => {
 
   const [open, setOpen] = useState(false)
   const [error, setError] = useState(false)
-  const [filterName, setFilterName] = useState('')
-  const [columnFiltered, setColumnFiltered] = useState('')
-  console.log('databookContext.data', data)
+  const [chartType, setChartType] = useState('')
+  const [chartTitle, setChartTitle] = useState('')
+  const [chartDescription, setChartDescription] = useState('')
+  const [formValues, setFormValues] = useState({})
   if (data.rows.length === 0)
     return (
       <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
@@ -55,7 +55,7 @@ export default () => {
   return (
     <>
       {/* TOGGLE DIALOGUE */}
-      <Tooltip title="Create filter from current data" /*placement="left-start"*/>
+      <Tooltip title="Create chart from current data" placement="left-start">
         <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOpen(true)} size="small">
           <PlusIcon size={14} />
         </IconButton>
@@ -63,7 +63,7 @@ export default () => {
 
       {/* DIALOGUE */}
       <Dialog fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add filter to databook</DialogTitle>
+        <DialogTitle>Add chart to dashboard</DialogTitle>
         <DialogContent>
           {/* ERROR MSG */}
           {error && (
@@ -72,28 +72,58 @@ export default () => {
             </Typography>
           )}
 
-          {/* FILTER NAME */}
+          {/* CHART TITLE */}
           <TextField
-            id="filter-name"
+            id="chart-title"
             fullWidth
             style={{ marginBottom: FIELD_SPACING }}
-            label="Name"
-            value={filterName}
-            onChange={e => setFilterName(e.target.value)}
+            label="Title"
+            value={chartTitle}
+            onChange={e => setChartTitle(e.target.value)}
           />
 
-          {/* COLUMN FILTERED */}
-          <DialogContentText>Select column filtered</DialogContentText>
+          {/* CHART DESCRIPTION */}
+          <TextField
+            id="chart-description"
+            fullWidth
+            style={{ marginBottom: FIELD_SPACING }}
+            label="Description"
+            value={chartDescription}
+            onChange={e => setChartDescription(e.target.value)}
+          />
+
+          {/* CHART TYPE */}
+          <DialogContentText>Select chart type</DialogContentText>
           <Autocomplete
-            id="select-column-filtered"
-            options={data.rows ? Object.keys(data.rows[0]) : []}
-            setOption={val => {
-              setColumnFiltered(val)
-            }}
-            selectedOptions={columnFiltered}
+            id="select-chart-type"
+            options={chartDefinitions.map(({ type }) => type)}
+            setOption={val => setChartType(val)}
+            selectedOptions={chartType}
           />
 
           <div style={{ marginBottom: FIELD_SPACING }} />
+
+          {/* CHART CONFIG */}
+          {chartType &&
+            chartDefinitions
+              .find(({ type }) => type === chartType)
+              .config.map(({ id, Component, description }) => {
+                return (
+                  <div key={id} style={{ marginBottom: FIELD_SPACING }}>
+                    <DialogContentText>{description}</DialogContentText>
+                    <Component
+                      value={formValues[id]}
+                      setValue={val => {
+                        return setFormValues({
+                          ...formValues,
+                          [id]: val,
+                        })
+                      }}
+                      data={data.rows}
+                    />
+                  </div>
+                )
+              })}
         </DialogContent>
 
         <DialogActions>
@@ -111,21 +141,30 @@ export default () => {
                 <Button
                   onClick={async () => {
                     update({ loading: true })
+                    const saveFilter =
+                      chartDefinitions.find(({ type }) => type === chartType)?.saveFilter ||
+                      function (data) {
+                        return data
+                      }
                     try {
                       await client.mutate({
                         mutation: gql`
                           mutation(
                             $databookId: ID!
-                            $name: String
-                            $columnFiltered: String
-                            $values: [String]
-                            $sql: String
+                            $title: String
+                            $description: String
+                            $data: JSON!
+                            $config: JSON!
+                            $sql: String!
+                            $type: ChartType!
                           ) {
-                            createFilter(
+                            createChart(
                               databookId: $databookId
-                              name: $name
-                              columnFiltered: $columnFiltered
-                              values: $values
+                              title: $title
+                              description: $description
+                              type: $type
+                              data: $data
+                              config: $config
                               sql: $sql
                             ) {
                               id
@@ -133,31 +172,35 @@ export default () => {
                           }
                         `,
                         variables: {
-                          ...Object.assign({
-                            databookId,
-                            name: filterName,
-                            columnFiltered: columnFiltered,
-                            values: [...new Set(data.rows.map(row => String(row[columnFiltered])))], //grabbing column values and removing duplicates
-                            sql,
-                          }),
+                          ...Object.assign(
+                            {
+                              type: chartType,
+                              title: chartTitle,
+                              description: chartDescription,
+                              databookId,
+                              data: saveFilter(data.rows, formValues),
+                              sql,
+                            },
+                            { config: formValues }
+                          ),
                         },
                         update: (cache, { data }) => {
                           const { databook } = cache.read({
-                            query: FILTERS_QUERY,
+                            query: CHARTS_QUERY,
                             variables: {
                               id: databookId,
                             },
                           })
 
                           cache.writeQuery({
-                            query: FILTERS_QUERY,
+                            query: CHARTS_QUERY,
                             variables: {
                               id: databookId,
                             },
                             data: {
                               databook: {
                                 ...databook,
-                                filters: [data.createFilter, ...databook.filters],
+                                charts: [data.createChart, ...databook.charts],
                               },
                             },
                           })
@@ -165,8 +208,8 @@ export default () => {
                       })
                       setOpen(false)
                     } catch (error) {
-                      setError(error.message)
                       console.error(error)
+                      setError(error.message)
                     } finally {
                       update({ loading: false })
                     }
@@ -176,7 +219,7 @@ export default () => {
                   color="primary"
                   disableElevation
                 >
-                  Create Filter
+                  Create Chart
                 </Button>
               )
             }}

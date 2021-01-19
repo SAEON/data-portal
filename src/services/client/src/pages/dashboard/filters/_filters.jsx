@@ -4,8 +4,11 @@ import AutoComplete from '../../../components/autocomplete'
 import WithGqlQuery from '../../../hooks/with-gql-query'
 import { gql } from '@apollo/client'
 import Loading from '../../../components/loading'
+import useStyles from '../style'
+import clsx from 'clsx'
 
 export default () => {
+  const classes = useStyles()
   const { selectedFilters, setSelectedFilters, filterIds } = useContext(dashboardContext)
   return (
     <>
@@ -25,7 +28,7 @@ export default () => {
       >
         {({ error, loading, data }) => {
           if (loading) {
-            return '' //<Loading />
+            return <Loading />
           }
 
           if (error) {
@@ -35,6 +38,7 @@ export default () => {
           const { filters } = data
           return filters.map((filter, i) => {
             return (
+              // STEVEN TO-DO: Autocomplete starts behaving strangely once many options are selected. To be looked into
               <AutoComplete
                 multiple
                 id={`filter-${filter.id}`}
@@ -47,6 +51,9 @@ export default () => {
                   setSelectedFilters(newSelectedFilters)
                 }}
                 label={filter.name}
+                inputClassName={clsx(classes.test)}
+                className={clsx(classes.test)}
+                variant="outlined"
               />
             )
           })

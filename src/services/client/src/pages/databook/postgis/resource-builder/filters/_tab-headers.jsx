@@ -3,6 +3,7 @@ import useStyles from '../../../style'
 import clsx from 'clsx'
 import PlusIcon from 'mdi-react/PlusIcon'
 import CreateFilterButton from './_create-filter-button'
+
 export default ({ filters, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
   return (
@@ -29,7 +30,7 @@ export default ({ filters, activeTabIndex, setActiveTabIndex }) => {
             />
           ))}
         </Tabs>
-        {/* ADD TAB BUTTON */}
+        {/* ADD FILTER TAB BUTTON */}
         <div style={{ alignSelf: 'center' }}>
           <CreateFilterButton />
         </div>

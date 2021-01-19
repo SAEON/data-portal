@@ -23,7 +23,8 @@ export default {
     {
       id: 'series-names',
       description: 'Select column containing series names',
-      Component: ({ data, value, setValue }) => {
+      Component: props => {
+        const { data, value, setValue } = props
         return (
           <Autocomplete
             id="pie-chart-select-series-names-columns"
