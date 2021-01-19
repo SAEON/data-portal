@@ -77,7 +77,7 @@ npm run install-dependencies
 
 The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
-Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](https://github.com/SAEON/catalogue/tree/docs/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
 
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
@@ -168,6 +168,7 @@ CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
 CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
 CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
 CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
+CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of admin email addresses" \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
 

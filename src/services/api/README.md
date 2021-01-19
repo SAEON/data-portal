@@ -34,6 +34,7 @@ Default configuration values can be found in [src/config.js](src/config.js). To 
 ```sh
 # src/services/api/.env
 CATALOGUE_API_ODP_CLIENT_SECRET=<some secret>
+CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of email addresses"
 ```
 
 # PostGIS configuration
