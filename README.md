@@ -24,10 +24,10 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
     - [Endpoints](#endpoints)
+- [API configuration](#api-configuration)
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose (quick deployment)](#docker-compose-quick-deployment)
   - [Containerized deployment](#containerized-deployment)
-  - [API configuration](#api-configuration)
   - [Continuous deployment](#continuous-deployment)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
@@ -109,6 +109,8 @@ npm run start:api
 npm run start:client
 ```
 
+Then [configure the API for first use](#api-configuration)
+
 ### Endpoints
 
 - http://localhost:3001
@@ -120,6 +122,29 @@ npm run start:client
 - http://localhost:5601
 - postgis://localhost:5432
 - mongodb://localhost:27017
+
+# API configuration
+The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API.
+
+1. Authenticate yourself by navigating to `<api-address>/login`
+2. Navigate to GraphQL Playground (`/graphql`) where you can interact with the API
+
+```graphql
+# Configure default PostGIS tables
+mutation {
+  configureDefaultPostGISLayers
+}
+
+# Create an appropriate Elasticsearch index. This mutation should only be run on initial app startup
+mutation {
+  configureElasticsearchIndex
+}
+
+# Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
+mutation {
+  configureElasticsearchIndex
+}
+```
 
 # Deployment and installation
 
@@ -160,29 +185,6 @@ Then [configure the API for first use](#api-configuration).
 
 ## Containerized deployment
 Services can be deployed as individual containers. This is useful for deploying to a an environment with orchestrated container management (such as Kubernetes) and where 3rd party services are managed independently of this deployment (i.e. when connecting to existing MongoDB / PostGIS / Elasticsearch servers). Refer to [individual service documentation](#documentation) for containerizing individual services. Also look at the [docker-compose](docker-compose.yml) configuration to see how Docker images of individual services are built
-
-## API configuration
-The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API.
-
-1. Authenticate yourself by navigating to `<api-address>/login`
-2. Navigate to GraphQL Playground (`/graphql`) where you can interact with the API
-
-```graphql
-# Configure default PostGIS tables
-mutation {
-  configureDefaultPostGISLayers
-}
-
-# Create an appropriate Elasticsearch index. This mutation should only be run on initial app startup
-mutation {
-  configureElasticsearchIndex
-}
-
-# Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
-mutation {
-  configureElasticsearchIndex
-}
-```
 
 ## Continuous deployment
 
