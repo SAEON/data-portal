@@ -51,7 +51,9 @@ export default () => {
                         ),
                       },
                       $addToSet: {
-                        userRoles: datascientistRoleId,
+                        userRoles: googleProfile.email.includes('@saeon.ac.za')
+                          ? datascientistRoleId
+                          : '',
                       },
                     },
                     {
