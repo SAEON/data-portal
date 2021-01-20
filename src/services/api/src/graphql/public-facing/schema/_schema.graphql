@@ -57,11 +57,11 @@ type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): Void
   submitFeedback(input: FeedbackInput!): Boolean!
   # Save a web-browser's search context for retrieving as a databook
-  createDatabook(state: JSON!, createdBy: String!): ID!
+  createDatabook(search: JSON!, createdBy: String!): ID!
   # Save a web-browser's search context for retrieving as an atlas
-  createAtlas(state: JSON!, createdBy: String!): ID!
+  createAtlas(search: JSON!, createdBy: String!): ID!
   # Save a web-browser's search context for retrieving
-  persistSearchState(state: JSON!, createdBy: String!): ID!
+  persistSearchState(search: JSON!, createdBy: String!): ID!
   createDashboard(name: String, databookId: ID!): Dashboard!
   updateDashboard(id: ID!, layout: JSON): Dashboard!
   deleteDashboard(id: ID!): Boolean!

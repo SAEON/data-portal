@@ -45,7 +45,7 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
 const indices = [
   {
     collection: _collections.Lists,
-    index: 'hashedState',
+    index: 'hashedSearch',
     options: {
       unique: true,
     },

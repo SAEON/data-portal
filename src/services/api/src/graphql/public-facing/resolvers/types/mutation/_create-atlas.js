@@ -3,18 +3,18 @@ const { ObjectID } = mongodb
 import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
-  const { state, createdBy } = args
+  const { search, createdBy } = args
   const { Atlases } = await ctx.mongo.collections
 
   const result = await Atlases.findOneAndUpdate(
     {
-      hashedState: hash(state),
+      hashedSearch: hash(search),
     },
     {
       $setOnInsert: {
         _id: ObjectID(),
-        hashedState: hash(state),
-        state,
+        hashedSearch: hash(search),
+        search,
         createdAt: new Date(),
         createdBy,
       },

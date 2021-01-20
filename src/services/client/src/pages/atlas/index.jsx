@@ -53,13 +53,15 @@ export default () => {
             throw new Error('Error loading search state for Atlas')
           }
 
+          console.log(data)
+
           const {
             ids = undefined,
             dois = undefined,
             extent = undefined,
             terms = undefined,
             text = undefined,
-          } = data.atlas.state
+          } = data.atlas.search
 
           return (
             <WithGqlQuery

@@ -26,7 +26,7 @@ const FromSavedSearch = ({ id, children }) =>
           throw new Error('Unable to load saved search.' + error.message)
         }
 
-        return children(data?.searchState.state)
+        return children(data?.searchState.search)
       }}
     </WithGqlQuery>
   ) : (
