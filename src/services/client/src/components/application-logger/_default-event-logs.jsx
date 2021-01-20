@@ -22,6 +22,7 @@ export default ({ children }) => {
             x,
             y,
             target: target.outerHTML,
+            pathname: window.location.pathname,
           },
         })
       }
@@ -35,6 +36,7 @@ export default ({ children }) => {
             commitHash: CATALOGUE_LATEST_COMMIT,
             createdAt: new Date(),
             info: {
+              pathname: window.location.pathname,
               innerHeight,
               innerWidth,
               x,
