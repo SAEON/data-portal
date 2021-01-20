@@ -131,7 +131,11 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
           setActiveTabIndex={setActiveTabIndex}
         />
       </Toolbar>
-      <Grid container justify="space-around" alignItems="center">
+      <Grid
+        container
+        justify="center"
+        // alignItems="center"
+      >
         {filterIds?.map(id => (
           <FilterStub key={id} filterId={id} dashboard={dashboard} />
         ))}
