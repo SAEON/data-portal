@@ -1,5 +1,3 @@
-# https://itnext.io/improve-your-graphql-schema-with-the-relay-specification-8952d06998eb
-
 scalar DateTime
 scalar JSON
 scalar Void
@@ -91,9 +89,6 @@ type Mutation {
     sql: String
   ): Filter!
   deleteFilter(id: ID!): Boolean!
-  configureElasticsearchTemplate: JSON!
-  configureElasticsearchIndex: JSON!
-  configureDefaultPostGISLayers: JSON!
 }
 
 type BrowserEvent implements Node {

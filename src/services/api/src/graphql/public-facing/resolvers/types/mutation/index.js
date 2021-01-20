@@ -17,7 +17,4 @@ export default {
   deleteChart: await _import('./_delete-chart.js'),
   createFilter: await _import('./_create-filter.js'),
   deleteFilter: await _import('./_delete-filter.js'),
-  configureElasticsearchTemplate: await _import('./configure-elasticsearch-template/index.js'),
-  configureElasticsearchIndex: await _import('./configure-elasticsearch-index/index.js'),
-  configureDefaultPostGISLayers: await _import('./configure-default-postgis-layers/index.js'),
 }

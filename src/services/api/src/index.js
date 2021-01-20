@@ -22,15 +22,11 @@ import apolloServers from './graphql/index.js'
 import configurePassport, { passportCookieConfig } from './passport/index.js'
 import { applyIndices, setupUserRoles, setupDefaultAdmins } from './mongo/index.js'
 import {
-  CATALOGUE_API_ADDRESS,
-  CATALOGUE_API_INTERNAL_ADDRESS,
+  CATALOGUE_API_ADDRESS_PORT,
+  CATALOGUE_API_INTERNAL_ADDRESS_PORT,
   CATALOGUE_PROXY_ADDRESS,
   CATALOGUE_API_KEY,
 } from './config.js'
-import { parse } from 'url'
-
-const CATALOGUE_API_PUBLIC_PORT = parse(CATALOGUE_API_ADDRESS).port
-const CATALOGUE_API_INTERNAL_PORT = parse(CATALOGUE_API_INTERNAL_ADDRESS).port
 
 // Configure MongoDB indices
 applyIndices()
@@ -120,14 +116,14 @@ internalServer.applyMiddleware({ app: internalApp })
 internalServer.installSubscriptionHandlers(privateHttpServer)
 
 // Start public HTTP server
-publicHttpServer.listen(CATALOGUE_API_PUBLIC_PORT, () => {
+publicHttpServer.listen(CATALOGUE_API_ADDRESS_PORT, () => {
   console.log(`@saeon/catalogue API server ready`)
   console.log(`@saeon/catalogue GraphQL server ready`)
   console.log(`@saeon/catalogue GraphQL subscriptions server ready`)
 })
 
 // Start internal HTTP server
-privateHttpServer.listen(CATALOGUE_API_INTERNAL_PORT, () => {
+privateHttpServer.listen(CATALOGUE_API_INTERNAL_ADDRESS_PORT, () => {
   console.log(`@saeon/catalogue API server ready (internal)`)
   console.log(`@saeon/catalogue GraphQL server ready (internal)`)
   console.log(`@saeon/catalogue GraphQL subscriptions server ready (internal)`)

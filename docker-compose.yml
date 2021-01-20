@@ -134,7 +134,7 @@ services:
         POSTGIS_USERNAME: $POSTGIS_USERNAME
     ports:
       - $CATALOGUE_API_CONTAINER_PORT_MAPPING:3000
-      - 4000:4000
+      - $CATALOGUE_API_CONTAINER_INTERNAL_PORT_MAPPING:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp

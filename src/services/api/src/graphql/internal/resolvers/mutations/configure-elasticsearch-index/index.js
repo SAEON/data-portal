@@ -3,14 +3,13 @@ import {
   CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
   ELASTICSEARCH_ADDRESS,
   CATALOGUE_API_ODP_FILTER,
-} from '../../../../../../config.js'
+} from '../../../../../config.js'
 import makeOdpIterator from './iterator/index.js'
 import { performance } from 'perf_hooks'
 
 const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
 
-export default async (self, args, ctx) => {
-  await ctx.userModel.ensureAdmin(ctx)
+export default async () => {
   const t0 = performance.now()
 
   const result = {

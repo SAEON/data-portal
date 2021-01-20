@@ -1,4 +1,4 @@
-import publicServer, { schema as _publicSchema } from './public/index.js'
+import publicServer, { schema as _publicSchema } from './public-facing/index.js'
 import internalServer, { schema as _internalSchema } from './internal/index.js'
 
 export const publicSchema = _publicSchema

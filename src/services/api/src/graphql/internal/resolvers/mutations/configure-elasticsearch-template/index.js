@@ -4,11 +4,9 @@ import settings from './settings.json'
 import {
   ELASTICSEARCH_ADDRESS,
   CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME,
-} from '../../../../../../config.js'
+} from '../../../../../config.js'
 
-export default async (self, args, ctx) => {
-  await ctx.userModel.ensureAdmin(ctx)
-
+export default async () => {
   return fetch(
     `${ELASTICSEARCH_ADDRESS}/_index_template/${CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME}`,
     {

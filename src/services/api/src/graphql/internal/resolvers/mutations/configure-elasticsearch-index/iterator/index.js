@@ -3,11 +3,11 @@ import {
   ODP_ADDRESS,
   CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE,
   CATALOGUE_API_ODP_DEBUG_IDS,
-} from '../../../../../../../config.js'
+} from '../../../../../../config.js'
 import parseDates from './_parse-dates.js'
 import parseSpatial from './_parse-spatial.js'
 import parseImmutableResource from './_parse-immutable-resource.js'
-import authenticateWithOdp from '../../../../../../../lib/authenticate-with-odp.js'
+import authenticateWithOdp from '../../../../../../lib/authenticate-with-odp.js'
 
 const DEBUG_IDS = CATALOGUE_API_ODP_DEBUG_IDS.split(',')
   .filter(_ => _)
