@@ -10,7 +10,7 @@ const { ObjectID } = mongo
 export default async ctx => {
   const { findSavedSearches } = ctx.mongo.dataFinders
   const { search } = ctx.query
-  const { schema } = ctx.gql
+  const { publicSchema } = ctx.gql
 
   if (!search) {
     ctx.throw(400, 'No search ID provided. Unable to download records')
@@ -25,7 +25,7 @@ export default async ctx => {
 
   // Query the catalogue for the IDs associated with this search state
   const { data } = await execute(
-    schema,
+    publicSchema,
     gql`
       query(
         $ids: [ID!]

@@ -95,7 +95,7 @@ docker build -t api . \
 ... etc
 
 # Run as a Docker container
-docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -d api
+docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -p 4000:4000 -d api
 ```
 
 

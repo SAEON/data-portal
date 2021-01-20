@@ -67,11 +67,14 @@ export const POSTGIS_USERNAME = process.env.POSTGIS_USERNAME || 'admin'
 
 export const POSTGIS_PASSWORD = process.env.POSTGIS_PASSWORD || 'password'
 
-export const CATALOGUE_API_PORT = process.env.CATALOGUE_API_PORT || 3000
-
 export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 
 export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
+
+export const CATALOGUE_API_INTERNAL_ADDRESS =
+  process.env.CATALOGUE_API_INTERNAL_ADDRESS || 'http://localhost:4000'
+
+export const CATALOGUE_API_INTERNAL_GQL_ADDRESS = `${CATALOGUE_API_INTERNAL_ADDRESS}/graphql`
 
 export const CATALOGUE_PROXY_ADDRESS =
   process.env.CATALOGUE_PROXY_ADDRESS || 'http://localhost:8001'
@@ -117,6 +120,8 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_API_INTERNAL_ADDRESS,
+      CATALOGUE_API_INTERNAL_GQL_ADDRESS,
       CATALOGUE_API_ADDRESS,
       CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES,
       CATALOGUE_API_OAUTH_REDIRECT_ADDRESS,
@@ -146,7 +151,6 @@ console.log(
       POSTGIS_USERNAME: mask(POSTGIS_USERNAME),
       POSTGIS_PASSWORD: mask(POSTGIS_PASSWORD),
       POSTGIS_PORT,
-      CATALOGUE_API_PORT,
       CATALOGUE_PROXY_ADDRESS,
       CATALOGUE_API_ALLOWED_ORIGINS,
       CATALOGUE_API_GQL_ADDRESS,
