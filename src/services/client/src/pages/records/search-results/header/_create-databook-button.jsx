@@ -8,7 +8,7 @@ import { CATALOGUE_CLIENT_MAX_DATABOOK_TABLES } from '../../../../config'
 import { context as globalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
-import { AuthContext } from '../../../../contexts/authentication'
+import { context as authContext } from '../../../../contexts/authentication'
 
 const cacheOfMappableItems = {}
 
@@ -56,7 +56,7 @@ const removeSelectedIds = obj =>
 
 export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
-  const { userInfo } = useContext(AuthContext)
+  const { userInfo } = useContext(authContext)
   const { selectedIds } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()

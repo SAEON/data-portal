@@ -7,14 +7,14 @@ import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import useStyles from './style'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { AuthContext } from '../../../../../../contexts/authentication'
+import { context as authContext } from '../../../../../../contexts/authentication'
 
 export default ({ id, immutableResource }) => {
   const [loading, setLoading] = useState(false)
   const client = useApolloClient()
   const classes = useStyles()
   const { global, setGlobal } = useContext(globalContext)
-  const { userInfo } = useContext(AuthContext)
+  const { userInfo } = useContext(authContext)
   const { selectedIds } = global
   const history = useHistory()
 
