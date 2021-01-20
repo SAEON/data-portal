@@ -4,9 +4,9 @@ import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
   const { state, createdBy } = args
-  const { SavedSearches } = await ctx.mongo.collections
+  const { Lists } = await ctx.mongo.collections
 
-  const result = await SavedSearches.findOneAndUpdate(
+  const result = await Lists.findOneAndUpdate(
     {
       hashedState: hash(state),
     },
