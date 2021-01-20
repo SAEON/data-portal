@@ -48,9 +48,13 @@ export default () => {
   const [formValues, setFormValues] = useState({})
   if (data.rows.length === 0)
     return (
-      <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
-        <PlusIcon size={14} />
-      </IconButton>
+      <Tooltip title="Requires available data" placement="left-start">
+        <span>
+          <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
+            <PlusIcon size={14} />
+          </IconButton>
+        </span>
+      </Tooltip>
     )
   return (
     <>

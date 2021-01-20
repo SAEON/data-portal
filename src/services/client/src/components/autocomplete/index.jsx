@@ -4,6 +4,7 @@ import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
 import CheckboxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckboxIcon from '@material-ui/icons/CheckBox'
+
 export default ({
   id,
   options = [], //STEVEN: gave default value. On filter creation was throwing error as component was initializing with options=undefined for some reason, crashing the client
@@ -41,25 +42,6 @@ export default ({
                 size="small"
                 onChange={inputValue => update({ inputValue })}
                 value={inputValue}
-                // style={{
-                //   color: 'secondary',
-                //   '& label.Mui-focused': {
-                //     color: 'secondary',
-                //   },
-                // }}
-                sx={{
-                  // width: 300,
-                  // color: 'success.main',
-                  // '& .MuiSlider-thumb': {
-                  //   borderRadius: '1px',
-                  // },
-
-                  color: 'secondary',
-                  '& label.Mui-focused': {
-                    color: 'secondary',
-                  },
-                }}
-                className={inputClassName}
                 {...props}
               />
             )
@@ -69,7 +51,7 @@ export default ({
       //multiple related
       multiple={multiple}
       disableCloseOnSelect={multiple}
-      limitTags={multiple ? 3 : undefined}
+      // limitTags={multiple ? 3 : undefined}
       renderOption={
         multiple
           ? (option, { selected }) => {

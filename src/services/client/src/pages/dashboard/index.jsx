@@ -64,21 +64,18 @@ export default ({ id }) => {
                   style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
                   variant="elevation"
                 >
-                  <Toolbar variant="dense">
-                    1<Filters filterIds={filterIds} />2
+                  <Toolbar variant="dense" style={{ overflowX: 'scroll' }}>
+                    <Filters filterIds={filterIds} />
                   </Toolbar>
                 </AppBar>
               </Grid>
               <Grid item xs={12} style={{ margin: '36px 0' }} />
+              <div style={{ height: '400px', width: '1px' }}></div>
               <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
-                <Grid item xs={12}>
-                  <div className={clsx(classes.layout)}>
-                    <Toolbar variant="dense">
-                      {/* Filters go here */}
-                      <Filters filterIds={filterIds} />
-                    </Toolbar>
-                  </div>
-                </Grid>
+                {/* <Grid item xs={12}>
+                  <div className={clsx(classes.layout)}>                  </div>
+                </Grid> */}
+                {/* STEVEN:some cleaning up can be done here since filters is no longer here */}
                 <div style={{ position: 'relative', width: '100%' }}>
                   <Layout items={layout} />
                 </div>

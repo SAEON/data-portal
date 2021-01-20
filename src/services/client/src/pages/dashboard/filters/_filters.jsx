@@ -36,27 +36,34 @@ export default () => {
             throw error
           }
           const { filters } = data
-          return filters.map((filter, i) => {
-            return (
-              // STEVEN TO-DO: Autocomplete starts behaving strangely once many options are selected. To be looked into
-              <AutoComplete
-                multiple
-                id={`filter-${filter.id}`}
-                key={i}
-                options={filter.values}
-                selectedOptions={selectedFilters[filter.id].selectedValues}
-                setOption={newValues => {
-                  let newSelectedFilters = JSON.parse(JSON.stringify(selectedFilters))
-                  newSelectedFilters[filter.id].selectedValues = newValues
-                  setSelectedFilters(newSelectedFilters)
-                }}
-                label={filter.name}
-                inputClassName={clsx(classes.test)}
-                className={clsx(classes.test)}
-                variant="outlined"
-              />
-            )
-          })
+          return (
+            // <div id="filters" className={clsx(classes.filtersContainer)}>
+            //   {
+            filters.map((filter, i) => {
+              return (
+                // STEVEN TO-DO: Autocomplete starts behaving strangely once many options are selected. To be looked into
+                // <div id={`filter-${i}`} key={i} className={clsx(classes.filter)}>
+                <AutoComplete
+                  multiple
+                  id={`filter-${filter.id}`}
+                  options={filter.values}
+                  selectedOptions={selectedFilters[filter.id].selectedValues}
+                  setOption={newValues => {
+                    let newSelectedFilters = JSON.parse(JSON.stringify(selectedFilters))
+                    newSelectedFilters[filter.id].selectedValues = newValues
+                    setSelectedFilters(newSelectedFilters)
+                  }}
+                  label={filter.name}
+                  className={clsx(classes.textFieldFilled)} //applies to input TextField
+                  color="secondary"
+                  variant="filled"
+                />
+                // </div>
+              )
+            }) //end of return
+            //   }
+            // </div>
+          )
         }}
       </WithGqlQuery>
     </>
