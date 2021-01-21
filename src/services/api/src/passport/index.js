@@ -51,7 +51,7 @@ export default () => {
                         ),
                       },
                       $addToSet: {
-                        userRoles: datascientistRoleId,
+                        userRoles: googleProfile.hd === 'saeon.ac.za' ? datascientistRoleId : '',
                       },
                     },
                     {

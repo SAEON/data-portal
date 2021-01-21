@@ -7,8 +7,9 @@
 - [Start the service](#start-the-service)
   - [Endpoints](#endpoints)
 - [Environment configuration](#environment-configuration)
+- [PostGIS configuration](#postgis-configuration)
 - [ODP integration configuration](#odp-integration-configuration)
-  - [ODP integration schedule](#odp-integration-schedule)
+  - [ODP integration](#odp-integration)
 - [Docker](#docker)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -32,10 +33,17 @@ Default configuration values can be found in [src/config.js](src/config.js). To 
 
 ```sh
 # src/services/api/.env
-CATALOGUE_API_SEED_POSTGIS_LAYERS=enabled
-CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE=enabled
-CATALOGUE_API_RESET_ELASTICSEARCH_INDEX=enabled
 CATALOGUE_API_ODP_CLIENT_SECRET=<some secret>
+CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of email addresses"
+```
+
+# PostGIS configuration
+Make sure you are logged in by navigating to `/login`. Then navigate to `/graphql`. Run the following mutation
+
+```graphql
+mutation {
+  configureDefaultPostGISLayers
+}
 ```
 
 # ODP integration configuration
@@ -61,13 +69,19 @@ export default (record) => {
 }
 ```
 
-## ODP integration schedule
-To adjust the schedule of the ODP integration, specify a different schedule to the default, and make sure that rebuilding the index is enabled
+## ODP integration
+Make sure you are logged in by navigating to `/login`. Then navigate to `/graphql`. Run the following mutations to setup the ODP integration
 
-```sh
-# .env
-CATALOGUE_API_INDEX_REBUILD_SCHEDULE='0 0 0 * * *'
-CATALOGUE_API_INDEX_REBUILD=enabled
+```graphql
+# Create the Elasticsearch template
+mutation {
+  configureElasticsearchTemplate
+}
+
+# Insert documents from the ODP into Elasticsearch
+mutation {
+  configureElasticsearchIndex
+}
 ```
 
 # Docker
@@ -81,7 +95,7 @@ docker build -t api . \
 ... etc
 
 # Run as a Docker container
-docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -d api
+docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -p 4000:4000 -d api
 ```
 
 

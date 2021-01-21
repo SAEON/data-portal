@@ -5,7 +5,24 @@
     "sortOrder": "desc",
     "sortBy": "doc_count"
   },
-  { "title": "Publication Year", "field": "publicationYear", "sortOrder": "desc" },
-  { "title": "Publisher", "field": "publisher.raw" },
-  { "title": "Creators", "field": "creators.name.raw", "path": "creators" }
+  {
+    "title": "Publication Year",
+    "field": "publicationYear",
+    "sortOrder": "desc"
+  },
+  {
+    "title": "Publisher",
+    "field": "publisher.raw"
+  },
+  {
+    "title": "Creators",
+    "field": "creators.name.raw",
+    "path": "creators"
+  },
+  {
+    "title": "Data format",
+    "field": "immutableResource._fileFormat.raw",
+    "sortBy": "doc_count",
+    "sortOrder": "desc"
+  }
 ]

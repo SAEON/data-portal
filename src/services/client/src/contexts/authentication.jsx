@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import { CATALOGUE_API_ADDRESS } from '../config'
 
-export const AuthContext = createContext()
+export const context = createContext()
 
 export default ({ children }) => {
   const [userInfo, setUserInfo] = useState(false)
@@ -34,7 +34,7 @@ export default ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider
+    <context.Provider
       value={{
         userInfo,
         authenticating,
@@ -42,6 +42,6 @@ export default ({ children }) => {
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </context.Provider>
   )
 }

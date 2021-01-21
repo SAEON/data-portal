@@ -9,6 +9,7 @@ export default ({ showSearchBar = true, ...props } = {}) => {
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/records?disableSidebar=true`,
     params: true,
   })
+
   return showSearchBar ? (
     <div
       style={{

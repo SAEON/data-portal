@@ -6,7 +6,7 @@ import {
   CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
   CATALOGUE_API_KEY,
 } from '../config.js'
-import { schema } from '../graphql/index.js'
+import { publicSchema, internalSchema } from '../graphql/index.js'
 import userModel from '../user-model/index.js'
 import { encrypt, decrypt } from '../lib/crypto.js'
 
@@ -35,7 +35,8 @@ export default app => async (ctx, next) => {
   }
 
   app.context.gql = {
-    schema,
+    publicSchema,
+    internalSchema,
   }
 
   app.context.userModel = userModel

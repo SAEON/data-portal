@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { useSnackbar } from 'notistack'
 import { CATALOGUE_CLIENT_DEFAULT_NOTICES } from '../../config'
 import { getUriState } from '../../lib/fns'
+import { context as authContext } from '../../contexts/authentication'
 
 /**
  * Example of a notice:
@@ -10,6 +11,15 @@ import { getUriState } from '../../lib/fns'
 export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
   const { disableNotices } = getUriState()
+  const { userInfo } = useContext(authContext)
+
+  useEffect(() => {
+    if (!userInfo) return
+
+    if (disableNotices !== 'true') {
+      enqueueSnackbar(`Welcome back ${userInfo.email}`, { variant: 'info' })
+    }
+  }, [disableNotices, enqueueSnackbar, userInfo])
 
   useEffect(() => {
     const _ = async () => {
@@ -31,7 +41,7 @@ export default ({ children }) => {
     if (disableNotices !== 'true') {
       _()
     }
-  })
+  }, [disableNotices, enqueueSnackbar])
 
   return children
 }

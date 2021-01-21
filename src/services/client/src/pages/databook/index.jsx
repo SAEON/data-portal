@@ -10,12 +10,12 @@ import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_TECHNICAL_CONTACT } from '../../con
 import useStyles from './style'
 import clsx from 'clsx'
 import { Box, Typography } from '@material-ui/core'
-import { AuthContext } from '../../contexts/authentication'
+import { context as authContext } from '../../contexts/authentication'
 
 const POLLING_INTERVAL = 1000
 
 export default ({ id }) => {
-  useContext(AuthContext).authenticate()
+  useContext(authContext).authenticate()
 
   const classes = useStyles()
   setShareLink({

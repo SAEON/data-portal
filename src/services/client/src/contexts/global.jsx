@@ -26,7 +26,7 @@ const FromSavedSearch = ({ id, children }) =>
           throw new Error('Unable to load saved search.' + error.message)
         }
 
-        return children(data?.searchState.state)
+        return children(data?.searchState.search)
       }}
     </WithGqlQuery>
   ) : (
@@ -38,15 +38,15 @@ export default ({ children }) => {
 
   return (
     <FromSavedSearch id={search}>
-      {state => (
+      {search => (
         <QuickForm
           referrer={referrer || undefined}
-          text={text || state?.text || undefined}
-          extent={state?.extent || undefined}
-          terms={state?.terms || []}
-          ids={state?.ids || []}
-          dois={state?.dois || []}
-          selectedIds={state?.selectedIds || []}
+          text={text || search?.text || undefined}
+          extent={search?.extent || undefined}
+          terms={search?.terms || []}
+          ids={search?.ids || []}
+          dois={search?.dois || []}
+          selectedIds={search?.selectedIds || []}
         >
           {(setGlobal, global) => {
             return (

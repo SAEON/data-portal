@@ -1,26 +1,9 @@
-import { ApolloServer } from 'apollo-server-koa'
-import { CATALOGUE_API_GQL_ADDRESS } from '../config.js'
-import _schema from './schema/index.js'
+import publicServer, { schema as _publicSchema } from './public-facing/index.js'
+import internalServer, { schema as _internalSchema } from './internal/index.js'
 
-export const schema = _schema
-
-export default () =>
-  new ApolloServer({
-    schema,
-    introspection: true,
-    playground: {
-      subscriptionEndpoint: `${CATALOGUE_API_GQL_ADDRESS}`,
-      settings: {
-        'editor.cursorShape': 'line',
-        'request.credentials': 'include',
-        'editor.theme': 'light',
-      },
-    },
-    subscriptions: {
-      onConnect: () => null,
-      onDisconnect: () => null,
-    },
-    context: ({ ctx }) => {
-      return ctx
-    },
-  })
+export const publicSchema = _publicSchema
+export const internalSchema = _internalSchema
+export default {
+  publicServer,
+  internalServer,
+}

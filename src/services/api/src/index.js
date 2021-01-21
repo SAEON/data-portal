@@ -1,4 +1,5 @@
 import '@saeon/logger'
+import './lib/native-extensions.js'
 import { createServer } from 'http'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
@@ -18,15 +19,13 @@ import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
-import configureApolloServer from './graphql/index.js'
-import configurePostgis from './postgis/setup/index.js'
-import { configure as configureElasticsearch } from './elasticsearch/index.js'
+import apolloServers from './graphql/index.js'
 import configurePassport, { passportCookieConfig } from './passport/index.js'
 import { applyIndices, setupUserRoles, setupDefaultAdmins } from './mongo/index.js'
 import {
-  CATALOGUE_API_PORT,
+  CATALOGUE_API_ADDRESS_PORT,
+  CATALOGUE_API_INTERNAL_ADDRESS_PORT,
   CATALOGUE_PROXY_ADDRESS,
-  CATALOGUE_API_SEED_POSTGIS_LAYERS,
   CATALOGUE_API_KEY,
 } from './config.js'
 
@@ -48,35 +47,14 @@ setupUserRoles()
     process.exit(1)
   })
 
-// Configure Elasticsearch
-configureElasticsearch()
-  .then(() => console.info('Elasticsearch', 'configured'))
-  .catch(error => {
-    console.error(error)
-    process.exit(1)
-  })
-
-// Configure PostGIS
-if (CATALOGUE_API_SEED_POSTGIS_LAYERS === 'enabled') {
-  configurePostgis()
-    .then(() => console.info('PostGIS configured'))
-    .catch(error => {
-      console.error(error)
-      process.exit(1)
-    })
-} else {
-  console.info('PostGIS', 'seeding disabled')
-}
-
 // Configure passport authentication
 const { login, authenticate } = configurePassport()
 
-// Configure app
-const app = new Koa()
-app.keys = [CATALOGUE_API_KEY]
-app.proxy = true // X-Forwarded-* headers can be trusted
-
-app
+// Configure internal app
+const internalApp = new Koa()
+internalApp.keys = [CATALOGUE_API_KEY]
+internalApp.proxy = false
+internalApp
   .use(
     koaCompress({
       threshold: 2048,
@@ -84,12 +62,27 @@ app
     })
   )
   .use(koaBody())
-  .use(koaSession(passportCookieConfig, app))
+  .use(createRequestContext(internalApp))
+  .use(new KoaRouter().get('/', homeRoute).post('/', homeRoute).routes())
+
+// Configure public app
+const publicApp = new Koa()
+publicApp.keys = [CATALOGUE_API_KEY]
+publicApp.proxy = true // X-Forwarded-* headers can be trusted
+publicApp
+  .use(
+    koaCompress({
+      threshold: 2048,
+      flush: zlib.constants.Z_SYNC_FLUSH,
+    })
+  )
+  .use(koaBody())
+  .use(koaSession(passportCookieConfig, publicApp))
   .use(cors)
   .use(clientSession)
   .use(koaPassport.initialize())
   .use(koaPassport.session())
-  .use(createRequestContext(app))
+  .use(createRequestContext(publicApp))
   .use(
     new KoaRouter()
       .get('/', homeRoute)
@@ -112,19 +105,27 @@ app
     })
   )
 
-// Configure HTTP server
-const httpServer = createServer(app.callback())
+// Configure HTTP servers
+const publicHttpServer = createServer(publicApp.callback())
+const privateHttpServer = createServer(internalApp.callback())
 
-// Configure Apollo server
-const apolloServer = configureApolloServer()
-apolloServer.applyMiddleware({ app })
-apolloServer.installSubscriptionHandlers(httpServer)
+// Configure Apollo public server
+const { publicServer, internalServer } = apolloServers
+publicServer.applyMiddleware({ app: publicApp })
+publicServer.installSubscriptionHandlers(publicHttpServer)
+internalServer.applyMiddleware({ app: internalApp })
+internalServer.installSubscriptionHandlers(privateHttpServer)
 
-// Start HTTP server
-httpServer.listen(CATALOGUE_API_PORT, () => {
-  console.log(`@saeon/catalogue API server ready at ${CATALOGUE_API_PORT}`)
-  console.log(`@saeon/catalogue GraphQL server ready at ${apolloServer.graphqlPath}`)
-  console.log(
-    `@saeon/catalogue GraphQL subscriptions server ready at ${apolloServer.subscriptionsPath}`
-  )
+// Start public HTTP server
+publicHttpServer.listen(CATALOGUE_API_ADDRESS_PORT, () => {
+  console.log(`@saeon/catalogue API server ready`)
+  console.log(`@saeon/catalogue GraphQL server ready`)
+  console.log(`@saeon/catalogue GraphQL subscriptions server ready`)
+})
+
+// Start internal HTTP server
+privateHttpServer.listen(CATALOGUE_API_INTERNAL_ADDRESS_PORT, () => {
+  console.log(`@saeon/catalogue API server ready (internal)`)
+  console.log(`@saeon/catalogue GraphQL server ready (internal)`)
+  console.log(`@saeon/catalogue GraphQL subscriptions server ready (internal)`)
 })

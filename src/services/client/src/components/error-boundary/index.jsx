@@ -2,8 +2,11 @@ import { Link, DialogContentText } from '@material-ui/core'
 import { Component } from 'react'
 import MessageDialogue from '../../components/message-dialogue'
 import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
+import { withStyles } from '@material-ui/core/styles'
+import style from './style'
+import clsx from 'clsx'
 
-export default class extends Component {
+class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
     this.state = { error: undefined }
@@ -15,8 +18,9 @@ export default class extends Component {
 
   render() {
     const { props, state } = this
-    const { children } = props
+    const { children, classes } = props
     const { error } = state
+
     return error ? (
       <MessageDialogue
         permanent
@@ -37,7 +41,9 @@ export default class extends Component {
             </DialogContentText>
             <DialogContentText
               component={({ children }) => (
-                <pre style={{ whiteSpace: 'break-spaces' }}>{children}</pre>
+                <pre className={clsx(classes.errorBlock)}>
+                  <code>{children}</code>
+                </pre>
               )}
               gutterBottom
               style={{ marginBottom: 16 }}
@@ -52,3 +58,5 @@ export default class extends Component {
     )
   }
 }
+
+export default withStyles(style, { withTheme: true })(ErrorBoundary)

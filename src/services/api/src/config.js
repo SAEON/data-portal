@@ -10,6 +10,9 @@ const __dirname = getCurrentDirectory(import.meta)
 export const CATALOGUE_API_KEY =
   process.env.CATALOGUE_API_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0EdIqD3RAUUCU='
 
+export const CATALOGUE_DISABLE_AUTHENTICATION =
+  process.env.CATALOGUE_DISABLE_AUTHENTICATION?.toBoolean() || false
+
 export const CATALOGUE_API_GOOGLE_CLIENT_ID = process.env.CATALOGUE_API_GOOGLE_CLIENT_ID || ''
 
 export const CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES =
@@ -42,11 +45,6 @@ export const CATALOGUE_DEPLOYMENT_ENV = process.env.CATALOGUE_DEPLOYMENT_ENV || 
 
 export const CATALOGUE_API_NODE_ENV = process.env.CATALOGUE_API_NODE_ENV || 'development'
 
-export const CATALOGUE_API_INDEX_REBUILD_SCHEDULE =
-  process.env.CATALOGUE_API_INDEX_REBUILD_SCHEDULE || '0 0 0 * * *'
-
-export const CATALOGUE_API_INDEX_REBUILD = process.env.CATALOGUE_API_INDEX_REBUILD || 'disabled'
-
 export const MONGO_DB = process.env.MONGO_DB || 'catalogue'
 
 export const MONGO_DB_ADDRESS = process.env.MONGO_DB_ADDRESS || 'mongodb://localhost:27017'
@@ -56,9 +54,6 @@ export const MONGO_DB_USERNAME = process.env.MONGO_DB_USERNAME || 'admin'
 export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
-
-export const CATALOGUE_API_SEED_POSTGIS_LAYERS =
-  process.env.CATALOGUE_API_SEED_POSTGIS_LAYERS || 'disabled'
 
 /**
  * Local development the API doesn't run dockerized,
@@ -75,11 +70,19 @@ export const POSTGIS_USERNAME = process.env.POSTGIS_USERNAME || 'admin'
 
 export const POSTGIS_PASSWORD = process.env.POSTGIS_PASSWORD || 'password'
 
-export const CATALOGUE_API_PORT = process.env.CATALOGUE_API_PORT || 3000
-
 export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 
+export const CATALOGUE_API_ADDRESS_PORT = process.env.CATALOGUE_API_ADDRESS_PORT || 3000
+
 export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
+
+export const CATALOGUE_API_INTERNAL_ADDRESS =
+  process.env.CATALOGUE_API_INTERNAL_ADDRESS || 'http://localhost:4000'
+
+export const CATALOGUE_API_INTERNAL_ADDRESS_PORT =
+  process.env.CATALOGUE_API_INTERNAL_ADDRESS || 4000
+
+export const CATALOGUE_API_INTERNAL_GQL_ADDRESS = `${CATALOGUE_API_INTERNAL_ADDRESS}/graphql`
 
 export const CATALOGUE_PROXY_ADDRESS =
   process.env.CATALOGUE_PROXY_ADDRESS || 'http://localhost:8001'
@@ -110,12 +113,6 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
   process.env.CATALOGUE_API_ELASTICSEARCH_INDEX_NAME || 'catalogue-search'
 }`
 
-export const CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE =
-  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE || 'disabled'
-
-export const CATALOGUE_API_RESET_ELASTICSEARCH_INDEX =
-  process.env.CATALOGUE_API_RESET_ELASTICSEARCH_INDEX || 'disabled'
-
 export const CATALOGUE_API_TEMP_DIRECTORY =
   process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))
 
@@ -131,6 +128,11 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_API_INTERNAL_ADDRESS,
+      CATALOGUE_API_INTERNAL_GQL_ADDRESS,
+      CATALOGUE_API_ADDRESS_PORT,
+      CATALOGUE_API_INTERNAL_ADDRESS_PORT,
+      DISABLE_AUTHENTICATION: CATALOGUE_DISABLE_AUTHENTICATION,
       CATALOGUE_API_ADDRESS,
       CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES,
       CATALOGUE_API_OAUTH_REDIRECT_ADDRESS,
@@ -151,7 +153,6 @@ console.log(
       CATALOGUE_API_NODE_ENV,
       CATALOGUE_DEPLOYMENT_ENV,
       CATALOGUE_DOCKER_NETWORK,
-      CATALOGUE_API_SEED_POSTGIS_LAYERS,
       MONGO_DB,
       MONGO_DB_USERNAME: mask(MONGO_DB_USERNAME),
       MONGO_DB_PASSWORD: mask(MONGO_DB_PASSWORD),
@@ -161,15 +162,11 @@ console.log(
       POSTGIS_USERNAME: mask(POSTGIS_USERNAME),
       POSTGIS_PASSWORD: mask(POSTGIS_PASSWORD),
       POSTGIS_PORT,
-      CATALOGUE_API_PORT,
       CATALOGUE_PROXY_ADDRESS,
       CATALOGUE_API_ALLOWED_ORIGINS,
       CATALOGUE_API_GQL_ADDRESS,
       ELASTICSEARCH_ADDRESS,
       CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
-      CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE,
-      CATALOGUE_API_RESET_ELASTICSEARCH_INDEX,
-      CATALOGUE_API_INDEX_REBUILD,
       CATALOGUE_API_TEMP_DIRECTORY,
     }).sort(([aKey], [bKey]) => {
       if (aKey > bKey) return 1

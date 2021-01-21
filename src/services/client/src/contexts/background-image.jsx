@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
 import { getUriState } from '../lib/fns'
+
 /**
  * Provides some measure of control over which background
  * image is displayed throughout the application. This
@@ -40,6 +41,7 @@ export default ({ children }) => {
           zIndex: -1,
         }}
       />
+
       {children}
     </>
   )

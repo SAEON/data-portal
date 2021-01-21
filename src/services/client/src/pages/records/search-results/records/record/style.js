@@ -40,6 +40,17 @@ export default makeStyles(theme => {
       textAlign: 'center',
     },
 
+    // File format
+    fileFormat: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      paddingTop: 0,
+      paddingBottom: `0 !important`,
+    },
+    fileFormatText: {
+      fontSize: '0.6rem',
+    },
+
     // Description
     descriptionContent: {},
     description: {

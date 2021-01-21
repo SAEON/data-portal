@@ -42,7 +42,7 @@ export default forwardRef(({ editor, updateCache }, ref) => {
           animatedScroll: true,
           displayIndentGuides: true,
           fadeFoldWidgets: true,
-          vScrollBarAlwaysVisible: true,
+          vScrollBarAlwaysVisible: false,
           scrollSpeed: 1,
           highlightGutterLine: true,
           fontSize: 12,

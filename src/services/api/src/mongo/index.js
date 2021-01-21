@@ -20,7 +20,7 @@ export const _collections = {
   Atlases: 'atlases',
   Logs: 'logs',
   Feedback: 'feedback',
-  SavedSearches: 'savedSearches',
+  Lists: 'lists',
   Databooks: 'databooks',
   Dashboards: 'dashboards',
   Charts: 'charts',
@@ -44,8 +44,8 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
 
 const indices = [
   {
-    collection: _collections.SavedSearches,
-    index: 'hashedState',
+    collection: _collections.Lists,
+    index: 'hashedSearch',
     options: {
       unique: true,
     },

@@ -24,6 +24,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
     - [Endpoints](#endpoints)
+- [API configuration](#api-configuration)
 - [Deployment and installation](#deployment-and-installation)
   - [Docker-compose (quick deployment)](#docker-compose-quick-deployment)
   - [Containerized deployment](#containerized-deployment)
@@ -76,7 +77,7 @@ npm run install-dependencies
 
 The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
-Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](https://github.com/SAEON/catalogue/tree/docs/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
 
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
@@ -108,6 +109,8 @@ npm run start:api
 npm run start:client
 ```
 
+Then [configure the API for first use](#api-configuration)
+
 ### Endpoints
 
 - http://localhost:3001
@@ -119,6 +122,29 @@ npm run start:client
 - http://localhost:5601
 - postgis://localhost:5432
 - mongodb://localhost:27017
+
+# API configuration
+The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API.
+
+1. Authenticate yourself by navigating to `<api-address>/login`
+2. Navigate to GraphQL Playground (`/graphql`) where you can interact with the API
+
+```graphql
+# Configure default PostGIS tables
+mutation {
+  configureDefaultPostGISLayers
+}
+
+# Create an appropriate Elasticsearch index. This mutation should only be run on initial app startup
+mutation {
+  configureElasticsearchIndex
+}
+
+# Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
+mutation {
+  configureElasticsearchIndex
+}
+```
 
 # Deployment and installation
 
@@ -137,13 +163,12 @@ CATALOGUE_LATEST_COMMIT= \
 CATALOGUE_DEPLOYMENT_ENV="development" \
 CATALOGUE_API_ADDRESS="http://localhost:3000" \
 CATALOGUE_API_ALLOWED_ORIGINS="http://localhost:3001,http://localhost:3000" \
-CATALOGUE_API_RESET_ELASTICSEARCH_INDEX="enabled" \
-CATALOGUE_API_RESET_ELASTICSEARCH_TEMPLATE="enabled" \
 CATALOGUE_API_RESET_POSTGIS="disabled" \
 CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
 CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
 CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
 CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
+CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of admin email addresses" \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
 
@@ -156,6 +181,8 @@ Check that the services started successfully: `docker container ls`. There shoul
 - API
 - Proxy
 - Client
+
+Then [configure the API for first use](#api-configuration).
 
 ## Containerized deployment
 Services can be deployed as individual containers. This is useful for deploying to a an environment with orchestrated container management (such as Kubernetes) and where 3rd party services are managed independently of this deployment (i.e. when connecting to existing MongoDB / PostGIS / Elasticsearch servers). Refer to [individual service documentation](#documentation) for containerizing individual services. Also look at the [docker-compose](docker-compose.yml) configuration to see how Docker images of individual services are built

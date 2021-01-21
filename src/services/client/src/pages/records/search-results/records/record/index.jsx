@@ -5,6 +5,7 @@ import Descriptions from './_descriptions'
 import Titles from './_titles'
 import clsx from 'clsx'
 import useStyles from './style'
+import FileFormat from './_file-format'
 
 export default _source => {
   const classes = useStyles()
@@ -17,6 +18,7 @@ export default _source => {
           <Titles {..._source} />
           <Authors {..._source} />
           <Descriptions {..._source} />
+          <FileFormat {..._source} />
         </Card>
       </span>
     </Fade>

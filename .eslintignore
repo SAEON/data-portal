@@ -4,6 +4,7 @@
 
 src/services/api/src/index.js
 src/services/api/src/config.js
-src/services/api/src/graphql/resolvers/types/**/*/index.js
-src/services/api/src/graphql/schema/datacite.graphql/index.js
+src/services/api/src/graphql/public-facing/resolvers/types/**/*/index.js
+src/services/api/src/graphql/internal/resolvers/types/**/*/index.js
+src/services/api/src/graphql/public-facing/schema/datacite.graphql/index.js
 src/tools/source-analysis/src/index.js

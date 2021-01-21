@@ -87,7 +87,12 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
     "sortOrder": "desc",
     "sortBy": "doc_count",
     "path": "subjects",
-    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType general"] }
+    "filter": {
+      "field": "subjects.subjectScheme.raw",
+      "values": [
+        "SANS1878 keywordType general"
+      ]
+    }
   },
   {
     "title": "Places",
@@ -95,7 +100,12 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
     "sortOrder": "desc",
     "sortBy": "doc_count",
     "path": "subjects",
-    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType place"] }
+    "filter": {
+      "field": "subjects.subjectScheme.raw",
+      "values": [
+        "SANS1878 keywordType place"
+      ]
+    }
   },
   {
     "title": "Themes",
@@ -103,7 +113,12 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
     "sortOrder": "desc",
     "sortBy": "doc_count",
     "path": "subjects",
-    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType theme"] }
+    "filter": {
+      "field": "subjects.subjectScheme.raw",
+      "values": [
+        "SANS1878 keywordType theme"
+      ]
+    }
   },
   {
     "title": "Stratums",
@@ -111,10 +126,32 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
     "sortOrder": "desc",
     "sortBy": "doc_count",
     "path": "subjects",
-    "filter": { "field": "subjects.subjectScheme.raw", "values": ["SANS1878 keywordType stratum"] }
+    "filter": {
+      "field": "subjects.subjectScheme.raw",
+      "values": [
+        "SANS1878 keywordType stratum"
+      ]
+    }
   },
-  { "title": "Publication Year", "field": "publicationYear", "sortOrder": "desc" },
-  { "title": "Publisher", "field": "publisher.raw" },
-  { "title": "Creators", "field": "creators.name.raw", "path": "creators" }
+  {
+    "title": "Publication Year",
+    "field": "publicationYear",
+    "sortOrder": "desc"
+  },
+  {
+    "title": "Publisher",
+    "field": "publisher.raw"
+  },
+  {
+    "title": "Creators",
+    "field": "creators.name.raw",
+    "path": "creators"
+  },
+  {
+    "title": "Data format",
+    "field": "immutableResource._fileFormat.raw",
+    "sortBy": "doc_count",
+    "sortOrder": "desc"
+  }
 ]
 ```

@@ -97,13 +97,13 @@ export default ({ catalogue }) => {
               setSavedSearchLoading(true)
               const { data } = await client.mutate({
                 mutation: gql`
-                  mutation($state: JSON!, $createdBy: String!) {
-                    createAtlas(state: $state, createdBy: $createdBy)
+                  mutation($search: JSON!, $createdBy: String!) {
+                    createAtlas(search: $search, createdBy: $createdBy)
                   }
                 `,
                 variables: {
                   createdBy: `${packageJson.name} v${packageJson.version}`,
-                  state: removeSelectedIds(global),
+                  search: removeSelectedIds(global),
                 },
               })
               if (data) {

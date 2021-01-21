@@ -14,14 +14,14 @@ import packageJson from '../../../package.json'
  * dialogue is opened. The useEffect hook will
  * fire every time the dialogue is opened
  */
-export default ({ tabIndex, state = undefined, params = {} }) => {
+export default ({ tabIndex, search = undefined, params = {} }) => {
   const { uri: shareLink, params: includeParams } = getShareLink()
   const isAtlasPage = window.location.pathname.includes('atlas')
 
   const { global } = useContext(globalContext)
   const [persistSearchState, { loading, error, data }] = useMutation(gql`
-    mutation($state: JSON!, $createdBy: String!) {
-      ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(state: $state, createdBy: $createdBy)
+    mutation($search: JSON!, $createdBy: String!) {
+      ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(search: $search, createdBy: $createdBy)
     }
   `)
 
@@ -30,11 +30,11 @@ export default ({ tabIndex, state = undefined, params = {} }) => {
       persistSearchState({
         variables: {
           createdBy: `${packageJson.name} v${packageJson.version}`,
-          state: state || global,
+          search: search || global,
         },
       })
     }
-  }, [isAtlasPage, global, persistSearchState, state])
+  }, [isAtlasPage, global, persistSearchState, search])
 
   const id = data?.persistSearchState || undefined
 

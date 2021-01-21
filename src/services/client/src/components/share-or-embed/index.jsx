@@ -4,7 +4,7 @@ import { Tabs, Tab } from '@material-ui/core'
 import ShareIcon from 'mdi-react/LinkPlusIcon'
 import DialogueContents from './_dialogue-contents'
 
-export default ({ icon, iconProps, tooltipProps, badgeProps, state, params }) => {
+export default ({ icon, iconProps, tooltipProps, badgeProps, search, params }) => {
   const [tabIndex, setTabIndex] = useState(0)
 
   return (
@@ -28,7 +28,7 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, state, params }) =>
         <Tab label="Share" />
         <Tab label="Embed" />
       </Tabs>
-      <DialogueContents tabIndex={tabIndex} state={state} params={params} />
+      <DialogueContents tabIndex={tabIndex} search={search} params={params} />
     </MessageDialogue>
   )
 }
