@@ -21,6 +21,10 @@ export default ({ children }) => {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ')
     }
+
+    String.prototype.toBoolean = function () {
+      return this.toLowerCase() === 'true'
+    }
   })
 
   return children
