@@ -9,10 +9,12 @@ export default ({ catalogue }) => {
   const { selectedIds } = global
   const resultCount = catalogue?.records.totalCount
 
+  console.log('global', global)
+
   return (
     <ShareOrEmbed
       params={{ showSearchBar: false }}
-      state={
+      search={
         selectedIds.length
           ? { ids: selectedIds }
           : Object.fromEntries(

@@ -41,7 +41,7 @@ export default () => {
             <Grid container justify="flex-end" alignItems="center" item xs>
               {window.location.pathname.includes('atlas') && (
                 <ShareOrEmbed
-                  state={
+                  search={
                     selectedIds.length && window.location.pathname.includes('atlas')
                       ? { ids: selectedIds }
                       : global
