@@ -2,7 +2,7 @@ import Row from '../_row'
 import { Grid, Chip } from '@material-ui/core'
 
 export default ({ immutableResource }) => {
-  const { _archive = undefined, _fileFormat = undefined } = immutableResource
+  const { _archive = undefined, _fileFormat = undefined } = immutableResource || {}
 
   return (
     <Row title="Resource type">

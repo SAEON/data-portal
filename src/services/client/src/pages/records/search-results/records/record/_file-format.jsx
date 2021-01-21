@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import useStyles from './style'
 
 export default ({ immutableResource }) => {
-  const { _archive = undefined, _fileFormat = undefined } = immutableResource
+  const { _archive = undefined, _fileFormat = undefined } = immutableResource || {}
   const classes = useStyles()
 
   return (
