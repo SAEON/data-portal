@@ -54,7 +54,7 @@ export default makeStyles(theme => {
         backgroundColor: theme.palette.primary.light,
         borderRadius: '5px',
         //attempting to make textbox scroll horizontally when full
-        // overflowX: 'auto',
+        overflowX: 'auto',
         // display: 'inline-block',
       },
       // '& .MuiChip-root': {
@@ -89,10 +89,6 @@ export default makeStyles(theme => {
       lineClamp: 3,
       boxOrient: 'vertical',
       paddingTop: 32,
-      // paddingBottom: 24,
-      // textOverflow: 'ellipsis',
-      // overflow: 'hidden',
-      // display: '-webkit-box',
     },
   }
 })
