@@ -7,8 +7,8 @@ import PlusIcon from 'mdi-react/PlusIcon'
 import clsx from 'clsx'
 
 const ADD_DASHBOARD = gql`
-  mutation($databookId: ID!, $name: String) {
-    createDashboard(name: $name, databookId: $databookId) {
+  mutation($databookId: ID!) {
+    createDashboard(databookId: $databookId) {
       id
     }
   }

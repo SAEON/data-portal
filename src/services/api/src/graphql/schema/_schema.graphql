@@ -64,8 +64,14 @@ type Mutation {
   createAtlas(state: JSON!, createdBy: String!): ID!
   # Save a web-browser's search context for retrieving
   persistSearchState(state: JSON!, createdBy: String!): ID!
-  createDashboard(name: String, databookId: ID!): Dashboard!
-  updateDashboard(id: ID!, layout: JSON): Dashboard!
+  createDashboard(title: String, subtitle: String, description: String, databookId: ID!): Dashboard!
+  updateDashboard(
+    id: ID!
+    layout: JSON
+    title: String
+    subtitle: String
+    description: String
+  ): Dashboard!
   deleteDashboard(id: ID!): Boolean!
   # Add a chart to dashboard, and get the new count of a dashboard's charts
   addChartToDashboard(chartId: ID!, dashboardId: ID!): Chart!

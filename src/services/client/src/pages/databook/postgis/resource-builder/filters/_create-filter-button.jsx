@@ -45,7 +45,6 @@ export default () => {
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
-  console.log('databookContext.data', data)
   if (data.rows.length === 0)
     return (
       <Tooltip title="Requires available data" placement="left-start">

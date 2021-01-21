@@ -51,7 +51,7 @@ export default ({
       //multiple related
       multiple={multiple}
       disableCloseOnSelect={multiple}
-      // limitTags={multiple ? 3 : undefined}
+      limitTags={multiple ? 3 : undefined}
       renderOption={
         multiple
           ? (option, { selected }) => {

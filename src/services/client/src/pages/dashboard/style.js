@@ -1,11 +1,11 @@
 import { makeStyles, fade } from '@material-ui/core/styles'
 
 export default makeStyles(theme => {
-  console.log('theme.palette', theme.palette)
   return {
     layout: {
       backgroundColor: fade(theme.palette.common.white, 0.8),
       margin: theme.spacing(1),
+      padding: '16px',
     },
     gridContainer: {},
     grid: {},
@@ -19,18 +19,6 @@ export default makeStyles(theme => {
       left: theme.spacing(1),
       right: theme.spacing(1),
       backgroundColor: fade(theme.palette.common.white, 0.8),
-    },
-    //steven. below possibly deletable at some point
-    button: {
-      margin: theme.spacing(1),
-      width: '150px',
-      backgroundColor: theme.palette.primary.main,
-      color: 'white',
-      borderRadius: '6px',
-      justifyContent: 'space-between',
-      '&:hover': {
-        backgroundColor: theme.palette.primary.light,
-      },
     },
     select: {
       color: 'white',
@@ -46,15 +34,8 @@ export default makeStyles(theme => {
       },
     },
     icon: { color: 'white' },
-    // filtersContainer: { flex: 1 },
-    // filter: {
-    //   width: '250px',
-    //   margin: '10px',
-    //   // margin: theme.spacing(1),
-    //   // float: 'right',
-    // },
 
-    textFieldFilled: {
+    textField: {
       //spacing between filters
       margin: theme.spacing(1),
       //placeholder label
@@ -66,10 +47,9 @@ export default makeStyles(theme => {
         color: theme.palette.common.white,
       },
       //TextField border, and background color
-
       '& .MuiInputBase-root': {
         //parent
-        width: '250px',
+        width: '300px',
         color: theme.palette.common.white,
         backgroundColor: theme.palette.primary.light,
         borderRadius: '5px',
@@ -81,6 +61,38 @@ export default makeStyles(theme => {
       //   //child
       //   // border:'1px solid red'
       // },
+    },
+
+    title: {
+      lineHeight: 1.5,
+      display: 'block',
+      textAlign: 'center',
+      fontSize: '0.75rem',
+      fontWeight: 700,
+      letterSpacing: '0.08333em',
+      textTransform: 'uppercase',
+      color: theme.palette.text.primary,
+    },
+    subtitle: {
+      paddingTop: 8,
+      lineHeight: 1.5,
+      display: 'block',
+      textAlign: 'center',
+    },
+    description: {
+      color: theme.palette.text.primary,
+      fontSize: '0.8rem',
+      lineHeight: 1.5,
+      textAlign: 'center',
+      whiteSpace: 'break-spaces',
+      wordBreak: 'break-word',
+      lineClamp: 3,
+      boxOrient: 'vertical',
+      paddingTop: 32,
+      // paddingBottom: 24,
+      // textOverflow: 'ellipsis',
+      // overflow: 'hidden',
+      // display: '-webkit-box',
     },
   }
 })

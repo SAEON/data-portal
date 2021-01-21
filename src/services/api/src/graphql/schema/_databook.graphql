@@ -9,6 +9,9 @@ type Databook {
 
 type Dashboard {
   id: ID!
+  title: String
+  subtitle: String
+  description: String
   databookId: ID!
   charts: [Chart!]
   filters: [ID!]

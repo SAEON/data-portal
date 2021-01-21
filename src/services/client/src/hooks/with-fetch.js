@@ -22,7 +22,6 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
         })
 
         const data = await response.json()
-        console.log('with-fetch data', data)
         setState({ error: false, loading: false, data })
       } catch (error) {
         console.error(error)

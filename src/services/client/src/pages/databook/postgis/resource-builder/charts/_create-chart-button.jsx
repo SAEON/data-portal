@@ -67,7 +67,7 @@ export default () => {
 
       {/* DIALOGUE */}
       <Dialog fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add chart to dashboard</DialogTitle>
+        <DialogTitle>Add chart to databook</DialogTitle>
         <DialogContent>
           {/* ERROR MSG */}
           {error && (

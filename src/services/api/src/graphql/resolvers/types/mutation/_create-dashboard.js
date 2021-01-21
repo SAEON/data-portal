@@ -5,13 +5,15 @@ export default async (_, args, ctx) => {
   await ctx.userModel.checkRole(ctx, 'datascientist')
 
   const { Dashboards } = await ctx.mongo.collections
-  const { name, databookId } = args
+  const { title, subtitle, description, databookId } = args
 
   return (
     await Dashboards.insertOne({
       databookId: ObjectID(databookId),
       modifiedAt: new Date(),
-      name,
+      title,
+      subtitle,
+      description,
     })
   ).ops[0]
 }
