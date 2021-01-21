@@ -1,17 +1,17 @@
 import gql from 'graphql-tag'
 import { graphql, print } from 'graphql'
 
-export default async (state, ctx) => {
+export default async (search, ctx) => {
   const { default: schema } = await import('../../../../schema/index.js')
 
   const {
     extent = undefined,
     terms = undefined,
     text = undefined,
-    size = 10,
+    size = 10000,
     ids = undefined,
     dois = undefined,
-  } = state
+  } = search
 
   const records = (
     await graphql(

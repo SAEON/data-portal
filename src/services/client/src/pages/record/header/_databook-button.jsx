@@ -34,13 +34,13 @@ export default ({ immutableResource, id }) => {
               const { data } = await client
                 .mutate({
                   mutation: gql`
-                    mutation($state: JSON!, $createdBy: String!) {
-                      createDatabook(state: $state, createdBy: $createdBy)
+                    mutation($search: JSON!, $createdBy: String!) {
+                      createDatabook(search: $search, createdBy: $createdBy)
                     }
                   `,
                   variables: {
                     createdBy: `${packageJson.name} v${packageJson.version}`,
-                    state: { ids: [id] },
+                    search: { ids: [id] },
                   },
                 })
                 .catch(error => {

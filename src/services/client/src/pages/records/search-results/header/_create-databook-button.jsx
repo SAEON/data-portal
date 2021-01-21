@@ -58,6 +58,7 @@ export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
   const { userInfo } = useContext(authContext)
   const { selectedIds } = global
+  const [error, setError] = useState(undefined)
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
   const history = useHistory()
@@ -67,6 +68,10 @@ export default ({ catalogue }) => {
       .find(summary => summary['linkedResources.linkedResourceType.raw'])
       ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
       ?.doc_count || 0
+
+  if (error) {
+    throw new Error(`Error creating databook. ${error.message}`)
+  }
 
   if (!userInfo) {
     return null
@@ -100,25 +105,27 @@ export default ({ catalogue }) => {
           onClick={async e => {
             e.stopPropagation()
             setSavedSearchLoading(true)
-            const { data } = await client.mutate({
-              mutation: gql`
-                mutation($state: JSON!, $createdBy: String!) {
-                  createDatabook(state: $state, createdBy: $createdBy)
-                }
-              `,
-              variables: {
-                createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: removeSelectedIds(global),
-              },
-            })
+            const { data } = await client
+              .mutate({
+                mutation: gql`
+                  mutation($search: JSON!, $createdBy: String!) {
+                    createDatabook(search: $search, createdBy: $createdBy)
+                  }
+                `,
+                variables: {
+                  createdBy: `${packageJson.name} v${packageJson.version}`,
+                  search: removeSelectedIds(global),
+                },
+              })
+              .catch(error => setError(error))
+              .finally(() => setSavedSearchLoading(false))
+
             if (data) {
               history.push({
                 pathname: window.location.pathname.includes('render')
                   ? `/render/databooks/${data.createDatabook}`
                   : `/databooks/${data.createDatabook}`,
               })
-            } else {
-              throw new Error('Error creating databook')
             }
           }}
         >

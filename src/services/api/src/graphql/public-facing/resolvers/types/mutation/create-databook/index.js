@@ -5,14 +5,14 @@ import createMongoDoc from './_create-mongo-doc.js'
 export default async (_, args, ctx) => {
   await ctx.userModel.ensureDataScientist(ctx)
 
-  const { state, createdBy } = args
+  const { search, createdBy } = args
 
   /**
    * Search the catalogue with the provided state
    * for a list of record IDs that should be included
    * in the databook
    */
-  const records = await fetchMetadataRecords(state, ctx)
+  const records = await fetchMetadataRecords(search, ctx)
 
   /**
    * Insert a databook to MongoDB that represents a databook

@@ -11,6 +11,7 @@ import { context as authContext } from '../../../../../../contexts/authenticatio
 
 export default ({ id, immutableResource }) => {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(undefined)
   const client = useApolloClient()
   const classes = useStyles()
   const { global, setGlobal } = useContext(globalContext)
@@ -22,6 +23,10 @@ export default ({ id, immutableResource }) => {
 
   if (!userInfo) {
     return null
+  }
+
+  if (error) {
+    throw new Error(`Error creating databook: ${error.message}`)
   }
 
   if (loading) {
@@ -46,17 +51,24 @@ export default ({ id, immutableResource }) => {
             e.stopPropagation()
             setLoading(true)
             setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
-            const { data } = await client.mutate({
-              mutation: gql`
-                mutation($state: JSON!, $createdBy: String!) {
-                  createDatabook(state: $state, createdBy: $createdBy)
-                }
-              `,
-              variables: {
-                createdBy: `${packageJson.name} v${packageJson.version}`,
-                state: { ids: [id] },
-              },
-            })
+            const { data } = await client
+              .mutate({
+                mutation: gql`
+                  mutation($search: JSON!, $createdBy: String!) {
+                    createDatabook(search: $search, createdBy: $createdBy)
+                  }
+                `,
+                variables: {
+                  createdBy: `${packageJson.name} v${packageJson.version}`,
+                  search: { ids: [id] },
+                },
+              })
+              .catch(error => {
+                alert('hi')
+                console.log(error)
+                setError(error)
+              })
+              .finally(() => setLoading(false))
             if (data) {
               history.push({
                 pathname: window.location.pathname.includes('render')

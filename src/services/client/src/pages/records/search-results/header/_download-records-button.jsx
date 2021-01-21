@@ -7,9 +7,9 @@ import { CATALOGUE_API_ADDRESS } from '../../../../config'
 import { gql, useApolloClient } from '@apollo/client'
 import packageJson from '../../../../../package.json'
 
-const MUTATTION = gql`
-  mutation($state: JSON!, $createdBy: String!) {
-    persistSearchState(state: $state, createdBy: $createdBy)
+const MUTATION = gql`
+  mutation($search: JSON!, $createdBy: String!) {
+    persistSearchState(search: $search, createdBy: $createdBy)
   }
 `
 
@@ -40,27 +40,25 @@ export default ({ catalogue }) => {
           <IconButton
             onClick={async () => {
               setLoading(true)
-              const { error, data } = await client.mutate({
-                mutation: MUTATTION,
-                variables: {
-                  createdBy: `${packageJson.name} v${packageJson.version}`,
-                  state: selectedIds.length
-                    ? { ids: selectedIds }
-                    : Object.fromEntries(
-                        Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
-                      ),
-                },
-              })
+              const { data } = await client
+                .mutate({
+                  mutation: MUTATION,
+                  variables: {
+                    createdBy: `${packageJson.name} v${packageJson.version}`,
+                    search: selectedIds.length
+                      ? { ids: selectedIds }
+                      : Object.fromEntries(
+                          Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
+                        ),
+                  },
+                })
+                .catch(error => setError(error))
+                .finally(() => setLoading(false))
 
               if (data) {
                 window.open(
                   `${CATALOGUE_API_ADDRESS}/metadata-records?search=${data.persistSearchState}`
                 )
-                setLoading(false)
-              }
-
-              if (error) {
-                setError(error)
               }
             }}
             disabled={!resultCount || resultCount > 10000}
