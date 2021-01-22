@@ -23,6 +23,7 @@ import apolloServers from './graphql/index.js'
 import configureGoogleAuth from './passport/google-auth/index.js'
 import configureTwitterAuth from './passport/twitter-auth/index.js'
 import configureSaeonAuth from './passport/saeon-identity-server/index.js'
+import configureLocalAuth from './passport/local-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
 import { applyIndices, setupUserRoles, setupDefaultAdmins } from './mongo/index.js'
 import {
@@ -54,6 +55,7 @@ setupUserRoles()
 const { login: googleLogin, authenticate: googleAuthenticate } = configureGoogleAuth()
 const { login: twitterLogin, authenticate: twitterAuthenticate } = configureTwitterAuth()
 const { login: saeonLogin, authenticate: saeonAuthenticate } = configureSaeonAuth()
+const { authenticate: localAuthenticate } = configureLocalAuth()
 
 // Configure internal app
 const internalApp = new Koa()
@@ -101,6 +103,7 @@ publicApp
       .get('/login/google', twitterLogin) // passport
       .get('/authenticate/redirect/saeon-identity-server', saeonAuthenticate, loginSuccessRoute) // passport
       .get('/login/saeon-identity-server', saeonLogin) // passport
+      .post('/login/local', localAuthenticate) // passport
       .get('/authenticate', authenticateRoute)
       .get('/logout', logoutRoute)
       .routes()
