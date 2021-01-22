@@ -19,7 +19,7 @@ export default () => {
           <CardContent>
             <LocalAuth />
 
-            {/* <Divider className={clsx(classes.divider)} /> */}
+            <Divider className={clsx(classes.divider)} />
 
             <SaeonAuth redirect={redirect} />
             <GoogleAuth redirect={redirect} />
