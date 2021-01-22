@@ -1,20 +1,19 @@
-import { Link, Tooltip } from '@material-ui/core'
+import { Link } from '@material-ui/core'
+import { Link as RouterLink } from 'react-router-dom'
 import clsx from 'clsx'
 import useStyles from './style'
-import { CATALOGUE_API_ADDRESS } from '../../../config'
 
 export default () => {
   const classes = useStyles()
   return (
-    <Tooltip title="Login to the SAEON Data Portal">
-      <Link
-        className={clsx(classes.link)}
-        color="inherit"
-        variant="overline"
-        href={`${CATALOGUE_API_ADDRESS}/login?redirect=${window.location.href}`}
-      >
-        Login
-      </Link>
-    </Tooltip>
+    <Link
+      to={`/login?redirect=${window.location.href}`}
+      component={RouterLink}
+      className={clsx(classes.link)}
+      color="inherit"
+      variant="overline"
+    >
+      Login
+    </Link>
   )
 }

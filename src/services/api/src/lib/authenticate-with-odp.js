@@ -11,7 +11,7 @@ const TOKEN = btoa(`${CATALOGUE_API_ODP_CLIENT_ID}:${CATALOGUE_API_ODP_CLIENT_SE
 
 export default async () =>
   fetch({
-    uri: CATALOGUE_API_ODP_AUTH_ADDRESS,
+    uri: `${CATALOGUE_API_ODP_AUTH_ADDRESS}/token`,
     json: true,
     method: 'POST',
     headers: {

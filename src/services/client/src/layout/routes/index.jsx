@@ -12,12 +12,25 @@ const AtlasPage = lazy(() => import('../../pages/atlas'))
 const DatabookPage = lazy(() => import('../../pages/databook'))
 const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
+const LoginPage = lazy(() => import('../../pages/login'))
 
 export default withRouter(() => {
   return (
     <Switch key={location.pathname || '/'}>
       <Route key={'authenticated'} path={'/authenticated'} render={() => <Loading />} />
       <Route key={'logout'} path={'/logout'} render={() => <Redirect to={'/'} />} />
+
+      {/* LOGIN */}
+      <Route
+        key={'login'}
+        path={'/login'}
+        exact
+        render={() => (
+          <Transition>
+            <LoginPage />
+          </Transition>
+        )}
+      />
 
       {/* Render individual components */}
       <Route

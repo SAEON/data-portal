@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
+import { useLocation } from 'react-router-dom'
 import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
 import FeedbackDialogue from './_feedback-dialogue'
@@ -11,6 +12,7 @@ import { context as globalContext } from '../../contexts/global'
 
 export default () => {
   const classes = useStyles()
+  useLocation() // Trigger re-render on location changes
   const { global } = useContext(globalContext)
   const { selectedIds } = global
 
@@ -48,7 +50,7 @@ export default () => {
                   }
                 />
               )}
-              <Authentication />
+              {!window.location.pathname.includes('login') && <Authentication />}
               <FeedbackDialogue />
             </Grid>
           </Grid>
