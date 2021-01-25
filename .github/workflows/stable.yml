@@ -25,7 +25,7 @@ jobs:
           CATALOGUE_API_GOOGLE_CLIENT_SECRET="${{ secrets.CATALOGUE_API_GOOGLE_CLIENT_SECRET }}"
           CATALOGUE_API_KEY="${{ secrets.CATALOGUE_API_KEY }}"
           CATALOGUE_API_NODE_ENV=production
-          CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect
+          CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect/google
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
