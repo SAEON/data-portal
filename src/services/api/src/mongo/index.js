@@ -57,6 +57,13 @@ const indices = [
       unique: true,
     },
   },
+  {
+    collection: _collections.Users,
+    index: 'email',
+    options: {
+      unique: true,
+    },
+  },
 ]
 
 export const setupUserRoles = () =>

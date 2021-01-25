@@ -14,8 +14,11 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  confirmPassword: {
+    marginBottom: theme.spacing(2),
+  },
   divider: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(1),
     marginBottom: theme.spacing(4),
   },
   box: {

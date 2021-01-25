@@ -5,7 +5,7 @@ import getUriState from '../../lib/fns/_get-uri-state'
 import GoogleAuth from './_google'
 import TwitterAuth from './_twitter'
 import SaeonAuth from './_saeon'
-import LocalAuth from './_local'
+import LocalAuth from './local'
 
 export default () => {
   const classes = useStyles()

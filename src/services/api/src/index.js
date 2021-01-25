@@ -5,6 +5,7 @@ import Koa from 'koa'
 import KoaRouter from '@koa/router'
 import koaCompress from 'koa-compress'
 import koaBody from 'koa-bodyparser'
+import morgan from 'koa-morgan'
 import koaSession from 'koa-session'
 import koaPassport from 'koa-passport'
 import zlib from 'zlib'
@@ -16,6 +17,7 @@ import homeRoute from './http/home.js'
 import downloadProxyRoute from './http/download-proxy.js'
 import executeSql from './http/execute-sql.js'
 import authenticateRoute from './http/authenticate.js'
+import signupRoute from './http/login-signup.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
@@ -62,6 +64,7 @@ const internalApp = new Koa()
 internalApp.keys = [CATALOGUE_API_KEY]
 internalApp.proxy = false
 internalApp
+  .use(morgan('combined'))
   .use(
     koaCompress({
       threshold: 2048,
@@ -77,6 +80,7 @@ const publicApp = new Koa()
 publicApp.keys = [CATALOGUE_API_KEY]
 publicApp.proxy = true // X-Forwarded-* headers can be trusted
 publicApp
+  .use(morgan('combined'))
   .use(
     koaCompress({
       threshold: 2048,
@@ -104,6 +108,7 @@ publicApp
       .get('/authenticate/redirect/saeon-identity-server', saeonAuthenticate, loginSuccessRoute) // passport
       .get('/login/saeon-identity-server', saeonLogin) // passport
       .post('/login/local', localAuthenticate) // passport
+      .post('/login/signup', signupRoute)
       .get('/authenticate', authenticateRoute)
       .get('/logout', logoutRoute)
       .routes()
