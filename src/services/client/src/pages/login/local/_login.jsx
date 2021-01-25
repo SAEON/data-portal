@@ -13,7 +13,7 @@ export default () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const classes = useStyles()
-  const { redirect } = getUriState()
+  const { redirect = CATALOGUE_CLIENT_ADDRESS } = getUriState()
 
   return (
     <form style={{ minHeight: 212 }} action={`${CATALOGUE_API_ADDRESS}/login/local`} method="POST">

@@ -8,9 +8,10 @@ export default ({ redirect }) => {
   const classes = useStyles()
 
   return (
-    <Tooltip title={'Login via the SAEON identity server'} placement="bottom-end">
+    <Tooltip title={'Login via the SAEON identity server (coming soon)'} placement="bottom-end">
       <span>
         <Button
+          disabled={true}
           fullWidth
           href={`${CATALOGUE_API_ADDRESS}/login/saeon-identity-server?redirect=${redirect}`}
           className={clsx(classes.button)}

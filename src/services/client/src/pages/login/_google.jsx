@@ -8,7 +8,7 @@ export default ({ redirect }) => {
   const classes = useStyles()
 
   return (
-    <Tooltip title={'Login via your Google account'} placement="bottom-end">
+    <Tooltip title={'Login via your Google account (SAEON employees only)'} placement="bottom-end">
       <span>
         <Button
           href={`${CATALOGUE_API_ADDRESS}/login/google?redirect=${redirect}`}
