@@ -1,6 +1,7 @@
 import { makeStyles, fade } from '@material-ui/core/styles'
 
 export default makeStyles(theme => {
+  console.log('theme', theme)
   return {
     layout: {
       backgroundColor: fade(theme.palette.common.white, 0.8),
@@ -33,34 +34,25 @@ export default makeStyles(theme => {
         backgroundColor: theme.palette.primary.light,
       },
     },
-    icon: { color: 'white' },
+    icon: { color: theme.palette.common.white },
 
     textField: {
-      //spacing between filters
-      margin: theme.spacing(1),
-      //placeholder label
-      '& .MuiInputLabel-root': {
-        color: theme.palette.common.white,
-      },
-      //expansion arrow
-      '& .MuiIconButton-label': {
-        color: theme.palette.common.white,
-      },
-      //TextField border, and background color
-      '& .MuiInputBase-root': {
-        //parent
-        width: '300px',
-        color: theme.palette.common.white,
-        backgroundColor: theme.palette.primary.light,
-        borderRadius: '5px',
-        //attempting to make textbox scroll horizontally when full
-        // overflowX: 'auto',
-        // display: 'inline-block',
-      },
-      // '& .MuiChip-root': {
-      //   //child
-      //   // border:'1px solid red'
+      // '& .MuiInputLabel-root': {
+      //   color: theme.palette.common.white,
       // },
+      // '& .MuiIconButton-label': {
+      //   color: theme.palette.common.white,
+      // },
+      '& .MuiInputBase-root': {
+        borderRadius: '4px',
+      },
+      '& .MuiChip-root': {
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.common.white,
+        '& .MuiChip-deleteIcon': {
+          color: theme.palette.grey[300],
+        },
+      },
     },
 
     title: {
@@ -89,6 +81,9 @@ export default makeStyles(theme => {
       lineClamp: 3,
       boxOrient: 'vertical',
       paddingTop: 32,
+    },
+    drawer: {
+      width: 280,
     },
   }
 })

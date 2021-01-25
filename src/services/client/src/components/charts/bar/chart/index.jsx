@@ -26,7 +26,9 @@ export default ({ config, data, title, description }) => {
 
   return (
     <ReactEcharts
-      style={{ height: '100%', width: '100%' }}
+      style={{
+        height: '95%', //STEVEN:TO-DO: move to styling
+      }}
       theme={theme}
       option={{
         grid: {
