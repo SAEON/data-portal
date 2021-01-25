@@ -3,7 +3,6 @@ import CitationDialog from '../../../components/citation-dialogue'
 import { Tooltip, IconButton } from '@material-ui/core'
 
 export default ({ doi }) => {
-  console.log('doi', doi)
   return (
     <CitationDialog doi={doi}>
       {({ disabled, onClick }) => (

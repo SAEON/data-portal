@@ -2,7 +2,8 @@ import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import ApolloProvider from './components/apollo-provider'
 import GlobalProvider from './contexts/global'
-import AuthProvider from './contexts/authentication'
+import AuthorizationProvider from './contexts/authorization'
+import AuthenticationProvider from './contexts/authentication'
 import Layout from './layout'
 import theme from './theme'
 import { SnackbarProvider } from 'notistack'
@@ -24,13 +25,15 @@ export default () => {
                 <GlobalProvider>
                   <BackgroundImageProvider>
                     <ApplicationLogger>
-                      <AuthProvider>
-                        <SnackbarProvider>
-                          <DefaultApplicationNotices>
-                            <Layout />
-                          </DefaultApplicationNotices>
-                        </SnackbarProvider>
-                      </AuthProvider>
+                      <AuthenticationProvider>
+                        <AuthorizationProvider>
+                          <SnackbarProvider>
+                            <DefaultApplicationNotices>
+                              <Layout />
+                            </DefaultApplicationNotices>
+                          </SnackbarProvider>
+                        </AuthorizationProvider>
+                      </AuthenticationProvider>
                     </ApplicationLogger>
                   </BackgroundImageProvider>
                 </GlobalProvider>

@@ -53,8 +53,6 @@ export default () => {
             throw new Error('Error loading search state for Atlas')
           }
 
-          console.log(data)
-
           const {
             ids = undefined,
             dois = undefined,

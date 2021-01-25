@@ -11,7 +11,6 @@ import Row from '../_row'
 const wkt = new WKT()
 
 export default ({ geoLocations }) => {
-  console.log('geoLocations!', geoLocations)
   return (
     <Row title={'Spatial coverage'}>
       <OlReact

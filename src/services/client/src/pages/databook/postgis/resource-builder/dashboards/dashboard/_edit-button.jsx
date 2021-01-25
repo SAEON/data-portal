@@ -150,7 +150,6 @@ export default ({ dashboard }) => {
                                     variant="contained"
                                     onClick={async () => {
                                       updateButton({ loading: true })
-                                      console.log('title', title)
                                       await client
                                         .mutate({
                                           mutation: gql`

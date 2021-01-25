@@ -9,4 +9,5 @@ export default {
   databook: await _import('./_databook.js'),
   searchState: await _import('./_search-state.js'),
   atlas: await _import('./_atlas.js'),
+  userRoles: await _import('./_user-roles.js'),
 }

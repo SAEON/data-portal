@@ -1,14 +1,18 @@
 import { useState, useContext } from 'react'
 import { Tooltip, IconButton, CircularProgress, Fade } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { CATALOGUE_CLIENT_MAX_DATABOOK_TABLES } from '../../../../config'
+import {
+  CATALOGUE_CLIENT_MAX_DATABOOK_TABLES,
+  CATALOGUE_TECHNICAL_CONTACT,
+} from '../../../../config'
 import { context as globalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
-import { context as authContext } from '../../../../contexts/authentication'
+import { context as authorizationContext } from '../../../../contexts/authorization'
 
 const cacheOfMappableItems = {}
 
@@ -55,8 +59,9 @@ const removeSelectedIds = obj =>
   )
 
 export default ({ catalogue }) => {
+  const theme = useTheme()
   const { global } = useContext(globalContext)
-  const { userInfo } = useContext(authContext)
+  const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
   const { selectedIds } = global
   const [error, setError] = useState(undefined)
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
@@ -73,7 +78,7 @@ export default ({ catalogue }) => {
     throw new Error(`Error creating databook. ${error.message}`)
   }
 
-  if (!userInfo) {
+  if (!isAuthenticated) {
     return null
   }
 
@@ -84,6 +89,8 @@ export default ({ catalogue }) => {
       </Fade>
     )
   }
+
+  const isDisabled = !isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)
 
   return (
     <Tooltip
@@ -101,33 +108,45 @@ export default ({ catalogue }) => {
     >
       <span style={{ display: 'flex', alignContent: 'center' }}>
         <IconButton
-          disabled={!isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)}
-          onClick={async e => {
-            e.stopPropagation()
-            setSavedSearchLoading(true)
-            const { data } = await client
-              .mutate({
-                mutation: gql`
-                  mutation($search: JSON!, $createdBy: String!) {
-                    createDatabook(search: $search, createdBy: $createdBy)
-                  }
-                `,
-                variables: {
-                  createdBy: `${packageJson.name} v${packageJson.version}`,
-                  search: removeSelectedIds(global),
-                },
-              })
-              .catch(error => setError(error))
-              .finally(() => setSavedSearchLoading(false))
+          style={
+            isDisabled
+              ? {}
+              : { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
+          }
+          disabled={isDisabled}
+          onClick={
+            isDataScientist
+              ? async e => {
+                  e.stopPropagation()
+                  setSavedSearchLoading(true)
+                  const { data } = await client
+                    .mutate({
+                      mutation: gql`
+                        mutation($search: JSON!, $createdBy: String!) {
+                          createDatabook(search: $search, createdBy: $createdBy)
+                        }
+                      `,
+                      variables: {
+                        createdBy: `${packageJson.name} v${packageJson.version}`,
+                        search: removeSelectedIds(global),
+                      },
+                    })
+                    .catch(error => setError(error))
+                    .finally(() => setSavedSearchLoading(false))
 
-            if (data) {
-              history.push({
-                pathname: window.location.pathname.includes('render')
-                  ? `/render/databooks/${data.createDatabook}`
-                  : `/databooks/${data.createDatabook}`,
-              })
-            }
-          }}
+                  if (data) {
+                    history.push({
+                      pathname: window.location.pathname.includes('render')
+                        ? `/render/databooks/${data.createDatabook}`
+                        : `/databooks/${data.createDatabook}`,
+                    })
+                  }
+                }
+              : () =>
+                  alert(
+                    `Your login is not authorized to use this feature. Please request access (${CATALOGUE_TECHNICAL_CONTACT})`
+                  )
+          }
         >
           <StyledBadge
             color={

@@ -32,6 +32,12 @@ interface Edge {
   node: Node!
 }
 
+type UserRole {
+  id: ID!
+  name: String!
+  description: String
+}
+
 type Query {
   # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
   catalogue(referrer: String): Catalogue!
@@ -49,6 +55,7 @@ type Query {
   atlas(id: ID!): JSON
   # Retrieve a Databook's dashboards
   dashboards(databookId: ID!): [Dashboard!]
+  userRoles: [UserRole!]!
 }
 
 # type Subscription {}
