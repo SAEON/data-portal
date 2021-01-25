@@ -61,13 +61,15 @@ export default ({ id }) => {
         }
         return (
           <Grid container justify="center">
-            <DashboardContextProvider filterIds={filterIds}>
+            <DashboardContextProvider filterIds={filterIds || []}>
               <Grid item xs={12}>
                 <AppBar
                   style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
                   variant="elevation"
                 >
-                  <Toolbar variant="dense" style={{ overflowX: 'scroll' }}>
+                  {/* STEVEN: TO-DO: Bug: Toolbar height is not accounted for by cards beneath it. If toolbar grows large enough,
+                  it will cover the cards */}
+                  <Toolbar variant="dense" style={{ overflowX: 'auto' }}>
                     <Filters filterIds={filterIds} />
                   </Toolbar>
                 </AppBar>

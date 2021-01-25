@@ -89,10 +89,6 @@ export default makeStyles(theme => {
       lineClamp: 3,
       boxOrient: 'vertical',
       paddingTop: 32,
-      // paddingBottom: 24,
-      // textOverflow: 'ellipsis',
-      // overflow: 'hidden',
-      // display: '-webkit-box',
     },
   }
 })
