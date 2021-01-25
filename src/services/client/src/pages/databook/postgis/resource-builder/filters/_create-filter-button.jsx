@@ -45,17 +45,20 @@ export default () => {
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
-  console.log('databookContext.data', data)
   if (data.rows.length === 0)
     return (
-      <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
-        <PlusIcon size={14} />
-      </IconButton>
+      <Tooltip title="Requires available data" placement="left-start">
+        <span>
+          <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
+            <PlusIcon size={14} />
+          </IconButton>
+        </span>
+      </Tooltip>
     )
   return (
     <>
       {/* TOGGLE DIALOGUE */}
-      <Tooltip title="Create filter from current data" /*placement="left-start"*/>
+      <Tooltip title="Create filter from current data" placement="left-start">
         <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOpen(true)} size="small">
           <PlusIcon size={14} />
         </IconButton>

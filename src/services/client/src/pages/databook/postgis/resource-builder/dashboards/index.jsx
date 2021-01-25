@@ -7,6 +7,7 @@ import Loading from '../../../../../components/loading'
 import TabHeaders from './_tab-headers'
 import Dashboard from './dashboard'
 import { Fade } from '@material-ui/core'
+import { DataUsageRounded } from '@material-ui/icons'
 
 export default forwardRef((props, ref) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
@@ -19,6 +20,9 @@ export default forwardRef((props, ref) => {
         query($databookId: ID!) {
           dashboards(databookId: $databookId) {
             id
+            title
+            subtitle
+            description
             layout
             filters
           }
@@ -30,12 +34,10 @@ export default forwardRef((props, ref) => {
         if (loading) {
           return <Loading />
         }
-
         if (error) {
           throw error
         }
         const { dashboards } = data
-
         return (
           <>
             {createPortal(

@@ -1,15 +1,12 @@
-import { makeStyles, fade } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
-  layout: {
-    height: '100%',
-    display: 'flex',
-    padding: 16,
-    backgroundColor: fade(theme.palette.secondary.light, 0.1),
-    border: `1px solid ${theme.palette.grey[300]}`,
-  },
   filter: {
-    border: `1px solid ${theme.palette.grey[300]}`,
-    marginRight: '5px',
+    display: 'flex',
+    borderRadius: '3px',
+    backgroundColor: theme.palette.secondary.light,
+    margin: '5px',
+    alignItems: 'center',
+    paddingLeft: '6px',
   },
 }))

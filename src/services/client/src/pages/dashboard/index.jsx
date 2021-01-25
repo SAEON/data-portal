@@ -6,7 +6,7 @@ import Loading from '../../components/loading'
 import Footer from '../../components/footer'
 import DashboardContextProvider from './context'
 import { gql } from '@apollo/client'
-import { AppBar, Grid, Toolbar } from '@material-ui/core'
+import { AppBar, Grid, Toolbar, Card, Typography } from '@material-ui/core'
 import Layout from './layout'
 import Filters from './filters/_filters'
 import useStyles from './style'
@@ -27,6 +27,9 @@ export default ({ id }) => {
         query($id: ID!) {
           dashboard(id: $id) {
             id
+            title
+            subtitle
+            description
             layout
             filters
           }
@@ -47,7 +50,7 @@ export default ({ id }) => {
           startPolling(POLLING_INTERVAL)
         }
 
-        const { layout, filters: filterIds } = data.dashboard
+        const { layout, filters: filterIds, title, subtitle, description } = data.dashboard
         const MenuProps = {
           PaperProps: {
             style: {
@@ -64,19 +67,25 @@ export default ({ id }) => {
                   style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
                   variant="elevation"
                 >
-                  <Toolbar variant="dense">
-                    1<Filters filterIds={filterIds} />2
+                  <Toolbar variant="dense" style={{ overflowX: 'scroll' }}>
+                    <Filters filterIds={filterIds} />
                   </Toolbar>
                 </AppBar>
               </Grid>
               <Grid item xs={12} style={{ margin: '36px 0' }} />
+              <div style={{ height: '400px', width: '1px' }}></div>
               <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
                 <Grid item xs={12}>
                   <div className={clsx(classes.layout)}>
-                    <Toolbar variant="dense">
-                      {/* Filters go here */}
-                      <Filters filterIds={filterIds} />
-                    </Toolbar>
+                    <Typography variant="h2" className={clsx(classes.title)}>
+                      {title || 'Untitled'}
+                    </Typography>
+                    <Typography className={clsx(classes.subtitle)} variant="overline">
+                      {subtitle || 'No subtitle'}
+                    </Typography>
+                    <Typography className={clsx(classes.description)} variant="body2">
+                      {description || 'No description'}
+                    </Typography>
                   </div>
                 </Grid>
                 <div style={{ position: 'relative', width: '100%' }}>

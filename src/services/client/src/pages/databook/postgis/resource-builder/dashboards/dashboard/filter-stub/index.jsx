@@ -12,7 +12,7 @@ export default ({ filterId, dashboard }) => {
   const classes = useStyles()
 
   return (
-    <Grid item style={itemStyle}>
+    <Grid item className={clsx(classes.filter)}>
       <Typography variant="overline">{filterId}</Typography>
       <RemoveFilterButton filterId={filterId} dashboard={dashboard} />
     </Grid>

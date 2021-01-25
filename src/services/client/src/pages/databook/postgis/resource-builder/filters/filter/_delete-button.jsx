@@ -17,7 +17,6 @@ const FILTERS = gql`
 `
 
 export default ({ id, setActiveTabIndex, activeTabIndex }) => {
-  console.log('activeTabIndex', activeTabIndex)
   const client = useApolloClient()
   const { databook } = useContext(databookContext)
 

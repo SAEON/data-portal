@@ -48,9 +48,13 @@ export default () => {
   const [formValues, setFormValues] = useState({})
   if (data.rows.length === 0)
     return (
-      <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
-        <PlusIcon size={14} />
-      </IconButton>
+      <Tooltip title="Requires available data" placement="left-start">
+        <span>
+          <IconButton style={{ marginLeft: 'auto' }} size="small" disabled>
+            <PlusIcon size={14} />
+          </IconButton>
+        </span>
+      </Tooltip>
     )
   return (
     <>
@@ -63,7 +67,7 @@ export default () => {
 
       {/* DIALOGUE */}
       <Dialog fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add chart to dashboard</DialogTitle>
+        <DialogTitle>Add chart to databook</DialogTitle>
         <DialogContent>
           {/* ERROR MSG */}
           {error && (

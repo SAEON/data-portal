@@ -9,6 +9,7 @@ import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
 import PreviewButton from './_preview-button'
 import SaveLayoutButton from './_save-layout'
+import EditButton from './_edit-button'
 import ChartStub from './chart-stub'
 import FilterStub from './filter-stub'
 import useStyles from './style'
@@ -32,12 +33,11 @@ const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id: dashboardId, layout = [], filters: filterIds = [] } = dashboard
+  const { id: dashboardId, layout = [], filters: filterIds = [], title } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const gridElRef = useRef()
   const refs = useRef({})
-
   gridCache[dashboardId] = layout
 
   const chartIds = useMemo(() => {
@@ -113,9 +113,11 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   return (
     <>
       <Toolbar className={classes.toolbar} variant={'dense'}>
-        <Typography>{dashboardId}</Typography>
+        <Typography>{title || dashboardId}</Typography>
         <span style={{ marginLeft: 'auto' }} />
         <SaveLayoutButton dashboard={dashboard} gridState={gridState} />
+        <span style={{ marginRight: 8 }} />
+        <EditButton dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
         <AddChartButton dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
@@ -131,7 +133,11 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
           setActiveTabIndex={setActiveTabIndex}
         />
       </Toolbar>
-      <Grid container justify="space-around" alignItems="center">
+      <Grid
+        container
+        justify="center"
+        // alignItems="center"
+      >
         {filterIds?.map(id => (
           <FilterStub key={id} filterId={id} dashboard={dashboard} />
         ))}
