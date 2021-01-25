@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Grid, Divider } from '@material-ui/core'
+import { Card, CardContent, CardHeader, Grid, Divider, Typography } from '@material-ui/core'
 import useStyles from './style'
 import clsx from 'clsx'
 import getUriState from '../../lib/fns/_get-uri-state'
@@ -15,7 +15,10 @@ export default () => {
     <Grid container alignItems="stretch" justify="center">
       <Grid item xs={12} sm={5} lg={4} className={clsx(classes.grid)}>
         <Card variant="outlined" className={clsx(classes.card)}>
-          <CardHeader className={clsx(classes.header)} title="Login" />
+          <CardHeader
+            className={clsx(classes.header)}
+            title={<Typography variant="overline">Login to the SAEON Data Portal</Typography>}
+          />
           <CardContent>
             <LocalAuth />
 

@@ -1,21 +1,41 @@
+import { useState } from 'react'
 import { Button, FormControlLabel, Checkbox, TextField, Typography, Box } from '@material-ui/core'
 import useStyles from './style'
 import clsx from 'clsx'
 import { CATALOGUE_API_ADDRESS } from '../../config'
 
 export default () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const classes = useStyles()
 
   return (
     <form
-      // onSubmit={() => alert('hi')}
+      onSubmit={e => {
+        e.preventDefault()
+        alert('hi')
+      }}
       action={`${CATALOGUE_API_ADDRESS}/login/local`}
       method="POST"
     >
-      <TextField autoComplete="username" type="email" fullWidth label="Email address" />
-      <TextField autoComplete="current-password" fullWidth label="Password" type="password" />
+      <TextField
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        autoComplete="username"
+        type="email"
+        fullWidth
+        label="Email address"
+      />
+      <TextField
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        autoComplete="current-password"
+        fullWidth
+        label="Password"
+        type="password"
+      />
       <Box className={clsx(classes.box)}>
-        <Button size="small" disableElevation variant="text">
+        <Button color="primary" size="small" disableElevation variant="outlined">
           <Typography className={clsx(classes.formLabel)}>Forgot password</Typography>
         </Button>
         <FormControlLabel

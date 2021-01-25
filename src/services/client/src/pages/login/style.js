@@ -4,10 +4,11 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 export default makeStyles(theme => ({
   grid: {
     padding: theme.spacing(2),
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(12),
   },
   card: {
     backgroundColor: fade(theme.palette.common.white, 0.75),
+    paddingBottom: theme.spacing(1),
   },
   button: {
     marginTop: theme.spacing(1),
@@ -19,7 +20,7 @@ export default makeStyles(theme => ({
   },
   box: {
     display: 'flex',
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
   },
   formLabel: {
