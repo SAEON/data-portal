@@ -104,7 +104,7 @@ publicApp
       .get('/authenticate/redirect/google', googleAuthenticate, loginSuccessRoute) // passport
       .get('/login/google', googleLogin) // passport
       .get('/authenticate/redirect/twitter', twitterAuthenticate, loginSuccessRoute) // passport
-      .get('/login/google', twitterLogin) // passport
+      .get('/login/twitter', twitterLogin) // passport
       .get('/authenticate/redirect/saeon-identity-server', saeonAuthenticate, loginSuccessRoute) // passport
       .get('/login/saeon-identity-server', saeonLogin) // passport
       .post('/login/local', localAuthenticate) // passport

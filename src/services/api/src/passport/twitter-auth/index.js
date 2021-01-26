@@ -21,42 +21,35 @@ export default () => {
         async (token, tokenSecret, profile, cb) => {
           const { Users } = await collections
 
-          const { id: twitterId, _json: twitterProfile } = profile
+          const { _json: twitterProfile } = profile
 
-          if (!twitterProfile.email_verified) {
-            cb(new Error('Twitter email has not been verified', null))
-          } else {
-            try {
-              cb(
-                null,
-                (
-                  await Users.findAndModify(
-                    {
-                      email: twitterProfile.email,
+          try {
+            cb(
+              null,
+              (
+                await Users.findAndModify(
+                  {
+                    username: twitterProfile.screen_name,
+                  },
+                  null,
+                  {
+                    $setOnInsert: {
+                      username: twitterProfile.screen_name,
+                      userRoles: [],
                     },
-                    null,
-                    {
-                      $setOnInsert: {
-                        email: twitterProfile.email,
-                        userRoles: [],
-                      },
-                      $set: {
-                        twitter: Object.assign(
-                          { twitterId, modifiedAt: new Date() },
-                          twitterProfile
-                        ),
-                      },
+                    $set: {
+                      twitter: Object.assign({ modifiedAt: new Date() }, twitterProfile),
                     },
-                    {
-                      new: true,
-                      upsert: true,
-                    }
-                  )
-                ).value
-              )
-            } catch (error) {
-              cb(error, null)
-            }
+                  },
+                  {
+                    new: true,
+                    upsert: true,
+                  }
+                )
+              ).value
+            )
+          } catch (error) {
+            cb(error, null)
           }
         }
       )
@@ -74,10 +67,9 @@ export default () => {
       authenticate: passport.authenticate('twitter'),
       login: async (ctx, next) =>
         passport.authenticate('twitter', {
-          scope: ['email'],
-          state: base64url(
+          callbackURL: `${CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS}?state=${base64url(
             JSON.stringify({ redirect: ctx.request.query.redirect || CATALOGUE_API_ADDRESS })
-          ),
+          )}`,
         })(ctx, next),
     }
   } else {

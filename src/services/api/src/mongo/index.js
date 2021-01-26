@@ -59,7 +59,7 @@ const indices = [
   },
   {
     collection: _collections.Users,
-    index: 'email',
+    index: 'username',
     options: {
       unique: true,
     },
@@ -91,11 +91,11 @@ export const setupDefaultAdmins = async () => {
       CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(email =>
         db.collection(_collections.Users).findAndModify(
           {
-            email,
+            username: email,
           },
           null,
           {
-            $setOnInsert: { email },
+            $setOnInsert: { emails: [{ email, verified: true }], username: email },
             $addToSet: {
               userRoles: adminRoleId,
             },

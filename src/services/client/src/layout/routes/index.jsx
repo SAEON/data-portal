@@ -1,7 +1,6 @@
 import { lazy } from 'react'
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import Transition from './_transition'
-import Loading from '../../components/loading'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
@@ -13,12 +12,48 @@ const DatabookPage = lazy(() => import('../../pages/databook'))
 const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
 const LoginPage = lazy(() => import('../../pages/login'))
+const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
+const AboutPage = lazy(() => import('../../pages/about'))
+const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 
 export default withRouter(() => {
   return (
     <Switch key={location.pathname || '/'}>
-      <Route key={'authenticated'} path={'/authenticated'} render={() => <Loading />} />
-      <Route key={'logout'} path={'/logout'} render={() => <Redirect to={'/'} />} />
+      {/* PRIVACY POLICY */}
+      <Route
+        key={'privacy-policy'}
+        path={'/privacy-policy'}
+        exact
+        render={() => (
+          <Transition>
+            <PrivacyPolicyPage />
+          </Transition>
+        )}
+      />
+
+      {/* ABOUT */}
+      <Route
+        key={'about'}
+        path={'/about'}
+        exact
+        render={() => (
+          <Transition>
+            <AboutPage />
+          </Transition>
+        )}
+      />
+
+      {/* TERMS OF SERVICE */}
+      <Route
+        key={'terms-of-service'}
+        path={'/terms-of-service'}
+        exact
+        render={() => (
+          <Transition>
+            <TermsOfServicePage />
+          </Transition>
+        )}
+      />
 
       {/* LOGIN */}
       <Route

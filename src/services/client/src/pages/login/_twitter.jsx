@@ -8,10 +8,9 @@ export default ({ redirect }) => {
   const classes = useStyles()
 
   return (
-    <Tooltip title={'Coming soon!'} placement="bottom-end">
+    <Tooltip title={'Authenticate via Twitter'} placement="bottom-end">
       <span>
         <Button
-          disabled={true}
           href={`${CATALOGUE_API_ADDRESS}/login/twitter?redirect=${redirect}`}
           fullWidth
           className={clsx(classes.button)}

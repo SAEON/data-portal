@@ -23,44 +23,41 @@ export default () => {
           const datascientistRoleId = (await UserRoles.find({ name: 'datascientist' }).toArray())[0]
             ._id
 
-          const { id: googleId, _json: googleProfile } = profile
+          const { _json: googleProfile } = profile
 
-          if (!googleProfile.email_verified) {
-            cb(new Error('Google email has not been verified', null))
-          } else {
-            try {
-              cb(
-                null,
-                (
-                  await Users.findAndModify(
-                    {
-                      email: googleProfile.email,
+          try {
+            cb(
+              null,
+              (
+                await Users.findAndModify(
+                  {
+                    username: googleProfile.email,
+                  },
+                  null,
+                  {
+                    $setOnInsert: {
+                      username: googleProfile.email,
                     },
-                    null,
-                    {
-                      $setOnInsert: {
+                    $set: {
+                      google: Object.assign({ accessToken, modifiedAt: new Date() }, googleProfile),
+                    },
+                    $addToSet: {
+                      userRoles: googleProfile.hd === 'saeon.ac.za' ? datascientistRoleId : '',
+                      emails: {
                         email: googleProfile.email,
-                      },
-                      $set: {
-                        google: Object.assign(
-                          { googleId, accessToken, modifiedAt: new Date() },
-                          googleProfile
-                        ),
-                      },
-                      $addToSet: {
-                        userRoles: googleProfile.hd === 'saeon.ac.za' ? datascientistRoleId : '',
+                        verified: googleProfile.email_verified,
                       },
                     },
-                    {
-                      new: true,
-                      upsert: true,
-                    }
-                  )
-                ).value
-              )
-            } catch (error) {
-              cb(error, null)
-            }
+                  },
+                  {
+                    new: true,
+                    upsert: true,
+                  }
+                )
+              ).value
+            )
+          } catch (error) {
+            cb(error, null)
           }
         }
       )
