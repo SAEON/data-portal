@@ -62,7 +62,6 @@ type Query {
 
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): Void
-  submitFeedback(input: FeedbackInput!): Boolean!
   # Save a web-browser's search context for retrieving as a databook
   createDatabook(search: JSON!, createdBy: String!): ID!
   # Save a web-browser's search context for retrieving as an atlas
@@ -119,12 +118,5 @@ input BrowserEventInput {
   createdAt: DateTime!
   info: JSON!
   clientVersion: String!
-  commitHash: String!
-}
-
-input FeedbackInput {
-  text: String!
-  rating: Int!
-  pathname: String!
   commitHash: String!
 }

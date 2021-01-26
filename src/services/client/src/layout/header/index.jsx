@@ -3,25 +3,29 @@ import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
 import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
-import FeedbackDialogue from './_feedback-dialogue'
 import Authentication from './auth'
 import ShareOrEmbed from '../../components/share-or-embed'
 import useStyles from './style'
 import clsx from 'clsx'
 import { context as globalContext } from '../../contexts/global'
+import NavMenu from './nav'
+import { useTheme } from '@material-ui/core/styles'
 
 export default () => {
   const classes = useStyles()
   useLocation() // Trigger re-render on location changes
   const { global } = useContext(globalContext)
   const { selectedIds } = global
+  const theme = useTheme()
 
   return (
     <>
       <AppBar className={clsx(classes.appBar)} variant="outlined" position="fixed">
         <Toolbar disableGutters={true} variant="dense">
           <Grid container>
-            <Grid item xs={12} sm={4}></Grid>
+            <Grid item xs={12} sm={4}>
+              <NavMenu />
+            </Grid>
 
             {/* MIDDLE (or Left, Mobile) */}
             <Grid container justify="center" alignItems="center" item xs={6} sm={4}>
@@ -50,8 +54,11 @@ export default () => {
                   }
                 />
               )}
-              {!window.location.pathname.includes('login') && <Authentication />}
-              <FeedbackDialogue />
+              {!window.location.pathname.includes('login') && (
+                <div style={{ marginRight: theme.spacing(1) }}>
+                  <Authentication />
+                </div>
+              )}
             </Grid>
           </Grid>
         </Toolbar>

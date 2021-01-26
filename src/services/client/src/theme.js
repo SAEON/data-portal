@@ -14,6 +14,12 @@ export default createMuiTheme({
   },
   overrides: {
     MuiTypography: {
+      h1: {
+        fontSize: '2.5rem',
+      },
+      h2: {
+        fontSize: '2rem',
+      },
       h6: {
         fontSize: '1rem',
       },

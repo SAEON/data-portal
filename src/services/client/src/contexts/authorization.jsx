@@ -40,6 +40,11 @@ export default ({ children }) => {
               isAuthenticated: Boolean(userInfo),
               isDataScientist: dataScientistRoleId && userRoles?.includes(dataScientistRoleId),
               isAdmin: adminRoleId && userRoles?.includes(adminRoleId),
+              isAuthorized: roles => {
+                if (!applicationRoles) return false
+                const roleId = applicationRoles.find(({ name }) => roles.includes(name)).id
+                return userRoles?.includes(roleId)
+              },
             }}
           >
             {children}

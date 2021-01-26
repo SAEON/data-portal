@@ -14,7 +14,7 @@ export default () => {
         color="primary"
       >
         <Toolbar variant="dense">
-          <Typography variant="overline">© SAEON 2020</Typography>
+          <Typography variant="overline">© SAEON 2020 - {new Date().getFullYear()}</Typography>
         </Toolbar>
       </AppBar>
     </div>

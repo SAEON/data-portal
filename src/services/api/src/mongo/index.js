@@ -19,7 +19,6 @@ export const _collections = {
   Users: 'users',
   Atlases: 'atlases',
   Logs: 'logs',
-  Feedback: 'feedback',
   Lists: 'lists',
   Databooks: 'databooks',
   Dashboards: 'dashboards',

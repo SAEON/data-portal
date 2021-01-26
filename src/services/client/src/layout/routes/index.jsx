@@ -9,6 +9,8 @@ const RecordsPage = lazy(() => import('../../pages/records'))
 const Render = lazy(() => import('../../pages/render'))
 const AtlasPage = lazy(() => import('../../pages/atlas'))
 const DatabookPage = lazy(() => import('../../pages/databook'))
+const DatabooksPage = lazy(() => import('../../pages/databooks'))
+const UsersPage = lazy(() => import('../../pages/users'))
 const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
 const LoginPage = lazy(() => import('../../pages/login'))
@@ -136,6 +138,30 @@ export default withRouter(() => {
         render={() => (
           <Transition tKey="compact-record">
             <CompactRecordPage />
+          </Transition>
+        )}
+      />
+
+      {/* DATABOOKS */}
+      <Route
+        key={'databooks'}
+        path={'/databooks'}
+        exact
+        render={props => (
+          <Transition tKey={'databooks'}>
+            <DatabooksPage {...props} />
+          </Transition>
+        )}
+      />
+
+      {/* USERS */}
+      <Route
+        key={'users'}
+        path={'/users'}
+        exact
+        render={props => (
+          <Transition tKey={'users'}>
+            <UsersPage {...props} />
           </Transition>
         )}
       />

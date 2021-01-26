@@ -11,6 +11,8 @@ export const CATALOGUE_SOURCE_CODE_URI =
 
 export const CATALOGUE_CURATOR_CONTACT = process.env.CATALOGUE_CURATOR_CONTACT || 'leo@saeon.ac.za'
 
+export const CATALOGUE_LEGAL_CONTACT = process.env.CATALOGUE_LEGAL_CONTACT || 'bryan@saeon.ac.za'
+
 export const CATALOGUE_TECHNICAL_CONTACT =
   process.env.CATALOGUE_TECHNICAL_CONTACT || 'zach@saeon.ac.za'
 
@@ -31,11 +33,17 @@ export const CATALOGUE_CLIENT_ADDRESS =
 
 export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
 
+export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()
+
+export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
+
 if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
   console.log(
     'Configuration',
     Object.fromEntries(
       Object.entries({
+        PACKAGE_DESCRIPTION,
+        PACKAGE_KEYWORDS,
         CATALOGUE_CURATOR_CONTACT,
         CATALOGUE_TECHNICAL_CONTACT,
         CATALOGUE_DEPLOYMENT_ENV,
