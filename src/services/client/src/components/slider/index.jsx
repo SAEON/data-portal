@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core'
 import QuickForm from '@saeon/quick-form'
-import { debounce } from '../../lib/fns'
+import debounce from '../../lib/fns/debounce'
 
 /**
  * The material-ui slider doesn't seem to work very well

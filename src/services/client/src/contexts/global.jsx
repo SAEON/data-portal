@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
-import { getUriState } from '../lib/fns'
+import getUriState from '../lib/fns/get-uri-state'
 import Loading from '../components/loading'
 import { gql } from '@apollo/client'
 import WithGqlQuery from '../hooks/with-gql-query'

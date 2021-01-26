@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react'
 import { useSnackbar } from 'notistack'
 import { CATALOGUE_CLIENT_DEFAULT_NOTICES } from '../../config'
-import { getUriState } from '../../lib/fns'
+import getUriState from '../../lib/fns/get-uri-state'
 import { context as authContext } from '../../contexts/authentication'
 
 /**

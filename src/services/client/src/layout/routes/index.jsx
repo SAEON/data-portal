@@ -15,10 +15,23 @@ const LoginPage = lazy(() => import('../../pages/login'))
 const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const AboutPage = lazy(() => import('../../pages/about'))
 const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
+const ContactPage = lazy(() => import('../../pages/contact'))
 
 export default withRouter(() => {
   return (
     <Switch key={location.pathname || '/'}>
+      {/* CONTACT */}
+      <Route
+        key={'contact'}
+        path={'/contact'}
+        exact
+        render={() => (
+          <Transition>
+            <ContactPage />
+          </Transition>
+        )}
+      />
+
       {/* PRIVACY POLICY */}
       <Route
         key={'privacy-policy'}

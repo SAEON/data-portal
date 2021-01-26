@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Fade, Typography } from '@material-ui/core'
 import Signup from './_sign-up'
 import Login from './_login'
-import { getUriState } from '../../../lib/fns'
+import getUriState from '../../../lib/fns/get-uri-state'
 import { useSnackbar } from 'notistack'
 
 export default () => {

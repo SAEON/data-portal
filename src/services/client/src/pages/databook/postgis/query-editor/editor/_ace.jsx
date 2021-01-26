@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import AceEditor from 'react-ace'
-import { debounce } from '../../../../../lib/fns'
+import debounce from '../../../../../lib/fns/debounce'
 import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-noconflict/mode-pgsql'
 import 'ace-builds/src-noconflict/theme-sqlserver'

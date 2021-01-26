@@ -1,7 +1,7 @@
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import WithGqlQuery from '../../hooks/with-gql-query'
 import { setShareLink } from '../../hooks/use-share-link'
-import { getUriState } from '../../lib/fns'
+import getUriState from '../../lib/fns/get-uri-state'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
 import DashboardContextProvider from './context'

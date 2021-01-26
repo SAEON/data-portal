@@ -4,7 +4,7 @@ import { TextField, InputAdornment } from '@material-ui/core'
 import { Search as SearchIcon } from '@material-ui/icons'
 import QuickForm from '@saeon/quick-form'
 import { context as globalContext } from '../../contexts/global'
-import { debounce } from '../../lib/fns'
+import debounce from '../../lib/fns/debounce'
 
 export default ({
   children,

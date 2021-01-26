@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, Grid, Divider, Typography } from '@material-ui/core'
 import useStyles from './style'
 import clsx from 'clsx'
-import getUriState from '../../lib/fns/_get-uri-state'
+import getUriState from '../../lib/fns/get-uri-state'
 import GoogleAuth from './_google'
 import TwitterAuth from './_twitter'
 import SaeonAuth from './_saeon'

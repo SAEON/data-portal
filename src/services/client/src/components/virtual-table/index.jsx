@@ -3,7 +3,7 @@ import { VariableSizeGrid } from 'react-window'
 import useStyles from './style'
 import Draggable from 'react-draggable'
 import Measure from 'react-measure'
-// import { debounce } from '../../lib/fns'
+// import debounce  from '../../lib/fns/debounce'
 import clsx from 'clsx'
 const ROW_HEIGHT = 30
 

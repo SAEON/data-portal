@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
 import Loading from '../../../components/loading'
 import WithGqlQuery from '../../../hooks/with-gql-query'
-import { getUriState } from '../../../lib/fns'
+import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
 

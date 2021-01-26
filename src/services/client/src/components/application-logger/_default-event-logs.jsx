@@ -1,7 +1,7 @@
 import RegisterEventLog from '../application-logger/_register-event-log'
 import { CATALOGUE_LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
-import { debounce } from '../../lib/fns'
+import debounce from '../../lib/fns/debounce'
 import useWindowSize from '../../hooks/use-window-size'
 
 export default ({ children }) => {

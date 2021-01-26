@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
-import { getUriState } from '../lib/fns'
+import getUriState from '../lib/fns/get-uri-state'
 
 /**
  * Provides some measure of control over which background

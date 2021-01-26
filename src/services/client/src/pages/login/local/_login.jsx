@@ -6,7 +6,7 @@ import {
 } from '../../../config'
 import { Button, TextField, Typography, Box } from '@material-ui/core'
 import useStyles from '../style'
-import { getUriState } from '../../../lib/fns'
+import getUriState from '../../../lib/fns/get-uri-state'
 import clsx from 'clsx'
 
 export default () => {
