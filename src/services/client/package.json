@@ -72,6 +72,7 @@
     "react-ace": "^9.2.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-contexify": "^5.0.0",
+    "react-cookie-consent": "^6.2.1",
     "react-device-detect": "^1.15.0",
     "react-dom": "^17.0.1",
     "react-measure": "^2.5.2",
