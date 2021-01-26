@@ -9,6 +9,16 @@ import {
   CATALOGUE_API_ADDRESS,
 } from '../../config.js'
 
+const REQUIRED_FIELDS = [
+  'id',
+  'name',
+  'screen_name',
+  'location',
+  'description',
+  'profile_image_url',
+  'profile_image_url_https',
+]
+
 export default () => {
   if (CATALOGUE_API_TWITTER_CLIENT_ID && CATALOGUE_API_TWITTER_CLIENT_SECRET) {
     passport.use(
@@ -38,7 +48,14 @@ export default () => {
                       userRoles: [],
                     },
                     $set: {
-                      twitter: Object.assign({ modifiedAt: new Date() }, twitterProfile),
+                      twitter: Object.assign(
+                        { modifiedAt: new Date() },
+                        Object.fromEntries(
+                          Object.entries(twitterProfile).filter(([k]) =>
+                            REQUIRED_FIELDS.includes(k)
+                          )
+                        )
+                      ),
                     },
                   },
                   {
