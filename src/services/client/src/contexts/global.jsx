@@ -44,7 +44,9 @@ export default ({ children }) => {
   return (
     <>
       <CookieConsent
-        style={{ background: theme.palette.primary.light }}
+        overlay={true}
+        overlayStyle={{ zIndex: 2000 }}
+        style={{ background: theme.palette.primary.dark }}
         ButtonComponent={forwardRef((props, ref) => {
           return (
             <Button
