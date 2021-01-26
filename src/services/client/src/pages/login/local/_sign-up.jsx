@@ -5,12 +5,12 @@ import useStyles from '../style'
 import clsx from 'clsx'
 
 export default () => {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmedPassword, setConfirmedPassword] = useState('')
   const classes = useStyles()
 
-  const disabled = !(password.length > 6 && confirmedPassword === password && email)
+  const disabled = !(password.length > 6 && confirmedPassword === password && username)
 
   return (
     <form style={{ minHeight: 212 }} action={`${CATALOGUE_API_ADDRESS}/login/signup`} method="POST">
@@ -20,12 +20,11 @@ export default () => {
         value={`${CATALOGUE_CLIENT_ADDRESS}/login`}
       />
       <TextField
-        value={email}
-        onChange={e => setEmail(e.target.value)}
+        value={username}
+        onChange={e => setUsername(e.target.value)}
         autoComplete="off"
-        type="email"
         fullWidth
-        label="Email address"
+        label="Username"
         name="username"
       />
       <TextField

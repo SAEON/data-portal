@@ -17,7 +17,7 @@ export default ({ children }) => {
     if (!userInfo) return
 
     if (disableNotices !== 'true') {
-      enqueueSnackbar(`Welcome back ${userInfo.email}`, { variant: 'info' })
+      enqueueSnackbar(`Welcome back ${userInfo.username}`, { variant: 'info' })
     }
   }, [disableNotices, enqueueSnackbar, userInfo])
 

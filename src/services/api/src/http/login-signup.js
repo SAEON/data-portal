@@ -13,7 +13,7 @@ export default async ctx => {
   try {
     await Users.insertOne({
       username,
-      email: username,
+      emails: [],
       passwordHash: await new Promise((resolve, reject) =>
         hash(password, SALT_ROUNDS, (error, h) => (error ? reject(error) : resolve(h)))
       ),

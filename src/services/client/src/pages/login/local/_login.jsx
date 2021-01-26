@@ -10,7 +10,7 @@ import { getUriState } from '../../../lib/fns'
 import clsx from 'clsx'
 
 export default () => {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const classes = useStyles()
   const { redirect = CATALOGUE_CLIENT_ADDRESS } = getUriState()
@@ -24,12 +24,11 @@ export default () => {
         value={`${CATALOGUE_CLIENT_ADDRESS}/login`}
       />
       <TextField
-        value={email}
-        onChange={e => setEmail(e.target.value)}
+        value={username}
+        onChange={e => setUsername(e.target.value)}
         autoComplete="username"
-        type="email"
         fullWidth
-        label="Email address"
+        label="Username"
         name="username"
       />
       <TextField

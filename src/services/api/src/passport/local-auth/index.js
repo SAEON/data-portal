@@ -6,19 +6,23 @@ import { compare } from 'bcrypt'
 export default () => {
   passport.use(
     new LocalStrategy(async (username, password, cb) => {
-      const { Users } = await collections
-      const user = await Users.findOne({ email: username })
-      const { passwordHash = '' } = user
-      const success = await new Promise((resolve, reject) =>
-        compare(password, passwordHash, (error, result) =>
-          error ? reject(error) : resolve(result)
+      try {
+        const { Users } = await collections
+        const user = await Users.findOne({ username })
+        const { passwordHash = '' } = user
+        const success = await new Promise((resolve, reject) =>
+          compare(password, passwordHash, (error, result) =>
+            error ? reject(error) : resolve(result)
+          )
         )
-      )
 
-      if (success) {
-        cb(null, user)
-      } else {
-        cb(new Error('Unknown email address or password'), null)
+        if (success) {
+          cb(null, user)
+        } else {
+          cb(null, false)
+        }
+      } catch (error) {
+        cb(error, null)
       }
     })
   )
@@ -35,8 +39,10 @@ export default () => {
     authenticate: async (ctx, next) => {
       const { successRedirect, failureRedirect } = ctx.request.body
       return passport.authenticate('local', {
-        successRedirect,
-        failureRedirect,
+        successRedirect: `${successRedirect}`,
+        failureRedirect: `${failureRedirect}?error=${encodeURIComponent(
+          'User already exists - please login with your existing credentials. You may also see this message if you previously authenticated via a 3rd party'
+        )}`,
       })(ctx, next)
     },
   }

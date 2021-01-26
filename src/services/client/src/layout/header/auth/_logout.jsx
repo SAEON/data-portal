@@ -13,7 +13,7 @@ export default ({ userInfo }) => {
         variant="overline"
         href={`${CATALOGUE_API_ADDRESS}/logout?redirect=${window.location.href}`}
       >
-        Logout {userInfo.email}
+        Logout {userInfo.username}
       </Link>
     </Tooltip>
   )
