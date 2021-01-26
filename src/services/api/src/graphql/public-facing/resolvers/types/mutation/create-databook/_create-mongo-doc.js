@@ -9,11 +9,14 @@ export default async (records, ctx, createdBy) => {
   const { encrypt } = ctx.crypto
   const recordsIds = records.map(({ _source: _ }) => _.id)
 
+  const userId = ObjectID(ctx.userInfo._id)
+
   const _id = ObjectID()
   const password = encrypt(nanoid(36))
 
   return Databooks.insertOne({
     _id,
+    userId,
     hash: hash(recordsIds),
     type: 'postgis',
     authentication: {

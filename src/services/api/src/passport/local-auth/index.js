@@ -9,7 +9,7 @@ export default () => {
       try {
         const { Users } = await collections
         const user = await Users.findOne({ username })
-        const { passwordHash = '' } = user
+        const { passwordHash = '' } = user || {}
         const success = await new Promise((resolve, reject) =>
           compare(password, passwordHash, (error, result) =>
             error ? reject(error) : resolve(result)
@@ -41,7 +41,7 @@ export default () => {
       return passport.authenticate('local', {
         successRedirect: `${successRedirect}`,
         failureRedirect: `${failureRedirect}?error=${encodeURIComponent(
-          'User already exists - please login with your existing credentials. You may also see this message if you previously authenticated via a 3rd party'
+          'Unable to login. You may see this message if your username/password is incorrect or if you have previously authenticated via a 3rd party'
         )}`,
       })(ctx, next)
     },
