@@ -22,45 +22,36 @@ export default () => {
     <>
       <AppBar className={clsx(classes.appBar)} variant="outlined" position="fixed">
         <Toolbar disableGutters={true} variant="dense">
-          <Grid container>
-            <Grid item xs={12} sm={4}>
-              <NavMenu />
-            </Grid>
+          <NavMenu />
 
-            {/* MIDDLE (or Left, Mobile) */}
-            <Grid container justify="center" alignItems="center" item xs={6} sm={4}>
-              <Typography
-                component={Link}
-                style={{ color: 'white', cursor: 'pointer', margin: '0 8px' }}
-                href="/"
-                display="block"
-                variant="body2"
-              >
-                SAEON DATA PORTAL{' '}
-                {CATALOGUE_DEPLOYMENT_ENV === 'production'
-                  ? undefined
-                  : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`}
-              </Typography>
-            </Grid>
+          <Typography
+            component={Link}
+            style={{ color: 'white', cursor: 'pointer', margin: '0 8px' }}
+            href="/"
+            display="block"
+            variant="body2"
+          >
+            SAEON DATA PORTAL{' '}
+            {CATALOGUE_DEPLOYMENT_ENV === 'production'
+              ? undefined
+              : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`}
+          </Typography>
 
-            {/* TOP-RIGHT */}
-            <Grid container justify="flex-end" alignItems="center" item xs>
-              {window.location.pathname.includes('atlas') && (
-                <ShareOrEmbed
-                  search={
-                    selectedIds.length && window.location.pathname.includes('atlas')
-                      ? { ids: selectedIds }
-                      : global
-                  }
-                />
-              )}
-              {!window.location.pathname.includes('login') && (
-                <div style={{ marginRight: theme.spacing(1) }}>
-                  <Authentication />
-                </div>
-              )}
-            </Grid>
-          </Grid>
+          {window.location.pathname.includes('atlas') && (
+            <ShareOrEmbed
+              search={
+                selectedIds.length && window.location.pathname.includes('atlas')
+                  ? { ids: selectedIds }
+                  : global
+              }
+            />
+          )}
+
+          {!window.location.pathname.includes('login') && (
+            <div style={{ marginRight: theme.spacing(1), marginLeft: 'auto' }}>
+              <Authentication />
+            </div>
+          )}
         </Toolbar>
       </AppBar>
 
