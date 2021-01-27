@@ -25,13 +25,7 @@ export default ({ codeView, ..._source }) => {
       <Grid container justify="center">
         <Grid item lg={10} xl={8}>
           <Fade key="field-view" in={!codeView}>
-            <Grid
-              container
-              direction="column"
-              justify="space-evenly"
-              alignItems="stretch"
-              spacing={isMobile ? 2 : 3}
-            >
+            <Grid container direction="column" justify="space-evenly" alignItems="stretch">
               {_source.titles?.length && <Titles {..._source} />}
               {_source.creators?.length && <Creators {..._source} />}
               {_source.rightsList?.length && <RightsList {..._source} />}

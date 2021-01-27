@@ -1,8 +1,8 @@
 import { Typography } from '@material-ui/core'
 
-export default ({ catalogue }) => {
+export default ({ catalogue, style }) => {
   return (
-    <Typography component="div" variant="overline" noWrap style={{ display: 'flex' }}>
+    <Typography component="div" variant="overline" noWrap style={style}>
       {catalogue?.records ? `${catalogue.records.totalCount}` : '...'} Records
     </Typography>
   )

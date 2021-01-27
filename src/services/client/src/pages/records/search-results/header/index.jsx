@@ -1,8 +1,9 @@
-import { AppBar, Toolbar, Grid } from '@material-ui/core'
+import { AppBar, Toolbar } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { isMobile } from 'react-device-detect'
 import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
-import RefreshSelectionButton from './_reset-selection-button'
+import ResetSelectionButton from './_reset-selection-button'
 import CreateDatabookButton from './_create-databook-button'
 import CreateAtlasButton from './_create-atlas-button'
 import CreateListButton from './_create-list-button'
@@ -24,50 +25,58 @@ export default ({
   showSidebar,
   setShowSidebar,
 }) => {
+  const theme = useTheme()
+
   return (
     <>
       <AppBar color="inherit" position="sticky" variant="outlined">
-        <Toolbar disableGutters variant="dense" style={{ display: 'flex' }}>
-          <Grid container>
-            {/* LEFT */}
-            <Grid item xs={1} sm={4}>
-              {isMobile && !disableSidebar ? (
-                <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
-              ) : undefined}
-            </Grid>
+        <Toolbar disableGutters variant="dense">
+          {/* MOBILE FILTER TOGGLE */}
+          {isMobile && !disableSidebar ? (
+            <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+          ) : undefined}
 
-            {/* CENTER */}
-            <Grid item xs={3} sm={4} container justify="center" alignContent="center">
-              {!isMobile && <Title catalogue={catalogue} />}
-            </Grid>
+          {/* SEARCH RESULT COUNT */}
+          {!isMobile && <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />}
 
-            {/* RIGHT */}
-            <Grid item xs={8} sm={4} container justify="flex-end" alignItems="center">
-              <RefreshSelectionButton />
-              <CreateDatabookButton catalogue={catalogue} />
-              <DownloadRecords catalogue={catalogue} />
-              <CreateAtlasButton catalogue={catalogue} />
-              <CreateListButton catalogue={catalogue} />
-              {!isMobile && (
-                <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
-              )}
-              <PageBackButton
-                setCursors={setCursors}
-                loading={loading}
-                cursors={cursors}
-                catalogue={catalogue}
-              />
-              {!isMobile && (
-                <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
-              )}
-              <PageForwardButton
-                setCursors={setCursors}
-                loading={loading}
-                cursors={cursors}
-                catalogue={catalogue}
-              />
-            </Grid>
-          </Grid>
+          {/* RESET SELECTION */}
+          <ResetSelectionButton style={{ marginLeft: 'auto' }} />
+
+          {/* CREATE DATABOOK */}
+          {!isMobile && <CreateDatabookButton catalogue={catalogue} />}
+
+          {/* DOWNLOAD METADATA RECORDS */}
+          {!isMobile && <DownloadRecords catalogue={catalogue} />}
+
+          {/* CREATE ATLAS */}
+          <CreateAtlasButton catalogue={catalogue} />
+
+          {/* CREATE LIST */}
+          <CreateListButton catalogue={catalogue} />
+
+          {/* PAGINATION CONFIG */}
+          {!isMobile && <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />}
+
+          {/* PAGE BACK */}
+          <PageBackButton
+            setCursors={setCursors}
+            loading={loading}
+            cursors={cursors}
+            catalogue={catalogue}
+          />
+
+          {/* CURRENT PAGE */}
+          {!isMobile && (
+            <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
+          )}
+
+          {/* PAGE FORWARD */}
+          <PageForwardButton
+            setCursors={setCursors}
+            loading={loading}
+            cursors={cursors}
+            catalogue={catalogue}
+          />
         </Toolbar>
       </AppBar>
       {children}

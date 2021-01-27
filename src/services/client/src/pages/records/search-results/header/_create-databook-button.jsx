@@ -106,7 +106,7 @@ export default ({ catalogue }) => {
           : 'Search context: no datasets with maps found'
       }
     >
-      <span style={{ display: 'flex', alignContent: 'center' }}>
+      <span>
         <IconButton
           style={
             isDisabled
