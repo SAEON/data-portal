@@ -4,7 +4,7 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
   const [state, setState] = useState({
     error: false,
     loading: false,
-    data: [],
+    data: undefined,
   })
 
   useEffect(() => {
@@ -21,11 +21,20 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
           signal,
         })
 
-        const data = await response.json()
-        setState({ error: false, loading: false, data })
+        const text = await response.text()
+
+        if (text.substring(0, 5) === 'ERROR') {
+          setState({
+            error: new Error(text.substring(5, text.length - 5)),
+            loading: false,
+            data: undefined,
+          })
+        } else {
+          setState({ error: false, loading: false, data: JSON.parse(text) })
+        }
       } catch (error) {
         console.error(error)
-        setState({ error, loading: false, data: [] })
+        setState({ error, loading: false, data: undefined })
       }
     })()
   }, [uri, method, headers, body, signal])

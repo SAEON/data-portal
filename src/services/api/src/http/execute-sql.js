@@ -13,6 +13,16 @@ export default async ctx => {
   const password = ctx.crypto.decrypt(encryptedPassword)
   const { createClient } = ctx.postgis
 
+  /**
+   * Configure the query
+   */
+  const query = new QueryStream(sql, [], {
+    batchSize: 100,
+  })
+
+  /**
+   * Configure the client
+   */
   const client = createClient({
     user: username,
     password,
@@ -20,13 +30,27 @@ export default async ctx => {
 
   client.connect()
 
-  const query = new QueryStream(sql, [], {
-    batchSize: 100,
-  })
-
+  /**
+   * Configure the stream
+   */
   const stream = client.query(query)
-  stream.on('end', () => client.end())
+  stream
+    .on('end', error => {
+      client.end(() => {
+        if (error) {
+          console.error(new Error(error.message))
+        }
+      })
+    })
+    .on('error', error => {
+      ctx.body.write(`ERROR ${error.message}`)
+      stream.destroy()
+      stream.emit('end', error)
+    })
 
-  ctx.set('Content-type', 'application/json')
+  /**
+   * Configure the response
+   */
+  ctx.set('Content-type', 'text/plain')
   ctx.body = stream.pipe(JSONStream.stringify())
 }
