@@ -1,4 +1,4 @@
-import ChartController from '../../../../components/chartController'
+import ChartController from '../../../../components/chart-controller'
 import { useContext } from 'react'
 import { context as dashboardContext } from '../../context'
 

@@ -34,24 +34,18 @@ export default makeStyles(theme => {
         backgroundColor: theme.palette.primary.light,
       },
     },
-    icon: { color: theme.palette.common.white },
-
-    textField: {
-      // '& .MuiInputLabel-root': {
-      //   color: theme.palette.common.white,
-      // },
-      // '& .MuiIconButton-label': {
-      //   color: theme.palette.common.white,
-      // },
-      '& .MuiInputBase-root': {
-        borderRadius: '4px',
-      },
-      '& .MuiChip-root': {
+    icon: {
+      color: theme.palette.common.white,
+      '&:hover': {
         backgroundColor: theme.palette.primary.light,
-        color: theme.palette.common.white,
-        '& .MuiChip-deleteIcon': {
-          color: theme.palette.grey[300],
-        },
+      },
+      float: 'right',
+    },
+    iconActice: {
+      color: theme.palette.common.white,
+      backgroundColor: theme.palette.primary.light,
+      '&:hover': {
+        backgroundColor: theme.palette.primary.dark,
       },
     },
 
@@ -83,7 +77,8 @@ export default makeStyles(theme => {
       paddingTop: 32,
     },
     drawer: {
-      width: 280,
+      minWidth: 400,
+      '& .close-button': { color: theme.palette.info.dark },
     },
   }
 })

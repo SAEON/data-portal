@@ -5,7 +5,7 @@ import ShareButton from './_share-button'
 import useStyles from './style'
 import clsx from 'clsx'
 
-const EChart = lazy(() => import('../../../../../../components/chartController'))
+const EChart = lazy(() => import('../../../../../../components/chart-controller'))
 
 export default ({ chart, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()

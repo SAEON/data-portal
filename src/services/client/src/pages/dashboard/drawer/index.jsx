@@ -1,11 +1,11 @@
 import React from 'react'
 import clsx from 'clsx'
-import { SwipeableDrawer, Button, IconButton } from '@material-ui/core'
+import { SwipeableDrawer, IconButton } from '@material-ui/core'
 import FilterIcon from 'mdi-react/FilterOutlineIcon'
 import Filters from './_filters'
 import useStyles from '../style'
-
-export default function SwipeableTemporaryDrawer() {
+import CloseIcon from 'mdi-react/CloseIcon'
+export default () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
 
@@ -15,10 +15,9 @@ export default function SwipeableTemporaryDrawer() {
         onClick={() => {
           setOpen(!open)
         }}
-        className={clsx(classes.icon)}
-        style={{ backgroundColor: open ? 'lightblue' : undefined }}
+        className={open ? clsx(classes.iconActice) : clsx(classes.icon)}
       >
-        <FilterIcon className={clsx(classes.select)} />
+        <FilterIcon />
       </IconButton>
       <SwipeableDrawer
         variant="persistent"
@@ -31,11 +30,12 @@ export default function SwipeableTemporaryDrawer() {
           setOpen(true)
         }}
       >
-        {
-          <div className={clsx(classes.drawer)} role="presentation">
-            <Filters />
-          </div>
-        }
+        <div className={clsx(classes.drawer)} role="presentation">
+          <IconButton onClick={() => setOpen(false)}>
+            <CloseIcon size={20} className={'close-button'} />
+          </IconButton>
+          <Filters />
+        </div>
       </SwipeableDrawer>
     </>
   )

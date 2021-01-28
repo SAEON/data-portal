@@ -11,14 +11,13 @@ export default ({
   setOption,
   getOptionSelected = undefined,
   selectedOptions = [],
+  limitTags = true,
   multiple = false,
   inputClassName = undefined,
   ...props
 }) => {
   return (
     <Autocomplete
-      //debugging options
-      // open={true}
       // From parent
       id={id}
       value={selectedOptions?.length ? selectedOptions : multiple ? [] : null}
@@ -51,7 +50,7 @@ export default ({
       //multiple related
       multiple={multiple}
       disableCloseOnSelect={multiple}
-      limitTags={multiple ? 3 : undefined}
+      limitTags={limitTags && multiple ? 3 : undefined}
       renderOption={
         multiple
           ? (option, { selected }) => {
