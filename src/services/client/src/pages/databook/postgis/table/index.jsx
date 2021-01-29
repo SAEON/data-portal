@@ -29,10 +29,23 @@ export default () => {
         <Fade in={Boolean(error)}>
           <span>
             {error.name === 'AbortError' ? (
-              <Typography>Cancelled</Typography>
+              <Typography className={clsx(classes.msgBox)}>Cancelled</Typography>
             ) : (
-              <Typography>{error.message}</Typography>
+              <Typography className={clsx(classes.msgBox)}>{error.message}</Typography>
             )}
+          </span>
+        </Fade>
+      </div>
+    )
+  }
+
+  if (!data.rows?.length) {
+    return (
+      <div className={clsx(classes.layout, classes.bg)}>
+        <Header />
+        <Fade in={Boolean(data)}>
+          <span>
+            <Typography className={clsx(classes.msgBox)}>[ no results ]</Typography>
           </span>
         </Fade>
       </div>
@@ -42,7 +55,6 @@ export default () => {
   return (
     <div className={clsx(classes.layout, classes.bg)}>
       <Header />
-
       <Fade in={Boolean(data)}>
         <div className={clsx(classes.content)}>
           <div className={clsx(classes.layout)}>

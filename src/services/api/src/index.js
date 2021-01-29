@@ -18,6 +18,7 @@ import executeSql from './http/execute-sql.js'
 import authenticateRoute from './http/authenticate.js'
 import signupRoute from './http/login-signup.js'
 import logoutRoute from './http/logout.js'
+import pgDumpRoute from './http/pg-dump.js'
 import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
 import apolloServers from './graphql/index.js'
@@ -96,6 +97,7 @@ publicApp
       .get('/', homeRoute)
       .post('/', homeRoute)
       .post('/execute-sql', executeSql)
+      .get('/pg-dump', pgDumpRoute) // TODO - make post
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
       .get('/authenticate/redirect/google', googleAuthenticate, loginSuccessRoute) // passport

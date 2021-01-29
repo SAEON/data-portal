@@ -87,7 +87,7 @@ docker network create --driver bridge catalogue
 docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.1
 
 # Start a PostGIS server
-docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d -p 5432:5432  postgis/postgis:12-3.0
+docker run --net=catalogue --name postgis --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d -p 5432:5432  postgis/postgis:13-3.1
 
 # Optionally start the pgAdmin IDE (on localhost:5001)
 # NOTE the postgis container host that you want to connect to is just "postgis", since you are using the Docker network

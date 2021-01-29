@@ -2,6 +2,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import { blue, deepOrange, green, purple } from '@material-ui/core/colors'
 
 export default makeStyles(theme => ({
+  msgBox: {
+    padding: theme.spacing(1),
+    fontFamily: 'monospace',
+  },
   layout: {
     position: 'absolute',
     top: 0,

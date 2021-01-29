@@ -72,7 +72,7 @@ export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
  * Local development the API doesn't run dockerized,
  * so PostGIS is on local. However the ogr2ogr
  * commands still require addressing PostGIS via the
- * Docker network
+ * Docker network.
  */
 export const POSTGIS_HOST_DEV = process.env.POSTGIS_HOST_DEV || 'localhost'
 export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'postgis'

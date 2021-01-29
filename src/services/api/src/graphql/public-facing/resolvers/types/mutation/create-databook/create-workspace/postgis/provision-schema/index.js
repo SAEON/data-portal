@@ -12,19 +12,15 @@ export default async (ctx, databook) => {
   const { decrypt } = ctx.crypto
   const { query } = ctx.postgis
   const password = decrypt(encryptedPassword)
-  console.log(username, password)
 
   console.log(schema, 'Creating schema')
 
   await query({
     text: `
       begin;
-        -- Setup user, schema, and permissions 
+        -- Setup user and schema
         create user "${username}" with encrypted password '${password}';
         create schema "${schema}" authorization "${username}";
-        grant usage on schema public to "${username}";
-        alter role "${username}" set search_path = "${schema}", public;
-        grant select on all tables in schema public to "${username}";
 
         -- Setup odp / postgres table map
         create table "${schema}".odp_map (
@@ -36,10 +32,33 @@ export default async (ctx, databook) => {
           constraint odp_map_unique_col_2 unique (table_name)
         );
 
+        -- Update search path to include "public" schema
+        alter role "${username}" set search_path = "${schema}", public, tiger;
+        
+        -- Setup SELECT ONLY for public tables
+        grant usage on schema public to "${username}";
+        grant select on all tables in schema public to "${username}";        
+        grant insert on public.spatial_ref_sys to "${username}";
+
         -- Grant user access to the new table
         grant select, update, insert on "${schema}".odp_map to "${username}";
         grant usage, select on all sequences in schema "${schema}" to "${username}";
         alter default privileges in schema "${schema}" grant usage, select on sequences to "${username}";
       commit;`,
   })
+
+  /**
+   * Return a function for cleaning up permissions
+   * ogr2ogr requires write access to public.spatial_ref_sys
+   * which needs to be revoked
+   */
+  return async () => {
+    console.log(schema, 'Cleaning up permissions')
+    await query({
+      text: `
+      begin;
+        revoke insert on public.spatial_ref_sys from "${username}";
+      commit;`,
+    })
+  }
 }

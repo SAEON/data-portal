@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
-    "npm-check-updates": "^11.0.2",
+    "npm-check-updates": "^11.1.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.38.0"
   }
