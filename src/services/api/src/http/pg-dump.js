@@ -27,7 +27,7 @@ console.log(
 )
 
 export default async ctx => {
-  // await ctx.userModel.ensureDataScientist(ctx)
+  await ctx.userModel.ensureDataScientist(ctx)
 
   const childProcess = spawn(
     'docker',
