@@ -14,13 +14,14 @@ export default ({ config, data, title, description }) => {
     type: 'FeatureCollection',
     features: data
       .map((row, i) => {
-        // if (!row.geojson) {
-        //   return null
-        // }
+        //to-do: more error handling here perhaps
+        if (!row[geoJsonField]) {
+          return null
+        }
         return {
           type: 'Feature',
           id: i,
-          properties: { name: row.name }, // TODO row.name => this is explicit column name usage. should come from config object instead
+          properties: { name: row[geoNamesField] }, // TODO row.name => this is explicit column name usage. should come from config object instead
           geometry: JSON.parse(row[geoJsonField]),
         }
       })
@@ -37,8 +38,10 @@ export default ({ config, data, title, description }) => {
   const chartData = data.map((row, i) => {
     return { name: row[geoNamesField], value: row[geoValuesField] }
   })
+  console.log('chartData', chartData)
   return (
     <ReactEcharts
+      style={{ height: '95%', width: '95%' }}
       theme={theme}
       option={{
         title: {
@@ -53,7 +56,7 @@ export default ({ config, data, title, description }) => {
         },
         visualMap: {
           left: 'right',
-          inRange: {},
+          // inRange: {},
           text: ['High', 'Low'],
           // calculable: true
         },
@@ -76,7 +79,6 @@ export default ({ config, data, title, description }) => {
           },
         ],
       }}
-      style={{ height: '100%', width: '100%' }}
     />
   )
 }
