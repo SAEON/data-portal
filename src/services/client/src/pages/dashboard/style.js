@@ -35,13 +35,14 @@ export default makeStyles(theme => {
       },
     },
     icon: {
+      float: 'right',
       color: theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.primary.light,
       },
-      float: 'right',
     },
     iconActice: {
+      float: 'right',
       color: theme.palette.common.white,
       backgroundColor: theme.palette.primary.light,
       '&:hover': {
@@ -51,7 +52,7 @@ export default makeStyles(theme => {
 
     title: {
       lineHeight: 1.5,
-      display: 'block',
+
       textAlign: 'center',
       fontSize: '0.75rem',
       fontWeight: 700,

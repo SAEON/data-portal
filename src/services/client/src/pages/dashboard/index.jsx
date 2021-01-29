@@ -70,7 +70,7 @@ export default ({ id }) => {
                       style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
                       variant="elevation"
                     >
-                      <Toolbar variant="dense" style={{ overflowX: 'auto' }}>
+                      <Toolbar variant="dense" style={{ overflowX: 'auto', display: 'block' }}>
                         <FiltersDrawer filterIds={filterIds} />
                       </Toolbar>
                     </AppBar>

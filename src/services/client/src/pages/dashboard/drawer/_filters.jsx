@@ -38,7 +38,6 @@ export default () => {
           }
           const { filters } = data
           return filters.map((filter, i) => (
-            // <Fragment key={i}>
             <DropdownSelect
               key={i}
               options={filter.values}
@@ -51,7 +50,6 @@ export default () => {
               label={filter.name}
               icon={SearchIcon}
             />
-            /* </Fragment> */
           ))
         }}
       </WithGqlQuery>
