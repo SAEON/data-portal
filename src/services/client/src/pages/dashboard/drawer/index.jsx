@@ -30,10 +30,13 @@ export default () => {
           setOpen(true)
         }}
       >
-        <div className={clsx(classes.drawer)} role="presentation">
+        <div>
           <IconButton onClick={() => setOpen(false)}>
             <CloseIcon size={20} className={'close-button'} />
           </IconButton>
+        </div>
+
+        <div className={clsx(classes.drawer)} role="presentation">
           <Filters />
         </div>
       </SwipeableDrawer>

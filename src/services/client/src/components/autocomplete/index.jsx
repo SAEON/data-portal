@@ -13,7 +13,7 @@ export default ({
   selectedOptions = [],
   limitTags = true,
   multiple = false,
-  inputClassName = undefined,
+  renderTags = undefined,
   ...props
 }) => {
   return (
@@ -50,6 +50,7 @@ export default ({
       //multiple related
       multiple={multiple}
       disableCloseOnSelect={multiple}
+      renderTags={renderTags}
       limitTags={limitTags && multiple ? 3 : undefined}
       renderOption={
         multiple

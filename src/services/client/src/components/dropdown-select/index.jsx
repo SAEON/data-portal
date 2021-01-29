@@ -1,29 +1,22 @@
-import { useState } from 'react'
-import { TextField, IconButton, Grid } from '@material-ui/core'
+import { Grid, IconButton } from '@material-ui/core'
 import CloseIcon from 'mdi-react/CloseIcon'
 import AutoComplete from '../autocomplete'
 import useStyles from './style.js'
 import clsx from 'clsx'
-import SearchIcon from '@material-ui/icons/Search'
 /**
  * TO-DO:
  * Ellipsis overflow needs work
- * bug: textfield label perpetually sits above underline if options are selected
  * textfield/icon grid layout sizing values can be cleaned up
+ * general padding can be cleaned up
  */
-export default ({ options, selectedOptions, setOption, label }) => {
+export default ({ options, selectedOptions, setOption, label, icon: Icon }) => {
   const classes = useStyles()
   return (
     <>
-      {/* Search / TextField */}
-      <Grid
-        container
-        spacing={1}
-        alignItems="flex-end"
-        style={{ paddingLeft: '5px', paddingRight: '5px' }}
-      >
-        <Grid item xs={12} sm={1}>
-          <SearchIcon />
+      {/* TextField */}
+      <Grid container spacing={1} alignItems="flex-end">
+        <Grid item>
+          <Icon />
         </Grid>
         <Grid item xs={12} sm={11}>
           <AutoComplete
@@ -32,8 +25,7 @@ export default ({ options, selectedOptions, setOption, label }) => {
             selectedOptions={selectedOptions}
             setOption={setOption}
             label={label}
-            className={clsx(classes.autoComplete)} //applies to input TextField
-            limitTags={false}
+            renderTags={() => {}} //rendering no tags
           />
         </Grid>
       </Grid>
@@ -46,15 +38,21 @@ export default ({ options, selectedOptions, setOption, label }) => {
               key={i}
               className={clsx(classes.listItem)}
               onClick={() => {
-                let arrayCopy = [...selectedOptions]
-                arrayCopy.splice(i, 1)
-                setOption(arrayCopy)
+                let updatedOptions = [...selectedOptions]
+                updatedOptions.splice(i, 1)
+                setOption(updatedOptions)
               }}
             >
-              <span className={clsx(classes.listItemText)}>{value}</span>
-              <span className={clsx(classes.listItemClose)}>
-                <CloseIcon size={20} />
-              </span>
+              <Grid container>
+                <Grid item xs={12} sm={11} className={clsx(classes.gridText)}>
+                  {value}
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                  <IconButton className={clsx(classes.listItemClose)} disabled>
+                    <CloseIcon size={20} />
+                  </IconButton>
+                </Grid>
+              </Grid>
             </li>
           )
         })}

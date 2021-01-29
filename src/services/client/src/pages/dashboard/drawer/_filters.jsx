@@ -6,6 +6,7 @@ import Loading from '../../../components/loading'
 import DropdownSelect from '../../../components/dropdown-select'
 import useStyles from '../style'
 import clsx from 'clsx'
+import SearchIcon from '@material-ui/icons/Search'
 
 export default () => {
   const classes = useStyles()
@@ -37,18 +38,20 @@ export default () => {
           }
           const { filters } = data
           return filters.map((filter, i) => (
-            <Fragment key={i}>
-              <DropdownSelect
-                options={filter.values}
-                selectedOptions={selectedFilters[filter.id].selectedValues}
-                setOption={newValues => {
-                  let newSelectedFilters = JSON.parse(JSON.stringify(selectedFilters))
-                  newSelectedFilters[filter.id].selectedValues = newValues
-                  setSelectedFilters(newSelectedFilters)
-                }}
-                label={filter.name}
-              />
-            </Fragment>
+            // <Fragment key={i}>
+            <DropdownSelect
+              key={i}
+              options={filter.values}
+              selectedOptions={selectedFilters[filter.id].selectedValues}
+              setOption={newValues => {
+                let newSelectedFilters = JSON.parse(JSON.stringify(selectedFilters))
+                newSelectedFilters[filter.id].selectedValues = newValues
+                setSelectedFilters(newSelectedFilters)
+              }}
+              label={filter.name}
+              icon={SearchIcon}
+            />
+            /* </Fragment> */
           ))
         }}
       </WithGqlQuery>

@@ -3,42 +3,30 @@ import { makeStyles, fade } from '@material-ui/core/styles'
 export default makeStyles(theme => {
   console.log('theme.palette', theme.palette)
   return {
-    autoComplete: {
-      '& .MuiChip-root': {
-        display: 'none',
-      },
-    },
-
     list: {
-      backgroundColor: theme.palette.common.white,
-      listStyle: 'none',
-      paddingLeft: '10px',
-      paddingRight: '10px',
+      listStyle: 'none', //needed
+      padding: 'unset', //needed
     },
     listItem: {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#f5f5f5', //add to /take from theme
       '&:hover': {
         backgroundColor: theme.palette.grey[300],
         // -webkit-transition: background-color 1000ms linear
         // -ms-transition: background-color 1000ms linear
-        transition: 'background-color 100ms linear',
+        transition: 'background-color 100ms linear', //needed
       },
-      height: '40px',
-      lineHeight: '40px',
-      margin: '4px',
-      verticalAlign: 'middle',
-      paddingLeft: '20px',
-      paddingRight: '20px',
+      height: '40px', //needed
+      lineHeight: '40px', //needed
+      margin: '4px', //needed
     },
-    listItemText: {
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      lineHeight: 'normal',
-      overflow: 'hidden',
-      whiteSpace: 'nowrap',
+    //needed
+    gridText: {
+      paddingLeft: '10px',
       textOverflow: 'ellipsis',
-      maxWidth: 300, //temporary solution till ellipsis work
+      overflow: 'hidden',
+      // might need to set font. to be tested
     },
+    //needed
     listItemClose: {
       float: 'right',
     },

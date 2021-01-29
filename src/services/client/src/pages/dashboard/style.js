@@ -77,7 +77,8 @@ export default makeStyles(theme => {
       paddingTop: 32,
     },
     drawer: {
-      minWidth: 400,
+      width: 400,
+      margin: '10px',
       '& .close-button': { color: theme.palette.info.dark },
     },
   }
