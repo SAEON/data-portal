@@ -61,7 +61,11 @@ export default {
     fillerColor: 'rgba(182,162,222,0.2)',
     handleColor: '#008acd',
   },
-
+  // series:{
+  label: {
+    color: '#37598B',
+    // }
+  },
   grid: {
     borderColor: '#eee',
   },
