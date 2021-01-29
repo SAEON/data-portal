@@ -8,21 +8,20 @@ export default ({ config, data, title, description }) => {
   const geoNamesField = config['series-geo-names']
   const geoValuesField = config['series-geo-values']
   const geoJsonField = config['series-geo-json']
-
   const nano = nanoid()
 
   const customMapJson = {
     type: 'FeatureCollection',
     features: data
       .map((row, i) => {
-        if (!row.geojson) {
-          return null
-        }
+        // if (!row.geojson) {
+        //   return null
+        // }
         return {
           type: 'Feature',
           id: i,
           properties: { name: row.name }, // TODO row.name => this is explicit column name usage. should come from config object instead
-          geometry: JSON.parse(row.geojson),
+          geometry: JSON.parse(row[geoJsonField]),
         }
       })
       .filter(_ => _),

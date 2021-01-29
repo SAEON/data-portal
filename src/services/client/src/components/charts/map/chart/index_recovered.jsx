@@ -3,25 +3,23 @@ import theme from '../../../../lib/echarts-theme'
 import echarts from 'echarts'
 import { nanoid } from 'nanoid'
 
-
 export default ({ config, data, title, description }) => {
   const geoNamesField = config['series-geo-names']
   const geoValuesField = config['series-geo-values']
   const geoJsonField = config['series-geo-json']
-
   const nano = nanoid()
+
   const customMapJson = {
     type: 'FeatureCollection',
-    features: data
-      .map((row, i) => {
-        console.log('row', row)
-        return {
-          type: 'Feature',
-          id: i,
-          properties: { name: row[geoNamesField] }, // TODO row.name => this is explicit column name usage. should come from config object instead
-          geometry: JSON.parse(row[geoJsonField]),
-        }
-      }),
+    features: data.map((row, i) => {
+      console.log('row', row)
+      return {
+        type: 'Feature',
+        id: i,
+        properties: { name: row[geoNamesField] }, // TODO row.name => this is explicit column name usage. should come from config object instead
+        geometry: JSON.parse(row[geoJsonField]),
+      }
+    }),
   }
 
   // TODO, if echarts DOESN"T already have customeMap, register it
