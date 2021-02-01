@@ -6,7 +6,7 @@ const { ObjectID } = mongo
  * remove the filter from the dashboard
  */
 export default async (_, { filterId, dashboardId }, ctx) => {
-  await ctx.userModel.ensureDataScientist(ctx)
+  await ctx.user.ensureDataScientist(ctx)
 
   const { Filters, Dashboards } = await ctx.mongo.collections
   filterId = ObjectID(filterId)

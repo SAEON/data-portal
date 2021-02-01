@@ -1,33 +1,17 @@
 import { spawn } from 'child_process'
-import {
-  POSTGIS_DB,
-  POSTGIS_USERNAME,
-  POSTGIS_PORT,
-  POSTGIS_HOST,
-  POSTGIS_PASSWORD,
-} from '../config.js'
+import { POSTGIS_DB, POSTGIS_PORT, POSTGIS_HOST } from '../config.js'
+import mongo from 'mongodb'
 
-console.log(
-  [
-    'container',
-    'exec',
-    'postgis',
-    'pg_dump',
-    '--dbname',
-    `postgresql://${POSTGIS_USERNAME}:${POSTGIS_PASSWORD}@${POSTGIS_HOST}:${POSTGIS_PORT}/${POSTGIS_DB}`,
-    '--schema',
-    'public',
-    '--encoding',
-    'utf8',
-    '--create',
-    '--clean',
-    '--no-privileges',
-    '--no-owner',
-  ].join(' ')
-)
+const { ObjectID } = mongo
 
 export default async ctx => {
-  await ctx.userModel.ensureDataScientist(ctx)
+  await ctx.user.ensureDataScientist(ctx)
+  const { schema } = ctx.params
+  const databookId = schema
+  const { findDatabooks } = ctx.mongo.dataFinders
+  const databook = (await findDatabooks({ _id: ObjectID(databookId) }))[0]
+  const { username, password: encryptedPassword } = databook.authentication
+  const password = ctx.crypto.decrypt(encryptedPassword)
 
   const childProcess = spawn(
     'docker',
@@ -37,9 +21,11 @@ export default async ctx => {
       'postgis',
       'pg_dump',
       '--dbname',
-      `postgresql://${POSTGIS_USERNAME}:${POSTGIS_PASSWORD}@${POSTGIS_HOST}:${POSTGIS_PORT}/${POSTGIS_DB}`,
+      `postgresql://${username}:${password}@${POSTGIS_HOST}:${POSTGIS_PORT}/${POSTGIS_DB}`,
       '--schema',
       'public',
+      '--schema',
+      schema,
       '--encoding',
       'utf8',
       '--create',
@@ -54,5 +40,5 @@ export default async ctx => {
 
   ctx.set('Content-disposition', 'attachment; filename=test2.sql')
   ctx.set('Content-type', 'application/octet-stream')
-  ctx.body = childProcess.stdout
+  ctx.body = childProcess.stderr
 }

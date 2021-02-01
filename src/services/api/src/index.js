@@ -97,7 +97,7 @@ publicApp
       .get('/', homeRoute)
       .post('/', homeRoute)
       .post('/execute-sql', executeSql)
-      .get('/pg-dump', pgDumpRoute) // TODO - make post
+      .get('/pg-dump/:schema', pgDumpRoute) // TODO - make post
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
       .get('/authenticate/redirect/google', googleAuthenticate, loginSuccessRoute) // passport

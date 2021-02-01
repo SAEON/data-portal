@@ -39,7 +39,7 @@ export default app => async (ctx, next) => {
     internalSchema,
   }
 
-  app.context.userModel = userModel
+  app.context.user = userModel
 
   app.context.crypto = {
     encrypt: plainTxt =>

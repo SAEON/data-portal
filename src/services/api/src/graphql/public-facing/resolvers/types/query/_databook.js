@@ -3,7 +3,7 @@ const { ObjectID } = mongodb
 import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
-  await ctx.userModel.ensureDataScientist(ctx)
+  await ctx.user.ensureDataScientist(ctx)
 
   const { id } = args
   const { Databooks } = await ctx.mongo.collections
