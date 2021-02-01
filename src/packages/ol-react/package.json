@@ -45,13 +45,13 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "@rollup/plugin-babel": "^5.2.2",
-    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-babel": "^5.2.3",
+    "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",
     "npm-check-updates": "^11.1.1",
     "ol": "^6.3.1",
     "react": "^16.13.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.38.0"
+    "rollup": "^2.38.3"
   }
 }
