@@ -8,7 +8,7 @@ const { ObjectID } = mongo
  * describe GridStack.js widgets
  */
 export default async (_, { chartId, dashboardId }, ctx) => {
-  await ctx.userModel.ensureDataScientist(ctx)
+  await ctx.user.ensureDataScientist(ctx)
 
   const { Charts, Dashboards } = await ctx.mongo.collections
   chartId = ObjectID(chartId)

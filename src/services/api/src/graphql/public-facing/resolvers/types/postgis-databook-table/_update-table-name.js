@@ -1,5 +1,5 @@
 export default async (self, args, ctx) => {
-  await ctx.userModel.ensureDataScientist(ctx)
+  await ctx.user.ensureDataScientist(ctx)
 
   const { id: currentTableName } = self
   const { authentication, _id: schema } = self.databook
