@@ -37,10 +37,11 @@ export default async (ctx, databook) => {
         
         -- Setup SELECT ONLY for public tables
         grant usage on schema public to "${username}";
-        grant select on all tables in schema public to "${username}";        
+        grant select on all tables in schema public to "${username}";
+        grant select on all sequences in schema public to "${username}";
         grant insert on public.spatial_ref_sys to "${username}";
 
-        -- Grant user access to the new table
+        -- Grant user access to the new table in their new schema
         grant select, update, insert on "${schema}".odp_map to "${username}";
         grant usage, select on all sequences in schema "${schema}" to "${username}";
         alter default privileges in schema "${schema}" grant usage, select on sequences to "${username}";
