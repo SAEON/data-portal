@@ -99,7 +99,7 @@ export default ({ config, data, title, description }) => {
             markLine: {
               lineStyle: {
                 type: 'dotted',
-                color: 'orange',
+                color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
                 width: 2,
               },
               symbol: 'none',
