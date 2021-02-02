@@ -66,9 +66,11 @@ services:
       - $CATALOGUE_DOCKER_NETWORK      
 
   postgis:
-    image: $POSTGIS_IMAGE
     container_name: postgis
     restart: always
+    build:
+      context: src/services/postgis
+      dockerfile: Dockerfile
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_DB: $POSTGIS_DB

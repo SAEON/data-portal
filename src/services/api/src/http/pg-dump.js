@@ -49,5 +49,5 @@ export default async ctx => {
   pg_dumpOutput.append(pgDumpProcess.stderr)
 
   // Set the request result to the stream
-  ctx.body = pg_dumpOutput
+  ctx.body = pgDumpProcess.pg_dumpOutput
 }
