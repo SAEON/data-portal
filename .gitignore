@@ -1,3 +1,5 @@
+**/postgis/dev-volume/*
+!**/postgis/dev-volume/README.md
 .catalogue-api-temp/
 credentials.json
 token.json

@@ -1,4 +1,5 @@
 import loadShapefileArchive from './shapefile-archive/index.js'
+import loadNetCdfFile from './netcdf/index.js'
 import mongodb from 'mongodb'
 const { ObjectID } = mongodb
 import { collections } from '../../../../../../../../../mongo/index.js'
@@ -12,10 +13,11 @@ export default async (ctx, databook, { immutableResource, id }) => {
 
   try {
     /**
-     * .nc (THREDDS) resources
+     * .nc (NetCDF) resources
      */
     if (fileFormat?.includes('nc')) {
-      throw new Error('.nc files are not supported yet')
+      console.log(databook._id, 'Importing NetCDF file to PostGIS')
+      return await loadNetCdfFile(ctx, databook, { immutableResource, id })
     }
 
     /**

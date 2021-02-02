@@ -19,4 +19,12 @@ export default async () => {
       create extension if not exists pg_trgm;
       create extension if not exists pgcrypto;`,
   })
+
+  await query({
+    text: `alter system set postgis.gdal_enabled_drivers to 'ENABLE_ALL';`,
+  })
+
+  await query({
+    text: `select pg_reload_conf();`,
+  })
 }

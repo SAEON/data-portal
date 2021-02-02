@@ -1,4 +1,3 @@
-import gisExtensions from './_gis-extensions.js'
 import mongodb from 'mongodb'
 const { ObjectID } = mongodb
 import fetch from 'node-fetch'
@@ -9,12 +8,13 @@ import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import ogr2ogr from '../ogr2ogr/index.js'
 import createDataName from '../../../../_create-data-name.js'
-import { collections } from '../../../../../../../../../../mongo/index.js'
+
+const INCLUDE_EXTENSIONS = ['.dbf', '.shp', '.shx', '.qpj', '.prj', '.cpg']
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
 export default async (ctx, databook, { immutableResource, id }) => {
-  const { Databooks } = await collections
+  const { Databooks } = await ctx.mongo.collections
   const tableName = createDataName(id)
   const { downloadURL } = immutableResource.resourceDownload
 
@@ -47,7 +47,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
       const { path: filename } = entry
       const ext = extname(filename)
       if (filename.includes('MACOSX')) continue
-      if (gisExtensions.includes(ext)) {
+      if (INCLUDE_EXTENSIONS.includes(ext)) {
         const writePath = join(cacheDir, basename(filename))
         if (ext === '.shp') shpFilePath = writePath
         await new Promise(resolve => {
@@ -123,5 +123,18 @@ export default async (ctx, databook, { immutableResource, id }) => {
      * Clean up the tmp directory
      */
     rimraf(cacheDir, () => console.log(tableName, 'Removing temporary directory', cacheDir))
+
+    /**
+     * Update the databook to indicate
+     * that no more work is to be done on it
+     */
+    await Databooks.findOneAndUpdate(
+      { _id: ObjectID(databook._id) },
+      {
+        $set: {
+          complete: true,
+        },
+      }
+    )
   }
 }

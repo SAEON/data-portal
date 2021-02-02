@@ -43,4 +43,10 @@ export default async (ctx, { records, databookId }) => {
    * (GDAL ogr2ogr requires this when importing shapefiles)
    */
   await cleanupAfterOgr2Ogr()
+
+  /**
+   * Mark Mongo doc as complete
+   * Otherwise client may be left hanging
+   */
+  console.log('hi')
 }
