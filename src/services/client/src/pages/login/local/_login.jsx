@@ -17,10 +17,16 @@ export default () => {
 
   return (
     <form style={{ minHeight: 212 }} action={`${CATALOGUE_API_ADDRESS}/login/local`} method="POST">
-      <input style={{ display: 'none' }} name="successRedirect" value={redirect} />
+      <input
+        style={{ display: 'none' }}
+        onChange={e => e}
+        name="successRedirect"
+        value={redirect}
+      />
       <input
         style={{ display: 'none' }}
         name="failureRedirect"
+        onChange={e => e}
         value={`${CATALOGUE_CLIENT_ADDRESS}/login`}
       />
       <TextField

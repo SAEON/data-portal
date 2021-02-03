@@ -17,6 +17,7 @@ export default () => {
       <input
         style={{ display: 'none' }}
         name="redirect"
+        onChange={e => e}
         value={`${CATALOGUE_CLIENT_ADDRESS}/login`}
       />
       <TextField

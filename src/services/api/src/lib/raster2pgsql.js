@@ -1,9 +1,10 @@
 import { spawn } from 'child_process'
-import { CATALOGUE_DOCKER_NETWORK, POSTGIS_DB, POSTGIS_HOST } from '../config.js'
+import { CATALOGUE_DOCKER_NETWORK, POSTGIS_DB, POSTGIS_HOST, POSTGIS_PORT } from '../config.js'
 
 export default ({ tableName, username, password, filePath, schema, mntRoot = '/tmp' }) => {
+  console.log(`"${schema}"."${tableName}"`)
   return new Promise((resolve, reject) => {
-    const raster2pgsqlProcess = spawn('docker', [
+    spawn('docker', [
       'run',
       `--net=${CATALOGUE_DOCKER_NETWORK}`,
       '-v',
@@ -12,24 +13,31 @@ export default ({ tableName, username, password, filePath, schema, mntRoot = '/t
       'postgis',
       'raster2pgsql',
       filePath,
-      'public.test2',
+      `${schema}.${tableName}`,
+      '-c',
     ])
-
-    const psqlProcess = spawn('docker', [
-      'run',
-      `--net=${CATALOGUE_DOCKER_NETWORK}`,
-      '--rm',
-      'postgis',
-      'psql',
-      'postgresql://admin:password@postgis:5432/databooks',
-    ])
-
-    raster2pgsqlProcess.stdout.pipe(psqlProcess.stdin)
-    raster2pgsqlProcess.stderr.on('data', data => console.error(tableName, `stderr: ${data}`))
-    raster2pgsqlProcess.on('close', code => resolve(code))
-    raster2pgsqlProcess.on('error', error => reject(error))
-
-    psqlProcess.stdout.pipe(process.stdout)
-    psqlProcess.stderr.pipe(process.stderr)
+      .stdout.pipe(
+        spawn('docker', [
+          'run',
+          '-i',
+          '-e',
+          `PGPASSWORD=${password}`,
+          `--net=${CATALOGUE_DOCKER_NETWORK}`,
+          '--rm',
+          'postgis',
+          'psql',
+          '--dbname',
+          POSTGIS_DB,
+          '--host',
+          POSTGIS_HOST,
+          '--port',
+          POSTGIS_PORT,
+          '--no-password',
+          '--username',
+          username,
+        ]).stdin
+      )
+      .on('finish', resolve)
+      .on('error', reject)
   })
 }

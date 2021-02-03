@@ -41,7 +41,7 @@ export const CATALOGUE_API_ODP_CLIENT_ID =
   process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
 
 export const CATALOGUE_API_ODP_AUTH_ADDRESS =
-  process.env.CATALOGUE_API_ODP_AUTH_ADDRESS || 'https://odp.saeon.dvn/auth/oauth2'
+  process.env.CATALOGUE_API_ODP_AUTH_ADDRESS || 'https://odp.saeon.dvn/auth'
 
 export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET || ''
 

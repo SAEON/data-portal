@@ -4,7 +4,6 @@ import FlatPage from '../../components/flat-page'
 import Footer from '../../components/footer'
 import useStyles from './style'
 import clsx from 'clsx'
-import { CATALOGUE_LEGAL_CONTACT } from '../../config'
 
 export default () => {
   const classes = useStyles()

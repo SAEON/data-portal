@@ -45,6 +45,7 @@ export default async (ctx, databook) => {
         grant select, update, insert on "${schema}".odp_map to "${username}";
         grant usage, select on all sequences in schema "${schema}" to "${username}";
         alter default privileges in schema "${schema}" grant usage, select on sequences to "${username}";
+
       commit;`,
   })
 
