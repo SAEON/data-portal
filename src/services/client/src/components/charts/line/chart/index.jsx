@@ -18,17 +18,18 @@ export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
   const valuesField = config['series-values']
 
-  const markline1 = config['series-markline-1']
-  const markline2 = config['series-markline-2']
-  let targetsArr = []
-  if (markline1) targetsArr.push(markline1)
-  if (markline2) targetsArr.push(markline2)
+  // const markline1 = config['series-markline-1']
+  // const markline2 = config['series-markline-2']
 
+  const marklines = config['series-marklines']
+  console.log('chart marklines', marklines)
   return (
     <ReactEcharts
-      style={{
-        // height: '95%', //STEVEN:TO-DO: move to styling
-      }}
+      style={
+        {
+          // height: '95%', //STEVEN:TO-DO: move to styling
+        }
+      }
       theme={theme}
       option={{
         xAxis: {
@@ -36,24 +37,27 @@ export default ({ config, data, title, description }) => {
           data: data.map(entry => entry[namesField]),
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
         },
-        series: [{
-          data: data.map(entry => entry[valuesField]),
-          type: 'line',
-          // smooth: false
-          markLine: {
-            lineStyle: {
-              type: 'dotted',
-              color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
-              width: 2,
-            },
-            symbol: 'none',
-            data: targetsArr.map(target => {
-              return { name: target.name, yAxis: target.value }
-            }),
+        series: [
+          {
+            data: data.map(entry => entry[valuesField]),
+            type: 'line',
+            // smooth: false,
+            markLine: !marklines
+              ? undefined
+              : {
+                  lineStyle: {
+                    type: 'dotted',
+                    color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
+                    width: 2,
+                  },
+                  symbol: 'none',
+                  data: marklines.map(markline => {
+                    return { name: markline.name, yAxis: markline.value }
+                  }),
+                },
           },
-        },
         ],
         title: {
           text: title,
@@ -61,7 +65,6 @@ export default ({ config, data, title, description }) => {
           left: 'center',
         },
         tooltip: {},
-
       }}
     />
   )

@@ -1,44 +1,8 @@
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import Autocomplete from '../../../components/autocomplete'
-import { TextField, IconButton } from '@material-ui/core'
+import { TextField, IconButton, Divider, Grid } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
-const marklines = ({ data, value, setValue }) => {
-  let [marklines, setMarklines] = useState([])
-  return (
-    <>
-      <IconButton>
-        <AddCircleOutlineOutlinedIcon onClick={() => setMarklines([...marklines, {}])} />
-      </IconButton>
-      {marklines.map(() => {
-        return (
-          <>
-            <TextField
-              id="line-chart-select-markline-1-name"
-              label="Name (e.g. Expected Value)"
-              autoFocus
-              size="small"
-              fullWidth
-              onChange={event => setValue({ name: event.target.value, value: value?.value })}
-              value={value?.name}
-            />
-            <TextField
-              id="line-chart-select-target-1-value"
-              label="Value (Numeric)"
-              autoFocus
-              size="small"
-              onChange={event => {
-                setValue({ name: value?.name, value: event.target.value })
-              }}
-              value={value?.value}
-              type="number"
-            />
-          </>
-        )
-      })}
-      <p>below this is static marklines. dont mix them up while debugging</p>
-    </>
-  )
-}
+import DeleteIcon from '@material-ui/icons/Delete'
 
 export default {
   type: 'LINE', // NOTE - this value must also be defined on the ChartType enum in the API
@@ -89,70 +53,146 @@ export default {
       },
     },
     {
-      Component: marklines,
-    },
-    {
-      id: 'series-markline-1',
-      description: 'Name and quantify first line marking',
+      id: 'series-marklines',
+      description: 'Marklines',
       Component: ({ value, setValue }) => {
         return (
           <>
-            <TextField
-              id="line-chart-select-markline-1-name"
-              label="Name (e.g. Expected Value)"
-              autoFocus
-              size="small"
-              fullWidth
-              onChange={event => setValue({ name: event.target.value, value: value?.value })}
-              value={value?.name}
-            />
-            <TextField
-              id="line-chart-select-target-1-value"
-              label="Value (Numeric)"
-              autoFocus
-              size="small"
-              onChange={event => {
-                setValue({ name: value?.name, value: event.target.value })
-              }}
-              value={value?.value}
-              type="number"
-            />
+            {value?.map((markline, i) => {
+              return (
+                <Grid container justify="space-between">
+                  <Grid item key={i} xs={10} style={{ marginBottom: '30px' }}>
+                    <TextField
+                      id={`chart-select-markline-${i}-name`}
+                      label="Name (e.g. Expected Value)"
+                      autoFocus
+                      size="small"
+                      fullWidth
+                      onChange={event => {
+                        const newName = event.target.value
+                        let marklineCopy = JSON.parse(JSON.stringify(markline))
+                        marklineCopy.name = newName
+                        let valueCopy = value
+                        valueCopy[i] = marklineCopy
+                        setValue(valueCopy)
+                      }}
+                      value={markline?.name || ''}
+                    />
+                    <TextField
+                      id={`chart-select-markline-${i}-value`}
+                      label="Value (Numeric)"
+                      autoFocus
+                      size="small"
+                      fullWidth
+                      onChange={event => {
+                        const newValue = event.target.value
+                        let marklineCopy = JSON.parse(JSON.stringify(markline))
+                        marklineCopy.value = newValue
+                        let valueCopy = value
+                        valueCopy[i] = marklineCopy
+                        setValue(valueCopy)
+                      }}
+                      value={markline?.value || ''}
+                      type="number"
+                    />
+                  </Grid>
+                  <Grid item xs={2} style={{ margin: 'auto', textAlign: 'end' }}>
+                    <IconButton
+                      onClick={() => {
+                        // if (value === undefined) setValue([])
+                        // else setValue([...value, { name: undefined, value: undefined }])
+                        var valueCopy = value
+                        console.log('valueCopy 1', valueCopy)
+                        valueCopy.splice(i, 1)
+                        console.log('valueCopy 2', valueCopy)
+                        setValue(valueCopy)
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                  <Grid item key={i} xs={12}>
+                    <Divider light variant="middle" />
+                  </Grid>
+                </Grid>
+              )
+            })}
+            <Grid item xs={12}>
+              <IconButton
+                onClick={() => {
+                  if (value === undefined) setValue([{ name: undefined, value: undefined }])
+                  else setValue([...value, { name: undefined, value: undefined }])
+                }}
+              >
+                <AddCircleOutlineOutlinedIcon />
+              </IconButton>
+            </Grid>
           </>
         )
       },
     },
-    {
-      id: 'series-markline-2',
-      description: 'Name and quantify second line marking',
-      Component: ({ value, setValue }) => {
-        return (
-          <>
-            <TextField
-              id="line-chart-select-target-2-name"
-              label="Name (e.g. Expected Value)"
-              autoFocus
-              size="small"
-              fullWidth
-              onChange={event => {
-                setValue({ name: event.target.value, value: value?.value })
-              }}
-              value={value?.name}
-            />
-            <TextField
-              id="line-chart-select-target-2-value"
-              label="Value (Numeric)"
-              autoFocus
-              size="small"
-              onChange={event => {
-                setValue({ name: value?.name, value: event.target.value })
-              }}
-              value={value?.value}
-              type="number"
-            />
-          </>
-        )
-      },
-    },
+    // {
+    //   id: 'series-markline-1',
+    //   description: 'Name and quantify first line marking',
+    //   Component: ({ value, setValue }) => {
+    //     return (
+    //       <>
+    //         <TextField
+    //           id="line-chart-select-markline-1-name"
+    //           label="Name (e.g. Expected Value)"
+    //           autoFocus
+    //           size="small"
+    //           fullWidth
+    //           onChange={event => setValue({ name: event.target.value, value: value?.value })}
+    //           value={value?.name}
+    //         />
+    //         <TextField
+    //           id="line-chart-select-target-1-value"
+    //           label="Value (Numeric)"
+    //           autoFocus
+    //           size="small"
+    //           onChange={event => {
+    //             setValue({ name: value?.name, value: event.target.value })
+    //           }}
+    //           value={value?.value}
+    //           type="number"
+    //         />
+    //       </>
+    //     )
+    //   },
+    // },
+    // {
+    //   id: 'series-markline-2',
+    //   description: 'Name and quantify second line marking',
+    //   Component: ({ value, setValue }) => {
+    //     return (
+    //       <>
+    //         <TextField
+    //           id="line-chart-select-target-2-name"
+    //           label="Name (e.g. Expected Value)"
+    //           autoFocus
+    //           size="small"
+    //           fullWidth
+    //           onChange={event => {
+    //             setValue({ name: event.target.value, value: value?.value })
+    //           }}
+    //           value={value?.name}
+    //         />
+    //         <TextField
+    //           id="line-chart-select-target-2-value"
+    //           label="Value (Numeric)"
+    //           autoFocus
+    //           size="small"
+    //           onChange={event => {
+    //             setValue({ name: value?.name, value: event.target.value })
+    //           }}
+    //           value={value?.value}
+    //           type="number"
+    //         />
+    //       </>
+    //     )
+    //   },
+    // },
   ],
 
   /**

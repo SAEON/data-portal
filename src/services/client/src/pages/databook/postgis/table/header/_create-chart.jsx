@@ -33,7 +33,7 @@ const CHARTS_QUERY = gql`
 `
 
 const FIELD_SPACING = 32
-
+//STEVEN: TO BE DELETED. SEE ./index.jsx for details
 export default () => {
   const theme = useTheme()
   const client = useApolloClient()
