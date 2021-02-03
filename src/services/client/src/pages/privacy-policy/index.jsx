@@ -22,11 +22,7 @@ export default () => {
 
             <Typography className={clsx(classes.body)} variant="body2">
               If you have additional questions or require more information about our Privacy Policy,
-              do not hesitate to contact us. Our Privacy Policy was created with the help of the{' '}
-              <Link href="https://www.privacypolicyonline.com/privacy-policy-generator/">
-                Privacy Policy Generator
-              </Link>
-              .
+              do not hesitate to contact us.
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
@@ -35,13 +31,13 @@ export default () => {
 
             <Typography className={clsx(classes.body)} variant="body2">
               SAEON Data Portal follows a standard procedure of using log files. These files log
-              visitors when they visit websites. All hosting companies do this and a part of hosting
-              services&apos; analytics. The information collected by log files include internet
-              protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time
-              stamp, referring/exit pages, and page usage information (clicks and mouse tracking).
-              These are not linked to any information that is personally identifiable. The purpose
-              of the information is for analyzing trends, administering the site, tracking
-              users&apos; movement on the website, and gathering demographic information.
+              visitors when they visit websites. All websites do this. The information collected by
+              log files include internet protocol (IP) addresses, browser type, Internet Service
+              Provider (ISP), date and time stamp, referring/exit pages, and page usage information
+              (clicks and mouse tracking). These are not linked to any information that is
+              personally identifiable. The purpose of the information is for analyzing trends,
+              administering the site, tracking users&apos; movement on the website, and gathering
+              demographic information.
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
@@ -70,22 +66,18 @@ export default () => {
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              You may consult this list to find the Privacy Policy for each of the advertising
-              partners of SAEON Data Portal.
+              We do not share information that we collect with outside parties.
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or
-              Web Beacons that are used in their respective advertisements and links that appear on
-              SAEON Data Portal, which are sent directly to users&apos; browser. They automatically
-              receive your IP address when this occurs. These technologies are used to measure the
-              effectiveness of their advertising campaigns and/or to personalize the advertising
-              content that you see on websites that you visit.
+              We use return email addresses to answer the email we receive. Such addresses are not
+              used for any other purpose and are not shared with outside parties.
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              Note that SAEON Data Portal has no access to or control over these cookies that are
-              used by third-party advertisers.
+              Finally, we never use or share the personally identifiable information provided to us
+              online in ways unrelated to the ones described above without also providing you an
+              opportunity to opt-out or otherwise prohibit such unrelated uses.
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
@@ -95,14 +87,15 @@ export default () => {
             <Typography className={clsx(classes.body)} variant="body2">
               SAEON Data Portal&apos;s Privacy Policy does not apply to other advertisers or
               websites. Thus, we are advising you to consult the respective Privacy Policies of
-              these third-party ad servers for more detailed information. It may include their
-              practices and instructions about how to opt-out of certain options.{' '}
+              these third-party websites or ad servers for more detailed information. It may include
+              their practices and instructions about how to opt-out of certain options.
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
               You can choose to disable cookies through your individual browser options. To know
               more detailed information about cookie management with specific web browsers, it can
-              be found at the browsers&apos; respective websites. What Are Cookies?
+              be found at the browsers&apos; respective websites. Note that disabling cookies will
+              prevent the SAEON Data Portal from functioning fully.
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
@@ -123,6 +116,16 @@ export default () => {
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
+              Our commitment to data security
+            </Typography>
+
+            <Typography className={clsx(classes.body)} variant="body2">
+              To prevent unauthorised access, maintain data accuracy, and ensure the correct use of
+              information, we have put in place appropriate physical, electronic, and managerial
+              procedures to safeguard and secure the information we collect online.
+            </Typography>
+
+            <Typography className={clsx(classes.h2)} variant="h6">
               Online Privacy Policy Only
             </Typography>
 
@@ -140,6 +143,15 @@ export default () => {
             <Typography className={clsx(classes.body)} variant="body2">
               By using our website, you hereby consent to our Privacy Policy and agree to its Terms
               and Conditions.
+            </Typography>
+
+            <Typography className={clsx(classes.h2)} variant="h6">
+              How to contact us
+            </Typography>
+
+            <Typography className={clsx(classes.body)} variant="body2">
+              Should you have other questions or concerns about these privacy policies, please call
+              us on +27 (12) 534 3504 or send us an email at enquiries@saeon.ac.za.
             </Typography>
           </CardContent>
         </Card>
