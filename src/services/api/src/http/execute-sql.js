@@ -35,6 +35,7 @@ export default async ctx => {
    */
   const stream = client.query(query)
   stream
+    .on('data', () => console.log('hi there'))
     .on('end', error => {
       client.end(() => {
         if (error) {

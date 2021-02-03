@@ -37,8 +37,8 @@ export default async (ctx, databook, { immutableResource, id }) => {
    */
   var shpFilePath
   try {
-    const res = await fetch(downloadURL)
-    const zip = res.body.pipe(unzipper.Parse({ forceStream: true }))
+    const responseStreamObject = await fetch(downloadURL)
+    const zip = responseStreamObject.body.pipe(unzipper.Parse({ forceStream: true }))
 
     /**
      * Process the archive into the cache
