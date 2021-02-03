@@ -15,10 +15,12 @@ export default ({ options, selectedOptions, setOption, label, icon: Icon }) => {
     <>
       {/* TextField */}
       <Grid container spacing={1} alignItems="flex-end">
-        <Grid item>
-          <Icon />
-        </Grid>
-        <Grid item xs={12} sm={11}>
+        {Icon ? (
+          <Grid item>
+            <Icon />
+          </Grid>
+        ) : undefined}
+        <Grid item xs={12} sm={Icon ? 11 : 12}>
           <AutoComplete
             multiple
             options={options}
@@ -32,7 +34,7 @@ export default ({ options, selectedOptions, setOption, label, icon: Icon }) => {
 
       {/* Selected Items List */}
       <ul className={clsx(classes.list)}>
-        {selectedOptions.map((value, i) => {
+        {selectedOptions?.map((value, i) => {
           return (
             <li
               key={i}

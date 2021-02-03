@@ -16,13 +16,8 @@ limit 55
  */
 export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
-  const valuesField = config['series-values']
-
-  // const markline1 = config['series-markline-1']
-  // const markline2 = config['series-markline-2']
-
+  const valuesFields = config['series-values']
   const marklines = config['series-marklines']
-  console.log('chart marklines', marklines)
   return (
     <ReactEcharts
       style={
@@ -40,23 +35,29 @@ export default ({ config, data, title, description }) => {
           type: 'value',
         },
         series: [
+          ...valuesFields?.map((valueField, i) => {
+            return {
+              data: data.map(entry => entry[valueField]),
+              type: 'line',
+              // smooth: false,
+            }
+          }),
+          // marklines
           {
-            data: data.map(entry => entry[valuesField]),
             type: 'line',
-            // smooth: false,
             markLine: !marklines
               ? undefined
               : {
-                  lineStyle: {
-                    type: 'dotted',
-                    color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
-                    width: 2,
-                  },
-                  symbol: 'none',
-                  data: marklines.map(markline => {
-                    return { name: markline.name, yAxis: markline.value }
-                  }),
+                lineStyle: {
+                  type: 'dotted',
+                  color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
+                  width: 2,
                 },
+                symbol: 'none',
+                data: marklines.map(markline => {
+                  return { name: markline.name, yAxis: markline.value }
+                }),
+              },
           },
         ],
         title: {

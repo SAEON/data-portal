@@ -1,5 +1,6 @@
 import { useState, Fragment } from 'react'
 import Autocomplete from '../../../components/autocomplete'
+import DropdownSelect from '../../../components/dropdown-select'
 import { TextField, IconButton, Divider, Grid } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -13,7 +14,7 @@ export default {
    * for filtering shoulg NOT be filtered out
    */
   saveFilter: (data, config) => {
-    const cols = [config['series-names'], config['series-values']]
+    const cols = [config['series-names'], ...config['series-values']]
     return data.map(row => {
       return Object.fromEntries(Object.entries(row).filter(([k]) => cols.includes(k)))
     })
@@ -26,11 +27,11 @@ export default {
   config: [
     {
       id: 'series-names',
-      description: 'Select column containing series names',
+      description: 'Select column containing series names (x-axis)',
       Component: ({ data, value, setValue }) => {
         return (
           <Autocomplete
-            id="line-chart-select-series-names-columns"
+            id="chart-select-series-names-columns"
             options={Object.keys(data[0])}
             selectedOptions={value}
             setOption={setValue}
@@ -40,15 +41,17 @@ export default {
     },
     {
       id: 'series-values',
-      description: 'Select column containing series values',
+      description: 'Select column(s) containing series values (y-axis)',
       Component: ({ data, value, setValue }) => {
         return (
-          <Autocomplete
-            id="line-chart-select-series-values-columns"
-            options={Object.keys(data[0])}
-            selectedOptions={value}
-            setOption={setValue}
-          />
+          <>
+            <DropdownSelect
+              id="chart-select-series-names-columns"
+              options={Object.keys(data[0])}
+              selectedOptions={value || []}
+              setOption={setValue}
+            />
+          </>
         )
       },
     },
@@ -60,8 +63,8 @@ export default {
           <>
             {value?.map((markline, i) => {
               return (
-                <Grid container justify="space-between">
-                  <Grid item key={i} xs={10} style={{ marginBottom: '30px' }}>
+                <Grid key={i} container justify="space-between">
+                  <Grid item xs={10} style={{ marginBottom: '30px' }}>
                     <TextField
                       id={`chart-select-markline-${i}-name`}
                       label="Name (e.g. Expected Value)"
@@ -99,12 +102,8 @@ export default {
                   <Grid item xs={2} style={{ margin: 'auto', textAlign: 'end' }}>
                     <IconButton
                       onClick={() => {
-                        // if (value === undefined) setValue([])
-                        // else setValue([...value, { name: undefined, value: undefined }])
                         var valueCopy = value
-                        console.log('valueCopy 1', valueCopy)
                         valueCopy.splice(i, 1)
-                        console.log('valueCopy 2', valueCopy)
                         setValue(valueCopy)
                       }}
                     >
