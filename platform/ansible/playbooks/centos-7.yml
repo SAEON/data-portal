@@ -23,17 +23,24 @@
       private: yes      
       
   tasks:
-    - name: Ensure /opt directory
+    - name: Ensure /opt/
       file:
         path: /opt
         state: directory
         mode: '0755'     
 
-    - name: Ensure /opt/dbak directory
+    - name: Ensure /opt/dbak/
       file:
         path: /opt/dbak
         state: directory
         mode: '0755'
+
+    - name: Ensure /var/lib/catalogue-api/
+      file:
+        path: /var/lib/catalogue-api
+        state: directory
+        mode: '0755'
+        owner: 'saeo-catalogue' # TODO. what should this user be?
 
     - name: Ensure /opt/ssl-keys directory
       file:
