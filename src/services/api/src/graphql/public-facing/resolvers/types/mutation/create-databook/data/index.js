@@ -1,6 +1,5 @@
-import { collections } from '../../../../../../../../mongo/index.js'
 import provisionSchema from './provision-schema/index.js'
-import importGisData from './import-gis-data/index.js'
+import importGisData from './_import.js'
 
 /**
  * NOTE
@@ -19,7 +18,7 @@ import importGisData from './import-gis-data/index.js'
  */
 
 export default async (ctx, { records, databookId }) => {
-  const { Databooks } = await collections
+  const { Databooks } = await ctx.mongo.collections
   const databook = await Databooks.findOne({ _id: databookId })
 
   /**
@@ -35,7 +34,11 @@ export default async (ctx, { records, databookId }) => {
    * Then import that GIS data into PostGIS using GDAL
    */
   for (const record of records) {
-    await importGisData(ctx, databook, { ...record._source })
+    const { id } = record._source
+    const { tables } = databook
+    const dataType = Object.entries(tables).find(([_, { recordId }]) => recordId === id)[1].type
+
+    await importGisData(ctx, databook, dataType, { ...record._source })
   }
 
   /**
@@ -43,10 +46,4 @@ export default async (ctx, { records, databookId }) => {
    * (GDAL ogr2ogr requires this when importing shapefiles)
    */
   await cleanupAfterOgr2Ogr()
-
-  /**
-   * Mark Mongo doc as complete
-   * Otherwise client may be left hanging
-   */
-  console.log('hi')
 }

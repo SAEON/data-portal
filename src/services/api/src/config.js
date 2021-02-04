@@ -1,6 +1,7 @@
 import { join, normalize } from 'path'
-import { mkdirSync, existsSync } from 'fs'
+import { mkdirSync, existsSync, rmdirSync } from 'fs'
 import getCurrentDirectory from './lib/get-current-directory.js'
+import ensureDirectory from './lib/ensure-directory.js'
 import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
@@ -129,6 +130,22 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
 export const CATALOGUE_API_TEMP_DIRECTORY =
   process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))
 
+export const CATALOGUE_API_DATA_DIRECTORY =
+  process.env.CATALOGUE_API_DATA_DIRECTORY || '/var/lib/catalogue-api/'
+
+try {
+  ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
+  mkdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
+  rmdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
+} catch (error) {
+  console.error(
+    'Please create directory',
+    CATALOGUE_API_DATA_DIRECTORY,
+    'that can be used by the current process'
+  )
+  process.exit(1)
+}
+
 export const CATALOGUE_CLIENT_ID = process.env.CATALOGUE_CLIENT_ID || 'client.sess'
 
 if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
@@ -141,6 +158,7 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_API_DATA_DIRECTORY,
       CATALOGUE_API_INTERNAL_ADDRESS,
       CATALOGUE_API_INTERNAL_GQL_ADDRESS,
       CATALOGUE_API_ADDRESS_PORT,

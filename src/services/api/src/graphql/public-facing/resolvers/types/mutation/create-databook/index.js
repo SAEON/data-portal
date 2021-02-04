@@ -1,4 +1,4 @@
-import createPostgisWorkspace from './create-workspace/postgis/index.js'
+import createPostgisWorkspace from './data/index.js'
 import fetchMetadataRecords from './_fetch-metadata-records.js'
 import createMongoDoc from './_create-mongo-doc.js'
 

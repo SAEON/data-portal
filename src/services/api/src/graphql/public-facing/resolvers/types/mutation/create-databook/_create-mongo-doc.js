@@ -6,8 +6,8 @@ import { nanoid } from 'nanoid'
 
 export default async (records, ctx, createdBy) => {
   const { Databooks } = await ctx.mongo.collections
+
   const { encrypt } = ctx.crypto
-  const recordsIds = records.map(({ _source: _ }) => _.id)
 
   const userId = ObjectID(ctx.userInfo._id)
 
@@ -17,14 +17,27 @@ export default async (records, ctx, createdBy) => {
   return Databooks.insertOne({
     _id,
     userId,
-    hash: hash(recordsIds),
-    type: 'postgis',
+    hash: hash(records.map(({ _source }) => _source.id)),
     authentication: {
       username: _id.toString(),
       password,
     },
     tables: Object.fromEntries(
-      recordsIds.map(id => [[createDataName(id)], { ready: false, recordId: id }])
+      records.map(({ _source }) => {
+        const { id, immutableResource } = _source
+        const { resourceDownload } = immutableResource
+        const { archive, archivedFormats, fileFormat } = resourceDownload
+
+        const type = fileFormat?.includes('nc')
+          ? 'netcdf'
+          : archive && archivedFormats?.includes('shp')
+          ? 'shapefile-archive'
+          : archive && archivedFormats?.includes('asc')
+          ? 'asc-archive'
+          : 'unknown'
+
+        return [[createDataName(id)], { ready: false, recordId: id, type }]
+      })
     ),
     createdBy,
     modifiedAt: new Date(),
