@@ -9,7 +9,7 @@ export default ({ tableName, username, password, pathToShapefile, schema, mntRoo
       '-v',
       `${mntRoot}:${mntRoot}`,
       '--rm',
-      'osgeo/gdal:alpine-small-latest',
+      'osgeo/gdal:latest', // TODO this should be configurable
       'ogr2ogr',
       '--config',
       'PG_USE_COPY YES',
