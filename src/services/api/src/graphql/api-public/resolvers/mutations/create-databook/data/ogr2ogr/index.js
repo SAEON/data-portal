@@ -1,4 +1,4 @@
-import ogr2ogr from '../../../../../../../../lib/ogr2ogr.js'
+import ogr2ogr from '../../../../../../../lib/ogr2ogr.js'
 
 export default (ctx, databook, tableName, pathToShapefile) => {
   const { _id: schema, authentication } = databook

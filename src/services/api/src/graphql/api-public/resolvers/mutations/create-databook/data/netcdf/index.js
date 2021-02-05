@@ -3,7 +3,7 @@ import createDataName from '../../_create-data-name.js'
 import { createWriteStream, mkdtemp as createUniqueDirectory } from 'fs'
 import { join, basename, sep } from 'path'
 import fetch from 'node-fetch'
-import { CATALOGUE_API_DATA_DIRECTORY } from '../../../../../../../../config.js'
+import { CATALOGUE_API_DATA_DIRECTORY } from '../../../../../../../config.js'
 const { ObjectID } = mongodb
 import raster2pgsql from '../raster2pgsql/index.js'
 

@@ -1,4 +1,4 @@
-import raster2pgsql from '../../../../../../../../lib/raster2pgsql.js'
+import raster2pgsql from '../../../../../../../lib/raster2pgsql.js'
 
 export default async (ctx, databook, tableName, filePath) => {
   const { _id: schema, authentication } = databook

@@ -1,4 +1,4 @@
-import { CATALOGUE_CLIENT_ID } from '../../../../../config.js'
+import { CATALOGUE_CLIENT_ID } from '../../../../config.js'
 
 export default async (self, args, ctx) => {
   const { input: logs } = args

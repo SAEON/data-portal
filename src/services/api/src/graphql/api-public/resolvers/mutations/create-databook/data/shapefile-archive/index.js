@@ -3,7 +3,7 @@ const { ObjectID } = mongodb
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
 import { createWriteStream, mkdtemp } from 'fs'
-import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../../../../config.js'
+import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../../../config.js'
 import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import ogr2ogr from '../ogr2ogr/index.js'

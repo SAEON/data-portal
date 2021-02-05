@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import { graphql, print } from 'graphql'
 
 export default async (search, ctx) => {
-  const { default: schema } = await import('../../../../schema/index.js')
+  const { default: schema } = await import('../../../schema/index.js')
 
   const {
     extent = undefined,
