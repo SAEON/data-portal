@@ -22,19 +22,19 @@ export default ({ immutableResource, id }) => {
 
   if (error) throw error
 
-  const isShapefile = immutableResource?._fileFormat === 'Shapefile'
+  const isAllowed = ['Shapefile', 'NetCDF'].includes(immutableResource?._fileFormat)
 
   return loading ? (
     <Fade in={loading}>
       <CircularProgress thickness={2} size={18} style={{ margin: '15px 8px' }} />
     </Fade>
   ) : (
-    <Tooltip title={isShapefile ? 'Analyze dataset' : 'Only shapefiles supported currently'}>
+    <Tooltip title={isAllowed ? 'Analyze dataset' : 'Only shapefiles supported currently'}>
       <span>
         <IconButton
-          disabled={!isShapefile}
+          disabled={!isAllowed}
           style={
-            isShapefile
+            isAllowed
               ? { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
               : {}
           }

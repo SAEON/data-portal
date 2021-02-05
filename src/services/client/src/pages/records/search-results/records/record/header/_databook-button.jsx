@@ -26,7 +26,7 @@ export default ({ id, immutableResource }) => {
     return null
   }
 
-  const isShapefile = immutableResource?._fileFormat === 'Shapefile'
+  const isAllowed = ['Shapefile', 'NetCDF'].includes(immutableResource?._fileFormat)
 
   if (error) {
     throw new Error(`Error creating databook: ${error.message}`)
@@ -42,7 +42,7 @@ export default ({ id, immutableResource }) => {
 
   return (
     <Tooltip
-      title={isShapefile ? 'Analyze dataset' : 'Only shapefiles supported currently'}
+      title={isAllowed ? 'Analyze dataset' : 'Only shapefiles supported currently'}
       placement="left-start"
     >
       <span>
@@ -50,11 +50,11 @@ export default ({ id, immutableResource }) => {
           className={clsx(classes['small-icon-button'])}
           size="small"
           style={
-            isShapefile
+            isAllowed
               ? { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
               : {}
           }
-          disabled={!isShapefile}
+          disabled={!isAllowed}
           onClick={
             isDataScientist
               ? async e => {

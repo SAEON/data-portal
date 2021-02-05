@@ -1,4 +1,5 @@
 import passport from 'koa-passport'
+import fetch from 'node-fetch'
 import { collections } from '../../mongo/index.js'
 import { OAuth2Strategy } from 'passport-oauth'
 import base64url from 'base64url'
@@ -17,48 +18,30 @@ export default () => {
       'provider',
       new OAuth2Strategy(
         {
-          tokenURL: `${CATALOGUE_API_ODP_AUTH_ADDRESS}/token`,
-          authorizationURL: `${CATALOGUE_API_ODP_AUTH_ADDRESS}/auth`,
+          tokenURL: `${CATALOGUE_API_ODP_AUTH_ADDRESS}/oauth2/token`,
+          authorizationURL: `${CATALOGUE_API_ODP_AUTH_ADDRESS}/oauth2/auth`,
           clientID: CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID,
           clientSecret: CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET,
           callbackURL: CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS,
         },
-        async (token, tokenSecret, profile, cb) => {
+        async (token, tokenSecret, _, cb) => {
+          // eslint-disable-next-line
           const { Users } = await collections
 
-          const { id: saeonID, _json: saeonProfile } = profile
+          /**
+           * Fetch the user info
+           *
+           * TODO
+           * This needs to be implemented with the .ac.za identity server
+           */
+          const profile = await fetch(`${CATALOGUE_API_ODP_AUTH_ADDRESS}/userinfo`).then(res =>
+            res.text()
+          )
 
-          if (!saeonProfile.email_verified) {
-            cb(new Error('SAEON email has not been verified', null))
-          } else {
-            try {
-              cb(
-                null,
-                (
-                  await Users.findAndModify(
-                    {
-                      email: saeonProfile.email,
-                    },
-                    null,
-                    {
-                      $setOnInsert: {
-                        email: saeonProfile.email,
-                        userRoles: [],
-                      },
-                      $set: {
-                        saeon: Object.assign({ saeonID, modifiedAt: new Date() }, saeonProfile),
-                      },
-                    },
-                    {
-                      new: true,
-                      upsert: true,
-                    }
-                  )
-                ).value
-              )
-            } catch (error) {
-              cb(error, null)
-            }
+          try {
+            cb(null, {})
+          } catch (error) {
+            cb(error, null)
           }
         }
       )
@@ -76,13 +59,14 @@ export default () => {
       authenticate: async (ctx, next) => {
         return passport.authenticate('provider')(ctx, next)
       },
-      login: async (ctx, next) =>
-        passport.authenticate('provider', {
+      login: async (ctx, next) => {
+        return passport.authenticate('provider', {
           scope: CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES.split(','),
           state: base64url(
             JSON.stringify({ redirect: ctx.request.query.redirect || CATALOGUE_API_ADDRESS })
           ),
-        })(ctx, next),
+        })(ctx, next)
+      },
     }
   } else {
     console.info('SAEON API OAUTH credentials not provided. Skipping setup')

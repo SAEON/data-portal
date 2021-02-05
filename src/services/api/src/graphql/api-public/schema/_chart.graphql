@@ -1,0 +1,16 @@
+enum ChartType {
+  PIE
+  BAR
+  MAP
+  PICTORIAL
+  LINE
+}
+
+type Chart {
+  id: ID!
+  title: String
+  description: String
+  type: ChartType!
+  config: JSON!
+  data: JSON!
+}

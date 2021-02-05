@@ -1,7 +1,0 @@
-type Filter {
-  id: ID!
-  name: String
-  columnFiltered: String
-  values: [String]
-  sql: String
-}

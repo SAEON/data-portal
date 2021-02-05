@@ -1,0 +1,44 @@
+type Databook {
+  id: ID!
+  doc: JSON
+  schema: PostgisDatabookSchema!
+  dashboards: [Dashboard!]
+  charts: [Chart!]
+  filters: [Filter!]
+}
+
+type Dashboard {
+  id: ID!
+  title: String
+  subtitle: String
+  description: String
+  databookId: ID!
+  charts: [Chart!]
+  filters: [ID!]
+  layout: JSON
+}
+
+type PostgisDatabookSchema {
+  id: ID!
+  databook: JSON!
+  tables(id: ID): [PostgisDatabookTable]!
+}
+
+type PostgisDatabookTable {
+  id: ID!
+  description: String
+  table_schema: String!
+  databook: JSON!
+  odpRecordId: String
+  updateTableName(name: String!): Boolean!
+  fields(id: ID): [PostgisDatabookField]
+}
+
+type PostgisDatabookField {
+  id: ID!
+  databook: JSON!
+  column_name: String!
+  updateFieldName(name: String!): Boolean!
+  data_type: String!
+  ordinal_position: Int!
+}

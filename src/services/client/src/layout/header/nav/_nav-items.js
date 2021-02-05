@@ -5,6 +5,7 @@ import PrivacyIcon from 'mdi-react/LockCheckIcon'
 import ContactIcon from 'mdi-react/ContactMailIcon'
 import DatabookIcon from 'mdi-react/DatabaseCogIcon'
 import UsersIcon from 'mdi-react/UsersSwitchIcon'
+import DisclaimerIcon from 'mdi-react/WarningIcon'
 
 export default [
   {
@@ -26,6 +27,11 @@ export default [
     label: 'Terms of service',
     Icon: TermsIcon,
     to: '/terms-of-service',
+  },
+  {
+    label: 'Disclaimer',
+    Icon: DisclaimerIcon,
+    to: '/disclaimer',
   },
   {
     label: 'Contact us',

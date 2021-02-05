@@ -18,6 +18,7 @@ const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const AboutPage = lazy(() => import('../../pages/about'))
 const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 const ContactPage = lazy(() => import('../../pages/contact'))
+const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 
 export default withRouter(() => {
   return (
@@ -30,6 +31,18 @@ export default withRouter(() => {
         render={() => (
           <Transition>
             <ContactPage />
+          </Transition>
+        )}
+      />
+
+      {/* DISCLAIMER */}
+      <Route
+        key={'disclaimer'}
+        path={'/disclaimer'}
+        exact
+        render={() => (
+          <Transition>
+            <DisclaimerPage />
           </Transition>
         )}
       />

@@ -1,0 +1,1 @@
+This directory is useful for development purposes and is mounted into the PostGIS docker (assuming the command in the README file is used)
