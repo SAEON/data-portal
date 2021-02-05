@@ -20,13 +20,26 @@ export default ({ config, data, title, description }) => {
   const marklines = config['series-marklines']
   return (
     <ReactEcharts
-      style={
-        {
-          // height: '95%', //STEVEN:TO-DO: move to styling
-        }
-      }
+      style={{
+        height: '95%',
+      }}
       theme={theme}
       option={{
+        //https://echarts.apache.org/en/option.html#color
+        //apache echarts default color palette. Adopted sequentially and circularly from this list as the colors of series.
+        color: [
+          '#c23531',
+          '#2f4554',
+          '#61a0a8',
+          '#d48265',
+          '#91c7ae',
+          '#749f83',
+          '#ca8622',
+          '#bda29a',
+          '#6e7074',
+          '#546570',
+          '#c4ccd3',
+        ],
         xAxis: {
           type: 'category',
           data: data.map(entry => entry[namesField]),
@@ -48,16 +61,28 @@ export default ({ config, data, title, description }) => {
             markLine: !marklines
               ? undefined
               : {
-                lineStyle: {
-                  type: 'dotted',
-                  color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
-                  width: 2,
+                  lineStyle: {
+                    type: 'dotted',
+                    color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
+                    width: 2,
+                  },
+                  symbol: 'none',
+                  data: marklines.map(markline => {
+                    return { name: markline.name, yAxis: markline.value }
+                  }),
                 },
-                symbol: 'none',
-                data: marklines.map(markline => {
-                  return { name: markline.name, yAxis: markline.value }
-                }),
-              },
+          },
+        ],
+        dataZoom: [
+          {
+            show: true,
+            start: 0,
+            end: 100,
+            bottom: 0,
+            height: '4%',
+          },
+          {
+            type: 'inside',
           },
         ],
         title: {
