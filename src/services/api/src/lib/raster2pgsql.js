@@ -42,15 +42,11 @@ export default async ({ tableName, username, password, filePath, schema, mntRoot
     username,
   ])
 
-  // TODO confirm that this error handling works for b19a1490-4734-4381-a4c2-cde52b4e5502 rejects properly
-
-  await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const stream = raster2pgsql.stdout.pipe(psql.stdin)
 
-    stream.on('finish', resolve)
-    stream.on('error', error => {
-      reject(error)
-    })
+    stream.on('close', () => resolve)
+    stream.on('error', reject)
 
     raster2pgsql.on('exit', code => {
       if (code !== 0) {

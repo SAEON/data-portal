@@ -50,10 +50,11 @@ export default async (ctx, databook, { immutableResource, id }) => {
       if (INCLUDE_EXTENSIONS.includes(ext)) {
         const writePath = join(cacheDir, basename(filename))
         if (ext === '.shp') shpFilePath = writePath
-        await new Promise(resolve => {
+        await new Promise((resolve, reject) => {
           const dest = createWriteStream(writePath)
           entry.pipe(dest)
-          dest.on('finish', resolve)
+          dest.on('error', reject)
+          dest.on('close', resolve)
         })
       } else {
         entry.autodrain()
