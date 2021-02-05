@@ -45,7 +45,7 @@ export default async ({ tableName, username, password, filePath, schema, mntRoot
   return new Promise((resolve, reject) => {
     const stream = raster2pgsql.stdout.pipe(psql.stdin)
 
-    stream.on('close', () => resolve)
+    stream.on('close', resolve)
     stream.on('error', reject)
 
     raster2pgsql.on('exit', code => {

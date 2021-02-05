@@ -7,15 +7,13 @@ import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../../../config.js'
 import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import ogr2ogr from '../ogr2ogr/index.js'
-import createDataName from '../../_create-data-name.js'
 
 const INCLUDE_EXTENSIONS = ['.dbf', '.shp', '.shx', '.qpj', '.prj', '.cpg']
 
 const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
 
-export default async (ctx, databook, { immutableResource, id }) => {
+export default async (ctx, databook, tableName, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections
-  const tableName = createDataName(id)
   const { downloadURL } = immutableResource.resourceDownload
 
   console.log(databook._id, 'Creating table', tableName)
@@ -94,9 +92,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
         { _id: ObjectID(databookId) },
         {
           $set: {
-            [`tables.${tableName}`]: {
-              ready: true,
-            },
+            [`tables.${tableName}.ready`]: true,
           },
         }
       )
@@ -113,10 +109,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
       { _id: ObjectID(databook._id) },
       {
         $set: {
-          [`tables.${tableName}`]: {
-            ready: false,
-            error: error.message,
-          },
+          [`tables.${tableName}.error`]: error.message,
         },
       }
     )

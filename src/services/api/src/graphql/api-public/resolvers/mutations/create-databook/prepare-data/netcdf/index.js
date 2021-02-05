@@ -1,5 +1,4 @@
 import mongodb from 'mongodb'
-import createDataName from '../../_create-data-name.js'
 import { createWriteStream, mkdtemp as createUniqueDirectory } from 'fs'
 import { join, basename, sep } from 'path'
 import fetch from 'node-fetch'
@@ -9,9 +8,8 @@ import raster2pgsql from '../raster2pgsql/index.js'
 
 const DATA_DIRECTORY = `${CATALOGUE_API_DATA_DIRECTORY}${sep}`
 
-export default async (ctx, databook, { immutableResource, id }) => {
+export default async (ctx, databook, tableName, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections
-  const tableName = createDataName(id)
   console.log(databook._id, 'Creating table', tableName)
 
   // Create a new unique directory
@@ -61,9 +59,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
       { _id: ObjectID(databookId) },
       {
         $set: {
-          [`tables.${tableName}`]: {
-            ready: true,
-          },
+          [`tables.${tableName}.ready`]: true,
         },
       }
     )
@@ -79,10 +75,7 @@ export default async (ctx, databook, { immutableResource, id }) => {
       { _id: ObjectID(databook._id) },
       {
         $set: {
-          [`tables.${tableName}`]: {
-            ready: false,
-            error: error.message,
-          },
+          [`tables.${tableName}.error`]: error.message,
         },
       }
     )
