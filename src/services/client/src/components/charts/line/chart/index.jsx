@@ -26,9 +26,11 @@ export default ({ config, data, title, description }) => {
 
   return (
     <ReactEcharts
-      style={{
-        // height: '95%', //STEVEN:TO-DO: move to styling
-      }}
+      style={
+        {
+          // height: '95%', //STEVEN:TO-DO: move to styling
+        }
+      }
       theme={theme}
       option={{
         xAxis: {
@@ -36,24 +38,25 @@ export default ({ config, data, title, description }) => {
           data: data.map(entry => entry[namesField]),
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
         },
-        series: [{
-          data: data.map(entry => entry[valuesField]),
-          type: 'line',
-          // smooth: false
-          markLine: {
-            lineStyle: {
-              type: 'dotted',
-              color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
-              width: 2,
+        series: [
+          {
+            data: data.map(entry => entry[valuesField]),
+            type: 'line',
+            // smooth: false
+            markLine: {
+              lineStyle: {
+                type: 'dotted',
+                color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
+                width: 2,
+              },
+              symbol: 'none',
+              data: targetsArr.map(target => {
+                return { name: target.name, yAxis: target.value }
+              }),
             },
-            symbol: 'none',
-            data: targetsArr.map(target => {
-              return { name: target.name, yAxis: target.value }
-            }),
           },
-        },
         ],
         title: {
           text: title,
@@ -61,7 +64,6 @@ export default ({ config, data, title, description }) => {
           left: 'center',
         },
         tooltip: {},
-
       }}
     />
   )
