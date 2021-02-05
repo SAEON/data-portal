@@ -6,5 +6,5 @@ export default async (ctx, databook, tableName, filePath) => {
   const { decrypt } = ctx.crypto
   const password = decrypt(encryptedPassword)
 
-  return raster2pgsql({ tableName, username, password, filePath, schema })
+  await raster2pgsql({ tableName, username, password, filePath, schema })
 }

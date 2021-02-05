@@ -7,71 +7,66 @@ import { CATALOGUE_API_DATA_DIRECTORY } from '../../../../../../../config.js'
 const { ObjectID } = mongodb
 import raster2pgsql from '../raster2pgsql/index.js'
 
-const _dataDir = `${CATALOGUE_API_DATA_DIRECTORY}${sep}`
+const DATA_DIRECTORY = `${CATALOGUE_API_DATA_DIRECTORY}${sep}`
 
 export default async (ctx, databook, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections
   const tableName = createDataName(id)
-  const { downloadURL } = immutableResource.resourceDownload
-
   console.log(databook._id, 'Creating table', tableName)
 
+  // Create a new unique directory
   const dir = await new Promise((resolve, reject) =>
-    createUniqueDirectory(_dataDir, (error, directory) =>
+    createUniqueDirectory(DATA_DIRECTORY, (error, directory) =>
       error ? reject(error) : resolve(directory)
     )
   )
 
   try {
+    // Stream the download to the unique directory
+    const { downloadURL } = immutableResource.resourceDownload
     const writePath = join(dir, basename(downloadURL))
     const res = await fetch(downloadURL)
-    const dest = createWriteStream(writePath)
-    res.body.pipe(dest)
-
     await new Promise((resolve, reject) => {
+      const writeStream = createWriteStream(writePath)
+      res.body.pipe(writeStream)
       res.body.on('end', resolve)
       res.body.on('error', error => reject(error))
     })
 
+    // Process the NetCDF into PostGIS
+    console.info('Writing raster file to', writePath)
+    await raster2pgsql(ctx, databook, tableName, writePath)
+
     /**
-     * Process the NetCDF into PostGIS
+     * Register the ODP ID in the PostGIS odp_map table
+     * This is so that if a user renames the table, the
+     * association between the ODP and the data is kept
      */
-    await raster2pgsql(ctx, databook, tableName, writePath).then(async () => {
-      console.info('Raster file written to disk', writePath)
-
-      const { _id: databookId, _id: schema } = databook
-
-      /**
-       * Register the ODP ID in the PostGIS odp_map table
-       * This is so that if a user renames the table, the
-       * association between the ODP and the data is kept
-       */
-
-      const { query } = ctx.postgis
-      await query({
-        text: `
+    const { _id: databookId, _id: schema } = databook
+    const { query } = ctx.postgis
+    await query({
+      text: `
           insert into "${schema}".odp_map (odp_record_id, table_name)
           select
             '${id}' odp_id,
             '${tableName}' table_name;
         `,
-      })
-
-      /**
-       * Update the databook (Mongo doc) to
-       * indicate that this table is ready
-       */
-      await Databooks.findOneAndUpdate(
-        { _id: ObjectID(databookId) },
-        {
-          $set: {
-            [`tables.${tableName}`]: {
-              ready: true,
-            },
-          },
-        }
-      )
     })
+
+    /**
+     * Update the databook (Mongo doc) to
+     * indicate that this table is ready
+     */
+    await Databooks.findOneAndUpdate(
+      { _id: ObjectID(databookId) },
+      {
+        $set: {
+          [`tables.${tableName}`]: {
+            ready: true,
+          },
+        },
+      }
+    )
   } catch (error) {
     console.error(
       tableName,
