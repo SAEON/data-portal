@@ -1,6 +1,6 @@
 import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
-import echarts from 'echarts'
+import { registerMap } from 'echarts'
 import { nanoid } from 'nanoid'
 
 // eslint-disable-next-line
@@ -33,7 +33,7 @@ export default ({ config, data, title, description }) => {
   }
 
   // TODO, if echarts DOESN"T already have customeMap, register it
-  echarts.registerMap(nano, customMapJson)
+  registerMap(nano, customMapJson)
 
   const chartData = data.map((row, i) => {
     return { name: row[geoNamesField], value: row[geoValuesField] }
