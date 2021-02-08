@@ -35,7 +35,7 @@ export default ({ config, data, title, description }) => {
   // TODO, if echarts DOESN"T already have customeMap, register it
   registerMap(nano, customMapJson)
 
-  const chartData = data.map((row, i) => {
+  const chartData = data.map(row => {
     return { name: row[geoNamesField], value: row[geoValuesField] }
   })
   console.log('chartData', chartData)
