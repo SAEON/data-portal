@@ -1,4 +1,4 @@
-import { readdirSync, lstatSync } from 'fs'
+import { readdirSync, lstatSync, existsSync } from 'fs'
 import { execSync, exec as e } from 'child_process'
 import { fileURLToPath } from 'url'
 import { dirname, join, normalize } from 'path'
@@ -30,12 +30,13 @@ export const print = msg => console.log(`\n\n********** ${msg} **********\n\n`)
 
 export const apply = ({ PATH, script, args = undefined, debug = false, ignore = [] }) =>
   readdirSync(PATH)
-    .filter(name => !ignore.includes(name))
     .forEach(name => {
-      const P = normalize(join(PATH, name))
-      if (lstatSync(P).isFile()) return
+      const p = normalize(join(PATH, name))
+      if (ignore.includes(name)) return
+      if (lstatSync(p).isFile()) return
+      if (!existsSync(join(p, 'package.json'))) return
       print(`${name} dependencies`)
       NPM_NATIVE_SCRIPTS.includes(script)
-        ? exec(`npm --prefix ${P} ${script}`, debug)
-        : exec(`npm --prefix ${P} run "${`${script} ${(args || []).join(' ')}`.trim()}"`, debug)
+        ? exec(`npm --prefix ${p} ${script}`, debug)
+        : exec(`npm --prefix ${p} run "${`${script} ${(args || []).join(' ')}`.trim()}"`, debug)
     })
