@@ -19,7 +19,6 @@ var colorPalette = [
 
 export default {
   color: colorPalette,
-
   title: {
     textStyle: {
       fontWeight: 'normal',
@@ -31,15 +30,28 @@ export default {
     itemWidth: 15,
     color: ['#5ab1ef', '#e0ffff'],
   },
-
+  //https://echarts.apache.org/en/option.html#toolbox
   toolbox: {
     iconStyle: {
       normal: {
         borderColor: colorPalette[0],
       },
     },
+    feature: {
+      saveAsImage: {},
+      dataView: {
+        readOnly: true,
+        title: 'View data',
+        lang: ['Data View', 'Back', 'Refresh'],
+      },
+      magicType: {
+        type: ['line', 'bar'],
+        title: { line: 'View as line chart', bar: 'View as bar chart' },
+        // title: [',View as line chart', 'View as bar chart'],
+      },
+    },
   },
-
+  legend: { type: 'scroll', orient: 'vertical', left: 'right', top: 40 },
   tooltip: {
     backgroundColor: 'rgba(50,50,50,0.5)',
     axisPointer: {
@@ -55,12 +67,15 @@ export default {
       },
     },
   },
-
-  dataZoom: {
-    dataBackgroundColor: '#efefff',
-    fillerColor: 'rgba(182,162,222,0.2)',
-    handleColor: '#008acd',
-  },
+  dataZoom: [
+    {
+      handleColor: '#008acd',
+      height: '4%',
+    },
+    {
+      type: 'inside',
+    },
+  ],
   // series:{
   label: {
     color: '#37598B',
@@ -73,7 +88,8 @@ export default {
   categoryAxis: {
     axisLine: {
       lineStyle: {
-        color: '#008acd',
+        // color: '#008acd',
+        color: '#10305E',
       },
     },
     splitLine: {
@@ -86,7 +102,8 @@ export default {
   valueAxis: {
     axisLine: {
       lineStyle: {
-        color: '#008acd',
+        // color: '#008acd',
+        color: '#10305E',
       },
     },
     splitArea: {

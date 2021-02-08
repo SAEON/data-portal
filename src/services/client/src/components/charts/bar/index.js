@@ -1,5 +1,8 @@
 import Autocomplete from '../../../components/autocomplete'
-import { TextField } from '@material-ui/core'
+import DropdownSelect from '../../../components/dropdown-select'
+import { TextField, IconButton, Divider, Grid } from '@material-ui/core'
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 export default {
   type: 'BAR', // NOTE - this value must also be defined on the ChartType enum in the API
@@ -10,7 +13,7 @@ export default {
    * for filtering shoulg NOT be filtered out
    */
   saveFilter: (data, config) => {
-    const cols = [config['series-names'], config['series-values']]
+    const cols = [config['series-names'], ...config['series-values']]
     return data.map(row => {
       return Object.fromEntries(Object.entries(row).filter(([k]) => cols.includes(k)))
     })
@@ -35,82 +38,173 @@ export default {
         )
       },
     },
+    // {
+    //   id: 'series-values',
+    //   description: 'Select column containing series values',
+    //   Component: ({ data, value, setValue }) => {
+    //     return (
+    //       <Autocomplete
+    //         id="bar-chart-select-series-values-columns"
+    //         options={Object.keys(data[0])}
+    //         selectedOptions={value}
+    //         setOption={setValue}
+    //       />
+    //     )
+    //   },
+    // },
     {
       id: 'series-values',
-      description: 'Select column containing series values',
+      description: 'Select column(s) containing series values (y-axis)',
       Component: ({ data, value, setValue }) => {
         return (
-          <Autocomplete
-            id="bar-chart-select-series-values-columns"
-            options={Object.keys(data[0])}
-            selectedOptions={value}
-            setOption={setValue}
-          />
-        )
-      },
-    },
-    {
-      id: 'series-markline-1',
-      description: 'Name and quantify first line marking',
-      Component: ({ value, setValue }) => {
-        return (
           <>
-            <TextField
-              id="bar-chart-select-markline-1-name"
-              label="Name (e.g. Expected Value)"
-              autoFocus
-              size="small"
-              fullWidth
-              onChange={event => setValue({ name: event.target.value, value: value?.value })}
-              value={value?.name}
-            />
-            <TextField
-              id="bar-chart-select-target-1-value"
-              label="Value (Numeric)"
-              autoFocus
-              size="small"
-              onChange={event => {
-                setValue({ name: value?.name, value: event.target.value })
-              }}
-              value={value?.value}
-              type="number"
+            <DropdownSelect
+              id="chart-select-series-names-columns"
+              options={Object.keys(data[0])}
+              selectedOptions={value || []}
+              setOption={setValue}
             />
           </>
         )
       },
     },
     {
-      id: 'series-markline-2',
-      description: 'Name and quantify second line marking',
+      id: 'series-marklines',
+      description: 'Marklines',
       Component: ({ value, setValue }) => {
         return (
           <>
-            <TextField
-              id="bar-chart-select-target-2-name"
-              label="Name (e.g. Expected Value)"
-              autoFocus
-              size="small"
-              fullWidth
-              onChange={event => {
-                setValue({ name: event.target.value, value: value?.value })
-              }}
-              value={value?.name}
-            />
-            <TextField
-              id="bar-chart-select-target-2-value"
-              label="Value (Numeric)"
-              autoFocus
-              size="small"
-              onChange={event => {
-                setValue({ name: value?.name, value: event.target.value })
-              }}
-              value={value?.value}
-              type="number"
-            />
+            {value?.map((markline, i) => {
+              return (
+                <Grid key={i} container justify="space-between">
+                  <Grid item xs={10} style={{ marginBottom: '30px' }}>
+                    <TextField
+                      id={`chart-select-markline-${i}-name`}
+                      label="Name (e.g. Expected Value)"
+                      autoFocus
+                      size="small"
+                      fullWidth
+                      onChange={event => {
+                        const newName = event.target.value
+                        let marklineCopy = JSON.parse(JSON.stringify(markline))
+                        marklineCopy.name = newName
+                        let valueCopy = value
+                        valueCopy[i] = marklineCopy
+                        setValue(valueCopy)
+                      }}
+                      value={markline?.name || ''}
+                    />
+                    <TextField
+                      id={`chart-select-markline-${i}-value`}
+                      label="Value (Numeric)"
+                      autoFocus
+                      size="small"
+                      fullWidth
+                      onChange={event => {
+                        const newValue = event.target.value
+                        let marklineCopy = JSON.parse(JSON.stringify(markline))
+                        marklineCopy.value = newValue
+                        let valueCopy = value
+                        valueCopy[i] = marklineCopy
+                        setValue(valueCopy)
+                      }}
+                      value={markline?.value || ''}
+                      type="number"
+                    />
+                  </Grid>
+                  <Grid item xs={2} style={{ margin: 'auto', textAlign: 'end' }}>
+                    <IconButton
+                      onClick={() => {
+                        var valueCopy = value
+                        valueCopy.splice(i, 1)
+                        setValue(valueCopy)
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                  <Grid item key={i} xs={12}>
+                    <Divider light variant="middle" />
+                  </Grid>
+                </Grid>
+              )
+            })}
+            <Grid item xs={12}>
+              <IconButton
+                onClick={() => {
+                  if (value === undefined) setValue([{ name: undefined, value: undefined }])
+                  else setValue([...value, { name: undefined, value: undefined }])
+                }}
+              >
+                <AddCircleOutlineOutlinedIcon />
+              </IconButton>
+            </Grid>
           </>
         )
       },
     },
+    // {
+    //   id: 'series-markline-1',
+    //   description: 'Name and quantify first line marking',
+    //   Component: ({ value, setValue }) => {
+    //     return (
+    //       <>
+    //         <TextField
+    //           id="bar-chart-select-markline-1-name"
+    //           label="Name (e.g. Expected Value)"
+    //           autoFocus
+    //           size="small"
+    //           fullWidth
+    //           onChange={event => setValue({ name: event.target.value, value: value?.value })}
+    //           value={value?.name}
+    //         />
+    //         <TextField
+    //           id="bar-chart-select-target-1-value"
+    //           label="Value (Numeric)"
+    //           autoFocus
+    //           size="small"
+    //           onChange={event => {
+    //             setValue({ name: value?.name, value: event.target.value })
+    //           }}
+    //           value={value?.value}
+    //           type="number"
+    //         />
+    //       </>
+    //     )
+    //   },
+    // },
+    // {
+    //   id: 'series-markline-2',
+    //   description: 'Name and quantify second line marking',
+    //   Component: ({ value, setValue }) => {
+    //     return (
+    //       <>
+    //         <TextField
+    //           id="bar-chart-select-target-2-name"
+    //           label="Name (e.g. Expected Value)"
+    //           autoFocus
+    //           size="small"
+    //           fullWidth
+    //           onChange={event => {
+    //             setValue({ name: event.target.value, value: value?.value })
+    //           }}
+    //           value={value?.name}
+    //         />
+    //         <TextField
+    //           id="bar-chart-select-target-2-value"
+    //           label="Value (Numeric)"
+    //           autoFocus
+    //           size="small"
+    //           onChange={event => {
+    //             setValue({ name: value?.name, value: event.target.value })
+    //           }}
+    //           value={value?.value}
+    //           type="number"
+    //         />
+    //       </>
+    //     )
+    //   },
+    // },
   ],
 
   /**

@@ -35,6 +35,9 @@ export default ({ config, data, title, description }) => {
     <ReactEcharts
       style={{
         height: '95%',
+        width: '100%',
+        paddingTop: '10px', //STEVEN:TO-DO: move to generic parent of all charts OR find a Echarts prop that allows for this and put it in theme
+        paddingRight: '10px',
       }}
       theme={theme}
       option={{
@@ -51,6 +54,7 @@ export default ({ config, data, title, description }) => {
         series: [
           ...valuesFields?.map((valueField, i) => {
             return {
+              name: valueField, //data.map(entry => entry[namesField]),
               data: data.map(entry => entry[valueField]),
               type: 'line',
               // smooth: false,
@@ -74,24 +78,16 @@ export default ({ config, data, title, description }) => {
                 },
           },
         ],
-        dataZoom: [
-          {
-            show: true,
-            start: 0,
-            end: 100,
-            bottom: 0,
-            height: '4%',
-          },
-          {
-            type: 'inside',
-          },
-        ],
+        legend: {},
+        dataZoom: theme.dataZoom,
         title: {
           text: title,
           subtext: description,
           left: 'center',
         },
         tooltip: {},
+        // https://echarts.apache.org/en/option.html#toolbox
+        toolbox: {},
       }}
     />
   )
