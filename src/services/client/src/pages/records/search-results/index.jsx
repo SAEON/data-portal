@@ -114,7 +114,7 @@ export default ({ disableSidebar = false }) => {
         size: pageSize,
         after: cursors.end,
         before: cursors.start,
-        summaryLimit: 50,
+        summaryLimit: 75,
         referrer,
       }}
     >

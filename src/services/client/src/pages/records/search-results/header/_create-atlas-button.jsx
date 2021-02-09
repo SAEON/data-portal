@@ -35,16 +35,17 @@ const idHasMap = (id, records) => {
   }
 }
 
-const isAtlasAvailable = (selectedIds, atlasLayersCount, records) =>
-  records && atlasLayersCount
-    ? selectedIds?.length
-      ? selectedIds.filter(id => idHasMap(id, records)).length
-        ? true
-        : false
-      : atlasLayersCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS
-      ? true
-      : false
-    : false
+const isAtlasAvailable = (selectedIds, selectAll, atlasLayersCount, records) => {
+  if (records && atlasLayersCount && (selectedIds?.length || selectAll)) {
+    if (selectedIds?.length) {
+      return selectedIds.filter(id => idHasMap(id, records)).length ? true : false
+    } else {
+      return atlasLayersCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS ? true : false
+    }
+  }
+
+  return false
+}
 
 const removeSelectedIds = obj =>
   Object.fromEntries(
@@ -55,7 +56,7 @@ const removeSelectedIds = obj =>
 
 export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
-  const { selectedIds } = global
+  const { selectedIds, selectAll } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
   const history = useHistory()
@@ -78,7 +79,7 @@ export default ({ catalogue }) => {
     <Fade key="not-loading" in={!savedSearchLoading}>
       <Tooltip
         title={
-          isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)
+          isAtlasAvailable(selectedIds, selectAll, atlasLayersCount, catalogue?.records)
             ? `Configure atlas from ${
                 selectedIds?.filter(id => cacheOfMappableItems[id]).length || atlasLayersCount
               } mappable search results`

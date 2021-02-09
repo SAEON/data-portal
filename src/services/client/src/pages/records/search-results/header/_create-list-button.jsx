@@ -6,8 +6,9 @@ import StyledBadge from './components/styled-badge'
 
 export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
-  const { selectedIds } = global
+  const { selectedIds, selectAll } = global
   const resultCount = catalogue?.records.totalCount
+  const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
 
   return (
     <ShareOrEmbed
@@ -22,16 +23,16 @@ export default ({ catalogue }) => {
       icon={<ListIcon />}
       iconProps={{
         color: 'default',
-        disabled: !(selectedIds?.length || resultCount),
+        disabled: !applicableRecordsCount,
         style: { marginRight: 10 },
       }}
       tooltipProps={{
-        title: `Share list of ${selectedIds?.length || resultCount} selected datasets`,
+        title: `Share list of ${applicableRecordsCount} selected datasets`,
         placement: 'bottom',
       }}
       badgeProps={{
-        color: selectedIds?.length || resultCount ? 'primary' : 'default',
-        badgeContent: selectedIds?.length || resultCount || 0,
+        color: applicableRecordsCount ? 'primary' : 'default',
+        badgeContent: applicableRecordsCount,
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
         invisible: false,
         _component: StyledBadge,

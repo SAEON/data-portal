@@ -3,7 +3,7 @@ import { useTheme } from '@material-ui/core/styles'
 import { isMobile } from 'react-device-detect'
 import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
-import ResetSelectionButton from './_reset-selection-button'
+import ToggleSelectionButton from './_toggle-select-button'
 import CreateDatabookButton from './_create-databook-button'
 import CreateAtlasButton from './_create-atlas-button'
 import CreateListButton from './_create-list-button'
@@ -40,7 +40,7 @@ export default ({
           {!isMobile && <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />}
 
           {/* RESET SELECTION */}
-          <ResetSelectionButton style={{ marginLeft: 'auto' }} />
+          <ToggleSelectionButton style={{ marginLeft: 'auto' }} />
 
           {/* CREATE DATABOOK */}
           {!isMobile && <CreateDatabookButton catalogue={catalogue} />}
