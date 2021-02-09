@@ -152,6 +152,22 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
     "field": "immutableResource._fileFormat.raw",
     "sortBy": "doc_count",
     "sortOrder": "desc"
-  }
+  },
+  {
+    "title": "Institution",
+    "field": "institution.raw",
+    "sortOrder": "asc"
+  },
+  {
+    "title": "Collection",
+    "field": "collection.raw",
+    "sortOrder": "asc"
+  },
+  {
+    "title": "Projects",
+    "field": "projects.raw",
+    "sortOrder": "asc",
+    "boost": 50
+  }  
 ]
 ```

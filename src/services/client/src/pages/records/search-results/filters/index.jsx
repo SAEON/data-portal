@@ -33,7 +33,7 @@ export default ({ catalogue }) => {
 
         {/* CONFIGURABLE FILTERS */}
         {CATALOGUE_CLIENT_FILTER_CONFIG.map(
-          ({ title, field, sortBy, sortOrder, filter = {} }, i) => {
+          ({ title, field, boost, sortBy, sortOrder, filter = {} }, i) => {
             const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
             const { values: allowedValues = undefined } = filter
             const aggregationName = allowedValues
@@ -58,6 +58,7 @@ export default ({ catalogue }) => {
                   sortOrder={sortOrder}
                   field={field}
                   title={title}
+                  boost={boost}
                   results={items}
                 />
               </Grid>

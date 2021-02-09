@@ -4,9 +4,13 @@
 
 src/services/api/src/index.js
 src/services/api/src/config.js
+
 src/services/api/src/graphql/api-public/resolvers/types/_query.js
 src/services/api/src/graphql/api-public/resolvers/types/_mutation.js
-src/services/api/src/graphql/api-public/schema/datacite.graphql/index.js
+src/services/api/src/graphql/api-public/resolvers/types/_mutation.js
+src/services/api/src/graphql/api-public/resolvers/types/catalogue/index.js
+
 src/services/api/src/graphql/api-internal/resolvers/types/_query.js
 src/services/api/src/graphql/api-internal/resolvers/types/_mutation.js
+
 src/tools/source-analysis/src/index.js

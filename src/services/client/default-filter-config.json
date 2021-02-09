@@ -38,6 +38,7 @@
   {
     "title": "Projects",
     "field": "projects.raw",
-    "sortOrder": "asc"
+    "sortOrder": "asc",
+    "boost": 50
   }
 ]

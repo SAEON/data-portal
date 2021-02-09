@@ -3,7 +3,6 @@ import {
   Typography,
   Grid,
   Checkbox,
-  FormControlLabel,
   Button,
   AppBar,
   Toolbar,
@@ -21,7 +20,15 @@ import clsx from 'clsx'
 
 const LIST_SIZE = 3
 
-export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', style = {} }) => {
+export default ({
+  results,
+  title,
+  field,
+  boost,
+  sortBy = 'key',
+  sortOrder = 'asc',
+  style = {},
+}) => {
   const [showAll, toggleShowAll] = useState(false)
   const { global, setGlobal } = useContext(globalContext)
   const { terms } = global
@@ -117,13 +124,13 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', styl
                             })
                           } else {
                             setGlobal({
-                              terms: [...new Set([...terms, { field, value: key }])],
+                              terms: [...new Set([...terms, { field, boost, value: key }])],
                             })
                           }
                         }}
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
-                      <Tooltip title={key}>
+                      <Tooltip title={key} placement="top">
                         <Typography
                           style={{
                             overflow: 'hidden',
@@ -164,13 +171,13 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', styl
                             })
                           } else {
                             setGlobal({
-                              terms: [...new Set([...terms, { field, value: key }])],
+                              terms: [...new Set([...terms, { field, boost, value: key }])],
                             })
                           }
                         }}
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
-                      <Tooltip title={key}>
+                      <Tooltip title={key} placement="top">
                         <Typography
                           style={{
                             overflow: 'hidden',
