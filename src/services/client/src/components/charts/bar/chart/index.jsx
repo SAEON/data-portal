@@ -18,6 +18,20 @@ export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
   const valuesFields = config['series-values']
   const marklines = config['series-marklines']
+  const quickOptions = config['series-quick-options']
+  console.log('quickOptions', quickOptions)
+  // const { isVertical } = quickOptions
+  // let isVertical = quickOptions[0]
+  let isVertical = true
+  const categoryAxis = {
+    type: 'category',
+    data: data.map(entry => entry[namesField]),
+    name: namesField,
+    axisLabel: isVertical ? { rotate: 50 } : { rotate: 0 },
+  }
+  const valueAxis = {
+    type: 'value',
+  }
 
   return (
     <ReactEcharts
@@ -27,10 +41,9 @@ export default ({ config, data, title, description }) => {
         paddingRight: '10px',
       }}
       theme={theme}
-      option
       option={{
         grid: {
-          bottom: 100, //giving wiggle room for larger x axis labels
+          bottom: 50, //giving wiggle room for larger x axis labels
         },
 
         title: {
@@ -44,65 +57,16 @@ export default ({ config, data, title, description }) => {
         },
         toolbox: {},
         legend: {},
-        xAxis: {
-          show: true,
-          type: 'category',
-          data: data.map(entry => entry[namesField]),
-          name: namesField,
-          axisTick: {
-            show: false,
-          },
-          // axisLabel: { show: true }
-          axisLabel: {
-            show: true,
-            rotate: 45,
-            // rotate: 50,
-            // rotate: 90,
-            align: 'right',
-            verticalAlign: 'top',
-            position: 'insideBottom',
-            distance: -10,
-            // formatter: '{b}',
-            fontSize: 11,
-          },
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)',
-            },
-          },
-        },
-        yAxis: {
-          type: 'value',
-        },
+        xAxis: isVertical ? categoryAxis : valueAxis,
+        yAxis: isVertical ? valueAxis : categoryAxis,
 
-        // dataZoom,
         dataZoom: theme.dataZoom, //STEVEN: haven't found a way to apply themed dataZoom another way
         series: [
           ...valuesFields?.map((valueField, i) => {
-            console.log('i valueField', i, valueField)
-            console.log('data', data)
-            console.log(
-              'i data.map(entry => entry[valueField]),',
-              i,
-              data.map(entry => entry[valueField])
-            )
             return {
               name: valueField, //data.map(entry => entry[namesField]),
               data: data.map(entry => entry[valueField]),
               type: 'bar',
-              // label: {
-              //   show: true,
-              //   // rotate: 50,
-              //   rotate: 90,
-              //   align: 'right',
-              //   verticalAlign: 'top',
-              //   position: 'insideBottom',
-              //   distance: -10,
-              //   formatter: '{b}',
-              //   fontSize: 11,
-              // },
               emphasis: {
                 itemStyle: {
                   shadowBlur: 10,

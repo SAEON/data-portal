@@ -1,6 +1,6 @@
 import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
-import echarts from 'echarts'
+import { registerMap } from 'echarts'
 import { nanoid } from 'nanoid'
 
 // eslint-disable-next-line
@@ -32,13 +32,18 @@ export default ({ config, data, title, description }) => {
     return <div>Cannot render map. Are you sure it&apos;s configured properly?</div>
   }
 
-  // TODO, if echarts DOESN"T already have customeMap, register it
-  echarts.registerMap(nano, customMapJson)
+  // TODO, if echarts DOESN"T already have customMap, register it
+  registerMap(nano, customMapJson)
 
-  const chartData = data.map((row, i) => {
+  let dataMin = 0
+  let dataMax = 0
+
+  const chartData = data.map(row => {
+    if (row[geoValuesField] < dataMin) dataMin = row[geoValuesField]
+    if (row[geoValuesField] > dataMax) dataMax = row[geoValuesField]
     return { name: row[geoNamesField], value: row[geoValuesField] }
   })
-  console.log('chartData', chartData)
+  // console.log('map chartData', chartData)
   return (
     <ReactEcharts
       style={{ height: '95%', width: '95%' }}
@@ -55,30 +60,44 @@ export default ({ config, data, title, description }) => {
           formatter: '{b} : {c}',
         },
         visualMap: {
-          left: 'right',
-          // inRange: {},
-          text: ['High', 'Low'],
-          // calculable: true
-        },
-        series: [
-          {
-            type: 'map',
-            mapType: nano,
-            roam: true, //allows dragging of map
-            label: {
-              normal: {
-                show: false,
-              },
-            },
-            emphasis: {
-              label: {
-                show: true,
-              },
-            },
-            data: chartData,
+          min: dataMin,
+          max: dataMax,
+          inRange: {
+            color: [
+              '#313695',
+              '#4575b4',
+              '#74add1',
+              '#abd9e9',
+              '#e0f3f8',
+              '#ffffbf',
+              '#fee090',
+              '#fdae61',
+              '#f46d43',
+              '#d73027',
+              '#a50026',
+            ],
           },
+        },
+      },
+        series: [
+    {
+      type: 'map',
+      mapType: nano,
+      roam: true, //allows dragging of map
+      label: {
+        normal: {
+          show: false,
+        },
+      },
+      emphasis: {
+        label: {
+          show: true,
+        },
+      },
+      data: chartData,
+    },
         ],
       }}
-    />
+/>
   )
 }

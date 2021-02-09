@@ -64,12 +64,13 @@ export default ({ dashboard }) => {
               }
 
               if (error) {
+                console.error(error)
                 throw error
               }
 
               return (
-                <QuickForm error={false} selectedOption={''}>
-                  {(update, { error, selectedOption }) => {
+                <QuickForm error={false} selectedOption={''} selectedId={''}>
+                  {(update, { error, selectedOption, selectedId }) => {
                     return (
                       <>
                         <DialogContent>
@@ -79,8 +80,10 @@ export default ({ dashboard }) => {
                           <Autocomplete
                             style={{ margin: '16px 0' }}
                             id={'add-charts-to-dashboard-list'}
-                            options={[...data.databook.charts?.map(({ id }) => id)]}
-                            setOption={selectedOption => update({ selectedOption })}
+                            options={[...data.databook.charts?.map(({ id, title }) => title || id)]}
+                            setOption={(selectedOption, i) => {
+                              update({ selectedOption, selectedId: data.databook.charts[i].id })
+                            }}
                             selectedOptions={selectedOption}
                           />
                         </DialogContent>
@@ -120,7 +123,7 @@ export default ({ dashboard }) => {
                                             }
                                           `,
                                           variables: {
-                                            chartId: selectedOption,
+                                            chartId: selectedId,
                                             dashboardId,
                                           },
                                           update: (cache, { data }) => {

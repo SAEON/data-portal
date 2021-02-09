@@ -1,7 +1,6 @@
 import provisionSchema from './provision-schema/index.js'
 import loadShapefileArchive from './shapefile-archive/index.js'
 import loadNetCdfFile from './netcdf/index.js'
-import createDataName from '../_create-data-name.js'
 import mongodb from 'mongodb'
 const { ObjectID } = mongodb
 
@@ -40,9 +39,11 @@ export default async (ctx, { records, databookId }) => {
   for (const record of records) {
     const { _source } = record
     const { id } = _source
-    const tableName = createDataName(id)
     const { tables } = databook
-    const dataType = Object.entries(tables).find(([, { recordId }]) => recordId === id)[1].type
+
+    const table = Object.entries(tables).find(([, { recordId }]) => recordId === id)
+    const tableName = table[0]
+    const dataType = table[1].type
 
     /**
      * Depending on the type of data that immutableResource is,
@@ -53,12 +54,12 @@ export default async (ctx, { records, databookId }) => {
       switch (dataType) {
         case 'netcdf':
           console.log(databook._id, 'Importing NetCDF file to PostGIS')
-          await loadNetCdfFile(ctx, databook, _source)
+          await loadNetCdfFile(ctx, databook, tableName, _source)
           break
 
         case 'shapefile-archive':
           console.log(databook._id, 'Importing shapefile archive to PostGIS')
-          await loadShapefileArchive(ctx, databook, _source)
+          await loadShapefileArchive(ctx, databook, tableName, _source)
           break
 
         case 'asc-archive':

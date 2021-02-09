@@ -4,6 +4,7 @@ import theme from '../../../../lib/echarts-theme'
 /**TO DO:
  * Shift chart rightward to avoid labels being cut off
  * Have icons have a transparent background square so that hovering over icon is easier
+ * medium - large datasets cause poor performance issues rendering many icons. To look into ways of improving performance
  */
 export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
@@ -37,15 +38,16 @@ export default ({ config, data, title, description }) => {
           // axisLine: { show: false },
           axisLabel: {
             margin: 10,
+            rotate: 0,
           },
         },
-
         series: [
           {
             // current data
             type: 'pictorialBar',
             symbol: symbolFilled,
             symbolRepeat: 'fixed',
+            // symbolRepeat: true,
             symbolClip: true,
             data: data.map(entry => entry[valuesField]),
             //       markLine: {
@@ -79,9 +81,7 @@ export default ({ config, data, title, description }) => {
             label: {
               show: true,
               formatter: function (params) {
-                console.log('param', params)
-                console.log('total', total)
-                return ((params.value / total) * 100).toFixed(1) + ' %' //TO-DO: use something other than markline to indicate total
+                return ((params.value / total) * 100).toFixed(1) + ' %'
               },
               position: 'right',
               offset: [10, 0],

@@ -3,6 +3,8 @@ import ChartIcon from 'mdi-react/ChartBubbleIcon'
 import { Typography, Grid } from '@material-ui/core'
 import useStyles from './style'
 import clsx from 'clsx'
+import WithGqlQuery from '../../../../../../../hooks/with-gql-query'
+import { gql } from '@apollo/client'
 
 const itemStyle = {
   display: 'flex',
@@ -18,7 +20,30 @@ export default ({ chart: id, dashboard }) => {
           <ChartIcon />
         </Grid>
         <Grid item style={itemStyle}>
-          <Typography variant="overline">{id}</Typography>
+          <WithGqlQuery
+            QUERY={gql`
+              query($ids: [ID!]) {
+                charts(ids: $ids) {
+                  id
+                  title
+                }
+              }
+            `}
+            variables={{ ids: [id] }}
+          >
+            {({ error, loading, data }) => {
+              if (loading) {
+                return <Typography variant="overline">{id}</Typography>
+              }
+
+              if (error) {
+                console.error(error)
+                throw error
+              }
+              const chartTitle = data?.charts[0]?.title
+              return <Typography variant="overline">{chartTitle || id}</Typography>
+            }}
+          </WithGqlQuery>
         </Grid>
         <Grid item style={itemStyle}>
           <RemoveChartButton chartId={id} dashboard={dashboard} />

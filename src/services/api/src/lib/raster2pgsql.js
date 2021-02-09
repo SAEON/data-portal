@@ -43,18 +43,21 @@ export default async ({ tableName, username, password, filePath, schema, mntRoot
   ])
 
   return new Promise((resolve, reject) => {
+    const stream = raster2pgsql.stdout.pipe(psql.stdin)
+
+    stream.on('close', resolve)
+    stream.on('error', reject)
+
     raster2pgsql.on('exit', code => {
       if (code !== 0) {
-        reject(new Error(`raster2pgsql error loading table ${schema}.${tableName}`))
+        stream.emit('error', new Error(`raster2pgsql error loading table ${schema}.${tableName}`))
       }
     })
 
     psql.on('exit', code => {
       if (code !== 0) {
-        reject(new Error(`psql error ${schema}.${tableName}`))
+        stream.emit('error', new Error(`psql error ${schema}.${tableName}`))
       }
     })
-
-    raster2pgsql.stdout.pipe(psql.stdin).on('finish', resolve).on('error', reject)
   })
 }

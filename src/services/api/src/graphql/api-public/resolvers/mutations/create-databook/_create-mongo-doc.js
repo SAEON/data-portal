@@ -1,8 +1,9 @@
 import mongodb from 'mongodb'
 const { ObjectID } = mongodb
 import hash from 'object-hash'
-import createDataName from './_create-data-name.js'
 import { nanoid } from 'nanoid'
+
+const createDataName = (id, type = 'odp') => `${type.replace('-archive', '')}-${id}`
 
 export default async (records, ctx, createdBy) => {
   const { Databooks } = await ctx.mongo.collections
@@ -36,7 +37,7 @@ export default async (records, ctx, createdBy) => {
           ? 'asc-archive'
           : 'unknown'
 
-        return [[createDataName(id)], { ready: false, recordId: id, type }]
+        return [[createDataName(id, type)], { ready: false, recordId: id, type }]
       })
     ),
     createdBy,

@@ -72,8 +72,8 @@ export default ({ dashboard }) => {
               }
 
               return (
-                <QuickForm error={false} selectedOption={''}>
-                  {(update, { error, selectedOption }) => {
+                <QuickForm error={false} selectedOption={''} selectedId={''}>
+                  {(update, { error, selectedOption, selectedId }) => {
                     return (
                       <>
                         <DialogContent>
@@ -83,8 +83,11 @@ export default ({ dashboard }) => {
                           <Autocomplete
                             style={{ margin: '16px 0' }}
                             id={'add-filters-to-dashboard-list'}
-                            options={[...data.databook.filters.map(({ id }) => id)]}
+                            options={[...data.databook.filters.map(({ id, name }) => name || id)]}
                             setOption={selectedOption => update({ selectedOption })}
+                            setOption={(selectedOption, i) => {
+                              update({ selectedOption, selectedId: data.databook.filters[i].id })
+                            }}
                             selectedOptions={selectedOption}
                           />
                         </DialogContent>
@@ -128,7 +131,7 @@ export default ({ dashboard }) => {
                                             }
                                           `,
                                           variables: {
-                                            filterId: selectedOption,
+                                            filterId: selectedId,
                                             dashboardId,
                                           },
                                           update: (cache, { data }) => {

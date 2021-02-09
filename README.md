@@ -88,7 +88,7 @@ docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_US
 
 # Start a PostGIS server (from the /src/services/postgis directory)
 docker build -t postgis .
-docker run --name postgis -v $(pwd)/dev-volume:/host-data --net=catalogue -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d postgis
+docker run --name postgis -v /var/lib/catalogue-api:/var/lib/catalogue-api --net=catalogue -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d postgis
 
 # Optionally start the pgAdmin IDE (on localhost:5001)
 # NOTE the postgis container host that you want to connect to is just "postgis", since you are using the Docker network
@@ -125,10 +125,10 @@ Then [configure the API for first use](#api-configuration)
 - mongodb://localhost:27017
 
 # API configuration
-The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API.
+The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API. **NOTE: There are actually TWO GraphQL APIs - one is for internal use and should NOT be exposed outside a private network. Use the internal HTTP service to configure the API**.
 
 1. Authenticate yourself by navigating to `<api-address>/login`
-2. Navigate to GraphQL Playground (`/graphql`) where you can interact with the API
+2. Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can interact with the API (or whatever port you have configured for deployment)
 
 ```graphql
 # Configure default PostGIS tables

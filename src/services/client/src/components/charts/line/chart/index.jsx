@@ -41,12 +41,16 @@ export default ({ config, data, title, description }) => {
       }}
       theme={theme}
       option={{
+        grid: {
+          bottom: 50, //giving wiggle room for larger x axis labels
+        },
         //https://echarts.apache.org/en/option.html#color
         //apache echarts default color palette. Adopted sequentially and circularly from this list as the colors of series.
         color: seriesPalette,
         xAxis: {
-          type: 'category',
+          // type: 'category',
           data: data.map(entry => entry[namesField]),
+          name: namesField,
         },
         yAxis: {
           type: 'value',

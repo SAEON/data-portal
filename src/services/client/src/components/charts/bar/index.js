@@ -1,6 +1,16 @@
+import { useState } from 'react'
 import Autocomplete from '../../../components/autocomplete'
 import DropdownSelect from '../../../components/dropdown-select'
-import { TextField, IconButton, Divider, Grid } from '@material-ui/core'
+import {
+  TextField,
+  IconButton,
+  Divider,
+  Grid,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import DeleteIcon from '@material-ui/icons/Delete'
 
@@ -24,6 +34,46 @@ export default {
    * The values are passed to your chart in the {config} param
    */
   config: [
+    {
+      id: 'series-quick-options',
+      description: 'Quick Options',
+      Component: ({ data, value, setValue }) => {
+        return ''
+        // <FormControl component="fieldset">
+        //   <FormGroup>
+        //     <FormControlLabel
+        //       control={
+        //         <Checkbox
+        //           // checked={typeof value === 'undefined' ? false : value[0]}
+        //           // value
+        //           onChange={() => {
+        //             // if (typeof value === 'undefined') {
+        //             //   setValue({ isVertical: true })
+        //             //   console.log('if final value', value)
+        //             // } else {
+        //             //   console.log('else initial value', value)
+        //             //   let valueCopy = JSON.parse(JSON.stringify(value))
+        //             //   console.log('initial valueCopy', valueCopy)
+        //             //   valueCopy.isVertical = isVertical
+        //             //   setValue(valueCopy)
+        //             //   console.log('value final', value)
+        //             // }
+        //             if (typeof value === 'undefined') {
+        //               setValue([true]) //will need to change once more quick options are added
+        //             } else {
+        //               // setValue([!value[0]])
+        //             }
+        //             console.log('value', value)
+        //           }}
+        //           color="primary"
+        //         />
+        //       }
+        //       label="Vertically Oriented"
+        //     />
+        //   </FormGroup>
+        // </FormControl>
+      },
+    },
     {
       id: 'series-names',
       description: 'Select column containing series names',

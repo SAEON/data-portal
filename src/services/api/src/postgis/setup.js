@@ -20,9 +20,14 @@ export default async () => {
       create extension if not exists pgcrypto;`,
   })
 
-  // TODO - this seems to fail
+  // TODO - this needs to be done manually on server startup. Look into this
+
   // await query({
-  //   text: `alter system set postgis.gdal_enabled_drivers to 'ENABLE_ALL';`,
+  //   text: `set postgis.gdal_enabled_drivers to 'ENABLE_ALL';`,
+  // })
+
+  // await query({
+  //   text: `alter system set postgis.enable_outdb_rasters='on';`,
   // })
 
   // await query({

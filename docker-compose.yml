@@ -80,6 +80,7 @@ services:
       - $POSTGIS_CONTAINER_HOST_PORT:$POSTGIS_PORT
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
+      - /var/lib/catalogue-api:/var/lib/catalogue-api
     networks:
       - $CATALOGUE_DOCKER_NETWORK      
 

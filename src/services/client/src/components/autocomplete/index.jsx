@@ -22,7 +22,10 @@ export default ({
       id={id}
       value={selectedOptions?.length ? selectedOptions : multiple ? [] : null}
       options={options}
-      onChange={(ev, newVal) => setOption(newVal)}
+      onChange={(ev, newVal) => {
+        const optionIndex = ev.target.dataset.optionIndex
+        setOption(newVal, optionIndex)
+      }}
       getOptionSelected={getOptionSelected}
       // Internal
       fullWidth
