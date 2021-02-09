@@ -6,9 +6,10 @@ const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 
 export default ({ title, children, ...props }) => {
   const theme = useTheme()
+  const { style, ...otherProps } = props
 
   return (
-    <Grid style={{ margin: theme.spacing(1) }} item {...props}>
+    <Grid style={Object.assign({}, { margin: theme.spacing(1) }, style)} item {...otherProps}>
       <Card
         style={{ backgroundColor: CARD_BG_COLOUR, margin: isMobile ? '0 16px' : '' }}
         variant="outlined"

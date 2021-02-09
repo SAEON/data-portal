@@ -26,7 +26,7 @@
     "sortOrder": "desc"
   },
   {
-    "title": "Institution",
+    "title": "Data provider",
     "field": "institution.raw",
     "sortOrder": "asc"
   },
@@ -34,11 +34,5 @@
     "title": "Collection",
     "field": "collection.raw",
     "sortOrder": "asc"
-  },
-  {
-    "title": "Projects",
-    "field": "projects.raw",
-    "sortOrder": "asc",
-    "boost": 50
   }
 ]

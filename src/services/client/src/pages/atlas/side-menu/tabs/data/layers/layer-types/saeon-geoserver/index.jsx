@@ -147,8 +147,7 @@ export default ({
                 {/* Data Download */}
                 <DataDownloadButton
                   style={{ alignSelf: 'center', marginRight: 16 }}
-                  size="small"
-                  fontSize="small"
+                  IconButtonSize="small"
                   tooltipPlacement="top"
                   immutableResource={immutableResource}
                 />
