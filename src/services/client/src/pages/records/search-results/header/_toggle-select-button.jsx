@@ -12,9 +12,9 @@ export default ({ catalogue }) => {
 
   return (
     <Tooltip title={selectAll || isIndeterminate ? `Unselect all records` : 'Select all records'}>
-      <span>
+      <span style={{ marginRight: 8 }}>
         <StyledBadge
-          color={applicableRecordsCount ? 'secondary' : 'default'}
+          color={applicableRecordsCount ? 'primary' : 'default'}
           badgeContent={applicableRecordsCount}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           invisible={false}
@@ -34,7 +34,7 @@ export default ({ catalogue }) => {
                 setGlobal({ selectAll: false })
               }
             }}
-            color="primary"
+            color="default"
             indeterminate={isIndeterminate}
           />
         </StyledBadge>
