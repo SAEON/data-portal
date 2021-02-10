@@ -59,7 +59,7 @@ const removeSelectedIds = obj =>
     ).filter(([key]) => key !== 'selectedIds')
   )
 
-const DATATYPES = ['Shapefile'].map(s => s.toUpperCase())
+const DATATYPES = ['Shapefile', 'NetCDF'].map(s => s.toUpperCase())
 
 export default ({ catalogue }) => {
   const theme = useTheme()
@@ -108,15 +108,15 @@ export default ({ catalogue }) => {
       } else {
         return `Configure databook from ${
           selectedIds?.filter(id => cacheOfLoadableItems[id]).length || databookTablesCount
-        } mappable search results`
+        } search results`
       }
     } else {
       if (selectedIds.length) {
         const n = selectedIds?.filter(id => cacheOfLoadableItems[id]).length
         if (n) {
-          return `Configure databook from ${n} mappable search results`
+          return `Configure databook from ${n} search results`
         } else {
-          return 'No maps found for selected records'
+          return 'No databook-compatible records found for selected records'
         }
       } else {
         return 'No selected records'

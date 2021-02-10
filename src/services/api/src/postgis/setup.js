@@ -20,17 +20,16 @@ export default async () => {
       create extension if not exists pgcrypto;`,
   })
 
-  // TODO - this needs to be done manually on server startup. Look into this
+  /**
+   * TODO. Look more into offline raster configuration options
+   * https://postgis.net/docs/manual-dev/postgis_gdal_enabled_drivers.html
+   */
 
-  // await query({
-  //   text: `set postgis.gdal_enabled_drivers to 'ENABLE_ALL';`,
-  // })
+  await query({
+    text: `alter database databooks set postgis.enable_outdb_rasters = true;`,
+  })
 
-  // await query({
-  //   text: `alter system set postgis.enable_outdb_rasters='on';`,
-  // })
-
-  // await query({
-  //   text: `select pg_reload_conf();`,
-  // })
+  await query({
+    text: `alter database databooks set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
+  })
 }
