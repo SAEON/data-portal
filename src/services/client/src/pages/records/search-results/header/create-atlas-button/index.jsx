@@ -4,10 +4,10 @@ import { Explore as MapIcon } from '@material-ui/icons'
 import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../config'
-import { context as globalContext } from '../../../../contexts/global'
-import StyledBadge from './components/styled-badge'
-import packageJson from '../../../../../package.json'
+import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../config'
+import { context as globalContext } from '../../../../../contexts/global'
+import StyledBadge from '../components/styled-badge'
+import packageJson from '../../../../../../package.json'
 
 const cacheOfMappableItems = {}
 
@@ -75,24 +75,42 @@ export default ({ catalogue }) => {
     )
   }
 
+  const atlasAvailable = isAtlasAvailable(
+    selectedIds,
+    selectAll,
+    atlasLayersCount,
+    catalogue?.records
+  )
+
+  const getTooltip = () => {
+    if (selectAll) {
+      if (atlasLayersCount > CATALOGUE_CLIENT_MAX_ATLAS_LAYERS) {
+        return `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}`
+      } else {
+        return `Configure atlas from ${
+          selectedIds?.filter(id => cacheOfMappableItems[id]).length || atlasLayersCount
+        } mappable search results`
+      }
+    } else {
+      if (selectedIds.length) {
+        const n = selectedIds?.filter(id => cacheOfMappableItems[id]).length
+        if (n) {
+          return `Configure atlas from ${n} mappable search results`
+        } else {
+          return 'No maps found for selected records'
+        }
+      } else {
+        return 'Show atlas from 0 selected records'
+      }
+    }
+  }
+
   return (
     <Fade key="not-loading" in={!savedSearchLoading}>
-      <Tooltip
-        title={
-          isAtlasAvailable(selectedIds, selectAll, atlasLayersCount, catalogue?.records)
-            ? `Configure atlas from ${
-                selectedIds?.filter(id => cacheOfMappableItems[id]).length || atlasLayersCount
-              } mappable search results`
-            : selectedIds.length
-            ? 'No atlas preview available'
-            : atlasLayersCount
-            ? `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}`
-            : 'Search context: no datasets with maps found'
-        }
-      >
+      <Tooltip title={getTooltip()}>
         <span>
           <IconButton
-            disabled={!isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)}
+            disabled={!atlasAvailable}
             onClick={async e => {
               e.stopPropagation()
               setSavedSearchLoading(true)
@@ -120,13 +138,9 @@ export default ({ catalogue }) => {
             }}
           >
             <StyledBadge
-              color={
-                isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)
-                  ? 'primary'
-                  : 'default'
-              }
+              color={atlasAvailable ? 'primary' : 'default'}
               badgeContent={
-                isAtlasAvailable(selectedIds, atlasLayersCount, catalogue?.records)
+                atlasAvailable || selectAll
                   ? selectedIds?.filter(id => cacheOfMappableItems[id]).length ||
                     atlasLayersCount ||
                     0

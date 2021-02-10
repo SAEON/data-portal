@@ -19,7 +19,8 @@ export default ({ catalogue }) => {
   const [error, setError] = useState(false)
   const resultCount = catalogue?.records.totalCount
   const { global } = useContext(globalContext)
-  const { selectedIds } = global
+  const { selectedIds, selectAll } = global
+  const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
 
   if (loading) {
     return (
@@ -61,13 +62,11 @@ export default ({ catalogue }) => {
                 )
               }
             }}
-            disabled={!resultCount || resultCount > 10000}
+            disabled={!applicableRecordsCount}
           >
             <StyledBadge
-              color={
-                selectedIds?.length || (resultCount && resultCount < 10000) ? 'primary' : 'default'
-              }
-              badgeContent={selectedIds?.length || resultCount || 0}
+              color={applicableRecordsCount ? 'primary' : 'default'}
+              badgeContent={applicableRecordsCount}
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
               invisible={false}
             >

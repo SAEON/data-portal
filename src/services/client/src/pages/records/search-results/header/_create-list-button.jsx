@@ -27,7 +27,7 @@ export default ({ catalogue }) => {
         style: { marginRight: 10 },
       }}
       tooltipProps={{
-        title: `Share list of ${applicableRecordsCount} selected datasets`,
+        title: `Share list of ${applicableRecordsCount} selected records`,
         placement: 'bottom',
       }}
       badgeProps={{

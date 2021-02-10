@@ -14,11 +14,11 @@ import StyledBadge from './components/styled-badge'
 import packageJson from '../../../../../package.json'
 import { context as authorizationContext } from '../../../../contexts/authorization'
 
-const cacheOfMappableItems = {}
+const cacheOfLoadableItems = {}
 
 const idHasMap = (id, records) => {
-  if (cacheOfMappableItems.hasOwnProperty(id)) {
-    return cacheOfMappableItems[id]
+  if (cacheOfLoadableItems.hasOwnProperty(id)) {
+    return cacheOfLoadableItems[id]
   } else {
     for (let node of records.nodes) {
       var { metadata } = node
@@ -27,29 +27,30 @@ const idHasMap = (id, records) => {
 
       if (!itemId) return false
 
-      cacheOfMappableItems[itemId] = Boolean(
+      cacheOfLoadableItems[itemId] = Boolean(
         linkedResources?.find(
           ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
         )
       )
 
       if (id === itemId) {
-        return cacheOfMappableItems[id]
+        return cacheOfLoadableItems[id]
       }
     }
   }
 }
 
-const isDatabookAvailable = (selectedIds, databookTablesCount, records) =>
-  records && databookTablesCount
-    ? selectedIds?.length
-      ? selectedIds.filter(id => idHasMap(id, records)).length
-        ? true
-        : false
-      : databookTablesCount < CATALOGUE_CLIENT_MAX_DATABOOK_TABLES
-      ? true
-      : false
-    : false
+const isDatabookAvailable = (selectedIds, selectAll, databookTablesCount, records) => {
+  if (records && databookTablesCount && (selectedIds?.length || selectAll)) {
+    if (selectedIds?.length) {
+      return selectedIds.filter(id => idHasMap(id, records)).length ? true : false
+    } else {
+      return databookTablesCount < CATALOGUE_CLIENT_MAX_DATABOOK_TABLES ? true : false
+    }
+  }
+
+  return false
+}
 
 const removeSelectedIds = obj =>
   Object.fromEntries(
@@ -58,11 +59,13 @@ const removeSelectedIds = obj =>
     ).filter(([key]) => key !== 'selectedIds')
   )
 
+const DATATYPES = ['Shapefile'].map(s => s.toUpperCase())
+
 export default ({ catalogue }) => {
   const theme = useTheme()
   const { global } = useContext(globalContext)
   const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
-  const { selectedIds } = global
+  const { selectedIds, selectAll } = global
   const [error, setError] = useState(undefined)
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
@@ -70,9 +73,10 @@ export default ({ catalogue }) => {
 
   const databookTablesCount =
     catalogue?.summary
-      .find(summary => summary['linkedResources.linkedResourceType.raw'])
-      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
-      ?.doc_count || 0
+      .find(summary => summary['immutableResource._fileFormat.raw'])
+      ?.['immutableResource._fileFormat.raw'].find(({ key }) =>
+        DATATYPES.includes(key.toUpperCase())
+      )?.doc_count || 0
 
   if (error) {
     throw new Error(`Error creating databook. ${error.message}`)
@@ -90,30 +94,46 @@ export default ({ catalogue }) => {
     )
   }
 
-  const isDisabled = !isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)
+  const available = isDatabookAvailable(
+    selectedIds,
+    selectAll,
+    databookTablesCount,
+    catalogue?.records
+  )
+
+  const getTooltip = () => {
+    if (selectAll) {
+      if (databookTablesCount > CATALOGUE_CLIENT_MAX_DATABOOK_TABLES) {
+        return `Too many datasets for atlas - search returns ${databookTablesCount} maps. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
+      } else {
+        return `Configure atlas from ${
+          selectedIds?.filter(id => cacheOfLoadableItems[id]).length || databookTablesCount
+        } mappable search results`
+      }
+    } else {
+      if (selectedIds.length) {
+        const n = selectedIds?.filter(id => cacheOfLoadableItems[id]).length
+        if (n) {
+          return `Configure atlas from ${n} mappable search results`
+        } else {
+          return 'No maps found for selected records'
+        }
+      } else {
+        return 'Show atlas from 0 selected records'
+      }
+    }
+  }
 
   return (
-    <Tooltip
-      title={
-        isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)
-          ? `Configure databook from ${
-              selectedIds?.filter(id => cacheOfMappableItems[id]).length || databookTablesCount
-            } mappable search results`
-          : selectedIds.length
-          ? 'No databook preview available'
-          : databookTablesCount
-          ? `Too many datasets for databook - search returns ${databookTablesCount} maps. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
-          : 'Search context: no datasets with maps found'
-      }
-    >
+    <Tooltip title={getTooltip()}>
       <span>
         <IconButton
           style={
-            isDisabled
-              ? {}
-              : { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
+            available
+              ? { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
+              : {}
           }
-          disabled={isDisabled}
+          disabled={!available}
           onClick={
             isDataScientist
               ? async e => {
@@ -149,14 +169,10 @@ export default ({ catalogue }) => {
           }
         >
           <StyledBadge
-            color={
-              isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)
-                ? 'primary'
-                : 'default'
-            }
+            color={available ? 'primary' : 'default'}
             badgeContent={
-              isDatabookAvailable(selectedIds, databookTablesCount, catalogue?.records)
-                ? selectedIds?.filter(id => cacheOfMappableItems[id]).length ||
+              available || selectAll
+                ? selectedIds?.filter(id => cacheOfLoadableItems[id]).length ||
                   databookTablesCount ||
                   0
                 : 0
