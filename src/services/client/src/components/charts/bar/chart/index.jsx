@@ -20,9 +20,8 @@ export default ({ config, data, title, description }) => {
   const marklines = config['series-marklines']
   const quickOptions = config['series-quick-options']
   console.log('quickOptions', quickOptions)
-  // const { isVertical } = quickOptions
-  // let isVertical = quickOptions[0]
-  let isVertical = true
+  const { isVertical } = quickOptions
+
   const categoryAxis = {
     type: 'category',
     data: data.map(entry => entry[namesField]),
@@ -86,7 +85,6 @@ export default ({ config, data, title, description }) => {
               : {
                   lineStyle: {
                     type: 'dotted',
-                    // color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
                     width: 2,
                   },
                   symbol: 'none',
@@ -96,42 +94,6 @@ export default ({ config, data, title, description }) => {
                 },
           },
         ],
-        // series: [
-        //   // Bar data
-        //   {
-        //     data: data.map(entry => entry[valuesField]),
-        // type: 'bar',
-        // label: {
-        //   show: true,
-        //   rotate: 50,
-        //   align: 'right',
-        //   verticalAlign: 'top',
-        //   position: 'insideBottom',
-        //   distance: -10,
-        //   formatter: '{b}',
-        //   fontSize: 11,
-        // },
-        // emphasis: {
-        //   itemStyle: {
-        //     shadowBlur: 10,
-        //     shadowOffsetX: 0,
-        //     shadowColor: 'rgba(0, 0, 0, 0.5)',
-        //   },
-        // },
-
-        //     markLine: {
-        //       lineStyle: {
-        //         type: 'dotted',
-        //         color: 'orange', //STEVEN To-DO: grab from theme rather than explicit
-        //         width: 2,
-        //       },
-        //       symbol: 'none',
-        //       data: targetsArr.map(target => {
-        //         return { name: target.name, yAxis: target.value }
-        //       }),
-        //     },
-        //   },
-        // ],
       }}
     />
   )

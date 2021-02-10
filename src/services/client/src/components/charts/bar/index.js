@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import Autocomplete from '../../../components/autocomplete'
 import DropdownSelect from '../../../components/dropdown-select'
 import {
@@ -38,40 +38,31 @@ export default {
       id: 'series-quick-options',
       description: 'Quick Options',
       Component: ({ data, value, setValue }) => {
-        return ''
-        // <FormControl component="fieldset">
-        //   <FormGroup>
-        //     <FormControlLabel
-        //       control={
-        //         <Checkbox
-        //           // checked={typeof value === 'undefined' ? false : value[0]}
-        //           // value
-        //           onChange={() => {
-        //             // if (typeof value === 'undefined') {
-        //             //   setValue({ isVertical: true })
-        //             //   console.log('if final value', value)
-        //             // } else {
-        //             //   console.log('else initial value', value)
-        //             //   let valueCopy = JSON.parse(JSON.stringify(value))
-        //             //   console.log('initial valueCopy', valueCopy)
-        //             //   valueCopy.isVertical = isVertical
-        //             //   setValue(valueCopy)
-        //             //   console.log('value final', value)
-        //             // }
-        //             if (typeof value === 'undefined') {
-        //               setValue([true]) //will need to change once more quick options are added
-        //             } else {
-        //               // setValue([!value[0]])
-        //             }
-        //             console.log('value', value)
-        //           }}
-        //           color="primary"
-        //         />
-        //       }
-        //       label="Vertically Oriented"
-        //     />
-        //   </FormGroup>
-        // </FormControl>
+        useEffect(() => {
+          //on component mount
+          setValue({ isVertical: true })
+          return () => {}
+        }, [])
+        return (
+          <FormControl component="fieldset">
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={value ? value.isVertical : true}
+                    onChange={() => {
+                      let valueCopy = JSON.parse(JSON.stringify(value))
+                      valueCopy.isVertical = !value.isVertical
+                      setValue(valueCopy)
+                    }}
+                    color="primary"
+                  />
+                }
+                label="Vertically Oriented"
+              />
+            </FormGroup>
+          </FormControl>
+        )
       },
     },
     {
@@ -88,20 +79,6 @@ export default {
         )
       },
     },
-    // {
-    //   id: 'series-values',
-    //   description: 'Select column containing series values',
-    //   Component: ({ data, value, setValue }) => {
-    //     return (
-    //       <Autocomplete
-    //         id="bar-chart-select-series-values-columns"
-    //         options={Object.keys(data[0])}
-    //         selectedOptions={value}
-    //         setOption={setValue}
-    //       />
-    //     )
-    //   },
-    // },
     {
       id: 'series-values',
       description: 'Select column(s) containing series values (y-axis)',
@@ -193,68 +170,6 @@ export default {
         )
       },
     },
-    // {
-    //   id: 'series-markline-1',
-    //   description: 'Name and quantify first line marking',
-    //   Component: ({ value, setValue }) => {
-    //     return (
-    //       <>
-    //         <TextField
-    //           id="bar-chart-select-markline-1-name"
-    //           label="Name (e.g. Expected Value)"
-    //           autoFocus
-    //           size="small"
-    //           fullWidth
-    //           onChange={event => setValue({ name: event.target.value, value: value?.value })}
-    //           value={value?.name}
-    //         />
-    //         <TextField
-    //           id="bar-chart-select-target-1-value"
-    //           label="Value (Numeric)"
-    //           autoFocus
-    //           size="small"
-    //           onChange={event => {
-    //             setValue({ name: value?.name, value: event.target.value })
-    //           }}
-    //           value={value?.value}
-    //           type="number"
-    //         />
-    //       </>
-    //     )
-    //   },
-    // },
-    // {
-    //   id: 'series-markline-2',
-    //   description: 'Name and quantify second line marking',
-    //   Component: ({ value, setValue }) => {
-    //     return (
-    //       <>
-    //         <TextField
-    //           id="bar-chart-select-target-2-name"
-    //           label="Name (e.g. Expected Value)"
-    //           autoFocus
-    //           size="small"
-    //           fullWidth
-    //           onChange={event => {
-    //             setValue({ name: event.target.value, value: value?.value })
-    //           }}
-    //           value={value?.name}
-    //         />
-    //         <TextField
-    //           id="bar-chart-select-target-2-value"
-    //           label="Value (Numeric)"
-    //           autoFocus
-    //           size="small"
-    //           onChange={event => {
-    //             setValue({ name: value?.name, value: event.target.value })
-    //           }}
-    //           value={value?.value}
-    //           type="number"
-    //         />
-    //       </>
-    //     )
-    //   },
-    // },
   ],
 
   /**

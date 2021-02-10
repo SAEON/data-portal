@@ -3,4 +3,5 @@ import barChart from './bar'
 import lineChart from './line'
 import mapChart from './map'
 import pictorialChart from './pictorial'
-export default [pieChart, barChart, lineChart, mapChart, pictorialChart]
+import customChart from './custom'
+export default [pieChart, barChart, lineChart, mapChart, pictorialChart, customChart]

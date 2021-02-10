@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Toolbar, Typography } from '@material-ui/core'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
+import EditButton from './_edit-button'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -16,6 +17,8 @@ export default ({ chart, activeTabIndex, setActiveTabIndex }) => {
       <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>
         <Typography>{id}</Typography>
         <span style={{ marginLeft: 'auto' }} />
+        <EditButton id={id} />
+        <span style={{ marginRight: 8 }} />
         <ShareButton id={id} />
         <span style={{ marginRight: 8 }} />
         <DeleteButton

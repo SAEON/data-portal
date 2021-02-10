@@ -1,9 +1,10 @@
 enum ChartType {
   PIE
   BAR
+  LINE
   MAP
   PICTORIAL
-  LINE
+  CUSTOM
 }
 
 type Chart {

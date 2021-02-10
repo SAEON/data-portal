@@ -242,6 +242,7 @@ export default {
     //     borderColor: '#18a4a6',
     //   },
     // },
+
     feature: {
       saveAsImage: { title: 'Save as image' },
       dataView: {
@@ -308,192 +309,192 @@ export default {
     text: ['High', 'Low'],
     itemHeight: 200,
     calculable: true,
+  },
 
-
-    markPoint: {
+  markPoint: {
+    label: {
+      color: '#eee',
+    },
+    emphasis: {
       label: {
         color: '#eee',
+      },
+    },
+  },
+  //specialised specifications
+  line: {
+    itemStyle: {
+      borderWidth: 1,
+    },
+    lineStyle: {
+      width: 2,
+    },
+    // symbolSize: 3,
+    symbol: 'emptyCircle',
+    smooth: true,
+    xAxis: {
+      type: 'category',
+    },
+    yAxis: {
+      type: 'value',
+    },
+  },
+  bar: {
+    itemStyle: {
+      barBorderWidth: 0,
+      barBorderColor: '#ccc',
+    },
+    xAxis: {
+      type: 'category',
+    },
+    yAxis: {
+      type: 'value',
+    },
+  },
+  pie: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
+    },
+  },
+  map: {
+    itemStyle: {
+      normal: {
+        areaColor: '#dddddd',
+        borderColor: '#eeeeee',
+        borderWidth: 0.5,
       },
       emphasis: {
-        label: {
-          color: '#eee',
-        },
-      },
-    },
-    //specialised specifications
-    line: {
-      itemStyle: {
+        areaColor: 'rgba(254,153,78,1)',
+        borderColor: '#444',
         borderWidth: 1,
       },
-      lineStyle: {
-        width: 2,
-      },
-      // symbolSize: 3,
-      symbol: 'emptyCircle',
-      smooth: true,
-      xAxis: {
-        type: 'category',
-      },
-      yAxis: {
-        type: 'value',
-      },
     },
-    bar: {
-      itemStyle: {
-        barBorderWidth: 0,
-        barBorderColor: '#ccc',
-      },
-      xAxis: {
-        type: 'category',
-      },
-      yAxis: {
-        type: 'value',
-      },
-    },
-    pie: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
-    },
-    map: {
-      itemStyle: {
-        normal: {
-          areaColor: '#dddddd',
-          borderColor: '#eeeeee',
-          borderWidth: 0.5,
-        },
-        emphasis: {
-          areaColor: 'rgba(254,153,78,1)',
-          borderColor: '#444',
-          borderWidth: 1,
+    label: {
+      normal: {
+        textStyle: {
+          color: '#d87a80',
         },
       },
-      label: {
-        normal: {
-          textStyle: {
-            color: '#d87a80',
-          },
-        },
-        emphasis: {
-          textStyle: {
-            color: 'rgb(100,0,0)',
-          },
-        },
-      },
-      feature: {
-        saveAsImage: {},
-        dataView: {
-          readOnly: true,
-          title: 'View data',
-          lang: ['Data View', 'Back', 'Refresh'],
-        },
-        magicType: {
-          type: ['line', 'bar'],
-          title: { line: 'View as line chart', bar: 'View as bar chart' },
-          // title: [',View as line chart', 'View as bar chart'],
+      emphasis: {
+        textStyle: {
+          color: 'rgb(100,0,0)',
         },
       },
     },
-    radar: {
-      itemStyle: {
-        borderWidth: 1,
+    feature: {
+      saveAsImage: {},
+      dataView: {
+        readOnly: true,
+        title: 'View data',
+        lang: ['Data View', 'Back', 'Refresh'],
       },
-      lineStyle: {
-        width: 2,
+      magicType: {
+        type: ['line', 'bar'],
+        title: { line: 'View as line chart', bar: 'View as bar chart' },
+        // title: [',View as line chart', 'View as bar chart'],
       },
-      symbolSize: 3,
-      symbol: 'emptyCircle',
-      smooth: true,
     },
+  },
+  radar: {
+    itemStyle: {
+      borderWidth: 1,
+    },
+    lineStyle: {
+      width: 2,
+    },
+    symbolSize: 3,
+    symbol: 'emptyCircle',
+    smooth: true,
+  },
 
-    scatter: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
+  scatter: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
     },
-    boxplot: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
+  },
+  boxplot: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
     },
-    parallel: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
+  },
+  parallel: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
     },
-    sankey: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
+  },
+  sankey: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
     },
-    funnel: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
+  },
+  funnel: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
     },
-    gauge: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
+  },
+  gauge: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
     },
-    candlestick: {
-      itemStyle: {
-        color: '#d87a80',
-        color0: '#2ec7c9',
-        borderColor: '#d87a80',
-        borderColor0: '#2ec7c9',
+  },
+  candlestick: {
+    itemStyle: {
+      color: '#d87a80',
+      color0: '#2ec7c9',
+      borderColor: '#d87a80',
+      borderColor0: '#2ec7c9',
+      borderWidth: 1,
+    },
+  },
+  graph: {
+    itemStyle: {
+      borderWidth: 0,
+      borderColor: '#ccc',
+    },
+    lineStyle: {
+      width: 1,
+      color: '#aaa',
+    },
+    symbolSize: 3,
+    symbol: 'emptyCircle',
+    smooth: true,
+    color: palette,
+    label: {
+      color: '#eee',
+    },
+  },
+
+  geo: {
+    itemStyle: {
+      normal: {
+        areaColor: '#dddddd',
+        borderColor: '#eeeeee',
+        borderWidth: 0.5,
+      },
+      emphasis: {
+        areaColor: 'rgba(254,153,78,1)',
+        borderColor: '#444',
         borderWidth: 1,
       },
     },
-    graph: {
-      itemStyle: {
-        borderWidth: 0,
-        borderColor: '#ccc',
-      },
-      lineStyle: {
-        width: 1,
-        color: '#aaa',
-      },
-      symbolSize: 3,
-      symbol: 'emptyCircle',
-      smooth: true,
-      color: palette,
-      label: {
-        color: '#eee',
-      },
-    },
-
-    geo: {
-      itemStyle: {
-        normal: {
-          areaColor: '#dddddd',
-          borderColor: '#eeeeee',
-          borderWidth: 0.5,
-        },
-        emphasis: {
-          areaColor: 'rgba(254,153,78,1)',
-          borderColor: '#444',
-          borderWidth: 1,
+    label: {
+      normal: {
+        textStyle: {
+          color: '#d87a80',
         },
       },
-      label: {
-        normal: {
-          textStyle: {
-            color: '#d87a80',
-          },
-        },
-        emphasis: {
-          textStyle: {
-            color: 'rgb(100,0,0)',
-          },
+      emphasis: {
+        textStyle: {
+          color: 'rgb(100,0,0)',
         },
       },
     },
-  }
+  },
+}
