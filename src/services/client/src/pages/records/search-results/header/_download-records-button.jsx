@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { IconButton, Tooltip, Fade, CircularProgress } from '@material-ui/core'
 import DownloadIcon from 'mdi-react/DownloadCircleIcon'
 import { context as globalContext } from '../../../../contexts/global'
+import { context as authorizationContext } from '../../../../contexts/authorization'
 import StyledBadge from './components/styled-badge'
 import { CATALOGUE_API_ADDRESS } from '../../../../config'
 import { gql, useApolloClient } from '@apollo/client'
@@ -18,9 +19,14 @@ export default ({ catalogue }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const resultCount = catalogue?.records.totalCount
+  const { isAuthenticated } = useContext(authorizationContext)
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global
   const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
+
+  if (!isAuthenticated) {
+    return null
+  }
 
   if (loading) {
     return (
