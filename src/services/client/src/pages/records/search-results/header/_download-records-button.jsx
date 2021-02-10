@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { IconButton, Tooltip, Fade, CircularProgress } from '@material-ui/core'
 import DownloadIcon from 'mdi-react/DownloadCircleIcon'
 import { context as globalContext } from '../../../../contexts/global'
+import { context as authorizationContext } from '../../../../contexts/authorization'
 import StyledBadge from './components/styled-badge'
 import { CATALOGUE_API_ADDRESS } from '../../../../config'
 import { gql, useApolloClient } from '@apollo/client'
@@ -18,8 +19,14 @@ export default ({ catalogue }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const resultCount = catalogue?.records.totalCount
+  const { isAuthenticated } = useContext(authorizationContext)
   const { global } = useContext(globalContext)
-  const { selectedIds } = global
+  const { selectedIds, selectAll } = global
+  const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
+
+  if (!isAuthenticated) {
+    return null
+  }
 
   if (loading) {
     return (
@@ -35,7 +42,13 @@ export default ({ catalogue }) => {
 
   return (
     <Fade key="not-loading" in={!loading}>
-      <Tooltip title={`Download ${selectedIds?.length || resultCount} metadata records`}>
+      <Tooltip
+        title={
+          applicableRecordsCount
+            ? `Download ${selectedIds?.length || resultCount} metadata records`
+            : 'No records selected'
+        }
+      >
         <span>
           <IconButton
             onClick={async () => {
@@ -61,13 +74,11 @@ export default ({ catalogue }) => {
                 )
               }
             }}
-            disabled={!resultCount || resultCount > 10000}
+            disabled={!applicableRecordsCount}
           >
             <StyledBadge
-              color={
-                selectedIds?.length || (resultCount && resultCount < 10000) ? 'primary' : 'default'
-              }
-              badgeContent={selectedIds?.length || resultCount || 0}
+              color={applicableRecordsCount ? 'primary' : 'default'}
+              badgeContent={applicableRecordsCount}
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
               invisible={false}
             >

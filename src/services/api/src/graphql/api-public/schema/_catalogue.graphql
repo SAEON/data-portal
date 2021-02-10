@@ -6,6 +6,7 @@ input ES_Cursor {
 input TermInput {
   field: String!
   value: String!
+  boost: Int
 }
 
 input TermsFilterInput {
@@ -14,7 +15,7 @@ input TermsFilterInput {
 }
 
 input FieldInput {
-  # Name of field to aggregate on (this is probabably a .raw field)
+  # Name of field to aggregate on (this is probably a .raw field)
   field: String!
   # Aggregations are performed on sub-documents
   path: String

@@ -4,7 +4,7 @@ import { context as globalContext } from '../../../../../../contexts/global'
 
 export default ({ id }) => {
   const { global, setGlobal } = useContext(globalContext)
-  const { selectedIds } = global
+  const { selectedIds, selectAll } = global
 
   return (
     <Tooltip title={'Select record'} placement="left-start">
@@ -12,12 +12,19 @@ export default ({ id }) => {
         style={{ marginRight: 4 }}
         size="small"
         color="primary"
-        checked={selectedIds.includes(id)}
-        onChange={(e, checked) =>
-          checked
-            ? setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
-            : setGlobal({ selectedIds: selectedIds.filter(selectedId => selectedId !== id) })
-        }
+        checked={selectAll || selectedIds.includes(id)}
+        indeterminate={selectAll}
+        onChange={(e, checked) => {
+          if (selectAll) {
+            setGlobal({ selectedIds: [...new Set([...selectedIds, id])], selectAll: false })
+          } else if (checked) {
+            setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
+          } else {
+            setGlobal({
+              selectedIds: selectedIds.filter(selectedId => selectedId !== id),
+            })
+          }
+        }}
       />
     </Tooltip>
   )

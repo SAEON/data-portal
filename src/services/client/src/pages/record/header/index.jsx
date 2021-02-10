@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import { AppBar, Toolbar, Grid, Hidden } from '@material-ui/core'
 import DataDownloadButton from '../../../components/data-download'
+import { context as authorizationContext } from '../../../contexts/authorization'
 import AtlasButton from './_atlas-button'
 import DatabookButton from './_databook-button'
 import CitationButton from './_citation-button'
@@ -7,6 +9,8 @@ import CodeViewButton from './_code-view-button'
 import Title from './_title'
 
 export default _source => {
+  const { isAuthenticated } = useContext(authorizationContext)
+
   return (
     <AppBar color="inherit" position="sticky" variant="outlined">
       <Toolbar variant="dense">
@@ -18,7 +22,7 @@ export default _source => {
           <Hidden xsDown>
             <DatabookButton {..._source} />
             <AtlasButton {..._source} />
-            <CodeViewButton {..._source} />
+            {isAuthenticated && <CodeViewButton {..._source} />}
             <CitationButton {..._source} />
           </Hidden>
 

@@ -1,23 +1,25 @@
 import mongodb from 'mongodb'
-import { createWriteStream, mkdtemp as createUniqueDirectory } from 'fs'
+import { createWriteStream, mkdir } from 'fs'
 import { join, basename, sep } from 'path'
 import fetch from 'node-fetch'
 import { CATALOGUE_API_DATA_DIRECTORY } from '../../../../../../../config.js'
-const { ObjectID } = mongodb
 import raster2pgsql from '../raster2pgsql/index.js'
+import { nanoid } from 'nanoid'
+const { ObjectID } = mongodb
 
 const DATA_DIRECTORY = `${CATALOGUE_API_DATA_DIRECTORY}${sep}`
+const createUniqueDirectory = async () => {
+  const p = join(DATA_DIRECTORY, nanoid())
+  return await new Promise((resolve, reject) =>
+    mkdir(p, { mode: '777' }, error => (error ? reject(error) : resolve(p)))
+  )
+}
 
 export default async (ctx, databook, tableName, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections
   console.log(databook._id, 'Creating table', tableName)
 
-  // Create a new unique directory
-  const dir = await new Promise((resolve, reject) =>
-    createUniqueDirectory(DATA_DIRECTORY, (error, directory) =>
-      error ? reject(error) : resolve(directory)
-    )
-  )
+  const dir = await createUniqueDirectory()
 
   try {
     // Stream the download to the unique directory

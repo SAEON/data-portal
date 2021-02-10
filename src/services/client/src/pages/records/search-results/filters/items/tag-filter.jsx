@@ -3,7 +3,6 @@ import {
   Typography,
   Grid,
   Checkbox,
-  FormControlLabel,
   Button,
   AppBar,
   Toolbar,
@@ -11,7 +10,9 @@ import {
   Collapse,
   Card,
   Fade,
+  Tooltip,
 } from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
 import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@material-ui/icons'
 import { context as globalContext } from '../../../../../contexts/global'
 import useStyles from './style'
@@ -19,11 +20,20 @@ import clsx from 'clsx'
 
 const LIST_SIZE = 3
 
-export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', style = {} }) => {
+export default ({
+  results,
+  title,
+  field,
+  boost,
+  sortBy = 'key',
+  sortOrder = 'asc',
+  style = {},
+}) => {
   const [showAll, toggleShowAll] = useState(false)
   const { global, setGlobal } = useContext(globalContext)
   const { terms } = global
   const classes = useStyles()
+  const theme = useTheme()
 
   const { sortedResults, currentContext } = useMemo(() => {
     const termValues = terms?.map(({ value }) => value) || []
@@ -94,39 +104,44 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', styl
       <Collapse style={{ width: '100%' }} key="result-list-collapse" in={!collapsed}>
         <Card variant="outlined">
           <Grid container item xs={12} spacing={0}>
+            {/* SELECTED FILTERS */}
             {currentContext
               .sort(({ key: a }, { key: b }) => (a > b ? -1 : b > a ? 1 : 0))
               .map(({ key }) => {
                 key = typeof key === 'number' ? `${key}` : key
                 return (
-                  <Grid key={key} item xs={12} style={{ paddingLeft: 10 }}>
-                    <FormControlLabel
-                      label={
-                        <Typography variant="overline">{`${
-                          typeof key === 'string' ? key.toUpperCase() : key
-                        }`}</Typography>
-                      }
-                      control={
-                        <Checkbox
-                          style={{ alignSelf: 'baseline' }}
-                          size="small"
-                          color="primary"
-                          checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
-                          onChange={() => {
-                            if (terms?.map(({ value }) => value)?.includes(key)) {
-                              setGlobal({
-                                terms: terms?.filter(({ value }) => value !== key),
-                              })
-                            } else {
-                              setGlobal({
-                                terms: [...new Set([...terms, { field, value: key }])],
-                              })
-                            }
+                  <Grid key={key} item xs={12}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Checkbox
+                        style={{ alignSelf: 'baseline' }}
+                        size="small"
+                        color="primary"
+                        checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
+                        onChange={() => {
+                          if (terms?.map(({ value }) => value)?.includes(key)) {
+                            setGlobal({
+                              terms: terms?.filter(({ value }) => value !== key),
+                            })
+                          } else {
+                            setGlobal({
+                              terms: [...new Set([...terms, { field, boost, value: key }])],
+                            })
+                          }
+                        }}
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
+                      <Tooltip title={key} placement="top">
+                        <Typography
+                          style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            marginRight: theme.spacing(2),
                           }}
-                          inputProps={{ 'aria-label': 'primary checkbox' }}
-                        />
-                      }
-                    />
+                          variant="overline"
+                        >{`${typeof key === 'string' ? key.toUpperCase() : key}`}</Typography>
+                      </Tooltip>
+                    </div>
                   </Grid>
                 )
               })}
@@ -142,34 +157,40 @@ export default ({ results, title, field, sortBy = 'key', sortOrder = 'asc', styl
               ({ key, doc_count }) => {
                 key = typeof key === 'number' ? `${key}` : key
                 return (
-                  <Grid key={key} item xs={12} style={{ paddingLeft: 10 }}>
-                    <FormControlLabel
-                      label={
-                        <Typography variant="overline">{`${
-                          typeof key === 'string' ? key.truncate(20).toUpperCase() : key
-                        } (${doc_count})`}</Typography>
-                      }
-                      control={
-                        <Checkbox
-                          style={{ alignSelf: 'baseline' }}
-                          size="small"
-                          color="primary"
-                          checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
-                          onChange={() => {
-                            if (terms?.map(({ value }) => value)?.includes(key)) {
-                              setGlobal({
-                                terms: terms?.filter(({ value }) => value !== key),
-                              })
-                            } else {
-                              setGlobal({
-                                terms: [...new Set([...terms, { field, value: key }])],
-                              })
-                            }
+                  <Grid key={key} item xs={12}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Checkbox
+                        style={{ alignSelf: 'baseline', display: 'flex' }}
+                        size="small"
+                        color="primary"
+                        checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
+                        onChange={() => {
+                          if (terms?.map(({ value }) => value)?.includes(key)) {
+                            setGlobal({
+                              terms: terms?.filter(({ value }) => value !== key),
+                            })
+                          } else {
+                            setGlobal({
+                              terms: [...new Set([...terms, { field, boost, value: key }])],
+                            })
+                          }
+                        }}
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                      />
+                      <Tooltip title={key} placement="top">
+                        <Typography
+                          style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            marginRight: theme.spacing(2),
                           }}
-                          inputProps={{ 'aria-label': 'primary checkbox' }}
-                        />
-                      }
-                    />
+                          variant="overline"
+                        >{`${
+                          typeof key === 'string' ? key.toUpperCase() : key
+                        } (${doc_count})`}</Typography>
+                      </Tooltip>
+                    </div>
                   </Grid>
                 )
               }

@@ -149,7 +149,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
-      - /var:/var
+      - /var/lib/catalogue-api:/var/lib/catalogue-api
     depends_on:
       - proxy
       - mongo

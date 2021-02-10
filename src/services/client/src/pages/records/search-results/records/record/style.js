@@ -55,7 +55,6 @@ export default makeStyles(theme => {
     descriptionContent: {},
     description: {
       color: theme.palette.text.primary,
-      cursor: 'pointer',
       fontSize: '0.8rem',
       lineHeight: 1.5,
       textAlign: 'justify',

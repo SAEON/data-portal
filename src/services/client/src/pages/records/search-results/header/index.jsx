@@ -3,9 +3,9 @@ import { useTheme } from '@material-ui/core/styles'
 import { isMobile } from 'react-device-detect'
 import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
-import ResetSelectionButton from './_reset-selection-button'
+import ToggleSelectionButton from './_toggle-select-button'
 import CreateDatabookButton from './_create-databook-button'
-import CreateAtlasButton from './_create-atlas-button'
+import CreateAtlasButton from './create-atlas-button'
 import CreateListButton from './_create-list-button'
 import ConfigurePaginationButton from './_configure-pagination-button'
 import PageBackButton from './_page-back-button'
@@ -39,8 +39,7 @@ export default ({
           {/* SEARCH RESULT COUNT */}
           {!isMobile && <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />}
 
-          {/* RESET SELECTION */}
-          <ResetSelectionButton style={{ marginLeft: 'auto' }} />
+          <span style={{ marginLeft: 'auto' }} />
 
           {/* CREATE DATABOOK */}
           {!isMobile && <CreateDatabookButton catalogue={catalogue} />}
@@ -53,6 +52,9 @@ export default ({
 
           {/* CREATE LIST */}
           <CreateListButton catalogue={catalogue} />
+
+          {/* RESET SELECTION */}
+          <ToggleSelectionButton catalogue={catalogue} />
 
           {/* PAGINATION CONFIG */}
           {!isMobile && <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />}

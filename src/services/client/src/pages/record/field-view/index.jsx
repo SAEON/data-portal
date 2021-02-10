@@ -12,6 +12,7 @@ import LinkedResources from './_linked-resources'
 import Identifiers from './_identifiers'
 import RightsList from './_rights-list'
 import ResourceType from './_resource-type'
+import ImmutableResource from './_immutable-resource'
 
 /**
  * Fields correlate to fields in the metadata docs
@@ -27,6 +28,7 @@ export default ({ codeView, ..._source }) => {
           <Fade key="field-view" in={!codeView}>
             <Grid container direction="column" justify="space-evenly" alignItems="stretch">
               {_source.titles?.length && <Titles {..._source} />}
+              {_source.immutableResource && <ImmutableResource {..._source} />}
               {_source.creators?.length && <Creators {..._source} />}
               {_source.rightsList?.length && <RightsList {..._source} />}
               {_source.geoLocations?.length && <GeoLocations {..._source} />}
@@ -34,9 +36,9 @@ export default ({ codeView, ..._source }) => {
               {_source.publisher && <Publisher {..._source} />}
               {_source.contributors?.length && <Contributors {..._source} />}
               {_source.descriptions?.length && <Descriptions {..._source} />}
+              {_source.linkedResources?.length && <LinkedResources {..._source} />}
               {<ResourceType {..._source} />}
               {_source.subjects?.length && <Subjects {..._source} />}
-              {_source.linkedResources?.length && <LinkedResources {..._source} />}
               {_source.identifiers?.length && <Identifiers {..._source} />}
             </Grid>
           </Fade>
