@@ -39,8 +39,7 @@ export default ({
           {/* SEARCH RESULT COUNT */}
           {!isMobile && <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />}
 
-          {/* RESET SELECTION */}
-          <ToggleSelectionButton style={{ marginLeft: 'auto' }} />
+          <span style={{ marginLeft: 'auto' }} />
 
           {/* CREATE DATABOOK */}
           {!isMobile && <CreateDatabookButton catalogue={catalogue} />}
@@ -53,6 +52,9 @@ export default ({
 
           {/* CREATE LIST */}
           <CreateListButton catalogue={catalogue} />
+
+          {/* RESET SELECTION */}
+          <ToggleSelectionButton catalogue={catalogue} />
 
           {/* PAGINATION CONFIG */}
           {!isMobile && <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />}

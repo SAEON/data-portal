@@ -24,7 +24,7 @@ export default ({ catalogue }) => {
       iconProps={{
         color: 'default',
         disabled: !applicableRecordsCount,
-        style: { marginRight: 10 },
+        style: { marginRight: 4 },
       }}
       tooltipProps={{
         title: `Share list of ${applicableRecordsCount} selected records`,
