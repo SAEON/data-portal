@@ -1,3 +1,4 @@
+import { POSTGIS_DB } from '../config.js'
 import query from './query.js'
 
 export default async () => {
@@ -26,10 +27,10 @@ export default async () => {
    */
 
   await query({
-    text: `alter database databooks set postgis.enable_outdb_rasters = true;`,
+    text: `alter database ${POSTGIS_DB} set postgis.enable_outdb_rasters = true;`,
   })
 
   await query({
-    text: `alter database databooks set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
+    text: `alter database ${POSTGIS_DB} set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
   })
 }

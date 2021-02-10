@@ -14,7 +14,7 @@ import {
 import { useTheme } from '@material-ui/core/styles'
 import { Search as SearchIcon, Close as CloseIcon, Add as AddIcon } from '@material-ui/icons'
 import MessageDialogue from '../../../../../../components/message-dialogue'
-import Record from '../../../../../record'
+import Record from '../../../../../../pages/record'
 import Minisearch from 'minisearch'
 import QuickForm from '@saeon/quick-form'
 import debounce from '../../../../../../lib/fns/debounce'

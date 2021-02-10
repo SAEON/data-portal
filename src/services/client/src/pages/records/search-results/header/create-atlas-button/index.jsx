@@ -6,6 +6,7 @@ import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../config'
 import { context as globalContext } from '../../../../../contexts/global'
+import { context as authorizationContext } from '../../../../../contexts/authorization'
 import StyledBadge from '../components/styled-badge'
 import packageJson from '../../../../../../package.json'
 
@@ -56,10 +57,15 @@ const removeSelectedIds = obj =>
 
 export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
+  const { isAuthenticated } = useContext(authorizationContext)
   const { selectedIds, selectAll } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
   const history = useHistory()
+
+  if (!isAuthenticated) {
+    return null
+  }
 
   const atlasLayersCount =
     catalogue?.summary
