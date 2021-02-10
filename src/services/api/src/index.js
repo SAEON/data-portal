@@ -12,6 +12,7 @@ import proxy from 'koa-proxies'
 import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
+import blacklistRoute from './middleware/blacklist-route.js'
 import homeRoute from './http/home.js'
 import downloadProxyRoute from './http/download-proxy.js'
 import executeSql from './http/execute-sql.js'
@@ -94,12 +95,20 @@ publicApp
     })
   )
   .use(koaBody())
-  .use(koaSession(passportCookieConfig, publicApp))
+  .use(blacklistRoute(koaSession(passportCookieConfig, publicApp), '/proxy'))
   .use(cors)
   .use(clientSession)
   .use(koaPassport.initialize())
   .use(koaPassport.session())
   .use(createRequestContext(publicApp))
+  .use(
+    proxy('/proxy', {
+      target: CATALOGUE_PROXY_ADDRESS,
+      changeOrigin: true,
+      logs: true,
+      events: {},
+    })
+  )
   .use(
     new KoaRouter()
       .get('/', homeRoute)
@@ -119,14 +128,6 @@ publicApp
       .get('/authenticate', authenticateRoute)
       .get('/logout', logoutRoute)
       .routes()
-  )
-  .use(
-    proxy('/proxy', {
-      target: CATALOGUE_PROXY_ADDRESS,
-      changeOrigin: true,
-      logs: true,
-      events: {},
-    })
   )
 
 // Configure HTTP servers

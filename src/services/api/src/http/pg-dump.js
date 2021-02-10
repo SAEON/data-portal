@@ -40,7 +40,7 @@ export default async ctx => {
     '--no-privileges',
     '--no-owner',
   ])
-    .on('close', code => console.info('SQL Backup complete. Code: ', code))
+    .on('close', code => console.info(databookId, 'SQL export complete. Code: ', code))
     .on('error', error => console.error(new Error(error.message)))
 
   //  Combine the stdout and stderr streams
