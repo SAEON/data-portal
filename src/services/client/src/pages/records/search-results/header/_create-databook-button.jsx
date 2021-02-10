@@ -104,9 +104,9 @@ export default ({ catalogue }) => {
   const getTooltip = () => {
     if (selectAll) {
       if (databookTablesCount > CATALOGUE_CLIENT_MAX_DATABOOK_TABLES) {
-        return `Too many datasets for atlas - search returns ${databookTablesCount} maps. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
+        return `Too many datasets - search returns ${databookTablesCount} maps. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
       } else {
-        return `Configure atlas from ${
+        return `Configure databook from ${
           selectedIds?.filter(id => cacheOfLoadableItems[id]).length || databookTablesCount
         } mappable search results`
       }
@@ -114,12 +114,12 @@ export default ({ catalogue }) => {
       if (selectedIds.length) {
         const n = selectedIds?.filter(id => cacheOfLoadableItems[id]).length
         if (n) {
-          return `Configure atlas from ${n} mappable search results`
+          return `Configure databook from ${n} mappable search results`
         } else {
           return 'No maps found for selected records'
         }
       } else {
-        return 'Show atlas from 0 selected records'
+        return 'No selected records'
       }
     }
   }

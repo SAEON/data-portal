@@ -42,7 +42,13 @@ export default ({ catalogue }) => {
 
   return (
     <Fade key="not-loading" in={!loading}>
-      <Tooltip title={`Download ${selectedIds?.length || resultCount} metadata records`}>
+      <Tooltip
+        title={
+          applicableRecordsCount
+            ? `Download ${selectedIds?.length || resultCount} metadata records`
+            : 'No records selected'
+        }
+      >
         <span>
           <IconButton
             onClick={async () => {
