@@ -11,6 +11,10 @@ volumes:
     driver: local
   postgis:
     driver: local
+  var:
+    driver: local
+  tmp:
+    driver: local
 
 services:
   elasticsearch:
@@ -80,7 +84,7 @@ services:
       - $POSTGIS_CONTAINER_HOST_PORT:$POSTGIS_PORT
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
-      - /var/lib/catalogue-api:/var/lib/catalogue-api
+      - var:/var/lib/catalogue-api
     networks:
       - $CATALOGUE_DOCKER_NETWORK      
 
@@ -148,8 +152,8 @@ services:
       - $CATALOGUE_API_CONTAINER_INTERNAL_PORT_MAPPING:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp:/tmp
-      - /var/lib/catalogue-api:/var/lib/catalogue-api
+      - tmp:/tmp
+      - var:/var/lib/catalogue-api
     depends_on:
       - proxy
       - mongo
