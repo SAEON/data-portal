@@ -31,7 +31,7 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   toolbar: {
-    backgroundColor: fade(theme.palette.common.black, 0.4),
+    backgroundColor: fade(theme.palette.common.black, 0.5),
     minHeight: theme.customSizes.thickToolbar.minHeight,
   },
 }))
