@@ -29,7 +29,7 @@
   "dependencies": {
     "@koa/router": "^10.0.0",
     "@saeon/logger": "^6.2.0",
-    "apollo-server-koa": "^2.20.0",
+    "apollo-server-koa": "2.20",
     "base64url": "^3.0.1",
     "bcrypt": "^5.0.0",
     "btoa": "^1.2.1",
