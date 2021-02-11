@@ -39,7 +39,9 @@ export default ({ id }) => {
         }
 
         if (error) {
-          throw new Error(`Error retrieving record ${id}. ${error}`)
+          throw new Error(
+            `Error retrieving record ${id}\n\n${error}\n\nIt is likely that Elasticsearch has not been configured`
+          )
         }
 
         return (

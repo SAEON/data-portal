@@ -127,8 +127,7 @@ Then [configure the API for first use](#api-configuration)
 # API configuration
 The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API. **NOTE: There are actually TWO GraphQL APIs - one is for internal use and should NOT be exposed outside a private network. Use the internal HTTP service to configure the API**.
 
-1. Authenticate yourself by navigating to `<api-address>/login`
-2. Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can interact with the API (or whatever port you have configured for deployment)
+Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can interact with the API (or whatever port you have configured for deployment)
 
 ```graphql
 # Configure default PostGIS tables

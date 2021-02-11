@@ -84,7 +84,9 @@ export default () => {
                 >
                   {({ error, loading, data }) => {
                     if (error) {
-                      throw new Error(`${CATALOGUE_API_GQL_ADDRESS}: ${error}`)
+                      throw new Error(
+                        `${CATALOGUE_API_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
+                      )
                     }
 
                     return loading ? (

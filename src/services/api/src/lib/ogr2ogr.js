@@ -12,7 +12,7 @@ export default ({ tableName, username, password, pathToShapefile, schema }) => {
       'run',
       `--net=${CATALOGUE_DOCKER_NETWORK}`,
       '-v',
-      `${CATALOGUE_API_TEMP_DIRECTORY}:/tmp`,
+      `${CATALOGUE_API_TEMP_DIRECTORY}:/tmp/catalogue-api`,
       '--rm',
       'osgeo/gdal:latest',
       'ogr2ogr',
