@@ -71,7 +71,7 @@ services:
 
   postgis:
     image: $POSTGIS_IMAGE_NAME
-    container_name: postgis2
+    container_name: postgis
     restart: always
     build:
       context: src/services/postgis
