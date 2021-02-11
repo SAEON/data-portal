@@ -120,6 +120,8 @@ export const CATALOGUE_API_ODP_DEBUG_IDS = process.env.CATALOGUE_API_ODP_DEBUG_I
 
 export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || `http://localhost:9200`
 
+export const POSTGIS_IMAGE_NAME = process.env.POSTGIS_IMAGE_NAME || 'postgis'
+
 export const CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME =
   process.env.CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME || 'saeon-odp'
 
@@ -141,6 +143,7 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      POSTGIS_IMAGE_NAME,
       CATALOGUE_API_DATA_DIRECTORY,
       CATALOGUE_API_INTERNAL_ADDRESS,
       CATALOGUE_API_INTERNAL_GQL_ADDRESS,

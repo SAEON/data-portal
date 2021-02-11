@@ -70,7 +70,8 @@ services:
       - $CATALOGUE_DOCKER_NETWORK      
 
   postgis:
-    container_name: postgis
+    image: $POSTGIS_IMAGE_NAME
+    container_name: postgis2
     restart: always
     build:
       context: src/services/postgis
@@ -112,6 +113,7 @@ services:
       context: src/services/api
       dockerfile: Dockerfile
       args:
+        POSTGIS_IMAGE_NAME: $POSTGIS_IMAGE_NAME
         CATALOGUE_API_DATA_DIRECTORY: $CATALOGUE_DOCKER_DATA_VOLUME
         CATALOGUE_API_TEMP_DIRECTORY: $CATALOGUE_DOCKER_TMP_VOLUME
         CATALOGUE_API_TWITTER_CLIENT_ID: $CATALOGUE_API_TWITTER_CLIENT_ID

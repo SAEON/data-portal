@@ -4,6 +4,7 @@ import {
   POSTGIS_DB,
   POSTGIS_HOST,
   POSTGIS_PORT,
+  POSTGIS_IMAGE_NAME,
   CATALOGUE_API_DATA_DIRECTORY,
 } from '../config.js'
 
@@ -14,7 +15,7 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     '-v',
     `${CATALOGUE_API_DATA_DIRECTORY}:/var/lib/catalogue-api`,
     '--rm',
-    'postgis',
+    POSTGIS_IMAGE_NAME,
     'raster2pgsql',
     '-d', // Drop and recreate the table
     '-F', // Add filename column
@@ -35,7 +36,7 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     `PGPASSWORD=${password}`,
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '--rm',
-    'postgis',
+    POSTGIS_IMAGE_NAME,
     'psql',
     '--dbname',
     POSTGIS_DB,
