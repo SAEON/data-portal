@@ -133,24 +133,7 @@ export const CATALOGUE_API_TEMP_DIRECTORY =
 export const CATALOGUE_API_DATA_DIRECTORY =
   process.env.CATALOGUE_API_DATA_DIRECTORY || '/var/lib/catalogue-api/'
 
-try {
-  ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
-  mkdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
-  rmdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
-} catch (error) {
-  console.error(
-    'Please create directory',
-    CATALOGUE_API_DATA_DIRECTORY,
-    'that can be used by the current process'
-  )
-  process.exit(1)
-}
-
 export const CATALOGUE_CLIENT_ID = process.env.CATALOGUE_CLIENT_ID || 'client.sess'
-
-if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
-  mkdirSync(CATALOGUE_API_TEMP_DIRECTORY)
-}
 
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
@@ -212,3 +195,20 @@ console.log(
     })
   )
 )
+
+if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
+  mkdirSync(CATALOGUE_API_TEMP_DIRECTORY)
+}
+
+try {
+  ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
+  mkdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
+  rmdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
+} catch (error) {
+  console.error(
+    'Please create directory',
+    CATALOGUE_API_DATA_DIRECTORY,
+    'that can be used by the current process'
+  )
+  process.exit(1)
+}

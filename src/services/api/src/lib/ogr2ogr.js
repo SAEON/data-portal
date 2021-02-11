@@ -1,15 +1,20 @@
 import { spawn } from 'child_process'
-import { CATALOGUE_DOCKER_NETWORK, POSTGIS_DB, POSTGIS_HOST } from '../config.js'
+import {
+  CATALOGUE_DOCKER_NETWORK,
+  POSTGIS_DB,
+  POSTGIS_HOST,
+  CATALOGUE_API_TEMP_DIRECTORY,
+} from '../config.js'
 
-export default ({ tableName, username, password, pathToShapefile, schema, mntRoot = '/tmp' }) => {
+export default ({ tableName, username, password, pathToShapefile, schema }) => {
   return new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', [
       'run',
       `--net=${CATALOGUE_DOCKER_NETWORK}`,
       '-v',
-      `${mntRoot}:${mntRoot}`,
+      `${CATALOGUE_API_TEMP_DIRECTORY}:/tmp`,
       '--rm',
-      'osgeo/gdal:latest', // TODO this should be configurable
+      'osgeo/gdal:latest',
       'ogr2ogr',
       '--config',
       'PG_USE_COPY YES',

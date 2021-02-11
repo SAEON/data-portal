@@ -1,12 +1,18 @@
 import { spawn } from 'child_process'
-import { CATALOGUE_DOCKER_NETWORK, POSTGIS_DB, POSTGIS_HOST, POSTGIS_PORT } from '../config.js'
+import {
+  CATALOGUE_DOCKER_NETWORK,
+  POSTGIS_DB,
+  POSTGIS_HOST,
+  POSTGIS_PORT,
+  CATALOGUE_API_DATA_DIRECTORY,
+} from '../config.js'
 
-export default async ({ tableName, username, password, filePath, schema, mntRoot = '/var' }) => {
+export default async ({ tableName, username, password, filePath, schema }) => {
   const raster2pgsql = spawn('docker', [
     'run',
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '-v',
-    `${mntRoot}:${mntRoot}`,
+    `${CATALOGUE_API_DATA_DIRECTORY}:/var`,
     '--rm',
     'postgis',
     'raster2pgsql',
