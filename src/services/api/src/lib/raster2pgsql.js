@@ -12,7 +12,7 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     'run',
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '-v',
-    `${CATALOGUE_API_DATA_DIRECTORY}:/var`,
+    `${CATALOGUE_API_DATA_DIRECTORY}:/var/lib/catalogue-api`,
     '--rm',
     'postgis',
     'raster2pgsql',
