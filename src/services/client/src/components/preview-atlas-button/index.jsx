@@ -1,14 +1,16 @@
 import { Suspense, lazy } from 'react'
-import { IconButton, Typography, DialogContent } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import DialogContent from '@material-ui/core/DialogContent'
+import useTheme from '@material-ui/core/styles/useTheme'
 import CloseIcon from 'mdi-react/CloseIcon'
 import PreviewIcon from 'mdi-react/EyeIcon'
-import MessageDialogue from '../../../../../../../components/message-dialogue'
-import Loading from '../../../../../../../components/loading'
+import MessageDialogue from '../../components/message-dialogue'
+import Loading from '../../components/loading'
 
 const Map = lazy(() => import('./_map'))
 
-export default ({ id, titles, linkedResources }) => {
+export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
   const theme = useTheme()
   const title = titles[0].title
 
@@ -26,7 +28,7 @@ export default ({ id, titles, linkedResources }) => {
 
   return (
     <MessageDialogue
-      iconProps={{ size: 'small' }}
+      iconProps={{ size: buttonSize }}
       icon={<PreviewIcon />}
       title={onClose => (
         <div style={{ display: 'flex' }}>

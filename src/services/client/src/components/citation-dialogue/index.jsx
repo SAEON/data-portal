@@ -1,71 +1,20 @@
-import { useState } from 'react'
-import { Button, CircularProgress } from '@material-ui/core'
-import { FormatQuote as CitationIcon } from '@material-ui/icons'
-import { gql } from '@apollo/client'
-import Dialogue from './dialogue'
-import WithGqlQuery from '../../hooks/with-gql-query'
+import CitationDialog from './dialogue'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import CitationIcon from '@material-ui/icons/FormatQuote'
 
-export default ({ doi, children, ...props }) => {
-  const [open, setOpen] = useState(false)
-
+export default ({ id, doi, buttonSize = 'small' }) => {
   return (
-    <WithGqlQuery
-      QUERY={gql`
-        query {
-          citationStyles: __type(name: "CitationStyle") {
-            enumValues {
-              name
-            }
-          }
-
-          citationLocales: __type(name: "CitationLocale") {
-            enumValues {
-              name
-            }
-          }
-        }
-      `}
-      fetchPolicy="cache-first"
-    >
-      {({ error, loading, data }) => {
-        return (
-          <>
-            {typeof children === 'function' ? (
-              children({
-                disabled: error || loading,
-                onClick: e => {
-                  e.stopPropagation()
-                  setOpen(true)
-                },
-              })
-            ) : (
-              <Button
-                disabled={error || loading}
-                variant="contained"
-                disableElevation
-                startIcon={<CitationIcon />}
-                color="primary"
-                onClick={e => {
-                  e.stopPropagation()
-                  setOpen(true)
-                }}
-                {...props}
-              >
-                {error || loading ? <CircularProgress size={24} /> : 'Cite'}
-              </Button>
-            )}
-            {open ? (
-              <Dialogue
-                doi={doi}
-                open={open}
-                setOpen={setOpen}
-                citationStyles={data?.citationStyles}
-                citationLocales={data?.citationLocales}
-              />
-            ) : null}
-          </>
-        )
-      }}
-    </WithGqlQuery>
+    <CitationDialog id={id} doi={doi}>
+      {({ disabled, onClick }) => (
+        <Tooltip placement="left-start" title="Cite this record">
+          <span>
+            <IconButton size={buttonSize} disabled={disabled} onClick={onClick}>
+              <CitationIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
+      )}
+    </CitationDialog>
   )
 }

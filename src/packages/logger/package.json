@@ -47,7 +47,6 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/logger",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@apollo/client": "^3.2.1",
     "@rollup/plugin-commonjs": "^17.1.0",

@@ -32,6 +32,10 @@ export default ({
       ? `${CATALOGUE_API_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
       : resourceDownload?.downloadURL
 
+  if (!resourceDownload?.downloadURL) {
+    return null
+  }
+
   return (
     <>
       <Tooltip

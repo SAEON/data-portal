@@ -15,8 +15,8 @@
     }
   },
   "peerDependencies": {
-    "react": ">=17.0",
-    "ol": ">=6"
+    "ol": ">=6",
+    "react": ">=17.0"
   },
   "scripts": {
     "build": "rimraf ./dist && rollup --config rollup.config.js",
@@ -39,7 +39,6 @@
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/ol-react",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-class-properties": "^7.12.13",

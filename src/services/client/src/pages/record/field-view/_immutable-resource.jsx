@@ -11,7 +11,7 @@ export default ({ immutableResource }) => {
   return (
     <Row title={'Download'} style={{ position: 'relative' }}>
       <Typography variant="body2" component="h2">
-        {resourceDescription}
+        {resourceDescription || '(Missing resource description and/or download URI)'}
       </Typography>
       {!isMobile && (
         <span style={{ position: 'absolute', top: `calc(50% - 30px)`, right: theme.spacing(2) }}>

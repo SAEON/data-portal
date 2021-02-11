@@ -1,21 +1,18 @@
 import { useContext, useState } from 'react'
 import { IconButton, Fade, Tooltip, CircularProgress } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
-import { CATALOGUE_TECHNICAL_CONTACT } from '../../../../../../config'
+import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
-import packageJson from '../../../../../../../package.json'
+import packageJson from '../../../package.json'
 import { gql, useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import clsx from 'clsx'
-import useStyles from './style'
-import { context as globalContext } from '../../../../../../contexts/global'
-import { context as authorizationContext } from '../../../../../../contexts/authorization'
+import { context as globalContext } from '../../contexts/global'
+import { context as authorizationContext } from '../../contexts/authorization'
 
-export default ({ id, immutableResource }) => {
+export default ({ id, immutableResource, buttonSize = 'small' }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(undefined)
   const client = useApolloClient()
-  const classes = useStyles()
   const { global, setGlobal } = useContext(globalContext)
   const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
   const { selectedIds } = global
@@ -42,16 +39,19 @@ export default ({ id, immutableResource }) => {
 
   return (
     <Tooltip
-      title={isAllowed ? 'Analyze dataset' : 'Only shapefiles supported currently'}
-      placement="left-start"
+      title={
+        isAllowed ? 'Analyze dataset' : 'Only some file formats supported for databook workflows'
+      }
+      placement="left"
     >
       <span>
         <IconButton
-          className={clsx(classes['small-icon-button'])}
-          size="small"
+          size={buttonSize}
           style={
             isAllowed
-              ? { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
+              ? {
+                  color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main,
+                }
               : {}
           }
           disabled={!isAllowed}

@@ -12,8 +12,5 @@ export default makeStyles(theme => {
       fontSize: '0.6rem',
     },
     toolbar: {},
-    'small-icon-button': {
-      padding: 3,
-    },
   }
 })
