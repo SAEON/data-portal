@@ -36,7 +36,8 @@ export default ({ tableName, username, password, pathToShapefile, schema }) => {
     pathToShapefile,
   ]
 
-  console.log('Docker CMD', `docker ${args.join(' ')}`)
+  // This is very helpful for debugging
+  console.info(`docker ${args.join(' ')}`)
 
   return new Promise((resolve, reject) => {
     const ogr2ogrProcess = spawn('docker', args)

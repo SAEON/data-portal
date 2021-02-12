@@ -157,7 +157,7 @@ services:
       - $CATALOGUE_API_CONTAINER_INTERNAL_PORT_MAPPING:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - tmp:/tmp
+      - tmp:/tmp/catalogue-api
       - data:/var/lib/catalogue-api
     depends_on:
       - proxy

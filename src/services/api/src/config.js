@@ -207,6 +207,25 @@ console.log(
   )
 )
 
+/**
+ * Ensure temporary directory exists
+ */
+try {
+  ensureDirectory(CATALOGUE_API_TEMP_DIRECTORY)
+  mkdirSync(join(CATALOGUE_API_TEMP_DIRECTORY, '.test-write-permissions'))
+  rmdirSync(join(CATALOGUE_API_TEMP_DIRECTORY, '.test-write-permissions'))
+} catch (error) {
+  console.error(
+    'Please create directory',
+    CATALOGUE_API_TEMP_DIRECTORY,
+    'that can be used by the current process'
+  )
+  process.exit(1)
+}
+
+/**
+ * Ensure data directory exists
+ */
 try {
   ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
   mkdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
