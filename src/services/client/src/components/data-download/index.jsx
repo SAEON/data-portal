@@ -84,7 +84,11 @@ export default ({
             style={{ display: 'block' }}
             uri={downloadURL}
           >
-            <Typography variant="overline" style={{ margin: theme.spacing(2) }}>
+            <Typography
+              onClick={() => setOpen(false)}
+              variant="overline"
+              style={{ margin: theme.spacing(2) }}
+            >
               I AGREE
             </Typography>
           </SimpleLink>
