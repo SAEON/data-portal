@@ -128,15 +128,15 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
   process.env.CATALOGUE_API_ELASTICSEARCH_INDEX_NAME || 'catalogue-search'
 }`
 
-export const CATALOGUE_API_TEMP_DIRECTORY = '/tmp/catalogue-api'
+export const CATALOGUE_DOCKER_TMP_VOLUME =
+  process.env.CATALOGUE_DOCKER_TMP_VOLUME || '/tmp/catalogue-api'
 
-export const CATALOGUE_API_DATA_DIRECTORY = '/var/lib/catalogue-api'
+export const CATALOGUE_API_TEMP_DIRECTORY = '/tmp/catalogue-api'
 
 export const CATALOGUE_DOCKER_DATA_VOLUME =
   process.env.CATALOGUE_DOCKER_DATA_VOLUME || '/var/lib/catalogue-api'
 
-export const CATALOGUE_DOCKER_TMP_VOLUME =
-  process.env.CATALOGUE_DOCKER_TMP_VOLUME || '/tmp/catalogue-api'
+export const CATALOGUE_API_DATA_DIRECTORY = '/var/lib/catalogue-api'
 
 export const CATALOGUE_CLIENT_ID = process.env.CATALOGUE_CLIENT_ID || 'client.sess'
 

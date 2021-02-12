@@ -8,7 +8,7 @@ import {
 } from '../config.js'
 
 export default ({ tableName, username, password, pathToShapefile, schema }) => {
-  const args = [
+  const ogr2ogrProcess = spawn('docker', [
     'run',
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '-v',
@@ -34,14 +34,9 @@ export default ({ tableName, username, password, pathToShapefile, schema }) => {
     tableName,
     `PG:host=${POSTGIS_HOST} port=5432 user=${username} password=${password} dbname=${POSTGIS_DB} active_schema=${schema}`,
     pathToShapefile,
-  ]
-
-  // This is very helpful for debugging
-  console.info(`docker ${args.join(' ')}`)
+  ])
 
   return new Promise((resolve, reject) => {
-    const ogr2ogrProcess = spawn('docker', args)
-
     ogr2ogrProcess.stdout.on('data', data => console.log(`stdout: ${data}`))
     ogr2ogrProcess.stderr.on('data', data => console.error(tableName, `stderr: ${data}`))
     ogr2ogrProcess.on('close', code => resolve(code))
