@@ -4,6 +4,7 @@ import {
   POSTGIS_DB,
   POSTGIS_HOST,
   CATALOGUE_API_TEMP_DIRECTORY,
+  CATALOGUE_DOCKER_TMP_VOLUME,
 } from '../config.js'
 
 export default ({ tableName, username, password, pathToShapefile, schema }) => {
@@ -12,7 +13,7 @@ export default ({ tableName, username, password, pathToShapefile, schema }) => {
       'run',
       `--net=${CATALOGUE_DOCKER_NETWORK}`,
       '-v',
-      `${CATALOGUE_API_TEMP_DIRECTORY}:/tmp/catalogue-api`,
+      `${CATALOGUE_DOCKER_TMP_VOLUME}:${CATALOGUE_API_TEMP_DIRECTORY}`,
       '--rm',
       'osgeo/gdal:latest',
       'ogr2ogr',

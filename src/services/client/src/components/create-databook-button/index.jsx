@@ -13,9 +13,8 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(undefined)
   const client = useApolloClient()
-  const { global, setGlobal } = useContext(globalContext)
+  const { setGlobal } = useContext(globalContext)
   const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
-  const { selectedIds } = global
   const history = useHistory()
   const theme = useTheme()
 
@@ -60,7 +59,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
               ? async e => {
                   e.stopPropagation()
                   setLoading(true)
-                  setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
+                  setGlobal({ selectedIds: [id] })
                   const { data } = await client
                     .mutate({
                       mutation: gql`

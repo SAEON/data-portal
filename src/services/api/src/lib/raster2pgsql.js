@@ -6,6 +6,7 @@ import {
   POSTGIS_PORT,
   POSTGIS_IMAGE_NAME,
   CATALOGUE_API_DATA_DIRECTORY,
+  CATALOGUE_DOCKER_DATA_VOLUME,
 } from '../config.js'
 
 export default async ({ tableName, username, password, filePath, schema }) => {
@@ -13,7 +14,7 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     'run',
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '-v',
-    `${CATALOGUE_API_DATA_DIRECTORY}:/var/lib/catalogue-api`,
+    `${CATALOGUE_DOCKER_DATA_VOLUME}:${CATALOGUE_API_DATA_DIRECTORY}`,
     '--rm',
     POSTGIS_IMAGE_NAME,
     'raster2pgsql',

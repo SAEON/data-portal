@@ -1,8 +1,7 @@
 import { join, normalize } from 'path'
-import { mkdirSync, existsSync, rmdirSync } from 'fs'
+import { mkdirSync, rmdirSync } from 'fs'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import ensureDirectory from './lib/ensure-directory.js'
-import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
 
@@ -129,11 +128,15 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
   process.env.CATALOGUE_API_ELASTICSEARCH_INDEX_NAME || 'catalogue-search'
 }`
 
-export const CATALOGUE_API_TEMP_DIRECTORY =
-  process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))
+export const CATALOGUE_API_TEMP_DIRECTORY = '/tmp/catalogue-api'
 
-export const CATALOGUE_API_DATA_DIRECTORY =
-  process.env.CATALOGUE_API_DATA_DIRECTORY || '/var/lib/catalogue-api/'
+export const CATALOGUE_API_DATA_DIRECTORY = '/var/lib/catalogue-api'
+
+export const CATALOGUE_DOCKER_DATA_VOLUME =
+  process.env.CATALOGUE_DOCKER_DATA_VOLUME || '/var/lib/catalogue-api'
+
+export const CATALOGUE_DOCKER_TMP_VOLUME =
+  process.env.CATALOGUE_DOCKER_TMP_VOLUME || '/tmp/catalogue-api'
 
 export const CATALOGUE_CLIENT_ID = process.env.CATALOGUE_CLIENT_ID || 'client.sess'
 
@@ -143,6 +146,8 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      CATALOGUE_DOCKER_DATA_VOLUME,
+      CATALOGUE_DOCKER_TMP_VOLUME,
       POSTGIS_IMAGE_NAME,
       CATALOGUE_API_DATA_DIRECTORY,
       CATALOGUE_API_INTERNAL_ADDRESS,
@@ -198,10 +203,6 @@ console.log(
     })
   )
 )
-
-if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
-  mkdirSync(CATALOGUE_API_TEMP_DIRECTORY)
-}
 
 try {
   ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
