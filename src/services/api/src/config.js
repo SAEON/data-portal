@@ -140,12 +140,15 @@ export const CATALOGUE_DOCKER_TMP_VOLUME =
 
 export const CATALOGUE_CLIENT_ID = process.env.CATALOGUE_CLIENT_ID || 'client.sess'
 
+export const POSTGIS_CONTAINER_NAME = process.env.POSTGIS_CONTAINER_NAME || 'postgis'
+
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
 console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      POSTGIS_CONTAINER_NAME,
       CATALOGUE_DOCKER_DATA_VOLUME,
       CATALOGUE_DOCKER_TMP_VOLUME,
       POSTGIS_IMAGE_NAME,

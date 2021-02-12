@@ -117,7 +117,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
     /**
      * Clean up the tmp directory
      */
-    rimraf(cacheDir, () => console.log(tableName, 'Removing temporary directory', cacheDir))
+    // rimraf(cacheDir, () => console.log(tableName, 'Removing temporary directory', cacheDir))
 
     /**
      * Update the databook to indicate

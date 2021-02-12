@@ -71,7 +71,7 @@ services:
 
   postgis:
     image: $POSTGIS_IMAGE_NAME
-    container_name: postgis
+    container_name: $POSTGIS_CONTAINER_NAME
     restart: always
     build:
       context: src/services/postgis
@@ -113,6 +113,7 @@ services:
       context: src/services/api
       dockerfile: Dockerfile
       args:
+        POSTGIS_CONTAINER_NAME: $POSTGIS_CONTAINER_NAME
         POSTGIS_IMAGE_NAME: $POSTGIS_IMAGE_NAME
         CATALOGUE_DOCKER_DATA_VOLUME: $CATALOGUE_DOCKER_DATA_VOLUME
         CATALOGUE_DOCKER_TMP_VOLUME: $CATALOGUE_DOCKER_TMP_VOLUME

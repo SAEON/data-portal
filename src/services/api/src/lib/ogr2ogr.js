@@ -8,34 +8,38 @@ import {
 } from '../config.js'
 
 export default ({ tableName, username, password, pathToShapefile, schema }) => {
+  const args = [
+    'run',
+    `--net=${CATALOGUE_DOCKER_NETWORK}`,
+    '-v',
+    `${CATALOGUE_DOCKER_TMP_VOLUME}:${CATALOGUE_API_TEMP_DIRECTORY}`,
+    '--rm',
+    'osgeo/gdal:latest',
+    'ogr2ogr',
+    '--config',
+    'PG_USE_COPY YES',
+    '-skipfailures',
+    '-overwrite',
+    '-gt',
+    100000,
+    '-f',
+    'PostgreSQL',
+    '-lco',
+    'LAUNDER=NO',
+    '-lco',
+    'PRECISION=NO',
+    '-nlt',
+    'PROMOTE_TO_MULTI',
+    '-nln',
+    tableName,
+    `PG:host=${POSTGIS_HOST} port=5432 user=${username} password=${password} dbname=${POSTGIS_DB} active_schema=${schema}`,
+    pathToShapefile,
+  ]
+
+  console.log('Docker CMD', `docker ${args.join(' ')}`)
+
   return new Promise((resolve, reject) => {
-    const ogr2ogrProcess = spawn('docker', [
-      'run',
-      `--net=${CATALOGUE_DOCKER_NETWORK}`,
-      '-v',
-      `${CATALOGUE_DOCKER_TMP_VOLUME}:${CATALOGUE_API_TEMP_DIRECTORY}`,
-      '--rm',
-      'osgeo/gdal:latest',
-      'ogr2ogr',
-      '--config',
-      'PG_USE_COPY YES',
-      '-skipfailures',
-      '-overwrite',
-      '-gt',
-      100000,
-      '-f',
-      'PostgreSQL',
-      '-lco',
-      'LAUNDER=NO',
-      '-lco',
-      'PRECISION=NO',
-      '-nlt',
-      'PROMOTE_TO_MULTI',
-      '-nln',
-      tableName,
-      `PG:host=${POSTGIS_HOST} port=5432 user=${username} password=${password} dbname=${POSTGIS_DB} active_schema=${schema}`,
-      pathToShapefile,
-    ])
+    const ogr2ogrProcess = spawn('docker', args)
 
     ogr2ogrProcess.stdout.on('data', data => console.log(`stdout: ${data}`))
     ogr2ogrProcess.stderr.on('data', data => console.error(tableName, `stderr: ${data}`))

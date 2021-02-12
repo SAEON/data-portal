@@ -1,8 +1,9 @@
 import { spawn } from 'child_process'
-import { POSTGIS_DB, POSTGIS_PORT, POSTGIS_HOST } from '../config.js'
+import { POSTGIS_DB, POSTGIS_PORT, POSTGIS_HOST, POSTGIS_CONTAINER_NAME } from '../config.js'
 import mongo from 'mongodb'
 import CombinedStream from 'combined-stream'
 const { ObjectID } = mongo
+import archiver from 'archiver'
 
 export default async ctx => {
   await ctx.user.ensureDataScientist(ctx)
@@ -17,14 +18,19 @@ export default async ctx => {
   ctx.set('Content-type', 'application/octet-stream')
   ctx.set(
     'Content-disposition',
-    `attachment; filename=databook.dump.${new Date().toISOString().replace(/:/g, '-')}.backup`
+    `attachment; filename=saeon-databook.${new Date().toISOString().replace(/:/g, '-')}.zip`
   )
+
+  // Archive the output
+  const archive = archiver('zip', {
+    zlib: { level: 2 },
+  })
 
   // Start the pg_dump process in a separate thread
   const pgDumpProcess = spawn('docker', [
     'container',
     'exec',
-    'postgis',
+    POSTGIS_CONTAINER_NAME,
     'pg_dump',
     '--dbname',
     `postgresql://${username}:${password}@${POSTGIS_HOST}:${POSTGIS_PORT}/${POSTGIS_DB}`,
@@ -40,14 +46,19 @@ export default async ctx => {
     '--no-privileges',
     '--no-owner',
   ])
-    .on('close', code => console.info(databookId, 'SQL export complete. Code: ', code))
+    .on('close', code => {
+      console.info(databookId, 'SQL export complete. Code: ', code)
+      archive.finalize()
+    })
     .on('error', error => console.error(new Error(error.message)))
 
   //  Combine the stdout and stderr streams
-  const pg_dumpOutput = CombinedStream.create()
-  pg_dumpOutput.append(pgDumpProcess.stdout)
-  pg_dumpOutput.append(pgDumpProcess.stderr)
+  const pgDumpOutput = CombinedStream.create()
+  pgDumpOutput.append(pgDumpProcess.stdout)
+  pgDumpOutput.append(pgDumpProcess.stderr)
+
+  archive.append(pgDumpOutput, { name: 'db.backup' })
 
   // Set the request result to the stream
-  ctx.body = pg_dumpOutput
+  ctx.body = archive
 }
