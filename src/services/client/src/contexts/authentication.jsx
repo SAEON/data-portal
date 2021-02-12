@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
-import { CATALOGUE_API_ADDRESS } from '../config'
+import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_API_ADDRESS } from '../config'
 
 export const context = createContext()
 
@@ -11,7 +11,7 @@ export default ({ children }) => {
     if (userInfo) {
       return true
     } else {
-      window.location.href = `${CATALOGUE_API_ADDRESS}/login?redirect=${window.location.href}`
+      window.location.href = `${CATALOGUE_CLIENT_ADDRESS}/login?redirect=${window.location.href}`
     }
   }
 
