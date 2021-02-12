@@ -44,6 +44,12 @@ export default ({ id }) => {
           )
         }
 
+        if (!data?.catalogue?.records?.nodes?.[0]?.metadata?._source) {
+          throw new Error(
+            `Sorry, we cannot find record "${id}". If you think that we SHOULD be able to find this record, please forward this message onto us so that we can look into why it appears to be missing.`
+          )
+        }
+
         return (
           <>
             <Header
