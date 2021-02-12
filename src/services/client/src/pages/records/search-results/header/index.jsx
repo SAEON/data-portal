@@ -12,7 +12,7 @@ import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
 import CurrentPageInfo from './_current-page-info'
 import DownloadRecords from './_download-records-button'
-import ResetFiltersButton from './_reset-filters-button'
+// import ResetFiltersButton from './_reset-filters-button'
 
 export default ({
   catalogue,

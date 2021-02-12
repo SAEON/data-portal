@@ -27,6 +27,7 @@ export default async (ctx, databook) => {
           id serial,
           odp_record_id varchar not null,
           table_name varchar not null,
+          file_location varchar null,
           constraint odp_map_primary_key primary key (id),
           constraint odp_map_unique_col_1 unique (odp_record_id),
           constraint odp_map_unique_col_2 unique (table_name)

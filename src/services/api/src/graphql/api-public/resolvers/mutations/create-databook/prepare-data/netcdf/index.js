@@ -24,18 +24,18 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
   try {
     // Stream the download to the unique directory
     const { downloadURL } = immutableResource.resourceDownload
-    const writePath = join(dir, basename(downloadURL))
+    const rasterFilePath = join(dir, basename(downloadURL))
     const res = await fetch(downloadURL)
     await new Promise((resolve, reject) => {
-      const writeStream = createWriteStream(writePath)
+      const writeStream = createWriteStream(rasterFilePath)
       res.body.pipe(writeStream)
       res.body.on('end', resolve)
       res.body.on('error', error => reject(error))
     })
 
     // Process the NetCDF into PostGIS
-    console.info('Writing raster file to', writePath)
-    await raster2pgsql(ctx, databook, tableName, writePath)
+    console.info('Writing raster file to', rasterFilePath)
+    await raster2pgsql(ctx, databook, tableName, rasterFilePath)
 
     /**
      * Register the ODP ID in the PostGIS odp_map table
@@ -46,10 +46,11 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
     const { query } = ctx.postgis
     await query({
       text: `
-          insert into "${schema}".odp_map (odp_record_id, table_name)
+          insert into "${schema}".odp_map (odp_record_id, table_name, file_location)
           select
             '${id}' odp_id,
-            '${tableName}' table_name;
+            '${tableName}' table_name,
+            '${rasterFilePath}' file_location;
         `,
     })
 
