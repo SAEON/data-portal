@@ -103,14 +103,8 @@
     {
       "spatial": {
         "mapping": {
-          "type": "keyword",
-          "normalizer": "keyword_trimmed_lower",
-          "fields": {
-            "geometry": {
-              "type": "geo_shape",
-              "orientation": "counterclockwise"
-            }
-          }
+          "type": "geo_shape",
+          "orientation": "counterclockwise"
         },
         "match_mapping_type": "string",
         "match": "geoLocationBox*"

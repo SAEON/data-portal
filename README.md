@@ -95,10 +95,10 @@ docker run --name postgis -v /var/lib/catalogue-api:/var/lib/catalogue-api --net
 docker run --net=catalogue --name pgadmin -p 5001:80 -e PGADMIN_DEFAULT_EMAIL=<your email address> -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
 
 # Start an Elasticsearch server (you can connect to Elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
-docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.10.2
 
 # Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)
-docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.0
+docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.2
 
 # Start the Node.js proxy server
 npm run start:proxy
