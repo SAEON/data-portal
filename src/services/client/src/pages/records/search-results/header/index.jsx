@@ -81,6 +81,7 @@ export default ({
             setCursors={setCursors}
             loading={loading}
             cursors={cursors}
+            pageSize={pageSize}
             catalogue={catalogue}
           />
         </Toolbar>
