@@ -9,9 +9,9 @@ export const CATALOGUE_CLIENT_DEFAULT_NOTICES = process.env.CATALOGUE_CLIENT_DEF
 export const CATALOGUE_SOURCE_CODE_URI =
   process.env.CATALOGUE_SOURCE_CODE_URI || 'https://github.com/SAEONData/catalogue'
 
-export const CATALOGUE_CURATOR_CONTACT = process.env.CATALOGUE_CURATOR_CONTACT || 'leo@saeon.ac.za'
+export const CATALOGUE_CURATOR_CONTACT = process.env.CATALOGUE_CURATOR_CONTACT || 'curation@saeon.ac.za'
 
-export const CATALOGUE_LEGAL_CONTACT = process.env.CATALOGUE_LEGAL_CONTACT || 'bryan@saeon.ac.za'
+export const CATALOGUE_LEGAL_CONTACT = process.env.CATALOGUE_LEGAL_CONTACT || ''
 
 export const CATALOGUE_TECHNICAL_CONTACT =
   process.env.CATALOGUE_TECHNICAL_CONTACT || 'zach@saeon.ac.za'
