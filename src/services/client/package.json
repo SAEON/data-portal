@@ -96,6 +96,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/eslint-plugin": "^7.12.13",
     "eslint": "^7.20.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",

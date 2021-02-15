@@ -23,7 +23,7 @@ module.exports = () => {
   const output = 'dist'
 
   return {
-    devtool: mode === 'production' ? undefined : 'inline-source-map',
+    devtool: mode === 'production' ? undefined : 'eval',
     target: 'web',
     mode,
     entry: {

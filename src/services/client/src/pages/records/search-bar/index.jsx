@@ -19,8 +19,8 @@ export default () => {
             <Grid style={{ display: 'flex' }} item>
               <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>
                 <img
+                  height={80}
                   style={{
-                    height: 80,
                     display: isMobile ? 'none' : 'inherit',
                   }}
                   src="/saeon-logo-white.png"
