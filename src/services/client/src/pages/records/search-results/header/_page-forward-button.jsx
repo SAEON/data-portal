@@ -2,7 +2,6 @@ import { IconButton } from '@material-ui/core'
 import { NavigateNext as PageForwardIcon } from '@material-ui/icons'
 
 export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
-  console.log(cursors?.currentPage, pageSize, catalogue?.records?.totalCount)
   return (
     <IconButton
       disabled={
