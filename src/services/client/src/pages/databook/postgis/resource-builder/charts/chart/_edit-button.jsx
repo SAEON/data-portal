@@ -12,6 +12,7 @@ import Draggable from 'react-draggable'
 import AceEditor from 'react-ace'
 import ReactEcharts from 'echarts-for-react'
 import Split from 'react-split'
+import SplitPane from 'react-split-pane'
 import clsx from 'clsx'
 import useStyles from './style'
 
@@ -67,7 +68,7 @@ export default () => {
           Custom Chart Creator
         </DialogTitle>
         <DialogContent>
-          <Split
+          {/* <Split
             className={clsx(classes.split)}
             sizes={[50, 50]}
             direction="horizontal"
@@ -75,7 +76,8 @@ export default () => {
             gutterStyle={(dimension, gutterSize, index) => {
               return { backgroundColor: 'rgb(200,200,200)', width: `${gutterSize}px` }
             }}
-          >
+          > */}
+          <SplitPane split="vertical">
             <div id="split-left" className={clsx(classes.splitItem)}>
               <AceEditor
                 // style={{ height: '90%', width: '90%' }}
@@ -152,7 +154,8 @@ export default () => {
                 }}
               />
             </div>
-          </Split>
+          </SplitPane>
+          {/* </Split> */}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
