@@ -25,7 +25,7 @@ const idHasMap = (id, records) => {
 
       cacheOfMappableItems[itemId] = Boolean(
         linkedResources?.find(
-          ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
+          ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
         )
       )
 
@@ -70,7 +70,7 @@ export default ({ catalogue }) => {
   const atlasLayersCount =
     catalogue?.summary
       .find(summary => summary['linkedResources.linkedResourceType.raw'])
-      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
+      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key?.toUpperCase() === 'QUERY')
       ?.doc_count || 0
 
   if (savedSearchLoading) {

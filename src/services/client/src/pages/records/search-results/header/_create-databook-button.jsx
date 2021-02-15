@@ -29,7 +29,7 @@ const idHasMap = (id, records) => {
 
       cacheOfLoadableItems[itemId] = Boolean(
         linkedResources?.find(
-          ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
+          ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
         )
       )
 
