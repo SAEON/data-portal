@@ -1,10 +1,10 @@
 import { useState, useContext } from 'react'
-import { Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './_context-menu'
 import RenameOperator from './_rename-operator'
-import { useTheme } from '@material-ui/core/styles'
+import useTheme from '@material-ui/core/styles/useTheme'
 import { context as databooksContext } from '../../context'
 
 export default ({ tableName, fields, tableSchema }) => {

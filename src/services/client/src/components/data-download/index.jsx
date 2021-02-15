@@ -1,15 +1,13 @@
 import { useState } from 'react'
-import {
-  Tooltip,
-  Button,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-} from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+import Typography from '@material-ui/core/Typography'
+import useTheme from '@material-ui/core/styles/useTheme'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import SimpleLink from '../link'
 import { CATALOGUE_API_ADDRESS } from '../../config'

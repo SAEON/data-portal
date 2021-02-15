@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
 // eslint-disable-next-line no-unused-vars
 export default makeStyles(theme => {

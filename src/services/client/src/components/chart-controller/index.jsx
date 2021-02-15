@@ -3,7 +3,7 @@ import WithGqlQuery from '../../hooks/with-gql-query'
 import Loading from '../loading'
 import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'
-import { Fade } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
 
 export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
   return (

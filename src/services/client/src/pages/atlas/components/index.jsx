@@ -1,11 +1,10 @@
-import { IconButton, Tooltip } from '@material-ui/core'
-import {
-  ExpandLess,
-  ExpandMore,
-  Visibility,
-  VisibilityOff,
-  Delete as DeleteIcon,
-} from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 export const DeleteLayer = ({ onClick }) => {
   return (

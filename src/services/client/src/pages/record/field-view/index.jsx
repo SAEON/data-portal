@@ -1,4 +1,5 @@
-import { Grid, Fade } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+import Fade from '@material-ui/core/Fade'
 import { isMobile } from 'react-device-detect'
 import Titles from './_titles'
 import Creators from './_creators'

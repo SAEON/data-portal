@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { context as databooksContext } from '../../context'
-import { Typography, Fade } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Fade from '@material-ui/core/Fade'
 import VirtualTable from '../../../../components/virtual-table'
 import Loading from '../../../../components/loading'
 import Header from './header'

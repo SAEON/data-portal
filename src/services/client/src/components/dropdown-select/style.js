@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core/styles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
 export default makeStyles(theme => {
   console.log('theme.palette', theme.palette)

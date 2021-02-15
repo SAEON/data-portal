@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 
 export default ({ title, uri }) => {
   const [state, setState] = useState({

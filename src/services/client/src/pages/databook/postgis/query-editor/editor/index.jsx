@@ -1,5 +1,6 @@
 import Ace from './_ace'
-import { IconButton, Tooltip } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 
 export default ({ editor, updateCacheFn, closeEditorFn, activeEditorRef, disableCloseBtn }) => (

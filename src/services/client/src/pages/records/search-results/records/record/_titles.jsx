@@ -1,5 +1,7 @@
 import { useHistory } from 'react-router-dom'
-import { CardContent, Typography, Link as MuiLink } from '@material-ui/core'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
 import clsx from 'clsx'
 import useStyles from './style'
 
@@ -10,7 +12,7 @@ export default ({ titles, id }) => {
   return (
     <CardContent className={clsx(classes.titleContent)}>
       <Typography
-        component={MuiLink}
+        component={Link}
         onClick={() => history.push(`/records/${id}`)}
         className={clsx(classes.title)}
         variant="h2"

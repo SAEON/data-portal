@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
-import { Toolbar, Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Toolbar from '@material-ui/core/Toolbar'
 import DeleteButton from './_delete-button'
 import ShareButton from './_share-button'
 import EditButton from './_edit-button'

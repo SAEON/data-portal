@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { useApolloClient, gql } from '@apollo/client'
-import { IconButton, Tooltip } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 import CloseIcon from 'mdi-react/CloseIcon'
 import { context as databookContext } from '../../../../../context'
 

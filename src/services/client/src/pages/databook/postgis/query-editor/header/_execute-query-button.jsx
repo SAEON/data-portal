@@ -1,8 +1,9 @@
-import { IconButton, Tooltip } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 import PlayIcon from 'mdi-react/PlayArrowIcon'
 import clsx from 'clsx'
 import useStyles from '../../../style'
-import { useTheme } from '@material-ui/core/styles'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({ onClick }) => {
   const theme = useTheme()

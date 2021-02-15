@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import Loading from '../../components/loading'
 import getUriState from '../../lib/fns/get-uri-state'
-import { Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 
 const components = {
   '': lazy(() => import('../home')),

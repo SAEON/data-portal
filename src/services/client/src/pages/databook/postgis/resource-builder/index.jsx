@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Dashboards from './dashboards'
 import Charts from './charts'
 import Filters from './filters'
-import { Fade } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
 
 export default () => {
   const [active, setActive] = useState('dashboards')

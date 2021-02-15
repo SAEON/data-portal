@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import Row from '../_row'
-import { Grid, Chip } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+import Chip from '@material-ui/core/Chip'
 import { context as globalContext } from '../../../contexts/global'
 import { useHistory } from 'react-router-dom'
 

@@ -1,4 +1,5 @@
-import { Grid, IconButton } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import Grid from '@material-ui/core/Grid'
 import CloseIcon from 'mdi-react/CloseIcon'
 import AutoComplete from '../autocomplete'
 import useStyles from './style.js'

@@ -1,8 +1,10 @@
-import { Card, CardContent, CardHeader, Typography, Chip, Grid } from '@material-ui/core'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardHeader from '@material-ui/core/CardHeader'
+import Typography from '@material-ui/core/Typography'
 import FlatPage from '../../components/flat-page'
 import useStyles from './style'
 import clsx from 'clsx'
-import { PACKAGE_DESCRIPTION, PACKAGE_KEYWORDS } from '../../config'
 
 export default () => {
   const classes = useStyles()

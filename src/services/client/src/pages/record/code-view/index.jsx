@@ -1,6 +1,7 @@
 import Row from '../_row'
-import { Grid, Fade } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Fade from '@material-ui/core/Fade'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({ codeView, json }) => {
   const theme = useTheme()

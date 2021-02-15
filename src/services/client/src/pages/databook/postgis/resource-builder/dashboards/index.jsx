@@ -6,8 +6,7 @@ import { gql } from '@apollo/client'
 import Loading from '../../../../../components/loading'
 import TabHeaders from './_tab-headers'
 import Dashboard from './dashboard'
-import { Fade } from '@material-ui/core'
-import { DataUsageRounded } from '@material-ui/icons'
+import Fade from '@material-ui/core/Fade'
 
 export default forwardRef((props, ref) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)

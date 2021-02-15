@@ -1,7 +1,10 @@
-import { Tabs, Tab, Avatar, Tooltip, Fade, IconButton } from '@material-ui/core'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Avatar from '@material-ui/core/Avatar'
+import Tooltip from '@material-ui/core/Tooltip'
+import Fade from '@material-ui/core/Fade'
 import useStyles from '../../../style'
 import clsx from 'clsx'
-import PlusIcon from 'mdi-react/PlusIcon'
 import CreateFilterButton from './_create-filter-button'
 
 export default ({ filters, activeTabIndex, setActiveTabIndex }) => {

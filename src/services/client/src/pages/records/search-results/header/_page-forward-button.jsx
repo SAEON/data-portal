@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { NavigateNext as PageForwardIcon } from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
+import PageForwardIcon from '@material-ui/icons/NavigateNext'
 
 export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
   return (

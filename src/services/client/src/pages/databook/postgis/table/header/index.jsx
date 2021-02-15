@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Toolbar } from '@material-ui/core'
+import Toolbar from '@material-ui/core/Toolbar'
 import useStyles from '../../../style'
 
 export default () => {

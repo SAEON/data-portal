@@ -1,4 +1,5 @@
-import { Typography, Link as MuiLink } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
 import { isMobile } from 'react-device-detect'
 import clsx from 'clsx'
 import useStyles from './style'
@@ -8,7 +9,7 @@ export default ({ doi }) => {
 
   return isMobile ? null : doi ? (
     <Typography
-      component={MuiLink}
+      component={Link}
       variant="overline"
       href={`https://doi.org/${doi}`}
       className={clsx(classes.title)}
