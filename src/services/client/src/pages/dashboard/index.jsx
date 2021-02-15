@@ -54,14 +54,7 @@ export default ({ id }) => {
         }
 
         const { layout, filters: filterIds, title, subtitle, description } = data.dashboard
-        const MenuProps = {
-          PaperProps: {
-            style: {
-              maxHeight: 48 * 4.5 + 8,
-              width: 250,
-            },
-          },
-        }
+
         return (
           <>
             <Grid container justify="center">

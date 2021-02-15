@@ -7,6 +7,7 @@
   "scripts": {
     "start": "nodemon --ext js,graphql,json --watch ./src --watch ../../packages/catalogue-search/src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --no-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --no-warnings --experimental-json-modules src",
+    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,mjs,cjs}\"",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
@@ -22,6 +23,9 @@
   },
   "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "eslint": "^7.20.0",
     "nodemon": "^2.0.7",
     "npm-check-updates": "^11.1.1",
     "prettier": "^2.2.1"

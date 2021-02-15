@@ -11,7 +11,7 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -30,7 +30,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: require('./src/services/client/package.json').dependencies.react,
+      version: require('./package.json').dependencies.react,
     },
   },
 }

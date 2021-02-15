@@ -52,11 +52,6 @@ export default {
       type: 'line',
       lineStyle: {
         color: '#008acd',
-      },
-    },
-    axisPointer: {
-      lineStyle: {
-        color: '#008acd',
         width: '1',
       },
       crossStyle: {
@@ -307,7 +302,6 @@ export default {
     left: 'right',
     itemHeight: 200,
     text: ['High', 'Low'],
-    itemHeight: 200,
     calculable: true,
   },
 
