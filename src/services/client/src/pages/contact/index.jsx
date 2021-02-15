@@ -5,11 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import FlatPage from '../../components/flat-page'
 import useStyles from './style'
 import clsx from 'clsx'
-import {
-  CATALOGUE_CURATOR_CONTACT,
-  CATALOGUE_TECHNICAL_CONTACT,
-  CATALOGUE_LEGAL_CONTACT,
-} from '../../config'
+import { CATALOGUE_CURATOR_CONTACT, CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 
 export default () => {
   const classes = useStyles()
@@ -21,13 +17,12 @@ export default () => {
           <CardHeader style={{ textAlign: 'center' }} title="Contact us" />
           <CardContent>
             <Typography className={clsx(classes.h2)} variant="h6">
-            Website and technical feedback
+              Website and technical feedback
             </Typography>
             <Typography className={clsx(classes.body)} variant="body2">
               {CATALOGUE_TECHNICAL_CONTACT.replace('@', ' [ at ] ')}
             </Typography>
 
-        
             <Typography className={clsx(classes.h2)} variant="h6">
               Technical contact
             </Typography>
