@@ -1,16 +1,20 @@
 import { useState } from 'react'
-import { Grid, IconButton, Tooltip } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from 'mdi-react/EditIcon'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Paper from '@material-ui/core/Paper'
 import Draggable from 'react-draggable'
 import AceEditor from 'react-ace'
 import ReactEcharts from 'echarts-for-react'
+import Split from 'react-split'
+import clsx from 'clsx'
+import useStyles from './style'
+
 function PaperComponent(props) {
   return (
     <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
@@ -21,6 +25,13 @@ function PaperComponent(props) {
 
 export default ({ id }) => {
   const [open, setOpen] = useState(false)
+  const [userJS, setUserJS] = useState(`
+{
+
+}
+`)
+  const [userOption, setUserOption] = useState({})
+  const classes = useStyles()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -56,27 +67,31 @@ export default ({ id }) => {
           Custom Chart Creator
         </DialogTitle>
         <DialogContent>
-          {/* Use splitview to allow for readjustable split dimensions of dialog */}
-          <Grid container>
-            <Grid item item xs={12} sm={6}>
+          <Split
+            className={clsx(classes.split)}
+            sizes={[50, 50]}
+            direction="horizontal"
+            cursor="col-resize"
+            gutterStyle={(dimension, gutterSize, index) => {
+              return { backgroundColor: 'rgb(200,200,200)', width: `${gutterSize}px` }
+            }}
+          >
+            <div id="split-left" className={clsx(classes.splitItem)}>
               <AceEditor
-                style={{ height: '90%', width: '90%' }}
+                // style={{ height: '90%', width: '90%' }}
+                height="600px"
+                width="auto"
                 placeholder="Placeholder Text"
                 mode="javascript"
                 theme="monokai"
                 name="blah2"
                 //   onLoad={this.onLoad}
-                //   onChange={this.onChange}
+                onChange={value => setUserJS(value)}
                 fontSize={14}
                 showPrintMargin={true}
                 showGutter={true}
                 highlightActiveLine={true}
-                value={`
-export default ({ config, data, title, description }) => {
-const namesField = config['series-names']
-const valuesFields = config['series-values']
-
-return <ReactEcharts theme={theme} option={{}} />`}
+                value={userJS}
                 setOptions={{
                   enableBasicAutocompletion: false,
                   enableLiveAutocompletion: false,
@@ -85,9 +100,21 @@ return <ReactEcharts theme={theme} option={{}} />`}
                   tabSize: 2,
                 }}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+              <button
+                onClick={() => {
+                  const newOption = eval(userJS)
+                  console.log('render userJS', userJS)
+                  console.log('render evalReturn', newOption)
+                  setUserOption(newOption)
+                }}
+              >
+                render
+              </button>
+            </div>
+
+            <div id="split-right" className={clsx(classes.splitItem)}>
               <ReactEcharts
+                style={{ height: '600px' }}
                 option={{
                   title: {
                     text: '某站点用户访问来源',
@@ -124,8 +151,8 @@ return <ReactEcharts theme={theme} option={{}} />`}
                   ],
                 }}
               />
-            </Grid>
-          </Grid>
+            </div>
+          </Split>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
