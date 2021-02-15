@@ -2,17 +2,17 @@ import { useContext, forwardRef, useState, useMemo, useEffect } from 'react'
 import { AtlasContext } from '../../../../state'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import {
-  Box,
-  Card,
-  TextField,
-  InputAdornment,
-  Typography,
-  IconButton,
-  Tooltip,
-} from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
-import { Search as SearchIcon, Close as CloseIcon, Add as AddIcon } from '@material-ui/icons'
+import Box from '@material-ui/core/Box'
+import Card from '@material-ui/core/Card'
+import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import useTheme from '@material-ui/core/styles/useTheme'
+import AddIcon from '@material-ui/icons/Add'
+import CloseIcon from '@material-ui/icons/Close'
+import SearchIcon from '@material-ui/icons/Search'
 import MessageDialogue from '../../../../../../components/message-dialogue'
 import Record from '../../../../../../pages/record'
 import Minisearch from 'minisearch'

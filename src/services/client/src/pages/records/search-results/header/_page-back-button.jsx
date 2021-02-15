@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { NavigateBefore as PageBackIcon } from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
+import PageBackIcon from '@material-ui/icons/NavigateBefore'
 
 export default ({ setCursors, loading, cursors, catalogue }) => {
   return (

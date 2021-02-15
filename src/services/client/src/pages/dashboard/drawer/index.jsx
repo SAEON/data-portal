@@ -1,6 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
-import { SwipeableDrawer, IconButton } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import FilterIcon from 'mdi-react/FilterOutlineIcon'
 import Filters from './_filters'
 import useStyles from '../style'
@@ -15,7 +16,7 @@ export default () => {
         onClick={() => {
           setOpen(!open)
         }}
-        className={open ? clsx(classes.iconActice) : clsx(classes.icon)}
+        className={open ? clsx(classes.iconActive) : clsx(classes.icon)}
       >
         <FilterIcon />
       </IconButton>

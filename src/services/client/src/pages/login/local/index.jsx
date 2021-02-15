@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Fade, Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Fade from '@material-ui/core/Fade'
 import Signup from './_sign-up'
 import Login from './_login'
 import getUriState from '../../../lib/fns/get-uri-state'

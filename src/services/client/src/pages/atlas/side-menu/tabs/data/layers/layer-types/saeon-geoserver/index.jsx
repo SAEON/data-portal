@@ -1,24 +1,20 @@
 import { forwardRef, useState } from 'react'
-import {
-  Card,
-  CardHeader,
-  AppBar,
-  Toolbar,
-  Typography,
-  Tooltip,
-  Collapse,
-  CardContent,
-  IconButton,
-  Box,
-} from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
-import {
-  DragIndicator,
-  Close as CloseIcon,
-  ZoomIn as ZoomInIcon,
-  VpnKey as KeyIcon,
-  BarChart as ViewDataIcon,
-} from '@material-ui/icons'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Tooltip from '@material-ui/core/Tooltip'
+import Collapse from '@material-ui/core/Collapse'
+import CardContent from '@material-ui/core/CardContent'
+import IconButton from '@material-ui/core/IconButton'
+import Box from '@material-ui/core/Box'
+import useTheme from '@material-ui/core/styles/useTheme'
+import DragIndicator from '@material-ui/icons/DragIndicator'
+import CloseIcon from '@material-ui/icons/Close'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import KeyIcon from '@material-ui/icons/VpnKey'
+import ViewDataIcon from '@material-ui/icons/BarChart'
 import QuickForm from '@saeon/quick-form'
 import MessageDialogue from '../../../../../../../../components/message-dialogue'
 import Slider from '../../../../../../../../components/slider'

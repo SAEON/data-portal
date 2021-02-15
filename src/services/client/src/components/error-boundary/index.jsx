@@ -1,8 +1,9 @@
-import { Link, DialogContentText } from '@material-ui/core'
 import { Component } from 'react'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import Link from '@material-ui/core/Link'
 import MessageDialogue from '../../components/message-dialogue'
 import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import style from './style'
 import clsx from 'clsx'
 

@@ -1,4 +1,5 @@
-import { CardContent, Typography } from '@material-ui/core'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
 import clsx from 'clsx'
 import useStyles from './style'
 
@@ -9,7 +10,7 @@ export default ({ immutableResource }) => {
   return (
     <CardContent className={clsx(classes.fileFormat)}>
       <Typography className={clsx(classes.fileFormatText)} variant="overline">
-        {`${_fileFormat.toUpperCase() === 'UNKNOWN' ? `Unknown data format` : _fileFormat} ${
+        {`${_fileFormat?.toUpperCase() === 'UNKNOWN' ? `Unknown data format` : _fileFormat} ${
           _archive === true ? '(Archive)' : ''
         }`.truncate(150)}
       </Typography>

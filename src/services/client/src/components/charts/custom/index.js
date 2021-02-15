@@ -1,18 +1,5 @@
-import { useEffect } from 'react'
 import Autocomplete from '../../../components/autocomplete'
 import DropdownSelect from '../../../components/dropdown-select'
-import {
-  TextField,
-  IconButton,
-  Divider,
-  Grid,
-  FormControl,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-} from '@material-ui/core'
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
-import DeleteIcon from '@material-ui/icons/Delete'
 
 export default {
   type: 'CUSTOM', // NOTE - this value must also be defined on the ChartType enum in the API
@@ -20,7 +7,7 @@ export default {
   /**
    * This is for reducing the amount of data saved
    * Discards unused columns. Note tha columns required
-   * for filtering shoulg NOT be filtered out
+   * for filtering should NOT be filtered out
    */
   saveFilter: (data, config) => {
     const cols = [config['series-names'], ...config['series-values']]

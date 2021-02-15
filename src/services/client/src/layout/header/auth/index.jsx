@@ -1,5 +1,5 @@
-import { CircularProgress } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import useTheme from '@material-ui/core/styles/useTheme'
 import { isMobile } from 'react-device-detect'
 import { context as authContext } from '../../../contexts/authentication'
 import Login from './_login'

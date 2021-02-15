@@ -1,5 +1,6 @@
-import { TextField, Checkbox } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab'
+import TextField from '@material-ui/core/TextField'
+import Checkbox from '@material-ui/core/Checkbox'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
 import CheckboxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'

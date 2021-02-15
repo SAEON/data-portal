@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
-import { IconButton, Menu } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import Menu from '@material-ui/core/Menu'
 import MenuIcon from 'mdi-react/MenuIcon'
 import navItems from './_nav-items'
 import NavItem from './_nav-item'

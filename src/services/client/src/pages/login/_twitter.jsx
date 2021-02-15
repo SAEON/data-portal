@@ -1,6 +1,7 @@
 import { CATALOGUE_API_ADDRESS } from '../../config'
 import TwitterIcon from 'mdi-react/TwitterIcon'
-import { Button, Tooltip } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
 import clsx from 'clsx'
 import useStyles from './style'
 

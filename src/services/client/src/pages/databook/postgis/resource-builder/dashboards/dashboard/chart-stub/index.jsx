@@ -1,6 +1,7 @@
 import RemoveChartButton from './_remove-chart-button'
 import ChartIcon from 'mdi-react/ChartBubbleIcon'
-import { Typography, Grid } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 import useStyles from './style'
 import clsx from 'clsx'
 import WithGqlQuery from '../../../../../../../hooks/with-gql-query'

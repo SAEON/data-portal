@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 
 export default ({ catalogue, style }) => {
   return (

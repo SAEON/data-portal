@@ -24,7 +24,7 @@ function PaperComponent(props) {
   )
 }
 
-export default ({ id }) => {
+export default () => {
   const [open, setOpen] = useState(false)
   const [userJS, setUserJS] = useState(`
 {

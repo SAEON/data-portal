@@ -9,7 +9,8 @@ import PostgisDataExplorer from './postgis'
 import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 import useStyles from './style'
 import clsx from 'clsx'
-import { Box, Typography } from '@material-ui/core'
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
 import { context as authContext } from '../../contexts/authentication'
 
 const POLLING_INTERVAL = 1000

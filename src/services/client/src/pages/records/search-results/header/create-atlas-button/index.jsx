@@ -1,6 +1,9 @@
 import { useState, useContext } from 'react'
-import { Tooltip, IconButton, CircularProgress, Fade } from '@material-ui/core'
-import { Explore as MapIcon } from '@material-ui/icons'
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Fade from '@material-ui/core/Fade'
+import MapIcon from '@material-ui/icons/Explore'
 import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
@@ -25,7 +28,7 @@ const idHasMap = (id, records) => {
 
       cacheOfMappableItems[itemId] = Boolean(
         linkedResources?.find(
-          ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
+          ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
         )
       )
 
@@ -70,7 +73,7 @@ export default ({ catalogue }) => {
   const atlasLayersCount =
     catalogue?.summary
       .find(summary => summary['linkedResources.linkedResourceType.raw'])
-      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key.toUpperCase() === 'QUERY')
+      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key?.toUpperCase() === 'QUERY')
       ?.doc_count || 0
 
   if (savedSearchLoading) {

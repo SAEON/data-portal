@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { List as ListIcon } from '@material-ui/icons'
+import ListIcon from '@material-ui/icons/List'
 import { context as globalContext } from '../../../../contexts/global'
 import ShareOrEmbed from '../../../../components/share-or-embed'
 import StyledBadge from './components/styled-badge'

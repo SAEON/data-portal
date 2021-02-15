@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { CATALOGUE_API_ADDRESS, CATALOGUE_CLIENT_ADDRESS } from '../../../config'
-import { Button, TextField, Tooltip } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Tooltip from '@material-ui/core/Tooltip'
 import useStyles from '../style'
 import clsx from 'clsx'
 

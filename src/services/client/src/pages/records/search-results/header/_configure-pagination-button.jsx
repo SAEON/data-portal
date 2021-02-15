@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import { Button, Menu, MenuItem, Tooltip } from '@material-ui/core'
-import { ArrowDropDown as ArrowDropDownIcon } from '@material-ui/icons'
+import Button from '@material-ui/core/Button'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Tooltip from '@material-ui/core/Tooltip'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
 const pageSizes = [
   10,

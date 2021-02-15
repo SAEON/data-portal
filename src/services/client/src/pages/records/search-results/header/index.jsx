@@ -1,5 +1,6 @@
-import { AppBar, Toolbar } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import useTheme from '@material-ui/core/styles/useTheme'
 import { isMobile } from 'react-device-detect'
 import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
@@ -81,6 +82,7 @@ export default ({
             setCursors={setCursors}
             loading={loading}
             cursors={cursors}
+            pageSize={pageSize}
             catalogue={catalogue}
           />
         </Toolbar>

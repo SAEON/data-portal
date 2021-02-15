@@ -6,9 +6,11 @@ import Loading from '../../components/loading'
 import Footer from '../../components/footer'
 import DashboardContextProvider from './context'
 import { gql } from '@apollo/client'
-import { AppBar, Grid, Toolbar, Card, Typography } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Grid from '@material-ui/core/Grid'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 import Layout from './layout'
-import Filters from './drawer/_filters'
 import useStyles from './style'
 import clsx from 'clsx'
 import FiltersDrawer from './drawer/index'
@@ -52,14 +54,7 @@ export default ({ id }) => {
         }
 
         const { layout, filters: filterIds, title, subtitle, description } = data.dashboard
-        const MenuProps = {
-          PaperProps: {
-            style: {
-              maxHeight: 48 * 4.5 + 8,
-              width: 250,
-            },
-          },
-        }
+
         return (
           <>
             <Grid container justify="center">

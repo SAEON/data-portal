@@ -1,8 +1,11 @@
 import { useContext } from 'react'
 import { MapContext } from '../../../../../../contexts/ol-react'
 import { AtlasContext } from '../../../../state'
-import { Typography, Box, Tooltip, IconButton } from '@material-ui/core'
-import { Add as AddIcon } from '@material-ui/icons'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
+import AddIcon from '@material-ui/icons/Add'
 import SaeonGeoserverLayer from './layer-types/saeon-geoserver'
 import BaseLayer from './layer-types/base-layer'
 

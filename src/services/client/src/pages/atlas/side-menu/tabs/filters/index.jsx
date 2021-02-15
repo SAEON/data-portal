@@ -1,4 +1,5 @@
-import { Typography, Box } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 
 export default () => {
   return (

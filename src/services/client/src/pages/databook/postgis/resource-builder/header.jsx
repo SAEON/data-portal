@@ -1,11 +1,14 @@
 import { forwardRef } from 'react'
-import { Toolbar, IconButton, Tooltip, Grid } from '@material-ui/core'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import Grid from '@material-ui/core/Grid'
 import useStyles from '../../style'
 import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
 import ChartsIcon from 'mdi-react/ChartBoxOutlineIcon'
 import FilterIcon from 'mdi-react/FilterOutlineIcon'
 import clsx from 'clsx'
-import { useTheme } from '@material-ui/core/styles'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default forwardRef(({ active, setActive }, ref) => {
   const theme = useTheme()

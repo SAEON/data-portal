@@ -1,7 +1,7 @@
-import { makeStyles, fade } from '@material-ui/core/styles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => {
-  console.log('theme', theme)
   return {
     layout: {
       backgroundColor: fade(theme.palette.common.white, 0.8),
@@ -41,7 +41,7 @@ export default makeStyles(theme => {
         backgroundColor: theme.palette.primary.light,
       },
     },
-    iconActice: {
+    iconActive: {
       float: 'right',
       color: theme.palette.common.white,
       backgroundColor: theme.palette.primary.light,

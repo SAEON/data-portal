@@ -1,15 +1,12 @@
-import { useContext, Fragment } from 'react'
+import { useContext } from 'react'
 import { context as dashboardContext } from '../context'
 import WithGqlQuery from '../../../hooks/with-gql-query'
 import { gql } from '@apollo/client'
 import Loading from '../../../components/loading'
 import DropdownSelect from '../../../components/dropdown-select'
-import useStyles from '../style'
-import clsx from 'clsx'
 import SearchIcon from '@material-ui/icons/Search'
 
 export default () => {
-  const classes = useStyles()
   const { selectedFilters, setSelectedFilters, filterIds } = useContext(dashboardContext)
   return (
     <>

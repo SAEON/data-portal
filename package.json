@@ -11,7 +11,6 @@
     "start:doi-resolver": "npm --prefix src/services/doi-resolver start",
     "************ REPOSITORY TOOLING **********": "",
     "doc": "doctoc README.md && doctoc src/packages/README.md && doctoc src/tools/README.md && doctoc src/services/client/README.md && doctoc src/services/api/README.md && doctoc src/services/proxy/README.md && doctoc platform/README.md",
-    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "bump-patch": "TC=utc node scripts/bump-patch.js",
@@ -19,9 +18,7 @@
     "update-git-snapshot": "git add .",
     "ncu": "ncu",
     "ncu -u": "ncu -u",
-    "************ GENERATORS **********": "",
-    "generate-npm-package": "npm --prefix src/generators/npm-package run plop",
-    "generate-react-client": "npm --prefix src/generators/react-client run plop",
+    "lint": "npm --prefix src/services/api run lint & npm --prefix src/services/client run lint",
     "************ PACKAGES **********": "",
     "build-all-packages": "TC=utc node scripts/build-all-packages.js",
     "check-dependency-updates": "TC=utc node scripts/manage-dependencies.js",
@@ -35,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run doc && npm run bump-patch && npm run prettier:changed && npm run lint && npm run update-git-snapshot"
+      "pre-commit": "npm run doc && npm run bump-patch && npm run prettier:changed && npm run update-git-snapshot"
     }
   },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
@@ -44,17 +41,19 @@
     "arg": "^5.0.0",
     "doctoc": "^2.0.0",
     "eslint": "^7.19.0",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^5.0.9",
     "npm-check-updates": "^11.1.1",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0"
   },
+<<<<<<< HEAD
   "dependencies": {
     "babel-eslint": "^10.1.0",
     "react-split-pane": "^0.1.92"
   },
+=======
+  "dependencies": {},
+>>>>>>> next
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SAEONData/catalogue.git"

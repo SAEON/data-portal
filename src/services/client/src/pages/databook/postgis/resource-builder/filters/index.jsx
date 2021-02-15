@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { context as databookContext } from '../../../context'
 import TabHeaders from './_tab-headers'
 import Filter from './filter'
-import { Fade } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
 
 export default forwardRef((props, ref) => {
   const { databook } = useContext(databookContext)

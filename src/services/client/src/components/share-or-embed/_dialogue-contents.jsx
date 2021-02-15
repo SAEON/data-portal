@@ -1,5 +1,6 @@
 import { useContext } from 'react'
-import { Fade, CircularProgress } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { context as globalContext } from '../../contexts/global'
 import Link from '../link'
 import { useEffect } from 'react'

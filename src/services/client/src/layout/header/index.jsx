@@ -1,5 +1,8 @@
 import { useContext } from 'react'
-import { AppBar, Toolbar, Typography, Link, Grid } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
 import { useLocation } from 'react-router-dom'
 import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
@@ -9,7 +12,7 @@ import useStyles from './style'
 import clsx from 'clsx'
 import { context as globalContext } from '../../contexts/global'
 import NavMenu from './nav'
-import { useTheme } from '@material-ui/core/styles'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
   const classes = useStyles()

@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
-import { IconButton, Dialog, DialogTitle, DialogContent, Tooltip, Badge } from '@material-ui/core'
-import { Info as InfoIcon } from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import Tooltip from '@material-ui/core/Tooltip'
+import Badge from '@material-ui/core/Badge'
+import InfoIcon from '@material-ui/icons/Info'
 
 export default ({
   iconProps,

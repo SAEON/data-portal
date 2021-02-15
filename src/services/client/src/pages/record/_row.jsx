@@ -1,6 +1,9 @@
 import { isMobile } from 'react-device-detect'
-import { Grid, Typography, Card, CardContent } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
 

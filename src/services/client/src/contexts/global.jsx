@@ -1,13 +1,13 @@
 import { createContext, forwardRef } from 'react'
 import QuickForm from '@saeon/quick-form'
 import getUriState from '../lib/fns/get-uri-state'
-import { Button } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import useTheme from '@material-ui/core/styles/useTheme'
 import Loading from '../components/loading'
 import { gql } from '@apollo/client'
 import WithGqlQuery from '../hooks/with-gql-query'
 import CookieConsent from 'react-cookie-consent'
-import { Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 
 export const context = createContext()
 

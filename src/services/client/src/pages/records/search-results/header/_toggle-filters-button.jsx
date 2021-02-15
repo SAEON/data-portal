@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { FilterList as FilterIcon } from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
+import FilterIcon from '@material-ui/icons/FilterList'
 
 export default ({ setShowSidebar, showSidebar }) => {
   return (

@@ -1,4 +1,5 @@
-import { Toolbar, Divider } from '@material-ui/core'
+import Divider from '@material-ui/core/Divider'
+import Toolbar from '@material-ui/core/Toolbar'
 import clsx from 'clsx'
 import useStyles from './style'
 import Title from './_title'

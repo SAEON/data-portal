@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
 import Layers from './layers'
 import Search from './search'
 

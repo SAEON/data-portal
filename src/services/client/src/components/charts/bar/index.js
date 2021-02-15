@@ -1,16 +1,14 @@
 import { useEffect } from 'react'
 import Autocomplete from '../../../components/autocomplete'
 import DropdownSelect from '../../../components/dropdown-select'
-import {
-  TextField,
-  IconButton,
-  Divider,
-  Grid,
-  FormControl,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-} from '@material-ui/core'
+import TextField from '@material-ui/core/TextField'
+import IconButton from '@material-ui/core/IconButton'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import DeleteIcon from '@material-ui/icons/Delete'
 

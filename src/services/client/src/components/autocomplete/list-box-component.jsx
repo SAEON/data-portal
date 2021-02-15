@@ -8,8 +8,9 @@ import {
   useRef,
   useEffect,
 } from 'react'
-import { useTheme } from '@material-ui/core/styles'
-import { useMediaQuery, ListSubheader } from '@material-ui/core'
+import useTheme from '@material-ui/core/styles/useTheme'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import ListSubheader from '@material-ui/core/ListSubheader'
 import { VariableSizeList } from 'react-window'
 
 const LISTBOX_PADDING = 8

@@ -1,6 +1,6 @@
 import Row from '../_row'
-import { Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import useTheme from '@material-ui/core/styles/useTheme'
 import DownloadButton from '../../../components/data-download'
 import { isMobile } from 'react-device-detect'
 

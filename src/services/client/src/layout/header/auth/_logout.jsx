@@ -1,4 +1,5 @@
-import { Link, Tooltip } from '@material-ui/core'
+import Tooltip from '@material-ui/core/Tooltip'
+import Link from '@material-ui/core/Link'
 import clsx from 'clsx'
 import useStyles from './style'
 import { CATALOGUE_API_ADDRESS } from '../../../config'

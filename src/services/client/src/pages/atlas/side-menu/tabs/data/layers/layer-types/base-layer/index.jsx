@@ -1,16 +1,15 @@
 import { forwardRef, memo } from 'react'
-import {
-  Card,
-  CardHeader,
-  AppBar,
-  Toolbar,
-  Typography,
-  Tooltip,
-  Collapse,
-  CardContent,
-  IconButton,
-} from '@material-ui/core'
-import { DragIndicator, Info as InfoIcon } from '@material-ui/icons'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Tooltip from '@material-ui/core/Tooltip'
+import Collapse from '@material-ui/core/Collapse'
+import CardContent from '@material-ui/core/CardContent'
+import IconButton from '@material-ui/core/IconButton'
+import DragIndicator from '@material-ui/icons/DragIndicator'
+import InfoIcon from '@material-ui/icons/Info'
 import QuickForm from '@saeon/quick-form'
 import Slider from '../../../../../../../../components/slider'
 import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'

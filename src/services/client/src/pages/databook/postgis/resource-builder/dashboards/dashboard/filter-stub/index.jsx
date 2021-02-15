@@ -1,15 +1,11 @@
 import RemoveFilterButton from './_remove-filter-button'
-import ChartIcon from 'mdi-react/ChartBubbleIcon'
-import { Typography, Grid } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 import useStyles from './style'
 import clsx from 'clsx'
 import WithGqlQuery from '../../../../../../../hooks/with-gql-query'
 import { gql } from '@apollo/client'
 
-const itemStyle = {
-  display: 'flex',
-  margin: 'auto',
-}
 export default ({ filterId, dashboard }) => {
   const classes = useStyles()
 

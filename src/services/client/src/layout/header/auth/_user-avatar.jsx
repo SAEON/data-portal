@@ -1,5 +1,5 @@
-import { Avatar } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Avatar from '@material-ui/core/Avatar'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({ userInfo, style }) => {
   const theme = useTheme()

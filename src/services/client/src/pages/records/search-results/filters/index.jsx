@@ -1,5 +1,6 @@
-import { Grid, Fade } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Fade from '@material-ui/core/Fade'
+import useTheme from '@material-ui/core/styles/useTheme'
 import TagFilter from './items/tag-filter'
 import ExtentFilter from './items/extent-filter'
 import useStyles from './style'

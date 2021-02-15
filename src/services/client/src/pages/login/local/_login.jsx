@@ -4,7 +4,10 @@ import {
   CATALOGUE_TECHNICAL_CONTACT,
   CATALOGUE_CLIENT_ADDRESS,
 } from '../../../config'
-import { Button, TextField, Typography, Box } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 import useStyles from '../style'
 import getUriState from '../../../lib/fns/get-uri-state'
 import clsx from 'clsx'

@@ -1,12 +1,10 @@
 import { useContext } from 'react'
-import {
-  Button,
-  CircularProgress,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Fade,
-} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import Fade from '@material-ui/core/Fade'
 import AddFilterIcon from 'mdi-react/FilterPlusOutlineIcon'
 import MessageDialogue from '../../../../../../components/message-dialogue'
 import Loading from '../../../../../../components/loading'
@@ -84,7 +82,6 @@ export default ({ dashboard }) => {
                             style={{ margin: '16px 0' }}
                             id={'add-filters-to-dashboard-list'}
                             options={[...data.databook.filters.map(({ id, name }) => name || id)]}
-                            setOption={selectedOption => update({ selectedOption })}
                             setOption={(selectedOption, i) => {
                               update({ selectedOption, selectedId: data.databook.filters[i].id })
                             }}
