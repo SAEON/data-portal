@@ -23,7 +23,7 @@ module.exports = () => {
   const output = 'dist'
 
   return {
-    devtool: 'inline-source-map',
+    devtool: mode === 'production' ? undefined : 'inline-source-map',
     target: 'web',
     mode,
     entry: {
@@ -102,32 +102,6 @@ module.exports = () => {
             },
           },
         },
-        // TODO - this definitely builds faster, but there are errors. Especially with external packages
-        // {
-        //   test: /\.(js|mjs|jsx)$/,
-        //   exclude: /(node_modules)/,
-        //   use: {
-        //     loader: "swc-loader",
-        //     options: {
-        //       jsc: {
-        //         parser: {
-        //           syntax: "ecmascript",
-        //           jsx: true,
-        //           dynamicImport: true,
-        //         },
-        //         transform: {
-        //           react: {
-        //             pragma: "React.createElement",
-        //             pragmaFrag: "React.Fragment",
-        //             throwIfNamespace: true,
-        //             development: false,
-        //             useBuiltins: false,
-        //           },
-        //         },
-        //       },
-        //     },
-        //   },
-        // },
         {
           test: /\.*css$/,
           use: ['style-loader', 'css-loader', 'sass-loader'],
