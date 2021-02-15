@@ -3,7 +3,8 @@ import Header from './header'
 import Filters from './filters'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
-import { Grid, Collapse } from '@material-ui/core'
+import Collapse from '@material-ui/core/Collapse'
+import Grid from '@material-ui/core/Grid'
 import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
 import Loading from '../../../components/loading'
@@ -125,7 +126,7 @@ export default ({ disableSidebar = false }) => {
 
         if (error) {
           throw new Error(
-            'We apologise for this unexpected error!. Error rendering search results: ' + error
+            `Error searching catalogue: ${error}\n\nPlease check Elasticsearch configuration`
           )
         }
 

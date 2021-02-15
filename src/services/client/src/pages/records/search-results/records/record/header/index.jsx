@@ -2,10 +2,10 @@ import { Toolbar, Divider } from '@material-ui/core'
 import clsx from 'clsx'
 import useStyles from './style'
 import Title from './_title'
-import AtlasButton from './atlas-button'
-import CitationButton from './_citation-button'
+import PreviewAtlasButton from '../../../../../../components/preview-atlas-button'
+import CitationButton from '../../../../../../components/citation-dialogue'
 import ToggleItemButton from './_toggle-item-button'
-import DatabookButton from './_databook-button'
+import CreateDatabookButton from '../../../../../../components/create-databook-button'
 import DataDownloadButton from '../../../../../../components/data-download'
 
 export default ({
@@ -25,8 +25,8 @@ export default ({
       style={{ display: 'flex', justifyContent: 'flex-end' }}
     >
       <Title {..._source} />
-      {showDatabook && <DatabookButton {..._source} />}
-      {showPreview && <AtlasButton {..._source} />}
+      {showDatabook && <CreateDatabookButton {..._source} />}
+      {showPreview && <PreviewAtlasButton {..._source} />}
       <CitationButton style={!showSelect && !showDownload ? { marginRight: 8 } : {}} {..._source} />
       {showDownload && (
         <DataDownloadButton

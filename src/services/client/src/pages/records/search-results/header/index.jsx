@@ -12,6 +12,7 @@ import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
 import CurrentPageInfo from './_current-page-info'
 import DownloadRecords from './_download-records-button'
+// import ResetFiltersButton from './_reset-filters-button'
 
 export default ({
   catalogue,
@@ -48,13 +49,16 @@ export default ({
           {!isMobile && <DownloadRecords catalogue={catalogue} />}
 
           {/* CREATE ATLAS */}
-          <CreateAtlasButton catalogue={catalogue} />
+          {!isMobile && <CreateAtlasButton catalogue={catalogue} />}
 
           {/* CREATE LIST */}
           <CreateListButton catalogue={catalogue} />
 
           {/* RESET SELECTION */}
           <ToggleSelectionButton catalogue={catalogue} />
+
+          {/* RESET FILTERS */}
+          {/* <ResetFiltersButton /> */}
 
           {/* PAGINATION CONFIG */}
           {!isMobile && <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />}

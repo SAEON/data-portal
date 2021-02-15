@@ -9,7 +9,9 @@ export default ({ immutableResource }) => {
   return (
     <CardContent className={clsx(classes.fileFormat)}>
       <Typography className={clsx(classes.fileFormatText)} variant="overline">
-        {`${_fileFormat} ${_archive === true ? '(Archive)' : ''}`.truncate(150)}
+        {`${_fileFormat.toUpperCase() === 'UNKNOWN' ? `Unknown data format` : _fileFormat} ${
+          _archive === true ? '(Archive)' : ''
+        }`.truncate(150)}
       </Typography>
     </CardContent>
   )

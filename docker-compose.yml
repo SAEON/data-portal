@@ -11,6 +11,10 @@ volumes:
     driver: local
   postgis:
     driver: local
+  data:
+    driver: local
+  tmp:
+    driver: local
 
 services:
   elasticsearch:
@@ -66,7 +70,8 @@ services:
       - $CATALOGUE_DOCKER_NETWORK      
 
   postgis:
-    container_name: postgis
+    image: $POSTGIS_IMAGE_NAME
+    container_name: $POSTGIS_CONTAINER_NAME
     restart: always
     build:
       context: src/services/postgis
@@ -80,7 +85,7 @@ services:
       - $POSTGIS_CONTAINER_HOST_PORT:$POSTGIS_PORT
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
-      - /var/lib/catalogue-api:/var/lib/catalogue-api
+      - data:/var/lib/catalogue-api
     networks:
       - $CATALOGUE_DOCKER_NETWORK      
 
@@ -108,6 +113,10 @@ services:
       context: src/services/api
       dockerfile: Dockerfile
       args:
+        POSTGIS_CONTAINER_NAME: $POSTGIS_CONTAINER_NAME
+        POSTGIS_IMAGE_NAME: $POSTGIS_IMAGE_NAME
+        CATALOGUE_DOCKER_DATA_VOLUME: $CATALOGUE_DOCKER_DATA_VOLUME
+        CATALOGUE_DOCKER_TMP_VOLUME: $CATALOGUE_DOCKER_TMP_VOLUME
         CATALOGUE_API_TWITTER_CLIENT_ID: $CATALOGUE_API_TWITTER_CLIENT_ID
         CATALOGUE_API_TWITTER_CLIENT_SECRET: $CATALOGUE_API_TWITTER_CLIENT_SECRET
         CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS: $CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS
@@ -148,8 +157,8 @@ services:
       - $CATALOGUE_API_CONTAINER_INTERNAL_PORT_MAPPING:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp:/tmp
-      - /var/lib/catalogue-api:/var/lib/catalogue-api
+      - tmp:/tmp/catalogue-api
+      - data:/var/lib/catalogue-api
     depends_on:
       - proxy
       - mongo

@@ -1,8 +1,7 @@
 import { join, normalize } from 'path'
-import { mkdirSync, existsSync, rmdirSync } from 'fs'
+import { mkdirSync, rmdirSync } from 'fs'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import ensureDirectory from './lib/ensure-directory.js'
-import { tmpdir } from 'os'
 import { config } from 'dotenv'
 config()
 
@@ -120,6 +119,8 @@ export const CATALOGUE_API_ODP_DEBUG_IDS = process.env.CATALOGUE_API_ODP_DEBUG_I
 
 export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || `http://localhost:9200`
 
+export const POSTGIS_IMAGE_NAME = process.env.POSTGIS_IMAGE_NAME || 'postgis'
+
 export const CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME =
   process.env.CATALOGUE_API_ELASTICSEARCH_TEMPLATE_NAME || 'saeon-odp'
 
@@ -127,30 +128,19 @@ export const CATALOGUE_API_ELASTICSEARCH_INDEX_NAME = `${CATALOGUE_API_ELASTICSE
   process.env.CATALOGUE_API_ELASTICSEARCH_INDEX_NAME || 'catalogue-search'
 }`
 
-export const CATALOGUE_API_TEMP_DIRECTORY =
-  process.env.CATALOGUE_API_TEMP_DIRECTORY || normalize(join(tmpdir(), 'catalogue-api'))
+export const CATALOGUE_DOCKER_TMP_VOLUME =
+  process.env.CATALOGUE_DOCKER_TMP_VOLUME || '/tmp/catalogue-api'
 
-export const CATALOGUE_API_DATA_DIRECTORY =
-  process.env.CATALOGUE_API_DATA_DIRECTORY || '/var/lib/catalogue-api/'
+export const CATALOGUE_API_TEMP_DIRECTORY = '/tmp/catalogue-api'
 
-try {
-  ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
-  mkdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
-  rmdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
-} catch (error) {
-  console.error(
-    'Please create directory',
-    CATALOGUE_API_DATA_DIRECTORY,
-    'that can be used by the current process'
-  )
-  process.exit(1)
-}
+export const CATALOGUE_DOCKER_DATA_VOLUME =
+  process.env.CATALOGUE_DOCKER_DATA_VOLUME || '/var/lib/catalogue-api'
+
+export const CATALOGUE_API_DATA_DIRECTORY = '/var/lib/catalogue-api'
 
 export const CATALOGUE_CLIENT_ID = process.env.CATALOGUE_CLIENT_ID || 'client.sess'
 
-if (!existsSync(CATALOGUE_API_TEMP_DIRECTORY)) {
-  mkdirSync(CATALOGUE_API_TEMP_DIRECTORY)
-}
+export const POSTGIS_CONTAINER_NAME = process.env.POSTGIS_CONTAINER_NAME || 'postgis'
 
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
@@ -158,6 +148,10 @@ console.log(
   'Configuration',
   Object.fromEntries(
     Object.entries({
+      POSTGIS_CONTAINER_NAME,
+      CATALOGUE_DOCKER_DATA_VOLUME,
+      CATALOGUE_DOCKER_TMP_VOLUME,
+      POSTGIS_IMAGE_NAME,
       CATALOGUE_API_DATA_DIRECTORY,
       CATALOGUE_API_INTERNAL_ADDRESS,
       CATALOGUE_API_INTERNAL_GQL_ADDRESS,
@@ -212,3 +206,35 @@ console.log(
     })
   )
 )
+
+/**
+ * Ensure temporary directory exists
+ */
+try {
+  ensureDirectory(CATALOGUE_API_TEMP_DIRECTORY)
+  mkdirSync(join(CATALOGUE_API_TEMP_DIRECTORY, '.test-write-permissions'))
+  rmdirSync(join(CATALOGUE_API_TEMP_DIRECTORY, '.test-write-permissions'))
+} catch (error) {
+  console.error(
+    'Please create directory',
+    CATALOGUE_API_TEMP_DIRECTORY,
+    'that can be used by the current process'
+  )
+  process.exit(1)
+}
+
+/**
+ * Ensure data directory exists
+ */
+try {
+  ensureDirectory(CATALOGUE_API_DATA_DIRECTORY)
+  mkdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
+  rmdirSync(join(CATALOGUE_API_DATA_DIRECTORY, '.test-write-permissions'))
+} catch (error) {
+  console.error(
+    'Please create directory',
+    CATALOGUE_API_DATA_DIRECTORY,
+    'that can be used by the current process'
+  )
+  process.exit(1)
+}

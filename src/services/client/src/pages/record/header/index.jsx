@@ -1,10 +1,13 @@
 import { useContext } from 'react'
-import { AppBar, Toolbar, Grid, Hidden } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Grid from '@material-ui/core/Grid'
+import Hidden from '@material-ui/core/Hidden'
 import DataDownloadButton from '../../../components/data-download'
 import { context as authorizationContext } from '../../../contexts/authorization'
-import AtlasButton from './_atlas-button'
-import DatabookButton from './_databook-button'
-import CitationButton from './_citation-button'
+import PreviewAtlasButton from '../../../components/preview-atlas-button'
+import CreateDatabookButton from '../../../components/create-databook-button'
+import CitationButton from '../../../components/citation-dialogue'
 import CodeViewButton from './_code-view-button'
 import Title from './_title'
 
@@ -20,10 +23,10 @@ export default _source => {
           </Grid>
 
           <Hidden xsDown>
-            <DatabookButton {..._source} />
-            <AtlasButton {..._source} />
+            <CreateDatabookButton {..._source} buttonSize="medium" />
+            <PreviewAtlasButton {..._source} buttonSize="medium" />
             {isAuthenticated && <CodeViewButton {..._source} />}
-            <CitationButton {..._source} />
+            <CitationButton {..._source} buttonSize="medium" />
           </Hidden>
 
           <DataDownloadButton color="primary" immutableResource={_source?.immutableResource} />

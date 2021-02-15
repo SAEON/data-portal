@@ -1,14 +1,22 @@
 import { spawn } from 'child_process'
-import { CATALOGUE_DOCKER_NETWORK, POSTGIS_DB, POSTGIS_HOST, POSTGIS_PORT } from '../config.js'
+import {
+  CATALOGUE_DOCKER_NETWORK,
+  POSTGIS_DB,
+  POSTGIS_HOST,
+  POSTGIS_PORT,
+  POSTGIS_IMAGE_NAME,
+  CATALOGUE_API_DATA_DIRECTORY,
+  CATALOGUE_DOCKER_DATA_VOLUME,
+} from '../config.js'
 
-export default async ({ tableName, username, password, filePath, schema, mntRoot = '/var' }) => {
+export default async ({ tableName, username, password, filePath, schema }) => {
   const raster2pgsql = spawn('docker', [
     'run',
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '-v',
-    `${mntRoot}:${mntRoot}`,
+    `${CATALOGUE_DOCKER_DATA_VOLUME}:${CATALOGUE_API_DATA_DIRECTORY}`,
     '--rm',
-    'postgis',
+    POSTGIS_IMAGE_NAME,
     'raster2pgsql',
     '-d', // Drop and recreate the table
     '-F', // Add filename column
@@ -29,7 +37,7 @@ export default async ({ tableName, username, password, filePath, schema, mntRoot
     `PGPASSWORD=${password}`,
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
     '--rm',
-    'postgis',
+    POSTGIS_IMAGE_NAME,
     'psql',
     '--dbname',
     POSTGIS_DB,

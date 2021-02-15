@@ -14,7 +14,7 @@ const DEBUG_IDS = CATALOGUE_API_ODP_DEBUG_IDS.split(',')
   .map(id => id.trim())
 
 if (DEBUG_IDS?.length) {
-  console.log('Debugging ODP integration ids', DEBUG_IDS)
+  console.debug('Debugging ODP integration ids', DEBUG_IDS)
 }
 
 const iterate = async ({ offset = 0, token }) => {
@@ -36,7 +36,7 @@ const iterate = async ({ offset = 0, token }) => {
   const data = odpResponseJson
     .map(({ id, doi, institution, collection, projects, schema, metadata, published }, i) => {
       if (DEBUG_IDS.includes(id)) {
-        console.log(id, JSON.stringify(odpResponseJson[i], null, 2))
+        console.debug(id, JSON.stringify(odpResponseJson[i], null, 2))
       }
 
       try {
@@ -60,7 +60,7 @@ const iterate = async ({ offset = 0, token }) => {
                 )
               ),
             }
-          : undefined // publised === false
+          : undefined // published === false
       } catch (error) {
         console.error(id, error.message)
         return undefined

@@ -24,7 +24,7 @@ export default ({ proxy }) => {
 
   defaultZoom = defaultZoom || proxy.getView().getZoom()
   defaultCenter = defaultCenter || proxy.getView().getCenter()
-  const [selectActive, setSelectActive] = useState(false)
+  const [selectActive, setSelectActive] = useState(true)
   const { global, setGlobal } = useContext(globalContext)
   const [extent, setExtent] = useState(global.extent)
 
@@ -74,6 +74,32 @@ export default ({ proxy }) => {
     const body = document.getElementsByTagName('body')[0]
     body.addEventListener('keydown', keydown)
     proxy.addLayer(layer)
+
+    /**
+     * start with selectActive
+     */
+    draw = new Draw({
+      source,
+      type: 'Circle',
+      geometryFunction: createBox(),
+    })
+
+    proxy.addInteraction(draw)
+
+    // Always create a fresh polygon
+    draw.on('drawstart', () => {
+      source.clear()
+    })
+
+    // On drawend, apply the filter
+    draw.on('drawend', e => {
+      const feat = e.feature
+      const geometry = feat.getGeometry()
+      setExtent(wkt.writeGeometry(geometry))
+    })
+
+    setSelectActive(true)
+
     return () => {
       proxy.removeInteraction(draw)
       proxy.removeLayer(layer)
@@ -132,7 +158,7 @@ export default ({ proxy }) => {
       <Tooltip title={'Clear the extent filter'}>
         <span>
           <IconButton
-            disabled={extent ? false : true}
+            disabled={extent || selectActive ? false : true}
             size="small"
             color="primary"
             onClick={() => {

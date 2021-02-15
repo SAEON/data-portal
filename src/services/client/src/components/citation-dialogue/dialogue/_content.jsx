@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import {
-  Button,
-  Dialog,
-  CircularProgress,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import { gql } from '@apollo/client'
-import WithGqlQuery from '../../hooks/with-gql-query'
-import Autocomplete from '../autocomplete'
+import WithGqlQuery from '../../../hooks/with-gql-query'
+import Autocomplete from '../../../components/autocomplete'
 
 const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'

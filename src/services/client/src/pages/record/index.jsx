@@ -39,7 +39,15 @@ export default ({ id }) => {
         }
 
         if (error) {
-          throw new Error(`Error retrieving record ${id}. ${error}`)
+          throw new Error(
+            `Error retrieving record ${id}\n\n${error}\n\nIt is likely that Elasticsearch has not been configured`
+          )
+        }
+
+        if (!data?.catalogue?.records?.nodes?.[0]?.metadata?._source) {
+          throw new Error(
+            `Sorry, we cannot find record "${id}". If you think that we SHOULD be able to find this record, please forward this message onto us so that we can look into why it appears to be missing.`
+          )
         }
 
         return (
