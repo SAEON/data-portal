@@ -12,7 +12,7 @@ export default ({ doi, buttonSize = 'small' }) => {
       <Dialogue doi={doi} open={open} setOpen={setOpen} />
       <Tooltip placement="left-start" title="Cite this record">
         <span>
-          <IconButton onClick={() => setOpen(!open)} size={buttonSize}>
+          <IconButton aria-label="Get citation" onClick={() => setOpen(!open)} size={buttonSize}>
             <CitationIcon />
           </IconButton>
         </span>

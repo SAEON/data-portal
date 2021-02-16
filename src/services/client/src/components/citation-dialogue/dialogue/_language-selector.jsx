@@ -23,6 +23,7 @@ export default ({ setCitationParams, citationParams, defaultLanguage }) => {
 
         return (
           <Autocomplete
+            aria-label="Select citation locale"
             label="Language"
             variant="outlined"
             setOption={value =>

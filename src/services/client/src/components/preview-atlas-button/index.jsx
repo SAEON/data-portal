@@ -28,12 +28,13 @@ export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
 
   return (
     <MessageDialogue
-      iconProps={{ size: buttonSize }}
+      iconProps={{ size: buttonSize, 'aria-label': 'Preview dataset as a map' }}
       icon={<PreviewIcon />}
       title={onClose => (
         <div style={{ display: 'flex' }}>
           <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
           <IconButton
+            aria-label="Close map"
             size="small"
             onClick={e => {
               e.stopPropagation()
