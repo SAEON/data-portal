@@ -4,14 +4,7 @@
     "field": "subjects.subject.raw",
     "sortOrder": "desc",
     "sortBy": "doc_count",
-    "path": "subjects",
-    "filter": {
-      "field": "subjects.subjectScheme.raw",
-      "includeIfMissingField": true,
-      "values": [
-        "SANS1878 keywordType general"
-      ]
-    }
+    "path": "subjects"
   },
   {
     "title": "Publication Year",

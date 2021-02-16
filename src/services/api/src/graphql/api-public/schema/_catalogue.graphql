@@ -12,6 +12,7 @@ input TermInput {
 input TermsFilterInput {
   field: String!
   values: [String!]!
+  includeIfMissingField: Boolean
 }
 
 input FieldInput {
