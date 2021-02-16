@@ -22,7 +22,13 @@ class ErrorBoundary extends Component {
     const { children, classes } = props
     const { error } = state
 
-    return error ? (
+    // NO APP ERROR
+    if (!error) {
+      return children
+    }
+
+    // APP ERROR
+    return (
       <MessageDialogue
         permanent
         hideIcon
@@ -54,8 +60,6 @@ class ErrorBoundary extends Component {
           </>
         }
       />
-    ) : (
-      <>{children}</>
     )
   }
 }
