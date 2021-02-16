@@ -72,6 +72,7 @@ export default ({
             <samp>{data.catalogue.records.nodes[0].citation}</samp>
             <DialogActions>
               <Button
+                aria-label="Copy citation"
                 disabled={error || loading}
                 onClick={() => {
                   navigator.clipboard.writeText(data.catalogue.records.nodes[0].citation)

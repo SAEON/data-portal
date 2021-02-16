@@ -129,7 +129,7 @@ export default ({
                         }}
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
-                      <Tooltip title={key} placement="top">
+                      <Tooltip title={key?.toUpperCase()} placement="top">
                         <Typography
                           style={{
                             overflow: 'hidden',
@@ -176,7 +176,7 @@ export default ({
                         }}
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                       />
-                      <Tooltip title={key} placement="top">
+                      <Tooltip title={key?.toUpperCase()} placement="top">
                         <Typography
                           style={{
                             overflow: 'hidden',

@@ -23,6 +23,7 @@ export default ({ setCitationParams, citationParams, defaultStyle }) => {
 
         return (
           <Autocomplete
+            aria-label="Select citation format"
             label="Style"
             variant="outlined"
             setOption={value =>

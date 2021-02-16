@@ -6,6 +6,7 @@ export default ({ codeView, toggleCodeView }) => {
   return (
     <Tooltip title="View raw metadata record (JSON)">
       <IconButton
+        aria-label="View raw (JSON) metadata"
         color={codeView ? 'primary' : 'default'}
         onClick={e => {
           e.stopPropagation()

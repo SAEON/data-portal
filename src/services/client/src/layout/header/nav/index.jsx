@@ -12,7 +12,11 @@ export default () => {
 
   return (
     <>
-      <IconButton onClick={e => setAnchorEl(anchorEl ? null : e.currentTarget)} color="inherit">
+      <IconButton
+        aria-label="Show navigation menu"
+        onClick={e => setAnchorEl(anchorEl ? null : e.currentTarget)}
+        color="inherit"
+      >
         <MenuIcon />
       </IconButton>
 

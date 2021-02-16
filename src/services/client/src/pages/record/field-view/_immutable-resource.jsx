@@ -2,9 +2,10 @@ import Row from '../_row'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import DownloadButton from '../../../components/data-download'
+import SimpleLink from '../../../components/link'
 import { isMobile } from 'react-device-detect'
 
-export default ({ immutableResource }) => {
+export default ({ immutableResource, rightsList }) => {
   const theme = useTheme()
   const { resourceDescription } = immutableResource
 
@@ -18,6 +19,24 @@ export default ({ immutableResource }) => {
           <DownloadButton size={36} immutableResource={immutableResource} />
         </span>
       )}
+
+      <div style={{ marginTop: theme.spacing(2) }} />
+
+      <div>
+        <Typography gutterBottom variant="overline">
+          <b>License</b>
+        </Typography>
+        {rightsList.map(rl => {
+          return (
+            <div key={rl.rightsURI}>
+              <Typography variant="body2">{rl.rights}</Typography>
+              <SimpleLink key={rl.rightsURI} uri={rl.rightsURI}>
+                <Typography variant="body2">{rl.rightsURI}</Typography>
+              </SimpleLink>
+            </div>
+          )
+        })}
+      </div>
     </Row>
   )
 }

@@ -11,7 +11,7 @@ import buildDsl from './dsl/index.js'
  * DON'T CHANGE
  */
 const FILTER_DELIMITER = '__FILTERED_BY__'
-const FILTER_VALUE_DELIMTER = ''
+const FILTER_VALUE_DELIMITER = ''
 
 /**
  * NOTE
@@ -51,9 +51,11 @@ export default async (_, args, ctx) => {
       fields.map(({ field, filter, path }) => {
         const { field: filterField, values: filterValues } = filter || {}
         const aggregationName = filterValues
-          ? `${field}${FILTER_DELIMITER}${filterValues.join(FILTER_VALUE_DELIMTER)}`
+          ? `${field}${FILTER_DELIMITER}${filterValues.join(FILTER_VALUE_DELIMITER)}`
           : field
         const dsl = {}
+
+        // TODO 'or' clause for when 'includeIfMissingField' is true
 
         /**
          * The path indicates that sub-documents are being searched
@@ -64,7 +66,7 @@ export default async (_, args, ctx) => {
          * But this means that when aggregating a sub-document, if one field
          * item matches then ALL items are returned!
          *
-         * Sub-documents get around this. If a 'path' (to a subdocument) is
+         * Sub-documents get around this. If a 'path' (to a sub-document) is
          * included in the args, then the aggregation is on sub-documents
          */
         if (path) {

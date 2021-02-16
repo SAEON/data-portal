@@ -2,14 +2,16 @@ import { useState, useEffect, useContext } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import IconButton from '@material-ui/core/IconButton'
 import Card from '@material-ui/core/Card'
-import CropIcon from '@material-ui/icons/CropSquare'
-import CloseIcon from '@material-ui/icons/Close'
+import CropIcon from 'mdi-react/EditIcon'
+import CloseIcon from 'mdi-react/CloseIcon'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
 import { context as globalContext } from '../../../../../../../contexts/global'
+import useTheme from '@material-ui/core/styles/useTheme'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const wkt = new WKT()
 
@@ -18,6 +20,7 @@ var defaultZoom
 var defaultCenter
 
 export default ({ proxy }) => {
+  const theme = useTheme()
   const source = new VectorSource({ wrapX: false })
   const layer = new VectorLayer({
     id: `${nanoid()}-drawLayer`,
@@ -27,7 +30,7 @@ export default ({ proxy }) => {
 
   defaultZoom = defaultZoom || proxy.getView().getZoom()
   defaultCenter = defaultCenter || proxy.getView().getCenter()
-  const [selectActive, setSelectActive] = useState(true)
+  const [selectActive, setSelectActive] = useState(false)
   const { global, setGlobal } = useContext(globalContext)
   const [extent, setExtent] = useState(global.extent)
 
@@ -78,31 +81,6 @@ export default ({ proxy }) => {
     body.addEventListener('keydown', keydown)
     proxy.addLayer(layer)
 
-    /**
-     * start with selectActive
-     */
-    draw = new Draw({
-      source,
-      type: 'Circle',
-      geometryFunction: createBox(),
-    })
-
-    proxy.addInteraction(draw)
-
-    // Always create a fresh polygon
-    draw.on('drawstart', () => {
-      source.clear()
-    })
-
-    // On drawend, apply the filter
-    draw.on('drawend', e => {
-      const feat = e.feature
-      const geometry = feat.getGeometry()
-      setExtent(wkt.writeGeometry(geometry))
-    })
-
-    setSelectActive(true)
-
     return () => {
       proxy.removeInteraction(draw)
       proxy.removeLayer(layer)
@@ -119,18 +97,19 @@ export default ({ proxy }) => {
         right: 0,
         zIndex: 1,
         margin: '10px 10px 0 0',
-        padding: 2,
-        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        padding: theme.spacing(1),
+        backgroundColor: fade(theme.palette.common.white, 0.9),
       }}
     >
       <Tooltip title={'Filter by bounding box'}>
         <IconButton
+          aria-label="Toggle extent filter draw tool"
           size="small"
-          color={selectActive ? 'primary' : 'inherit'}
           onClick={() => {
             const isActive = !selectActive
             if (isActive) {
               draw = new Draw({
+                freehand: true,
                 source,
                 type: 'Circle',
                 geometryFunction: createBox(),
@@ -155,29 +134,32 @@ export default ({ proxy }) => {
             setSelectActive(isActive)
           }}
         >
-          <CropIcon fontSize="small" />
+          <CropIcon
+            style={{ color: selectActive ? theme.palette.success.main : theme.palette.action }}
+          />
         </IconButton>
       </Tooltip>
-      <Tooltip title={'Clear the extent filter'}>
-        <span>
-          <IconButton
-            disabled={extent || selectActive ? false : true}
-            size="small"
-            color="primary"
-            onClick={() => {
-              setExtent(undefined)
-              setSelectActive(false)
-              proxy.removeInteraction(draw)
-              source.clear()
-              const view = proxy.getView()
-              view.setZoom(defaultZoom)
-              view.setCenter(defaultCenter)
-            }}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        </span>
-      </Tooltip>
+      {extent && (
+        <Tooltip title={'Clear the extent filter'}>
+          <span>
+            <IconButton
+              aria-label="Remove extent filter"
+              size="small"
+              onClick={() => {
+                setExtent(undefined)
+                setSelectActive(false)
+                proxy.removeInteraction(draw)
+                source.clear()
+                const view = proxy.getView()
+                view.setZoom(defaultZoom)
+                view.setCenter(defaultCenter)
+              }}
+            >
+              <CloseIcon style={{ color: theme.palette.error.dark }} />
+            </IconButton>
+          </span>
+        </Tooltip>
+      )}
     </Card>
   )
 }

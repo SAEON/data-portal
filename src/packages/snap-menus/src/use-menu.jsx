@@ -5,8 +5,8 @@ import context from './context.js'
 
 /**
  * Module level cache of refs
- * This object is updated everytime
- * a <SnapMenu /> is rendered
+ * Updated every time the
+ * component is called
  */
 const refs = {}
 
@@ -32,6 +32,9 @@ const getDefaultPosition = () => {
  * Export a React Hook
  */
 export default ({ id }) => {
+  const ref = useRef()
+  refs[id] = ref
+
   const {
     PORTAL,
     PORTAL_MARGIN_TOP,
@@ -39,8 +42,6 @@ export default ({ id }) => {
     PORTAL_MARGIN_BOTTOM,
     PORTAL_MARGIN_LEFT,
   } = useContext(context)
-  const ref = useRef()
-  refs[id] = ref
 
   return props => (
     <SnapMenu

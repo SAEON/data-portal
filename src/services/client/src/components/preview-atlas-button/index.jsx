@@ -10,7 +10,7 @@ import Loading from '../../components/loading'
 
 const Map = lazy(() => import('./_map'))
 
-export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
+export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small' }) => {
   const theme = useTheme()
   const title = titles[0].title
 
@@ -28,12 +28,13 @@ export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
 
   return (
     <MessageDialogue
-      iconProps={{ size: buttonSize }}
+      iconProps={{ size: buttonSize, 'aria-label': 'Preview dataset as a map' }}
       icon={<PreviewIcon />}
       title={onClose => (
         <div style={{ display: 'flex' }}>
           <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
           <IconButton
+            aria-label="Close map"
             size="small"
             onClick={e => {
               e.stopPropagation()
@@ -61,7 +62,7 @@ export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
     >
       <DialogContent style={{ margin: 0, padding: 0, height: window.innerHeight - 200 }}>
         <Suspense fallback={<Loading />}>
-          <Map resourceURL={resourceURL} title={title} id={id} />
+          <Map geoLocations={geoLocations} resourceURL={resourceURL} title={title} id={id} />
         </Suspense>
       </DialogContent>
     </MessageDialogue>

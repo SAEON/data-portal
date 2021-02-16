@@ -45,11 +45,17 @@ export default ({
       >
         <span>
           {children ? (
-            <Button onClick={() => setOpen(!open)} {...props} startIcon={<DownloadIcon />}>
+            <Button
+              aria-label="Download data"
+              onClick={() => setOpen(!open)}
+              {...props}
+              startIcon={<DownloadIcon />}
+            >
               {children}
             </Button>
           ) : (
             <IconButton
+              aria-label="Download data"
               onClick={() => setOpen(!open)}
               disabled={downloadURL === PLACEHOLDER_URI}
               size={IconButtonSize}
@@ -78,6 +84,7 @@ export default ({
         </DialogContent>
         <DialogActions>
           <SimpleLink
+            aria-label="Agree to terms"
             download={resourceDescription || 'Unknown resource'}
             style={{ display: 'block' }}
             uri={downloadURL}
