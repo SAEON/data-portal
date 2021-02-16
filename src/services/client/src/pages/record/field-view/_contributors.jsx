@@ -16,10 +16,13 @@ export default ({ contributors }) => (
       <div key={contributor.name}>
         <Typography gutterBottom variant="body2">
           <sup>[{i + 1}]</sup>&nbsp;
-          {contributor.contributorType
-            ?.replace(/([A-Z])/g, ' $1')
-            .trim()
-            .toUpperCase()}{' '}
+          <b>
+            {contributor.contributorType
+              ?.replace(/([A-Z])/g, ' $1')
+              .trim()
+              .toUpperCase()}
+          </b>
+          {': '}
           {contributor.affiliation?.map(aff => aff.affiliation)}
         </Typography>
       </div>
