@@ -11,7 +11,6 @@ import Descriptions from './_descriptions'
 import Subjects from './_subjects'
 import LinkedResources from './_linked-resources'
 import Identifiers from './_identifiers'
-import RightsList from './_rights-list'
 import ResourceType from './_resource-type'
 import ImmutableResource from './_immutable-resource'
 
@@ -28,18 +27,29 @@ export default ({ codeView, ..._source }) => {
         <Grid item lg={10} xl={8}>
           <Fade key="field-view" in={!codeView}>
             <Grid container direction="column" justify="space-evenly" alignItems="stretch">
+              {/* TITLE */}
               {_source.titles?.length && <Titles {..._source} />}
-              {_source.immutableResource && <ImmutableResource {..._source} />}
+              {/* AUTHOR */}
               {_source.creators?.length && <Creators {..._source} />}
-              {_source.rightsList?.length && <RightsList {..._source} />}
-              {_source.geoLocations?.length && <GeoLocations {..._source} />}
-              {_source.dates?.length && <Dates {..._source} />}
-              {_source.publisher && <Publisher {..._source} />}
+              {/* CONTRIBUTORS */}
               {_source.contributors?.length && <Contributors {..._source} />}
+              {/* PUBLISHER */}
+              {_source.publisher && <Publisher {..._source} />}
+              {/* DESCRIPTIONS */}
               {_source.descriptions?.length && <Descriptions {..._source} />}
-              {_source.linkedResources?.length && <LinkedResources {..._source} />}
+              {/* DOWNLOAD */}
+              {_source.immutableResource && <ImmutableResource {..._source} />}
+              {/* SPATIAL COVERAGE */}
+              {_source.geoLocations?.length && <GeoLocations {..._source} />}
+              {/* TEMPORAL COVERAGE */}
+              {_source.dates?.length && <Dates {..._source} />}
+              {/* RESOURCE TYPE */}
               {<ResourceType {..._source} />}
+              {/* KEYWORDS */}
               {_source.subjects?.length && <Subjects {..._source} />}
+              {/* RESOURCES */}
+              {_source.linkedResources?.length && <LinkedResources {..._source} />}
+              {/* IDENTIFIERS */}
               {_source.identifiers?.length && <Identifiers {..._source} />}
             </Grid>
           </Fade>
