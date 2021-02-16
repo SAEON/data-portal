@@ -64,7 +64,7 @@ export default async (_, args, ctx) => {
          * But this means that when aggregating a sub-document, if one field
          * item matches then ALL items are returned!
          *
-         * Sub-documents get around this. If a 'path' (to a subdocument) is
+         * Sub-documents get around this. If a 'path' (to a sub-document) is
          * included in the args, then the aggregation is on sub-documents
          */
         if (path) {

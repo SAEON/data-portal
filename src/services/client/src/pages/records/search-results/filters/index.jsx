@@ -18,7 +18,7 @@ import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
  * DON'T CHANGE
  */
 const FILTER_DELIMITER = '__FILTERED_BY__'
-const FILTER_VALUE_DELIMTER = ''
+const FILTER_VALUE_DELIMITER = ''
 
 export default ({ catalogue }) => {
   const classes = useStyles()
@@ -38,7 +38,7 @@ export default ({ catalogue }) => {
             const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
             const { values: allowedValues = undefined } = filter
             const aggregationName = allowedValues
-              ? `${field}${FILTER_DELIMITER}${allowedValues.join(FILTER_VALUE_DELIMTER)}`
+              ? `${field}${FILTER_DELIMITER}${allowedValues.join(FILTER_VALUE_DELIMITER)}`
               : field
             const items = catalogue?.summary.find(obj => {
               const agg = Object.entries(obj).find(([key]) => key === aggregationName)

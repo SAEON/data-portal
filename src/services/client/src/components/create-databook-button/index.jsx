@@ -48,6 +48,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     >
       <span>
         <IconButton
+          aria-label="Create databook"
           size={buttonSize}
           style={
             isAllowed

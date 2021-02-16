@@ -28,27 +28,38 @@ export default ({ codeView, ..._source }) => {
           <Fade key="field-view" in={!codeView}>
             <Grid container direction="column" justify="space-evenly" alignItems="stretch">
               {/* TITLE */}
-              {_source.titles?.length && <Titles {..._source} />}
+              {Boolean(_source.titles?.length) && <Titles {..._source} />}
+
               {/* AUTHOR */}
-              {_source.creators?.length && <Creators {..._source} />}
+              {Boolean(_source.creators?.length) && <Creators {..._source} />}
+
               {/* CONTRIBUTORS */}
-              {_source.contributors?.length && <Contributors {..._source} />}
+              {Boolean(_source.contributors?.length) && <Contributors {..._source} />}
+
               {/* PUBLISHER */}
               {_source.publisher && <Publisher {..._source} />}
+
               {/* DESCRIPTIONS */}
-              {_source.descriptions?.length && <Descriptions {..._source} />}
+              {Boolean(_source.descriptions?.length) && <Descriptions {..._source} />}
+
               {/* DOWNLOAD */}
               {_source.immutableResource && <ImmutableResource {..._source} />}
+
               {/* SPATIAL COVERAGE */}
-              {_source.geoLocations?.length && <GeoLocations {..._source} />}
+              {Boolean(_source.geoLocations?.length) && <GeoLocations {..._source} />}
+
               {/* TEMPORAL COVERAGE */}
-              {_source.dates?.length && <Dates {..._source} />}
+              {Boolean(_source.dates?.length) && <Dates {..._source} />}
+
               {/* RESOURCE TYPE */}
               {<ResourceType {..._source} />}
+
               {/* KEYWORDS */}
-              {_source.subjects?.length && <Subjects {..._source} />}
+              {Boolean(_source.subjects?.length) && <Subjects {..._source} />}
+
               {/* RESOURCES */}
-              {_source.linkedResources?.length && <LinkedResources {..._source} />}
+              {Boolean(_source.linkedResources?.length) && <LinkedResources {..._source} />}
+
               {/* IDENTIFIERS */}
               {_source.identifiers?.length && <Identifiers {..._source} />}
             </Grid>

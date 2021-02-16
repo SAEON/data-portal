@@ -17,6 +17,7 @@ export default ({ subjects }) => {
           .map(subject => (
             <Grid item key={subject.subject}>
               <Chip
+                aria-label="Click to search for records with this keyword"
                 size="small"
                 color="primary"
                 clickable
