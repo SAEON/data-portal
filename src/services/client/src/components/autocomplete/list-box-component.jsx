@@ -57,7 +57,7 @@ export default forwardRef(({ children, ...other }, ref) => {
             return <div ref={ref} {...props} {...outerProps} />
           })}
           innerElementType={forwardRef((props, ref) => {
-            props.style.height = undefined //STEVEN: closest cause to the extra row's worth of height issue that I can find
+            props.style.height = props.style.height - itemSize //STEVEN: closest cause to the extra row's worth of height issue that I can find
             return <ul ref={ref} {...props} />
           })}
           itemSize={index => getChildSize(itemData[index])}
