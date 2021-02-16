@@ -3,12 +3,8 @@ import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { isMobile } from 'react-device-detect'
-import clsx from 'clsx'
-import useStyles from './style'
 
 export default ({ results }) => {
-  const classes = useStyles()
-
   return (
     <Grid container item xs={12}>
       {/* Results */}
@@ -30,7 +26,7 @@ export default ({ results }) => {
       {/* NO Results */}
       {!results.length && (
         <Grid item xs={12} style={isMobile ? { padding: '16px 16px 0 16px' } : {}}>
-          <Card className={clsx(classes.card)} variant="outlined">
+          <Card variant="outlined">
             <Typography
               style={{ margin: 20, display: 'block', textAlign: 'center' }}
               variant="overline"
