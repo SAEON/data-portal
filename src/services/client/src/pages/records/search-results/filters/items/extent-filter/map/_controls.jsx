@@ -20,19 +20,19 @@ var defaultZoom
 var defaultCenter
 
 export default ({ proxy }) => {
+  const [selectActive, setSelectActive] = useState(false)
+  const { global, setGlobal } = useContext(globalContext)
+  const [extent, setExtent] = useState(global.extent)
   const theme = useTheme()
+
+  defaultZoom = defaultZoom || proxy.getView().getZoom()
+  defaultCenter = defaultCenter || proxy.getView().getCenter()
   const source = new VectorSource({ wrapX: false })
   const layer = new VectorLayer({
     id: `${nanoid()}-drawLayer`,
     title: 'Draw layer',
     source,
   })
-
-  defaultZoom = defaultZoom || proxy.getView().getZoom()
-  defaultCenter = defaultCenter || proxy.getView().getCenter()
-  const [selectActive, setSelectActive] = useState(false)
-  const { global, setGlobal } = useContext(globalContext)
-  const [extent, setExtent] = useState(global.extent)
 
   /**
    * Manage the extent state locally for a snappier UI
@@ -135,7 +135,9 @@ export default ({ proxy }) => {
           }}
         >
           <CropIcon
-            style={{ color: selectActive ? theme.palette.success.main : theme.palette.action }}
+            style={{
+              color: selectActive ? theme.palette.success.main : theme.palette.text.secondary,
+            }}
           />
         </IconButton>
       </Tooltip>

@@ -3,7 +3,6 @@ import Header from './header'
 import Filters from './filters'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
-import Collapse from '@material-ui/core/Collapse'
 import Grid from '@material-ui/core/Grid'
 import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
@@ -12,6 +11,7 @@ import WithGqlQuery from '../../../hooks/with-gql-query'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
+import MobileSideMenu from './_side-menu'
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -154,29 +154,35 @@ export default ({ disableSidebar = false }) => {
               }}
             >
               <Grid container direction="row" justify="center">
-                {loading ? (
+                {/* SEARCH LOADING */}
+                {loading && (
                   <Grid item xs={12} style={{ position: 'relative' }}>
                     <Loading />
                   </Grid>
-                ) : (
+                )}
+
+                {/* SEARCH RESULTS & HEADER */}
+                {!loading && (
                   <>
-                    {isMobile ? (
-                      // Mobile
+                    {/* MOBILE */}
+                    {isMobile && (
                       <>
-                        {disableSidebar ? null : (
-                          <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
-                            <Grid item xs={12}>
-                              <Filters catalogue={data?.catalogue} />
-                            </Grid>
-                          </Collapse>
+                        {!disableSidebar && (
+                          <MobileSideMenu
+                            setShowSidebar={setShowSidebar}
+                            showSidebar={showSidebar}
+                            data={data}
+                          />
                         )}
 
                         <Grid item xs style={{ flexGrow: 1 }}>
                           <Records results={results} />
                         </Grid>
                       </>
-                    ) : (
-                      // Tablet +
+                    )}
+
+                    {/* LARGER SCREENS */}
+                    {!isMobile && (
                       <Grid
                         item
                         xs={12}
