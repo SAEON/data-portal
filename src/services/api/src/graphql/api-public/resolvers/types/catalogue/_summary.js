@@ -4,8 +4,8 @@ import buildDsl from './dsl/index.js'
  * NOTE
  *
  * The aggregations allow for specifying sub-paths,
- * however the terms query only uses top level. This is
- * possible as sub-documents have "include_in_parent" = true
+ * however the terms query does not use document fragments (path).
+ * This is possible as sub-documents have "include_in_parent" = true
  * as part of the index mappings settings. But this could
  * result in unexpected query returns in some circumstances.
  *
@@ -15,7 +15,7 @@ import buildDsl from './dsl/index.js'
  * this is unlikely.
  *
  * If this DOES occur, then the query that matches on subject scheme
- * will need to be adjusted
+ * will need to be adjusted (term I think)
  */
 
 export default async (_, args, ctx) => {
