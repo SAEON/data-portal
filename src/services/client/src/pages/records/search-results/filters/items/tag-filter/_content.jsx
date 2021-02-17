@@ -12,15 +12,25 @@ import useTheme from '@material-ui/core/styles/useTheme'
 
 const LIST_SIZE = 3
 
-export default ({ filteredResults, currentContext, field, boost, sortBy, sortOrder, terms }) => {
+export default ({ results, activeFilters, filterId, field, boost, sortBy, sortOrder, terms }) => {
   const [showAll, toggleShowAll] = useState(false)
   const { setGlobal } = useContext(globalContext)
   const theme = useTheme()
 
-  const sortedResults = useMemo(() => {
-    return filteredResults
-      ? [...filteredResults].sort(
-          ({ key: aKey, doc_count: aDocCount }, { key: bKey, doc_count: bDocCount }) => {
+  const { sortedResults, currentContext } = useMemo(() => {
+    const termValues = activeFilters?.map(({ value }) => value) || []
+
+    const currentContext = []
+    const sortedResults = results
+      ? [...results]
+          .filter(({ key, doc_count }) => {
+            if (termValues.includes(key.toString())) {
+              currentContext.push({ key, doc_count })
+              return false
+            }
+            return true
+          })
+          .sort(({ key: aKey, doc_count: aDocCount }, { key: bKey, doc_count: bDocCount }) => {
             let sort
             if (sortBy === 'key') {
               sort = aKey > bKey ? 1 : aKey === bKey ? 0 : -1
@@ -28,16 +38,23 @@ export default ({ filteredResults, currentContext, field, boost, sortBy, sortOrd
               sort = aDocCount > bDocCount ? 1 : aDocCount === bDocCount ? 0 : -1
             }
             return sortOrder === 'asc' ? sort * 1 : sort * -1
-          }
-        )
+          })
       : undefined
-  }, [filteredResults, sortBy, sortOrder])
+
+    return {
+      currentContext,
+      sortedResults,
+    }
+  }, [results, sortBy, sortOrder, activeFilters])
 
   return (
     <Card variant="outlined">
       <Grid container item xs={12} spacing={0}>
         {/* SELECTED FILTERS */}
-        {currentContext
+        {(currentContext.length
+          ? currentContext
+          : activeFilters.map(({ value }) => ({ key: value }))
+        )
           .sort(({ key: a }, { key: b }) => (a > b ? -1 : b > a ? 1 : 0))
           .map(({ key }) => {
             key = typeof key === 'number' ? `${key}` : key
@@ -48,18 +65,18 @@ export default ({ filteredResults, currentContext, field, boost, sortBy, sortOrd
                     style={{ alignSelf: 'baseline' }}
                     size="small"
                     color="primary"
-                    checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
-                    onChange={() => {
-                      if (terms?.map(({ value }) => value)?.includes(key)) {
-                        setGlobal({
-                          terms: terms?.filter(({ value }) => value !== key),
-                        })
-                      } else {
-                        setGlobal({
-                          terms: [...new Set([...terms, { field, boost, value: key }])],
-                        })
-                      }
-                    }}
+                    checked={activeFilters?.map(({ value }) => value)?.includes(key) ? true : false}
+                    onChange={() =>
+                      setGlobal({
+                        terms: terms.filter(({ value, filterId: _id }) => {
+                          if (filterId !== _id) {
+                            return true
+                          } else {
+                            return value !== key
+                          }
+                        }),
+                      })
+                    }
                     inputProps={{ 'aria-label': 'primary checkbox' }}
                   />
                   <Tooltip title={key?.toUpperCase()} placement="top">
@@ -98,15 +115,15 @@ export default ({ filteredResults, currentContext, field, boost, sortBy, sortOrd
                     style={{ alignSelf: 'baseline', display: 'flex' }}
                     size="small"
                     color="primary"
-                    checked={terms?.map(({ value }) => value)?.includes(key) ? true : false}
+                    checked={activeFilters?.map(({ value }) => value)?.includes(key) ? true : false}
                     onChange={() => {
-                      if (terms?.map(({ value }) => value)?.includes(key)) {
+                      if (activeFilters?.map(({ value }) => value)?.includes(key)) {
                         setGlobal({
                           terms: terms?.filter(({ value }) => value !== key),
                         })
                       } else {
                         setGlobal({
-                          terms: [...new Set([...terms, { field, boost, value: key }])],
+                          terms: [...new Set([...terms, { field, boost, value: key, filterId }])],
                         })
                       }
                     }}

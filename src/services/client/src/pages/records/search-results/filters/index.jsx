@@ -20,8 +20,7 @@ export default ({ catalogue }) => {
         </Grid>
 
         {/* CONFIGURABLE FILTERS */}
-        {CATALOGUE_CLIENT_FILTER_CONFIG.map((fieldDefinition, i) => {
-          const { id, title, field, boost, sortBy, sortOrder } = fieldDefinition
+        {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost, sortBy, sortOrder }, i) => {
           const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
           const items = catalogue?.summary.find(obj => {
             const agg = Object.entries(obj).find(([key]) => key === id)
@@ -38,6 +37,7 @@ export default ({ catalogue }) => {
                       }
                     : {}
                 }
+                id={id}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
                 field={field}

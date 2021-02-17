@@ -111,7 +111,7 @@ export default ({ disableSidebar = false }) => {
         ids,
         dois,
         extent,
-        terms,
+        terms: terms.map(({ field, boost, value }) => ({ field, boost, value })),
         text,
         size: pageSize,
         after: cursors.end,
