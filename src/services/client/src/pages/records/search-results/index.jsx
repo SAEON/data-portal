@@ -100,11 +100,12 @@ export default ({ disableSidebar = false }) => {
       variables={{
         fields: [
           {
+            id: 'internal-1',
             field: 'linkedResources.linkedResourceType.raw',
             path: 'linkedResources',
           },
-          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field, path, filters }) => {
-            return { field, path, filters }
+          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, field, path, filters }) => {
+            return { id, field, path, filters }
           }),
         ],
         ids,

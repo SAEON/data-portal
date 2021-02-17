@@ -1,5 +1,6 @@
 [
   {
+    "id": "keywords-filter",
     "title": "Keywords",
     "field": "subjects.subject.raw",
     "sortOrder": "desc",
@@ -14,31 +15,37 @@
     }]
   },
   {
+    "id": "publication-year-filter",
     "title": "Publication Year",
     "field": "publicationYear",
     "sortOrder": "desc"
   },
   {
+    "id": "publisher-filter",
     "title": "Publisher",
     "field": "publisher.raw"
   },
   {
+    "id": "creators-filter",
     "title": "Creators",
     "field": "creators.name.raw",
     "path": "creators"
   },
   {
+    "id": "data-format-filter",
     "title": "Data format",
     "field": "immutableResource._fileFormat.raw",
     "sortBy": "doc_count",
     "sortOrder": "desc"
   },
   {
+    "id": "data-provider-filter",
     "title": "Data provider",
     "field": "institution.raw",
     "sortOrder": "asc"
   },
   {
+    "id": "collection-filter",
     "title": "Collection",
     "field": "collection.raw",
     "sortOrder": "asc"

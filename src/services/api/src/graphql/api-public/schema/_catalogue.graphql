@@ -16,6 +16,8 @@ input TermsFilterInput {
 }
 
 input FieldInput {
+  # An SH1 hash of the entire field object as defined on the client
+  id: ID!
   # Name of field to aggregate on (this is probably a .raw field)
   field: String!
   # Aggregations are performed on sub-documents

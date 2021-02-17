@@ -3,19 +3,6 @@ import buildDsl from './dsl/index.js'
 /**
  * NOTE
  *
- * These values needs to match the delimiter
- * defined on the client for the results filters.
- *
- * DON'T CHANGE
- * DON'T CHANGE
- * DON'T CHANGE
- */
-const FILTER_DELIMITER = '__FILTERED_BY__'
-const FILTER_VALUE_DELIMITER = ''
-
-/**
- * NOTE
- *
  * The aggregations allow for specifying sub-paths,
  * however the terms query only uses top level. This is
  * possible as sub-documents have "include_in_parent" = true
@@ -48,23 +35,8 @@ export default async (_, args, ctx) => {
   const dsl = {
     size: 0,
     aggs: Object.fromEntries(
-      fields.map(({ field, filter, path }) => {
+      fields.map(({ id, field, filters, path }) => {
         const dsl = {}
-
-        /**
-         * The aggregationName is used by the client to identify which query result
-         * is which. For example. the client could specify two subjects aggregations
-         * with different filters. These have to be uniquely named to come back as
-         * separate results.
-         *
-         * Names are different according to the filters used
-         *
-         * NOTE - if you change this code you will probably break the client
-         */
-        const { values: filterValues } = filter || {}
-        const aggregationName = filterValues
-          ? `${field}${FILTER_DELIMITER}${filterValues.join(FILTER_VALUE_DELIMITER)}`
-          : field
 
         /**
          * The path indicates that sub-documents are being searched
@@ -81,9 +53,9 @@ export default async (_, args, ctx) => {
         if (path) {
           dsl.nested = { path }
           dsl.aggs = {
-            [aggregationName]: {
+            [id]: {
               aggs: {
-                [aggregationName]: {
+                [id]: {
                   terms: {
                     field,
                     size,
@@ -95,7 +67,7 @@ export default async (_, args, ctx) => {
           }
         } else {
           dsl.aggs = {
-            [aggregationName]: {
+            [id]: {
               terms: {
                 field,
                 size,
@@ -112,38 +84,55 @@ export default async (_, args, ctx) => {
          * filters, on top of the different aggregation structure
          * w/wo path. Including a superfluous 'exists' filter
          * simplifies this
+         *
+         * NOTE filters are 'AND' bound. i.e. ALL conditions have
+         * to be met
          */
         let _filter
-        if (filter) {
-          const { field: filterField, includeIfMissingField = undefined } = filter
-          if (includeIfMissingField) {
-            _filter = {
-              bool: {
-                should: [
+        if (filters) {
+          _filter = {
+            bool: {
+              must: [],
+            },
+          }
+          filters.forEach(
+            ({ field: filterField, values: filterValues, includeIfMissingField = undefined }) => {
+              if (includeIfMissingField) {
+                _filter.bool.must = [
+                  ..._filter.bool.must,
                   {
                     bool: {
-                      must_not: {
-                        exists: {
-                          field: filterField,
+                      should: [
+                        {
+                          bool: {
+                            must_not: {
+                              exists: {
+                                field: filterField,
+                              },
+                            },
+                          },
                         },
-                      },
+                        {
+                          terms: {
+                            [filterField]: filterValues,
+                          },
+                        },
+                      ],
                     },
                   },
+                ]
+              } else {
+                _filter.bool.must = [
+                  ..._filter.bool.must,
                   {
                     terms: {
                       [filterField]: filterValues,
                     },
                   },
-                ],
-              },
+                ]
+              }
             }
-          } else {
-            _filter = {
-              terms: {
-                [filterField]: filterValues,
-              },
-            }
-          }
+          )
         } else {
           _filter = {
             exists: {
@@ -152,20 +141,18 @@ export default async (_, args, ctx) => {
           }
         }
 
-        console.log(JSON.stringify(_filter))
-
         /**
          * The filter is put in a different place on the
          * aggregation query depending on if the aggregation
          * is across sub-documents (path === true) or not
          */
         if (path) {
-          dsl.aggs[aggregationName].filter = _filter
+          dsl.aggs[id].filter = _filter
         } else {
           dsl.filter = _filter
         }
 
-        return [aggregationName, dsl]
+        return [id, dsl]
       })
     ),
   }
