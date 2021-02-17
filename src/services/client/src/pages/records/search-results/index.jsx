@@ -103,8 +103,8 @@ export default ({ disableSidebar = false }) => {
             field: 'linkedResources.linkedResourceType.raw',
             path: 'linkedResources',
           },
-          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field, path, filter }) => {
-            return { field, path, filter }
+          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field, path, filters }) => {
+            return { field, path, filters }
           }),
         ],
         ids,

@@ -3,7 +3,7 @@ import buildDsl from './dsl/index.js'
 /**
  * NOTE
  *
- * These values needs to match the delimeter
+ * These values needs to match the delimiter
  * defined on the client for the results filters.
  *
  * DON'T CHANGE
@@ -49,13 +49,22 @@ export default async (_, args, ctx) => {
     size: 0,
     aggs: Object.fromEntries(
       fields.map(({ field, filter, path }) => {
-        const { field: filterField, values: filterValues } = filter || {}
+        const dsl = {}
+
+        /**
+         * The aggregationName is used by the client to identify which query result
+         * is which. For example. the client could specify two subjects aggregations
+         * with different filters. These have to be uniquely named to come back as
+         * separate results.
+         *
+         * Names are different according to the filters used
+         *
+         * NOTE - if you change this code you will probably break the client
+         */
+        const { values: filterValues } = filter || {}
         const aggregationName = filterValues
           ? `${field}${FILTER_DELIMITER}${filterValues.join(FILTER_VALUE_DELIMITER)}`
           : field
-        const dsl = {}
-
-        // TODO 'or' clause for when 'includeIfMissingField' is true
 
         /**
          * The path indicates that sub-documents are being searched
@@ -98,22 +107,52 @@ export default async (_, args, ctx) => {
 
         /**
          * Even if a filter is not specified, a simple
-         * 'exists' filter is still provided. Otherwise
+         * 'exists' filter is still required. Otherwise
          * there is a different aggregation structure w/wo
          * filters, on top of the different aggregation structure
-         * w/wo path
+         * w/wo path. Including a superfluous 'exists' filter
+         * simplifies this
          */
-        const _filter = filter
-          ? {
+        let _filter
+        if (filter) {
+          const { field: filterField, includeIfMissingField = undefined } = filter
+          if (includeIfMissingField) {
+            _filter = {
+              bool: {
+                should: [
+                  {
+                    bool: {
+                      must_not: {
+                        exists: {
+                          field: filterField,
+                        },
+                      },
+                    },
+                  },
+                  {
+                    terms: {
+                      [filterField]: filterValues,
+                    },
+                  },
+                ],
+              },
+            }
+          } else {
+            _filter = {
               terms: {
                 [filterField]: filterValues,
               },
             }
-          : {
-              exists: {
-                field,
-              },
-            }
+          }
+        } else {
+          _filter = {
+            exists: {
+              field,
+            },
+          }
+        }
+
+        console.log(JSON.stringify(_filter))
 
         /**
          * The filter is put in a different place on the
