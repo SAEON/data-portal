@@ -12,8 +12,8 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import useStyles from '../style'
 import clsx from 'clsx'
-import { context as globalContext } from '../../../../../../contexts/global'
-import Loading from '../../../../../../components/loading'
+import { context as globalContext } from '../../../../../contexts/global'
+import Loading from '../../../../../components/loading'
 
 const Map = lazy(() => import('./map'))
 

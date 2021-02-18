@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react'
+import { useState, useEffect, useContext, useRef, lazy, Suspense } from 'react'
 import Header from './header'
 import Filters from './filters'
 import Records from './records'
@@ -11,7 +11,8 @@ import WithGqlQuery from '../../../hooks/with-gql-query'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
-import MobileSideMenu from './_side-menu'
+
+const MobileSideMenu = lazy(() => import('./_side-menu'))
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -104,9 +105,11 @@ export default ({ disableSidebar = false }) => {
             field: 'linkedResources.linkedResourceType.raw',
             path: 'linkedResources',
           },
-          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, field, path, filters }) => {
-            return { id, field, path, filters }
-          }),
+          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(
+            ({ id, field, path, filters, sortBy, sortOrder }) => {
+              return { id, field, path, filters, sortBy, sortOrder }
+            }
+          ),
         ],
         ids,
         dois,
@@ -169,11 +172,13 @@ export default ({ disableSidebar = false }) => {
                     {isMobile && (
                       <>
                         {!disableSidebar && (
-                          <MobileSideMenu
-                            setShowSidebar={setShowSidebar}
-                            showSidebar={showSidebar}
-                            data={data}
-                          />
+                          <Suspense fallback={<Loading />}>
+                            <MobileSideMenu
+                              setShowSidebar={setShowSidebar}
+                              showSidebar={showSidebar}
+                              data={data}
+                            />
+                          </Suspense>
                         )}
 
                         <Grid item xs style={{ flexGrow: 1 }}>

@@ -1,8 +1,8 @@
 import Grid from '@material-ui/core/Grid'
 import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
-import TagFilter from './items/tag-filter'
-import ExtentFilter from './items/extent-filter'
+import TagFilter from './tag-filter'
+import ExtentFilter from './extent-filter'
 import useStyles from './style'
 import clsx from 'clsx'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
@@ -20,7 +20,7 @@ export default ({ catalogue }) => {
         </Grid>
 
         {/* CONFIGURABLE FILTERS */}
-        {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost, sortBy, sortOrder }, i) => {
+        {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }, i) => {
           const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
           const items = catalogue?.summary.find(obj => {
             const agg = Object.entries(obj).find(([key]) => key === id)
@@ -38,8 +38,6 @@ export default ({ catalogue }) => {
                     : {}
                 }
                 id={id}
-                sortBy={sortBy}
-                sortOrder={sortOrder}
                 field={field}
                 title={title}
                 boost={boost}

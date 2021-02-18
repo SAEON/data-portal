@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
-import { context as globalContext } from '../../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../contexts/global'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 /**
@@ -18,7 +18,7 @@ export default ({ activeFilters, filterId }) => {
   const { terms } = global
 
   const sortedValues = activeFilters.sort(({ value: a }, { value: b }) =>
-    a > b ? -1 : b > a ? 1 : 0
+    a > b ? 1 : b > a ? -1 : 0
   )
 
   return sortedValues.map(({ value }) => {

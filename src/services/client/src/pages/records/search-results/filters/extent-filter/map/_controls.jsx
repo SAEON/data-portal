@@ -9,7 +9,7 @@ import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
-import { context as globalContext } from '../../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../contexts/global'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 

@@ -23,6 +23,10 @@ input FieldInput {
   # Aggregations are performed on sub-documents
   path: String
   filters: [TermsFilterInput]
+  # Either _key (to sort by term) or _count (to sort by term frequency). Default _count
+  sortBy: String
+  # 'asc' or 'desc'. Default 'desc'
+  sortOrder: String
 }
 
 type Catalogue {

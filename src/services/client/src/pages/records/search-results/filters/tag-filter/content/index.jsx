@@ -9,7 +9,7 @@ import AvailableFilters from './_available-filters'
 
 const LIST_SIZE = 3
 
-export default ({ results, activeFilters, filterId, field, boost, sortBy, sortOrder }) => {
+export default ({ results, activeFilters, filterId, field, boost }) => {
   const [showAll, toggleShowAll] = useState(false)
 
   return (
@@ -32,8 +32,6 @@ export default ({ results, activeFilters, filterId, field, boost, sortBy, sortOr
           field={field}
           boost={boost}
           filterId={filterId}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
           activeFilters={activeFilters}
           showAll={showAll}
           results={results}

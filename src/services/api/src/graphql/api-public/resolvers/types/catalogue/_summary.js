@@ -31,11 +31,11 @@ export default async (_, args, ctx) => {
     limit: size,
   } = args
 
-  const order = { _key: 'asc', _count: 'desc' }
   const dsl = {
     size: 0,
     aggs: Object.fromEntries(
-      fields.map(({ id, field, filters, path }) => {
+      fields.map(({ id, field, filters, path, sortBy = '_count', sortOrder = 'desc' }) => {
+        const order = { [sortBy]: sortOrder }
         const dsl = {}
 
         /**

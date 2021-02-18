@@ -1,41 +1,17 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import Checkbox from '@material-ui/core/Checkbox'
 import Grid from '@material-ui/core/Grid'
-import { context as globalContext } from '../../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../../contexts/global'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({
-  showAll,
-  results,
-  LIST_SIZE,
-  activeFilters,
-  field,
-  boost,
-  filterId,
-  sortBy,
-  sortOrder,
-}) => {
+export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filterId }) => {
   const { global, setGlobal } = useContext(globalContext)
   const { terms } = global
   const theme = useTheme()
 
-  const availableFilters = useMemo(() => {
-    const sortedResults = [...results].sort(
-      ({ key: aKey, doc_count: aDocCount }, { key: bKey, doc_count: bDocCount }) => {
-        let sort
-        if (sortBy === 'key') {
-          sort = aKey > bKey ? 1 : aKey === bKey ? 0 : -1
-        } else {
-          sort = aDocCount > bDocCount ? 1 : aDocCount === bDocCount ? 0 : -1
-        }
-        return sortOrder === 'asc' ? sort * 1 : sort * -1
-      }
-    )
-
-    return showAll ? sortedResults : sortedResults.slice(0, LIST_SIZE)
-  }, [results, sortBy, sortOrder, LIST_SIZE, showAll])
+  const availableFilters = showAll ? results : results.slice(0, LIST_SIZE + activeFilters.length)
 
   return availableFilters.map(({ key, doc_count }) => {
     key = typeof key === 'number' ? `${key}` : key

@@ -1,21 +1,12 @@
 import { useState, useContext, lazy, Suspense } from 'react'
 import Collapse from '@material-ui/core/Collapse'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as globalContext } from '../../../../../contexts/global'
 import FilterHeader from './_header'
-import Loading from '../../../../../../components/loading'
+import Loading from '../../../../../components/loading'
 
 const FilterContent = lazy(() => import('./content'))
 
-export default ({
-  results,
-  id,
-  title,
-  field,
-  boost,
-  sortBy = 'key',
-  sortOrder = 'asc',
-  style = {},
-}) => {
+export default ({ results, id, title, field, boost, style = {} }) => {
   const { global } = useContext(globalContext)
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
@@ -35,8 +26,6 @@ export default ({
             filterId={id}
             field={field}
             boost={boost}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
             results={results}
             activeFilters={activeFilters}
           />
