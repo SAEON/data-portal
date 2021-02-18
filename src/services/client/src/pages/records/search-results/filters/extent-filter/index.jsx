@@ -62,24 +62,24 @@ export default ({ title }) => {
           </div>
         </Toolbar>
       </AppBar>
-      <Collapse style={{ width: '100%' }} key="result-list-collapse" in={!collapsed}>
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <Card>
-              <div style={{ position: 'relative' }}>
-                <Suspense
-                  fallback={
-                    <div style={{ height: 4 }}>
-                      <Loading />
-                    </div>
-                  }
-                >
+      <Collapse style={{ width: '100%' }} key="result-list-collapse" unmountOnExit in={!collapsed}>
+        <Suspense
+          fallback={
+            <div style={{ height: 4 }}>
+              <Loading />
+            </div>
+          }
+        >
+          <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <Card>
+                <div style={{ position: 'relative' }}>
                   <Map />
-                </Suspense>
-              </div>
-            </Card>
+                </div>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
+        </Suspense>
       </Collapse>
     </>
   )
