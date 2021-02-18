@@ -1,8 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, lazy, Suspense } from 'react'
 import Collapse from '@material-ui/core/Collapse'
 import { context as globalContext } from '../../../../../../contexts/global'
 import FilterHeader from './_header'
-import FilterContent from './_content'
+import Loading from '../../../../../../components/loading'
+
+const FilterContent = lazy(() => import('./content'))
 
 export default ({
   results,
@@ -20,7 +22,7 @@ export default ({
   const [collapsed, setCollapsed] = useState(!activeFilters.length)
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <FilterHeader title={title} style={style} collapsed={collapsed} setCollapsed={setCollapsed} />
       <Collapse
         style={{ width: '100%' }}
@@ -28,17 +30,18 @@ export default ({
         unmountOnExit
         in={!collapsed}
       >
-        <FilterContent
-          filterId={id}
-          terms={terms}
-          field={field}
-          boost={boost}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-          results={results}
-          activeFilters={activeFilters}
-        />
+        <Suspense fallback={<Loading />}>
+          <FilterContent
+            filterId={id}
+            field={field}
+            boost={boost}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            results={results}
+            activeFilters={activeFilters}
+          />
+        </Suspense>
       </Collapse>
-    </>
+    </div>
   )
 }

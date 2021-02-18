@@ -7,13 +7,20 @@ import useStyles from './style'
 import { isMobile } from 'react-device-detect'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../../config'
 
-export default () => {
+export default ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
 
   return (
-    <div style={{ position: 'relative' }}>
-      <Toolbar style={{ padding: 8 }} className={classes.toolbar}>
+    <div
+      style={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100%',
+      }}
+    >
+      <Toolbar style={{ padding: 8, width: '100%' }} className={classes.toolbar}>
         <Grid container spacing={0} justify="center">
           <Grid container item xs={12} sm={8} direction={isMobile ? 'column' : 'row'}>
             <Grid style={{ display: 'flex' }} item>
@@ -46,6 +53,9 @@ export default () => {
           </Grid>
         </Grid>
       </Toolbar>
+      <div style={{ display: 'flex', flexGrow: 1 }}>
+        <div style={{ display: 'block', width: '100%' }}>{children}</div>
+      </div>
     </div>
   )
 }

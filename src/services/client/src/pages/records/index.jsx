@@ -4,36 +4,30 @@ import { isMobile } from 'react-device-detect'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks/use-share-link'
 
-export default ({ showSearchBar = true, ...props } = {}) => {
+/**
+ * disableSidebar will hide the 'show filters' button on a mobile
+ *
+ * hideSidebar will remove the sidebar in desktop mode, but allow
+ * it to be toggled in mobile. This feature only applies when rendering
+ * in mobile
+ */
+export default ({ showSearchBar = true, disableSidebar = false } = {}) => {
   setShareLink({
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/records?disableSidebar=true`,
     params: true,
   })
 
-  return showSearchBar ? (
-    <div
-      style={{
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100%',
-      }}
-    >
-      <div style={{ display: 'flex' }}>
-        <div style={{ display: 'block', width: '100%' }}>
-          <SearchBar />
-        </div>
-      </div>
-      <div style={{ display: 'flex', flexGrow: 1 }}>
-        <div style={{ display: 'block', width: '100%' }}>
-          <Results
-            disableSidebar={props.disableSidebar || false}
-            hideSidebar={isMobile ? true : false}
-          />
-        </div>
-      </div>
-    </div>
-  ) : (
-    <Results disableSidebar={props.disableSidebar || false} hideSidebar={isMobile ? true : false} />
-  )
+  const hideSidebar = isMobile ? true : false
+
+  // With Search bar
+  if (showSearchBar) {
+    return (
+      <SearchBar>
+        <Results disableSidebar={disableSidebar} hideSidebar={hideSidebar} />
+      </SearchBar>
+    )
+  }
+
+  // Without search bar
+  return <Results disableSidebar={disableSidebar} hideSidebar={hideSidebar} />
 }

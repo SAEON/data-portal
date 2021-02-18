@@ -1,4 +1,4 @@
-import Drawer from '@material-ui/core/Drawer'
+import Drawer from '@material-ui/core/SwipeableDrawer'
 import Grid from '@material-ui/core/Grid'
 import Filters from './filters'
 
