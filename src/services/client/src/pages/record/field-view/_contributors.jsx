@@ -3,8 +3,8 @@ import Typography from '@material-ui/core/Typography'
 
 export default ({ contributors }) => (
   <Row title="Contributors">
-    {contributors.map(contributor => (
-      <div key={contributor.name}>
+    {contributors.map((contributor, i) => (
+      <div key={`${contributor.name}-${i}`}>
         <Typography gutterBottom variant="body2">
           <b>
             {contributor.contributorType

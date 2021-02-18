@@ -14,17 +14,14 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
   const theme = useTheme()
   const title = titles[0].title
 
-  const hasMap = Boolean(
-    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-  )
+  const linkedResource =
+    linkedResources?.find(
+      ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
+    ) || {}
 
-  if (!hasMap) {
+  if (!linkedResource) {
     return null
   }
-
-  const { resourceURL } = linkedResources.find(
-    ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
-  )
 
   return (
     <MessageDialogue
@@ -62,7 +59,7 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
     >
       <DialogContent style={{ margin: 0, padding: 0, height: window.innerHeight - 200 }}>
         <Suspense fallback={<Loading />}>
-          <Map geoLocations={geoLocations} resourceURL={resourceURL} title={title} id={id} />
+          <Map geoLocations={geoLocations} linkedResource={linkedResource} title={title} id={id} />
         </Suspense>
       </DialogContent>
     </MessageDialogue>
