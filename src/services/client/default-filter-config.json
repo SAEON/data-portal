@@ -40,8 +40,8 @@
     "id": "data-format-filter",
     "title": "Data format",
     "field": "immutableResource._fileFormat.raw",
-    "sortBy": "_key",
-    "sortOrder": "asc"
+    "sortBy": "_count",
+    "sortOrder": "desc"
   },
   {
     "id": "data-provider-filter",

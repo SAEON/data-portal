@@ -44,15 +44,16 @@ export default ({ children }) => {
   return (
     <>
       <CookieConsent
-        overlay={true}
+        overlay={false}
         overlayStyle={{ zIndex: 2000 }}
         style={{ background: theme.palette.primary.dark }}
+        ariaAcceptLabel="Allow cookies"
         ButtonComponent={forwardRef((props, ref) => {
           return (
             <Button
               {...Object.fromEntries(Object.entries(props).filter(([k]) => k !== 'style'))}
               color="secondary"
-              variant="outlined"
+              variant="contained"
               style={{ marginRight: theme.spacing(1) }}
               ref={ref}
             >
@@ -62,7 +63,10 @@ export default ({ children }) => {
         })}
         location="bottom"
       >
-        <Typography>This website uses cookies to enhance the user experience.</Typography>
+        <Typography variant="h6">
+          This website uses cookies to enhance the user experience. Without cookies, this website
+          will not work as expected
+        </Typography>
       </CookieConsent>
 
       <FromSavedSearch id={search}>
