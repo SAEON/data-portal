@@ -13,6 +13,7 @@ import ApplicationLogger from './components/application-logger'
 import DefaultApplicationNotices from './components/default-application-notices'
 import ErrorBoundary from './components/error-boundary'
 import DetectDevice from './components/detect-device'
+import CookieConsent from './components/cookie-consent'
 
 export default () => {
   return (
@@ -22,21 +23,23 @@ export default () => {
           <DetectDevice>
             <NativeExtensions>
               <ApolloProvider>
-                <GlobalProvider>
-                  <BackgroundImageProvider>
-                    <ApplicationLogger>
-                      <AuthenticationProvider>
-                        <AuthorizationProvider>
-                          <SnackbarProvider>
-                            <DefaultApplicationNotices>
-                              <Layout />
-                            </DefaultApplicationNotices>
-                          </SnackbarProvider>
-                        </AuthorizationProvider>
-                      </AuthenticationProvider>
-                    </ApplicationLogger>
-                  </BackgroundImageProvider>
-                </GlobalProvider>
+                <CookieConsent>
+                  <GlobalProvider>
+                    <BackgroundImageProvider>
+                      <ApplicationLogger>
+                        <AuthenticationProvider>
+                          <AuthorizationProvider>
+                            <SnackbarProvider>
+                              <DefaultApplicationNotices>
+                                <Layout />
+                              </DefaultApplicationNotices>
+                            </SnackbarProvider>
+                          </AuthorizationProvider>
+                        </AuthenticationProvider>
+                      </ApplicationLogger>
+                    </BackgroundImageProvider>
+                  </GlobalProvider>
+                </CookieConsent>
               </ApolloProvider>
             </NativeExtensions>
           </DetectDevice>
