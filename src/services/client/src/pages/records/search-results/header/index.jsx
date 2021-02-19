@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
@@ -5,15 +6,14 @@ import { isMobile } from 'react-device-detect'
 import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
-import CreateDatabookButton from './_create-databook-button'
-import CreateAtlasButton from './create-atlas-button'
 import CreateListButton from './_create-list-button'
 import ConfigurePaginationButton from './_configure-pagination-button'
 import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
 import CurrentPageInfo from './_current-page-info'
-import DownloadRecords from './_download-records-button'
 // import ResetFiltersButton from './_reset-filters-button'
+
+const AuthenticatedOnly = lazy(() => import('./authenticated'))
 
 export default ({
   catalogue,
@@ -44,13 +44,11 @@ export default ({
           <span style={{ marginLeft: 'auto' }} />
 
           {/* CREATE DATABOOK */}
-          {!isMobile && <CreateDatabookButton catalogue={catalogue} />}
-
-          {/* DOWNLOAD METADATA RECORDS */}
-          {!isMobile && <DownloadRecords catalogue={catalogue} />}
-
-          {/* CREATE ATLAS */}
-          {!isMobile && <CreateAtlasButton catalogue={catalogue} />}
+          {!isMobile && (
+            <Suspense fallback={null}>
+              <AuthenticatedOnly catalogue={catalogue} />
+            </Suspense>
+          )}
 
           {/* CREATE LIST */}
           <CreateListButton catalogue={catalogue} />

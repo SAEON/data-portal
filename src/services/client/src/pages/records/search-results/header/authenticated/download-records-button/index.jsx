@@ -4,12 +4,12 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import DownloadIcon from 'mdi-react/DownloadCircleIcon'
-import { context as globalContext } from '../../../../contexts/global'
-import { context as authorizationContext } from '../../../../contexts/authorization'
-import StyledBadge from './components/styled-badge'
-import { CATALOGUE_API_ADDRESS } from '../../../../config'
+import { context as globalContext } from '../../../../../../contexts/global'
+import { context as authorizationContext } from '../../../../../../contexts/authorization'
+import StyledBadge from '../../components/styled-badge'
+import { CATALOGUE_API_ADDRESS } from '../../../../../../config'
 import { gql, useApolloClient } from '@apollo/client'
-import packageJson from '../../../../../package.json'
+import packageJson from '../../../../../../../package.json'
 
 const MUTATION = gql`
   mutation($search: JSON!, $createdBy: String!) {

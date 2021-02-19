@@ -36,6 +36,9 @@ export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_C
 
 export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()
 
+export const CATALOGUE_SUPPORTED_DATABOOK_FORMATS = process.env
+  .CATALOGUE_SUPPORTED_DATABOOK_FORMATS || ['SHAPEFILE', 'NETCDF']
+
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
 
 if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
@@ -43,6 +46,7 @@ if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
     'Configuration',
     Object.fromEntries(
       Object.entries({
+        CATALOGUE_SUPPORTED_DATABOOK_FORMATS,
         PACKAGE_DESCRIPTION,
         PACKAGE_KEYWORDS,
         CATALOGUE_CURATOR_CONTACT,

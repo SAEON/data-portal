@@ -7,17 +7,17 @@ import MapIcon from '@material-ui/icons/Explore'
 import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../config'
-import { context as globalContext } from '../../../../../contexts/global'
-import { context as authorizationContext } from '../../../../../contexts/authorization'
-import StyledBadge from '../components/styled-badge'
-import packageJson from '../../../../../../package.json'
+import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
+import { context as globalContext } from '../../../../../../contexts/global'
+import { context as authorizationContext } from '../../../../../../contexts/authorization'
+import StyledBadge from '../../components/styled-badge'
+import packageJson from '../../../../../../../package.json'
+import removeSelectedIds from './_remove-selected-ids'
+import getTooltip from './_get-tooltip'
 
-const cacheOfMappableItems = {}
-
-const idHasMap = (id, records) => {
-  if (cacheOfMappableItems.hasOwnProperty(id)) {
-    return cacheOfMappableItems[id]
+const idHasMap = (id, records, cache) => {
+  if (cache.hasOwnProperty(id)) {
+    return cache[id]
   } else {
     for (let node of records.nodes) {
       var { metadata } = node
@@ -26,23 +26,23 @@ const idHasMap = (id, records) => {
 
       if (!itemId) return false
 
-      cacheOfMappableItems[itemId] = Boolean(
+      cache[itemId] = Boolean(
         linkedResources?.find(
           ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
         )
       )
 
       if (id === itemId) {
-        return cacheOfMappableItems[id]
+        return cache[id]
       }
     }
   }
 }
 
-const isAtlasAvailable = (selectedIds, selectAll, atlasLayersCount, records) => {
+const isAtlasAvailable = (selectedIds, selectAll, atlasLayersCount, records, cache) => {
   if (records && atlasLayersCount && (selectedIds?.length || selectAll)) {
     if (selectedIds?.length) {
-      return selectedIds.filter(id => idHasMap(id, records)).length ? true : false
+      return selectedIds.filter(id => idHasMap(id, records, cache)).length ? true : false
     } else {
       return atlasLayersCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS ? true : false
     }
@@ -51,14 +51,7 @@ const isAtlasAvailable = (selectedIds, selectAll, atlasLayersCount, records) => 
   return false
 }
 
-const removeSelectedIds = obj =>
-  Object.fromEntries(
-    Object.entries(
-      obj.selectedIds?.length ? Object.assign({ ...obj }, { ids: obj.selectedIds }) : obj
-    ).filter(([key]) => key !== 'selectedIds')
-  )
-
-export default ({ catalogue }) => {
+export default ({ catalogue, cache }) => {
   const { global } = useContext(globalContext)
   const { isAuthenticated } = useContext(authorizationContext)
   const { selectedIds, selectAll } = global
@@ -88,35 +81,13 @@ export default ({ catalogue }) => {
     selectedIds,
     selectAll,
     atlasLayersCount,
-    catalogue?.records
+    catalogue?.records,
+    cache
   )
-
-  const getTooltip = () => {
-    if (selectAll) {
-      if (atlasLayersCount > CATALOGUE_CLIENT_MAX_ATLAS_LAYERS) {
-        return `Too many datasets for atlas - search returns ${atlasLayersCount} maps. Max. ${CATALOGUE_CLIENT_MAX_ATLAS_LAYERS}`
-      } else {
-        return `Configure atlas from ${
-          selectedIds?.filter(id => cacheOfMappableItems[id]).length || atlasLayersCount
-        } mappable search results`
-      }
-    } else {
-      if (selectedIds.length) {
-        const n = selectedIds?.filter(id => cacheOfMappableItems[id]).length
-        if (n) {
-          return `Configure atlas from ${n} mappable search results`
-        } else {
-          return 'No maps found for selected records'
-        }
-      } else {
-        return 'Show atlas from 0 selected records'
-      }
-    }
-  }
 
   return (
     <Fade key="not-loading" in={!savedSearchLoading}>
-      <Tooltip title={getTooltip()}>
+      <Tooltip title={getTooltip(selectedIds, cache, selectAll, atlasLayersCount)}>
         <span>
           <IconButton
             disabled={!atlasAvailable}
@@ -150,9 +121,7 @@ export default ({ catalogue }) => {
               color={atlasAvailable ? 'primary' : 'default'}
               badgeContent={
                 atlasAvailable || selectAll
-                  ? selectedIds?.filter(id => cacheOfMappableItems[id]).length ||
-                    atlasLayersCount ||
-                    0
+                  ? selectedIds?.filter(id => cache[id]).length || atlasLayersCount || 0
                   : 0
               }
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

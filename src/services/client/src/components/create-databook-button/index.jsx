@@ -4,15 +4,13 @@ import Fade from '@material-ui/core/Fade'
 import Tooltip from '@material-ui/core/Tooltip'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
+import { CATALOGUE_TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'
 import { gql, useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../contexts/global'
 import { context as authorizationContext } from '../../contexts/authorization'
-
-const DATABOOK_SUPPORTED_FORMATS = ['SHAPEFILE', 'NETCDF']
 
 export default ({ id, immutableResource, buttonSize = 'small' }) => {
   const [loading, setLoading] = useState(false)
@@ -27,7 +25,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     return null
   }
 
-  const isAllowed = DATABOOK_SUPPORTED_FORMATS.includes(immutableResource?._fileFormat)
+  const isAllowed = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(immutableResource?._fileFormat)
 
   if (error) {
     throw new Error(`Error creating databook: ${error.message}`)

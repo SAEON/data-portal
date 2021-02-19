@@ -11,58 +11,16 @@ import { useHistory } from 'react-router-dom'
 import {
   CATALOGUE_CLIENT_MAX_DATABOOK_TABLES,
   CATALOGUE_TECHNICAL_CONTACT,
-} from '../../../../config'
-import { context as globalContext } from '../../../../contexts/global'
-import StyledBadge from './components/styled-badge'
-import packageJson from '../../../../../package.json'
-import { context as authorizationContext } from '../../../../contexts/authorization'
+} from '../../../../../../config'
+import { context as globalContext } from '../../../../../../contexts/global'
+import StyledBadge from '../../components/styled-badge'
+import packageJson from '../../../../../../../package.json'
+import { context as authorizationContext } from '../../../../../../contexts/authorization'
+import removeSelectedIds from './_remove-selected-ids'
+import getTooltip from './_get-tooltip'
+import getValidCount from './_get-valid-count'
 
-const cacheOfLoadableItems = {}
-
-const DATABOOK_SUPPORTED_FORMATS = ['SHAPEFILE', 'NETCDF']
-
-const idHasAllowedDataset = (id, records) => {
-  if (cacheOfLoadableItems.hasOwnProperty(id)) {
-    return cacheOfLoadableItems[id]
-  } else {
-    for (let node of records.nodes) {
-      var { metadata } = node
-      var { _source } = metadata
-      var { immutableResource, id: itemId } = _source
-
-      if (!itemId) return false
-
-      cacheOfLoadableItems[itemId] = DATABOOK_SUPPORTED_FORMATS.includes(
-        immutableResource?._fileFormat
-      )
-
-      if (id === itemId) {
-        return cacheOfLoadableItems[id]
-      }
-    }
-  }
-}
-
-const isDatabookAvailable = (selectedIds, selectAll, databookTablesCount, records) => {
-  if (records && databookTablesCount && (selectedIds?.length || selectAll)) {
-    if (selectedIds?.length) {
-      return selectedIds.filter(id => idHasAllowedDataset(id, records)).length ? true : false
-    } else {
-      return databookTablesCount < CATALOGUE_CLIENT_MAX_DATABOOK_TABLES ? true : false
-    }
-  }
-
-  return false
-}
-
-const removeSelectedIds = obj =>
-  Object.fromEntries(
-    Object.entries(
-      obj.selectedIds?.length ? Object.assign({ ...obj }, { ids: obj.selectedIds }) : obj
-    ).filter(([key]) => key !== 'selectedIds')
-  )
-
-export default ({ catalogue }) => {
+export default ({ cache, catalogue }) => {
   const theme = useTheme()
   const { global } = useContext(globalContext)
   const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
@@ -72,21 +30,17 @@ export default ({ catalogue }) => {
   const client = useApolloClient()
   const history = useHistory()
 
-  const databookTablesCount =
-    catalogue?.summary
-      .find(summary => summary['data-format-filter'])
-      ?.['data-format-filter'].find(({ key }) => {
-        return DATABOOK_SUPPORTED_FORMATS.includes(key.toUpperCase())
-      })?.doc_count || 0
-
-  if (error) {
-    throw new Error(`Error creating databook. ${error.message}`)
-  }
-
+  // Return null if not logged in
   if (!isAuthenticated) {
     return null
   }
 
+  // Return early
+  if (error) {
+    throw new Error(`Error creating databook. ${error.message}`)
+  }
+
+  // Return early
   if (savedSearchLoading) {
     return (
       <Fade key="loading" in={savedSearchLoading}>
@@ -95,38 +49,14 @@ export default ({ catalogue }) => {
     )
   }
 
-  const available = isDatabookAvailable(
-    selectedIds,
-    selectAll,
-    databookTablesCount,
-    catalogue?.records
-  )
+  // Get all selected records that are valid for databooks
+  const validCount = getValidCount(selectedIds, selectAll, catalogue, cache)
 
-  const getTooltip = () => {
-    if (selectAll) {
-      if (databookTablesCount > CATALOGUE_CLIENT_MAX_DATABOOK_TABLES) {
-        return `Too many datasets - search returns ${databookTablesCount} records. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
-      } else {
-        return `Configure databook from ${
-          selectedIds?.filter(id => cacheOfLoadableItems[id]).length || databookTablesCount
-        } search results`
-      }
-    } else {
-      if (selectedIds.length) {
-        const n = selectedIds?.filter(id => cacheOfLoadableItems[id]).length
-        if (n) {
-          return `Configure databook from ${n} search results`
-        } else {
-          return 'No databook-compatible records found for selected records'
-        }
-      } else {
-        return 'No selected records'
-      }
-    }
-  }
+  // Check whether the databook function is available currently
+  const available = validCount && validCount < CATALOGUE_CLIENT_MAX_DATABOOK_TABLES
 
   return (
-    <Tooltip title={getTooltip()}>
+    <Tooltip title={getTooltip(selectAll, validCount, selectedIds, cache)}>
       <span>
         <IconButton
           style={
@@ -173,9 +103,7 @@ export default ({ catalogue }) => {
             color={available ? 'primary' : 'default'}
             badgeContent={
               available || selectAll
-                ? selectedIds?.filter(id => cacheOfLoadableItems[id]).length ||
-                  databookTablesCount ||
-                  0
+                ? selectedIds?.filter(id => cache[id]).length || validCount || 0
                 : 0
             }
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
