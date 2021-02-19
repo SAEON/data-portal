@@ -24,13 +24,6 @@ export default () => {
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
-              Technical contact
-            </Typography>
-            <Typography className={clsx(classes.body)} variant="body2">
-              {CATALOGUE_TECHNICAL_CONTACT.replace('@', ' [ at ] ')}
-            </Typography>
-
-            <Typography className={clsx(classes.h2)} variant="h6">
               Data enquiries
             </Typography>
             <Typography className={clsx(classes.body)} variant="body2">

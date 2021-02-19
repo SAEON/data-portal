@@ -19,7 +19,7 @@ const EXTENT_PADDING = 3
 
 export default ({ geoLocations, linkedResource, id, title }) => {
   const classes = useStyles()
-  const { resourceURL = undefined } = linkedResource
+  const { resourceURL = '' } = linkedResource
   const [uriInspection, setUriInspection] = useState({ error: undefined, loading: true })
   const { pathname, hostname, port, query } = parse(resourceURL, true)
   const { layers: LAYERS } = query
@@ -41,6 +41,13 @@ export default ({ geoLocations, linkedResource, id, title }) => {
           setUriInspection({ error: true, loading: false })
         }
       })
+      .catch(error => {
+        console.error(
+          `Error testing for WMS server at url: ${uri}?request=GetCapabilities`,
+          error.message
+        )
+        setUriInspection({ error: true, loading: false })
+      })
   }, [uri])
 
   if (uriInspection.loading) {
@@ -51,7 +58,7 @@ export default ({ geoLocations, linkedResource, id, title }) => {
     return (
       <DialogContent>
         <pre className={clsx(classes.errorBlock)}>
-          {`Non standard format for WMS resource - cannot render a map. The URL is probably intended for manual inspection (see below)\n\n${JSON.stringify(
+          {`Non standard format for WMS resource - cannot render a map. The URL is either missing, incorrect, or intended for manual inspection (see below)\n\n${JSON.stringify(
             linkedResource,
             null,
             2

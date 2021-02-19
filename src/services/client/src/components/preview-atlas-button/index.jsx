@@ -19,7 +19,7 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
       ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
     ) || {}
 
-  if (!linkedResource) {
+  if (!linkedResource?.resourceURL) {
     return null
   }
 

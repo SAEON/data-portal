@@ -19,9 +19,6 @@ export default () => {
           <CardHeader style={{ textAlign: 'center' }} title="About" />
 
           <CardContent>
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Description
-            </Typography>
             <Typography className={clsx(classes.body)} variant="body2">
               {PACKAGE_DESCRIPTION}
             </Typography>
