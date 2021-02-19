@@ -1,33 +1,70 @@
+/**
+ * @param {String|Array} format Dataset format
+ */
 const chooseFileFormat = format => {
-  /**
-   * format is an Array type
-   * i.e. archive == true
-   */
-  if (typeof format === 'object') {
-    if (format.includes('shp')) {
-      return 'Shapefile'
-    }
-
-    if (format.includes('nc')) {
-      return 'NetCDF'
-    }
-
-    return format.join('|')
+  // No format - Unknown
+  if (!format) {
+    return 'UNKNOWN'
   }
 
   /**
-   * Format is a string type
-   * i.e. archive == false
+   * Arrays suggest an archive. But that is irrelevant in this function
+   * Normalize to an array
    */
-  if (typeof format === 'string') {
-    if (format === 'nc') {
-      return 'NetCDF'
-    }
+  format = (typeof format === 'string' ? [format] : format).map(f => f.toUpperCase())
 
-    return format
+  if (format.includes('SHP')) {
+    return 'SHAPEFILE'
   }
 
-  return 'Unknown'
+  if (format.includes('NC')) {
+    return 'NETCDF'
+  }
+
+  if (format.includes('ASC')) {
+    return 'ASC'
+  }
+
+  if (format.includes('TIF')) {
+    if (format.includes('PDF')) {
+      return 'PDF|TIFF'
+    }
+    if (format.includes('DBF')) {
+      return 'DBF|TIFF'
+    }
+    return 'TIFF'
+  }
+
+  if (format.includes('IMG')) {
+    if (format.includes('PDF')) {
+      return 'PDF|IMG'
+    }
+  }
+
+  if (format.includes('PDF')) {
+    return 'PDF'
+  }
+
+  if (format.includes('JPEG')) {
+    return 'JPEG'
+  }
+
+  if (format.includes('HDR')) {
+    if (format.includes('DAT')) {
+      return 'DAT|HDR'
+    }
+    return 'HDR'
+  }
+
+  if (format.includes('CSV')) {
+    return 'CSV'
+  }
+
+  if (format.includes('TXT')) {
+    return 'TEXT'
+  }
+
+  return format.join('|')
 }
 
 export default (id, values) => {

@@ -12,6 +12,8 @@ import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../contexts/global'
 import { context as authorizationContext } from '../../contexts/authorization'
 
+const DATABOOK_SUPPORTED_FORMATS = ['SHAPEFILE', 'NETCDF']
+
 export default ({ id, immutableResource, buttonSize = 'small' }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(undefined)
@@ -25,7 +27,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     return null
   }
 
-  const isAllowed = ['Shapefile', 'NetCDF'].includes(immutableResource?._fileFormat)
+  const isAllowed = DATABOOK_SUPPORTED_FORMATS.includes(immutableResource?._fileFormat)
 
   if (error) {
     throw new Error(`Error creating databook: ${error.message}`)

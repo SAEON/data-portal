@@ -72,9 +72,9 @@ export default ({ catalogue }) => {
 
   const atlasLayersCount =
     catalogue?.summary
-      .find(summary => summary['linkedResources.linkedResourceType.raw'])
-      ?.['linkedResources.linkedResourceType.raw'].find(({ key }) => key?.toUpperCase() === 'QUERY')
-      ?.doc_count || 0
+      .find(summary => summary['_linked-resources-filter'])
+      ?.['_linked-resources-filter'].find(({ key }) => key?.toUpperCase() === 'QUERY')?.doc_count ||
+    0
 
   if (savedSearchLoading) {
     return (

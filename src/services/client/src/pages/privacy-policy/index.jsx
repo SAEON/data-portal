@@ -19,9 +19,8 @@ export default () => {
 
           <CardContent>
             <Typography className={clsx(classes.body)} variant="body2">
-              At SAEON Data Portal, accessible from catalogue.saeon.ac.za, one of our main
-              priorities is the privacy of our visitors. This Privacy Policy document contains types
-              of information that is collected and recorded by SAEON Data Portal and how we use it.
+              Your privacy is important to us. To better protect your privacy we provide this notice
+              explaining our online information practices.
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">

@@ -101,7 +101,7 @@ export default ({ disableSidebar = false }) => {
       variables={{
         fields: [
           {
-            id: 'internal-1',
+            id: '_linked-resources-filter',
             field: 'linkedResources.linkedResourceType.raw',
             path: 'linkedResources',
           },

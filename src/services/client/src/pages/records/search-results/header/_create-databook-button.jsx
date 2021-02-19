@@ -19,21 +19,21 @@ import { context as authorizationContext } from '../../../../contexts/authorizat
 
 const cacheOfLoadableItems = {}
 
-const idHasMap = (id, records) => {
+const DATABOOK_SUPPORTED_FORMATS = ['SHAPEFILE', 'NETCDF']
+
+const idHasAllowedDataset = (id, records) => {
   if (cacheOfLoadableItems.hasOwnProperty(id)) {
     return cacheOfLoadableItems[id]
   } else {
     for (let node of records.nodes) {
       var { metadata } = node
       var { _source } = metadata
-      var { linkedResources, id: itemId } = _source
+      var { immutableResource, id: itemId } = _source
 
       if (!itemId) return false
 
-      cacheOfLoadableItems[itemId] = Boolean(
-        linkedResources?.find(
-          ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
-        )
+      cacheOfLoadableItems[itemId] = DATABOOK_SUPPORTED_FORMATS.includes(
+        immutableResource?._fileFormat
       )
 
       if (id === itemId) {
@@ -46,7 +46,7 @@ const idHasMap = (id, records) => {
 const isDatabookAvailable = (selectedIds, selectAll, databookTablesCount, records) => {
   if (records && databookTablesCount && (selectedIds?.length || selectAll)) {
     if (selectedIds?.length) {
-      return selectedIds.filter(id => idHasMap(id, records)).length ? true : false
+      return selectedIds.filter(id => idHasAllowedDataset(id, records)).length ? true : false
     } else {
       return databookTablesCount < CATALOGUE_CLIENT_MAX_DATABOOK_TABLES ? true : false
     }
@@ -62,8 +62,6 @@ const removeSelectedIds = obj =>
     ).filter(([key]) => key !== 'selectedIds')
   )
 
-const DATATYPES = ['Shapefile', 'NetCDF'].map(s => s.toUpperCase())
-
 export default ({ catalogue }) => {
   const theme = useTheme()
   const { global } = useContext(globalContext)
@@ -76,10 +74,10 @@ export default ({ catalogue }) => {
 
   const databookTablesCount =
     catalogue?.summary
-      .find(summary => summary['immutableResource._fileFormat.raw'])
-      ?.['immutableResource._fileFormat.raw'].find(({ key }) =>
-        DATATYPES.includes(key.toUpperCase())
-      )?.doc_count || 0
+      .find(summary => summary['data-format-filter'])
+      ?.['data-format-filter'].find(({ key }) => {
+        return DATABOOK_SUPPORTED_FORMATS.includes(key.toUpperCase())
+      })?.doc_count || 0
 
   if (error) {
     throw new Error(`Error creating databook. ${error.message}`)
@@ -107,7 +105,7 @@ export default ({ catalogue }) => {
   const getTooltip = () => {
     if (selectAll) {
       if (databookTablesCount > CATALOGUE_CLIENT_MAX_DATABOOK_TABLES) {
-        return `Too many datasets - search returns ${databookTablesCount} maps. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
+        return `Too many datasets - search returns ${databookTablesCount} records. Max. ${CATALOGUE_CLIENT_MAX_DATABOOK_TABLES}`
       } else {
         return `Configure databook from ${
           selectedIds?.filter(id => cacheOfLoadableItems[id]).length || databookTablesCount
