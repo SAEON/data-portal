@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Fade from '@material-ui/core/Fade'
 import Tooltip from '@material-ui/core/Tooltip'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import LoadingCircular from '../../components/loading-circular'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { CATALOGUE_TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
@@ -34,7 +34,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
   if (loading) {
     return (
       <Fade in={true}>
-        <CircularProgress thickness={2} size={18} style={{ margin: '0 6px' }} />
+        <LoadingCircular />
       </Fade>
     )
   }

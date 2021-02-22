@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext, useRef, lazy, Suspense } from 'react'
 import Header from './header'
-import Filters from './filters'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
 import Grid from '@material-ui/core/Grid'
@@ -13,6 +12,7 @@ import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
 
 const MobileSideMenu = lazy(() => import('./_side-menu'))
+const Filters = lazy(() => import('./filters'))
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -202,7 +202,15 @@ export default ({ disableSidebar = false }) => {
                           <Grid container item lg={10} xl={8}>
                             {showSidebar ? (
                               <Grid style={{ paddingRight: 16 }} item md={4}>
-                                <Filters catalogue={data?.catalogue} />
+                                <Suspense
+                                  fallback={
+                                    <div style={{ position: 'relative' }}>
+                                      <Loading />
+                                    </div>
+                                  }
+                                >
+                                  <Filters catalogue={data?.catalogue} />
+                                </Suspense>
                               </Grid>
                             ) : null}
                             <Grid item xs style={{ flexGrow: 1 }}>
