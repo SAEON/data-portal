@@ -1,10 +1,9 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => {
   return {
     layout: {
-      backgroundColor: fade(theme.palette.common.white, 0.8),
+      backgroundColor: theme.backgroundColor,
       margin: theme.spacing(1),
       padding: '16px',
     },
@@ -19,7 +18,7 @@ export default makeStyles(theme => {
       bottom: theme.spacing(1),
       left: theme.spacing(1),
       right: theme.spacing(1),
-      backgroundColor: fade(theme.palette.common.white, 0.8),
+      backgroundColor: theme.backgroundColor,
     },
     select: {
       color: 'white',

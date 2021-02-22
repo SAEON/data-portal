@@ -11,7 +11,6 @@ import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
 import { context as globalContext } from '../../../../../../contexts/global'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const wkt = new WKT()
 
@@ -98,7 +97,7 @@ export default ({ proxy }) => {
         zIndex: 1,
         margin: '10px 10px 0 0',
         padding: theme.spacing(1),
-        backgroundColor: fade(theme.palette.common.white, 0.9),
+        backgroundColor: theme.backgroundColor,
       }}
     >
       <Tooltip title={'Filter by bounding box'}>

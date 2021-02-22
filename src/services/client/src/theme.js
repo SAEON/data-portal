@@ -4,7 +4,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 const defaultTheme = createMuiTheme()
 
 export default createMuiTheme({
-  backgroundColor: fade(defaultTheme.palette.common.white, 0.93),
+  backgroundColor: fade(defaultTheme.palette.common.white, 0.9),
   boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
   customSizes: {
     thickToolbar: {

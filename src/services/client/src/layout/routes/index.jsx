@@ -15,6 +15,7 @@ const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
 const LoginPage = lazy(() => import('../../pages/login'))
 const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
+const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const AboutPage = lazy(() => import('../../pages/about'))
 const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 const ContactPage = lazy(() => import('../../pages/contact'))
@@ -79,6 +80,18 @@ export default withRouter(() => {
         render={() => (
           <Transition>
             <TermsOfServicePage />
+          </Transition>
+        )}
+      />
+
+      {/* TERMS OF SERVICE */}
+      <Route
+        key={'terms-of-use'}
+        path={'/terms-of-use'}
+        exact
+        render={() => (
+          <Transition>
+            <TermsOfUsePage />
           </Transition>
         )}
       />

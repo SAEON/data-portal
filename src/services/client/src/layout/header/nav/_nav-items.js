@@ -29,6 +29,11 @@ export default [
     to: '/terms-of-service',
   },
   {
+    label: 'Terms of use',
+    Icon: TermsIcon,
+    to: '/terms-of-use',
+  },
+  {
     label: 'Disclaimer',
     Icon: DisclaimerIcon,
     to: '/disclaimer',

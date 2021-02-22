@@ -41,6 +41,12 @@ export default () => {
               referencing these datasets, the content of both metadata and data is under control of
               the third-party provider.
             </Typography>
+
+            <Typography className={clsx(classes.body)} variant="body2">
+              The SAEON Open Data Platform and its contents are provided on an “as is” and “as
+              available” basis and have not been compiled or supplied to meet the User’s individual
+              requirements.
+            </Typography>
           </CardContent>
         </Card>
       </FlatPage>
