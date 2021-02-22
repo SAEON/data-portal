@@ -11,7 +11,13 @@ export default ({ title, children, ...props }) => {
 
   return (
     <Grid style={Object.assign({}, { margin: theme.spacing(1) }, style)} item {...otherProps}>
-      <Card style={{ margin: isMobile ? '0 16px' : '' }} variant="outlined">
+      <Card
+        style={{
+          margin: isMobile ? '0 16px' : '',
+          backgroundColor: theme.backgroundColor,
+        }}
+        variant="outlined"
+      >
         <CardContent>
           {
             <Typography gutterBottom variant="overline">
