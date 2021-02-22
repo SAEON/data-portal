@@ -26,7 +26,7 @@ var palette = [
 export default {
   color: palette,
   backgroundColor: 'rgba(0,0,0,0)',
-  textStyle: {},
+  // textStyle: {},
   title: {
     textStyle: {
       color: '#008acd',
@@ -114,9 +114,9 @@ export default {
       position: 'insideBottom',
       distance: -10,
       fontSize: 11,
-      textStyle: {
-        color: '#333',
-      },
+      // textStyle: {
+      color: '#333',
+      // },
     },
     splitLine: {
       show: false,
@@ -146,9 +146,9 @@ export default {
     },
     axisLabel: {
       show: true,
-      textStyle: {
-        color: '#333',
-      },
+      // textStyle: {
+      color: '#333',
+      // },
     },
     splitLine: {
       show: true,
@@ -179,9 +179,9 @@ export default {
     },
     axisLabel: {
       show: true,
-      textStyle: {
-        color: '#333',
-      },
+      // textStyle: {
+      color: '#333',
+      // },
     },
     splitLine: {
       show: true,
@@ -211,9 +211,9 @@ export default {
     },
     axisLabel: {
       show: true,
-      textStyle: {
-        color: '#333',
-      },
+      // textStyle: {
+      color: '#333',
+      // },
     },
     splitLine: {
       show: true,

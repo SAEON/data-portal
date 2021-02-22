@@ -1,5 +1,6 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
-import ThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+// import ThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { ThemeProvider } from '@material-ui/core/styles'
 import ApolloProvider from './components/apollo-provider'
 import GlobalProvider from './contexts/global'
 import AuthorizationProvider from './contexts/authorization'

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, createRef, useContext } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from 'mdi-react/EditOutlineIcon'
 import CloseIcon from '@material-ui/icons/Close'
@@ -10,99 +10,86 @@ import IconButton from '@material-ui/core/IconButton'
 import PlayIcon from 'mdi-react/PlayArrowIcon'
 import Paper from '@material-ui/core/Paper'
 import Draggable from 'react-draggable'
-import AceEditor from 'react-ace'
 import ReactEcharts from 'echarts-for-react'
+import AceEditor from 'react-ace'
+import Beautify from 'ace-builds/src-noconflict/ext-beautify'
 import SplitPane from 'react-split-pane'
 import clsx from 'clsx'
 import useStyles from './style'
 import Alert from '@material-ui/lab/Alert'
+import { context as databookContext } from '../../../../context'
 
 function PaperComponent(props) {
   return (
-    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper {...props} />
+    <Draggable
+      bounds="body"
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
+      <Paper {...props} style={{ margin: 0 }} />
     </Draggable>
   )
 }
 
-const sampleJSON = `{
-  "title": {
-    "text": "some title",
-    "subtext": "some subtext",
-    "left": "center"
-  },
-  "tooltip": {
-    "trigger": "item"
-  },
-  "legend": {
-    "orient": "vertical",
-    "left": "left"
-  },
-  "series": [
-    {
-      "name": "series 1",
-      "type": "pie",
-      "radius": "50%",
-      "data": [
-        { "value": 1048, "name": "val1" },
-        { "value": 735, "name": "val2" },
-        { "value": 580, "name": "val3" },
-        { "value": 484, "name": "val4" },
-        { "value": 300, "name": "val5" }
-      ],
-      "emphasis": {
-        "itemStyle": {
-          "shadowBlur": 10,
-          "shadowOffsetX": 0,
-          "shadowColor": "rgba(0, 0, 0, 0.5)"
-        }
-      }
-    }
-  ]
-}`
-const sampleJS = `var option = {
+const initialEchartOptions = {
   title: {
     text: 'some title',
     subtext: 'some subtext',
     left: 'center',
   },
-  tooltip: {
-    trigger: 'item',
-  },
-  legend: {
-    orient: 'vertical',
-    left: 'left',
-  },
   series: [
     {
       name: 'series 1',
       type: 'pie',
-      radius: '50%',
       data: [
-        { value: 1048, name: 'val1' },
-        { value: 735, name: 'val2' },
-        { value: 580, name: 'val3' },
-        { value: 484, name: 'val4' },
-        { value: 300, name: 'val5' },
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        {
+          value: 1048,
+          name: 'val1',
         },
-      },
+        {
+          value: 735,
+          name: 'val2',
+        },
+      ],
     },
   ],
+}
+const initialEditorText = `function setOption(data) {
+  //Your data prop is your SQL Editor results and is available here
+  //Beautify => ctrl + shift + B
+  console.log('setOption data', data)
+  return ({
+    title: {
+      text: 'some title',
+      subtext: 'some subtext',
+      left: 'center',
+    },
+    series: [{
+      name: 'series 1',
+      type: 'pie',
+      data: [{
+        value: 1048,
+        name: 'val1',
+      },
+        {
+          value: 735,
+          name: 'val2',
+        },
+      ],
+    },
+    ],
+  })
 }`
+
 export default () => {
   const [open, setOpen] = useState(false)
-  const [userText, setUserText] = useState(sampleJSON)
-  const [userOption, setUserOption] = useState(JSON.parse(sampleJSON))
+  const [editorText, setEditorText] = useState(initialEditorText)
+  const [echartOption, setEchartOption] = useState(initialEchartOptions)
   const [error, setError] = useState('error goes here')
   const [showError, setShowError] = useState(false)
+  let aceRef = createRef()
   const classes = useStyles()
-
+  const { data } = useContext(databookContext)
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -110,11 +97,29 @@ export default () => {
   const handleClose = () => {
     setOpen(false)
   }
+  console.log('databook data in edit-button', data)
+  const handleAceEditorOnChange = (value, event) => {
+    console.log('handleAceEditorOnChange event', event)
+    console.log('aceRef', aceRef)
+    if (event.start.row <= 2 /*|| final row */) {
+      console.log('in read only zone! editor text should not update but it does') //DOESNT WORK
+      //https://github.com/securingsincity/react-ace/issues/181
+      // return
+    }
+    // const newValue = value.substring(76, value.length - 2)
+    // setUserText(newValue)
+    setEditorText(value)
+  }
+
+  const createFunction = (params, functionString) => {
+    let func = new Function(...params, functionString)
+    return func
+  }
 
   const dialogContentHeight = '600px'
   return (
     <div>
-      <Tooltip title="Open chart" placement="bottom-start">
+      <Tooltip title="Edit chart" placement="bottom-start">
         <IconButton
           onClick={() => {
             handleClickOpen()
@@ -152,19 +157,17 @@ export default () => {
                 <IconButton
                   className={clsx(classes.playButton)}
                   onClick={() => {
-                    let newOption = {}
+                    let newFunctionContent = editorText.substring(27, editorText.length - 2)
+                    let newUserFunction
                     try {
-                      newOption = JSON.parse(userText)
-                      //STEVEN TO-DO: this does not catch errors thrown by echarts
-                      //e.g. change series.type from pie to bar and page will crash
-                      const validatedChart = <ReactEcharts option={newOption} />
+                      newUserFunction = createFunction(['data'], newFunctionContent) //new Function('data', newFunctionContent)
                     } catch (error) {
                       console.error(error)
                       setError(`${error.name}: ${error.message}`)
                       setShowError(true)
                       return
                     }
-                    setUserOption(newOption)
+                    setEchartOption(newUserFunction(data.rows))
                   }}
                   size="small"
                 >
@@ -172,19 +175,21 @@ export default () => {
                 </IconButton>
               </Tooltip>
               <AceEditor
+                ref={aceRef} //probably wont be needed but may be useful for read only segments / grabbing user text
+                commands={Beautify.commands}
                 width="auto"
                 height="100%"
-                mode="json"
+                mode="javascript"
                 theme="monokai"
                 name="Custom Chart Creator Editor"
-                cursorStart={1}
+                // cursorStart={1}
                 //   onLoad={this.onLoad}
-                onChange={value => setUserText(value)}
+                onChange={handleAceEditorOnChange}
                 fontSize={14}
                 showPrintMargin={false}
                 showGutter={true}
                 highlightActiveLine={true}
-                value={userText}
+                value={editorText}
                 setOptions={{
                   enableBasicAutocompletion: true,
                   enableLiveAutocompletion: true,
@@ -193,6 +198,7 @@ export default () => {
                   tabSize: 2,
                 }}
               />
+
               {showError ? (
                 <Alert
                   onClick={() => setShowError(false)}
@@ -212,7 +218,7 @@ export default () => {
             <div id="split-right">
               <ReactEcharts
                 style={{ height: dialogContentHeight }}
-                option={userOption} /*theme={theme}*/
+                option={echartOption} /*theme={theme}*/
               />
               {/*STEVEN: should user be given theme by default? */}
             </div>
