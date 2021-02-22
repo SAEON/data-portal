@@ -10,6 +10,8 @@ import Row from '../_row'
 
 const wkt = new WKT()
 
+const EXTENT_PADDING = 2
+
 export default ({ geoLocations }) => {
   return (
     <Row title={'Spatial coverage'}>
@@ -20,11 +22,11 @@ export default ({ geoLocations }) => {
           extent: geoLocations[0].geoLocationBox
             ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
                 .getExtent()
-                .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1))
+                .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
             : geoLocations[0].geoLocationPoint
             ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
                 .getExtent()
-                .map((v, i) => ((i === 0) | (i === 1) ? v - 1 : v + 1))
+                .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
             : undefined,
         }}
         layers={[

@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   env: {
     browser: true,
@@ -19,8 +21,11 @@ module.exports = {
     },
     ecmaVersion: 2021,
     sourceType: 'module',
+    babelOptions: {
+      configFile: path.join(__dirname, './babel.config.cjs'),
+    },
   },
-  plugins: ['react'],
+  plugins: ['@babel', 'react'],
   rules: {
     'react/display-name': 0,
     'react/prop-types': 0,

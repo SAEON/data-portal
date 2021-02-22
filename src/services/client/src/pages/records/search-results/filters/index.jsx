@@ -1,24 +1,11 @@
 import Grid from '@material-ui/core/Grid'
 import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
-import TagFilter from './items/tag-filter'
-import ExtentFilter from './items/extent-filter'
+import TagFilter from './tag-filter'
+import ExtentFilter from './extent-filter'
 import useStyles from './style'
 import clsx from 'clsx'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
-
-/**
- * NOTE
- *
- * These values needs to match the delimeter
- * defined on the server in the summary GQL resolver.
- *
- * DON'T CHANGE
- * DON'T CHANGE
- * DON'T CHANGE
- */
-const FILTER_DELIMITER = '__FILTERED_BY__'
-const FILTER_VALUE_DELIMTER = ''
 
 export default ({ catalogue }) => {
   const classes = useStyles()
@@ -33,39 +20,32 @@ export default ({ catalogue }) => {
         </Grid>
 
         {/* CONFIGURABLE FILTERS */}
-        {CATALOGUE_CLIENT_FILTER_CONFIG.map(
-          ({ title, field, boost, sortBy, sortOrder, filter = {} }, i) => {
-            const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
-            const { values: allowedValues = undefined } = filter
-            const aggregationName = allowedValues
-              ? `${field}${FILTER_DELIMITER}${allowedValues.join(FILTER_VALUE_DELIMTER)}`
-              : field
-            const items = catalogue?.summary.find(obj => {
-              const agg = Object.entries(obj).find(([key]) => key === aggregationName)
-              return agg
-            })[aggregationName]
+        {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }, i) => {
+          const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
+          const items = catalogue?.summary.find(obj => {
+            const agg = Object.entries(obj).find(([key]) => key === id)
+            return agg
+          })[id]
 
-            return (
-              <Grid key={aggregationName} item xs={12}>
-                <TagFilter
-                  style={
-                    isLastFilter
-                      ? {
-                          borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-                        }
-                      : {}
-                  }
-                  sortBy={sortBy}
-                  sortOrder={sortOrder}
-                  field={field}
-                  title={title}
-                  boost={boost}
-                  results={items}
-                />
-              </Grid>
-            )
-          }
-        )}
+          return (
+            <Grid key={id} item xs={12}>
+              <TagFilter
+                style={
+                  isLastFilter
+                    ? {
+                        borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+                      }
+                    : {}
+                }
+                id={id}
+                field={field}
+                title={title}
+                boost={boost}
+                results={items}
+              />
+            </Grid>
+          )
+        })}
       </Grid>
     </Fade>
   )

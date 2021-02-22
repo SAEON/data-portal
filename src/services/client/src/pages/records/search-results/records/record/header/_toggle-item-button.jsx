@@ -7,13 +7,19 @@ export default ({ id }) => {
   const { global, setGlobal } = useContext(globalContext)
   const { selectedIds, selectAll } = global
 
+  const checked = selectAll || selectedIds.includes(id)
+
   return (
     <Tooltip title={'Select record'} placement="left-start">
       <Checkbox
         style={{ marginRight: 4 }}
         size="small"
         color="primary"
-        checked={selectAll || selectedIds.includes(id)}
+        inputProps={{
+          'aria-label': 'Select/unselect search result',
+          'aria-checked': checked,
+        }}
+        checked={checked}
         indeterminate={selectAll}
         onChange={(e, checked) => {
           if (selectAll) {

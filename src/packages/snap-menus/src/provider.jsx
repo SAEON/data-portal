@@ -8,9 +8,9 @@ PORTAL.setAttribute('id', PORTAL_ID)
 export default ({
   children,
   MARGIN_TOP = 0,
+  MARGIN_RIGHT = 0,
   MARGIN_BOTTOM = 0,
   MARGIN_LEFT = 0,
-  MARGIN_RIGHT = 0,
   SNAP_MENUS_CONTAINER_REF = null,
 }) => {
   PORTAL_STYLE.innerHTML = `

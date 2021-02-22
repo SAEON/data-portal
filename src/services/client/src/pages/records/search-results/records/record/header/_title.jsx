@@ -9,6 +9,7 @@ export default ({ doi }) => {
 
   return isMobile ? null : doi ? (
     <Typography
+      aria-label="Link to Datacite DOI address"
       component={Link}
       variant="overline"
       href={`https://doi.org/${doi}`}

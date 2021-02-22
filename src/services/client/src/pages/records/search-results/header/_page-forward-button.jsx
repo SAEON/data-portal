@@ -4,6 +4,7 @@ import PageForwardIcon from '@material-ui/icons/NavigateNext'
 export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
   return (
     <IconButton
+      aria-label="Go to next results page"
       disabled={
         loading
           ? true

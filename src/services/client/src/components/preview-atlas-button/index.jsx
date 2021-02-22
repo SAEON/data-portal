@@ -10,30 +10,31 @@ import Loading from '../../components/loading'
 
 const Map = lazy(() => import('./_map'))
 
-export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
+export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small' }) => {
   const theme = useTheme()
   const title = titles[0].title
 
-  const hasMap = Boolean(
-    linkedResources?.find(({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY')
-  )
+  const linkedResource =
+    linkedResources?.find(
+      ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
+    ) || {}
 
-  if (!hasMap) {
-    return null
-  }
-
-  const { resourceURL } = linkedResources.find(
-    ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
-  )
+  const disabled = !linkedResource?.resourceURL
 
   return (
     <MessageDialogue
-      iconProps={{ size: buttonSize }}
+      disabled={disabled}
+      ariaLabel="Toggle map preview"
+      id={`map-preview-${id}`}
+      iconProps={{ size: buttonSize, 'aria-label': 'Preview dataset as a map' }}
       icon={<PreviewIcon />}
-      title={onClose => (
+      title={(onClose, open) => (
         <div style={{ display: 'flex' }}>
           <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
           <IconButton
+            aria-label="Close map preview"
+            aria-controls={`map-preview-${id}`}
+            aria-expanded={open}
             size="small"
             onClick={e => {
               e.stopPropagation()
@@ -52,8 +53,8 @@ export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
         },
       }}
       tooltipProps={{
-        placement: 'right',
-        title: `Preview dataset as map`,
+        placement: 'left',
+        title: disabled ? 'No preview available' : `Preview dataset as map`,
       }}
       dialogueContentProps={{ style: { padding: 0 } }}
       dialogueProps={{ fullWidth: true }}
@@ -61,7 +62,7 @@ export default ({ id, titles, linkedResources, buttonSize = 'small' }) => {
     >
       <DialogContent style={{ margin: 0, padding: 0, height: window.innerHeight - 200 }}>
         <Suspense fallback={<Loading />}>
-          <Map resourceURL={resourceURL} title={title} id={id} />
+          <Map geoLocations={geoLocations} linkedResource={linkedResource} title={title} id={id} />
         </Suspense>
       </DialogContent>
     </MessageDialogue>

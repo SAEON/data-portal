@@ -1,72 +1,46 @@
-import { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import CitationIcon from '@material-ui/icons/FormatQuote'
-import { gql } from '@apollo/client'
-import Dialogue from './_content'
-import WithGqlQuery from '../../../hooks/with-gql-query'
+import { useState, Suspense, lazy } from 'react'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
 
-export default ({ doi, children, ...props }) => {
-  const [open, setOpen] = useState(false)
+const CitationControls = lazy(() => import('./_citation-controls'))
+
+const DEFAULT_CITATION_STYLE = 'apa'
+const DEFAULT_CITATION_LANG = 'en_US'
+
+export default ({ doi, open, setOpen }) => {
+  const [citationParams, setCitationParams] = useState({
+    style: DEFAULT_CITATION_STYLE,
+    language: DEFAULT_CITATION_LANG,
+    copied: false,
+  })
 
   return (
-    <WithGqlQuery
-      QUERY={gql`
-        query {
-          citationStyles: __type(name: "CitationStyle") {
-            enumValues {
-              name
-            }
-          }
-
-          citationLocales: __type(name: "CitationLocale") {
-            enumValues {
-              name
-            }
-          }
-        }
-      `}
-      fetchPolicy="cache-first"
-    >
-      {({ error, loading, data }) => {
-        return (
-          <>
-            {typeof children === 'function' ? (
-              children({
-                disabled: error || loading,
-                onClick: e => {
-                  e.stopPropagation()
-                  setOpen(true)
-                },
-              })
-            ) : (
-              <Button
-                disabled={error || loading}
-                variant="contained"
-                disableElevation
-                startIcon={<CitationIcon />}
-                color="primary"
-                onClick={e => {
-                  e.stopPropagation()
-                  setOpen(true)
-                }}
-                {...props}
-              >
-                {error || loading ? <CircularProgress size={24} /> : 'Cite'}
-              </Button>
-            )}
-            {open ? (
-              <Dialogue
-                doi={doi}
-                open={open}
-                setOpen={setOpen}
-                citationStyles={data?.citationStyles}
-                citationLocales={data?.citationLocales}
-              />
-            ) : null}
-          </>
-        )
+    <Dialog
+      onClose={() => {
+        setOpen(false)
       }}
-    </WithGqlQuery>
+      open={open}
+      maxWidth="sm"
+      fullWidth={true}
+    >
+      {/* TITLE */}
+      <DialogTitle>{doi}</DialogTitle>
+
+      {/* CITATION */}
+      <DialogContent>
+        {open && (
+          <Suspense fallback={null}>
+            <CitationControls
+              DEFAULT_CITATION_STYLE={DEFAULT_CITATION_STYLE}
+              DEFAULT_CITATION_LANG={DEFAULT_CITATION_LANG}
+              setCitationParams={setCitationParams}
+              citationParams={citationParams}
+              doi={doi}
+            />
+          </Suspense>
+        )}
+      </DialogContent>
+    </Dialog>
   )
 }

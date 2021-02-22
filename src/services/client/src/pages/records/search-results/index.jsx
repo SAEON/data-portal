@@ -1,9 +1,7 @@
-import { useState, useEffect, useContext, useRef } from 'react'
+import { useState, useEffect, useContext, useRef, lazy, Suspense } from 'react'
 import Header from './header'
-import Filters from './filters'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
-import Collapse from '@material-ui/core/Collapse'
 import Grid from '@material-ui/core/Grid'
 import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
@@ -12,6 +10,9 @@ import WithGqlQuery from '../../../hooks/with-gql-query'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
+
+const MobileSideMenu = lazy(() => import('./_side-menu'))
+const Filters = lazy(() => import('./filters'))
 
 const DEFAULT_CURSORS = {
   start: undefined,
@@ -100,17 +101,20 @@ export default ({ disableSidebar = false }) => {
       variables={{
         fields: [
           {
+            id: '_linked-resources-filter',
             field: 'linkedResources.linkedResourceType.raw',
             path: 'linkedResources',
           },
-          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(({ field, path, filter }) => {
-            return { field, path, filter }
-          }),
+          ...CATALOGUE_CLIENT_FILTER_CONFIG.map(
+            ({ id, field, path, filters, sortBy, sortOrder }) => {
+              return { id, field, path, filters, sortBy, sortOrder }
+            }
+          ),
         ],
         ids,
         dois,
         extent,
-        terms,
+        terms: terms.map(({ field, boost, value }) => ({ field, boost, value })),
         text,
         size: pageSize,
         after: cursors.end,
@@ -135,75 +139,93 @@ export default ({ disableSidebar = false }) => {
           : data.catalogue.records.nodes
 
         return (
-          <Header
-            disableSidebar={disableSidebar}
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-            cursors={cursors}
-            setCursors={setCursors}
-            setPageSize={setPageSize}
-            pageSize={pageSize}
-            loading={loading}
-            catalogue={data?.catalogue}
-          >
-            <div
-              style={{
-                minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
-                  showSearchBar === 'true' || !showSearchBar ? '128' : '0'
-                }px - 48px - 49px)`,
-              }}
+          <main id="search-results">
+            <Header
+              disableSidebar={disableSidebar}
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              cursors={cursors}
+              setCursors={setCursors}
+              setPageSize={setPageSize}
+              pageSize={pageSize}
+              loading={loading}
+              catalogue={data?.catalogue}
             >
-              <Grid container direction="row" justify="center">
-                {loading ? (
-                  <Grid item xs={12} style={{ position: 'relative' }}>
-                    <Loading />
-                  </Grid>
-                ) : (
-                  <>
-                    {isMobile ? (
-                      // Mobile
-                      <>
-                        {disableSidebar ? null : (
-                          <Collapse unmountOnExit orientation={'vertical'} in={showSidebar}>
-                            <Grid item xs={12}>
-                              <Filters catalogue={data?.catalogue} />
-                            </Grid>
-                          </Collapse>
-                        )}
+              <div
+                style={{
+                  minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
+                    showSearchBar === 'true' || !showSearchBar ? '128' : '0'
+                  }px - 48px - 49px)`,
+                }}
+              >
+                <Grid container direction="row" justify="center">
+                  {/* SEARCH LOADING */}
+                  {loading && (
+                    <Grid item xs={12} style={{ position: 'relative' }}>
+                      <Loading />
+                    </Grid>
+                  )}
 
-                        <Grid item xs style={{ flexGrow: 1 }}>
-                          <Records results={results} />
-                        </Grid>
-                      </>
-                    ) : (
-                      // Tablet +
-                      <Grid
-                        item
-                        xs={12}
-                        style={{
-                          justifyContent: 'center',
-                          display: 'flex',
-                          margin: '32px 0 16px 0',
-                        }}
-                      >
-                        <Grid container item lg={10} xl={8}>
-                          {showSidebar ? (
-                            <Grid style={{ paddingRight: 16 }} item md={4}>
-                              <Filters catalogue={data?.catalogue} />
-                            </Grid>
-                          ) : null}
+                  {/* SEARCH RESULTS & HEADER */}
+                  {!loading && (
+                    <>
+                      {/* MOBILE */}
+                      {isMobile && (
+                        <>
+                          {!disableSidebar && (
+                            <Suspense fallback={<Loading />}>
+                              <MobileSideMenu
+                                setShowSidebar={setShowSidebar}
+                                showSidebar={showSidebar}
+                                data={data}
+                              />
+                            </Suspense>
+                          )}
+
                           <Grid item xs style={{ flexGrow: 1 }}>
                             <Records results={results} />
                           </Grid>
+                        </>
+                      )}
+
+                      {/* LARGER SCREENS */}
+                      {!isMobile && (
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            justifyContent: 'center',
+                            display: 'flex',
+                            margin: '32px 0 16px 0',
+                          }}
+                        >
+                          <Grid container item lg={10} xl={8}>
+                            {showSidebar ? (
+                              <Grid style={{ paddingRight: 16 }} item md={4}>
+                                <Suspense
+                                  fallback={
+                                    <div style={{ position: 'relative' }}>
+                                      <Loading />
+                                    </div>
+                                  }
+                                >
+                                  <Filters catalogue={data?.catalogue} />
+                                </Suspense>
+                              </Grid>
+                            ) : null}
+                            <Grid item xs style={{ flexGrow: 1 }}>
+                              <Records results={results} />
+                            </Grid>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    )}
-                  </>
-                )}
-              </Grid>
-            </div>
-            {loading ? undefined : <Footer />}
-          </Header>
+                      )}
+                    </>
+                  )}
+                </Grid>
+              </div>
+              {loading ? undefined : <Footer />}
+            </Header>
+          </main>
         )
       }}
     </WithGqlQuery>

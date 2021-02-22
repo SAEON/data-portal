@@ -5,8 +5,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-const CARD_BG_COLOUR = 'rgba(255,255,255,0.85)'
-
 export default ({ title, children, ...props }) => {
   const theme = useTheme()
   const { style, ...otherProps } = props
@@ -14,7 +12,10 @@ export default ({ title, children, ...props }) => {
   return (
     <Grid style={Object.assign({}, { margin: theme.spacing(1) }, style)} item {...otherProps}>
       <Card
-        style={{ backgroundColor: CARD_BG_COLOUR, margin: isMobile ? '0 16px' : '' }}
+        style={{
+          margin: isMobile ? '0 16px' : '',
+          backgroundColor: theme.backgroundColor,
+        }}
         variant="outlined"
       >
         <CardContent>

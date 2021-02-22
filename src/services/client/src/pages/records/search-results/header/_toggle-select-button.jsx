@@ -23,6 +23,10 @@ export default ({ catalogue }) => {
           right={4}
         >
           <Checkbox
+            inputProps={{
+              'aria-label': `Select/unselect all search results`,
+              'aria-checked': selectAll,
+            }}
             size="small"
             checked={isIndeterminate || selectAll ? true : false}
             onChange={e => {

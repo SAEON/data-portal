@@ -22,9 +22,10 @@ export default _source => {
             <Title {..._source} />
           </Grid>
 
+          <PreviewAtlasButton {..._source} buttonSize="medium" />
+
           <Hidden xsDown>
             <CreateDatabookButton {..._source} buttonSize="medium" />
-            <PreviewAtlasButton {..._source} buttonSize="medium" />
             {isAuthenticated && <CodeViewButton {..._source} />}
             <CitationButton {..._source} buttonSize="medium" />
           </Hidden>

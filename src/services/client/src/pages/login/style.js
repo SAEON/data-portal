@@ -1,5 +1,4 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => ({
   grid: {
@@ -7,7 +6,7 @@ export default makeStyles(theme => ({
     paddingTop: theme.spacing(12),
   },
   card: {
-    backgroundColor: fade(theme.palette.common.white, 0.75),
+    backgroundColor: theme.backgroundColor,
     paddingBottom: theme.spacing(1),
   },
   button: {

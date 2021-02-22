@@ -1,19 +1,21 @@
+import { Suspense, lazy, useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { isMobile } from 'react-device-detect'
-import Title from './_title'
 import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
-import CreateDatabookButton from './_create-databook-button'
-import CreateAtlasButton from './create-atlas-button'
 import CreateListButton from './_create-list-button'
-import ConfigurePaginationButton from './_configure-pagination-button'
 import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
-import CurrentPageInfo from './_current-page-info'
-import DownloadRecords from './_download-records-button'
+import LoadingCircular from '../../../../components/loading-circular'
+import { context as authorizationContext } from '../../../../contexts/authorization'
 // import ResetFiltersButton from './_reset-filters-button'
+
+const AuthenticatedOnly = lazy(() => import('./authenticated'))
+const ConfigurePaginationButton = lazy(() => import('./_configure-pagination-button'))
+const CurrentPageInfo = lazy(() => import('./_current-page-info'))
+const Title = lazy(() => import('./_title'))
 
 export default ({
   catalogue,
@@ -27,6 +29,7 @@ export default ({
   showSidebar,
   setShowSidebar,
 }) => {
+  const { isAuthenticated } = useContext(authorizationContext)
   const theme = useTheme()
 
   return (
@@ -39,18 +42,20 @@ export default ({
           ) : undefined}
 
           {/* SEARCH RESULT COUNT */}
-          {!isMobile && <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />}
+          {!isMobile && (
+            <Suspense fallback={<LoadingCircular />}>
+              <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
+            </Suspense>
+          )}
 
           <span style={{ marginLeft: 'auto' }} />
 
-          {/* CREATE DATABOOK */}
-          {!isMobile && <CreateDatabookButton catalogue={catalogue} />}
-
-          {/* DOWNLOAD METADATA RECORDS */}
-          {!isMobile && <DownloadRecords catalogue={catalogue} />}
-
-          {/* CREATE ATLAS */}
-          {!isMobile && <CreateAtlasButton catalogue={catalogue} />}
+          {/* ATLAS and DATABOOK */}
+          {!isMobile && isAuthenticated && (
+            <Suspense fallback={<LoadingCircular />}>
+              <AuthenticatedOnly catalogue={catalogue} />
+            </Suspense>
+          )}
 
           {/* CREATE LIST */}
           <CreateListButton catalogue={catalogue} />
@@ -62,7 +67,11 @@ export default ({
           {/* <ResetFiltersButton /> */}
 
           {/* PAGINATION CONFIG */}
-          {!isMobile && <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />}
+          {!isMobile && (
+            <Suspense fallback={<LoadingCircular />}>
+              <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
+            </Suspense>
+          )}
 
           {/* PAGE BACK */}
           <PageBackButton
@@ -74,7 +83,9 @@ export default ({
 
           {/* CURRENT PAGE */}
           {!isMobile && (
-            <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
+            <Suspense fallback={<LoadingCircular />}>
+              <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
+            </Suspense>
           )}
 
           {/* PAGE FORWARD */}

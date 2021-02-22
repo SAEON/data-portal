@@ -26,19 +26,20 @@ export default () => {
       <AppBar className={clsx(classes.appBar)} variant="outlined" position="fixed">
         <Toolbar disableGutters={true} variant="dense">
           <NavMenu />
-
-          <Typography
-            component={Link}
-            style={{ color: 'white', cursor: 'pointer', margin: '0 8px' }}
-            href="/"
-            display="block"
-            variant="body2"
-          >
-            SAEON DATA PORTAL{' '}
-            {CATALOGUE_DEPLOYMENT_ENV === 'production'
-              ? undefined
-              : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`}
-          </Typography>
+          <header>
+            <Typography
+              component={Link}
+              style={{ color: 'white', cursor: 'pointer', margin: '0 8px' }}
+              href="/"
+              display="block"
+              variant="body2"
+            >
+              SAEON DATA PORTAL{' '}
+              {CATALOGUE_DEPLOYMENT_ENV === 'production'
+                ? undefined
+                : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`}
+            </Typography>
+          </header>
 
           {window.location.pathname.includes('atlas') && (
             <ShareOrEmbed

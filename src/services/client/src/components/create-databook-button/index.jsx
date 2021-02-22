@@ -2,9 +2,9 @@ import { useContext, useState } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Fade from '@material-ui/core/Fade'
 import Tooltip from '@material-ui/core/Tooltip'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import LoadingCircular from '../../components/loading-circular'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
+import { CATALOGUE_TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'
 import { gql, useApolloClient } from '@apollo/client'
@@ -25,7 +25,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     return null
   }
 
-  const isAllowed = ['Shapefile', 'NetCDF'].includes(immutableResource?._fileFormat)
+  const isAllowed = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(immutableResource?._fileFormat)
 
   if (error) {
     throw new Error(`Error creating databook: ${error.message}`)
@@ -34,7 +34,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
   if (loading) {
     return (
       <Fade in={true}>
-        <CircularProgress thickness={2} size={18} style={{ margin: '0 6px' }} />
+        <LoadingCircular />
       </Fade>
     )
   }
@@ -48,6 +48,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     >
       <span>
         <IconButton
+          aria-label="Create databook"
           size={buttonSize}
           style={
             isAllowed

@@ -18,15 +18,23 @@ export default () => {
           <CardHeader style={{ textAlign: 'center' }} title="Privacy Policy" />
 
           <CardContent>
-            <Typography className={clsx(classes.body)} variant="body2">
-              At SAEON Data Portal, accessible from catalogue.saeon.ac.za, one of our main
-              priorities is the privacy of our visitors. This Privacy Policy document contains types
-              of information that is collected and recorded by SAEON Data Portal and how we use it.
+            <Typography className={clsx(classes.h2)} variant="h6">
+              Our commitment to privacy
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              If you have additional questions or require more information about our Privacy Policy,
-              do not hesitate to contact us.
+              Your privacy is important to us. To better protect your privacy we provide this notice
+              explaining our online information practices. If you have additional questions or
+              require more information about our Privacy Policy, do not hesitate to contact us.
+            </Typography>
+
+            <Typography className={clsx(classes.body)} variant="body2">
+              We do not share information that we collect with outside parties.
+            </Typography>
+
+            <Typography className={clsx(classes.body)} variant="body2">
+              Finally, we never use or share the personally identifiable information provided to us
+              online in ways unrelated to the ones described.
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
@@ -66,22 +74,15 @@ export default () => {
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">
-              Privacy Policies
+              Personal information we collect
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              We do not share information that we collect with outside parties.
-            </Typography>
-
-            <Typography className={clsx(classes.body)} variant="body2">
-              We use return email addresses to answer the email we receive. Such addresses are not
-              used for any other purpose and are not shared with outside parties.
-            </Typography>
-
-            <Typography className={clsx(classes.body)} variant="body2">
-              Finally, we never use or share the personally identifiable information provided to us
-              online in ways unrelated to the ones described above without also providing you an
-              opportunity to opt-out or otherwise prohibit such unrelated uses.
+              Personal information is collected insofar as it is necessary to identify and
+              authenticate users, only when users authenticate with the ODP. Such information is
+              limited to profile information from services that this software uses for
+              authentication purposes (Google, Twitter, etc.) and email addresses used for
+              identification (and no other) purposes.
             </Typography>
 
             <Typography className={clsx(classes.h2)} variant="h6">

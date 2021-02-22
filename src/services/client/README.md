@@ -82,92 +82,98 @@ The catalogue filters are defined via configuration, which is a JSON file. A [de
 ```json
 [
   {
+    "id": "keywords-filter",
     "title": "Keywords",
     "field": "subjects.subject.raw",
+    "sortBy": "_count",
     "sortOrder": "desc",
-    "sortBy": "doc_count",
     "path": "subjects",
-    "filter": {
-      "field": "subjects.subjectScheme.raw",
-      "values": [
-        "SANS1878 keywordType general"
-      ]
-    }
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "includeIfMissingField": true,
+        "values": ["SANS1878 keywordType general"]
+      }
+    ]
   },
   {
+    "id": "places-filter",
     "title": "Places",
     "field": "subjects.subject.raw",
     "sortOrder": "desc",
-    "sortBy": "doc_count",
+    "sortBy": "_count",
     "path": "subjects",
     "filter": {
       "field": "subjects.subjectScheme.raw",
-      "values": [
-        "SANS1878 keywordType place"
-      ]
+      "values": ["SANS1878 keywordType place"]
     }
   },
   {
-    "title": "Themes",
-    "field": "subjects.subject.raw",
-    "sortOrder": "desc",
-    "sortBy": "doc_count",
-    "path": "subjects",
-    "filter": {
-      "field": "subjects.subjectScheme.raw",
-      "values": [
-        "SANS1878 keywordType theme"
-      ]
-    }
-  },
-  {
+    "id": "stratums-filter",
     "title": "Stratums",
     "field": "subjects.subject.raw",
     "sortOrder": "desc",
-    "sortBy": "doc_count",
+    "sortBy": "_count",
     "path": "subjects",
     "filter": {
       "field": "subjects.subjectScheme.raw",
-      "values": [
-        "SANS1878 keywordType stratum"
-      ]
+      "values": ["SANS1878 keywordType stratum"]
     }
   },
   {
+    "id": "themes-filter",
+    "title": "Themes",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filter": {
+      "field": "subjects.subjectScheme.raw",
+      "values": ["SANS1878 keywordType theme"]
+    }
+  },
+  {
+    "id": "publication-year-filter",
     "title": "Publication Year",
     "field": "publicationYear",
+    "sortBy": "_key",
     "sortOrder": "desc"
   },
   {
+    "id": "publisher-filter",
     "title": "Publisher",
-    "field": "publisher.raw"
+    "field": "publisher.raw",
+    "sortBy": "_key",
+    "sortOrder": "asc"
   },
   {
+    "id": "creators-filter",
     "title": "Creators",
     "field": "creators.name.raw",
-    "path": "creators"
+    "path": "creators",
+    "sortBy": "_key",
+    "sortOrder": "asc"
   },
   {
+    "id": "data-format-filter",
     "title": "Data format",
     "field": "immutableResource._fileFormat.raw",
-    "sortBy": "doc_count",
+    "sortBy": "_count",
     "sortOrder": "desc"
   },
   {
-    "title": "Institution",
+    "id": "data-provider-filter",
+    "title": "Data provider",
     "field": "institution.raw",
+    "sortBy": "_key",
     "sortOrder": "asc"
   },
   {
+    "id": "collection-filter",
     "title": "Collection",
     "field": "collection.raw",
+    "sortBy": "_key",
     "sortOrder": "asc"
-  },
-  {
-    "title": "Projects",
-    "field": "projects.raw",
-    "sortOrder": "asc",
-    "boost": 50
-  }  
+  }
 ]
 ```

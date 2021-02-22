@@ -19,6 +19,7 @@ export default ({
 }) => {
   return (
     <Autocomplete
+      aria-label="Select option"
       // From parent
       id={id}
       value={selectedOptions?.length ? selectedOptions : multiple ? [] : null}

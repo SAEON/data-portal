@@ -6,6 +6,7 @@ import FilterIcon from 'mdi-react/FilterOutlineIcon'
 import Filters from './_filters'
 import useStyles from '../style'
 import CloseIcon from 'mdi-react/CloseIcon'
+
 export default () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)

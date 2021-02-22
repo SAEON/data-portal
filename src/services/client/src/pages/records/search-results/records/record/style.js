@@ -1,13 +1,12 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => {
   return {
     card: {
+      backgroundColor: theme.backgroundColor,
       transitionTimingFunction: theme.transitions.easing.easeInOut,
       transitionProperty: 'all',
       transitionDuration: theme.transitions.duration.standard,
-      backgroundColor: fade(theme.palette.common.white, 0.85),
       '&:hover': {
         backgroundColor: theme.palette.common.white,
         boxShadow: theme.boxShadow,

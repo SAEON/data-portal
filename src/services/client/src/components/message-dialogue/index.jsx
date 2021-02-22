@@ -6,8 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent'
 import Tooltip from '@material-ui/core/Tooltip'
 import Badge from '@material-ui/core/Badge'
 import InfoIcon from '@material-ui/icons/Info'
+import { nanoid } from 'nanoid'
 
 export default ({
+  id,
   iconProps,
   tooltipProps,
   title = undefined,
@@ -22,10 +24,14 @@ export default ({
   badgeProps = undefined,
   hideIcon = false,
   defaultOpen = false,
+  ariaLabel = 'Toggle dialogue',
   permanent = false,
+  disabled = false,
   handleClose = () => {},
 }) => {
   const [open, setOpen] = useState(defaultOpen)
+
+  id = id || nanoid()
 
   useEffect(() => {
     if (open && onOpenEffect) {
@@ -39,6 +45,11 @@ export default ({
         <Tooltip placement="right-end" {...tooltipProps}>
           <span>
             <IconButton
+              disabled={disabled}
+              aria-label={ariaLabel}
+              aria-controls={id}
+              aria-haspopup="true"
+              aria-expanded={open}
               onClick={e => {
                 e.stopPropagation()
                 setOpen(!open)
@@ -64,6 +75,7 @@ export default ({
       )}
 
       <Dialog
+        id={id}
         disableBackdropClick={permanent}
         disableEscapeKeyDown={permanent}
         {...dialogueProps}
@@ -80,7 +92,9 @@ export default ({
           </DialogTitle>
         ) : undefined}
         <div style={{ position: 'relative' }}>
-          {children && typeof children === 'function' ? children(() => setOpen(false)) : children}
+          {children && typeof children === 'function'
+            ? children(() => setOpen(false), open)
+            : children}
           {children ? null : <DialogContent {...dialogueContentProps}>{text}</DialogContent>}
         </div>
       </Dialog>

@@ -1,38 +1,60 @@
 [
   {
+    "id": "keywords-filter",
     "title": "Keywords",
     "field": "subjects.subject.raw",
+    "sortBy": "_count",
     "sortOrder": "desc",
-    "sortBy": "doc_count"
+    "path": "subjects",
+    "filters": [{
+      "field": "subjects.subjectScheme.raw",
+      "includeIfMissingField": true,
+      "values": [
+        "SANS1878 keywordType general"
+      ]
+    }]
   },
   {
+    "id": "publication-year-filter",
     "title": "Publication Year",
     "field": "publicationYear",
+    "sortBy": "_key",
     "sortOrder": "desc"
   },
   {
+    "id": "publisher-filter",
     "title": "Publisher",
-    "field": "publisher.raw"
-  },
-  {
-    "title": "Creators",
-    "field": "creators.name.raw",
-    "path": "creators"
-  },
-  {
-    "title": "Data format",
-    "field": "immutableResource._fileFormat.raw",
-    "sortBy": "doc_count",
-    "sortOrder": "desc"
-  },
-  {
-    "title": "Data provider",
-    "field": "institution.raw",
+    "field": "publisher.raw",
+    "sortBy": "_key",
     "sortOrder": "asc"
   },
   {
+    "id": "creators-filter",
+    "title": "Creators",
+    "field": "creators.name.raw",
+    "path": "creators",
+    "sortBy": "_key",
+    "sortOrder": "asc"
+  },
+  {
+    "id": "data-format-filter",
+    "title": "Data format",
+    "field": "immutableResource._fileFormat.raw",
+    "sortBy": "_count",
+    "sortOrder": "desc"
+  },
+  {
+    "id": "data-provider-filter",
+    "title": "Data provider",
+    "field": "institution.raw",
+    "sortBy": "_key",
+    "sortOrder": "asc"
+  },
+  {
+    "id": "collection-filter",
     "title": "Collection",
     "field": "collection.raw",
+    "sortBy": "_key",
     "sortOrder": "asc"
   }
 ]

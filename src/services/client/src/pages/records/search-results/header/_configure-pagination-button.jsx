@@ -22,8 +22,10 @@ export default ({ pageSize, setPageSize }) => {
       <Button
         variant="text"
         disableElevation
-        aria-controls="simple-menu"
+        aria-controls="pagination-size-menu"
+        aria-expanded={Boolean(anchorEl)}
         aria-haspopup="true"
+        aria-label="Change pagination size"
         endIcon={<ArrowDropDownIcon />}
         onClick={event => {
           setAnchorEl(event.currentTarget)
@@ -32,7 +34,7 @@ export default ({ pageSize, setPageSize }) => {
         {pageSize}
       </Button>
       <Menu
-        id="simple-menu"
+        id="pagination-size-menu"
         anchorEl={anchorEl}
         keepMounted={false}
         open={Boolean(anchorEl)}
