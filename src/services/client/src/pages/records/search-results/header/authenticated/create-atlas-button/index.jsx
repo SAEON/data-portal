@@ -15,14 +15,7 @@ import getTooltip from '../fns/tooltip'
 import getValidCount from './_get-valid-count'
 import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
 
-/**
- * Hopefully slightly improve performance when
- * checking if records have useable data format
- * for this function when selectAll = true
- */
-const cache = {}
-
-export default ({ catalogue }) => {
+export default ({ cache, catalogue }) => {
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)

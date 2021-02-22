@@ -20,14 +20,7 @@ import removeSelectedIds from '../fns/remove-selected-ids'
 import getTooltip from '../fns/tooltip'
 import getValidCount from './_get-valid-count'
 
-/**
- * Hopefully slightly improve performance when
- * checking if records have useable data format
- * for this function when selectAll = true
- */
-const cache = {}
-
-export default ({ catalogue }) => {
+export default ({ catalogue, cache }) => {
   const theme = useTheme()
   const { global } = useContext(globalContext)
   const { isDataScientist } = useContext(authorizationContext)

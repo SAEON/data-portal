@@ -5,6 +5,11 @@ import CreateDatabookButton from './create-databook-button'
 import { CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../../../../config'
 
 export default ({ catalogue }) => {
+  /**
+   * This caching makes it easier to check
+   * if a record is valid for an Atlas and/
+   * or a Databook
+   */
   const cache = useMemo(() => {
     const cache = {
       atlases: {},
@@ -14,11 +19,18 @@ export default ({ catalogue }) => {
     for (let node of catalogue?.records.nodes) {
       var { metadata } = node
       var { _source } = metadata
-      var { immutableResource, id: itemId } = _source
+      var { immutableResource, linkedResources, id: itemId } = _source
 
-      // Register databooks cache
+      // Register to databooks cache
       cache.databooks[itemId] = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(
         immutableResource?._fileFormat
+      )
+
+      // Register to atlas cache
+      cache.atlases[itemId] = Boolean(
+        linkedResources?.find(
+          ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
+        )
       )
     }
 
@@ -27,8 +39,8 @@ export default ({ catalogue }) => {
 
   return (
     <>
-      <CreateDatabookButton cache={cache} catalogue={catalogue} />
-      <CreateAtlasButton catalogue={catalogue} />
+      <CreateDatabookButton cache={cache.databooks} catalogue={catalogue} />
+      <CreateAtlasButton cache={cache.atlases} catalogue={catalogue} />
       <DownloadRecords catalogue={catalogue} />
     </>
   )

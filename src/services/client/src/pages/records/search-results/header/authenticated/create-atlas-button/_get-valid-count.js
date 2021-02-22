@@ -1,10 +1,8 @@
-import isValid from './_is-valid'
-
 export default (selectedIds, selectAll, catalogue, cache) => {
   let validCount = 0
 
   if (selectedIds?.length) {
-    validCount = selectedIds.filter(id => isValid(id, catalogue?.records, cache)).length
+    validCount = selectedIds.filter(id => cache[id]).length
   }
 
   if (selectAll) {
