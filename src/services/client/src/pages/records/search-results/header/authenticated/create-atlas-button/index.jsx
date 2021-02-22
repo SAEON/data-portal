@@ -7,67 +7,27 @@ import MapIcon from '@material-ui/icons/Explore'
 import { gql } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { context as authorizationContext } from '../../../../../../contexts/authorization'
 import StyledBadge from '../../components/styled-badge'
 import packageJson from '../../../../../../../package.json'
-import removeSelectedIds from './_remove-selected-ids'
-import getTooltip from './_get-tooltip'
+import removeSelectedIds from '../fns/remove-selected-ids'
+import getTooltip from '../fns/tooltip'
+import getValidCount from './_get-valid-count'
+import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
 
-const idHasMap = (id, records, cache) => {
-  if (cache.hasOwnProperty(id)) {
-    return cache[id]
-  } else {
-    for (let node of records.nodes) {
-      var { metadata } = node
-      var { _source } = metadata
-      var { linkedResources, id: itemId } = _source
+/**
+ * Hopefully slightly improve performance when
+ * checking if records have useable data format
+ * for this function when selectAll = true
+ */
+const cache = {}
 
-      if (!itemId) return false
-
-      cache[itemId] = Boolean(
-        linkedResources?.find(
-          ({ linkedResourceType }) => linkedResourceType?.toUpperCase() === 'QUERY'
-        )
-      )
-
-      if (id === itemId) {
-        return cache[id]
-      }
-    }
-  }
-}
-
-const isAtlasAvailable = (selectedIds, selectAll, atlasLayersCount, records, cache) => {
-  if (records && atlasLayersCount && (selectedIds?.length || selectAll)) {
-    if (selectedIds?.length) {
-      return selectedIds.filter(id => idHasMap(id, records, cache)).length ? true : false
-    } else {
-      return atlasLayersCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS ? true : false
-    }
-  }
-
-  return false
-}
-
-export default ({ catalogue, cache }) => {
+export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
-  const { isAuthenticated } = useContext(authorizationContext)
   const { selectedIds, selectAll } = global
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
   const history = useHistory()
-
-  if (!isAuthenticated) {
-    return null
-  }
-
-  const atlasLayersCount =
-    catalogue?.summary
-      .find(summary => summary['_linked-resources-filter'])
-      ?.['_linked-resources-filter'].find(({ key }) => key?.toUpperCase() === 'QUERY')?.doc_count ||
-    0
 
   if (savedSearchLoading) {
     return (
@@ -77,20 +37,27 @@ export default ({ catalogue, cache }) => {
     )
   }
 
-  const atlasAvailable = isAtlasAvailable(
-    selectedIds,
-    selectAll,
-    atlasLayersCount,
-    catalogue?.records,
-    cache
-  )
+  // Get count of all selected records that are valid for databooks
+  const validCount = getValidCount(selectedIds, selectAll, catalogue, cache)
+
+  // Check whether the atlas function is available for current context
+  const available = validCount && validCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS
 
   return (
     <Fade key="not-loading" in={!savedSearchLoading}>
-      <Tooltip title={getTooltip(selectedIds, cache, selectAll, atlasLayersCount)}>
+      <Tooltip
+        title={getTooltip(
+          selectAll,
+          validCount,
+          selectedIds,
+          cache,
+          CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
+          'Atlas'
+        )}
+      >
         <span>
           <IconButton
-            disabled={!atlasAvailable}
+            disabled={!available}
             onClick={async e => {
               e.stopPropagation()
               setSavedSearchLoading(true)
@@ -118,10 +85,10 @@ export default ({ catalogue, cache }) => {
             }}
           >
             <StyledBadge
-              color={atlasAvailable ? 'primary' : 'default'}
+              color={available ? 'primary' : 'default'}
               badgeContent={
-                atlasAvailable || selectAll
-                  ? selectedIds?.filter(id => cache[id]).length || atlasLayersCount || 0
+                available || selectAll
+                  ? selectedIds?.filter(id => cache[id]).length || validCount || 0
                   : 0
               }
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

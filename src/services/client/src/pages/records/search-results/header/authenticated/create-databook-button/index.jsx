@@ -16,24 +16,26 @@ import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
 import packageJson from '../../../../../../../package.json'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
-import removeSelectedIds from './_remove-selected-ids'
-import getTooltip from './_get-tooltip'
+import removeSelectedIds from '../fns/remove-selected-ids'
+import getTooltip from '../fns/tooltip'
 import getValidCount from './_get-valid-count'
 
-export default ({ cache, catalogue }) => {
+/**
+ * Hopefully slightly improve performance when
+ * checking if records have useable data format
+ * for this function when selectAll = true
+ */
+const cache = {}
+
+export default ({ catalogue }) => {
   const theme = useTheme()
   const { global } = useContext(globalContext)
-  const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
+  const { isDataScientist } = useContext(authorizationContext)
   const { selectedIds, selectAll } = global
   const [error, setError] = useState(undefined)
   const [savedSearchLoading, setSavedSearchLoading] = useState(false)
   const client = useApolloClient()
   const history = useHistory()
-
-  // Return null if not logged in
-  if (!isAuthenticated) {
-    return null
-  }
 
   // Return early
   if (error) {
@@ -49,14 +51,23 @@ export default ({ cache, catalogue }) => {
     )
   }
 
-  // Get all selected records that are valid for databooks
+  // Get count of all selected records that are valid for databooks
   const validCount = getValidCount(selectedIds, selectAll, catalogue, cache)
 
-  // Check whether the databook function is available currently
+  // Check whether the databook function is available for current context
   const available = validCount && validCount < CATALOGUE_CLIENT_MAX_DATABOOK_TABLES
 
   return (
-    <Tooltip title={getTooltip(selectAll, validCount, selectedIds, cache)}>
+    <Tooltip
+      title={getTooltip(
+        selectAll,
+        validCount,
+        selectedIds,
+        cache,
+        CATALOGUE_CLIENT_MAX_DATABOOK_TABLES,
+        'Databook'
+      )}
+    >
       <span>
         <IconButton
           style={
