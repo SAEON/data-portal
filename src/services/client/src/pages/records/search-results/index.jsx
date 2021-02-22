@@ -139,83 +139,85 @@ export default ({ disableSidebar = false }) => {
           : data.catalogue.records.nodes
 
         return (
-          <Header
-            disableSidebar={disableSidebar}
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-            cursors={cursors}
-            setCursors={setCursors}
-            setPageSize={setPageSize}
-            pageSize={pageSize}
-            loading={loading}
-            catalogue={data?.catalogue}
-          >
-            <div
-              style={{
-                minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
-                  showSearchBar === 'true' || !showSearchBar ? '128' : '0'
-                }px - 48px - 49px)`,
-              }}
+          <main id="search-results">
+            <Header
+              disableSidebar={disableSidebar}
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              cursors={cursors}
+              setCursors={setCursors}
+              setPageSize={setPageSize}
+              pageSize={pageSize}
+              loading={loading}
+              catalogue={data?.catalogue}
             >
-              <Grid container direction="row" justify="center">
-                {/* SEARCH LOADING */}
-                {loading && (
-                  <Grid item xs={12} style={{ position: 'relative' }}>
-                    <Loading />
-                  </Grid>
-                )}
+              <div
+                style={{
+                  minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
+                    showSearchBar === 'true' || !showSearchBar ? '128' : '0'
+                  }px - 48px - 49px)`,
+                }}
+              >
+                <Grid container direction="row" justify="center">
+                  {/* SEARCH LOADING */}
+                  {loading && (
+                    <Grid item xs={12} style={{ position: 'relative' }}>
+                      <Loading />
+                    </Grid>
+                  )}
 
-                {/* SEARCH RESULTS & HEADER */}
-                {!loading && (
-                  <>
-                    {/* MOBILE */}
-                    {isMobile && (
-                      <>
-                        {!disableSidebar && (
-                          <Suspense fallback={<Loading />}>
-                            <MobileSideMenu
-                              setShowSidebar={setShowSidebar}
-                              showSidebar={showSidebar}
-                              data={data}
-                            />
-                          </Suspense>
-                        )}
+                  {/* SEARCH RESULTS & HEADER */}
+                  {!loading && (
+                    <>
+                      {/* MOBILE */}
+                      {isMobile && (
+                        <>
+                          {!disableSidebar && (
+                            <Suspense fallback={<Loading />}>
+                              <MobileSideMenu
+                                setShowSidebar={setShowSidebar}
+                                showSidebar={showSidebar}
+                                data={data}
+                              />
+                            </Suspense>
+                          )}
 
-                        <Grid item xs style={{ flexGrow: 1 }}>
-                          <Records results={results} />
-                        </Grid>
-                      </>
-                    )}
-
-                    {/* LARGER SCREENS */}
-                    {!isMobile && (
-                      <Grid
-                        item
-                        xs={12}
-                        style={{
-                          justifyContent: 'center',
-                          display: 'flex',
-                          margin: '32px 0 16px 0',
-                        }}
-                      >
-                        <Grid container item lg={10} xl={8}>
-                          {showSidebar ? (
-                            <Grid style={{ paddingRight: 16 }} item md={4}>
-                              <Filters catalogue={data?.catalogue} />
-                            </Grid>
-                          ) : null}
                           <Grid item xs style={{ flexGrow: 1 }}>
                             <Records results={results} />
                           </Grid>
+                        </>
+                      )}
+
+                      {/* LARGER SCREENS */}
+                      {!isMobile && (
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            justifyContent: 'center',
+                            display: 'flex',
+                            margin: '32px 0 16px 0',
+                          }}
+                        >
+                          <Grid container item lg={10} xl={8}>
+                            {showSidebar ? (
+                              <Grid style={{ paddingRight: 16 }} item md={4}>
+                                <Filters catalogue={data?.catalogue} />
+                              </Grid>
+                            ) : null}
+                            <Grid item xs style={{ flexGrow: 1 }}>
+                              <Records results={results} />
+                            </Grid>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    )}
-                  </>
-                )}
-              </Grid>
-            </div>
-            {loading ? undefined : <Footer />}
-          </Header>
+                      )}
+                    </>
+                  )}
+                </Grid>
+              </div>
+              {loading ? undefined : <Footer />}
+            </Header>
+          </main>
         )
       }}
     </WithGqlQuery>

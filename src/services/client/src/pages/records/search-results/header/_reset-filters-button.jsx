@@ -11,6 +11,7 @@ export default () => {
     <Tooltip title="Reset filters">
       <span>
         <IconButton
+          aria-label="Reset filter controls"
           onClick={() =>
             setGlobal({
               extent: undefined,

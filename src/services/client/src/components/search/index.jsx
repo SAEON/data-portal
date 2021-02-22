@@ -45,13 +45,15 @@ export default ({
               color={color}
               onChange={e => update({ text: e.target.value })}
               InputProps={{
-                ...inputProps,
-
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon {...iconProps} />
                   </InputAdornment>
                 ),
+                inputProps: {
+                  'aria-label': 'Text input for searching SAEON catalogue',
+                },
+                ...inputProps,
               }}
               value={text}
               placeholder="Search our data"

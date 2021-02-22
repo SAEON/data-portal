@@ -1,6 +1,7 @@
 import Results from './search-results'
 import SearchBar from './search-bar'
 import { isMobile } from 'react-device-detect'
+import SkipLink from '../../components/skip-link'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks/use-share-link'
 
@@ -19,15 +20,16 @@ export default ({ showSearchBar = true, disableSidebar = false } = {}) => {
 
   const hideSidebar = isMobile ? true : false
 
-  // With Search bar
-  if (showSearchBar) {
-    return (
-      <SearchBar>
+  return (
+    <>
+      <SkipLink href="#search-results" text="Skip to search results" />
+      {showSearchBar ? (
+        <SearchBar>
+          <Results disableSidebar={disableSidebar} hideSidebar={hideSidebar} />
+        </SearchBar>
+      ) : (
         <Results disableSidebar={disableSidebar} hideSidebar={hideSidebar} />
-      </SearchBar>
-    )
-  }
-
-  // Without search bar
-  return <Results disableSidebar={disableSidebar} hideSidebar={hideSidebar} />
+      )}
+    </>
+  )
 }

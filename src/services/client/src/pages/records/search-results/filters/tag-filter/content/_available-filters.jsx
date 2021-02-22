@@ -21,6 +21,8 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
       return null
     }
 
+    const checked = activeFilters?.map(({ value }) => value)?.includes(key) ? true : false
+
     return (
       <Grid key={key} item xs={12}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -28,7 +30,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
             style={{ alignSelf: 'baseline', display: 'flex' }}
             size="small"
             color="primary"
-            checked={activeFilters?.map(({ value }) => value)?.includes(key) ? true : false}
+            checked={checked}
             onChange={() => {
               if (activeFilters?.map(({ value }) => value)?.includes(key)) {
                 setGlobal({
@@ -40,7 +42,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
                 })
               }
             }}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
+            inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
           />
           <Tooltip title={key?.toUpperCase()} placement="top">
             <Typography

@@ -24,6 +24,8 @@ export default ({ activeFilters, filterId }) => {
   return sortedValues.map(({ value }) => {
     value = typeof value === 'number' ? `${value}` : value
 
+    const checked = activeFilters?.map(({ value }) => value)?.includes(value) ? true : false
+
     return (
       <Grid key={value} item xs={12}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -31,7 +33,7 @@ export default ({ activeFilters, filterId }) => {
             style={{ alignSelf: 'baseline' }}
             size="small"
             color="primary"
-            checked={activeFilters?.map(({ value }) => value)?.includes(value) ? true : false}
+            checked={checked}
             onChange={() =>
               setGlobal({
                 terms: terms.filter(({ value: _value, filterId: _id }) => {
@@ -43,7 +45,7 @@ export default ({ activeFilters, filterId }) => {
                 }),
               })
             }
-            inputProps={{ 'aria-label': 'primary checkbox' }}
+            inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
           />
           <Tooltip title={value?.toUpperCase()} placement="top">
             <Typography

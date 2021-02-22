@@ -31,6 +31,7 @@ export default ({ children }) => {
                     display: isMobile ? 'none' : 'inherit',
                   }}
                   src="/saeon-logo-white.png"
+                  alt="Logo"
                 />
               </a>
             </Grid>

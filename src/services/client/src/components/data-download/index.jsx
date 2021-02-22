@@ -47,6 +47,9 @@ export default ({
           {children ? (
             <Button
               aria-label="Download data"
+              aria-controls="usage-terms-confirmation-dialogue"
+              aria-haspopup="true"
+              aria-expanded={open}
               onClick={() => setOpen(!open)}
               {...props}
               startIcon={<DownloadIcon />}
@@ -56,6 +59,9 @@ export default ({
           ) : (
             <IconButton
               aria-label="Download data"
+              aria-controls="usage-terms-confirmation-dialogue"
+              aria-haspopup="true"
+              aria-expanded={open}
               onClick={() => setOpen(!open)}
               disabled={downloadURL === PLACEHOLDER_URI}
               size={IconButtonSize}
@@ -67,7 +73,7 @@ export default ({
         </span>
       </Tooltip>
 
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
         <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
@@ -84,7 +90,7 @@ export default ({
         </DialogContent>
         <DialogActions>
           <SimpleLink
-            aria-label="Agree to terms"
+            aria-label="Agree to terms and download resource"
             download={resourceDescription || 'Unknown resource'}
             style={{ display: 'block' }}
             uri={downloadURL}

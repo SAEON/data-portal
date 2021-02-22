@@ -11,14 +11,16 @@ export default ({ titles, id }) => {
 
   return (
     <CardContent className={clsx(classes.titleContent)}>
-      <Typography
-        component={Link}
-        onClick={() => history.push(`/records/${id}`)}
-        className={clsx(classes.title)}
-        variant="h2"
-      >
-        {titles?.[0]?.title || 'Title missing'}
-      </Typography>
+      <header>
+        <Typography
+          component={Link}
+          onClick={() => history.push(`/records/${id}`)}
+          className={clsx(classes.title)}
+          variant="h2"
+        >
+          {titles?.[0]?.title || 'Title missing'}
+        </Typography>
+      </header>
     </CardContent>
   )
 }
