@@ -16,10 +16,6 @@ export default () => {
           <CardHeader style={{ textAlign: 'center' }} title="Terms of Use" />
 
           <CardContent>
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Conditions of Use
-            </Typography>
-
             <Typography className={clsx(classes.body)} variant="body2">
               By accessing data from the South African Environmental Observation Network (SAEON)
               Open Data Platform (ODP) repository and its components, you affirm your acceptance of
