@@ -10,9 +10,10 @@ export default ({ titles, id }) => {
   const classes = useStyles()
 
   return (
-    <CardContent className={clsx(classes.titleContent)}>
-      <header>
+    <header>
+      <CardContent className={clsx(classes.titleContent)}>
         <Typography
+          tabIndex="0"
           component={Link}
           onClick={() => history.push(`/records/${id}`)}
           className={clsx(classes.title)}
@@ -20,7 +21,7 @@ export default ({ titles, id }) => {
         >
           {titles?.[0]?.title || 'Title missing'}
         </Typography>
-      </header>
-    </CardContent>
+      </CardContent>
+    </header>
   )
 }

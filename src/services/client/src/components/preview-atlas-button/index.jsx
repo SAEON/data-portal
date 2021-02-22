@@ -19,19 +19,22 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
       ({ linkedResourceType }) => linkedResourceType.toUpperCase() === 'QUERY'
     ) || {}
 
-  if (!linkedResource?.resourceURL) {
-    return null
-  }
+  const disabled = !linkedResource?.resourceURL
 
   return (
     <MessageDialogue
+      disabled={disabled}
+      ariaLabel="Toggle map preview"
+      id={`map-preview-${id}`}
       iconProps={{ size: buttonSize, 'aria-label': 'Preview dataset as a map' }}
       icon={<PreviewIcon />}
-      title={onClose => (
+      title={(onClose, open) => (
         <div style={{ display: 'flex' }}>
           <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
           <IconButton
-            aria-label="Close map"
+            aria-label="Close map preview"
+            aria-controls={`map-preview-${id}`}
+            aria-expanded={open}
             size="small"
             onClick={e => {
               e.stopPropagation()
@@ -50,8 +53,8 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
         },
       }}
       tooltipProps={{
-        placement: 'right',
-        title: `Preview dataset as map`,
+        placement: 'left',
+        title: disabled ? 'No preview available' : `Preview dataset as map`,
       }}
       dialogueContentProps={{ style: { padding: 0 } }}
       dialogueProps={{ fullWidth: true }}
