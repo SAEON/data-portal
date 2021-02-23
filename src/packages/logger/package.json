@@ -52,5 +52,7 @@
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.39.1"
-  }
+  },
+  "main": "rollup.config.js",
+  "dependencies": {}
 }

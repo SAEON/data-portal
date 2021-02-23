@@ -5,7 +5,7 @@ A tiny package that adds timestamps to the `info`, `log`, `warn`, and `error` fu
 ### Installation
 
 ```sh
-npm install -s @saeon/logger date-fns
+npm install -s @saeon/logger date-fns @babel/runtime
 ```
 
 ### Basic usage
