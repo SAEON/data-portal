@@ -47,6 +47,7 @@ export default ({ items }) => {
         {
           disableOneColumnMode: false,
           alwaysShowResizeHandle: false,
+          disableDrag: true,
           animate: true,
           float: false,
           margin: 0,

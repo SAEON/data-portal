@@ -2,6 +2,7 @@ enum ChartType {
   PIE
   BAR
   LINE
+  TABLE
   MAP
   PICTORIAL
   CUSTOM

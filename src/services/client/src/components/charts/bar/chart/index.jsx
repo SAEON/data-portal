@@ -1,25 +1,11 @@
 import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
 
-/*
-select "NAME", ogc_fid
-from "odp-925377aa-6914-41e8-8b92-f448ebe11f9c"
-ORDER BY ogc_fid
-limit 55
- */
-
-/**TO DO:
- * Move coloring to theme (main color, markline orange, and x-axis text styling)
- * Add Color Wheel component for  marklines customization by user? confirm with zach
- *
- *
- */
 export default ({ config, data, title, description }) => {
   const namesField = config['series-names']
   const valuesFields = config['series-values']
   const marklines = config['series-marklines']
   const quickOptions = config['series-quick-options']
-  console.log('quickOptions', quickOptions)
   const { isVertical } = quickOptions
 
   const categoryAxis = {

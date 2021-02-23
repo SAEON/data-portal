@@ -2,12 +2,15 @@ import { useState, useRef, useMemo } from 'react'
 import { VariableSizeGrid } from 'react-window'
 import useStyles from './style'
 import Draggable from 'react-draggable'
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator'
 import Measure from 'react-measure'
+import './scrollbar.css'
 // import debounce  from '../../lib/fns/debounce'
 import clsx from 'clsx'
-const ROW_HEIGHT = 30
-
+const ROW_HEIGHT = 35 //30
+const HEADER_HEIGHT = 40
 export default ({ data }) => {
+  // console.log('virtual-table data', data)
   //STEVEN TO-DO: get data (sqlResult) from context rather than prop
   if (!data || !data.length) return 'no data'
   const headers = useMemo(
@@ -16,7 +19,7 @@ export default ({ data }) => {
   )
   const columnCount = useMemo(() => Object.keys(headers).length, [headers])
 
-  const classes = useStyles({ ROW_HEIGHT: ROW_HEIGHT })
+  const classes = useStyles({ ROW_HEIGHT: ROW_HEIGHT, HEADER_HEIGHT: HEADER_HEIGHT })
 
   //dimensions value matches to bounds supplied by react-measure. dimensions consists of width, height, top, bottom,left,right. All values are in pixels
   const [dimensions, setDimensions] = useState({
@@ -42,7 +45,7 @@ export default ({ data }) => {
   }
 
   const minColWidth = 2
-  const gridMarginRight = 500
+  const gridMarginRight = 500 //refactored out. Delete soon
   const getColumnWidth = columnIndex => {
     const name = Object.entries(headers).find(([, i]) => i === columnIndex)?.[0]
     if (name) {
@@ -50,7 +53,7 @@ export default ({ data }) => {
     }
     //when final column (acts as right margin)
     else {
-      return gridMarginRight
+      return '100%'
     }
   }
   const handleDrag = (fieldName, deltaX) => {
@@ -64,7 +67,7 @@ export default ({ data }) => {
   }
 
   const handleDoubleClick = fieldName => {
-    const newWidth = fieldName.length / 2
+    const newWidth = fieldName.length // / 2
     columnWidths[fieldName] = newWidth > minColWidth ? newWidth : minColWidth
   }
   return (
@@ -87,13 +90,12 @@ export default ({ data }) => {
               {/* This grid is column headers */}
               <VariableSizeGrid
                 style={{
-                  overflowX: 'hidden',
-                  overflowY: 'hidden',
+                  overflow: 'hidden',
                 }}
                 columnCount={columnCount + 1} //extra column for easier resizing of final column
                 rowCount={1}
-                height={ROW_HEIGHT}
-                rowHeight={() => ROW_HEIGHT}
+                height={HEADER_HEIGHT}
+                rowHeight={() => HEADER_HEIGHT}
                 columnWidth={getColumnWidth}
                 width={dimensions.width}
                 ref={headerGrid}
@@ -114,9 +116,14 @@ export default ({ data }) => {
                             handleDrag(fieldName, data.x)
                             clearColumnWidthCache(columnIndex)
                           }}
+                          // onDrag={(event, data) => {
+                          //   console.log('onDrag data', data)
+                          //   debounce(handleDrag(fieldName, data.deltaX))
+                          //   clearColumnWidthCache(columnIndex)
+                          // }}
                           position={{ x: 0, y: 0 }}
                         >
-                          {
+                          {/* {
                             <span
                               className={classes.dragHandleIcon}
                               onDoubleClick={() => {
@@ -126,7 +133,14 @@ export default ({ data }) => {
                             >
                               ⋮
                             </span>
-                          }
+                          } */}
+                          <DragIndicatorIcon
+                            className={classes.dragHandleIcon}
+                            onDoubleClick={() => {
+                              handleDoubleClick(fieldName)
+                              clearColumnWidthCache(columnIndex)
+                            }}
+                          />
                         </Draggable>
                       ) : undefined}
                     </div>
@@ -135,9 +149,12 @@ export default ({ data }) => {
               </VariableSizeGrid>
               {/* This grid is data rows */}
               <VariableSizeGrid
-                style={{
-                  overflow: 'auto',
-                }}
+                // style={
+                //   {
+                //     // overflow: 'layout',
+                //   }
+                // }
+                className="customScroll"
                 columnCount={columnCount + 1}
                 rowCount={data.length}
                 columnWidth={getColumnWidth}
@@ -157,7 +174,7 @@ export default ({ data }) => {
                     // individual data row
                     <div
                       className={clsx(classes.tableRow, {
-                        [classes.tableRowHovered]: rowIndex % 2 === 0,
+                        [classes.tableRowAlternate]: rowIndex % 2 === 0,
                       })}
                       style={Object.assign({}, style)}
                     >
