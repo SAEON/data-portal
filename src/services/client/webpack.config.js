@@ -83,7 +83,7 @@ module.exports = () => {
         // @saeon/logger
         '@saeon/logger': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/logger/src' : '../../packages/logger/src'
+          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/dist'
         ),
       },
     },
