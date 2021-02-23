@@ -4,18 +4,18 @@ import CreateAtlasButton from './create-atlas-button'
 import CreateDatabookButton from './create-databook-button'
 import { CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../../../../config'
 
+const cache = {
+  atlases: {},
+  databooks: {},
+}
+
 export default ({ catalogue }) => {
   /**
    * This caching makes it easier to check
    * if a record is valid for an Atlas and/
    * or a Databook
    */
-  const cache = useMemo(() => {
-    const cache = {
-      atlases: {},
-      databooks: {},
-    }
-
+  useMemo(() => {
     for (let node of catalogue?.records.nodes) {
       var { metadata } = node
       var { _source } = metadata
@@ -33,8 +33,6 @@ export default ({ catalogue }) => {
         )
       )
     }
-
-    return cache
   }, [catalogue])
 
   return (

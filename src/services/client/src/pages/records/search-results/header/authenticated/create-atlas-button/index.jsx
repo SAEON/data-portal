@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
 import packageJson from '../../../../../../../package.json'
-import removeSelectedIds from '../fns/remove-selected-ids'
+import createSearchObject from '../fns/create-search-object'
 import getTooltip from '../fns/tooltip'
 import getValidCount from './_get-valid-count'
 import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
@@ -62,7 +62,7 @@ export default ({ cache, catalogue }) => {
                 `,
                 variables: {
                   createdBy: `${packageJson.name} v${packageJson.version}`,
-                  search: removeSelectedIds(global),
+                  search: createSearchObject(global),
                 },
               })
               if (data) {

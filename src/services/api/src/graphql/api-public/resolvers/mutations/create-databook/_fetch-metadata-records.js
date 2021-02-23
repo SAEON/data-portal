@@ -13,7 +13,7 @@ export default async (search, ctx) => {
     dois = undefined,
   } = search
 
-  const records = (
+  return (
     await graphql(
       schema,
       print(gql`
@@ -47,6 +47,4 @@ export default async (search, ctx) => {
       { extent, terms, text, size, ids, dois }
     )
   ).data.catalogue.records.nodes.map(({ metadata: m }) => m)
-
-  return records
 }

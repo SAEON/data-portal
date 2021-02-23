@@ -16,7 +16,7 @@ import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
 import packageJson from '../../../../../../../package.json'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
-import removeSelectedIds from '../fns/remove-selected-ids'
+import createSearchObject from '../fns/create-search-object'
 import getTooltip from '../fns/tooltip'
 import getValidCount from './_get-valid-count'
 
@@ -32,7 +32,7 @@ export default ({ catalogue, cache }) => {
 
   // Return early
   if (error) {
-    throw new Error(`Error creating databook. ${error.message}`)
+    throw new Error(`Error creating databook. ${error}`)
   }
 
   // Return early
@@ -65,7 +65,9 @@ export default ({ catalogue, cache }) => {
         <IconButton
           style={
             available
-              ? { color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main }
+              ? {
+                  color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main,
+                }
               : {}
           }
           disabled={!available}
@@ -74,8 +76,8 @@ export default ({ catalogue, cache }) => {
               ? async e => {
                   e.stopPropagation()
                   setSavedSearchLoading(true)
-                  const { data } = await client
-                    .mutate({
+                  try {
+                    const { data } = await client.mutate({
                       mutation: gql`
                         mutation($search: JSON!, $createdBy: String!) {
                           createDatabook(search: $search, createdBy: $createdBy)
@@ -83,18 +85,21 @@ export default ({ catalogue, cache }) => {
                       `,
                       variables: {
                         createdBy: `${packageJson.name} v${packageJson.version}`,
-                        search: removeSelectedIds(global),
+                        search: createSearchObject(global),
                       },
                     })
-                    .catch(error => setError(error))
-                    .finally(() => setSavedSearchLoading(false))
 
-                  if (data) {
-                    history.push({
-                      pathname: window.location.pathname.includes('render')
-                        ? `/render/databooks/${data.createDatabook}`
-                        : `/databooks/${data.createDatabook}`,
-                    })
+                    if (data) {
+                      history.push({
+                        pathname: window.location.pathname.includes('render')
+                          ? `/render/databooks/${data.createDatabook}`
+                          : `/databooks/${data.createDatabook}`,
+                      })
+                    } else {
+                      setSavedSearchLoading(false)
+                    }
+                  } catch (error) {
+                    setError(error.message)
                   }
                 }
               : () =>
