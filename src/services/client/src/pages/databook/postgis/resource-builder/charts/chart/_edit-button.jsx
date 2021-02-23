@@ -58,6 +58,7 @@ const initialEditorText = `function setOption(data) {
   //Your data prop is your SQL Editor results and is available here
   //Beautify => ctrl + shift + B
   console.log('setOption data', data)
+  console.log('this echarts instance',this)
   return ({
     title: {
       text: 'some title',
@@ -88,6 +89,14 @@ export default () => {
   const [error, setError] = useState('error goes here')
   const [showError, setShowError] = useState(false)
   let aceRef = createRef()
+  let echartRef = createRef()
+  //useeffect:
+  /*useEffect():
+    associate echartsRef.current with echartsinstance at start
+    ace will update echartRef
+    that will cause echart to update
+   * 
+   */
   const classes = useStyles()
   const { data } = useContext(databookContext)
   const handleClickOpen = () => {
@@ -97,10 +106,7 @@ export default () => {
   const handleClose = () => {
     setOpen(false)
   }
-  console.log('databook data in edit-button', data)
   const handleAceEditorOnChange = (value, event) => {
-    console.log('handleAceEditorOnChange event', event)
-    console.log('aceRef', aceRef)
     if (event.start.row <= 2 /*|| final row */) {
       console.log('in read only zone! editor text should not update but it does') //DOESNT WORK
       //https://github.com/securingsincity/react-ace/issues/181
@@ -113,10 +119,18 @@ export default () => {
 
   const createFunction = (params, functionString) => {
     let func = new Function(...params, functionString)
+    // const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor //https://stackoverflow.com/questions/42263200/es-2017-async-function-vs-asyncfunctionobject-vs-async-function-expression
+    // let speak = new AsyncFunction('word', 'await sleep(1000); return "Hi " + word;')
+    // let func = new AsyncFunction(...params, functionString)
+
     return func
   }
 
   const dialogContentHeight = '600px'
+
+  let echartsInstance = (
+    <ReactEcharts style={{ height: dialogContentHeight }} option={echartOption} /*theme={theme}*/ />
+  )
   return (
     <div>
       <Tooltip title="Edit chart" placement="bottom-start">
@@ -157,7 +171,8 @@ export default () => {
                 <IconButton
                   className={clsx(classes.playButton)}
                   onClick={() => {
-                    let newFunctionContent = editorText.substring(27, editorText.length - 2)
+                    let newFunctionContent = editorText.substring(27, editorText.length - 2) //Temporary solution till line 1 is read only
+                    console.log('newFunctionContent', newFunctionContent)
                     let newUserFunction
                     try {
                       newUserFunction = createFunction(['data'], newFunctionContent) //new Function('data', newFunctionContent)
@@ -167,7 +182,11 @@ export default () => {
                       setShowError(true)
                       return
                     }
-                    setEchartOption(newUserFunction(data.rows))
+                    setEchartOption(
+                      newUserFunction.call(echartsInstance, data.rows)
+
+                      // newUserFunction(data.rows)
+                    )
                   }}
                   size="small"
                 >
@@ -179,7 +198,8 @@ export default () => {
                 commands={Beautify.commands}
                 width="auto"
                 height="100%"
-                mode="javascript"
+                // mode="javascript"
+                mode="typescript"
                 theme="monokai"
                 name="Custom Chart Creator Editor"
                 // cursorStart={1}
@@ -196,6 +216,8 @@ export default () => {
                   enableSnippets: true,
                   showLineNumbers: true,
                   tabSize: 2,
+                  esversion: 9,
+                  esnext: false,
                 }}
               />
 
@@ -216,10 +238,10 @@ export default () => {
             </div>
 
             <div id="split-right">
-              <ReactEcharts
+              {/* <ReactEcharts
                 style={{ height: dialogContentHeight }}
-                option={echartOption} /*theme={theme}*/
-              />
+                option={echartOption}
+              /> */}
               {/*STEVEN: should user be given theme by default? */}
             </div>
           </SplitPane>

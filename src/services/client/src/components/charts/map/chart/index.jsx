@@ -82,16 +82,15 @@ export default ({ config, data, title, description }) => {
         series: [
           {
             type: 'map',
-            mapType: nano,
+            // mapType: nano,
+            map: nano,
             roam: true, //allows dragging of map
             label: {
-              normal: {
-                show: false,
-              },
+              show: false,
             },
             emphasis: {
               label: {
-                show: true,
+                show: false, //true,
               },
             },
             data: chartData,

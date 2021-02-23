@@ -23,8 +23,22 @@ var palette = [
   '#c14089',
 ]
 
+const palette2 = [
+  '#c23531',
+  '#2f4554',
+  '#61a0a8',
+  '#d48265',
+  '#91c7ae',
+  '#749f83',
+  '#ca8622',
+  '#bda29a',
+  '#6e7074',
+  '#546570',
+  '#c4ccd3',
+]
 export default {
-  color: palette,
+  // color: palette,
+  color: palette2,
   backgroundColor: 'rgba(0,0,0,0)',
   // textStyle: {},
   title: {
@@ -47,6 +61,7 @@ export default {
     },
   },
   tooltip: {
+    textStyle: { color: 'white' },
     backgroundColor: 'rgba(50,50,50,0.5)',
     axisPointer: {
       type: 'line',
@@ -114,9 +129,7 @@ export default {
       position: 'insideBottom',
       distance: -10,
       fontSize: 11,
-      // textStyle: {
       color: '#333',
-      // },
     },
     splitLine: {
       show: false,
@@ -146,9 +159,7 @@ export default {
     },
     axisLabel: {
       show: true,
-      // textStyle: {
       color: '#333',
-      // },
     },
     splitLine: {
       show: true,
@@ -179,9 +190,7 @@ export default {
     },
     axisLabel: {
       show: true,
-      // textStyle: {
       color: '#333',
-      // },
     },
     splitLine: {
       show: true,
@@ -211,9 +220,7 @@ export default {
     },
     axisLabel: {
       show: true,
-      // textStyle: {
       color: '#333',
-      // },
     },
     splitLine: {
       show: true,
@@ -229,15 +236,6 @@ export default {
     },
   },
   toolbox: {
-    // iconStyle: {
-    //   normal: {
-    //     borderColor: '#2ec7c9',
-    //   },
-    //   emphasis: {
-    //     borderColor: '#18a4a6',
-    //   },
-    // },
-
     feature: {
       saveAsImage: { title: 'Save as image' },
       dataView: {
@@ -258,40 +256,31 @@ export default {
       width: 1,
     },
     itemStyle: {
-      normal: {
-        color: '#008acd',
-        borderWidth: 1,
-      },
-      emphasis: {
-        color: '#a9334c',
-      },
+      color: '#008acd',
+      borderWidth: 1,
     },
+
     controlStyle: {
-      normal: {
-        color: '#008acd',
-        borderColor: '#008acd',
-        borderWidth: 0.5,
-      },
-      emphasis: {
-        color: '#008acd',
-        borderColor: '#008acd',
-        borderWidth: 0.5,
-      },
+      color: '#008acd',
+      borderColor: '#008acd',
+      borderWidth: 0.5,
     },
+
     checkpointStyle: {
       color: '#2ec7c9',
       borderColor: '#2ec7c9',
     },
     label: {
-      normal: {
-        textStyle: {
-          color: '#008acd',
-        },
+      color: '#008acd',
+    },
+    emphasis: {
+      controlStyle: {
+        color: '#008acd',
+        borderColor: '#008acd',
+        borderWidth: 0.5,
       },
-      emphasis: {
-        textStyle: {
-          color: '#008acd',
-        },
+      itemStyle: {
+        color: '#a9334c',
       },
     },
   },
@@ -352,28 +341,21 @@ export default {
     },
   },
   map: {
-    itemStyle: {
-      normal: {
-        areaColor: '#dddddd',
-        borderColor: '#eeeeee',
-        borderWidth: 0.5,
-      },
-      emphasis: {
-        areaColor: 'rgba(254,153,78,1)',
-        borderColor: '#444',
-        borderWidth: 1,
-      },
+    areaColor: '#dddddd',
+    borderColor: '#eeeeee',
+    borderWidth: 0.5,
+    emphasis: {
+      areaColor: 'rgba(254,153,78,1)',
+      borderColor: '#444',
+      borderWidth: 1,
     },
+
     label: {
-      normal: {
-        textStyle: {
-          color: '#d87a80',
-        },
-      },
-      emphasis: {
-        textStyle: {
-          color: 'rgb(100,0,0)',
-        },
+      color: '#d87a80',
+    },
+    emphasis: {
+      label: {
+        color: 'rgb(100,0,0)',
       },
     },
     feature: {
@@ -467,27 +449,21 @@ export default {
 
   geo: {
     itemStyle: {
-      normal: {
-        areaColor: '#dddddd',
-        borderColor: '#eeeeee',
-        borderWidth: 0.5,
+      areaColor: '#dddddd',
+      borderColor: '#eeeeee',
+      borderWidth: 0.5,
+    },
+    label: {
+      color: '#d87a80',
+    },
+    emphasis: {
+      label: {
+        color: 'rgb(100,0,0)',
       },
-      emphasis: {
+      itemStlye: {
         areaColor: 'rgba(254,153,78,1)',
         borderColor: '#444',
         borderWidth: 1,
-      },
-    },
-    label: {
-      normal: {
-        textStyle: {
-          color: '#d87a80',
-        },
-      },
-      emphasis: {
-        textStyle: {
-          color: 'rgb(100,0,0)',
-        },
       },
     },
   },
