@@ -85,7 +85,10 @@ export default ({ catalogue, cache }) => {
                       `,
                       variables: {
                         createdBy: `${packageJson.name} v${packageJson.version}`,
-                        search: createSearchObject(global),
+                        search: createSearchObject(
+                          global,
+                          selectedIds.length && selectedIds.filter(id => cache[id])
+                        ),
                       },
                     })
 
