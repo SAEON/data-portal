@@ -44,7 +44,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
             }}
             inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
           />
-          <Tooltip title={key?.toUpperCase()} placement="top">
+          <Tooltip title={`${key?.toUpperCase()} (${doc_count})`} placement="top">
             <Typography
               style={{
                 overflow: 'hidden',
