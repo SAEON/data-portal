@@ -1,6 +1,6 @@
 {
   "name": "@saeon/quick-form",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "description": "Quickly add localised state to your component tree",
   "main": "dist/index.js",
   "exports": {
