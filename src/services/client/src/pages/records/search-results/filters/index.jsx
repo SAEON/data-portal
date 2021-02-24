@@ -3,17 +3,14 @@ import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
 import TagFilter from './tag-filter'
 import ExtentFilter from './extent-filter'
-import useStyles from './style'
-import clsx from 'clsx'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
 
 export default ({ catalogue }) => {
-  const classes = useStyles()
   const theme = useTheme()
 
   return (
     <Fade in={Boolean(catalogue)}>
-      <Grid className={clsx(classes.sideBar)} container item xs={12} spacing={0}>
+      <Grid container item xs={12} spacing={0}>
         {/* EXTENT FILTER */}
         <Grid item xs={12} style={{ position: 'relative' }}>
           <ExtentFilter title="Extent Filter" />

@@ -48,7 +48,7 @@ class ErrorBoundary extends Component {
             </DialogContentText>
             <DialogContentText
               component={({ children }) => (
-                <pre className={clsx(classes.errorBlock)}>
+                <pre className={clsx(classes.errorMessage)}>
                   <code>{children}</code>
                 </pre>
               )}

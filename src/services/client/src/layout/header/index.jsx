@@ -8,14 +8,11 @@ import packageJson from '../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../config'
 import Authentication from './auth'
 import ShareOrEmbed from '../../components/share-or-embed'
-import useStyles from './style'
-import clsx from 'clsx'
 import { context as globalContext } from '../../contexts/global'
 import NavMenu from './nav'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
-  const classes = useStyles()
   useLocation() // Trigger re-render on location changes
   const { global } = useContext(globalContext)
   const { selectedIds } = global
@@ -23,7 +20,7 @@ export default () => {
 
   return (
     <>
-      <AppBar className={clsx(classes.appBar)} variant="outlined" position="fixed">
+      <AppBar color="primary" variant="outlined" position="fixed">
         <Toolbar disableGutters={true} variant="dense">
           <NavMenu />
           <header>
@@ -59,7 +56,7 @@ export default () => {
         </Toolbar>
       </AppBar>
 
-      <div className={classes.toolbar} />
+      <div style={{ minHeight: 48 }} />
     </>
   )
 }

@@ -28,7 +28,12 @@ export default () => {
           )
         }
 
-        return <Login />
+        return null
+
+        /**
+         * Login disabled for now
+         */
+        // return <Login />
       }}
     </authContext.Consumer>
   )
