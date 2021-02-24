@@ -37,11 +37,9 @@ jobs:
           CATALOGUE_API_NODE_ENV=production
           CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS=
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
-          CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
-          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
           CATALOGUE_DEPLOYMENT_ENV="development"
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
