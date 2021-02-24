@@ -14,13 +14,28 @@
 
     - name: MONGO_DB_USERNAME
       prompt: Provide a MongoDB username
-      default: ""
+      default: "admin"
       private: no
 
     - name: MONGO_DB_PASSWORD
       prompt: Provide a MongoDB password
-      default: ""
-      private: yes      
+      default: "password"
+      private: yes    
+      
+    - name: POSTGIS_USERNAME
+      prompt: Provide a PostGIS username
+      default: "admin"
+      private: no
+
+    - name: POSTGIS_PASSWORD
+      prompt: Provide a PostGIS password
+      default: "password"
+      private: yes    
+
+    - name: DHPARAM_SIZE
+      prompt: Specify the SSL dhparam size
+      default: "256"
+      private: no
       
   tasks:
     - name: Ensure /opt/
@@ -40,7 +55,6 @@
         path: /var/lib/catalogue-api
         state: directory
         mode: '0755'
-        owner: 'saeo-catalogue' # TODO. what should this user be?
 
     - name: Ensure /opt/ssl-keys directory
       file:
@@ -50,7 +64,7 @@
 
     - name: Generate dhparams
       shell: |
-        openssl dhparam -out /opt/ssl-keys/dhparam.pem 2048
+        openssl dhparam -out /opt/ssl-keys/dhparam.pem {{ DHPARAM_SIZE }}
       args:
         creates: /opt/ssl-keys/dhparam.pem      
 
@@ -69,7 +83,7 @@
         systemctl enable docker
         systemctl start docker
 
-    - name: Cleanup docker files regularly
+    - name: Clean up docker files regularly
       cron:
         name: Prune docker system
         minute: "0"
@@ -180,30 +194,6 @@
         firewall-cmd --permanent --add-port=5432/tcp # Postgres
         firewall-cmd --permanent --add-port=3306/tcp # MySQL      
         firewall-cmd --reload
-    
-    - name: copy-nginx-config.sh
-      copy:
-        content: "cp ./platform/nginx/{{ CATALOGUE_DEPLOYMENT_ENV }}/nginx.conf /etc/nginx/"
-        dest: /opt/copy-nginx-config.sh
-        owner: root
-        group: root
-        mode: '0700'
-
-    - name: copy-nginx-server-blocks.sh
-      copy:
-        content: "cp ./platform/nginx/{{ CATALOGUE_DEPLOYMENT_ENV }}/server-blocks/* /etc/nginx/conf.d/" 
-        dest: /opt/copy-nginx-server-blocks.sh
-        owner: root
-        group: root
-        mode: '0700'
-
-    - name: reload-nginx.sh
-      copy:
-        content: "service nginx reload" 
-        dest: /opt/reload-nginx.sh
-        owner: root
-        group: root
-        mode: '0700'
 
     - name: Setup Github Actions user
       user:
