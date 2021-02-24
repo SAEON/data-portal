@@ -107,7 +107,7 @@ export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.dvn/api
 
 export const CATALOGUE_API_ODP_FILTER_PATH =
   process.env.CATALOGUE_API_ODP_FILTER_PATH ||
-  join(__dirname, '../../../../deployment-configs/local/odp-filter.js')
+  join(__dirname, '../../../../deployment-configs/next/odp-filter.js')
 
 export const CATALOGUE_API_ODP_FILTER = await import(CATALOGUE_API_ODP_FILTER_PATH).then(
   ({ default: fn }) => fn

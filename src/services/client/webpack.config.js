@@ -17,7 +17,7 @@ let {
 } = process.env
 
 CATALOGUE_CLIENT_FILTER_CONFIG_PATH =
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH || path.join(__dirname, '../../../deployment-configs/saeon-data-portal/client-filters.json')
+  CATALOGUE_CLIENT_FILTER_CONFIG_PATH || path.join(__dirname, '../../../deployment-configs/next/client-filters.json')
 
 module.exports = () => {
   const output = 'dist'

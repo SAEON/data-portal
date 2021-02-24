@@ -8,8 +8,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## SAEON Data Portal
-All records except MIMS
-
-## MIMS
-A smaller deployment containing only MIMS records
+## next
+## stable
+## mims

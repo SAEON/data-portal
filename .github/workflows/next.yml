@@ -15,8 +15,8 @@ jobs:
 
       - name: Configure services
         run: |
-          cp deployment-configs/saeon-data-portal/odp-filter.js src/services/api/odp-filter.js
-          cp deployment-configs/saeon-data-portal/client-filters.json src/services/client/client-filters.json
+          cp deployment-configs/next/odp-filter.js src/services/api/odp-filter.js
+          cp deployment-configs/next/client-filters.json src/services/client/client-filters.json
 
       - name: Deploy services
         run: >-
