@@ -20,8 +20,8 @@ jobs:
 
       - name: Deploy services
         run: >-
-          CATALOGUE_API_ODP_FILTER_PATH="../odp-filter.js"
-          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="../client-filters.json"
+          CATALOGUE_API_ODP_FILTER_PATH="src/services/api/odp-filter.js"
+          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="src/services/client/client-filters.json"
           CATALOGUE_API_TWITTER_CLIENT_ID="${{ secrets.CATALOGUE_API_TWITTER_CLIENT_ID}}"
           CATALOGUE_API_TWITTER_CLIENT_SECRET="${{ secrets.CATALOGUE_API_TWITTER_CLIENT_SECRET}}"
           CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS="https://api.catalogue.saeon.dvn/authenticate/redirect/twitter"        
