@@ -36,16 +36,22 @@ export default async (ctx, databook) => {
         -- Update search path to include "public" schema
         alter role "${username}" set search_path = "${schema}", public, tiger;
         
-        -- Setup SELECT ONLY for public tables
-        grant usage on schema public to "${username}";
+        -- Adjust default privileges in public schema for this new role
+        grant USAGE on schema public to "${username}";
+        alter default privileges in schema public grant SELECT on tables to "${username}";
+        alter default privileges in schema public grant USAGE, SELECT on sequences to "${username}";
+
+        -- Adjust privileges for existing objects in public schema
         grant select on all tables in schema public to "${username}";
         grant select on all sequences in schema public to "${username}";
-        grant insert on public.spatial_ref_sys to "${username}";
+        
+        -- Temporary privileges required for provisioning data
+        grant INSERT, UPDATE on public.spatial_ref_sys to "${username}";
 
         -- Grant user access to the new table in their new schema
-        grant select, update, insert on "${schema}".odp_map to "${username}";
-        grant usage, select on all sequences in schema "${schema}" to "${username}";
-        alter default privileges in schema "${schema}" grant usage, select on sequences to "${username}";
+        grant SELECT, UPDATE, INSERT on "${schema}".odp_map to "${username}";
+        grant USAGE, SELECT on all sequences in schema "${schema}" to "${username}";
+        alter default privileges in schema "${schema}" grant USAGE, SELECT on sequences to "${username}";
 
       commit;`,
   })
@@ -60,7 +66,7 @@ export default async (ctx, databook) => {
     await query({
       text: `
       begin;
-        revoke insert on public.spatial_ref_sys from "${username}";
+        revoke INSERT, UPDATE on public.spatial_ref_sys from "${username}";
       commit;`,
     })
   }

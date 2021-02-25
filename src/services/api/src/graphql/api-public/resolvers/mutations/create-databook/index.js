@@ -1,4 +1,4 @@
-import createPostgisWorkspace from './prepare-data/index.js'
+import createPostgisWorkspace from './provision-postgis-db/index.js'
 import fetchMetadataRecords from './_fetch-metadata-records.js'
 import createMongoDoc from './_create-mongo-doc.js'
 
@@ -19,7 +19,7 @@ export default async (_, args, ctx) => {
    * This entry contains a list of tables with a ready status
    * that is initially set to 'false'
    *
-   * A databookId (i.e. thew _id of the Mongo doc) corresponds
+   * A databookId (i.e. the _id of the Mongo doc) corresponds
    * to the name of a schema in PostGIS
    */
   const { insertedId: databookId } = await createMongoDoc(records, ctx, createdBy)

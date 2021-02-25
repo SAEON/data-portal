@@ -7,7 +7,15 @@ import {
   CATALOGUE_DOCKER_TMP_VOLUME,
 } from '../config.js'
 
-export default ({ tableName, username, password, pathToShapefile, schema }) => {
+export default ({
+  tableName,
+  username,
+  password,
+  pathToShapefile,
+  schema,
+  translate = false,
+  s_srs = 'EPSG:4326',
+}) => {
   const ogr2ogrProcess = spawn('docker', [
     'run',
     `--net=${CATALOGUE_DOCKER_NETWORK}`,
@@ -26,6 +34,7 @@ export default ({ tableName, username, password, pathToShapefile, schema }) => {
     'PostgreSQL',
     '-lco',
     'LAUNDER=NO',
+    ...(translate ? ['-s_srs', s_srs, '-t_srs', 'EPSG:4326'] : []),
     '-lco',
     'PRECISION=NO',
     '-nlt',
