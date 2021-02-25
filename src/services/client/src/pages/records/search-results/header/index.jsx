@@ -34,7 +34,7 @@ export default ({
 
   return (
     <>
-      <AppBar color="inherit" position="sticky" variant="outlined" style={{ zIndex: 2000 }}>
+      <AppBar color="inherit" position="sticky" variant="outlined" style={{ zIndex: 1200 }}>
         <Toolbar disableGutters variant="dense">
           {/* MOBILE FILTER TOGGLE */}
           {isMobile && !disableSidebar ? (
