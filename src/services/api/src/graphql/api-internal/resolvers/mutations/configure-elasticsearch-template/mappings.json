@@ -133,7 +133,7 @@
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|gte|lte"
+        "unmatch": "publicationYear|gte|lte|subjects"
       }
     }
   ]

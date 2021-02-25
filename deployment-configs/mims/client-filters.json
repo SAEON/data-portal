@@ -9,7 +9,6 @@
     "filters": [
       {
         "field": "subjects.subjectScheme.raw",
-        "includeIfMissingField": true,
         "values": ["SANS1878 keywordType general"]
       }
     ]
@@ -21,10 +20,12 @@
     "sortOrder": "desc",
     "sortBy": "_count",
     "path": "subjects",
-    "filter": {
-      "field": "subjects.subjectScheme.raw",
-      "values": ["SANS1878 keywordType place"]
-    }
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType place"]
+      }
+    ]
   },
   {
     "id": "stratums-filter",
@@ -33,10 +34,12 @@
     "sortOrder": "desc",
     "sortBy": "_count",
     "path": "subjects",
-    "filter": {
-      "field": "subjects.subjectScheme.raw",
-      "values": ["SANS1878 keywordType stratum"]
-    }
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType stratum"]
+      }
+    ]
   },
   {
     "id": "themes-filter",
@@ -45,10 +48,12 @@
     "sortOrder": "desc",
     "sortBy": "_count",
     "path": "subjects",
-    "filter": {
-      "field": "subjects.subjectScheme.raw",
-      "values": ["SANS1878 keywordType theme"]
-    }
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType theme"]
+      }
+    ]
   },
   {
     "id": "publication-year-filter",
