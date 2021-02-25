@@ -11,6 +11,7 @@ export default async () => {
       password: POSTGIS_PASSWORD,
       schema: 'public',
       pathToShapefile: `/vsizip//vsicurl/${uri}`,
+      translate: true,
     })
   }
 
