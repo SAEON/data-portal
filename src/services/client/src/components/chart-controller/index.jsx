@@ -6,6 +6,7 @@ import chartDefinitions from '../charts'
 import Fade from '@material-ui/core/Fade'
 
 export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
+  console.log('in chart-controller for id', id)
   return (
     <WithGqlQuery
       QUERY={gql`
@@ -17,6 +18,7 @@ export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
             type
             config
             data
+            setOption
           }
           filters(ids: $filterIds) {
             id
@@ -38,6 +40,7 @@ export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
           throw error
         }
         const { charts, filters } = data
+        console.log('charts', charts)
 
         let chartDoc = charts.find(({ id: _id }) => _id === id)
         const chartDefinition = chartDefinitions.find(({ type }) => type === chartDoc.type)

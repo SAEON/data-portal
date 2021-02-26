@@ -46,9 +46,8 @@ export default ({ items }) => {
       GridStack.init(
         {
           disableOneColumnMode: false,
-          alwaysShowResizeHandle: false,
           disableDrag: true,
-          animate: true,
+          disableResize: true,
           float: false,
           margin: 0,
           cellHeight: '150px',

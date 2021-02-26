@@ -2,6 +2,7 @@ scalar DateTime
 scalar JSON
 scalar Void
 scalar WKT_4326
+scalar FunctionString
 
 type PageInfo {
   hasNextPage: Boolean
@@ -90,6 +91,7 @@ type Mutation {
     config: JSON!
     sql: String!
   ): Chart!
+  editChart(id: ID!, title: String, description: String, setOption: FunctionString): Chart!
   deleteChart(id: ID!): Boolean!
   # Add a filter to dashboard, and get the new count of a dashboard's filters
   addFilterToDashboard(filterId: ID!, dashboardId: ID!): Filter!

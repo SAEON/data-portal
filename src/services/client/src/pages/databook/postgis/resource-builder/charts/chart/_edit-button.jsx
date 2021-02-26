@@ -18,6 +18,7 @@ import clsx from 'clsx'
 import useStyles from './style'
 import Alert from '@material-ui/lab/Alert'
 import { context as databookContext } from '../../../../context'
+import { useApolloClient, gql } from '@apollo/client'
 
 function PaperComponent(props) {
   return (
@@ -82,7 +83,27 @@ const initialEditorText = `function setOption(data) {
   })
 }`
 
-export default () => {
+const CHARTS_QUERY = gql`
+  query($ids: [ID]!) {
+    charts(ids: $ids) {
+      id
+      title
+      description
+      type
+      setOption
+    }
+  }
+`
+
+/*STEVEN: 
+  -Data parameter is available within the context of the Custom Chart Creator and seemingly within context of dashboard page. I haven't tested for any bugs here
+  -This page is intended for the custom chart creator tool but is currently available to any chart type. I haven't tested what would happen if you edited a different
+  chart type but probably not good things. Probably best to rename this to _custom-chart-edit-button OR also handle regular chart editing in here
+  -Ace Editor mode is still set to typescript as I haven't figured out the esversion issue
+  -draggable (PaperComponent) hasn't been replaced with snap-menu yet
+*/
+
+export default ({ id: chartId }) => {
   const [open, setOpen] = useState(false)
   const [editorText, setEditorText] = useState(initialEditorText)
   const [echartOption, setEchartOption] = useState(initialEchartOptions)
@@ -90,13 +111,7 @@ export default () => {
   const [showError, setShowError] = useState(false)
   let aceRef = createRef()
   let echartRef = createRef()
-  //useeffect:
-  /*useEffect():
-    associate echartsRef.current with echartsinstance at start
-    ace will update echartRef
-    that will cause echart to update
-   * 
-   */
+  const client = useApolloClient()
   const classes = useStyles()
   const { data } = useContext(databookContext)
   const handleClickOpen = () => {
@@ -107,30 +122,15 @@ export default () => {
     setOpen(false)
   }
   const handleAceEditorOnChange = (value, event) => {
-    if (event.start.row <= 2 /*|| final row */) {
-      console.log('in read only zone! editor text should not update but it does') //DOESNT WORK
-      //https://github.com/securingsincity/react-ace/issues/181
-      // return
-    }
-    // const newValue = value.substring(76, value.length - 2)
-    // setUserText(newValue)
     setEditorText(value)
   }
 
   const createFunction = (params, functionString) => {
-    let func = new Function(...params, functionString)
-    // const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor //https://stackoverflow.com/questions/42263200/es-2017-async-function-vs-asyncfunctionobject-vs-async-function-expression
-    // let speak = new AsyncFunction('word', 'await sleep(1000); return "Hi " + word;')
-    // let func = new AsyncFunction(...params, functionString)
-
+    let func = new Function(...params, 'return ' + functionString)()
     return func
   }
-
   const dialogContentHeight = '600px'
 
-  let echartsInstance = (
-    <ReactEcharts style={{ height: dialogContentHeight }} option={echartOption} /*theme={theme}*/ />
-  )
   return (
     <div>
       <Tooltip title="Edit chart" placement="bottom-start">
@@ -171,22 +171,17 @@ export default () => {
                 <IconButton
                   className={clsx(classes.playButton)}
                   onClick={() => {
-                    let newFunctionContent = editorText.substring(27, editorText.length - 2) //Temporary solution till line 1 is read only
-                    console.log('newFunctionContent', newFunctionContent)
+                    let newFunctionContent = editorText
                     let newUserFunction
                     try {
-                      newUserFunction = createFunction(['data'], newFunctionContent) //new Function('data', newFunctionContent)
+                      newUserFunction = createFunction(['data'], newFunctionContent)
                     } catch (error) {
                       console.error(error)
                       setError(`${error.name}: ${error.message}`)
                       setShowError(true)
                       return
                     }
-                    setEchartOption(
-                      newUserFunction.call(echartsInstance, data.rows)
-
-                      // newUserFunction(data.rows)
-                    )
+                    setEchartOption(newUserFunction.call(echartRef.current, data.rows))
                   }}
                   size="small"
                 >
@@ -202,8 +197,6 @@ export default () => {
                 mode="typescript"
                 theme="monokai"
                 name="Custom Chart Creator Editor"
-                // cursorStart={1}
-                //   onLoad={this.onLoad}
                 onChange={handleAceEditorOnChange}
                 fontSize={14}
                 showPrintMargin={false}
@@ -238,11 +231,13 @@ export default () => {
             </div>
 
             <div id="split-right">
-              {/* <ReactEcharts
+              <ReactEcharts
+                ref={e => {
+                  echartRef.current = e
+                }}
                 style={{ height: dialogContentHeight }}
                 option={echartOption}
-              /> */}
-              {/*STEVEN: should user be given theme by default? */}
+              />
             </div>
           </SplitPane>
         </DialogContent>
@@ -250,7 +245,48 @@ export default () => {
           <Button onClick={handleClose} className={clsx(classes.cancelButton)}>
             Cancel
           </Button>
-          <Button className={clsx(classes.saveButton)} onClick={handleClose}>
+          <Button
+            className={clsx(classes.saveButton)}
+            onClick={async () => {
+              await client.mutate({
+                mutation: gql`
+                  mutation($id: ID!, $setOption: FunctionString) {
+                    editChart(id: $id, setOption: $setOption) {
+                      id
+                      setOption
+                    }
+                  }
+                `,
+                variables: {
+                  id: chartId,
+                  setOption: editorText,
+                },
+                update: (cache, { data }) => {
+                  const { charts } = cache.read({
+                    query: CHARTS_QUERY,
+                    variables: {
+                      ids: [chartId],
+                    },
+                  })
+                  const updatedChart = Object.assign(
+                    {},
+                    { ...charts },
+                    {
+                      setOption: editorText,
+                    }
+                  )
+
+                  cache.writeQuery({
+                    query: CHARTS_QUERY,
+                    data: {
+                      charts: [updatedChart],
+                    },
+                  })
+                },
+              })
+              handleClose()
+            }}
+          >
             Save
           </Button>
         </div>
