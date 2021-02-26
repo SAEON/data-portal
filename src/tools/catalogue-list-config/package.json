@@ -17,6 +17,6 @@
     "mongodb": "^3.6.4"
   },
   "devDependencies": {
-    "npm-check-updates": "^11.1.8"
+    "npm-check-updates": "^11.1.9"
   }
 }

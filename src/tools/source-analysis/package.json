@@ -31,6 +31,6 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "npm-check-updates": "^11.1.8"
+    "npm-check-updates": "^11.1.9"
   }
 }
