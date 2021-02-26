@@ -2,21 +2,17 @@ import 'react-resizable/css/styles.css'
 import { useState, useEffect, forwardRef } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
-import {
-  Card,
-  CardContent,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Tooltip,
-  Fade,
-} from '@material-ui/core'
-import {
-  Close as CloseIcon,
-  Minimize as MinimizeIcon,
-  CheckBoxOutlineBlank as MaximizeIcon,
-} from '@material-ui/icons'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import Fade from '@material-ui/core/Fade'
+import CloseIcon from '@material-ui/icons/Close'
+import MinimizeIcon from '@material-ui/icons/Minimize'
+import MaximizeIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import useStyles from './style.js'
 import debounce from '../lib/debounce.js'
 import EventBoundary from '../lib/event-boundary.jsx'
