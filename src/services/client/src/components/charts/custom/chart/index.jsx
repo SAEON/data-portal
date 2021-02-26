@@ -1,10 +1,10 @@
 import ReactEcharts from 'echarts-for-react'
 import theme from '../../../../lib/echarts-theme'
 
-export default ({ config, data, title, description }) => {
-  const namesField = config['series-names']
-  const valuesFields = config['series-values']
-  const quickOptions = config['series-quick-options']
+export default props => {
+  const { id, title, description, type, config, data, setOption } = props
 
-  return <ReactEcharts theme={theme} option={{}} />
+  let tempOption = () => ({})
+  if (setOption) tempOption = new Function('return ' + setOption)()
+  return <ReactEcharts option={tempOption()} />
 }

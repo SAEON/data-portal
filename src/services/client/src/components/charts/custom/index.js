@@ -10,7 +10,7 @@ export default {
    * for filtering should NOT be filtered out
    */
   saveFilter: (data, config) => {
-    const cols = [config['series-names'], ...config['series-values']]
+    const cols = config['series-data']
     return data.map(row => {
       return Object.fromEntries(Object.entries(row).filter(([k]) => cols.includes(k)))
     })
@@ -22,27 +22,13 @@ export default {
    */
   config: [
     {
-      id: 'series-names',
-      description: 'Select column containing series names',
-      Component: ({ data, value, setValue }) => {
-        return (
-          <Autocomplete
-            id="bar-chart-select-series-names-columns"
-            options={Object.keys(data[0])}
-            selectedOptions={value}
-            setOption={setValue}
-          />
-        )
-      },
-    },
-    {
-      id: 'series-values',
-      description: 'Select column(s) containing series values (y-axis)',
+      id: 'series-data',
+      description: 'Select column(s) containing required data',
       Component: ({ data, value, setValue }) => {
         return (
           <>
             <DropdownSelect
-              id="chart-select-series-names-columns"
+              id="chart-select-series-data"
               options={Object.keys(data[0])}
               selectedOptions={value || []}
               setOption={setValue}

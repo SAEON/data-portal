@@ -15,4 +15,5 @@ type Chart {
   type: ChartType!
   config: JSON!
   data: JSON!
+  setOption: FunctionString
 }
