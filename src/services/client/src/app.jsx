@@ -2,6 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
 import ApolloProvider from './components/apollo-provider'
 import GlobalProvider from './contexts/global'
+import ClientInfoProvider from './contexts/client-info'
 import AuthorizationProvider from './contexts/authorization'
 import AuthenticationProvider from './contexts/authentication'
 import Layout from './layout'
@@ -23,23 +24,25 @@ export default () => {
           <DetectDevice>
             <NativeExtensions>
               <ApolloProvider>
-                <CookieConsent>
-                  <GlobalProvider>
-                    <BackgroundImageProvider>
-                      <ApplicationLogger>
-                        <AuthenticationProvider>
-                          <AuthorizationProvider>
-                            <SnackbarProvider>
-                              <DefaultApplicationNotices>
-                                <Layout />
-                              </DefaultApplicationNotices>
-                            </SnackbarProvider>
-                          </AuthorizationProvider>
-                        </AuthenticationProvider>
-                      </ApplicationLogger>
-                    </BackgroundImageProvider>
-                  </GlobalProvider>
-                </CookieConsent>
+                <ClientInfoProvider>
+                  <CookieConsent>
+                    <AuthenticationProvider>
+                      <AuthorizationProvider>
+                        <GlobalProvider>
+                          <BackgroundImageProvider>
+                            <ApplicationLogger>
+                              <SnackbarProvider>
+                                <DefaultApplicationNotices>
+                                  <Layout />
+                                </DefaultApplicationNotices>
+                              </SnackbarProvider>
+                            </ApplicationLogger>
+                          </BackgroundImageProvider>
+                        </GlobalProvider>
+                      </AuthorizationProvider>
+                    </AuthenticationProvider>
+                  </CookieConsent>
+                </ClientInfoProvider>
               </ApolloProvider>
             </NativeExtensions>
           </DetectDevice>

@@ -14,6 +14,7 @@ import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
 import blacklistRoute from './middleware/blacklist-route.js'
 import homeRoute from './http/home.js'
+import clientInfoRoute from './http/client-info.js'
 import downloadProxyRoute from './http/download-proxy.js'
 import executeSql from './http/execute-sql.js'
 import authenticateRoute from './http/authenticate.js'
@@ -113,8 +114,9 @@ publicApp
     new KoaRouter()
       .get('/', homeRoute)
       .post('/', homeRoute)
+      .get('/client-info', clientInfoRoute)
       .post('/execute-sql', executeSql)
-      .get('/pg-dump/:schema', pgDumpRoute) // TODO - make post
+      .get('/pg-dump/:schema', pgDumpRoute)
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
       .get('/authenticate/redirect/google', googleAuthenticate, loginSuccessRoute) // passport

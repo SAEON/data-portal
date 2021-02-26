@@ -55,7 +55,7 @@ export default ({ id }) => {
             <Header
               codeView={codeView}
               toggleCodeView={() => updateCodeView(!codeView)}
-              {...data?.catalogue?.records?.nodes?.[0]?.metadata?._source}
+              _source={{ ...data?.catalogue?.records?.nodes?.[0]?.metadata?._source }}
             />
             {codeView ? (
               <CodeView

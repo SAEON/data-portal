@@ -41,7 +41,7 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
 
   if (children) {
     return children(state)
+  } else {
+    return state
   }
-
-  return state
 }

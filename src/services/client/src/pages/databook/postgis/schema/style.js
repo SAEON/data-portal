@@ -36,6 +36,11 @@ export default makeStyles(theme => ({
   inputFieldActive: {
     outline: `1px solid ${theme.palette.grey[500]} !important`,
   },
+  monoText: {
+    paddingLeft: '5px',
+    fontFamily: 'monospace',
+    fontSize: 'small',
+  },
   secondaryText: {
     color: theme.palette.grey[300],
     paddingLeft: '5px',

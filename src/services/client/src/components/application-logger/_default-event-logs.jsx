@@ -1,4 +1,4 @@
-import RegisterEventLog from '../application-logger/_register-event-log'
+import RegisterEventLog from './register-event-log'
 import { CATALOGUE_LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
 import debounce from '../../lib/fns/debounce'
@@ -10,7 +10,7 @@ export default ({ children }) => {
   return (
     <RegisterEventLog
       event={'click'}
-      handle={async ({ type, target, x, y }) =>
+      handle={({ type, target, x, y }) =>
         console.gql({
           clientVersion: packageJson.version,
           type,
@@ -29,7 +29,7 @@ export default ({ children }) => {
     >
       <RegisterEventLog
         event={'mousemove'}
-        handle={debounce(async ({ type, x, y }) =>
+        handle={debounce(({ type, x, y }) =>
           console.gql({
             clientVersion: packageJson.version,
             type,

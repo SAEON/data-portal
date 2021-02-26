@@ -11,7 +11,7 @@ import CitationButton from '../../../components/citation-dialogue'
 import CodeViewButton from './_code-view-button'
 import Title from './_title'
 
-export default _source => {
+export default ({ codeView, toggleCodeView, _source }) => {
   const { isAuthenticated } = useContext(authorizationContext)
 
   return (
@@ -26,11 +26,13 @@ export default _source => {
 
           <Hidden xsDown>
             <CreateDatabookButton {..._source} buttonSize="medium" />
-            {isAuthenticated && <CodeViewButton {..._source} />}
+            {isAuthenticated && (
+              <CodeViewButton codeView={codeView} toggleCodeView={toggleCodeView} />
+            )}
             <CitationButton {..._source} buttonSize="medium" />
           </Hidden>
 
-          <DataDownloadButton color="primary" immutableResource={_source?.immutableResource} />
+          <DataDownloadButton buttonProps={{ color: 'primary' }} {..._source} />
         </Grid>
       </Toolbar>
     </AppBar>

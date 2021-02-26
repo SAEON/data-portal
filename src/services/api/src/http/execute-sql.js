@@ -38,7 +38,7 @@ export default async ctx => {
     .on('end', error => {
       client.end(() => {
         if (error) {
-          console.error('(ignore)', new Error(error.message))
+          console.error('(ignore - this is a client-user error)', new Error(error.message))
         }
       })
     })

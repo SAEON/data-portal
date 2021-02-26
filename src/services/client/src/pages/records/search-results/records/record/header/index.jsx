@@ -50,9 +50,9 @@ export default ({
       {showDownload && !isMobile && (
         <Suspense fallback={<LoadingCircular />}>
           <DataDownloadButton
-            style={showSelect ? {} : { marginRight: 8 }}
-            size={'small'}
-            immutableResource={_source?.immutableResource}
+            buttonProps={{ style: showSelect ? {} : { marginRight: 8 } }}
+            size={16}
+            {..._source}
           />
         </Suspense>
       )}

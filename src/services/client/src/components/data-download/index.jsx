@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -10,18 +10,24 @@ import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import SimpleLink from '../link'
-import { CATALOGUE_API_ADDRESS } from '../../config'
+import { context as clientInfoContext } from '../../contexts/client-info'
+import { CATALOGUE_API_ADDRESS, CATALOGUE_LATEST_COMMIT } from '../../config'
+import RegisterEventLog from '../../components/application-logger/register-event-log'
+import packageJson from '../../../package.json'
 
 const PLACEHOLDER_URI = 'http://nothing.com'
 
 export default ({
-  immutableResource,
+  doi = undefined,
+  id = undefined,
+  immutableResource = undefined,
   children,
   size = 22,
   IconButtonSize = 'medium',
   tooltipPlacement,
-  ...props
+  buttonProps,
 }) => {
+  const clientInfo = useContext(clientInfoContext)
   const [open, setOpen] = useState(false)
   const theme = useTheme()
   const { resourceDescription, resourceDownload } = immutableResource || {}
@@ -51,7 +57,7 @@ export default ({
               aria-haspopup="true"
               aria-expanded={open}
               onClick={() => setOpen(!open)}
-              {...props}
+              {...buttonProps}
               startIcon={<DownloadIcon />}
             >
               {children}
@@ -65,7 +71,7 @@ export default ({
               onClick={() => setOpen(!open)}
               disabled={downloadURL === PLACEHOLDER_URI}
               size={IconButtonSize}
-              {...props}
+              {...buttonProps}
             >
               <DownloadIcon size={size} />
             </IconButton>
@@ -95,13 +101,30 @@ export default ({
             style={{ display: 'block' }}
             uri={downloadURL}
           >
-            <Typography
-              onClick={() => setOpen(false)}
-              variant="overline"
-              style={{ margin: theme.spacing(2) }}
+            <RegisterEventLog
+              event="click"
+              handle={e => {
+                e.stopPropagation()
+                console.gql({
+                  clientVersion: packageJson.version,
+                  type: 'download',
+                  commitHash: CATALOGUE_LATEST_COMMIT,
+                  createdAt: new Date(),
+                  info: {
+                    pathname: window.location.pathname,
+                    uri: downloadURL,
+                    odpId: id,
+                    doi,
+                    clientInfo,
+                  },
+                })
+                setOpen(false)
+              }}
             >
-              I AGREE
-            </Typography>
+              <Typography variant="overline" style={{ margin: theme.spacing(2) }}>
+                I AGREE
+              </Typography>
+            </RegisterEventLog>
           </SimpleLink>
         </DialogActions>
       </Dialog>

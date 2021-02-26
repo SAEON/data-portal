@@ -5,8 +5,9 @@ import DownloadButton from '../../../components/data-download'
 import SimpleLink from '../../../components/link'
 import { isMobile } from 'react-device-detect'
 
-export default ({ immutableResource, rightsList }) => {
+export default _source => {
   const theme = useTheme()
+  const { immutableResource, rightsList } = _source
   const { resourceDescription } = immutableResource
 
   return (
@@ -16,7 +17,7 @@ export default ({ immutableResource, rightsList }) => {
       </Typography>
       {!isMobile && (
         <span style={{ position: 'absolute', top: `calc(50% - 30px)`, right: theme.spacing(2) }}>
-          <DownloadButton size={36} immutableResource={immutableResource} />
+          <DownloadButton size={36} {..._source} />
         </span>
       )}
 

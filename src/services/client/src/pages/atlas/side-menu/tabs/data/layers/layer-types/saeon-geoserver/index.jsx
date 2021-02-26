@@ -142,10 +142,12 @@ export default ({
 
                 {/* Data Download */}
                 <DataDownloadButton
-                  style={{ alignSelf: 'center', marginRight: 16 }}
+                  buttonProps={{ style: { alignSelf: 'center', marginRight: 16 } }}
                   IconButtonSize="small"
                   tooltipPlacement="top"
                   immutableResource={immutableResource}
+                  doi={undefined}
+                  id={record_id}
                 />
 
                 {/* Show layer legend */}

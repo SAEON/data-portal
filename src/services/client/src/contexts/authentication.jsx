@@ -16,12 +16,15 @@ export default ({ children }) => {
   }
 
   useEffect(() => {
-    const _ = async () => {
+    const abortController = new AbortController()
+
+    ;(async () => {
       setAuthenticating(true)
       try {
         const response = await fetch(`${CATALOGUE_API_ADDRESS}/authenticate`, {
           credentials: 'include',
           mode: 'cors',
+          signal: abortController.signal,
         })
         const userInfo = await response.json()
         setUserInfo(userInfo)
@@ -29,8 +32,11 @@ export default ({ children }) => {
       } catch (error) {
         throw new Error('Error authenticating user ::' + error.message)
       }
+    })()
+
+    return () => {
+      abortController.abort()
     }
-    _()
   }, [])
 
   return (
