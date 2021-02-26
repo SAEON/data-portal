@@ -10,8 +10,6 @@ import Card from '@material-ui/core/Card'
 import useTheme from '@material-ui/core/styles/useTheme'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import useStyles from '../style'
-import clsx from 'clsx'
 import { context as globalContext } from '../../../../../contexts/global'
 import Loading from '../../../../../components/loading'
 
@@ -20,7 +18,6 @@ const Map = lazy(() => import('./map'))
 export default ({ title }) => {
   const { global } = useContext(globalContext)
   const [collapsed, setCollapsed] = useState(!global?.extent)
-  const classes = useStyles()
   const theme = useTheme()
 
   return (
@@ -28,10 +25,10 @@ export default ({ title }) => {
       <AppBar
         position="relative"
         variant="outlined"
-        className={clsx(classes.appbar)}
+        color="inherit"
         style={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0` }}
       >
-        <Toolbar className={clsx(classes.toolbar)} variant="regular">
+        <Toolbar variant="regular">
           <Typography
             onClick={() => setCollapsed(!collapsed)}
             style={{ cursor: 'pointer' }}
@@ -65,7 +62,7 @@ export default ({ title }) => {
       <Collapse style={{ width: '100%' }} key="result-list-collapse" unmountOnExit in={!collapsed}>
         <Suspense
           fallback={
-            <div style={{ height: 4 }}>
+            <div style={{ height: theme.overrides.MuiLinearProgress.root.height }}>
               <Loading />
             </div>
           }

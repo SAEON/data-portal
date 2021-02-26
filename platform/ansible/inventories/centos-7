@@ -1,3 +1,2 @@
 [catalogue]
-next ansible_host=catalogue.saeon.dvn ansible_user=zach
-stable ansible_host=catalogue.saeon.ac.za ansible_user=zach
+next ansible_host=test.zachsmith.co.za ansible_user=root

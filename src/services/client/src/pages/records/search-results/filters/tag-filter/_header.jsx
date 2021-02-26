@@ -1,19 +1,15 @@
-import clsx from 'clsx'
 import Fade from '@material-ui/core/Fade'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import useStyles from '../style'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
 export default ({ title, style, collapsed, setCollapsed }) => {
-  const classes = useStyles()
-
   return (
-    <AppBar style={style} className={clsx(classes.appbar)} position="relative" variant="outlined">
-      <Toolbar className={clsx(classes.toolbar)} variant="regular">
+    <AppBar style={style} position="relative" color="inherit" variant="outlined">
+      <Toolbar variant="regular">
         <Typography
           onClick={() => setCollapsed(!collapsed)}
           style={{ cursor: 'pointer' }}

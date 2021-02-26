@@ -1,4 +1,4 @@
-import { join, normalize } from 'path'
+import { join } from 'path'
 import { mkdirSync, rmdirSync } from 'fs'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import ensureDirectory from './lib/ensure-directory.js'
@@ -6,6 +6,7 @@ import { config } from 'dotenv'
 config()
 
 const __dirname = getCurrentDirectory(import.meta)
+const __apiRootDirectory = join(__dirname, '../')
 
 export const CATALOGUE_API_KEY =
   process.env.CATALOGUE_API_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0EdIqD3RAUUCU='
@@ -105,12 +106,13 @@ export const CATALOGUE_API_ALLOWED_ORIGINS =
 
 export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.dvn/api/catalogue'
 
-export const CATALOGUE_API_ODP_FILTER_PATH =
-  process.env.CATALOGUE_API_ODP_FILTER_PATH || 'odp-default-filter.js'
+export const CATALOGUE_API_ODP_FILTER_PATH = process.env.CATALOGUE_API_ODP_FILTER_PATH
+  ? join(__apiRootDirectory, process.env.CATALOGUE_API_ODP_FILTER_PATH)
+  : join(__dirname, '../../../../deployment-configs/next/odp-filter.js')
 
-export const CATALOGUE_API_ODP_FILTER = await import(
-  normalize(join(__dirname, '../', CATALOGUE_API_ODP_FILTER_PATH))
-).then(({ default: fn }) => fn)
+export const CATALOGUE_API_ODP_FILTER = await import(CATALOGUE_API_ODP_FILTER_PATH).then(
+  ({ default: fn }) => fn
+)
 
 export const CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE =
   process.env.CATALOGUE_API_ODP_INTEGRATION_BATCH_SIZE || 100

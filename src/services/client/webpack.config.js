@@ -16,8 +16,9 @@ let {
   CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
 } = process.env
 
-CATALOGUE_CLIENT_FILTER_CONFIG_PATH =
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH || path.join(__dirname, './default-filter-config.json')
+CATALOGUE_CLIENT_FILTER_CONFIG_PATH = CATALOGUE_CLIENT_FILTER_CONFIG_PATH
+  ? path.join(__dirname, CATALOGUE_CLIENT_FILTER_CONFIG_PATH)
+  : path.join(__dirname, '../../../deployment-configs/next/client-filters.json')
 
 module.exports = () => {
   const output = 'dist'
@@ -83,7 +84,7 @@ module.exports = () => {
         // @saeon/logger
         '@saeon/logger': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/logger/src' : '../../packages/logger/src'
+          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/dist'
         ),
       },
     },

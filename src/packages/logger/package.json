@@ -1,25 +1,14 @@
 {
   "name": "@saeon/logger",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
-  "main": "src/index.js",
   "exports": {
-    ".": {
-      "import": "./src/index.js",
-      "require": "./dist/index.js"
-    },
-    "./log-to-graphql": {
-      "import": "./src/log-to-graphql.js",
-      "require": "./dist/log-to-graphql.js"
-    },
-    "./log-to-http": {
-      "import": "./src/log-to-http.js",
-      "require": "./dist/log-to-http.js"
-    }
+    ".": "./dist/index.js",
+    "./log-to-graphql": "./dist/log-to-graphql.js",
+    "./log-to-http": "./dist/log-to-http.js"
   },
   "files": [
-    "src",
     "dist"
   ],
   "peerDependencies": {
@@ -49,13 +38,21 @@
   "license": "MIT",
   "devDependencies": {
     "@apollo/client": "^3.2.1",
+    "@babel/core": "^7.13.1",
+    "@babel/plugin-transform-runtime": "^7.13.2",
+    "@babel/preset-env": "^7.13.0",
+    "@babel/runtime": "^7.13.2",
+    "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.1.1",
+    "@rollup/plugin-node-resolve": "^11.2.0",
+    "core-js": "^3.9.0",
     "date-fns": "^2.17.0",
-    "npm-check-updates": "^11.1.1",
+    "npm-check-updates": "^11.1.8",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.38.5"
-  }
+    "rollup": "^2.39.1"
+  },
+  "main": "rollup.config.js",
+  "dependencies": {}
 }

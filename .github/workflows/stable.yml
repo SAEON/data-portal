@@ -13,8 +13,15 @@ jobs:
         with:
           ref: stable
 
+      - name: Configure services
+        run: |
+          cp deployment-configs/stable/odp-filter.js src/services/api/odp-filter.js
+          cp deployment-configs/stable/client-filters.json src/services/client/client-filters.json          
+
       - name: Deploy services
         run: >-
+          CATALOGUE_API_ODP_FILTER_PATH="odp-filter.js"
+          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"        
           CATALOGUE_API_TWITTER_CLIENT_ID="${{ secrets.CATALOGUE_API_TWITTER_CLIENT_ID}}"
           CATALOGUE_API_TWITTER_CLIENT_SECRET="${{ secrets.CATALOGUE_API_TWITTER_CLIENT_SECRET}}"
           CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS="https://api.catalogue.saeon.ac.za/authenticate/redirect/twitter"
@@ -30,11 +37,9 @@ jobs:
           CATALOGUE_API_NODE_ENV=production
           CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect/google
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
-          CATALOGUE_API_ODP_FILTER_PATH=odp-default-filter.js
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
-          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="default-filter-config.json"
           CATALOGUE_DEPLOYMENT_ENV="production"
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"

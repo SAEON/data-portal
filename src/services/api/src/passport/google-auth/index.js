@@ -73,13 +73,24 @@ export default () => {
 
     return {
       authenticate: passport.authenticate('google'),
-      login: async (ctx, next) =>
-        passport.authenticate('google', {
+      login: async (ctx, next) => {
+        /**
+         * If /login/google is called without a 'redirect'
+         * query param, then the result is 'undefined' as
+         * a string
+         */
+        const redirect = ctx.request.query.redirect
+          ? ctx.request.query.redirect == 'undefined'
+            ? CATALOGUE_API_ADDRESS
+            : ctx.request.query.redirect
+          : CATALOGUE_API_ADDRESS
+
+        return passport.authenticate('google', {
           scope: ['email'],
-          state: base64url(
-            JSON.stringify({ redirect: ctx.request.query.redirect || CATALOGUE_API_ADDRESS })
-          ),
-        })(ctx, next),
+          prompt: 'select_account',
+          state: base64url(JSON.stringify({ redirect })),
+        })(ctx, next)
+      },
     }
   } else {
     console.info('Google API OAUTH credentials not provided. Skipping setup')

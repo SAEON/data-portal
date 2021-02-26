@@ -47,7 +47,7 @@ export default () => {
               log files include internet protocol (IP) addresses, browser type, Internet Service
               Provider (ISP), date and time stamp, referring/exit pages, and page usage information
               (clicks and mouse tracking). These are not linked to any information that is
-              personally identifiable. The purpose of the information is for analyzing trends,
+              personally identifiable. The purpose of the information is for analysing trends,
               administering the site, tracking users&apos; movement on the website, and gathering
               demographic information.
             </Typography>

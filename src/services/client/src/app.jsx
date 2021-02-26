@@ -17,9 +17,9 @@ import CookieConsent from './components/cookie-consent'
 
 export default () => {
   return (
-    <ErrorBoundary>
-      <CssBaseline>
-        <ThemeProvider theme={theme}>
+    <CssBaseline>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary>
           <DetectDevice>
             <NativeExtensions>
               <ApolloProvider>
@@ -43,8 +43,8 @@ export default () => {
               </ApolloProvider>
             </NativeExtensions>
           </DetectDevice>
-        </ThemeProvider>
-      </CssBaseline>
-    </ErrorBoundary>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </CssBaseline>
   )
 }

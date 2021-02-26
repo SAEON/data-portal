@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Typography from '@material-ui/core/Typography'
 import Fade from '@material-ui/core/Fade'
@@ -50,69 +51,65 @@ export default () => {
             xs={12}
             md={6}
           >
-            <Grid
-              container
-              direction={isMobile ? 'column' : 'row'}
-              item
-              xs={12}
-              className={clsx(classes.grid)}
-            >
-              <Grid style={{ display: 'flex' }} item>
-                <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>
-                  <img
-                    style={{
-                      height: 56,
-                    }}
-                    src="/saeon-logo.png"
-                    alt="Logo"
-                  />
-                </a>
-              </Grid>
-              <Grid style={{ display: 'flex' }} item>
-                {isMobile ? (
-                  <div style={{ margin: 4 }} />
-                ) : (
-                  <Divider variant="middle" orientation={'vertical'} />
-                )}
-              </Grid>
-              <Grid item style={{ flexGrow: 2 }}>
-                <Search resetGlobalStateOnSearch={true} autofocus={true}>
-                  <Typography variant="overline">
-                    <WithGqlQuery
-                      QUERY={gql`
-                        query catalogue($text: String!) {
-                          catalogue {
-                            id
-                            records(text: $text) {
-                              totalCount
+            <Card className={clsx(classes.card)} variant="outlined">
+              <Grid container direction={isMobile ? 'column' : 'row'} item xs={12}>
+                <Grid style={{ display: 'flex' }} item>
+                  <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>
+                    <img
+                      style={{
+                        height: 56,
+                      }}
+                      src="/saeon-logo.png"
+                      alt="Logo"
+                    />
+                  </a>
+                </Grid>
+                <Grid style={{ display: 'flex' }} item>
+                  {isMobile ? (
+                    <div style={{ margin: 4 }} />
+                  ) : (
+                    <Divider variant="middle" orientation={'vertical'} />
+                  )}
+                </Grid>
+                <Grid item style={{ flexGrow: 2 }}>
+                  <Search resetGlobalStateOnSearch={true} autofocus={true}>
+                    <Typography variant="overline">
+                      <WithGqlQuery
+                        QUERY={gql`
+                          query catalogue($text: String!) {
+                            catalogue {
+                              id
+                              records(text: $text) {
+                                totalCount
+                              }
                             }
                           }
-                        }
-                      `}
-                      variables={{ text: global.text || '' }}
-                    >
-                      {({ error, loading, data }) => {
-                        if (error) {
-                          throw new Error(
-                            `${CATALOGUE_API_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
-                          )
-                        }
+                        `}
+                        variables={{ text: global.text || '' }}
+                      >
+                        {({ error, loading, data }) => {
+                          if (error) {
+                            throw new Error(
+                              `${CATALOGUE_API_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
+                            )
+                          }
 
-                        return loading ? (
-                          <Fade key="waiting" in={loading}>
-                            <span>...</span>
-                          </Fade>
-                        ) : (
-                          <Fade key="results" in={!loading}>
-                            <span>{data?.catalogue.records.totalCount} records</span>
-                          </Fade>
-                        )
-                      }}
-                    </WithGqlQuery>
-                  </Typography>
-                </Search>
+                          return loading ? (
+                            <Fade key="waiting" in={loading}>
+                              <span>...</span>
+                            </Fade>
+                          ) : (
+                            <Fade key="results" in={!loading}>
+                              <span>{data?.catalogue.records.totalCount} records</span>
+                            </Fade>
+                          )
+                        }}
+                      </WithGqlQuery>
+                    </Typography>
+                  </Search>
+                </Grid>
               </Grid>
-            </Grid>
+            </Card>
           </Grid>
         </main>
       </div>

@@ -6,13 +6,54 @@
     "sortBy": "_count",
     "sortOrder": "desc",
     "path": "subjects",
-    "filters": [{
-      "field": "subjects.subjectScheme.raw",
-      "includeIfMissingField": true,
-      "values": [
-        "SANS1878 keywordType general"
-      ]
-    }]
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType general"]
+      }
+    ]
+  },
+  {
+    "id": "places-filter",
+    "title": "Places",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType place"]
+      }
+    ]
+  },
+  {
+    "id": "stratums-filter",
+    "title": "Stratums",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType stratum"]
+      }
+    ]
+  },
+  {
+    "id": "themes-filter",
+    "title": "Themes",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType theme"]
+      }
+    ]
   },
   {
     "id": "publication-year-filter",
