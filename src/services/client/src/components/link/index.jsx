@@ -6,7 +6,6 @@ export default forwardRef(
     const classes = useStyles()
     return (
       <a
-        onClick={e => e.stopPropagation()}
         ref={ref}
         download={download}
         target="_blank"

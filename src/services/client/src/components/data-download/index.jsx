@@ -95,37 +95,37 @@ export default ({
           </Typography>
         </DialogContent>
         <DialogActions>
-          <SimpleLink
-            aria-label="Agree to terms and download resource"
-            download={resourceDescription || 'Unknown resource'}
-            style={{ display: 'block' }}
-            uri={downloadURL}
+          <RegisterEventLog
+            event="click"
+            handle={e => {
+              e.stopPropagation()
+              console.gql({
+                clientVersion: packageJson.version,
+                type: 'download',
+                commitHash: CATALOGUE_LATEST_COMMIT,
+                createdAt: new Date(),
+                info: {
+                  pathname: window.location.pathname,
+                  uri: downloadURL,
+                  odpId: id,
+                  doi,
+                  clientInfo,
+                },
+              })
+              setOpen(false)
+            }}
           >
-            <RegisterEventLog
-              event="click"
-              handle={e => {
-                e.stopPropagation()
-                console.gql({
-                  clientVersion: packageJson.version,
-                  type: 'download',
-                  commitHash: CATALOGUE_LATEST_COMMIT,
-                  createdAt: new Date(),
-                  info: {
-                    pathname: window.location.pathname,
-                    uri: downloadURL,
-                    odpId: id,
-                    doi,
-                    clientInfo,
-                  },
-                })
-                setOpen(false)
-              }}
+            <SimpleLink
+              aria-label="Agree to terms and download resource"
+              download={resourceDescription || 'Unknown resource'}
+              style={{ display: 'block', float: 'right' }}
+              uri={downloadURL}
             >
               <Typography variant="overline" style={{ margin: theme.spacing(2) }}>
                 I AGREE
               </Typography>
-            </RegisterEventLog>
-          </SimpleLink>
+            </SimpleLink>
+          </RegisterEventLog>
         </DialogActions>
       </Dialog>
     </>
