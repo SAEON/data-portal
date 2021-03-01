@@ -11,7 +11,7 @@ require('dotenv').config()
 
 let {
   NODE_ENV: mode,
-  CATALOGUE_DEPLOYMENT_ENV,
+  CATALOGUE_DEPLOYMENT_ENV = 'local',
   CATALOGUE_LATEST_COMMIT = '',
   CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
 } = process.env
@@ -89,6 +89,7 @@ module.exports = () => {
       },
     },
     optimization: {
+      minimize: ['local', 'development'].includes(CATALOGUE_DEPLOYMENT_ENV) ? false : true,
       splitChunks: { chunks: 'all' },
     },
     module: {
