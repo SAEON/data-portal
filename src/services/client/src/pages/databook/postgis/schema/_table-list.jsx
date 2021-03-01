@@ -41,7 +41,7 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
         >
           <ContextMenu
             uniqueIdentifier={tableName}
-            childrenContainerStyle={{ width: '100%' }}
+            style={{ width: '100%' }}
             menuItems={[
               {
                 value: 'Rename',
