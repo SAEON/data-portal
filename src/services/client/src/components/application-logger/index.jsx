@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
 import logger from '@saeon/logger'
+import logToGql from '@saeon/logger/dist/log-to-graphql'
 import DefaultEventLogs from './_default-event-logs'
-const { configure: configureLogger, logToGql } = logger
+const { configure: configureLogger } = logger
 
 export default ({ children }) => {
   const { link } = useApolloClient()
