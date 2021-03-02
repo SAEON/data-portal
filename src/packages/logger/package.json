@@ -4,6 +4,11 @@
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
   "main": "dist/index.js",
+  "exports": {
+    "/": "./dist/index.js",
+    "logToGql": "./dist/log-to-graphql.js",
+    "logToHttp": "./dist/log-to-graphql.js"
+    },
   "files": [
     "dist"
   ],
