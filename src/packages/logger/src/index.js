@@ -1,7 +1,5 @@
 'use strict'
 import format from 'date-fns/format/index.js'
-import logToGql from './log-to-graphql.js'
-import logToHttp from './log-to-http.js'
 ;(typeof global !== 'undefined' ? global : self).globalThis =
   typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : self
 
@@ -32,6 +30,4 @@ export default {
     timestampFormat = formatter || timestampFormat
     globalThis.console = Object.assign(globalThis.console, overwrites)
   },
-  logToGql,
-  logToHttp,
 }

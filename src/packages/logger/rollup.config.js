@@ -5,7 +5,7 @@ import { babel } from '@rollup/plugin-babel'
 
 export default {
   external: [/date-fns\//, '@apollo/client', /@babel\/runtime/],
-  input: ['src/index.js'],
+  input: ['src/index.js', 'src/log-to-graphql.js', 'src/log-to-http.js'],
   output: [
     {
       exports: 'auto',
