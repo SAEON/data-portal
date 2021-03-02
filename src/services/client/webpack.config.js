@@ -66,7 +66,7 @@ module.exports = () => {
           __dirname,
           mode === 'production'
             ? './node_modules/@saeon/quick-form'
-            : '../../packages/quick-form/src'
+            : '../../packages/quick-form'
         ),
 
         // @saeon/snap-menus
@@ -78,13 +78,13 @@ module.exports = () => {
         // @saeon/ol-react
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react/src'
+          mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react'
         ),
 
         // @saeon/logger
         '@saeon/logger': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/logger/dist' : '../../packages/logger/dist'
+          mode === 'production' ? './node_modules/@saeon/logger' : '../../packages/logger'
         ),
       },
     },

@@ -1,5 +1,7 @@
 'use strict'
 import format from 'date-fns/format/index.js'
+import logToGql from './log-to-graphql.js'
+import logToHttp from './log-to-http.js'
 ;(typeof global !== 'undefined' ? global : self).globalThis =
   typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : self
 
@@ -24,8 +26,12 @@ globalThis.console = {
   error: (...args) => writeToConsole('error', ...args),
 }
 
-export const configure = async cb => {
-  const { overwrites, formatter } = cb({ console: _console, timestampFormat })
-  timestampFormat = formatter || timestampFormat
-  globalThis.console = Object.assign(globalThis.console, overwrites)
+export default {
+  configure: async cb => {
+    const { overwrites, formatter } = cb({ console: _console, timestampFormat })
+    timestampFormat = formatter || timestampFormat
+    globalThis.console = Object.assign(globalThis.console, overwrites)
+  },
+  logToGql,
+  logToHttp,
 }

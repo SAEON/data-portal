@@ -1,10 +1,11 @@
 import commonjs from '@rollup/plugin-commonjs'
-import babel from '@rollup/plugin-babel'
+import { babel } from '@rollup/plugin-babel'
 import json from '@rollup/plugin-json'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import postcss from 'rollup-plugin-postcss'
 
 export default {
+  external: [/@material-ui\//, 'react', 'react-dom', 'clsx', /@babel\/runtime/],
   input: ['src/index.js', 'src/provider.jsx'],
   output: [
     {
@@ -18,24 +19,22 @@ export default {
     postcss({
       plugins: [],
     }),
+    commonjs(),
     babel({
-      babelHelpers: 'bundled',
-      exclude: 'node_modules/**',
+      babelHelpers: 'runtime',
       presets: [
         [
-          '@babel/env',
+          '@babel/preset-env',
           {
             debug: false,
-            modules: false,
-            targets: {
-              esmodules: true,
-            },
+            useBuiltIns: 'entry',
+            corejs: { version: 3, proposals: true },
           },
         ],
         ['@babel/preset-react'],
       ],
+      plugins: [['@babel/plugin-transform-runtime']],
     }),
-    commonjs(),
     json({
       compact: true,
     }),

@@ -8,7 +8,7 @@ export default {
     {
       exports: 'auto',
       dir: 'dist',
-      format: 'esm',
+      format: 'cjs',
     },
   ],
   plugins: [

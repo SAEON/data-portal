@@ -3,11 +3,7 @@
   "version": "6.2.1",
   "description": "Simple package to add timestamps to console.* statements, as well as a means to extend the console object for alternative logging methods",
   "type": "module",
-  "exports": {
-    ".": "./dist/index.js",
-    "./log-to-graphql": "./dist/log-to-graphql.js",
-    "./log-to-http": "./dist/log-to-http.js"
-  },
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -53,6 +49,5 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.39.1"
   },
-  "main": "rollup.config.js",
   "dependencies": {}
 }

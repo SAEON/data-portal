@@ -9,7 +9,7 @@ const createArrayFromLength = l => {
   return arr
 }
 
-export const logToGql = ({ link, query }, interval) => {
+export default ({ link, query }, interval) => {
   const logBatch = browserEvents =>
     new Promise(resolve => {
       toPromise(

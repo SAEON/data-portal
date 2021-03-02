@@ -3,6 +3,7 @@ import babel from '@rollup/plugin-babel'
 import json from '@rollup/plugin-json'
 
 export default {
+  external: [/ol\//, 'react', /@babel\/runtime/],
   input: ['src/index.js'],
   output: [
     {
@@ -12,25 +13,23 @@ export default {
     },
   ],
   plugins: [
+    commonjs(),
     babel({
-      babelHelpers: 'bundled',
+      babelHelpers: 'runtime',
       exclude: 'node_modules/**',
       presets: [
         [
           '@babel/env',
           {
             debug: false,
-            modules: false,
-            targets: {
-              esmodules: true,
-            },
+            useBuiltIns: 'entry',
+            corejs: { version: 3, proposals: true },
           },
         ],
         ['@babel/preset-react'],
       ],
-      plugins: ['@babel/plugin-proposal-class-properties'],
+      plugins: [['@babel/plugin-transform-runtime'], ['@babel/plugin-proposal-class-properties']],
     }),
-    commonjs(),
     json({
       compact: true,
     }),
