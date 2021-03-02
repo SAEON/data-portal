@@ -1,7 +1,9 @@
+if (!window.crypto) window.crypto = window.msCrypto // IE 11 (nanoid package)
+import 'core-js' // babel.useBuiltIns = entry
+import 'cross-fetch/polyfill' // IE 11
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch' // IE 11
 import { lazy, Suspense } from 'react'
 import Loading from './components/loading'
-import 'core-js/stable'
-import 'regenerator-runtime/runtime'
 import 'typeface-roboto'
 import './index.scss'
 import { render } from 'react-dom'

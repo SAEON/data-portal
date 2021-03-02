@@ -29,7 +29,7 @@ export default createMuiTheme({
     backgroundColor: defaultTheme.palette.grey[100],
     borderRadius: defaultTheme.shape.borderRadius,
     border: `1px solid ${defaultTheme.palette.grey[200]}`,
-    whiteSpace: 'break-spaces',
+    whiteSpace: 'pre-wrap',
     wordBreak: 'break-all',
     padding: defaultTheme.spacing(1),
   },

@@ -24,8 +24,8 @@ module.exports = () => {
   const output = 'dist'
 
   return {
-    devtool: mode === 'production' ? undefined : 'eval',
-    target: 'web',
+    devtool: mode === 'production' ? false : false, // I haven't been able to get source maps to work nicely
+    target: ['web', 'es5'],
     mode,
     entry: {
       index: './src/index.jsx',
@@ -64,9 +64,7 @@ module.exports = () => {
         // @saeon/quick-form
         '@saeon/quick-form': path.resolve(
           __dirname,
-          mode === 'production'
-            ? './node_modules/@saeon/quick-form'
-            : '../../packages/quick-form'
+          mode === 'production' ? './node_modules/@saeon/quick-form' : '../../packages/quick-form'
         ),
 
         // @saeon/snap-menus
@@ -96,7 +94,7 @@ module.exports = () => {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
-          exclude: mode === 'production' ? undefined : /node_modules/,
+          exclude: mode === 'production' ? /@babel(?:\/|\\{1,2})runtime|core-js/ : /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
