@@ -6,8 +6,8 @@
   "main": "dist/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "logToGql": "./dist/log-to-graphql.js",
-    "logToHttp": "./dist/log-to-graphql.js"
+    "./logToGql": "./dist/log-to-graphql.js",
+    "./logToHttp": "./dist/log-to-graphql.js"
   },
   "files": [
     "dist"
