@@ -22,6 +22,10 @@ export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
 
 export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 
+// TODO
+export const CATALOGUE_PROXY_ADDRESS =
+  process.env.CATALOGUE_PROXY_ADDRESS || 'http://localhost:8001'
+
 export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
 
 const url = new URL(CATALOGUE_API_ADDRESS)

@@ -8,7 +8,6 @@ import koaBody from 'koa-bodyparser'
 import koaSession from 'koa-session'
 import koaPassport from 'koa-passport'
 import zlib from 'zlib'
-import proxy from 'koa-proxies'
 import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
@@ -34,7 +33,6 @@ import configurePostGIS from './postgis/setup.js'
 import {
   CATALOGUE_API_ADDRESS_PORT,
   CATALOGUE_API_INTERNAL_ADDRESS_PORT,
-  CATALOGUE_PROXY_ADDRESS,
   CATALOGUE_API_KEY,
 } from './config.js'
 
@@ -102,14 +100,6 @@ publicApp
   .use(koaPassport.initialize())
   .use(koaPassport.session())
   .use(createRequestContext(publicApp))
-  .use(
-    proxy('/proxy', {
-      target: CATALOGUE_PROXY_ADDRESS,
-      changeOrigin: true,
-      logs: true,
-      events: {},
-    })
-  )
   .use(
     new KoaRouter()
       .get('/', homeRoute)

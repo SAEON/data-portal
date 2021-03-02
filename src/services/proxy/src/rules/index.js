@@ -7,19 +7,18 @@ import saeonGeoServerApp04Rule from './_saeon-geoserver-app04.js'
 
 const beforeSendRequest = async requestDetail => {
   const { path } = url.parse(requestDetail.url)
-
   try {
     let proxiedRequest
 
-    if (path.includes('/proxy/csir')) {
+    if (path.includes('/csir')) {
       proxiedRequest = csirRule({ path, requestDetail })
-    } else if (path.includes('/proxy/hst')) {
+    } else if (path.includes('/hst')) {
       proxiedRequest = hstRule({ path, requestDetail })
-    } else if (path.includes('/proxy/elasticsearch')) {
+    } else if (path.includes('/elasticsearch')) {
       proxiedRequest = elasticsearchRule({ path, requestDetail })
-    } else if (path.includes('/proxy/saeon-spatialdata/spatialdata.saeon.ac.za')) {
+    } else if (path.includes('/saeon-spatialdata/spatialdata.saeon.ac.za')) {
       proxiedRequest = saeonGeoServersRule({ path, requestDetail })
-    } else if (path.includes('/proxy/saeon-spatialdata/geoserver.saeon.ac.za')) {
+    } else if (path.includes('/saeon-spatialdata/geoserver.saeon.ac.za')) {
       proxiedRequest = saeonGeoServerApp04Rule({ path, requestDetail })
     } else {
       throw new Error('No rule found')
@@ -41,7 +40,20 @@ const beforeSendRequest = async requestDetail => {
 
 // eslint-disable-next-line no-unused-vars
 const beforeSendResponse = async (requestDetail, responseDetail) => {
-  // Update cache with response
+  Object.assign(responseDetail.response.header, {
+    'Access-Control-Allow-Origin': 'http://localhost:3001',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers':
+      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, credentials, Authorization',
+  })
+
+  if (requestDetail.requestOptions.method === 'OPTIONS') {
+    return {
+      response: {
+        statusCode: 200,
+      },
+    }
+  }
 }
 
 export default {

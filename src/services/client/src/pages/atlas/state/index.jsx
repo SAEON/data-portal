@@ -1,10 +1,10 @@
 import { createContext, useMemo } from 'react'
 import npmUrl from 'url'
-import { CATALOGUE_API_ADDRESS } from '../../../config'
+import { CATALOGUE_PROXY_ADDRESS } from '../../../config'
 import WKT from 'ol/format/WKT'
 import Polygon from 'ol/geom/Polygon'
 
-const SPATIALDATA_PROXY = `${CATALOGUE_API_ADDRESS}/proxy/saeon-spatialdata`
+const SPATIALDATA_PROXY = `${CATALOGUE_PROXY_ADDRESS}/saeon-spatialdata`
 
 export const AtlasContext = createContext()
 

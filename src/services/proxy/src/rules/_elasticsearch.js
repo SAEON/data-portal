@@ -13,8 +13,8 @@ export default ({ path, requestDetail }) => {
     port,
     path: normalize(
       `${proxyPath}${path
-        .replace(`/proxy/elasticsearch/${index}/_search`, `${index}/_search`)
-        .replace(`/proxy/elasticsearch/${index}`, `${index}/_search`)}`
+        .replace(`/elasticsearch/${index}/_search`, `${index}/_search`)
+        .replace(`/elasticsearch/${index}`, `${index}/_search`)}`
     ),
   }
 }
