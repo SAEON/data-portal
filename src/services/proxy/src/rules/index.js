@@ -1,15 +1,17 @@
-import url from 'url'
+import { URL } from 'url'
 import csirRule from './_csir.js'
 import hstRule from './_hst.js'
 import elasticsearchRule from './_elasticsearch.js'
 import saeonGeoServersRule from './_saeon-geoservers.js'
 import saeonGeoServerApp04Rule from './_saeon-geoserver-app04.js'
+import corsRule from './_cors.js'
 
 const beforeSendRequest = async requestDetail => {
-  const { path } = url.parse(requestDetail.url)
+  const { pathname, search } = new URL(requestDetail.url) // TODO
+  const path = [pathname, search].join('')
+
   try {
     let proxiedRequest
-
     if (path.includes('/csir')) {
       proxiedRequest = csirRule({ path, requestDetail })
     } else if (path.includes('/hst')) {
@@ -38,22 +40,8 @@ const beforeSendRequest = async requestDetail => {
   }
 }
 
-// eslint-disable-next-line no-unused-vars
 const beforeSendResponse = async (requestDetail, responseDetail) => {
-  Object.assign(responseDetail.response.header, {
-    'Access-Control-Allow-Origin': 'http://localhost:3001',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-    'Access-Control-Allow-Headers':
-      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, credentials, Authorization',
-  })
-
-  if (requestDetail.requestOptions.method === 'OPTIONS') {
-    return {
-      response: {
-        statusCode: 200,
-      },
-    }
-  }
+  return corsRule({ requestDetail, responseDetail })
 }
 
 export default {

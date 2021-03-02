@@ -179,6 +179,15 @@
         mode: '0644'
         force: yes
 
+    - name: Copy Nginx config (AnyProxy)
+      template:
+        src: templates/nginx/server-blocks/anyproxy.conf
+        dest: /etc/nginx/conf.d/anyproxy.conf
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes        
+
     # TODO https://docs.ansible.com/ansible/2.7/modules/openssl_certificate_module.html
     # TODO https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-ansible-on-ubuntu-18-04
   

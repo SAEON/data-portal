@@ -1,7 +1,7 @@
-import url from 'url'
+import { URL } from 'url'
 import { normalize } from 'path'
 import { CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04 } from '../config.js'
-const CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04_PARSED = url.parse(
+const CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04_PARSED = new URL(
   CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04
 )
 
@@ -10,8 +10,9 @@ export default ({ path, requestDetail }) => {
     protocol,
     hostname,
     host,
-    path: proxyPath,
+    pathname: proxyPath,
   } = CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04_PARSED
+
   const port = path.match(/^\/saeon-spatialdata\/geoserver.saeon.ac.za\/\d{4}/)[0].slice(-4)
   requestDetail.protocol = protocol
 

@@ -29,6 +29,7 @@ jobs:
           CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET}}"
           CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,steven@saeon.ac.za,bryan@saeon.ac.za"
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn"
+          CATALOGUE_PROXY_ADDRESS="https://proxy.catalogue.saeon.dvn"
           CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           CATALOGUE_API_GOOGLE_CLIENT_ID=
