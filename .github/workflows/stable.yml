@@ -29,7 +29,7 @@ jobs:
           CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET}}"
           CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,steven@saeon.ac.za,bryan@saeon.ac.za"
           CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.ac.za"
-          CATALOGUE_PROXY_ADDRESS="https://proxy.catalogue.saeon.ac.za"
+          CATALOGUE_PROXY_ADDRESS="https://proxy.saeon.ac.za"
           CATALOGUE_API_ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           CATALOGUE_API_GOOGLE_CLIENT_ID="${{ secrets.CATALOGUE_API_GOOGLE_CLIENT_ID }}"

@@ -147,10 +147,11 @@ ansible-playbook playbooks/centos-7.yml -i inventories/centos-7
 Using the ansible script in this repository will configure Nginx such that non-https traffic is redirected to https for all public facing host addresses (the client and api). If you look at the [Nginx configuration files](playbooks/templates/nginx) you will see that the Nginx server blocks specify paths to SSL certificates as well as the path to dhparam.pem, used for the [Diffie–Hellman key exchange
 ](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange). The `dhparam.pem` file is created during Ansible configuration, however, the SSL certificates are NOT!
 
-Currently setting up SSL is a manual process. After running the Ansible playbook, the Nginx service will fail until the appropriate certificates are created. Two certificates are required, these are:
+Currently setting up SSL is a manual process. After running the Ansible playbook, the Nginx service will fail until the appropriate certificates are created. Three certificates are required, these are:
 
 - `<hostname>` (for example, catalogue.saeon.ac.za)
 - api.`<hostname>` (for example, api.catalogue.saeon.ac.za)
+- proxy.`<hostname>` (for example, proxy.catalogue.saeon.ac.za)
 
 > NOTE - a domain name is required for the software to to run, since the API service is addressed as the subdomain of that domain. `api.<some IPv4 address>` is not addressable, and therefore will not work. The Nginx server blocks that Ansible installs route requests based on subdomain. To install and test this software __without__ a domain, adjust the files that Ansible copied to `/etc/nginx/conf.f/*.conf` manually. (And provide sensible alternatives to the default service environment variables).
 ## Self-signed SSL
@@ -159,7 +160,13 @@ You can generate appropriate self-signed SSL certs via the following commands:
 ```sh
 sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<hostname>.key -out  /opt/ssl-keys/<hostname>.cer
 sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/api.<hostname>.key -out  /opt/ssl-keys/api.<hostname>.cer
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<proxy hostname>.key -out  /opt/ssl-keys/<proxy hostname>.cer
 sudo service nginx restart
 ```
 ## SAEON SSL certificates
-This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be differet to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/).
+This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be differet to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/). Usually this correct trick is to append interm.cer to the cert.cer file. For example:
+
+```sh
+cat <file name>.cert.cer > <file name>.cer
+cat <file name>.interm.cer >> <file name>.cer
+```

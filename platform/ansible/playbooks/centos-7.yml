@@ -12,6 +12,10 @@
       prompt: What hostname or IP address will this deployment be on?
       private: no
 
+    - name: CATALOGUE_PROXY_HOSTNAME
+      prompt: What hostname or IP address will the proxy be available on?
+      private: no      
+
     - name: MONGO_DB_USERNAME
       prompt: Provide a MongoDB username
       default: "admin"
