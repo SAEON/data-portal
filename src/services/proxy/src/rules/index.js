@@ -5,29 +5,34 @@ import elasticsearchRule from './_elasticsearch.js'
 import saeonGeoServersRule from './_saeon-geoservers.js'
 import saeonGeoServerApp04Rule from './_saeon-geoserver-app04.js'
 import corsRule from './_cors.js'
+import ahocevarRule from './_ahocevar.js'
+import terrestrisRule from './_terrestris.js'
 
 const beforeSendRequest = async requestDetail => {
-  const { pathname, search } = new URL(requestDetail.url) // TODO
-  const path = [pathname, search].join('')
+  const url = new URL(requestDetail.url)
+  const { pathname } = url
 
   try {
     let proxiedRequest
-    if (path.includes('/csir')) {
-      proxiedRequest = csirRule({ path, requestDetail })
-    } else if (path.includes('/hst')) {
-      proxiedRequest = hstRule({ path, requestDetail })
-    } else if (path.includes('/elasticsearch')) {
-      proxiedRequest = elasticsearchRule({ path, requestDetail })
-    } else if (path.includes('/saeon-spatialdata/spatialdata.saeon.ac.za')) {
-      proxiedRequest = saeonGeoServersRule({ path, requestDetail })
-    } else if (path.includes('/saeon-spatialdata/geoserver.saeon.ac.za')) {
-      proxiedRequest = saeonGeoServerApp04Rule({ path, requestDetail })
+    if (pathname.includes('/csir')) {
+      proxiedRequest = csirRule(requestDetail, url)
+    } else if (pathname.includes('/hst')) {
+      proxiedRequest = hstRule(requestDetail, url)
+    } else if (pathname.includes('/elasticsearch')) {
+      proxiedRequest = elasticsearchRule(requestDetail, url)
+    } else if (pathname.includes('/saeon-spatialdata/spatialdata.saeon.ac.za')) {
+      proxiedRequest = saeonGeoServersRule(requestDetail, url)
+    } else if (pathname.includes('/saeon-spatialdata/geoserver.saeon.ac.za')) {
+      proxiedRequest = saeonGeoServerApp04Rule(requestDetail, url)
+    } else if (pathname.includes('/ahocevar')) {
+      proxiedRequest = ahocevarRule(requestDetail, url)
+    } else if (pathname.includes('/terrestris')) {
+      proxiedRequest = terrestrisRule(requestDetail, url)
     } else {
       throw new Error('No rule found')
     }
 
     Object.assign(requestDetail.requestOptions, proxiedRequest)
-
     return requestDetail
   } catch (error) {
     return {
@@ -41,7 +46,7 @@ const beforeSendRequest = async requestDetail => {
 }
 
 const beforeSendResponse = async (requestDetail, responseDetail) => {
-  return corsRule({ requestDetail, responseDetail })
+  return corsRule(requestDetail, responseDetail)
 }
 
 export default {

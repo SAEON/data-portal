@@ -1,4 +1,4 @@
-export default ({ requestDetail, responseDetail }) => {
+export default (requestDetail, responseDetail) => {
   Object.assign(responseDetail.response.header, {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',

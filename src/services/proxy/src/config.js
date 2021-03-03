@@ -18,11 +18,15 @@ export const CATALOGUE_PROXY_THROTTLE = process.env.CATALOGUE_PROXY_THROTTLE
   ? parseInt(process.env.CATALOGUE_PROXY_THROTTLE, 10)
   : 10000
 
+export const AHOCEVAR_ADDRESS = 'https://ahocevar.com'
+
+export const TERRESTRIS_ADDRESS = 'https://ows.terrestris.de'
+
 export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || 'http://localhost:9200'
 
 export const CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS = 'https://spatialdata.saeon.ac.za'
 
-export const CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04 = 'http://geoserver.saeon.ac.za/'
+export const CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04 = 'http://geoserver.saeon.ac.za'
 
 export const CATALOGUE_PROXY_CSIR_ESRI_ADDRESS =
   'https://pta-gis-2-web1.csir.co.za/server2/rest/services'

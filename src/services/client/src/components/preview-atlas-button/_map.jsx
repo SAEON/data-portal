@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Polygon from 'ol/geom/Polygon'
 import Point from 'ol/geom/Point'
 import WKT from 'ol/format/WKT'
-import { parse } from 'url'
+import { parse } from 'url' // TODO deprecated
 import { OlReact } from '@saeon/ol-react'
 import Loading from '../../components/loading'
 import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
@@ -14,8 +14,6 @@ import clsx from 'clsx'
 const wkt = new WKT()
 
 const SPATIALDATA_PROXY = `${CATALOGUE_PROXY_ADDRESS}/saeon-spatialdata`
-
-console.log('x', SPATIALDATA_PROXY)
 
 const EXTENT_PADDING = 3
 
