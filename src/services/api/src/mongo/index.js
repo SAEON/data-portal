@@ -55,7 +55,15 @@ export const getDataInserters = () =>
   Object.entries(_collections).reduce((acc, [alias, { name }]) => {
     const loader = new DataLoader(
       lists =>
-        db.then(db => db.collection(name)).then(collection => collection.insertMany(lists.flat())),
+        db
+          .then(db => db.collection(name))
+          .then(collection =>
+            collection
+              .insertMany(lists.flat())
+              .catch(error =>
+                console.error('Error inserting data to Mongo', '(probably logs)', error.message)
+              )
+          ),
       {
         batchScheduleFn: callback => setTimeout(callback, APP_LEVEL_BATCH_INTERVAL),
       }
