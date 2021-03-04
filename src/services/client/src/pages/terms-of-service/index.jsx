@@ -174,10 +174,6 @@ export default () => {
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              Address: Hertzog Blvd, Foreshore, Cape Town, 8001
-            </Typography>
-
-            <Typography className={clsx(classes.body)} variant="body2">
               Should you have other questions or concerns about these privacy policies, please call
               us on +27 (12) 534 3504 or send us an email at enquiries@saeon.ac.za.
             </Typography>

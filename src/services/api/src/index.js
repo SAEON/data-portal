@@ -28,31 +28,12 @@ import configureTwitterAuth from './passport/twitter-auth/index.js'
 import configureSaeonAuth from './passport/saeon-identity-server/index.js'
 import configureLocalAuth from './passport/local-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
-import { applyIndices, setupUserRoles, setupDefaultAdmins } from './mongo/index.js'
 import configurePostGIS from './postgis/setup.js'
 import {
   CATALOGUE_API_ADDRESS_PORT,
   CATALOGUE_API_INTERNAL_ADDRESS_PORT,
   CATALOGUE_API_KEY,
 } from './config.js'
-
-// Configure MongoDB indices
-applyIndices()
-  .then(() => console.info('Mongo indices configured'))
-  .catch(error => {
-    console.error(error)
-    process.exit(1)
-  })
-
-// Configure MongoDB userRoles
-setupUserRoles()
-  .then(() => console.info('Mongo user roles configured'))
-  .then(() => setupDefaultAdmins())
-  .then(() => console.info('Default users configured'))
-  .catch(error => {
-    console.error(error)
-    process.exit(1)
-  })
 
 /**
  * Install PostGIS extension if necessary

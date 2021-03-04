@@ -109,7 +109,6 @@ export default ({
                   uri: downloadURL,
                   odpId: id,
                   doi,
-                  clientInfo,
                 },
               })
               setOpen(false)

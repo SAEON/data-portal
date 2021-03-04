@@ -16,11 +16,18 @@ export default async (_, args, ctx, info) => {
 
   const log = {
     clientSession,
+    clientInfo: {
+      ipAdress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
+      userAgent: ctx.request.headers['user-agent'],
+    },
+    info: {
+      queryHash: hash(query),
+      ...query,
+    },
     referrer,
+    createdAt: new Date(),
     apiVersion: packageJson.version,
     type: 'query',
-    queryHash: hash(query),
-    ...query,
   }
 
   logToMongo(log)

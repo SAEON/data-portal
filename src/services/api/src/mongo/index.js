@@ -7,24 +7,14 @@ import {
   CATALOGUE_API_NODE_ENV,
   CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
-import getCollections from './_collections.js'
-import configureDataFinders from './_data-finders.js'
-import configureDataInserters from './_data-inserters.js'
-import userRoles from './setup/user-roles.js'
+import _collections from './_collections.js'
+import userRoles from './_user-roles.js'
+import DataLoader from 'dataloader'
+import sift from 'sift'
+
+const APP_LEVEL_BATCH_INTERVAL = 0
 
 const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
-
-export const _collections = {
-  UserRoles: 'userRoles',
-  Users: 'users',
-  Atlases: 'atlases',
-  Logs: 'logs',
-  Lists: 'lists',
-  Databooks: 'databooks',
-  Dashboards: 'dashboards',
-  Charts: 'charts',
-  Filters: 'filters',
-}
 
 export const db = MongoClient.connect(CONNECTION_STRING, {
   auth: {
@@ -41,80 +31,110 @@ export const db = MongoClient.connect(CONNECTION_STRING, {
     if (CATALOGUE_API_NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
   })
 
-const indices = [
-  {
-    collection: _collections.Lists,
-    index: 'hashedSearch',
-    options: {
-      unique: true,
-    },
-  },
-  {
-    collection: _collections.UserRoles,
-    index: 'name',
-    options: {
-      unique: true,
-    },
-  },
-  {
-    collection: _collections.Users,
-    index: 'username',
-    options: {
-      unique: true,
-    },
-  },
-]
+export const collections = Object.entries(_collections)
+  .reduce(async (accumulator, [alias, { name }]) => {
+    const _accumulator = await accumulator
+    _accumulator[alias] = (await db).collection(name)
+    return _accumulator
+  }, Promise.resolve({}))
+  .catch(error => console.error('Unable to load MongoDB collections', error))
 
-export const setupUserRoles = () =>
-  db.then(db =>
-    Promise.all(
-      userRoles.map(userRole => {
-        const { name, ...other } = userRole
-        db.collection(_collections.UserRoles).findAndModify(
-          { name },
-          null,
-          { $setOnInsert: { name }, $set: { ...other } },
-          { upsert: true }
-        )
+export const getDataFinders = () =>
+  Object.entries(_collections).reduce((acc, [alias, { name }]) => {
+    const loader = new DataLoader(filters =>
+      db
+        .then(db => db.collection(name))
+        .then(collection => collection.find({ $or: filters }).toArray())
+        .then(docs => filters.map(filter => docs.filter(sift(filter))))
+    )
+    acc[`find${alias}`] = filter => loader.load(filter)
+    return acc
+  }, {})
+
+export const getDataInserters = () =>
+  Object.entries(_collections).reduce((acc, [alias, { name }]) => {
+    const loader = new DataLoader(
+      lists =>
+        db.then(db => db.collection(name)).then(collection => collection.insertMany(lists.flat())),
+      {
+        batchScheduleFn: callback => setTimeout(callback, APP_LEVEL_BATCH_INTERVAL),
+      }
+    )
+    acc[`insert${alias}`] = (...list) => loader.load(list)
+    return acc
+  }, {})
+
+/**
+ * ================================================
+ * Configure MongoDB on API startup
+ * ================================================
+ */
+
+// Create collections
+await db.then(db =>
+  Promise.all(
+    Object.entries(_collections).map(([, { name, validator = {} }]) =>
+      db.createCollection(name, { validator }).catch(error => {
+        if (error.code == 48) {
+          console.info(`Collection already exists`, name)
+        } else {
+          console.error(error)
+          process.exit(1)
+        }
       })
     )
   )
+)
 
-export const setupDefaultAdmins = async () => {
-  const adminRoleId = (
-    await db.then(db => db.collection(_collections.UserRoles).findOne({ name: 'admin' }))
-  )._id
+// Insert user roles
+await db.then(db =>
+  Promise.all(
+    userRoles.map(userRole => {
+      const { name, ...other } = userRole
+      db.collection(_collections.UserRoles.name).findAndModify(
+        { name },
+        null,
+        { $setOnInsert: { name }, $set: { ...other } },
+        { upsert: true }
+      )
+    })
+  )
+)
 
-  db.then(db =>
-    Promise.all(
-      CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(email =>
-        db.collection(_collections.Users).findAndModify(
-          {
-            username: email,
-          },
-          null,
-          {
-            $setOnInsert: { emails: [{ email, verified: true }], username: email },
-            $addToSet: {
-              userRoles: adminRoleId,
+// Setup default admins
+await db
+  .then(db => db.collection(_collections.UserRoles.name).findOne({ name: 'admin' }))
+  .then(({ _id: adminRoleId }) =>
+    db.then(db =>
+      Promise.all(
+        CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(email =>
+          db.collection(_collections.Users.name).findAndModify(
+            {
+              username: email,
             },
-          },
-          { upsert: true }
+            null,
+            {
+              $setOnInsert: { emails: [{ email, verified: true }], username: email },
+              $addToSet: {
+                userRoles: adminRoleId,
+              },
+            },
+            { upsert: true }
+          )
         )
       )
     )
   )
-}
 
-export const applyIndices = () =>
-  db.then(db =>
-    Promise.all(
-      indices.map(({ collection, index, options }) =>
-        db.collection(collection).createIndex(index, options)
+// Apply indices
+await db.then(db =>
+  Promise.all(
+    Object.entries(_collections)
+      .map(([, { name, indices = [] }]) =>
+        indices.map(({ index, options }) => db.collection(name).createIndex(index, options))
       )
-    )
+      .flat()
   )
+)
 
-export const collections = getCollections({ db, _collections })
-export const getDataFinders = configureDataFinders({ db, _collections })
-export const getDataInserters = configureDataInserters({ db, _collections })
+console.info('MongoDB configured')
