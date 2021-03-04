@@ -138,7 +138,41 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK            
+      - $CATALOGUE_DOCKER_NETWORK
+
+  proxy4:
+    container_name: proxy4
+    restart: always
+    build:
+      context: src/services/proxy
+      dockerfile: Dockerfile
+      args:
+        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
+    ports:
+      - 8007:8001
+      - 8008:8002
+    depends_on:
+      - elasticsearch
+    networks:
+      - $CATALOGUE_DOCKER_NETWORK
+
+  proxy5:
+    container_name: proxy5
+    restart: always
+    build:
+      context: src/services/proxy
+      dockerfile: Dockerfile
+      args:
+        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
+    ports:
+      - 8009:8001
+      - 8010:8002
+    depends_on:
+      - elasticsearch
+    networks:
+      - $CATALOGUE_DOCKER_NETWORK              
 
   api:
     container_name: api
@@ -196,6 +230,8 @@ services:
       - proxy1
       - proxy2
       - proxy3
+      - proxy4
+      - proxy5
       - mongo
       - elasticsearch
       - postgis
