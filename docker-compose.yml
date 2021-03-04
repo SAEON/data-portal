@@ -193,7 +193,9 @@ services:
       - tmp:/tmp/catalogue-api
       - data:/var/lib/catalogue-api
     depends_on:
-      - proxy
+      - proxy1
+      - proxy2
+      - proxy3
       - mongo
       - elasticsearch
       - postgis
