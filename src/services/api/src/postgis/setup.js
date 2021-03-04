@@ -1,9 +1,8 @@
 import { POSTGIS_DB } from '../config.js'
 import query from './query.js'
 
-export default async () => {
-  await query({
-    text: `
+await query({
+  text: `
       create extension if not exists postgis;
       create extension if not exists postgis_raster;
       create extension if not exists postgis_sfcgal;
@@ -19,18 +18,19 @@ export default async () => {
       create extension if not exists intarray;
       create extension if not exists pg_trgm;
       create extension if not exists pgcrypto;`,
-  })
+})
 
-  /**
-   * TODO. Look more into offline raster configuration options
-   * https://postgis.net/docs/manual-dev/postgis_gdal_enabled_drivers.html
-   */
+/**
+ * TODO. Look more into offline raster configuration options
+ * https://postgis.net/docs/manual-dev/postgis_gdal_enabled_drivers.html
+ */
 
-  await query({
-    text: `alter database ${POSTGIS_DB} set postgis.enable_outdb_rasters = true;`,
-  })
+await query({
+  text: `alter database ${POSTGIS_DB} set postgis.enable_outdb_rasters = true;`,
+})
 
-  await query({
-    text: `alter database ${POSTGIS_DB} set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
-  })
-}
+await query({
+  text: `alter database ${POSTGIS_DB} set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
+})
+
+console.info('PostGIS extensions configured')

@@ -28,19 +28,12 @@ import configureTwitterAuth from './passport/twitter-auth/index.js'
 import configureSaeonAuth from './passport/saeon-identity-server/index.js'
 import configureLocalAuth from './passport/local-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
-import configurePostGIS from './postgis/setup.js'
+import './postgis/setup.js'
 import {
   CATALOGUE_API_ADDRESS_PORT,
   CATALOGUE_API_INTERNAL_ADDRESS_PORT,
   CATALOGUE_API_KEY,
 } from './config.js'
-
-/**
- * Install PostGIS extension if necessary
- */
-await configurePostGIS()
-  .then(() => console.info('PostGIS extensions installed'))
-  .catch(error => console.error('Error installing PostGIS extensions', error.message))
 
 // Configure passport authentication
 const { login: googleLogin, authenticate: googleAuthenticate } = configureGoogleAuth()

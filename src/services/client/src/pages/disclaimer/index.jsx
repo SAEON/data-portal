@@ -34,7 +34,7 @@ export default () => {
             </Typography>
 
             <Typography className={clsx(classes.body)} variant="body2">
-              SAEON provides meta-data descriptions and links to its own data and that of others in
+              SAEON provides metadata descriptions and links to its own data and that of others in
               the community of practice, in the belief that this will be useful and in support of
               Open Access to scientific publications and data. We cannot be held responsible for the
               quality of data provided by third parties, and while we take reasonable care in
