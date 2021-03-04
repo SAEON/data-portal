@@ -1,7 +1,7 @@
 ![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
 ![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
-# SAEON Catalogue software 
+# SAEON Catalogue software
 
 A suite of services that provide a platform for searching and exploring SAEON-curated datasets. The tech stack is as listed below. This document shows how to setup a development environment for contributions, and also explains how to build and deploy the services.
 
