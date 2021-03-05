@@ -1,5 +1,5 @@
 # Build client
-FROM node:14.15 as build
+FROM node:15.11 as build
 
 ARG CATALOGUE_API_ADDRESS
 ARG CATALOGUE_CLIENT_ADDRESS

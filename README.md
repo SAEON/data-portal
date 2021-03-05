@@ -49,7 +49,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Desktop
-2. Node.js **v14.15.1** (Versions lower than **v14.13** will not work. I have not tested newer versions yet)
+2. Node.js **v15.11** (Versions lower than **v14.13** will not work)
 
 ```sh
 # Make sure that Node.js ^14.15 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
