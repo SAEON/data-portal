@@ -58,7 +58,7 @@ export default ({ geoLocations, linkedResource, id, title }) => {
     return (
       <DialogContent>
         <pre className={clsx(classes.errorBlock)}>
-          {`Non standard format for WMS resource - cannot render a map. The URL is either missing, incorrect, or intended for manual inspection (see below)\n\n${JSON.stringify(
+          {`Cannot load map - WMS resource is not responding. If the URL is to a valid WMS server, then it is currently down. Otherwise the URL is missing, incorrect, or intended for manual inspection (see below)\n\n${JSON.stringify(
             linkedResource,
             null,
             2

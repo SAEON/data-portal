@@ -6,7 +6,7 @@ export default async (_, args, ctx, info) => {
   const referrer = args?.referrer || undefined
   const clientSession = ctx?.cookies.get(CATALOGUE_CLIENT_ID) || undefined
   const { operation, fragments, variableValues } = info
-  const { insertLogs: logToMongo } = ctx.mongo.dataInserters
+  const { logToMongo } = ctx.mongo
 
   const query = {
     operation: JSON.stringify(operation),

@@ -1,4 +1,4 @@
-import { db as mongoDb, collections, getDataFinders, getDataInserters } from '../mongo/index.js'
+import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/index.js'
 import postgisQuery, { createClient } from '../postgis/query.js'
 import Catalogue from '../lib/catalogue.js'
 import {
@@ -15,7 +15,7 @@ const catalogue = new Catalogue({
   index: CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
 })
 
-const dataInserters = getDataInserters() // App level batching
+const logToMongo = new Logger() // Application-level batching
 
 export default app => async (ctx, next) => {
   app.context.userInfo = ctx.state.user
@@ -26,7 +26,7 @@ export default app => async (ctx, next) => {
     db: mongoDb,
     collections,
     dataFinders: getDataFinders(), // Request level batching
-    dataInserters,
+    logToMongo: logToMongo.load.bind(logToMongo),
   }
 
   app.context.postgis = {

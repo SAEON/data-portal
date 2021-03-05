@@ -2,7 +2,7 @@ import { CATALOGUE_CLIENT_ID } from '../../../../config.js'
 
 export default async (self, args, ctx) => {
   const { input: logs } = args
-  const { insertLogs: logToMongo } = ctx.mongo.dataInserters
+  const { logToMongo } = ctx.mongo
 
   logToMongo(
     ...logs.map(log =>

@@ -8,11 +8,10 @@ import {
   CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
 import _collections from './_collections.js'
+import _Logger from './_logger.js'
 import userRoles from './_user-roles.js'
 import DataLoader from 'dataloader'
 import sift from 'sift'
-
-const APP_LEVEL_BATCH_INTERVAL = 0
 
 const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
 
@@ -48,27 +47,6 @@ export const getDataFinders = () =>
         .then(docs => filters.map(filter => docs.filter(sift(filter))))
     )
     acc[`find${alias}`] = filter => loader.load(filter)
-    return acc
-  }, {})
-
-export const getDataInserters = () =>
-  Object.entries(_collections).reduce((acc, [alias, { name }]) => {
-    const loader = new DataLoader(
-      lists =>
-        db
-          .then(db => db.collection(name))
-          .then(collection =>
-            collection
-              .insertMany(lists.flat())
-              .catch(error =>
-                console.error('Error inserting data to Mongo', '(probably logs)', error.message)
-              )
-          ),
-      {
-        batchScheduleFn: callback => setTimeout(callback, APP_LEVEL_BATCH_INTERVAL),
-      }
-    )
-    acc[`insert${alias}`] = (...list) => loader.load(list)
     return acc
   }, {})
 
@@ -146,3 +124,9 @@ await db.then(db =>
 )
 
 console.info('MongoDB configured')
+
+/**
+ * Application-level batching for inserting UI logs
+ * to MongoDB.
+ */
+export const Logger = _Logger(collections)

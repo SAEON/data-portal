@@ -29,20 +29,22 @@ export default ({ children }) => {
     >
       <RegisterEventLog
         event={'mousemove'}
-        handle={debounce(({ type, x, y }) =>
-          console.gql({
-            clientVersion: packageJson.version,
-            type,
-            commitHash: CATALOGUE_LATEST_COMMIT,
-            createdAt: new Date(),
-            info: {
-              pathname: window.location.pathname,
-              innerHeight,
-              innerWidth,
-              x,
-              y,
-            },
-          })
+        handle={debounce(
+          ({ type, x, y }) =>
+            console.gql({
+              clientVersion: packageJson.version,
+              type,
+              commitHash: CATALOGUE_LATEST_COMMIT,
+              createdAt: new Date(),
+              info: {
+                pathname: window.location.pathname,
+                innerHeight,
+                innerWidth,
+                x,
+                y,
+              },
+            }),
+          5
         )}
       >
         {children}
