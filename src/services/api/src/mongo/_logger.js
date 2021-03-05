@@ -1,7 +1,7 @@
 const BATCH_SIZE = 1000
 
 export default collections => {
-  return class DataLoader {
+  return class LogBatcher {
     constructor() {
       this._timer
       this._queries = []
