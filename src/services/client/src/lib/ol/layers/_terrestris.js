@@ -1,8 +1,8 @@
 import { Tile as TileLayer } from 'ol/layer.js'
 import { TileWMS } from 'ol/source'
-import { CATALOGUE_PROXY_ADDRESS } from '../../../config'
+import { CATALOGUE_CLIENT_PROXY_ADDRESS } from '../../../config'
 
-const URL = `${CATALOGUE_PROXY_ADDRESS}/terrestris/osm-gray/service`
+const URL = `${CATALOGUE_CLIENT_PROXY_ADDRESS}/terrestris/osm-gray/service`
 
 export const terrestrisBaseMap = () =>
   new TileLayer({

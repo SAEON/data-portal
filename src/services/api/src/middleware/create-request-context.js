@@ -2,7 +2,7 @@ import { db as mongoDb, collections, getDataFinders, getDataInserters } from '..
 import postgisQuery, { createClient } from '../postgis/query.js'
 import Catalogue from '../lib/catalogue.js'
 import {
-  CATALOGUE_PROXY_ADDRESS,
+  CATALOGUE_API_PROXY_ADDRESS,
   CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
   CATALOGUE_API_KEY,
 } from '../config.js'
@@ -11,7 +11,7 @@ import userModel from '../user-model/index.js'
 import { encrypt, decrypt } from '../lib/crypto.js'
 
 const catalogue = new Catalogue({
-  dslAddress: `${CATALOGUE_PROXY_ADDRESS}/elasticsearch`,
+  dslAddress: `${CATALOGUE_API_PROXY_ADDRESS}/elasticsearch`,
   index: CATALOGUE_API_ELASTICSEARCH_INDEX_NAME,
 })
 

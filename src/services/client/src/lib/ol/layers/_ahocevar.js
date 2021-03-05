@@ -1,8 +1,8 @@
 import { Tile as TileLayer } from 'ol/layer.js'
 import { TileWMS } from 'ol/source'
-import { CATALOGUE_PROXY_ADDRESS } from '../../../config'
+import { CATALOGUE_CLIENT_PROXY_ADDRESS } from '../../../config'
 
-const URL = `${CATALOGUE_PROXY_ADDRESS}/ahocevar/geoserver/wms`
+const URL = `${CATALOGUE_CLIENT_PROXY_ADDRESS}/ahocevar/geoserver/wms`
 
 export const ahocevarBaseMap = () =>
   new TileLayer({

@@ -6,14 +6,14 @@ import { parse } from 'url' // TODO deprecated
 import { OlReact } from '@saeon/ol-react'
 import Loading from '../../components/loading'
 import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
-import { CATALOGUE_PROXY_ADDRESS } from '../../config'
+import { CATALOGUE_CLIENT_PROXY_ADDRESS } from '../../config'
 import DialogContent from '@material-ui/core/DialogContent'
 import useStyles from './style'
 import clsx from 'clsx'
 
 const wkt = new WKT()
 
-const SPATIALDATA_PROXY = `${CATALOGUE_PROXY_ADDRESS}/saeon-spatialdata`
+const SPATIALDATA_PROXY = `${CATALOGUE_CLIENT_PROXY_ADDRESS}/saeon-spatialdata`
 
 const EXTENT_PADDING = 3
 
