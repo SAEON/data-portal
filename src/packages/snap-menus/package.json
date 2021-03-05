@@ -60,7 +60,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "npm-check-updates": "^11.1.10",
-    "postcss": "^8.2.6",
+    "postcss": "^8.2.7",
     "rimraf": "^3.0.2",
     "rollup": "^2.40.0",
     "rollup-plugin-postcss": "^4.0.0"
