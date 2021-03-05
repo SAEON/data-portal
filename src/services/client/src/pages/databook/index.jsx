@@ -5,7 +5,7 @@ import { setShareLink } from '../../hooks/use-share-link'
 import WithGqlQuery from '../../hooks/with-gql-query'
 import LoadingDatabook from './loading'
 import Loading from '../../components/loading'
-import PostgisDataExplorer from './postgis'
+import DataExplorer from './content'
 import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -155,7 +155,7 @@ export default ({ id }) => {
                       schema={schemaData.databook.schema}
                       databook={data.databook}
                     >
-                      <PostgisDataExplorer />
+                      <DataExplorer />
                     </DatabookContextProvider>
                   )
                 }}

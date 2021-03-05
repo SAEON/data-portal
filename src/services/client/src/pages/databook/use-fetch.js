@@ -8,7 +8,6 @@ export default ({ uri, method, headers, body, children = null, signal = undefine
   })
 
   useEffect(() => {
-    // eslint-disable-next-line
     ;(async () => {
       setState({ error: false, loading: true, data: [] })
       try {

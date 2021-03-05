@@ -26,7 +26,7 @@ module.exports = () => {
 
   return {
     devtool: mode === 'production' ? false : false, // I haven't been able to get source maps to work nicely
-    target: ['web', 'es5'],
+    target: mode === 'production' ? ['web', 'es5'] : 'web',
     mode,
     entry: {
       index: './src/index.jsx',
@@ -162,11 +162,7 @@ module.exports = () => {
       historyApiFallback: {
         disableDotRule: true,
       },
-      compress: true,
-      allowedHosts: ['.localhost'],
-      headers: {
-        'Access-Control-Allow-Headers': '*',
-      },
+      compress: true
     },
   }
 }

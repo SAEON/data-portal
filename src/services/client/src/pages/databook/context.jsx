@@ -1,10 +1,11 @@
 import { useState, createContext } from 'react'
-import WithFetch from '../../hooks/with-fetch'
+import WithFetch from './use-fetch'
 import { CATALOGUE_API_ADDRESS } from '../../config'
 
 export const context = createContext()
 
 export default ({ children, databook, schema }) => {
+  const abortController = new AbortController()
   const [postGisClient, setPostGisClient] = useState({
     query: '',
     c: 0,
@@ -16,8 +17,6 @@ export default ({ children, databook, schema }) => {
       c: postGisClient.c++,
     })
   }
-
-  const abortController = new AbortController()
 
   return (
     <WithFetch
