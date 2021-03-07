@@ -9,11 +9,11 @@ export default collections => {
     load(...queries) {
       this._queries.push(...queries)
 
-      process.nextTick(async () => {
-        if (!this._queries.length) {
-          return
-        }
+      if (!this._queries.length) {
+        return
+      }
 
+      process.nextTick(async () => {
         const batch = this._queries.slice(0, BATCH_SIZE)
         this._queries = this._queries.slice(BATCH_SIZE)
 
