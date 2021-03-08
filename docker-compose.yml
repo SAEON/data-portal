@@ -229,10 +229,6 @@ services:
       - data:/var/lib/catalogue-api
     depends_on:
       - proxy1
-      - proxy2
-      - proxy3
-      - proxy4
-      - proxy5
       - mongo
       - elasticsearch
       - postgis
@@ -260,5 +256,9 @@ services:
       - $CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING:80
     depends_on:
       - api
+      - proxy2
+      - proxy3
+      - proxy4
+      - proxy5      
     networks:
       - $CATALOGUE_DOCKER_NETWORK      
