@@ -41,8 +41,8 @@ export default async (_, args, ctx) => {
   }
 
   if (before || after) {
-    const c = before || after
-    dsl.search_after = [c.score || 0, c.id]
+    const cursor = before || after
+    dsl.search_after = [cursor.score || 0, cursor.id]
   }
 
   const data = await catalogue.query(

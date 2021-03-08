@@ -4,7 +4,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 export default makeStyles(theme => ({
   input: {
     color: theme.palette.common.white,
-    padding: 32,
+    padding: `32px 0`,
     caretColor: theme.palette.common.white,
   },
   recordsSearchBox: {
