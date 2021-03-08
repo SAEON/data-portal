@@ -18,7 +18,6 @@ export default ({
     gql`
       query($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
         catalogue {
-          id
           records(dois: $dois) {
             nodes {
               citation(style: $style, language: $language)
@@ -33,6 +32,7 @@ export default ({
         style: citationParams.style,
         language: citationParams.language,
       },
+      fetchPolicy: 'no-cache',
     }
   )
 

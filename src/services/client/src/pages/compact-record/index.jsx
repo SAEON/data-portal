@@ -29,6 +29,7 @@ export default ({ id = undefined, doi = undefined }) => {
     `,
     {
       variables: { ids: [id].filter(_ => _), dois: [doi].filter(_ => _), size: 1 },
+      fetchPolicy: 'cache-first',
     }
   )
 
