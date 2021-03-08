@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useRef, lazy, Suspense } from 'react'
+import { useQuery } from '@apollo/client'
 import Header from './header'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
@@ -6,7 +7,6 @@ import Grid from '@material-ui/core/Grid'
 import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
 import Loading from '../../../components/loading'
-import WithGqlQuery from '../../../hooks/with-gql-query'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
@@ -43,62 +43,58 @@ export default ({ disableSidebar = false }) => {
     ref.current = { terms, text, extent }
   }, [terms, extent, text])
 
-  /**
-   * cursors.start is only set when navigating BACK,
-   * data items must be reversed when paged BACK
-   */
-  return (
-    <WithGqlQuery
-      QUERY={gql`
-        query(
-          $extent: WKT_4326
-          $text: String
-          $terms: [TermInput!]
-          $size: Int
-          $before: ES_Cursor
-          $after: ES_Cursor
-          $fields: [FieldInput!]
-          $summaryLimit: Int
-          $ids: [ID!]
-          $dois: [String!]
-          $referrer: String
-        ) {
-          catalogue(referrer: $referrer) {
-            id
-            summary(
-              fields: $fields
-              filterByText: $text
-              filterByExtent: $extent
-              filterByTerms: $terms
-              limit: $summaryLimit
-              filterByIds: $ids
-              filterByDois: $dois
-            )
-            records(
-              extent: $extent
-              text: $text
-              terms: $terms
-              size: $size
-              before: $before
-              after: $after
-              ids: $ids
-              dois: $dois
-            ) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-                startCursor
-                endCursor
-              }
-              totalCount
-              nodes {
-                metadata
-              }
+  const { error, loading, data } = useQuery(
+    gql`
+      query(
+        $extent: WKT_4326
+        $text: String
+        $terms: [TermInput!]
+        $size: Int
+        $before: ES_Cursor
+        $after: ES_Cursor
+        $fields: [FieldInput!]
+        $summaryLimit: Int
+        $ids: [ID!]
+        $dois: [String!]
+        $referrer: String
+      ) {
+        catalogue(referrer: $referrer) {
+          id
+          summary(
+            fields: $fields
+            filterByText: $text
+            filterByExtent: $extent
+            filterByTerms: $terms
+            limit: $summaryLimit
+            filterByIds: $ids
+            filterByDois: $dois
+          )
+          records(
+            extent: $extent
+            text: $text
+            terms: $terms
+            size: $size
+            before: $before
+            after: $after
+            ids: $ids
+            dois: $dois
+          ) {
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+            totalCount
+            nodes {
+              metadata
             }
           }
         }
-      `}
-      variables={{
+      }
+    `,
+    {
+      variables: {
         fields: [
           {
             id: '_linked-resources-filter',
@@ -121,113 +117,114 @@ export default ({ disableSidebar = false }) => {
         before: cursors.start,
         summaryLimit: 75,
         referrer,
-      }}
-    >
-      {({ error, loading, data }) => {
-        if (loading) {
-          return <Loading />
-        }
+      },
+    }
+  )
 
-        if (error) {
-          throw new Error(
-            `Error searching catalogue: ${error}\n\nPlease check Elasticsearch configuration`
-          )
-        }
+  if (loading) {
+    return <Loading />
+  }
 
-        const results = cursors.start
-          ? data.catalogue.records.nodes.slice(0).reverse()
-          : data.catalogue.records.nodes
+  if (error) {
+    throw new Error(
+      `Error searching catalogue: ${error}\n\nPlease check Elasticsearch configuration`
+    )
+  }
+  /**
+   * cursors.start is only set when navigating BACK,
+   * data items must be reversed when paged BACK
+   */
+  const results = cursors.start
+    ? data.catalogue.records.nodes.slice(0).reverse()
+    : data.catalogue.records.nodes
 
-        return (
-          <main id="search-results">
-            <Header
-              disableSidebar={disableSidebar}
-              showSidebar={showSidebar}
-              setShowSidebar={setShowSidebar}
-              cursors={cursors}
-              setCursors={setCursors}
-              setPageSize={setPageSize}
-              pageSize={pageSize}
-              loading={loading}
-              catalogue={data?.catalogue}
-            >
-              <div
-                style={{
-                  minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
-                    showSearchBar === 'true' || !showSearchBar ? '128' : '0'
-                  }px - 48px - 49px)`,
-                }}
-              >
-                <Grid container direction="row" justify="center">
-                  {/* SEARCH LOADING */}
-                  {loading && (
-                    <Grid item xs={12} style={{ position: 'relative' }}>
-                      <Loading />
+  return (
+    <main id="search-results">
+      <Header
+        disableSidebar={disableSidebar}
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        cursors={cursors}
+        setCursors={setCursors}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
+        loading={loading}
+        catalogue={data?.catalogue}
+      >
+        <div
+          style={{
+            minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
+              showSearchBar === 'true' || !showSearchBar ? '128' : '0'
+            }px - 48px - 49px)`,
+          }}
+        >
+          <Grid container direction="row" justify="center">
+            {/* SEARCH LOADING */}
+            {loading && (
+              <Grid item xs={12} style={{ position: 'relative' }}>
+                <Loading />
+              </Grid>
+            )}
+
+            {/* SEARCH RESULTS & HEADER */}
+            {!loading && (
+              <>
+                {/* MOBILE */}
+                {isMobile && (
+                  <>
+                    {!disableSidebar && (
+                      <Suspense fallback={<Loading />}>
+                        <MobileSideMenu
+                          setShowSidebar={setShowSidebar}
+                          showSidebar={showSidebar}
+                          data={data}
+                        />
+                      </Suspense>
+                    )}
+
+                    <Grid item xs style={{ flexGrow: 1 }}>
+                      <Records results={results} />
                     </Grid>
-                  )}
+                  </>
+                )}
 
-                  {/* SEARCH RESULTS & HEADER */}
-                  {!loading && (
-                    <>
-                      {/* MOBILE */}
-                      {isMobile && (
-                        <>
-                          {!disableSidebar && (
-                            <Suspense fallback={<Loading />}>
-                              <MobileSideMenu
-                                setShowSidebar={setShowSidebar}
-                                showSidebar={showSidebar}
-                                data={data}
-                              />
-                            </Suspense>
-                          )}
-
-                          <Grid item xs style={{ flexGrow: 1 }}>
-                            <Records results={results} />
-                          </Grid>
-                        </>
-                      )}
-
-                      {/* LARGER SCREENS */}
-                      {!isMobile && (
-                        <Grid
-                          item
-                          xs={12}
-                          style={{
-                            justifyContent: 'center',
-                            display: 'flex',
-                            margin: '32px 0 16px 0',
-                          }}
-                        >
-                          <Grid container item lg={10} xl={8}>
-                            {showSidebar ? (
-                              <Grid style={{ paddingRight: 16 }} item md={4}>
-                                <Suspense
-                                  fallback={
-                                    <div style={{ position: 'relative' }}>
-                                      <Loading />
-                                    </div>
-                                  }
-                                >
-                                  <Filters catalogue={data?.catalogue} />
-                                </Suspense>
-                              </Grid>
-                            ) : null}
-                            <Grid item xs style={{ flexGrow: 1 }}>
-                              <Records results={results} />
-                            </Grid>
-                          </Grid>
+                {/* LARGER SCREENS */}
+                {!isMobile && (
+                  <Grid
+                    item
+                    xs={12}
+                    style={{
+                      justifyContent: 'center',
+                      display: 'flex',
+                      margin: '32px 0 16px 0',
+                    }}
+                  >
+                    <Grid container item lg={10} xl={8}>
+                      {showSidebar ? (
+                        <Grid style={{ paddingRight: 16 }} item md={4}>
+                          <Suspense
+                            fallback={
+                              <div style={{ position: 'relative' }}>
+                                <Loading />
+                              </div>
+                            }
+                          >
+                            <Filters catalogue={data?.catalogue} />
+                          </Suspense>
                         </Grid>
-                      )}
-                    </>
-                  )}
-                </Grid>
-              </div>
-              {loading ? undefined : <Footer />}
-            </Header>
-          </main>
-        )
-      }}
-    </WithGqlQuery>
+                      ) : null}
+                      <Grid item xs style={{ flexGrow: 1 }}>
+                        <Records results={results} />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                )}
+              </>
+            )}
+          </Grid>
+        </div>
+        {loading ? undefined : <Footer />}
+      </Header>
+    </main>
   )
 }

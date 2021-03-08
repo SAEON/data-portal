@@ -1,6 +1,5 @@
-import { gql } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 import Loading from '../../components/loading'
-import WithGqlQuery from '../../hooks/with-gql-query'
 import { setShareLink } from '../../hooks/use-share-link'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import CompactRecord from '../records/search-results/records/record'
@@ -15,43 +14,41 @@ export default ({ id = undefined, doi = undefined }) => {
     params: false,
   })
 
-  return (
-    <WithGqlQuery
-      QUERY={gql`
-        query catalogue($ids: [ID!], $dois: [String!], $size: Int) {
-          catalogue {
-            id
-            records(ids: $ids, dois: $dois, size: $size) {
-              nodes {
-                metadata
-              }
+  const { error, loading, data } = useQuery(
+    gql`
+      query catalogue($ids: [ID!], $dois: [String!], $size: Int) {
+        catalogue {
+          id
+          records(ids: $ids, dois: $dois, size: $size) {
+            nodes {
+              metadata
             }
           }
         }
-      `}
-      variables={{ ids: [id].filter(_ => _), dois: [doi].filter(_ => _), size: 1 }}
-    >
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <Loading />
-        }
+      }
+    `,
+    {
+      variables: { ids: [id].filter(_ => _), dois: [doi].filter(_ => _), size: 1 },
+    }
+  )
 
-        if (error) {
-          throw new Error(`Error retrieving record ${id}. ${error}`)
-        }
+  if (loading) {
+    return <Loading />
+  }
 
-        const _source = data.catalogue.records.nodes[0].metadata._source
+  if (error) {
+    throw new Error(`Error retrieving record ${id}. ${error}`)
+  }
 
-        return (
-          <CompactRecord
-            showDatabook={false}
-            showPreview={false}
-            showDownload={true}
-            showSelect={false}
-            {..._source}
-          />
-        )
-      }}
-    </WithGqlQuery>
+  const _source = data.catalogue.records.nodes[0].metadata._source
+
+  return (
+    <CompactRecord
+      showDatabook={false}
+      showPreview={false}
+      showDownload={true}
+      showSelect={false}
+      {..._source}
+    />
   )
 }

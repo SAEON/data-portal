@@ -1,21 +1,17 @@
-import { useContext } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Typography from '@material-ui/core/Typography'
-import Fade from '@material-ui/core/Fade'
 import Divider from '@material-ui/core/Divider'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { gql } from '@apollo/client'
-import Search from '../../components/search'
-import { context as globalContext } from '../../contexts/global'
 import useStyles from './style'
 import clsx from 'clsx'
 import { isMobile } from 'react-device-detect'
-import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_API_GQL_ADDRESS } from '../../config'
+import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks/use-share-link'
-import WithGqlQuery from '../../hooks/with-gql-query'
 import SkipLink from '../../components/skip-link'
+import SearchSummary from './_search'
+import Search from '../../components/search'
 
 export default () => {
   setShareLink({
@@ -25,7 +21,6 @@ export default () => {
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
-  const { global } = useContext(globalContext)
 
   return (
     <>
@@ -74,37 +69,7 @@ export default () => {
                 <Grid item style={{ flexGrow: 2 }}>
                   <Search resetGlobalStateOnSearch={true} autofocus={true}>
                     <Typography variant="overline">
-                      <WithGqlQuery
-                        QUERY={gql`
-                          query catalogue($text: String!) {
-                            catalogue {
-                              id
-                              records(text: $text) {
-                                totalCount
-                              }
-                            }
-                          }
-                        `}
-                        variables={{ text: global.text || '' }}
-                      >
-                        {({ error, loading, data }) => {
-                          if (error) {
-                            throw new Error(
-                              `${CATALOGUE_API_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
-                            )
-                          }
-
-                          return loading ? (
-                            <Fade key="waiting" in={loading}>
-                              <span>...</span>
-                            </Fade>
-                          ) : (
-                            <Fade key="results" in={!loading}>
-                              <span>{data?.catalogue.records.totalCount} records</span>
-                            </Fade>
-                          )
-                        }}
-                      </WithGqlQuery>
+                      <SearchSummary />
                     </Typography>
                   </Search>
                 </Grid>

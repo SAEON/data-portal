@@ -1,39 +1,14 @@
 import { createContext } from 'react'
 import QuickForm from '@saeon/quick-form'
-import getUriState from '../lib/fns/get-uri-state'
-import Loading from '../components/loading'
-import { gql } from '@apollo/client'
-import WithGqlQuery from '../hooks/with-gql-query'
+import getUriState from '../../lib/fns/get-uri-state'
+import FromSavedSearch from './from-saved-search'
 
 export const context = createContext()
 
-const FromSavedSearch = ({ id, children }) =>
-  id ? (
-    <WithGqlQuery
-      QUERY={gql`
-        query($id: ID!) {
-          searchState(id: $id)
-        }
-      `}
-      variables={{ id }}
-    >
-      {({ error, loading, data }) => {
-        if (loading) {
-          return <Loading />
-        }
-
-        if (error) {
-          throw new Error('Unable to load saved search.' + error.message)
-        }
-
-        return children(data?.searchState.search)
-      }}
-    </WithGqlQuery>
-  ) : (
-    children()
-  )
-
 export default ({ children }) => {
+  /**
+   * search => a uri param that indicates the ID of a saved search
+   */
   const { search, text = undefined, referrer = undefined } = getUriState()
 
   return (
