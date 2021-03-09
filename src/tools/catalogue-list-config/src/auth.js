@@ -1,3 +1,8 @@
+/**
+ * This is pretty much copied verbatum from the Google example
+ * https://developers.google.com/sheets/api/quickstart/nodejs
+ */
+
 import fs from 'fs'
 import readline from 'readline'
 import { google } from 'googleapis'

@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development TZ=utc node --no-warnings --experimental-json-modules src'",
+    "start": "nodemon --watch ./src --exec 'prettier --write \"src/**/*.@(js|json)\" && NODE_ENV=development TZ=utc node --trace-warnings --experimental-json-modules src'",
     "start:prod": "NODE_ENV=production TZ=utc node --no-warnings --experimental-json-modules src",
     "ncu": "ncu",
     "ncu -u": "ncu -u"

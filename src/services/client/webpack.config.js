@@ -162,7 +162,7 @@ module.exports = () => {
       historyApiFallback: {
         disableDotRule: true,
       },
-      compress: true
+      compress: true,
     },
   }
 }
