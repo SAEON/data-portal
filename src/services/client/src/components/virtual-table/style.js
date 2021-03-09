@@ -46,13 +46,11 @@ export default makeStyles(theme => ({
     fontWeight: 'bold',
     paddingLeft: '.5rem',
     paddingRight: '.5rem',
-    // fontFamily: 'monospace',
-    // fontFamily: 'Roboto',
+    fontFamily: 'monospace',
   }),
   gridItem: {
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
-    // fontFamily: 'monospace',
-    // fontFamily: 'Roboto',
+    fontFamily: 'monospace',
   },
 }))

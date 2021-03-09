@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect, useState } from 'react'
+import { useContext, useRef, useEffect } from 'react'
 import useLocalStorage from '../../../../hooks/use-localstorage'
 import { context as dataContext } from '../../contexts/data-provider'
 import { context as databookContext } from '../../contexts/databook-provider'
@@ -11,7 +11,8 @@ import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
   const { id: databookId } = useContext(databookContext)
-  const [sql, setSql] = useState('')
+  const { exeSqlQuery, cancelSqlQuery } = useContext(dataContext)
+  const defaultSql = ''
   const classes = useStyles()
   const activeEditorRef = useRef()
   const theme = useTheme()
@@ -25,7 +26,7 @@ export default () => {
   const [editors, setEditors] = useLocalStorage(`${databookId}-editors`, [
     {
       id: nanoid(4),
-      sql,
+      sql: defaultSql,
     },
   ])
 
@@ -48,8 +49,11 @@ export default () => {
           setActiveTabIndex(editors.length)
         }}
         setActiveTabFn={(event, newValue) => setActiveTabIndex(newValue)}
-        executeQueryFn={undefined}
-        cancelQueryFn={undefined}
+        executeQueryFn={() => {
+          const { sql } = editors[activeTabIndex]
+          exeSqlQuery(sql)
+        }}
+        cancelQueryFn={cancelSqlQuery}
       />
 
       {/* EDITORS (Tab Panels) */}
@@ -78,7 +82,7 @@ export default () => {
             closeEditorFn={() => {
               const newEditors = [...editors].filter(({ id: eId }) => id !== eId)
               setEditors(newEditors)
-              setActiveTabIndex(activeTabIndex - 1)
+              setActiveTabIndex(activeTabIndex > 0 ? activeTabIndex - 1 : 0)
             }}
           />
         )

@@ -25,7 +25,10 @@ export default forwardRef(({ editor, updateCache }, ref) => {
           ref.current.sql = val
           _updateCache(val)
         }}
-        editorProps={{ $blockScrolling: false, $blockSelectEnabled: true }}
+        editorProps={{
+          $blockScrolling: false,
+          $blockSelectEnabled: true,
+        }}
         setOptions={{
           enableBasicAutocompletion: true,
           enableLiveAutocompletion: true,

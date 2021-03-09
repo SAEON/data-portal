@@ -63,5 +63,5 @@ export default ({ children, id }) => {
     return <LoadingDatabook tables={tables} tablesReady={tablesReady} />
   }
 
-  return children({ errors })
+  return children({ errors, databook })
 }

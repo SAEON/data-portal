@@ -29,6 +29,11 @@ export default makeStyles(theme => ({
     backgroundColor: deepOrange[500],
   },
 
+  content: {
+    position: 'relative',
+    height: 'calc(100% - 48px)',
+  },
+
   playButton: {
     marginRight: theme.spacing(1),
   },
@@ -37,5 +42,9 @@ export default makeStyles(theme => ({
   },
   tab: {
     minWidth: 30,
+  },
+  msgBox: {
+    padding: theme.spacing(1),
+    fontFamily: 'monospace',
   },
 }))

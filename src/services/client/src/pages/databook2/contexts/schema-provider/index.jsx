@@ -32,6 +32,7 @@ export default ({ children }) => {
     `,
     {
       variables: { id },
+      fetchPolicy: 'cache-and-network',
     }
   )
 
@@ -44,7 +45,7 @@ export default ({ children }) => {
   }
 
   return (
-    <context.Provider value={{ schema: data.databook.schema, updateSchema: () => alert('todo') }}>
+    <context.Provider value={{ schema: data.databook.schema, refreshSchema: () => alert('todo') }}>
       {children}
     </context.Provider>
   )

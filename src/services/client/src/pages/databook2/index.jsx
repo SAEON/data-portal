@@ -8,8 +8,10 @@ import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import Layout from './layout'
 import useStyles from './style'
 import clsx from 'clsx'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({ id }) => {
+  const theme = useTheme()
   const classes = useStyles()
   const isAuthenticated = useContext(authContext).authenticate()
 
@@ -24,6 +26,7 @@ export default ({ id }) => {
 
   return (
     <div
+      style={{ backgroundColor: theme.palette.common.white }}
       className={clsx(classes.layout, {
         [classes.pushDown]: !window.location.pathname.includes('/render'),
       })}
