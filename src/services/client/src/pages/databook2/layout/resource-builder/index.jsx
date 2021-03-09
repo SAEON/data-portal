@@ -13,6 +13,10 @@ export default () => {
   const classes = useStyles()
   const tabsContainerRef = useRef()
 
+  console.log('TODO - the ref is not getting a value')
+
+  return 'http://localhost:3001/databooks2/60476988c904de477712d28c'
+
   return (
     <div className={clsx(classes.layout, classes.bg)}>
       <div style={{ position: 'relative', height: '100%' }}>

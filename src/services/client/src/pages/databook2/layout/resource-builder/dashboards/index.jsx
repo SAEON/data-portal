@@ -1,46 +1,14 @@
 import { useContext, forwardRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { context as databookContext } from '../../../contexts/databook-provider'
-import { gql, useQuery } from '@apollo/client'
-import Loading from '../../../../../components/loading'
+import { context as dashboardsContext } from '../../../contexts/dashboards-provider'
 import TabHeaders from './_tab-headers'
 import Dashboard from './dashboard'
 import Fade from '@material-ui/core/Fade'
 
 export default forwardRef((props, ref) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
-  const { databook } = useContext(databookContext)
-  const databookId = databook._id
+  const { dashboards } = useContext(dashboardsContext)
 
-  const { error, loading, data } = useQuery(
-    gql`
-      query($databookId: ID!) {
-        dashboards(databookId: $databookId) {
-          id
-          title
-          subtitle
-          description
-          layout
-          filters
-        }
-      }
-    `,
-    {
-      variables: {
-        databookId,
-      },
-    }
-  )
-
-  if (loading) {
-    return <Loading />
-  }
-
-  if (error) {
-    throw error
-  }
-
-  const { dashboards } = data
   return (
     <>
       {createPortal(

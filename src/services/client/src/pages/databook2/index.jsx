@@ -3,6 +3,7 @@ import { context as authContext } from '../../contexts/authentication'
 import DatabookProvider from './contexts/databook-provider'
 import SchemaProvider from './contexts/schema-provider'
 import DataProvider from './contexts/data-provider'
+import DashboardsProvider from './contexts/dashboards-provider'
 import { setShareLink } from '../../hooks/use-share-link'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import Layout from './layout'
@@ -34,7 +35,9 @@ export default ({ id }) => {
       <DatabookProvider id={id}>
         <SchemaProvider>
           <DataProvider>
-            <Layout />
+            <DashboardsProvider>
+              <Layout />
+            </DashboardsProvider>
           </DataProvider>
         </SchemaProvider>
       </DatabookProvider>

@@ -13,6 +13,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 export default forwardRef(({ active, setActive }, ref) => {
   const theme = useTheme()
   const classes = useStyles()
+
   return (
     <Toolbar disableGutters className={clsx(classes.toolbar)} variant="dense">
       <Grid container justify="flex-start" style={{ overflow: 'hidden' }}>
