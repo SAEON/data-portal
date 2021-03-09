@@ -76,7 +76,22 @@ const iterate = async ({ offset = 0, token }) => {
   }
 }
 
-export default () =>
+export const testConnection = () =>
+  authenticateWithOdp()
+    .then(({ token_type, access_token }) =>
+      fetch(`${ODP_ADDRESS}?limit=1`, {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: [token_type, access_token].join(' '),
+        },
+      })
+    )
+    .catch(error => {
+      throw new Error(`Cannot connect to the ODP. ${error}`)
+    })
+
+export const makeIterator = () =>
   authenticateWithOdp()
     .then(({ token_type, access_token }) =>
       iterate({ token: [token_type, access_token].join(' ') })

@@ -29,7 +29,7 @@ export const insertList = (
     .then(db => db.collection('lists'))
     .then(Lists =>
       Lists.findOneAndUpdate(
-        { collectionName, hashedSearch },
+        { collectionName, hashedSearch, createdDate },
         {
           $setOnInsert: {
             collectionName,

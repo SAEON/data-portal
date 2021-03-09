@@ -4,7 +4,10 @@ import {
   ELASTICSEARCH_ADDRESS,
   CATALOGUE_API_ODP_FILTER,
 } from '../../../../../config.js'
-import makeOdpIterator from './iterator/index.js'
+import {
+  makeIterator as makeOdpIterator,
+  testConnection as testOdpConnection,
+} from './iterator/index.js'
 import { performance } from 'perf_hooks'
 
 const filter = items => (CATALOGUE_API_ODP_FILTER ? items.filter(CATALOGUE_API_ODP_FILTER) : items)
@@ -16,6 +19,22 @@ export default async () => {
     updated: 0,
     created: 0,
     errors: false,
+  }
+
+  /**
+   * First test that the ODP is accessible,
+   * If not, abort the integration.
+   */
+  try {
+    await testOdpConnection()
+  } catch (error) {
+    const msg = 'Unable to integrate with the ODP - are you on the VPN?'
+    console.error(msg)
+    return {
+      runtime: `${Math.round((performance.now() - t0) / 1000, 2)} seconds`,
+      ...result,
+      msg,
+    }
   }
 
   try {
@@ -93,7 +112,6 @@ export default async () => {
   }
 
   const t1 = performance.now()
-
   console.log('Index integration complete', `${Math.round((t1 - t0) / 1000, 2)} seconds`)
   return { runtime: `${Math.round((t1 - t0) / 1000, 2)} seconds`, ...result }
 }
