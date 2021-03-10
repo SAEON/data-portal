@@ -18,9 +18,8 @@ export default ({ children, id }) => {
       }
     `,
     {
-      variables: {
-        id,
-      },
+      variables: { id },
+      fetchPolicy: 'cache-first',
     }
   )
 

@@ -9,7 +9,7 @@ export default ({ children }) => {
   const { id } = useContext(databookContext)
   const { error, loading, data } = useQuery(
     gql`
-      query($id: ID!) {
+      query databook($id: ID!) {
         databook(id: $id) {
           id
           schema {
@@ -32,7 +32,7 @@ export default ({ children }) => {
     `,
     {
       variables: { id },
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'cache-first',
     }
   )
 
@@ -43,6 +43,8 @@ export default ({ children }) => {
   if (error) {
     throw error
   }
+
+  console.log('rendering')
 
   return (
     <context.Provider value={{ schema: data.databook.schema, refreshSchema: () => alert('todo') }}>

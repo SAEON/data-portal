@@ -12,45 +12,55 @@ import useStyles from '../../../style'
 import PlusIcon from 'mdi-react/PlusIcon'
 import clsx from 'clsx'
 
-const ADD_DASHBOARD = gql`
-  mutation($databookId: ID!) {
-    createDashboard(databookId: $databookId) {
-      id
-    }
-  }
-`
-
-const DASHBOARDS = gql`
-  query($databookId: ID!) {
-    dashboards(databookId: $databookId) {
-      id
-    }
-  }
-`
-/**
- * TODO. Perhaps a better option then manually updating the cache is to specify
- * that a query should be rerun. There is a problem here where the active tab index is updated
- * BEFORE the component is re-rendered with the new dashboards
- */
 export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
-  const { id: databookId } = useContext(databookContext)
   const classes = useStyles()
-  const [addDashboard, { error, loading }] = useMutation(ADD_DASHBOARD, {
-    update: (cache, { data }) => {
-      const existingDashboards = cache.read({
-        query: DASHBOARDS,
-        variables: {
-          databookId,
-        },
-      })
+  const { id: databookId } = useContext(databookContext)
 
-      cache.writeQuery({
-        query: DASHBOARDS,
-        data: { dashboards: [data.createDashboard, ...existingDashboards.dashboards] },
-      })
-    },
-    onCompleted: () => setActiveTabIndex(dashboards.length),
-  })
+  /**
+   * Because a new dashboard is being created, the Apollo
+   * cache has to be updated explicilty (or the entire page
+   * needs to be refreshed)
+   */
+  const [addDashboard, { error, loading }] = useMutation(
+    gql`
+      mutation createDashboard($databookId: ID!) {
+        createDashboard(databookId: $databookId) {
+          id
+        }
+      }
+    `,
+    {
+      update: (cache, { data: freshData }) => {
+        const query = gql`
+          query databook($id: ID!) {
+            databook(id: $id) {
+              id
+              dashboards {
+                id
+              }
+            }
+          }
+        `
+
+        const staleData = cache.read({
+          query,
+          variables: {
+            id: databookId,
+          },
+        })
+
+        const dashboards = [...staleData.databook.dashboards, freshData.createDashboard]
+
+        cache.writeQuery({
+          query,
+          data: {
+            databook: Object.assign({ ...staleData.databook }, { dashboards }),
+          },
+        })
+      },
+      onCompleted: () => setTimeout(() => setActiveTabIndex(dashboards.length), 100), // TODO fix this hack. TODO fix the flash
+    }
+  )
 
   if (error) {
     throw error
