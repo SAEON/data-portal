@@ -17,7 +17,7 @@ const DASHBOARDS = gql`
 
 //STEVEN TO-DO: performance of remove onClick needs work, though it may largely be local ram shortage
 export default ({ filterId, dashboard }) => {
-  const { databook } = useContext(databookContext)
+  const databook = useContext(databookContext)
   const client = useApolloClient()
   return (
     <Tooltip title="Remove filter from this dashboard">
@@ -36,9 +36,7 @@ export default ({ filterId, dashboard }) => {
             update: (cache, { data }) => {
               const { dashboards } = cache.read({
                 query: DASHBOARDS,
-                variables: {
-                  databookId: databook._id,
-                },
+                variables: { databookId },
               })
 
               const { id: removedId } = data.removeFilterFromDashboard

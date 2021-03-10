@@ -22,8 +22,8 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
   const [hovered, setHovered] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const classes = useStyles()
-  const { databook } = useContext(databookContext)
-  const inputId = `${databook._id}-${tableName}`
+  const { id: databookId } = useContext(databookContext)
+  const inputId = `${databookId}-${tableName}`
   const handleFocus = () => {
     document.getElementById(inputId).focus()
   }
@@ -74,7 +74,7 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
                 />
                 <RenameOperator
                   variables={{
-                    id: databook._id,
+                    id: databookId,
                     tableName: tableName,
                     newName: text,
                   }}

@@ -17,7 +17,7 @@ import SplitPane from 'react-split-pane'
 import clsx from 'clsx'
 import useStyles from './style'
 import Alert from '@material-ui/lab/Alert'
-import { context as databookContext } from '../../../../contexts/databook-provider'
+import { context as dataContext } from '../../../../contexts/data-provider'
 import { useApolloClient, gql } from '@apollo/client'
 
 function PaperComponent(props) {
@@ -113,7 +113,7 @@ export default ({ id: chartId }) => {
   let echartRef = createRef()
   const client = useApolloClient()
   const classes = useStyles()
-  const { data } = useContext(databookContext)
+  const { data } = useContext(dataContext)
   const handleClickOpen = () => {
     setOpen(true)
   }

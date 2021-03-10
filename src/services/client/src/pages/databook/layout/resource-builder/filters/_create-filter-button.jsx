@@ -37,14 +37,13 @@ const FIELD_SPACING = 32
 export default () => {
   const theme = useTheme()
   const client = useApolloClient()
-  const { databook } = useContext(databookContext)
+  const { id: databookId } = useContext(databookContext)
   const { data } = useContext(dataContext)
-  const databookId = databook._id
-
   const [open, setOpen] = useState(false)
   const [error, setError] = useState(false)
   const [filterName, setFilterName] = useState('')
   const [columnFiltered, setColumnFiltered] = useState('')
+
   if (!data || !data.length)
     return (
       <Tooltip title="Requires available data" placement="left-start">

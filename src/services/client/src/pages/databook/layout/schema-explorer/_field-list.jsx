@@ -30,7 +30,7 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(column_name)
   const classes = useStyles()
-  const { databook } = useContext(databookContext)
+  const { id: databookId } = useContext(databookContext)
   const handleFocus = () => {
     document.getElementById(id).focus()
   }
@@ -55,7 +55,7 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
         >
           <RenameOperator
             variables={{
-              id: databook._id,
+              id: databookId,
               tableName: tableName,
               newName: text,
               columnName: column_name,

@@ -10,7 +10,10 @@ export default ({ children, id }) => {
       query($id: ID!) {
         databook(id: $id) {
           id
-          doc
+          tables
+          status {
+            id
+          }
         }
       }
     `,
@@ -29,7 +32,7 @@ export default ({ children, id }) => {
     throw new Error(`Error loading databook ${id}. ${error}`)
   }
 
-  const { doc: databook } = data.databook
+  const { databook } = data
   const { tables } = databook
 
   let tablesReady = 0

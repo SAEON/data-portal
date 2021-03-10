@@ -19,7 +19,7 @@ const FILTERS = gql`
 
 export default ({ id, setActiveTabIndex, activeTabIndex }) => {
   const client = useApolloClient()
-  const { databook } = useContext(databookContext)
+  const databook = useContext(databookContext)
 
   return (
     <Tooltip title="Delete current filter" placement="left-start">

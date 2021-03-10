@@ -22,8 +22,7 @@ export default ({ gridState, dashboard }) => {
   const theme = useTheme()
   const [loading, setLoading] = useState()
   const client = useApolloClient()
-  const { databook } = useContext(databookContext)
-  const { _id: databookId } = databook
+  const { id: databookId } = useContext(databookContext)
 
   const isSaved = JSON.stringify(gridState) === JSON.stringify(dashboard.layout)
 

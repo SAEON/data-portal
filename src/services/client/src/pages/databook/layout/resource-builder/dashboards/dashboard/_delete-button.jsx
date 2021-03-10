@@ -14,7 +14,7 @@ const DASHBOARDS = gql`
 `
 
 export default ({ id, activeTabIndex, setActiveTabIndex }) => {
-  const { databook } = useContext(databookContext)
+  const { id: databookId } = useContext(databookContext)
   const [deleteDashboard] = useMutation(
     gql`
       mutation($id: ID!) {
@@ -26,7 +26,7 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
         const { dashboards } = cache.read({
           query: DASHBOARDS,
           variables: {
-            databookId: databook._id,
+            databookId,
           },
         })
 

@@ -15,7 +15,7 @@ const DASHBOARDS = gql`
 `
 
 export default ({ chartId, dashboard }) => {
-  const { databook } = useContext(databookContext)
+  const databook = useContext(databookContext)
   const client = useApolloClient()
 
   return (
@@ -35,9 +35,7 @@ export default ({ chartId, dashboard }) => {
             update: (cache, { data }) => {
               const { dashboards } = cache.read({
                 query: DASHBOARDS,
-                variables: {
-                  databookId: databook._id,
-                },
+                variables: { databookId },
               })
 
               const { id: removedId } = data.removeChartFromDashboard

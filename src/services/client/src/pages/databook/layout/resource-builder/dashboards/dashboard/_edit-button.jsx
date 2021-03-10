@@ -219,9 +219,7 @@ const CloseButton = ({ id }) => {
 const FIELD_SPACING = 32
 export default ({ dashboard }) => {
   const client = useApolloClient()
-  const { databook } = useContext(databookContext)
-  const { _id: databookId } = databook
-
+  const { id: databookId } = useContext(databookContext)
   const { id: dashboardId } = dashboard
 
   return (

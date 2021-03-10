@@ -40,7 +40,7 @@ export default ({ children, id }) => {
           )
         }
 
-        return <context.Provider value={{ id, databook }}>{children}</context.Provider>
+        return <context.Provider value={databook}>{children}</context.Provider>
       }}
     </CheckStatus>
   )

@@ -6,8 +6,7 @@ import Loading from '../../../../components/loading'
 export const context = createContext()
 
 export default ({ children }) => {
-  const { databook } = useContext(databookContext)
-  const id = databook._id
+  const { id } = useContext(databookContext)
 
   const { error, loading, data } = useQuery(
     gql`

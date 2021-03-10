@@ -33,14 +33,14 @@ const DASHBOARDS = gql`
  * BEFORE the component is re-rendered with the new dashboards
  */
 export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
-  const { databook } = useContext(databookContext)
+  const { id: databookId } = useContext(databookContext)
   const classes = useStyles()
   const [addDashboard, { error, loading }] = useMutation(ADD_DASHBOARD, {
     update: (cache, { data }) => {
       const existingDashboards = cache.read({
         query: DASHBOARDS,
         variables: {
-          databookId: databook._id,
+          databookId,
         },
       })
 
@@ -95,7 +95,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
         <div style={{ alignSelf: 'center' }}>
           <IconButton
             onClick={() => {
-              addDashboard({ variables: { databookId: databook._id, name: 'test' } })
+              addDashboard({ variables: { databookId, name: 'test' } })
             }}
             size="small"
           >

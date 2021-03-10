@@ -6,7 +6,7 @@ const sharedTables = Object.keys(Object.assign({}, defaultLayers))
 export default async (self, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
 
-  const { _id: schema, authentication } = self.doc
+  const { _id: schema, authentication } = self
   const { username, password: encryptedPassword } = authentication
   const { query } = ctx.postgis
   const { decrypt } = ctx.crypto
@@ -28,7 +28,7 @@ export default async (self, args, ctx) => {
 
   return {
     id: schema,
-    databook: self.doc,
+    databook: self,
     tables,
   }
 }
