@@ -30,22 +30,12 @@ const QueryOperator = props => {
     variables,
     fetchPolicy: 'network-only',
   })
-  const { called, loading, error } = result
 
-  if (loading) console.log('Renaming Entity..')
-  else if (called && !loading) {
-    console.log('Rename Entity result', result)
-  }
-  if (error) {
-    console.log('mutation error!', error)
-  }
-  //STEVEN TO DO: more error handling
   return children(renameEntityLazy)
 }
 
 export default ({ variables, children, entityType }) => {
   if (!['table', 'column'].includes(entityType)) {
-    console.log('renameEntity requires a valid entityType')
     return children
   }
 

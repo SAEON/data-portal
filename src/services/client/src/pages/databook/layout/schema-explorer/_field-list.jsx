@@ -38,7 +38,7 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
   const isSharedTable = tableSchema === 'public'
 
   return (
-    <li className={clsx(classes.hoverHighlight)}>
+    <li className={clsx(classes.hover)}>
       <div style={{ display: 'flex', inlineSize: 'max-content' }}>
         <ContextMenu
           uniqueIdentifier={`${tableName}-${column_name}`}

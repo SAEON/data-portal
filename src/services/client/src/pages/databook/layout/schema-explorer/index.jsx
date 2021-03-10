@@ -6,7 +6,7 @@ import { CATALOGUE_API_ADDRESS } from '../../../../config'
 import ContextMenu from './_context-menu'
 import useStyles from './style'
 import clsx from 'clsx'
-import TableList from './_table-list'
+import TableList from './table-list'
 import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
 

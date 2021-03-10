@@ -15,7 +15,7 @@ export default makeStyles(theme => ({
   icon: {
     float: 'left',
   },
-  hoverHighlight: {
+  hover: {
     listStyleType: 'none',
     '&:hover': {
       background: '#efefef',
