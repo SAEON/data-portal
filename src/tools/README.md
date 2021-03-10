@@ -1,4 +1,3 @@
-TODO
+# @saeon/tools
 
-1. Create ande fill in credentials.json based on the example
-2. Run the script
+Generally useful tools and scripts for working with the catalogue software and this repository
