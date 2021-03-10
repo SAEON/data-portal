@@ -2,6 +2,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import { blue, deepOrange, green, purple } from '@material-ui/core/colors'
 
 export default makeStyles(theme => ({
+  msgBox: {
+    padding: theme.spacing(1),
+    fontFamily: 'monospace',
+  },
   layout: {
     position: 'absolute',
     top: 0,
@@ -9,11 +13,13 @@ export default makeStyles(theme => ({
     left: 0,
     right: 0,
   },
-  pushDown: {
-    marginTop: 48,
+  bg: {
+    backgroundColor: theme.palette.common.white,
   },
-  pre: Object.fromEntries(Object.entries(theme.pre).filter(([key]) => key !== 'backgroundColor')),
-
+  content: {
+    position: 'relative',
+    height: 'calc(100% - 48px)',
+  },
   toolbar: {
     backgroundColor: theme.palette.secondary.light,
     borderBottom: `1px solid ${theme.palette.secondary.dark}`,
@@ -21,19 +27,24 @@ export default makeStyles(theme => ({
     justifyContent: 'flex-start',
     boxSizing: 'content-box',
   },
-
+  pushDown: {
+    marginTop: 48,
+  },
   smallAvatar: {
     width: theme.spacing(2),
     height: theme.spacing(2),
     fontSize: 10,
     backgroundColor: deepOrange[500],
   },
-
-  content: {
-    position: 'relative',
-    height: 'calc(100% - 48px)',
+  blue: {
+    backgroundColor: blue[500],
   },
-
+  green: {
+    backgroundColor: green[500],
+  },
+  purple: {
+    backgroundColor: purple[500],
+  },
   playButton: {
     marginRight: theme.spacing(1),
   },
@@ -42,9 +53,5 @@ export default makeStyles(theme => ({
   },
   tab: {
     minWidth: 30,
-  },
-  msgBox: {
-    padding: theme.spacing(1),
-    fontFamily: 'monospace',
   },
 }))
