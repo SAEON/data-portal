@@ -7,25 +7,27 @@ export const context = createContext()
 
 export default ({ children }) => {
   const { databook } = useContext(databookContext)
-  const databookId = databook._id
+  const id = databook._id
 
   const { error, loading, data } = useQuery(
     gql`
-      query($databookId: ID!) {
-        dashboards(databookId: $databookId) {
+      query databook($id: ID!) {
+        databook(id: $id) {
           id
-          title
-          subtitle
-          description
-          layout
-          filters
+          dashboards {
+            id
+            title
+            subtitle
+            description
+            layout
+            filters
+          }
         }
       }
     `,
     {
-      variables: {
-        databookId,
-      },
+      variables: { id },
+      fetchPolicy: 'cache-first',
     }
   )
 
@@ -37,5 +39,7 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ dashboards: data.dashboards }}>{children}</context.Provider>
+  return (
+    <context.Provider value={{ dashboards: data.databook.dashboards }}>{children}</context.Provider>
+  )
 }

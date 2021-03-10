@@ -6,8 +6,8 @@ import Dashboard from './dashboard'
 import Fade from '@material-ui/core/Fade'
 
 export default forwardRef((props, ref) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
   const { dashboards } = useContext(dashboardsContext)
+  const [activeTabIndex, setActiveTabIndex] = useState(dashboards.length - 1 || 0)
 
   return (
     <>

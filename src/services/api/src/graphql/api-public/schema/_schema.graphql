@@ -54,7 +54,7 @@ type Query {
   searchState(id: ID!): JSON
   # Retrieve a web-browser's previously saved atlas TODO - should be on query
   atlas(id: ID!): JSON
-  # Retrieve a Databook's dashboards
+  # Retrieve a Databook's dashboards. TODO - should NOT be queried via databookId. should be an explicit dashboardId (or [ID!])
   dashboards(databookId: ID!): [Dashboard!]
   userRoles: [UserRole!]!
 }
