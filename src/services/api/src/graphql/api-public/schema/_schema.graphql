@@ -33,6 +33,12 @@ interface Edge {
   node: Node!
 }
 
+#  Types
+
+type StatusHash {
+  id: ID!
+}
+
 type UserRole {
   id: ID!
   name: String!

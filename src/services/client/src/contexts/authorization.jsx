@@ -11,7 +11,7 @@ export default ({ children }) => {
   const userRoles = userInfo?.userRoles
 
   const { loading, data } = useQuery(gql`
-    query {
+    query userRoles {
       userRoles {
         id
         name

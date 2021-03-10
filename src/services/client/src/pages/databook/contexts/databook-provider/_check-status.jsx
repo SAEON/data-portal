@@ -7,11 +7,11 @@ const POLLING_INTERVAL = 1000
 export default ({ children, id }) => {
   const { error, loading, data, startPolling, stopPolling } = useQuery(
     gql`
-      query($id: ID!) {
+      query databook($id: ID!) {
         databook(id: $id) {
           id
           tables
-          status {
+          statusHash {
             id
           }
         }

@@ -6,11 +6,7 @@ type Databook {
   charts: [Chart!]
   filters: [Filter!]
   # Returns a sub-document with a field 'id' that is a hash. This value changes to reflect status change
-  status: DatabookStatus!
-}
-
-type DatabookStatus {
-  id: ID!
+  statusHash: StatusHash!
 }
 
 type Dashboard {
