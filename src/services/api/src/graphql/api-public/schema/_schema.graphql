@@ -45,7 +45,7 @@ type Query {
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
   # Find a chart
-  charts(ids: [ID!]): [Chart!]
+  charts(ids: [ID!]!): [Chart!]
   # Find a filter
   filters(ids: [ID!]): [Filter!]
   # Retrieve a web-browser's previously saved databook
@@ -55,7 +55,7 @@ type Query {
   # Retrieve a web-browser's previously saved atlas TODO - should be on query
   atlas(id: ID!): JSON
   # Retrieve a Databook's dashboards. TODO - should NOT be queried via databookId. should be an explicit dashboardId (or [ID!])
-  dashboards(databookId: ID!): [Dashboard!]
+  dashboards(ids: [ID!]!): [Dashboard!]
   userRoles: [UserRole!]!
 }
 
