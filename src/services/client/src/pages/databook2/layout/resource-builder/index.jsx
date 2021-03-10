@@ -1,45 +1,53 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 import Header from './header'
 import useStyles from '../../style'
 import clsx from 'clsx'
-import { useState } from 'react'
 import Dashboards from './dashboards'
 import Charts from './charts'
 import Filters from './filters'
 import Fade from '@material-ui/core/Fade'
 
 export default () => {
+  const [ref, setRef] = useState()
   const [active, setActive] = useState('dashboards')
   const classes = useStyles()
-  const tabsContainerRef = useRef()
-
-  console.log('TODO - the ref is not getting a value')
-
-  return 'http://localhost:3001/databooks2/60476988c904de477712d28c'
 
   return (
     <div className={clsx(classes.layout, classes.bg)}>
       <div style={{ position: 'relative', height: '100%' }}>
-        <Header ref={tabsContainerRef} active={active} setActive={setActive} />
+        {/* TOOLBAR */}
+        <Header ref={el => setRef(el)} active={active} setActive={setActive} />
+
+        {/* CONTROLS */}
         <div style={{ height: 'calc(100% - 48px)', position: 'relative' }}>
+          {/* DASHBOARD EDITOR */}
           {active === 'dashboards' && (
-            <Fade in={active === 'dashboards'} key="dasboards-in">
+            <Fade
+              in={active === 'dashboards'}
+              unmountOnExit
+              mountOnEnter={false}
+              key="dasboards-in"
+            >
               <span>
-                <Dashboards ref={tabsContainerRef} />
+                <Dashboards ref={ref} />
               </span>
             </Fade>
           )}
+
+          {/* CHART EDITOR */}
           {active === 'charts' && (
-            <Fade in={active === 'charts'} key="charts-in">
+            <Fade in={active === 'charts'} unmountOnExit mountOnEnter={false} key="charts-in">
               <span>
-                <Charts ref={tabsContainerRef} />
+                <Charts ref={ref} />
               </span>
             </Fade>
           )}
+
+          {/* FILTER EDITOR */}
           {active === 'filters' && (
-            <Fade in={active === 'filters'} key="filters-in">
+            <Fade in={active === 'filters'} unmountOnExit mountOnEnter={false} key="filters-in">
               <span>
-                <Filters ref={tabsContainerRef} />
+                <Filters ref={ref} />
               </span>
             </Fade>
           )}

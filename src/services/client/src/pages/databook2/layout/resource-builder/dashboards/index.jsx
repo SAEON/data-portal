@@ -11,17 +11,22 @@ export default forwardRef((props, ref) => {
 
   return (
     <>
-      {createPortal(
-        <TabHeaders
-          activeTabIndex={activeTabIndex}
-          setActiveTabIndex={setActiveTabIndex}
-          dashboards={dashboards}
-        />,
-        ref.current
-      )}
+      {ref &&
+        createPortal(
+          <Fade key="dashboard-instances" unmountOnExit mountOnEnter={false} in={Boolean(ref)}>
+            <span>
+              <TabHeaders
+                activeTabIndex={activeTabIndex}
+                setActiveTabIndex={setActiveTabIndex}
+                dashboards={dashboards}
+              />
+            </span>
+          </Fade>,
+          ref
+        )}
       {dashboards.map((dashboard, i) => {
         return (
-          <Fade in={activeTabIndex === i} key={dashboard.id}>
+          <Fade in={activeTabIndex === i} unmountOnExit mountOnEnter={false} key={dashboard.id}>
             <div style={{ height: '100%' }} role="tabpanel" hidden={activeTabIndex !== i}>
               {activeTabIndex === i && (
                 <Dashboard
