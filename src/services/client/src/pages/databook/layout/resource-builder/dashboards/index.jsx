@@ -18,11 +18,7 @@ export default forwardRef((props, ref) => {
         createPortal(
           <Fade key="dashboard-instances" unmountOnExit mountOnEnter={false} in={Boolean(ref)}>
             <span>
-              <TabHeaders
-                activeTabIndex={activeTabIndex}
-                setActiveTabIndex={setActiveTabIndex}
-                dashboards={dashboards}
-              />
+              <TabHeaders activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
             </span>
           </Fade>,
           ref

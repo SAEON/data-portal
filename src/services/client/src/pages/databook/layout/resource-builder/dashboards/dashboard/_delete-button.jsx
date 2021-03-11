@@ -5,14 +5,6 @@ import DeleteIcon from 'mdi-react/DeleteIcon'
 import { useMutation, gql } from '@apollo/client'
 import { context as databookContext } from '../../../../contexts/databook-provider'
 
-const DASHBOARDS = gql`
-  query($databookId: ID!) {
-    dashboards(databookId: $databookId) {
-      id
-    }
-  }
-`
-
 export default ({ id, activeTabIndex, setActiveTabIndex }) => {
   const { id: databookId } = useContext(databookContext)
   const [deleteDashboard] = useMutation(
@@ -23,18 +15,36 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
     `,
     {
       update: cache => {
-        const { dashboards } = cache.read({
-          query: DASHBOARDS,
+        const query = gql`
+          query databook($id: ID!) {
+            databook(id: $id) {
+              id
+              dashboards {
+                id
+              }
+            }
+          }
+        `
+
+        const staleData = cache.read({
+          query,
           variables: {
-            databookId,
+            id: databookId,
           },
         })
 
-        const remainingDashboards = [...dashboards].filter(({ id: _id }) => id !== _id)
+        const dashboards = [...staleData.databook.dashboards].filter(({ id: _id }) => id !== _id)
 
         cache.writeQuery({
-          query: DASHBOARDS,
-          data: { dashboards: remainingDashboards },
+          query,
+          data: {
+            databook: Object.assign(
+              { ...staleData.databook },
+              {
+                dashboards,
+              }
+            ),
+          },
         })
 
         if (activeTabIndex) {

@@ -7,18 +7,20 @@ import IconButton from '@material-ui/core/IconButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
 import { context as databookContext } from '../../../contexts/databook-provider'
+import { context as dashboardsContext } from '../../../contexts/dashboards-provider'
 import { gql, useMutation } from '@apollo/client'
 import useStyles from '../../../style'
 import PlusIcon from 'mdi-react/PlusIcon'
 import clsx from 'clsx'
 
-export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
+export default ({ activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id: databookId } = useContext(databookContext)
+  const { id } = useContext(databookContext)
+  const { dashboards } = useContext(dashboardsContext)
 
   /**
    * Because a new dashboard is being created, the Apollo
-   * cache has to be updated explicilty (or the entire page
+   * cache has to be updated explicitly (or the entire page
    * needs to be refreshed)
    */
   const [addDashboard, { error, loading }] = useMutation(
@@ -45,7 +47,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
         const staleData = cache.read({
           query,
           variables: {
-            id: databookId,
+            id: id,
           },
         })
 
@@ -57,8 +59,16 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
             databook: Object.assign({ ...staleData.databook }, { dashboards }),
           },
         })
+
+        /**
+         * Set timeout prevents the activeTabIndex from being
+         * set before the new dashboards state is updated
+         *
+         * It's a bit of a hack, but actually gives a nice
+         * UI effect
+         */
+        setTimeout(() => setActiveTabIndex(activeTabIndex + 1), 100)
       },
-      onCompleted: () => setTimeout(() => setActiveTabIndex(dashboards.length), 100), // TODO fix this hack. TODO fix the flash
     }
   )
 
@@ -105,7 +115,7 @@ export default ({ dashboards, activeTabIndex, setActiveTabIndex }) => {
         <div style={{ alignSelf: 'center' }}>
           <IconButton
             onClick={() => {
-              addDashboard({ variables: { databookId, name: 'test' } })
+              addDashboard({ variables: { databookId: id, name: 'test' } })
             }}
             size="small"
           >

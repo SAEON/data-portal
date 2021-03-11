@@ -4,7 +4,7 @@ import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
 import ContactIcon from 'mdi-react/ContactMailIcon'
 import DatabookIcon from 'mdi-react/DatabaseCogIcon'
-import UsersIcon from 'mdi-react/UsersSwitchIcon'
+import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import DisclaimerIcon from 'mdi-react/WarningIcon'
 
 export default [
