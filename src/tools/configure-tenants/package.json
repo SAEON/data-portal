@@ -5,7 +5,8 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "start": "TC=utc node --trace-warnings src/index.js",
+    "start": "npm run prettier && TC=utc node --trace-warnings --experimental-json-modules src/index.js",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|cjs|graphql)\"",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
@@ -14,9 +15,10 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "googleapis": "^67.1.1",
-    "mongodb": "^3.6.4"
+    "mongodb": "^3.6.4",
+    "prettier": "^2.2.1"
   },
   "devDependencies": {
-    "npm-check-updates": "^11.1.10"
+    "npm-check-updates": "^11.2.1"
   }
 }
