@@ -1,11 +1,10 @@
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Avatar from '@material-ui/core/Avatar'
-import Tooltip from '@material-ui/core/Tooltip'
 import Fade from '@material-ui/core/Fade'
-import useStyles from '../../../style'
+import useStyles from '../../../../style'
 import clsx from 'clsx'
 import CreateFilterButton from './_create-filter-button'
+import Label from '../../../../components/tab-label'
 
 export default ({ filters, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
@@ -23,11 +22,9 @@ export default ({ filters, activeTabIndex, setActiveTabIndex }) => {
               key={id}
               className={clsx(classes.tab)}
               label={
-                <Tooltip title={`Filter ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar, classes.purple)} variant="circular">
-                    {i + 1}
-                  </Avatar>
-                </Tooltip>
+                <Label title={`Filter ${id}`} color="purple">
+                  {i + 1}
+                </Label>
               }
               id={`tab-${id}`}
             />

@@ -29,6 +29,10 @@ export default makeStyles(theme => ({
     backgroundColor: deepOrange[500],
   },
 
+  blue: {
+    backgroundColor: blue[500],
+  },
+
   content: {
     position: 'relative',
     height: 'calc(100% - 48px)',

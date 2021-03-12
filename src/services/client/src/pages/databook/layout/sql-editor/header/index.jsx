@@ -8,6 +8,7 @@ import useStyles from '../../../style'
 import AddEditor from './_add-editor-button'
 import ExecuteQuery from './_execute-query-button'
 import AbortQuery from './_abort-query-button'
+import Label from '../../../components/tab-label'
 
 export default ({
   editors,
@@ -31,13 +32,7 @@ export default ({
           <Tab
             key={id}
             className={clsx(classes.tab)}
-            label={
-              <Tooltip title={`Query editor ${id}`}>
-                <Avatar className={clsx(classes.smallAvatar)} variant="circular">
-                  {i + 1}
-                </Avatar>
-              </Tooltip>
-            }
+            label={<Label title={`Query editor ${id}`}>{i + 1}</Label>}
             id={`tab-${id}`}
           />
         ))}

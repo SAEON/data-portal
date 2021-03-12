@@ -1,7 +1,7 @@
 import { useState, useContext, forwardRef } from 'react'
 import { createPortal } from 'react-dom'
 import { context as filtersContext } from '../../../contexts/filters-provider'
-import TabHeaders from './_tab-headers'
+import HeaderControls from './header-controls'
 import Filter from './filter'
 import Fade from '@material-ui/core/Fade'
 
@@ -15,7 +15,7 @@ export default forwardRef((props, ref) => {
         createPortal(
           <Fade key="filters-instances" unmountOnExit mountOnEnter={false} in={Boolean(ref)}>
             <span>
-              <TabHeaders
+              <HeaderControls
                 activeTabIndex={activeTabIndex}
                 setActiveTabIndex={setActiveTabIndex}
                 filters={filters}

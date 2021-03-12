@@ -13,9 +13,9 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { useApolloClient, gql } from '@apollo/client'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { context as databookContext } from '../../../contexts/databook-provider'
-import { context as dataContext } from '../../../contexts/data-provider'
-import Autocomplete from '../../../../../components/autocomplete'
+import { context as databookContext } from '../../../../contexts/databook-provider'
+import { context as dataContext } from '../../../../contexts/data-provider'
+import Autocomplete from '../../../../../../components/autocomplete'
 import QuickForm from '@saeon/quick-form'
 
 const FILTERS_QUERY = gql`
