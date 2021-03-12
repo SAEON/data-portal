@@ -2,15 +2,15 @@ import { useContext } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import { useMutation, gql } from '@apollo/client'
 import { context as databookContext } from '../../../../contexts/databook-provider'
+import { useMutation, gql } from '@apollo/client'
 
-export default ({ id, activeTabIndex, setActiveTabIndex }) => {
+export default ({ id, setActiveTabIndex, activeTabIndex }) => {
   const { id: databookId } = useContext(databookContext)
-  const [deleteDashboard] = useMutation(
+  const [deleteFilter] = useMutation(
     gql`
       mutation($id: ID!) {
-        deleteDashboard(id: $id)
+        deleteFilter(id: $id)
       }
     `,
     {
@@ -31,8 +31,8 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
         cache.modify({
           id: cache.identify(databook),
           fields: {
-            dashboards(existingDashboards, { readField }) {
-              return existingDashboards.filter(d => id !== readField('id', d))
+            filters(existingFilters, { readField }) {
+              return existingFilters.filter(f => id !== readField('id', f))
             },
           },
         })
@@ -43,10 +43,11 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
       },
     }
   )
+
   return (
-    <Tooltip title="Delete current dashboard" placement="left-start">
+    <Tooltip title="Delete current filter" placement="left-start">
       <span>
-        <IconButton onClick={() => deleteDashboard({ variables: { id } })} size="small">
+        <IconButton onClick={() => deleteFilter({ variables: { id } })} size="small">
           <DeleteIcon size={20} />
         </IconButton>
       </span>

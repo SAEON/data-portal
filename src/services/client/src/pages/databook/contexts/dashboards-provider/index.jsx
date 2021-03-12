@@ -38,7 +38,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return (
-    <context.Provider value={{ dashboards: data.databook.dashboards }}>{children}</context.Provider>
-  )
+  return <context.Provider value={data.databook.dashboards}>{children}</context.Provider>
 }

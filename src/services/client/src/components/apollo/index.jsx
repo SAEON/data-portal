@@ -15,6 +15,9 @@ export default ({ children }) => (
                 dashboards: {
                   merge: mergeListByIds,
                 },
+                filters: {
+                  merge: mergeListByIds,
+                },
               },
             },
           },

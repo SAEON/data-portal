@@ -6,7 +6,7 @@ import Filter from './filter'
 import Fade from '@material-ui/core/Fade'
 
 export default forwardRef((props, ref) => {
-  const { filters = [] } = useContext(filtersContext)
+  const filters = useContext(filtersContext)
   const [activeTabIndex, setActiveTabIndex] = useState(filters.length > 0 ? filters.length - 1 : 0)
 
   return (
@@ -18,7 +18,6 @@ export default forwardRef((props, ref) => {
               <HeaderControls
                 activeTabIndex={activeTabIndex}
                 setActiveTabIndex={setActiveTabIndex}
-                filters={filters}
               />
             </span>
           </Fade>,

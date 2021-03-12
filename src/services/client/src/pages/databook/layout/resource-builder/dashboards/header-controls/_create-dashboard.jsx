@@ -1,10 +1,16 @@
+import { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { context as databookContext } from '../../../../contexts/databook-provider'
 import { gql, useMutation } from '@apollo/client'
 import IconButton from '@material-ui/core/IconButton'
 import PlusIcon from 'mdi-react/PlusIcon'
 import Fade from '@material-ui/core/Fade'
+import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({ id, setActiveTabIndex }) => {
+export default ({ setActiveTabIndex }) => {
+  const theme = useTheme()
+  const { id } = useContext(databookContext)
+
   const [addDashboard, { error, loading }] = useMutation(
     gql`
       mutation createDashboard($databookId: ID!) {
@@ -28,9 +34,7 @@ export default ({ id, setActiveTabIndex }) => {
 
         const staleData = cache.read({
           query,
-          variables: {
-            id: id,
-          },
+          variables: { id },
         })
 
         const dashboards = [...staleData.databook.dashboards, freshData.createDashboard]
@@ -71,10 +75,9 @@ export default ({ id, setActiveTabIndex }) => {
   return (
     <div style={{ alignSelf: 'center' }}>
       <IconButton
-        onClick={() => {
-          addDashboard({ variables: { databookId: id, name: 'test' } })
-        }}
         size="small"
+        style={{ marginLeft: theme.spacing(1) }}
+        onClick={() => addDashboard({ variables: { databookId: id, name: 'test' } })}
       >
         <PlusIcon size={14} />
       </IconButton>

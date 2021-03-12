@@ -36,5 +36,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ charts: data.databook.filters }}>{children}</context.Provider>
+  return <context.Provider value={data.databook.filters}>{children}</context.Provider>
 }

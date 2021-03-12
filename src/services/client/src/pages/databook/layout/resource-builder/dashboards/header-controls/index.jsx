@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import { context as databookContext } from '../../../../contexts/databook-provider'
 import { context as dashboardsContext } from '../../../../contexts/dashboards-provider'
 import useStyles from '../../../../style'
 import clsx from 'clsx'
@@ -10,8 +9,7 @@ import CreateDashboard from './_create-dashboard'
 
 export default ({ activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id } = useContext(databookContext)
-  const { dashboards } = useContext(dashboardsContext)
+  const dashboards = useContext(dashboardsContext)
 
   return (
     <div style={{ display: 'flex' }}>
@@ -37,7 +35,7 @@ export default ({ activeTabIndex, setActiveTabIndex }) => {
       </Tabs>
 
       {/* ADD TAB BUTTON */}
-      <CreateDashboard setActiveTabIndex={setActiveTabIndex} id={id} />
+      <CreateDashboard setActiveTabIndex={setActiveTabIndex} />
     </div>
   )
 }
