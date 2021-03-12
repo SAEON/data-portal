@@ -1,17 +1,16 @@
 import { useContext } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Avatar from '@material-ui/core/Avatar'
-import Tooltip from '@material-ui/core/Tooltip'
 import IconButton from '@material-ui/core/IconButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
-import { context as databookContext } from '../../../contexts/databook-provider'
-import { context as dashboardsContext } from '../../../contexts/dashboards-provider'
+import { context as databookContext } from '../../../../contexts/databook-provider'
+import { context as dashboardsContext } from '../../../../contexts/dashboards-provider'
 import { gql, useMutation } from '@apollo/client'
-import useStyles from '../../../style'
+import useStyles from '../../../../style'
 import PlusIcon from 'mdi-react/PlusIcon'
 import clsx from 'clsx'
+import Label from './_label'
 
 export default ({ activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
@@ -99,13 +98,7 @@ export default ({ activeTabIndex, setActiveTabIndex }) => {
             <Tab
               key={id}
               className={clsx(classes.tab)}
-              label={
-                <Tooltip title={`Dashboard ${id}`}>
-                  <Avatar className={clsx(classes.smallAvatar, classes.blue)} variant="circular">
-                    {i + 1}
-                  </Avatar>
-                </Tooltip>
-              }
+              label={<Label id={id} i={i} />}
               id={`tab-${id}`}
             />
           ))}

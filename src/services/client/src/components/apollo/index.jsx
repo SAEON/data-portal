@@ -2,12 +2,23 @@ import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, split } from '@a
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/link-ws'
 import { CATALOGUE_API_GQL_ADDRESS, CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS } from '../../config'
+import mergeListByIds from './_merge-list-by-ids'
 
 export default ({ children }) => (
   <ApolloProvider
     client={
       new ApolloClient({
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache({
+          typePolicies: {
+            Databook: {
+              fields: {
+                dashboards: {
+                  merge: mergeListByIds,
+                },
+              },
+            },
+          },
+        }),
         link: split(
           ({ query }) => {
             const definition = getMainDefinition(query)

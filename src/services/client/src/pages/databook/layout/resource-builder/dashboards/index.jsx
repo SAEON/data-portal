@@ -1,7 +1,7 @@
 import { useContext, forwardRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { context as dashboardsContext } from '../../../contexts/dashboards-provider'
-import TabHeaders from './_tab-headers'
+import HeaderControls from './header-controls'
 import Dashboard from './dashboard'
 import Fade from '@material-ui/core/Fade'
 
@@ -14,15 +14,21 @@ export default forwardRef((props, ref) => {
 
   return (
     <>
+      {/* INJECTED CONTROLS INTO HEADER */}
       {ref &&
         createPortal(
           <Fade key="dashboard-instances" unmountOnExit mountOnEnter={false} in={Boolean(ref)}>
             <span>
-              <TabHeaders activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+              <HeaderControls
+                activeTabIndex={activeTabIndex}
+                setActiveTabIndex={setActiveTabIndex}
+              />
             </span>
           </Fade>,
           ref
         )}
+
+      {/* DASHBOARDS */}
       {dashboards.map((dashboard, i) => {
         return (
           <Fade in={activeTabIndex === i} unmountOnExit mountOnEnter={false} key={dashboard.id}>
