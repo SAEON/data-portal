@@ -12,9 +12,9 @@ export default ({ children }) => (
           typePolicies: {
             Databook: {
               fields: {
-                dashboards: {
-                  merge: mergeListByIds,
-                },
+                // dashboards: {
+                //   merge: mergeListByIds,
+                // },
               },
             },
           },

@@ -1,12 +1,13 @@
 /**
- * This assumes that keys missing from incoming
- * list are to be deleted from the cache. This just
- * means that queries for individual dashboards will
- * need manual cache-updating functions. Currently
- * that is not a hassle, but could be in the future
+ * This is just an example of how to merge arrays
+ * Might be useful for merging on non-id fields.
+ *
+ * But mostly this should be done automatically.
+ *
+ * https://www.apollographql.com/docs/react/caching/cache-field-behavior/#merging-arrays-of-non-normalized-objects
  */
 export default (existing, incoming, { readField, mergeObjects }) => {
-  const merged = []
+  const merged = existing ? existing.slice(0) : []
   const idMap = Object.create(null)
   if (existing) {
     existing.forEach((obj, i) => {
@@ -17,8 +18,9 @@ export default (existing, incoming, { readField, mergeObjects }) => {
     const id = readField('id', obj)
     const i = idMap[id]
     if (typeof i === 'number') {
-      merged.push(mergeObjects(existing[i], obj))
+      merged[i] = mergeObjects(merged[i], obj)
     } else {
+      idMap[i] = merged.length
       merged.push(obj)
     }
   })

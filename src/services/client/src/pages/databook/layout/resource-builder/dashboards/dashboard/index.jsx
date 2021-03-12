@@ -5,13 +5,13 @@ import 'gridstack/dist/h5/gridstack-dd-native'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import AddChartButton from './_add-chart-button'
-import AddFilterButton from './_add-filter-button'
-import DeleteButton from './_delete-button'
-import ShareButton from './_share-button'
-import PreviewButton from './_preview-button'
-import SaveLayoutButton from './_save-layout'
-import EditButton from './_edit-button'
+import AddChart from './_add-chart'
+import AddFilter from './_add-filter'
+import DeleteDashboard from './_delete'
+import Share from './_share'
+import Preview from './_preview'
+import Save from './_save'
+import Edit from './_edit'
 import ChartStub from './chart-stub'
 import FilterStub from './filter-stub'
 import useStyles from './style'
@@ -117,19 +117,19 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       <Toolbar className={classes.toolbar} variant={'dense'}>
         <Typography>{title || dashboardId}</Typography>
         <span style={{ marginLeft: 'auto' }} />
-        <SaveLayoutButton dashboard={dashboard} gridState={gridState} />
+        <Save dashboard={dashboard} gridState={gridState} />
         <span style={{ marginRight: 8 }} />
-        <EditButton dashboard={dashboard} />
+        <Edit dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
-        <AddChartButton dashboard={dashboard} />
+        <AddChart dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
-        <AddFilterButton dashboard={dashboard} />
+        <AddFilter dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
-        <ShareButton id={dashboardId} />
+        <Share id={dashboardId} />
         <span style={{ marginRight: 8 }} />
-        <PreviewButton id={dashboardId} />
+        <Preview id={dashboardId} />
         <span style={{ marginRight: 8 }} />
-        <DeleteButton
+        <DeleteDashboard
           id={dashboardId}
           activeTabIndex={activeTabIndex}
           setActiveTabIndex={setActiveTabIndex}

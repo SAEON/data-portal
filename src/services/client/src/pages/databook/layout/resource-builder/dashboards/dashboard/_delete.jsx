@@ -15,35 +15,25 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
     `,
     {
       update: cache => {
-        const query = gql`
-          query databook($id: ID!) {
-            databook(id: $id) {
-              id
-              dashboards {
+        const { databook } = cache.read({
+          query: gql`
+            query databook($id: ID!) {
+              databook(id: $id) {
                 id
               }
             }
-          }
-        `
-
-        const staleData = cache.read({
-          query,
+          `,
           variables: {
             id: databookId,
           },
         })
 
-        const dashboards = [...staleData.databook.dashboards].filter(({ id: _id }) => id !== _id)
-
-        cache.writeQuery({
-          query,
-          data: {
-            databook: Object.assign(
-              { ...staleData.databook },
-              {
-                dashboards,
-              }
-            ),
+        cache.modify({
+          id: cache.identify(databook),
+          fields: {
+            dashboards(existingDashboards, { readField }) {
+              return existingDashboards.filter(dashboard => id !== readField('id', dashboard))
+            },
           },
         })
 
