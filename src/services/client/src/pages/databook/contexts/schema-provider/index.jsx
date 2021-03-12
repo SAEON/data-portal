@@ -44,8 +44,6 @@ export default ({ children }) => {
     throw error
   }
 
-  console.log('rendering')
-
   return (
     <context.Provider value={{ schema: data.databook.schema, refreshSchema: () => alert('todo') }}>
       {children}
