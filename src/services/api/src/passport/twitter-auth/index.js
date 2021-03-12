@@ -37,11 +37,11 @@ export default () => {
             cb(
               null,
               (
-                await Users.findAndModify(
+                await Users.findOneAndUpdate(
                   {
                     username: twitterProfile.screen_name,
                   },
-                  null,
+
                   {
                     $setOnInsert: {
                       username: twitterProfile.screen_name,
@@ -59,7 +59,7 @@ export default () => {
                     },
                   },
                   {
-                    new: true,
+                    returnOriginal: false,
                     upsert: true,
                   }
                 )

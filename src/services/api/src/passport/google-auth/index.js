@@ -29,11 +29,11 @@ export default () => {
             cb(
               null,
               (
-                await Users.findAndModify(
+                await Users.findOneAndUpdate(
                   {
                     username: googleProfile.email,
                   },
-                  null,
+
                   {
                     $setOnInsert: {
                       username: googleProfile.email,
@@ -50,7 +50,7 @@ export default () => {
                     },
                   },
                   {
-                    new: true,
+                    returnNewDocument: true,
                     upsert: true,
                   }
                 )

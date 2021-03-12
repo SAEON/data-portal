@@ -77,9 +77,8 @@ await db.then(db =>
   Promise.all(
     userRoles.map(userRole => {
       const { name, ...other } = userRole
-      db.collection(_collections.UserRoles.name).findAndModify(
+      db.collection(_collections.UserRoles.name).findOneAndUpdate(
         { name },
-        null,
         { $setOnInsert: { name }, $set: { ...other } },
         { upsert: true }
       )
@@ -94,11 +93,10 @@ await db
     db.then(db =>
       Promise.all(
         CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(email =>
-          db.collection(_collections.Users.name).findAndModify(
+          db.collection(_collections.Users.name).findOneAndUpdate(
             {
               username: email,
             },
-            null,
             {
               $setOnInsert: { emails: [{ email, verified: true }], username: email },
               $addToSet: {
