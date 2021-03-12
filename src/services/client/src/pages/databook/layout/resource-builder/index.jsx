@@ -6,10 +6,11 @@ import Dashboards from './dashboards'
 import Charts from './charts'
 import Filters from './filters'
 import Fade from '@material-ui/core/Fade'
+import useLocalStorage from '../../../../hooks/use-localstorage'
 
 export default () => {
   const [ref, setRef] = useState()
-  const [active, setActive] = useState('dashboards')
+  const [active, setActive] = useLocalStorage('active-resource-builder-context', 'dashboards')
   const classes = useStyles()
 
   return (

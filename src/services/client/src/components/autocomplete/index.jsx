@@ -33,7 +33,6 @@ export default ({
       fullWidth
       ListboxComponent={ListboxComponent}
       size="small"
-      style={{ zIndex: 5000 }}
       getOptionLabel={option => `${option}`}
       renderInput={params => (
         <QuickForm inputValue="">

@@ -4,16 +4,15 @@ export default makeStyles(theme => {
   console.log('theme.palette', theme.palette)
   return {
     list: {
-      listStyle: 'none', //needed
-      padding: 'unset', //needed
+      width: '100%',
+      listStyle: 'none',
+      padding: 'unset',
     },
     listItem: {
-      backgroundColor: '#f5f5f5', //add to /take from theme
+      backgroundColor: theme.palette.grey[100], //add to /take from theme
       '&:hover': {
         backgroundColor: theme.palette.grey[300],
-        // -webkit-transition: background-color 1000ms linear
-        // -ms-transition: background-color 1000ms linear
-        transition: 'background-color 100ms linear', //needed
+        transition: 'background-color 100ms linear',
       },
       height: '40px', //needed
       lineHeight: '40px', //needed
@@ -26,9 +25,12 @@ export default makeStyles(theme => {
       overflow: 'hidden',
       // might need to set font. to be tested
     },
-    //needed
     listItemClose: {
-      float: 'right',
+      marginLeft: 'auto',
+      marginRight: theme.spacing(1),
+      '&:hover': {
+        cursor: 'pointer',
+      },
     },
   }
 })
