@@ -1,13 +1,17 @@
-import { useState, useContext, forwardRef } from 'react'
+import { useContext, forwardRef } from 'react'
 import { createPortal } from 'react-dom'
 import { context as filtersContext } from '../../../contexts/filters-provider'
 import HeaderControls from './header-controls'
 import Filter from './filter'
 import Fade from '@material-ui/core/Fade'
+import useLocalStorage from '../../../../../hooks/use-localstorage'
 
 export default forwardRef((props, ref) => {
   const filters = useContext(filtersContext)
-  const [activeTabIndex, setActiveTabIndex] = useState(filters.length > 0 ? filters.length - 1 : 0)
+  const [activeTabIndex, setActiveTabIndex] = useLocalStorage(
+    'resource-builder-filters-tabs-index',
+    filters.length > 0 ? filters.length - 1 : 0
+  )
 
   return (
     <>

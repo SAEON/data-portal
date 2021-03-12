@@ -1,13 +1,17 @@
-import { useState, useContext, forwardRef } from 'react'
+import { useContext, forwardRef } from 'react'
 import { createPortal } from 'react-dom'
 import { context as chartsContext } from '../../../contexts/charts-provider'
 import HeaderControls from './header-controls'
 import Chart from './chart'
 import Fade from '@material-ui/core/Fade'
+import useLocalStorage from '../../../../../hooks/use-localstorage'
 
 export default forwardRef((props, ref) => {
   const charts = useContext(chartsContext)
-  const [activeTabIndex, setActiveTabIndex] = useState(charts.length > 0 ? charts.length - 1 : 0)
+  const [activeTabIndex, setActiveTabIndex] = useLocalStorage(
+    'resource-builder-charts-tabs-index',
+    charts.length > 0 ? charts.length - 1 : 0
+  )
 
   return (
     <>
