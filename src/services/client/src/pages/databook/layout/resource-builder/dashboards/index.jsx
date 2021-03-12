@@ -5,7 +5,6 @@ import HeaderControls from './header-controls'
 import Dashboard from './dashboard'
 import Fade from '@material-ui/core/Fade'
 
-// TODO https://stackoverflow.com/questions/64841680/prevent-child-rerendering-if-parent-is-rerendered-using-hooks
 export default forwardRef((props, ref) => {
   const dashboards = useContext(dashboardsContext)
   const [activeTabIndex, setActiveTabIndex] = useState(

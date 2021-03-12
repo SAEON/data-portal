@@ -23,7 +23,7 @@ export default ({ setActiveTabIndex, setOpen }) => {
 
   const [addFilter, { error, loading }] = useMutation(
     gql`
-      mutation(
+      mutation createFilter(
         $databookId: ID!
         $name: String
         $columnFiltered: String

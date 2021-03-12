@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Toolbar from '@material-ui/core/Toolbar'
-import DeleteButton from './_delete-button'
-import ShareButton from './_share-button'
-import EditButton from './_edit-button'
+import Delete from './_delete'
+import Share from './_share'
+import Edit from './_edit'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -18,15 +18,11 @@ export default ({ chart, activeTabIndex, setActiveTabIndex }) => {
       <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>
         <Typography>{id}</Typography>
         <span style={{ marginLeft: 'auto' }} />
-        <EditButton id={id} />
+        <Edit id={id} />
         <span style={{ marginRight: 8 }} />
-        <ShareButton id={id} />
+        <Share id={id} />
         <span style={{ marginRight: 8 }} />
-        <DeleteButton
-          id={id}
-          activeTabIndex={activeTabIndex}
-          setActiveTabIndex={setActiveTabIndex}
-        />
+        <Delete id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
       </Toolbar>
       <Suspense fallback={null}>
         <div style={{ height: 'calc(100% - 48px)', margin: 0, position: 'relative' }}>

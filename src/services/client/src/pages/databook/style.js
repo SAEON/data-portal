@@ -33,6 +33,14 @@ export default makeStyles(theme => ({
     backgroundColor: blue[500],
   },
 
+  green: {
+    backgroundColor: green[500],
+  },
+
+  purple: {
+    backgroundColor: purple[500],
+  },
+
   content: {
     position: 'relative',
     height: 'calc(100% - 48px)',

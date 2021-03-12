@@ -22,17 +22,15 @@ export default ({ children }) => {
 
   const exeSqlQuery = async sql => {
     abortController = new AbortController()
-    setState(Object.assign({ ...state }, { loading: true, sql }))
+    setState(state => Object.assign({ ...state }, { loading: true, sql }))
     await fetchFn({
       databookId,
       sql,
       signal: abortController.signal,
-      setState,
-      state,
     })
       .then(text => {
         if (text.substring(0, 5) === 'ERROR') {
-          setState(
+          setState(state =>
             Object.assign(
               { ...state },
               {
@@ -43,13 +41,13 @@ export default ({ children }) => {
             )
           )
         } else {
-          setState(
+          setState(state =>
             Object.assign({ ...state }, { error: false, loading: false, data: JSON.parse(text) })
           )
         }
       })
       .catch(error =>
-        setState(
+        setState(state =>
           Object.assign({ ...state }, { error, data: undefined, loading: false, sql: undefined })
         )
       )
@@ -59,7 +57,7 @@ export default ({ children }) => {
     if (abortController) {
       abortController.abort()
     }
-    setState(Object.assign({ ...state }, { loading: false, sql: undefined }))
+    setState(state => Object.assign({ ...state }, { loading: false, sql: undefined }))
   }
 
   return (
