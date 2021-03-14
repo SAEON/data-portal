@@ -18,6 +18,7 @@
     "update-git-snapshot": "git add .",
     "ncu": "ncu",
     "ncu -u": "ncu -u",
+    "clean-lock-files": "find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete",
     "lint": "npm --prefix src/services/api run lint & npm --prefix src/services/client run lint",
     "************ PACKAGES **********": "",
     "build-all-packages": "TC=utc node scripts/build-all-packages.js",
