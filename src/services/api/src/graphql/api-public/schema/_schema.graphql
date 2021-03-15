@@ -60,7 +60,7 @@ type Query {
   searchState(id: ID!): JSON
   # Retrieve a web-browser's previously saved atlas TODO - should be on query
   atlas(id: ID!): JSON
-  # Retrieve a Databook's dashboards. TODO - should NOT be queried via databookId. should be an explicit dashboardId (or [ID!])
+  # Retrieve dashboards by id
   dashboards(ids: [ID!]!): [Dashboard!]
   userRoles: [UserRole!]!
 }
@@ -83,10 +83,9 @@ type Mutation {
     subtitle: String
     description: String
   ): Dashboard!
-
+  # Return a Dashboard entity
+  dashboard(id: ID!): Dashboard
   deleteDashboard(id: ID!): Boolean!
-  # Add a chart to dashboard, and get the new count of a dashboard's charts
-  addChartToDashboard(chartId: ID!, dashboardId: ID!): Chart!
   removeChartFromDashboard(chartId: ID!, dashboardId: ID!): Chart!
   createChart(
     title: String

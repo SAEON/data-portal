@@ -50,7 +50,7 @@ export default () => {
                     },
                   },
                   {
-                    returnNewDocument: true,
+                    returnOriginal: false,
                     upsert: true,
                   }
                 )

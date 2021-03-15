@@ -4,7 +4,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import TextField from '@material-ui/core/TextField'
 import { useMutation, gql } from '@apollo/client'
 import useTheme from '@material-ui/core/styles/useTheme'
@@ -13,7 +12,7 @@ import chartDefinitions from '../../../../../../../components/charts'
 import Autocomplete from '../../../../../../../components/autocomplete'
 import { context as databookContext } from '../../../../../contexts/databook-provider'
 import { context as dataContext } from '../../../../../contexts/data-provider'
-import Fade from '@material-ui/core/Fade'
+import DialogueButtonLoading from '../../../../../components/loading-dialogue-button'
 
 export default ({ setActiveTabIndex, setOpen }) => {
   const theme = useTheme()
@@ -51,12 +50,11 @@ export default ({ setActiveTabIndex, setOpen }) => {
     {
       update: (cache, { data: freshData }) => {
         const query = gql`
-          query($id: ID!) {
+          query databook($id: ID!) {
             databook(id: $id) {
               id
               charts {
                 id
-                title
               }
             }
           }
@@ -111,6 +109,7 @@ export default ({ setActiveTabIndex, setOpen }) => {
         <TextField
           id="chart-title"
           fullWidth
+          autoComplete="off"
           style={{ marginBottom: theme.spacing(4) }}
           label="Title"
           value={chartTitle}
@@ -121,6 +120,7 @@ export default ({ setActiveTabIndex, setOpen }) => {
         <TextField
           id="chart-description"
           fullWidth
+          autoComplete="off"
           style={{ marginBottom: theme.spacing(4) }}
           label="Description"
           value={chartDescription}
@@ -162,16 +162,7 @@ export default ({ setActiveTabIndex, setOpen }) => {
       </DialogContent>
 
       <DialogActions>
-        {loading && (
-          <Fade in={loading} key={'loading-in'}>
-            <div
-              style={{ display: 'flex', margin: `0 ${theme.spacing(1)}px ${theme.spacing(1)}px 0` }}
-            >
-              <CircularProgress thickness={2} size={22} />
-            </div>
-          </Fade>
-        )}
-
+        {loading && <DialogueButtonLoading loading={loading} />}
         {!loading && (
           <Button
             onClick={() => {

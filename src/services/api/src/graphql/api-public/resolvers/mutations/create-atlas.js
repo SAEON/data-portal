@@ -24,7 +24,7 @@ export default async (self, args, ctx) => {
     },
     {
       upsert: true,
-      returnNewDocument: true,
+      returnOriginal: false,
     }
   )
 

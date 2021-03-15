@@ -15,7 +15,17 @@ export default ({ children }) => (
                 dashboards: {
                   merge: mergeListByIds,
                 },
+                charts: {
+                  merge: mergeListByIds,
+                },
                 filters: {
+                  merge: mergeListByIds,
+                },
+              },
+            },
+            Dashboard: {
+              fields: {
+                charts: {
                   merge: mergeListByIds,
                 },
               },

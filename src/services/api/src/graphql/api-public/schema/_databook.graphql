@@ -15,6 +15,8 @@ type Dashboard {
   subtitle: String
   description: String
   databookId: ID!
+  # Associate an existing chart with this dashboard
+  addChart(id: ID!): Dashboard!
   charts: [Chart!]
   filters: [ID!]
   layout: JSON

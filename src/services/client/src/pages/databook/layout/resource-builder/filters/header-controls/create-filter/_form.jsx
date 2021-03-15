@@ -8,11 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import { useMutation, gql } from '@apollo/client'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { context as dataContext } from '../../../../../contexts/data-provider'
 import { context as databookContext } from '../../../../../contexts/databook-provider'
 import useTheme from '@material-ui/core/styles/useTheme'
-import Fade from '@material-ui/core/Fade'
+import DialogueButtonLoading from '../../../../../components/loading-dialogue-button'
 
 export default ({ setActiveTabIndex, setOpen }) => {
   const theme = useTheme()
@@ -125,15 +124,7 @@ export default ({ setActiveTabIndex, setOpen }) => {
       </DialogContent>
 
       <DialogActions>
-        {loading && (
-          <Fade in={loading} key={'loading-in'}>
-            <div
-              style={{ display: 'flex', margin: `0 ${theme.spacing(1)}px ${theme.spacing(1)}px 0` }}
-            >
-              <CircularProgress thickness={2} size={22} />
-            </div>
-          </Fade>
-        )}
+        {loading && <DialogueButtonLoading loading={loading} />}
         {!loading && (
           <Button
             onClick={() => {

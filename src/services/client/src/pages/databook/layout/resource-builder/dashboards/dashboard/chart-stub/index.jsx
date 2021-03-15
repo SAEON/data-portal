@@ -14,7 +14,7 @@ const itemStyle = {
 const Content = ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query($ids: [ID!]) {
+      query($ids: [ID!]!) {
         charts(ids: $ids) {
           id
           title

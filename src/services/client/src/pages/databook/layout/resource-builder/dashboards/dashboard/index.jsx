@@ -5,13 +5,13 @@ import 'gridstack/dist/h5/gridstack-dd-native'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import AddChart from './_add-chart'
+import AddChart from './add-chart'
 import AddFilter from './_add-filter'
 import DeleteDashboard from './_delete'
 import Share from './_share'
 import Preview from './_preview'
 import Save from './_save'
-import Edit from './_edit'
+import Edit from './edit'
 import ChartStub from './chart-stub'
 import FilterStub from './filter-stub'
 import useStyles from './style'
@@ -119,9 +119,9 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         <span style={{ marginLeft: 'auto' }} />
         <Save dashboard={dashboard} gridState={gridState} />
         <span style={{ marginRight: 8 }} />
-        <Edit dashboard={dashboard} />
+        <Edit {...dashboard} />
         <span style={{ marginRight: 8 }} />
-        <AddChart dashboard={dashboard} />
+        <AddChart {...dashboard} />
         <span style={{ marginRight: 8 }} />
         <AddFilter dashboard={dashboard} />
         <span style={{ marginRight: 8 }} />
