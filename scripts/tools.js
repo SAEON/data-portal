@@ -28,14 +28,17 @@ export const execWithOutput = CMD =>
 
 export const print = msg => console.log(`\n\n********** ${msg} **********\n\n`)
 
-export const apply = ({ PATH, script, args = undefined, debug = false, ignore = [] }) =>
+export const apply = ({ PATH, script, args = [], debug = false, ignore = [] }) => {
   readdirSync(PATH).forEach(name => {
     const p = normalize(join(PATH, name))
     if (ignore.includes(name)) return
     if (lstatSync(p).isFile()) return
     if (!existsSync(join(p, 'package.json'))) return
+    const _script = NPM_NATIVE_SCRIPTS.includes(script)
+      ? `npm --prefix ${p} ${script} ${`${args.join(' ')}`.trim()}`
+      : `npm --prefix ${p} run "${`${script} ${(args).join(' ')}`.trim()}"`
     print(`${name} dependencies`)
-    NPM_NATIVE_SCRIPTS.includes(script)
-      ? exec(`npm --prefix ${p} ${script}`, debug)
-      : exec(`npm --prefix ${p} run "${`${script} ${(args || []).join(' ')}`.trim()}"`, debug)
+    console.log('script', _script)
+    exec(_script, debug)
   })
+}

@@ -49,9 +49,9 @@
     "@rollup/plugin-node-resolve": "^11.2.0",
     "core-js": "^3.9.1",
     "date-fns": "^2.19.0",
-    "npm-check-updates": "^11.2.2",
+    "npm-check-updates": "^11.3.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.41.1"
+    "rollup": "^2.41.2"
   }
 }

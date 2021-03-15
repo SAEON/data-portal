@@ -71,6 +71,9 @@ npm run configure-git
 
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies
+
+# Build local packages
+npm run build-all-packages
 ```
 
 ## Local development
@@ -116,9 +119,10 @@ Then [configure the API for first use](#api-configuration)
 
 - http://localhost:3001
 - http://localhost:3000
-- http://localhost:3000/graphql
-- http://localhost:3000/proxy (also http://localhost:8001)
-- http://localhost:8002 (for proxy logs)
+- http://localhost:3000/graphql (public API)
+- http://localhost:4000/graphql (internal API)
+- http://localhost:8001 (proxy)
+- http://localhost:8002 (proxy logs)
 - http://localhost:9200
 - http://localhost:5601
 - postgis://localhost:5432
@@ -135,9 +139,9 @@ mutation {
   configureDefaultPostGISLayers
 }
 
-# Create an appropriate Elasticsearch index. This mutation should only be run on initial app startup
+# Create an appropriate Elasticsearch index template. This mutation should only be run on initial app startup
 mutation {
-  configureElasticsearchIndex
+  configureElasticsearchTemplate
 }
 
 # Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
@@ -202,11 +206,12 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
 ### catalogue.saeon.dvn (`next` branch)
 
-- http://catalogue.saeon.dvn
-- http://api.catalogue.saeon.dvn
-- http://api.catalogue.saeon.dvn/proxy
-- http://api.catalogue.saeon.dvn/graphql
-- http://proxy.catalogue.saeon.dvn (for proxy logs)
+- https://catalogue.saeon.dvn
+- https://api.catalogue.saeon.dvn
+- https://api.catalogue.saeon.dvn/graphql (public API)
+- http://api.catalogue.saeon.dvn:5002/graphql (internal API)
+- https://proxy.saeon.dvn
+- http://catalogue.saeon.dvn:8002|8004|8006|8008|8010 (for proxy logs)
 - http://elasticsearch.saeon.dvn
 - http://kibana.saeon.dvn
 - postgis://catalogue.saeon.dvn:5442
@@ -216,9 +221,10 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 
 - https://catalogue.saeon.ac.za
 - https://api.catalogue.saeon.ac.za
-- https://api.catalogue.saeon.ac.za/proxy
-- https://api.catalogue.saeon.ac.za/graphql
-- http://proxy.catalogue.saeon.int (for proxy logs)
+- https://api.catalogue.saeon.ac.za/graphql (public API)
+- http://api.catalogue.saeon.int:5002/graphql (internal API)
+- https://proxy.saeon.ac.za
+- http://catalogue.saeon.int:8002|8004|8006|8008|8010 (for proxy logs)
 - http://elasticsearch.saeon.int
 - http://kibana.saeon.int
 - postgis://catalogue.saeon.int:5442
