@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Header from './header'
 import useStyles from '../../style'
 import clsx from 'clsx'
@@ -7,10 +7,12 @@ import Charts from './charts'
 import Filters from './filters'
 import Fade from '@material-ui/core/Fade'
 import useLocalStorage from '../../../../hooks/use-localstorage'
+import { context as databookContext } from '../../contexts/databook-provider'
 
 export default () => {
+  const { id } = useContext(databookContext)
   const [ref, setRef] = useState()
-  const [active, setActive] = useLocalStorage('active-resource-builder-context', 'dashboards')
+  const [active, setActive] = useLocalStorage(`${id}-active-resource-builder-context`, 'dashboards')
   const classes = useStyles()
 
   return (
