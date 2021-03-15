@@ -10,7 +10,7 @@ export default async (self, args, ctx) => {
         {
           clientSession: ctx.cookies.get(CATALOGUE_CLIENT_ID),
           clientInfo: {
-            ipAdress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
+            ipAddress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
             userAgent: ctx.request.headers['user-agent'],
           },
         },

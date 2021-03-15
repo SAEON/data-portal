@@ -17,7 +17,7 @@ export default async (_, args, ctx, info) => {
   const log = {
     clientSession,
     clientInfo: {
-      ipAdress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
+      ipAddress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
       userAgent: ctx.request.headers['user-agent'],
     },
     info: {
