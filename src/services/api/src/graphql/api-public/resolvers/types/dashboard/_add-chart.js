@@ -30,7 +30,5 @@ export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
     }
   )
 
-  console.log('hi', response)
-
   return response.value
 }

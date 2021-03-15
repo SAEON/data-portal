@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import { context as databookContext } from '../../../../../contexts/databook-provider'
+import { context as databookContext } from '../../../../../../contexts/databook-provider'
 import { gql, useQuery } from '@apollo/client'
-import Loading from '../../../../../../../components/loading'
+import Loading from '../../../../../../../../components/loading'
 
 export default ({ children }) => {
   const { id } = useContext(databookContext)

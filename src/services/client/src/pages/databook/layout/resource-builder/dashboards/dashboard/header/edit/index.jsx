@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import EditIcon from 'mdi-react/EditIcon'
-import MessageDialogue from '../../../../../../../components/message-dialogue'
-import Loading from '../../../../../../../components/loading'
+import MessageDialogue from '../../../../../../../../components/message-dialogue'
+import Loading from '../../../../../../../../components/loading'
 import Form from './_form'
 
 export default ({ id }) => {
@@ -39,7 +39,7 @@ export default ({ id }) => {
       iconProps={{ size: 'small' }}
       icon={<EditIcon size={20} />}
     >
-      <Form {...data.dashboard} />
+      {closeDialogue => <Form {...data.dashboard} closeDialogue={closeDialogue} />}
     </MessageDialogue>
   )
 }

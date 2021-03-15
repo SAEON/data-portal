@@ -3,7 +3,7 @@ import { useApolloClient, gql } from '@apollo/client'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import CloseIcon from 'mdi-react/CloseIcon'
-import { context as databookContext } from '../../../../../contexts/databook-provider'
+import { context as databookContext } from '../../../../../../contexts/databook-provider'
 
 const DASHBOARDS = gql`
   query($databookId: ID!) {

@@ -1,13 +1,13 @@
 import { useState, useContext } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import Autocomplete from '../../../../../../../components/autocomplete'
+import Autocomplete from '../../../../../../../../components/autocomplete'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import Fade from '@material-ui/core/Fade'
-import { context as databookContext } from '../../../../../contexts/databook-provider'
-import LoadingDialogueButton from '../../../../../components/loading-dialogue-button'
+import { context as databookContext } from '../../../../../../contexts/databook-provider'
+import LoadingDialogueButton from '../../../../../../components/loading-dialogue-button'
 
 export default ({ closeDialogueFn, dashboardId, charts }) => {
   const { id: databookId } = useContext(databookContext)

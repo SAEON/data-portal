@@ -2,40 +2,15 @@ import { useEffect, createRef, useRef, useMemo } from 'react'
 import 'gridstack/dist/gridstack.min.css'
 import { GridStack } from 'gridstack'
 import 'gridstack/dist/h5/gridstack-dd-native'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import AddChart from './add-chart'
-import AddFilter from './_add-filter'
-import DeleteDashboard from './_delete'
-import Share from './_share'
-import Preview from './_preview'
-import Save from './_save'
-import Edit from './edit'
-import ChartStub from './chart-stub'
-import FilterStub from './filter-stub'
-import useStyles from './style'
-import clsx from 'clsx'
 import { useState } from 'react'
-
-function createElement(str) {
-  var frag = document.createDocumentFragment()
-
-  var elem = document.createElement('div')
-  elem.innerHTML = str
-
-  while (elem.childNodes[0]) {
-    frag.appendChild(elem.childNodes[0])
-  }
-
-  return frag
-}
+import createElement from './_create-element'
+import Header from './header'
+import Layout from './layout'
 
 const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
-  const classes = useStyles()
-  const { id: dashboardId, layout = [], filters: filterIds = [], title } = dashboard
+  const { id: dashboardId, layout = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const gridElRef = useRef()
@@ -114,63 +89,19 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
 
   return (
     <>
-      <Toolbar className={classes.toolbar} variant={'dense'}>
-        <Typography>{title || dashboardId}</Typography>
-        <span style={{ marginLeft: 'auto' }} />
-        <Save dashboard={dashboard} gridState={gridState} />
-        <span style={{ marginRight: 8 }} />
-        <Edit {...dashboard} />
-        <span style={{ marginRight: 8 }} />
-        <AddChart {...dashboard} />
-        <span style={{ marginRight: 8 }} />
-        <AddFilter dashboard={dashboard} />
-        <span style={{ marginRight: 8 }} />
-        <Share id={dashboardId} />
-        <span style={{ marginRight: 8 }} />
-        <Preview id={dashboardId} />
-        <span style={{ marginRight: 8 }} />
-        <DeleteDashboard
-          id={dashboardId}
-          activeTabIndex={activeTabIndex}
-          setActiveTabIndex={setActiveTabIndex}
-        />
-      </Toolbar>
-      <Grid
-        container
-        justify="center"
-        // alignItems="center"
-      >
-        {filterIds?.map(id => (
-          <FilterStub key={id} filterId={id} dashboard={dashboard} />
-        ))}
-      </Grid>
-      <div className={clsx(classes.gridContainer)}>
-        <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
-          {chartIds?.map(id => {
-            const hydratedState = (gridCache[dashboardId] || []).find(
-              ({ content }) => content.id === id
-            )
-            return (
-              <div
-                ref={refs.current[id]}
-                key={id}
-                className={clsx('grid-stack-item', classes.gridItem)}
-                {...Object.fromEntries(
-                  Object.entries(hydratedState || {})
-                    .filter(([key]) => key !== 'content')
-                    .map(([key, value]) => [`gs-${key}`, value])
-                )}
-              >
-                <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>
-                  <span id={id} data-type={'Chart'}>
-                    <ChartStub chart={id} dashboard={dashboard} />
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      <Header
+        dashboard={dashboard}
+        activeTabIndex={activeTabIndex}
+        setActiveTabIndex={setActiveTabIndex}
+        gridState={gridState}
+      />
+      <Layout
+        dashboard={dashboard}
+        chartIds={chartIds}
+        gridElRef={gridElRef}
+        gridCache={gridCache}
+        refs={refs}
+      />
     </>
   )
 }

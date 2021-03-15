@@ -6,15 +6,21 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import Fade from '@material-ui/core/Fade'
 import TextField from '@material-ui/core/TextField'
 import { gql, useMutation } from '@apollo/client'
-import LoadingDialogueButton from '../../../../../components/loading-dialogue-button'
+import LoadingDialogueButton from '../../../../../../components/loading-dialogue-button'
 
-export default ({ id, title: _title, subtitle: _subtitle, description: _description }) => {
+export default ({
+  closeDialogue,
+  id,
+  title: _title,
+  subtitle: _subtitle,
+  description: _description,
+}) => {
   const theme = useTheme()
   const [title, setTitle] = useState(_title)
   const [subtitle, setSubtitle] = useState(_subtitle)
   const [description, setDescription] = useState(_description)
 
-  const [updateDashboard, { loading }] = useMutation(gql`
+  const [updateDashboard, { loading, error }] = useMutation(gql`
     mutation($id: ID!, $title: String, $subtitle: String, $description: String) {
       updateDashboard(id: $id, title: $title, subtitle: $subtitle, description: $description) {
         id
@@ -24,6 +30,10 @@ export default ({ id, title: _title, subtitle: _subtitle, description: _descript
       }
     }
   `)
+
+  if (error) {
+    throw error
+  }
 
   return (
     <>
@@ -74,7 +84,7 @@ export default ({ id, title: _title, subtitle: _subtitle, description: _descript
             color="primary"
             disableElevation
             variant="contained"
-            onClick={() =>
+            onClick={() => {
               updateDashboard({
                 variables: {
                   id,
@@ -83,7 +93,8 @@ export default ({ id, title: _title, subtitle: _subtitle, description: _descript
                   description,
                 },
               })
-            }
+              closeDialogue()
+            }}
           >
             Save Changes
           </Button>

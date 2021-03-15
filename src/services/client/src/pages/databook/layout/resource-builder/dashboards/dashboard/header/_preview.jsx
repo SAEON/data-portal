@@ -1,7 +1,7 @@
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import ShareIcon from 'mdi-react/ViewCompactIcon'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../config'
+import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../../config'
 
 // TODO - stop people sharing a poll link forever
 

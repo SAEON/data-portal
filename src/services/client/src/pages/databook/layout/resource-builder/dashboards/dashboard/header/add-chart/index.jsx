@@ -1,5 +1,5 @@
 import AddChartIcon from 'mdi-react/ChartBoxPlusOutlineIcon'
-import MessageDialogue from '../../../../../../../components/message-dialogue'
+import MessageDialogue from '../../../../../../../../components/message-dialogue'
 import Form from './_form'
 import WithCharts from './_with-charts'
 
