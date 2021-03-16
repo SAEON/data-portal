@@ -8,43 +8,43 @@ export default async (search, ctx) => {
     extent = undefined,
     terms = undefined,
     text = undefined,
-    size = 10000,
+    size = 200,
     ids = undefined,
     dois = undefined,
   } = search
 
-  return (
-    await graphql(
-      schema,
-      print(gql`
-        query(
-          $extent: WKT_4326
-          $text: String
-          $terms: [TermInput!]
-          $size: Int
-          $ids: [ID!]
-          $dois: [String!]
-        ) {
-          catalogue {
-            id
-            records(
-              extent: $extent
-              text: $text
-              terms: $terms
-              size: $size
-              ids: $ids
-              dois: $dois
-            ) {
-              nodes {
-                metadata
-              }
+  const searchResult = await graphql(
+    schema,
+    print(gql`
+      query(
+        $extent: WKT_4326
+        $text: String
+        $terms: [TermInput!]
+        $size: Int
+        $ids: [ID!]
+        $dois: [String!]
+      ) {
+        catalogue {
+          id
+          records(
+            extent: $extent
+            text: $text
+            terms: $terms
+            size: $size
+            ids: $ids
+            dois: $dois
+          ) {
+            nodes {
+              metadata
             }
           }
         }
-      `),
-      null,
-      ctx,
-      { extent, terms, text, size, ids, dois }
-    )
-  ).data.catalogue.records.nodes.map(({ metadata: m }) => m)
+      }
+    `),
+    null,
+    ctx,
+    { extent, terms, text, size, ids, dois }
+  )
+
+  return searchResult.data.catalogue.records.nodes.map(({ metadata: m }) => m)
 }

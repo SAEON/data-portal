@@ -7,15 +7,13 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import { CATALOGUE_TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'
-import { gql, useApolloClient } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../contexts/global'
 import { context as authorizationContext } from '../../contexts/authorization'
 
 export default ({ id, immutableResource, buttonSize = 'small' }) => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(undefined)
-  const client = useApolloClient()
+  const isAllowed = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(immutableResource?._fileFormat)
   const { setGlobal } = useContext(globalContext)
   const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
   const history = useHistory()
@@ -25,11 +23,26 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     return null
   }
 
-  const isAllowed = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(immutableResource?._fileFormat)
-
-  if (error) {
-    throw new Error(`Error creating databook: ${error.message}`)
-  }
+  const [createDatabook, { error, loading }] = useMutation(
+    gql`
+      mutation($search: JSON!, $createdBy: String!) {
+        createDatabook(search: $search, createdBy: $createdBy)
+      }
+    `,
+    {
+      onCompleted: data => {
+        if (data) {
+          history.push({
+            pathname: window.location.pathname.includes('render')
+              ? `render/databooks/${data.createDatabook}`
+              : `/databooks/${data.createDatabook}`,
+          })
+        } else {
+          throw new Error('createDatabook mutation failed')
+        }
+      },
+    }
+  )
 
   if (loading) {
     return (
@@ -37,6 +50,10 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
         <LoadingCircular />
       </Fade>
     )
+  }
+
+  if (error) {
+    throw new Error(`Error creating databook: ${error.message}`)
   }
 
   return (
@@ -60,35 +77,15 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
           disabled={!isAllowed}
           onClick={
             isDataScientist
-              ? async e => {
+              ? e => {
                   e.stopPropagation()
-                  setLoading(true)
                   setGlobal({ selectedIds: [id] })
-                  const { data } = await client
-                    .mutate({
-                      mutation: gql`
-                        mutation($search: JSON!, $createdBy: String!) {
-                          createDatabook(search: $search, createdBy: $createdBy)
-                        }
-                      `,
-                      variables: {
-                        createdBy: `${packageJson.name} v${packageJson.version}`,
-                        search: { ids: [id] },
-                      },
-                    })
-                    .catch(error => {
-                      setError(error)
-                    })
-                    .finally(() => setLoading(false))
-                  if (data) {
-                    history.push({
-                      pathname: window.location.pathname.includes('render')
-                        ? `render/databooks/${data.createDatabook}`
-                        : `/databooks/${data.createDatabook}`,
-                    })
-                  } else {
-                    throw new Error('Error creating databook')
-                  }
+                  createDatabook({
+                    variables: {
+                      createdBy: `${packageJson.name} v${packageJson.version}`,
+                      search: { ids: [id] },
+                    },
+                  })
                 }
               : () =>
                   alert(
