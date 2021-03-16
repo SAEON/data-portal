@@ -50,8 +50,8 @@ export default ({ disableSidebar = false }) => {
         $text: String
         $terms: [TermInput!]
         $size: Int
-        $before: ES_Cursor
-        $after: ES_Cursor
+        $before: String
+        $after: String
         $fields: [FieldInput!]
         $summaryLimit: Int
         $ids: [ID!]

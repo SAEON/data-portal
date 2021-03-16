@@ -11,17 +11,25 @@ export default async (_, args, ctx) => {
     text = undefined,
     extent = undefined,
     terms = undefined,
-    before = undefined,
-    after = undefined,
     identifiers = undefined,
   } = args
 
-  if (size < 1 || size > 10000) {
-    throw new Error('Size param must be between 1 and 10 000')
+  let { before = undefined, after = undefined } = args
+
+  if (size < 1 || size > 200) {
+    throw new Error('Size param must be between 1 and 200 (maximum page size)')
   }
 
   if (before && after) {
-    throw new Error('Please specify either a "before" or an "after" cursor (not both)')
+    throw new Error('Please specify either no cursor, a "before" or an "after" cursor (not both)')
+  }
+
+  if (before) {
+    before = JSON.parse(Buffer.from(before, 'base64').toString('utf8'))
+  }
+
+  if (after) {
+    after = JSON.parse(Buffer.from(after, 'base64').toString('utf8'))
   }
 
   const dsl = {
@@ -53,12 +61,21 @@ export default async (_, args, ctx) => {
     return new GraphQLError(`${JSON.stringify(data.error, null, 2)}`)
   }
 
+  const totalCount = data.hits.total.value
+  const pageSize = size >= totalCount ? totalCount : size
+
+  const _firstResult =
+    before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1]
+  const _lastResult =
+    before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0]
+
   return {
-    _firstResult:
-      before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1],
-    _lastResult:
-      before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
+    pageSize,
+    totalCount,
+    hasPreviousPage: undefined, // I haven't found a way to check if there is a previous page if only a before cursor is specified (and the results.length === pageSize)
+    hasNextPage: undefined,
+    _firstResult,
+    _lastResult,
     hits: data.hits.hits,
-    totalCount: data.hits.total.value,
   }
 }
