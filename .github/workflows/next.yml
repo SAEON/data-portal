@@ -45,7 +45,7 @@ jobs:
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
-          ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
+          ODP_ADDRESS="https://odp.saeon.dvn"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

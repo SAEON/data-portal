@@ -72,7 +72,7 @@ export default (id, values) => {
     values.resourceDownload || {}
 
   return {
-    _archive: archive || (fileFormat ? false : 'Unknown'),
+    _archive: archive || false,
     _fileFormat: chooseFileFormat(fileFormat || archivedFormats),
     ...values,
   }

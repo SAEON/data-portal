@@ -37,7 +37,7 @@ jobs:
           CATALOGUE_API_KEY="${{ secrets.CATALOGUE_API_KEY }}"
           CATALOGUE_API_NODE_ENV=production
           CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS=https://api.catalogue.saeon.ac.za/authenticate/redirect/google
-          CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
+          CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_STABLE }}"
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
@@ -45,7 +45,7 @@ jobs:
           CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
-          ODP_ADDRESS="https://odp.saeon.dvn/api/catalogue"
+          ODP_ADDRESS="https://odp.saeon.ac.za"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

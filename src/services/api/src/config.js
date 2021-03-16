@@ -38,12 +38,6 @@ export const CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS =
   process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS ||
   'http://localhost:3000/authenticate/redirect/saeon-identity-server'
 
-export const CATALOGUE_API_ODP_CLIENT_ID =
-  process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
-
-export const CATALOGUE_API_ODP_AUTH_ADDRESS =
-  process.env.CATALOGUE_API_ODP_AUTH_ADDRESS || 'https://odp.saeon.dvn/auth'
-
 export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET || ''
 
 export const CATALOGUE_API_ODP_AUTH_SCOPE =
@@ -104,7 +98,14 @@ export const CATALOGUE_API_PROXY_ADDRESS =
 export const CATALOGUE_API_ALLOWED_ORIGINS =
   process.env.CATALOGUE_API_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
-export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.dvn/api/catalogue'
+export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.dvn'
+
+export const ODP_ADDRESS_CATALOGUE_ENDPOINT = `${ODP_ADDRESS}/api/catalogue`
+
+export const CATALOGUE_API_ODP_CLIENT_ID =
+  process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
+
+export const CATALOGUE_API_ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 
 export const CATALOGUE_API_ODP_FILTER_PATH = process.env.CATALOGUE_API_ODP_FILTER_PATH
   ? join(__apiRootDirectory, process.env.CATALOGUE_API_ODP_FILTER_PATH)
