@@ -1,4 +1,4 @@
-import RemoveChartButton from './_remove-chart-button'
+import RemoveChartButton from './_remove-chart'
 import ChartIcon from 'mdi-react/ChartBubbleIcon'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'

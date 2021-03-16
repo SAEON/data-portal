@@ -6,7 +6,6 @@ import clsx from 'clsx'
 
 export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
   const { id: dashboardId, filters: filterIds = [] } = dashboard
-  console.log('hi there', dashboard)
   const classes = useStyles()
 
   return (

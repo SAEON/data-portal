@@ -18,8 +18,6 @@ export default ({ children }) => {
             title
             subtitle
             description
-            layout
-            filters
           }
         }
       }

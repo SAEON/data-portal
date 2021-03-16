@@ -20,7 +20,7 @@ type Dashboard {
   # Associate an existing filter with this dashboard
   addFilter(id: ID!): Dashboard!
   charts: [Chart!]
-  filters: [ID!]
+  filters: [Filter!]
   layout: JSON
 }
 

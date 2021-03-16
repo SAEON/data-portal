@@ -5,5 +5,5 @@ export default {
   addChart: await _import('./_add-chart.js'),
   addFilter: await _import('./_add-filter.js'),
   charts: await _import('./_charts.js'),
-  filters: async self => self.filters,
+  filters: await _import('./_filters.js'),
 }
