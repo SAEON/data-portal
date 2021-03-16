@@ -7,6 +7,7 @@ import { context as databookContext } from '../../../../../contexts/databook-pro
 
 export default ({ id, activeTabIndex, setActiveTabIndex }) => {
   const { id: databookId } = useContext(databookContext)
+
   const [deleteDashboard] = useMutation(
     gql`
       mutation($id: ID!) {

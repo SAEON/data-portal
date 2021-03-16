@@ -86,6 +86,7 @@ type Mutation {
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
   deleteDashboard(id: ID!): Boolean!
+  # TODO remove, but first put on Dashboard type
   removeChartFromDashboard(chartId: ID!, dashboardId: ID!): Chart!
   createChart(
     title: String
@@ -98,8 +99,7 @@ type Mutation {
   ): Chart!
   editChart(id: ID!, title: String, description: String, setOption: FunctionString): Chart!
   deleteChart(id: ID!): Boolean!
-  # Add a filter to dashboard, and get the new count of a dashboard's filters
-  addFilterToDashboard(filterId: ID!, dashboardId: ID!): Filter!
+  # TODO remove, but first put on Dashboard type
   removeFilterFromDashboard(filterId: ID!, dashboardId: ID!): Filter!
   createFilter(
     name: String

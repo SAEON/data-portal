@@ -17,6 +17,8 @@ type Dashboard {
   databookId: ID!
   # Associate an existing chart with this dashboard
   addChart(id: ID!): Dashboard!
+  # Associate an existing filter with this dashboard
+  addFilter(id: ID!): Dashboard!
   charts: [Chart!]
   filters: [ID!]
   layout: JSON
@@ -45,4 +47,12 @@ type PostgisDatabookField {
   updateFieldName(name: String!): Boolean!
   data_type: String!
   ordinal_position: Int!
+}
+
+type Filter {
+  id: ID!
+  name: String
+  columnFiltered: String
+  values: [String]
+  sql: String
 }

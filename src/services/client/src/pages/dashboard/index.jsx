@@ -24,7 +24,7 @@ export default ({ id }) => {
     params: false,
   })
 
-  const { error, loading, data } = useQuery(
+  const { error, loading, data, startPolling } = useQuery(
     gql`
       query($id: ID!) {
         dashboard(id: $id) {

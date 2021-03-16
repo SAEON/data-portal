@@ -10,8 +10,6 @@ export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
     throw new Error('Unable to find the chart specified. Does it exist')
   }
 
-  console.log('hi')
-
   if (layout.map(({ content }) => content.id.toString()).includes(chartId.toString())) {
     throw new Error('Cannot add duplicate chart to dashboard')
   }

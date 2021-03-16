@@ -1,9 +1,9 @@
 import AddChart from './add-chart'
 import Share from './_share'
 import DeleteDashboard from './_delete'
-import AddFilter from './_add-filter'
+import AddFilter from './add-filter'
 import Preview from './_preview'
-import Save from './_save'
+import Save from './save'
 import Edit from './edit'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -13,27 +13,27 @@ import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex, gridState }) => {
   const theme = useTheme()
-  const { dashboardId, title } = dashboard
+  const { id: dashboardId, title } = dashboard
   const classes = useStyles()
 
   return (
     <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>
       <Typography>{title || dashboardId}</Typography>
       <span style={{ marginLeft: 'auto' }} />
-      <Save dashboard={dashboard} gridState={gridState} />
+      <Save {...dashboard} gridState={gridState} />
       <span style={{ marginRight: theme.spacing(2) }} />
       <Edit {...dashboard} />
       <span style={{ marginRight: theme.spacing(2) }} />
       <AddChart {...dashboard} />
       <span style={{ marginRight: theme.spacing(2) }} />
-      <AddFilter dashboard={dashboard} />
+      <AddFilter {...dashboard} />
       <span style={{ marginRight: theme.spacing(2) }} />
-      <Share id={dashboardId} />
+      <Share {...dashboard} />
       <span style={{ marginRight: theme.spacing(2) }} />
-      <Preview id={dashboardId} />
+      <Preview {...dashboard} />
       <span style={{ marginRight: theme.spacing(2) }} />
       <DeleteDashboard
-        id={dashboardId}
+        {...dashboard}
         activeTabIndex={activeTabIndex}
         setActiveTabIndex={setActiveTabIndex}
       />

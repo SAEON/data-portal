@@ -5,24 +5,25 @@ import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import Fade from '@material-ui/core/Fade'
 import { context as databookContext } from '../../../../../../contexts/databook-provider'
+import Fade from '@material-ui/core/Fade'
 import LoadingDialogueButton from '../../../../../../components/loading-dialogue-button'
 
-export default ({ closeDialogueFn, dashboardId, charts }) => {
+export default ({ closeDialogueFn, dashboardId, filters }) => {
   const { id: databookId } = useContext(databookContext)
-  const [selectedChart, setSelectedChart] = useState({
+  const [selectedFilter, setSelectedFilter] = useState({
     id: '',
-    title: '',
+    name: '',
   })
-  const [addChart, { loading, error }] = useMutation(
+
+  const [addFilter, { loading, error }] = useMutation(
     gql`
-      mutation dashboards($chartId: ID!, $dashboardId: ID!) {
+      mutation dashboards($filterId: ID!, $dashboardId: ID!) {
         dashboard(id: $dashboardId) {
           id
-          addChart(id: $chartId) {
+          addFilter(id: $filterId) {
             id
-            layout
+            filters
           }
         }
       }
@@ -35,7 +36,7 @@ export default ({ closeDialogueFn, dashboardId, charts }) => {
               id
               dashboards {
                 id
-                layout
+                filters
               }
             }
           }
@@ -53,7 +54,7 @@ export default ({ closeDialogueFn, dashboardId, charts }) => {
               { ...staleData.databook },
               {
                 dashboards: staleData.databook.dashboards.map(({ id }) =>
-                  id === dashboardId ? freshData.dashboard.addChart : { id }
+                  id === dashboardId ? freshData.dashboard.addFilter : { id }
                 ),
               }
             ),
@@ -73,35 +74,35 @@ export default ({ closeDialogueFn, dashboardId, charts }) => {
     <>
       <DialogContent>
         <DialogContentText color={error ? 'error' : 'textPrimary'}>
-          {error || 'Select a chart to add to this dashboard'}
+          {error || 'Select a filter to add to this dashboard'}
         </DialogContentText>
         <Autocomplete
           style={{ margin: '16px 0' }}
-          id={'add-charts-to-dashboard-list'}
-          options={[...charts.map(({ title, id }) => title || id)]} // Options is a list of titles
-          setOption={(_, i) => setSelectedChart(charts[i])}
-          selectedOptions={selectedChart.title || selectedChart.id}
+          id={'add-filters-to-dashboard-list'}
+          options={[...filters.map(({ id, name }) => name || id)]}
+          setOption={(_, i) => setSelectedFilter(filters[i])}
+          selectedOptions={selectedFilter.name || selectedFilter.id}
         />
       </DialogContent>
       <DialogActions>
         <LoadingDialogueButton loading={loading} />
         <Fade in={!loading} key={'show-button'}>
           <Button
-            disabled={!selectedChart}
+            disabled={!selectedFilter}
             size="small"
             color="primary"
             disableElevation
             variant="contained"
             onClick={() =>
-              addChart({
+              addFilter({
                 variables: {
-                  chartId: selectedChart.id,
+                  filterId: selectedFilter.id,
                   dashboardId,
                 },
               })
             }
           >
-            Add Chart
+            Add Filter
           </Button>
         </Fade>
       </DialogActions>

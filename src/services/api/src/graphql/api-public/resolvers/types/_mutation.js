@@ -8,7 +8,6 @@ export default {
   updateDashboard: await _import('../mutations/update-dashboard.js'),
   deleteDashboard: await _import('../mutations/delete-dashboard.js'),
   removeChartFromDashboard: await _import('../mutations/remove-chart-from-dashboard.js'),
-  addFilterToDashboard: await _import('../mutations/add-filter-to-dashboard.js'),
   removeFilterFromDashboard: await _import('../mutations/remove-filter-from-dashboard.js'),
   dashboard: await _import('../mutations/dashboard.js'),
   createChart: await _import('../mutations/create-chart.js'),
