@@ -100,12 +100,12 @@ export default ({ setActiveTabIndex, setOpen }) => {
 
         {/* FILTER NAME */}
         <TextField
-          id="filter-name"
+          id="create-filter-name"
           fullWidth
-          autoComplete="off"
           style={{ marginBottom: theme.spacing(4) }}
-          label="Name"
+          label="Filter name"
           value={filterName}
+          autoComplete="off"
           onChange={e => setFilterName(e.target.value)}
         />
 

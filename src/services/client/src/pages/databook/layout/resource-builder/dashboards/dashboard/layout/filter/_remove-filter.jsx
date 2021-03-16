@@ -15,7 +15,6 @@ const DASHBOARDS = gql`
   }
 `
 
-//STEVEN TO-DO: performance of remove onClick needs work, though it may largely be local ram shortage
 export default ({ filterId, dashboard }) => {
   const databook = useContext(databookContext)
   const client = useApolloClient()

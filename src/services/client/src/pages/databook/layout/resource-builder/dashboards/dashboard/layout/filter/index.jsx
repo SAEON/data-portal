@@ -1,26 +1,30 @@
-import RemoveFilterButton from './_remove-filter-button'
+import { useContext } from 'react'
+import RemoveFilter from './_remove-filter'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import useStyles from './style'
 import clsx from 'clsx'
 import { gql, useQuery } from '@apollo/client'
+import { context as databookContext } from '../../../../../../contexts/databook-provider'
 
 export default ({ filterId, dashboard }) => {
+  const { id: databookId } = useContext(databookContext)
   const classes = useStyles()
 
   const { error, loading, data } = useQuery(
     gql`
-      query($ids: [ID!]) {
-        filters(ids: $ids) {
+      query databook($id: ID!) {
+        databook(id: $id) {
           id
-          name
+          filters {
+            id
+            name
+          }
         }
       }
     `,
     {
-      variables: {
-        ids: [filterId],
-      },
+      variables: { id: databookId },
     }
   )
 
@@ -36,7 +40,7 @@ export default ({ filterId, dashboard }) => {
   return (
     <Grid item className={clsx(classes.filter)}>
       <Typography variant="overline">{filterName || filterId}</Typography>
-      <RemoveFilterButton filterId={filterId} dashboard={dashboard} />
+      <RemoveFilter filterId={filterId} dashboard={dashboard} />
     </Grid>
   )
 }
