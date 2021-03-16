@@ -1,6 +1,15 @@
 import { GraphQLError } from 'graphql'
 import buildDsl from './dsl/index.js'
 
+/**
+ * NOTE
+ *
+ * I haven't found a way to check if there is a previous page
+ * if only a before cursor is specified (and the results.length
+ * === pageSize). Pagination is not as good as it could be as a
+ * result
+ */
+
 export default async (_, args, ctx) => {
   const { catalogue } = ctx
 
@@ -62,20 +71,16 @@ export default async (_, args, ctx) => {
   }
 
   const totalCount = data.hits.total.value
-  const pageSize = size >= totalCount ? totalCount : size
-
-  const _firstResult =
-    before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1]
-  const _lastResult =
-    before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0]
 
   return {
-    pageSize,
+    pageSize: size >= totalCount ? totalCount : size,
     totalCount,
-    hasPreviousPage: undefined, // I haven't found a way to check if there is a previous page if only a before cursor is specified (and the results.length === pageSize)
+    hasPreviousPage: undefined,
     hasNextPage: undefined,
-    _firstResult,
-    _lastResult,
+    _firstResult:
+      before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1],
+    _lastResult:
+      before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
     hits: data.hits.hits,
   }
 }
