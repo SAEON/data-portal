@@ -1,13 +1,8 @@
 import Chip from './_chip'
-import Grid from '@material-ui/core/Grid'
-import useStyles from './style'
-import clsx from 'clsx'
 import { gql, useQuery } from '@apollo/client'
-import Loading from '../../../../../../../../components/loading'
+import Loading from '../../../../../../../../components/loading-circular'
 
 export default ({ filterId, dashboardId }) => {
-  const classes = useStyles()
-
   const { error, loading, data } = useQuery(
     gql`
       query filters($ids: [ID!]!) {

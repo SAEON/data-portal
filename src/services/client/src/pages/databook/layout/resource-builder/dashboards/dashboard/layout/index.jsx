@@ -1,6 +1,5 @@
 import Chart from './chart'
 import Filter from './filter'
-import Grid from '@material-ui/core/Grid'
 import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
 import useStyles from '../style'
