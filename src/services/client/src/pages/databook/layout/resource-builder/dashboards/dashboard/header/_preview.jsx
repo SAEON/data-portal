@@ -1,4 +1,4 @@
-import ShareIcon from 'mdi-react/ViewCompactIcon'
+import ShareIcon from 'mdi-react/FileEyeOutlineIcon'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../../config'
 import MessageDialogue from '../../../../../../../components/message-dialogue'
 import DialogContent from '@material-ui/core/DialogContent'

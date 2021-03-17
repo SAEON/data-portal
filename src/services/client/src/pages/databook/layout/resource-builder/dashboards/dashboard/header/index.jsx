@@ -17,26 +17,41 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex, gridState }) => 
   const classes = useStyles()
 
   return (
-    <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>
-      <Typography>{title || dashboardId}</Typography>
-      <span style={{ marginLeft: 'auto' }} />
-      <Save {...dashboard} gridState={gridState} />
-      <span style={{ marginRight: theme.spacing(2) }} />
-      <Edit {...dashboard} />
-      <span style={{ marginRight: theme.spacing(2) }} />
-      <AddChart {...dashboard} />
-      <span style={{ marginRight: theme.spacing(2) }} />
-      <AddFilter {...dashboard} />
-      <span style={{ marginRight: theme.spacing(2) }} />
-      <Share {...dashboard} />
-      <span style={{ marginRight: theme.spacing(2) }} />
-      <Preview {...dashboard} />
-      <span style={{ marginRight: theme.spacing(2) }} />
-      <DeleteDashboard
-        {...dashboard}
-        activeTabIndex={activeTabIndex}
-        setActiveTabIndex={setActiveTabIndex}
-      />
+    <Toolbar disableGutters className={clsx(classes.toolbar)} variant={'dense'}>
+      <div style={{ display: 'flex', width: '100%' }}>
+        <Typography
+          style={{
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            paddingLeft: theme.spacing(1),
+          }}
+          variant="overline"
+        >
+          {title || dashboardId}
+        </Typography>
+      </div>
+
+      <div style={{ marginLeft: 'auto', display: 'flex' }}>
+        <Save {...dashboard} gridState={gridState} />
+        <span style={{ marginRight: theme.spacing(1) }} />
+        <Edit {...dashboard} />
+        <span style={{ marginRight: theme.spacing(1) }} />
+        <AddChart {...dashboard} />
+        <span style={{ marginRight: theme.spacing(1) }} />
+        <AddFilter {...dashboard} />
+        <span style={{ marginRight: theme.spacing(1) }} />
+        <Share {...dashboard} />
+        <span style={{ marginRight: theme.spacing(1) }} />
+        <Preview {...dashboard} />
+        <span style={{ marginRight: theme.spacing(1) }} />
+        <DeleteDashboard
+          {...dashboard}
+          activeTabIndex={activeTabIndex}
+          setActiveTabIndex={setActiveTabIndex}
+        />
+        <span style={{ marginRight: theme.spacing(1) }} />
+      </div>
     </Toolbar>
   )
 }

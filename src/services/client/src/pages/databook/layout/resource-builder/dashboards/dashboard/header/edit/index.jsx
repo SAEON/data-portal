@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import EditIcon from 'mdi-react/EditIcon'
+import EditIcon from 'mdi-react/EditOutlineIcon'
 import MessageDialogue from '../../../../../../../../components/message-dialogue'
 import Loading from '../../../../../../../../components/loading'
 import Form from './_form'
