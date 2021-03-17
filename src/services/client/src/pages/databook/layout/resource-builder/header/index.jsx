@@ -27,7 +27,7 @@ export default forwardRef(({ active, setActive }, ref) => {
             textAlign: 'center',
           }}
         >
-          <Tooltip title="Show dashboards">
+          <Tooltip placement="left-start" title="Show dashboards">
             <IconButton
               style={{ marginRight: theme.spacing(0.5) }}
               onClick={() => setActive('dashboards')}
@@ -43,7 +43,7 @@ export default forwardRef(({ active, setActive }, ref) => {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Show charts">
+          <Tooltip placement="left-start" title="Show charts">
             <IconButton
               style={{ marginLeft: theme.spacing(0.5) }}
               onClick={() => setActive('charts')}
@@ -57,7 +57,7 @@ export default forwardRef(({ active, setActive }, ref) => {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Show Filters">
+          <Tooltip placement="left-start" title="Show Filters">
             <IconButton
               style={{ marginLeft: theme.spacing(0.5) }}
               onClick={() => setActive('filters')}

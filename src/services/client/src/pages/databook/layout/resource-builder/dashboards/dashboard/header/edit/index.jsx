@@ -33,7 +33,7 @@ export default ({ id }) => {
     <MessageDialogue
       tooltipProps={{
         title: 'Edit dashboard',
-        placement: 'bottom-start',
+        placement: 'left-start',
       }}
       title="Edit dashboard"
       iconProps={{ size: 'small' }}

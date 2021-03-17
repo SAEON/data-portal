@@ -21,7 +21,7 @@ export default ({ id }) => {
       titleProps={{ style: { textAlign: 'center' } }}
       tooltipProps={{
         title: 'Realtime layout preview',
-        placement: 'bottom-start',
+        placement: 'left-start',
       }}
       title="Dashboard preview"
       icon={<ShareIcon size={20} />}

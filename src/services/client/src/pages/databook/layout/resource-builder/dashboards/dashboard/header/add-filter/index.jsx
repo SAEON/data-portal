@@ -7,7 +7,7 @@ export default ({ id: dashboardId }) => (
   <MessageDialogue
     tooltipProps={{
       title: 'Add filter to current dashboard',
-      placement: 'bottom-start',
+      placement: 'left-start',
     }}
     title="Add filter"
     iconProps={{ size: 'small' }}

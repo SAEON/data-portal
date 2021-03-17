@@ -133,7 +133,7 @@ export default ({ id: chartId }) => {
 
   return (
     <div>
-      <Tooltip title="Edit chart" placement="bottom-start">
+      <Tooltip title="Edit chart" placement="left-start">
         <IconButton
           onClick={() => {
             handleClickOpen()
