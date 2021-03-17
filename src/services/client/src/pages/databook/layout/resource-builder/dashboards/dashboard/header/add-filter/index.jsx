@@ -1,4 +1,4 @@
-import AddFilterIcon from 'mdi-react/FilterPlusOutlineIcon'
+import AddFilterIcon from 'mdi-react/FilterVariantPlusIcon'
 import MessageDialogue from '../../../../../../../../components/message-dialogue'
 import WithFilters from './_with-filters'
 import Form from './_form'
