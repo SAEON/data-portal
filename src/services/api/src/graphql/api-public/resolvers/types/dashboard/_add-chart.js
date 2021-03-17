@@ -6,7 +6,7 @@ export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
   const { Charts, Dashboards } = await ctx.mongo.collections
   chartId = ObjectID(chartId)
 
-  if (!Boolean(await Charts.countDocuments({ _id: chartId }))) {
+  if (!(await Charts.countDocuments({ _id: chartId }))) {
     throw new Error('Unable to find the chart specified. Does it exist')
   }
 

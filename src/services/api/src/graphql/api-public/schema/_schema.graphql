@@ -82,6 +82,7 @@ type Mutation {
     title: String
     subtitle: String
     description: String
+    filters: [ID!]
   ): Dashboard!
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
