@@ -1,17 +1,15 @@
+import Loading from '../../../../../../../../components/loading'
 import RemoveChartButton from './_remove-chart'
+import { gql, useQuery } from '@apollo/client'
 import ChartIcon from 'mdi-react/ChartBubbleIcon'
-import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import useStyles from './style'
 import clsx from 'clsx'
-import { gql, useQuery } from '@apollo/client'
+import Content from './content'
 
-const itemStyle = {
-  display: 'flex',
-  margin: 'auto',
-}
+export default ({ id, dashboardId }) => {
+  const classes = useStyles()
 
-const Content = ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
       query($ids: [ID!]!) {
@@ -29,32 +27,24 @@ const Content = ({ id }) => {
   )
 
   if (loading) {
-    return <Typography variant="overline">{id}</Typography>
+    return <Loading />
   }
 
   if (error) {
-    console.error(error)
     throw error
   }
-
-  const chartTitle = data?.charts[0]?.title
-  return <Typography variant="overline">{chartTitle || id}</Typography>
-}
-
-export default ({ chart: id, dashboard }) => {
-  const classes = useStyles()
 
   return (
     <div className={clsx(classes.layout)}>
       <Grid container justify="space-around" alignItems="center">
-        <Grid item style={itemStyle}>
+        <Grid item className={clsx(classes.item)}>
           <ChartIcon />
         </Grid>
-        <Grid item style={itemStyle}>
-          <Content id={id} />
+        <Grid item className={clsx(classes.item)}>
+          <Content {...data.charts[0]} />
         </Grid>
-        <Grid item style={itemStyle}>
-          <RemoveChartButton chartId={id} dashboard={dashboard} />
+        <Grid item className={clsx(classes.item)}>
+          <RemoveChartButton chartId={id} dashboardId={dashboardId} />
         </Grid>
       </Grid>
     </div>

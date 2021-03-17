@@ -1,18 +1,17 @@
-import ChartStub from './chart'
-import FilterStub from './filter'
+import Chart from './chart'
+import Filter from './filter'
 import Grid from '@material-ui/core/Grid'
 import useStyles from '../style'
 import clsx from 'clsx'
 
-export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
-  const { id: dashboardId, filters: filterIds = [] } = dashboard
+export default ({ dashboardId, chartIds, filterIds, gridElRef, gridCache, gridItemsRef }) => {
   const classes = useStyles()
 
   return (
     <>
       <Grid container justify="center">
         {filterIds?.map(id => (
-          <FilterStub key={id} filterId={id} dashboard={dashboard} />
+          <Filter key={id} filterId={id} dashboardId={dashboardId} />
         ))}
       </Grid>
       <div className={clsx(classes.gridContainer)}>
@@ -23,7 +22,7 @@ export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
             )
             return (
               <div
-                ref={refs.current[id]}
+                ref={gridItemsRef.current[id]}
                 key={id}
                 className={clsx('grid-stack-item', classes.gridItem)}
                 {...Object.fromEntries(
@@ -34,7 +33,7 @@ export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
               >
                 <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>
                   <span id={id} data-type={'Chart'}>
-                    <ChartStub chart={id} dashboard={dashboard} />
+                    <Chart id={id} dashboardId={dashboardId} />
                   </span>
                 </div>
               </div>

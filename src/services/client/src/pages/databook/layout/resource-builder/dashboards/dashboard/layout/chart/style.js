@@ -8,4 +8,8 @@ export default makeStyles(theme => ({
     padding: 16,
     backgroundColor: fade(theme.palette.secondary.light, 0.1),
   },
+  item: {
+    display: 'flex',
+    margin: 'auto',
+  },
 }))

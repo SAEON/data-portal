@@ -10,16 +10,15 @@ import Layout from './layout'
 const gridCache = {}
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
-  const { id: dashboardId, layout = [] } = dashboard
   const [gridState, updateGridState] = useState({})
   const gridStackRef = useRef()
   const gridElRef = useRef()
-  const refs = useRef({})
-  gridCache[dashboardId] = layout
+  const gridItemsRef = useRef({})
+  gridCache[dashboard.id] = dashboard.layout
 
-  const chartIds = useMemo(() => {
-    return (
-      layout
+  const chartIds = useMemo(
+    () =>
+      dashboard.layout
         ?.map(({ content }) => {
           if (content.type.toUpperCase() === 'CHART') {
             return content.id
@@ -27,13 +26,15 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
             return undefined
           }
         })
-        .filter(_ => _) || []
-    )
-  }, [layout])
+        .filter(_ => _) || [],
+    [dashboard]
+  )
 
-  if (Object.keys(refs.current).length !== chartIds.length) {
+  const filterIds = useMemo(() => dashboard.filters.map(({ id }) => id), [dashboard])
+
+  if (Object.keys(gridItemsRef.current).length !== chartIds.length) {
     chartIds.forEach(id => {
-      refs.current[id] = refs.current[id] || createRef()
+      gridItemsRef.current[id] = gridItemsRef.current[id] || createRef()
     })
   }
 
@@ -49,6 +50,8 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
     })
 
   useEffect(() => {
+    const { dashboardId } = dashboard
+
     gridStackRef.current =
       gridStackRef.current ||
       GridStack.init(
@@ -62,22 +65,18 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
         },
         gridElRef.current
       )
-
     const grid = gridStackRef.current
-
     grid.removeAll(false)
     grid.batchUpdate()
     chartIds.forEach(id => {
-      if (refs.current[id].current?.gridstackNode) {
-        // TODO - ? should the node be updated?
+      if (gridItemsRef.current[id].current?.gridstackNode) {
+        // TODO - should something happen here?
       } else {
-        grid.makeWidget(refs.current[id].current)
+        grid.makeWidget(gridItemsRef.current[id].current)
       }
     })
     grid.commit()
-
     updateGridState(saveGrid())
-
     const onChange = () => updateGridState(saveGrid())
     grid.on('change', onChange)
 
@@ -85,22 +84,23 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
       gridCache[dashboardId] = saveGrid()
       grid.off('change')
     }
-  }, [dashboardId, layout, chartIds])
+  }, [dashboard, chartIds])
 
   return (
     <>
       <Header
-        dashboard={dashboard}
+        dashboard={dashboard} // TODO - pass dashboard id only. update dashboards provider with a getDashboard method
         activeTabIndex={activeTabIndex}
         setActiveTabIndex={setActiveTabIndex}
         gridState={gridState}
       />
       <Layout
-        dashboard={dashboard}
+        dashboardId={dashboard.id}
         chartIds={chartIds}
+        filterIds={filterIds}
         gridElRef={gridElRef}
         gridCache={gridCache}
-        refs={refs}
+        gridItemsRef={gridItemsRef}
       />
     </>
   )
