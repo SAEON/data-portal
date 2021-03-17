@@ -48,4 +48,5 @@ jobs:
           ODP_ADDRESS="https://odp.saeon.ac.za"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
+          NODE_TLS_REJECT_UNAUTHORIZED=1
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

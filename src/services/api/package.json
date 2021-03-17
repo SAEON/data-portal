@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --ext js,graphql,json --watch ./src --watch ../../packages/catalogue-search/src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --trace-warnings --experimental-json-modules src'",
-    "start:prod": "TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --no-warnings --experimental-json-modules src",
+    "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,mjs,cjs}\"",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
