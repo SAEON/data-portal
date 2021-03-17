@@ -14,7 +14,7 @@ export default async (_, args, ctx) => {
   const { catalogue } = ctx
 
   const {
-    size = 100,
+    size = 10000,
     ids = undefined,
     dois = undefined,
     text = undefined,
@@ -25,7 +25,7 @@ export default async (_, args, ctx) => {
 
   let { before = undefined, after = undefined } = args
 
-  if (size < 1 || size > 200) {
+  if (size < 1 || size > 10000) {
     throw new Error('Size param must be between 1 and 200 (maximum page size)')
   }
 
