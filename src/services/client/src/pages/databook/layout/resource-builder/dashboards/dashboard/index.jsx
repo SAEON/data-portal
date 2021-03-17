@@ -89,7 +89,7 @@ export default ({ dashboard, activeTabIndex, setActiveTabIndex }) => {
   return (
     <>
       <Header
-        dashboard={dashboard} // TODO - pass dashboard id only. update dashboards provider with a getDashboard method
+        dashboard={dashboard}
         activeTabIndex={activeTabIndex}
         setActiveTabIndex={setActiveTabIndex}
         gridState={gridState}

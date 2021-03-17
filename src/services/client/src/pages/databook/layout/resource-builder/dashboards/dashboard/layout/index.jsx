@@ -1,19 +1,27 @@
 import Chart from './chart'
 import Filter from './filter'
 import Grid from '@material-ui/core/Grid'
+import Toolbar from '@material-ui/core/Toolbar'
+import useTheme from '@material-ui/core/styles/useTheme'
 import useStyles from '../style'
 import clsx from 'clsx'
 
 export default ({ dashboardId, chartIds, filterIds, gridElRef, gridCache, gridItemsRef }) => {
   const classes = useStyles()
+  const theme = useTheme()
 
   return (
-    <>
-      <Grid container justify="center">
+    <div style={{ height: 'calc(100% - 48px)', position: 'relative' }}>
+      <Toolbar
+        disableGutters
+        style={{ marginRight: theme.spacing(4), marginLeft: theme.spacing(4), overflowX: 'auto' }}
+        variant="dense"
+      >
         {filterIds?.map(id => (
           <Filter key={id} filterId={id} dashboardId={dashboardId} />
         ))}
-      </Grid>
+      </Toolbar>
+
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
           {chartIds?.map(id => {
@@ -41,6 +49,6 @@ export default ({ dashboardId, chartIds, filterIds, gridElRef, gridCache, gridIt
           })}
         </div>
       </div>
-    </>
+    </div>
   )
 }

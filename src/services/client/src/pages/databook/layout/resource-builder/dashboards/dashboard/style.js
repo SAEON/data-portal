@@ -6,9 +6,13 @@ export default makeStyles(theme => ({
     borderBottom: `1px solid ${theme.palette.grey[200]}`,
   },
   gridContainer: {
-    height: 'calc(100% - 48px)',
+    height: 'calc(100% - 64px)',
     position: 'relative',
-    padding: 8,
+    padding: theme.spacing(1),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    border: `1px solid ${theme.palette.grey[200]}`,
+    boxSizing: 'border-box',
   },
   grid: {
     height: '100% !important', // Overides the gridstack height

@@ -1,13 +1,14 @@
 import { useContext } from 'react'
 import { useMutation, gql } from '@apollo/client'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
-import CloseIcon from 'mdi-react/CloseIcon'
+import useTheme from '@material-ui/core/styles/useTheme'
 import { context as databookContext } from '../../../../../../contexts/databook-provider'
 import LoadingButton from '../../../../../../components/loading-dialogue-button'
+import Chip from '@material-ui/core/Chip'
 import Fade from '@material-ui/core/Fade'
+import Typography from '@material-ui/core/Typography'
 
-export default ({ filterId, dashboardId }) => {
+export default ({ id: filterId, name, dashboardId }) => {
+  const theme = useTheme()
   const { id: databookId } = useContext(databookContext)
 
   const [removeFilter, { error, loading }] = useMutation(
@@ -69,25 +70,32 @@ export default ({ filterId, dashboardId }) => {
   }
 
   return (
-    <>
-      <LoadingButton loading={loading} />
-      <Fade key="button-in" in={!loading}>
-        <Tooltip title="Remove filter from this dashboard">
-          <IconButton
-            size="small"
-            onClick={() =>
-              removeFilter({
-                variables: {
-                  filterId,
-                  dashboardId,
-                },
-              })
-            }
-          >
-            <CloseIcon size={20} />
-          </IconButton>
-        </Tooltip>
-      </Fade>
-    </>
+    <Chip
+      style={{ marginLeft: theme.spacing(1) }}
+      size="small"
+      color="primary"
+      onDelete={() =>
+        removeFilter({
+          variables: {
+            filterId,
+            dashboardId,
+          },
+        })
+      }
+      label={
+        <>
+          {loading && <LoadingButton loading={loading} />}
+          {!loading && (
+            <Fade key="button-in" in={!loading}>
+              <span>
+                <Typography variant="overline" style={{ margin: 0, padding: 0, fontSize: 12 }}>
+                  {name || filterId}
+                </Typography>
+              </span>
+            </Fade>
+          )}
+        </>
+      }
+    />
   )
 }

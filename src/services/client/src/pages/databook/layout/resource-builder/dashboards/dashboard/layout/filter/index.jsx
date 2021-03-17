@@ -1,5 +1,4 @@
-import RemoveFilter from './_remove-filter'
-import Typography from '@material-ui/core/Typography'
+import Chip from './_chip'
 import Grid from '@material-ui/core/Grid'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -33,10 +32,5 @@ export default ({ filterId, dashboardId }) => {
 
   const filter = data.filters[0]
 
-  return (
-    <Grid item className={clsx(classes.filter)}>
-      <Typography variant="overline">{filter.name || filter.id}</Typography>
-      <RemoveFilter filterId={filterId} dashboardId={dashboardId} />
-    </Grid>
-  )
+  return <Chip {...filter} dashboardId={dashboardId} />
 }
