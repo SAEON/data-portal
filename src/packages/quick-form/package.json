@@ -41,6 +41,6 @@
     "@rollup/plugin-json": "^4.1.0",
     "npm-check-updates": "^11.3.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.41.2"
+    "rollup": "^2.41.4"
   }
 }

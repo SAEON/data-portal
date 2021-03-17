@@ -15,7 +15,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "googleapis": "^67.1.1",
-    "mongodb": "^3.6.4",
+    "mongodb": "^3.6.5",
     "prettier": "^2.2.1"
   },
   "devDependencies": {
