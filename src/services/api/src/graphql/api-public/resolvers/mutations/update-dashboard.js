@@ -4,8 +4,9 @@ const { ObjectID } = mongo
 export default async (_, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
   const { Dashboards } = await ctx.mongo.collections
+
   const { id, layout, filters, ...otherArgs } = args
-  const $set = { ...otherArgs }
+  const $set = { ...otherArgs, modifiedAt: new Date() }
 
   // dashboard.layout requires changing strings to MongoIDs
   if (layout) {

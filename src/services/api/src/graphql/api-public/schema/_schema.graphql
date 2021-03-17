@@ -53,7 +53,7 @@ type Query {
   # Find a chart
   charts(ids: [ID!]!): [Chart!]
   # Find a filter
-  filters(ids: [ID!]): [Filter!]
+  filters(ids: [ID!]!): [Filter!]
   # Retrieve a web-browser's previously saved databook
   databook(id: ID!): Databook
   # Retrieve a web-browser's previously saved search context
@@ -87,8 +87,6 @@ type Mutation {
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
   deleteDashboard(id: ID!): Boolean!
-  # TODO remove, but first put on Dashboard type
-  removeChartFromDashboard(chartId: ID!, dashboardId: ID!): Chart!
   createChart(
     title: String
     description: String
@@ -100,8 +98,6 @@ type Mutation {
   ): Chart!
   editChart(id: ID!, title: String, description: String, setOption: FunctionString): Chart!
   deleteChart(id: ID!): Boolean!
-  # TODO remove, but first put on Dashboard type
-  removeFilterFromDashboard(filterId: ID!, dashboardId: ID!): Filter!
   createFilter(
     name: String
     databookId: ID!

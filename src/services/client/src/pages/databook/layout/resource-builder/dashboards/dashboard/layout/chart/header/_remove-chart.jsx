@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import DeleteIcon from 'mdi-react/CloseIcon'
 import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 import Fade from '@material-ui/core/Fade'
 import { useMutation, gql } from '@apollo/client'
 import { context as databookContext } from '../../../../../../../contexts/databook-provider'
@@ -64,16 +65,20 @@ export default ({ chartId, dashboardId }) => {
   }
 
   return (
-    <IconButton
-      onClick={() => removeChart({ variables: { chartId, dashboardId } })}
-      color="inherit"
-      size="small"
-      style={{ marginLeft: 'auto' }}
-    >
+    <>
       <LoadingButton loading={loading} />
       <Fade key="button-in" in={!loading}>
-        <DeleteIcon />
+        <Tooltip title="Remove chart from this dashboard">
+          <IconButton
+            onClick={() => removeChart({ variables: { chartId, dashboardId } })}
+            color="inherit"
+            size="small"
+            style={{ marginLeft: 'auto' }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       </Fade>
-    </IconButton>
+    </>
   )
 }
