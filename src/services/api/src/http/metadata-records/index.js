@@ -11,7 +11,11 @@ import { gql } from 'apollo-server-koa'
  * This will fail when there are more than 10 000
  * Elasticsearch results. To fix, make multiple
  * trips to Elasticsearch to append to the client
- * stream
+ * stream.
+ *
+ * This shouldn't be that complicated since the
+ * catalogue records endpoint already supports
+ * pagination
  */
 
 const { ObjectID } = mongo
