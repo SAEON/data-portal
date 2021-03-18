@@ -17,8 +17,8 @@ export default ({ id }) => {
   }
 
   return (
-    <Wrapper>
-      <DatabookProvider id={id}>
+    <DatabookProvider id={id}>
+      <Wrapper>
         <SchemaProvider>
           <DataProvider>
             <FiltersProvider>
@@ -30,7 +30,7 @@ export default ({ id }) => {
             </FiltersProvider>
           </DataProvider>
         </SchemaProvider>
-      </DatabookProvider>
-    </Wrapper>
+      </Wrapper>
+    </DatabookProvider>
   )
 }
