@@ -75,9 +75,12 @@ export default ({
       <DialogActions style={{ paddingLeft: 0, paddingRight: 0 }}>
         {/* DISCLAIMER */}
         <Typography variant="caption" style={{ marginRight: 'auto' }}>
-          Powerd by{' '}
           <Link target="_blank" rel="noopener noreferrer" href="https://citation.crosscite.org/">
             crosscite.org
+          </Link>{' '}
+          |{' '}
+          <Link target="_blank" rel="noopener noreferrer" href="https://datacite.org">
+            datacite.org
           </Link>
         </Typography>
 

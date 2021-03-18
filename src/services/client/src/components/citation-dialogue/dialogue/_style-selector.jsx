@@ -1,6 +1,21 @@
 import { gql, useQuery } from '@apollo/client'
 import Autocomplete from '../../../components/autocomplete'
 
+const STYLE_TO_HUMAN = {
+  apa: 'APA',
+  bibtex: 'BibTeX',
+  chicago_fullnote_bibliography: 'Chicago',
+  harvard_cite_them_right: 'Harvard',
+  ieee: 'IEEE',
+  modern_language_association: 'MLA',
+  vancouver: 'Vancouver',
+  ris: 'RIS',
+}
+
+const HUMAN_TO_STYLE = Object.fromEntries(
+  Object.entries(STYLE_TO_HUMAN).map(([style, human]) => [human, style])
+)
+
 export default ({ setCitationParams, citationParams, defaultStyle }) => {
   const { error, loading, data } = useQuery(
     gql`
@@ -30,16 +45,16 @@ export default ({ setCitationParams, citationParams, defaultStyle }) => {
             { ...citationParams },
             {
               copied: false,
-              style: value?.replace(/-/g, '_') || defaultStyle,
+              style: HUMAN_TO_STYLE[value] || defaultStyle,
             }
           )
         )
       }
-      selectedOptions={citationParams.style.replace(/_/g, '-')}
+      selectedOptions={STYLE_TO_HUMAN[citationParams.style]}
       options={
         loading
-          ? [defaultStyle.replace(/_/g, '-'), 'Loading ...']
-          : data.citationStyles?.enumValues?.map(v => v.name.replace(/_/g, '-'))
+          ? [STYLE_TO_HUMAN[defaultStyle], 'Loading ...']
+          : data.citationStyles.enumValues.map(({ name }) => STYLE_TO_HUMAN[name])
       }
     />
   )

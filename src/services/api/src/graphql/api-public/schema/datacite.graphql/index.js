@@ -39,8 +39,6 @@ const dataciteCitationStyles = `
       ris
   }`
 
-console.log(dataciteCitationStyles)
-
 const dataciteCitationLocales = `
   enum CitationLocale {
     ${await fetchContent({
