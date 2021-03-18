@@ -3,14 +3,12 @@
   "version": "0.0.15",
   "description": "Build CLI applications declaratively",
   "type": "module",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "exports": {
-    "import": "./src/index.js",
-    "require": "./dist/index.js"
+    ".": "./dist/index.js"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "peerDependencies": {},
   "scripts": {

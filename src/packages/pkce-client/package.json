@@ -5,13 +5,9 @@
   "main": "dist/index.js",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./src/index.js",
-      "require": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {

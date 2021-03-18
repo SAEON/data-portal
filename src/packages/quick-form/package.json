@@ -4,13 +4,9 @@
   "description": "Quickly add localised state to your component tree",
   "main": "dist/index.js",
   "exports": {
-    ".": {
-      "import": "./src/index.js",
-      "require": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "files": [
-    "src",
     "dist"
   ],
   "peerDependencies": {
