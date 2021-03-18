@@ -49,7 +49,7 @@ export default makeStyles(theme => ({
   playButton: {
     marginRight: theme.spacing(1),
   },
-  cancelButton: {
+  saveButton: {
     marginLeft: 'auto',
   },
   tab: {

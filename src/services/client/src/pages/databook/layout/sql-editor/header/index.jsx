@@ -3,10 +3,11 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import clsx from 'clsx'
 import useStyles from '../../../style'
-import AddEditor from './_add-editor-button'
-import ExecuteQuery from './_execute-query-button'
-import AbortQuery from './_abort-query-button'
+import AddEditor from './_add-editor'
+import ExecuteQuery from './_execute-query'
+import AbortQuery from './_abort-query'
 import Label from '../../../components/tab-label'
+import SaveSql from './_save-sql'
 
 export default ({
   editors,
@@ -15,6 +16,7 @@ export default ({
   addEditorFn,
   executeQueryFn,
   cancelQueryFn,
+  saveSqlFn,
 }) => {
   const classes = useStyles()
   return (
@@ -38,6 +40,7 @@ export default ({
 
       {/* BUTTONS */}
       <AddEditor onClick={addEditorFn} />
+      <SaveSql onClick={saveSqlFn} />
       <AbortQuery onClick={cancelQueryFn} />
       <ExecuteQuery onClick={executeQueryFn} />
     </Toolbar>

@@ -11,6 +11,7 @@ export default ({ children, id }) => {
         databook(id: $id) {
           id
           tables
+          editors
           statusHash {
             id
           }

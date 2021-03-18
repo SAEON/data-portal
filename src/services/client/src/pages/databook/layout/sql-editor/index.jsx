@@ -8,14 +8,29 @@ import { nanoid } from 'nanoid'
 import Header from './header'
 import Editor from './editor'
 import useTheme from '@material-ui/core/styles/useTheme'
+import { gql, useMutation } from '@apollo/client'
 
 export default () => {
-  const { id: databookId } = useContext(databookContext)
+  const { id: databookId, editors: _editors } = useContext(databookContext)
   const { exeSqlQuery, cancelSqlQuery } = useContext(dataContext)
   const defaultSql = ''
   const classes = useStyles()
   const activeEditorRef = useRef()
   const theme = useTheme()
+
+  const [updateDatabook, { error }] = useMutation(
+    gql`
+      mutation updateDatabook($id: ID!, $editors: JSON) {
+        updateDatabook(id: $id, editors: $editors) {
+          id
+        }
+      }
+    `
+  )
+
+  if (error) {
+    console.error('Unable to update databook', error.message)
+  }
 
   /**
    * Ace editor maintains it's own state, but syncs to
@@ -23,12 +38,15 @@ export default () => {
    * is kept
    */
   const [activeTabIndex, setActiveTabIndex] = useLocalStorage(`${databookId}-activeEditorIndex`, 0)
-  const [editors, setEditors] = useLocalStorage(`${databookId}-editors`, [
-    {
-      id: nanoid(4),
-      sql: defaultSql,
-    },
-  ])
+  const [editors, setEditors] = useLocalStorage(
+    `${databookId}-editors`,
+    _editors || [
+      {
+        id: nanoid(4),
+        sql: defaultSql,
+      },
+    ]
+  )
 
   /**
    * Set the active editor on component load
@@ -53,6 +71,14 @@ export default () => {
           const { sql } = editors[activeTabIndex]
           exeSqlQuery(sql)
         }}
+        saveSqlFn={() => {
+          updateDatabook({
+            variables: {
+              id: databookId,
+              editors,
+            },
+          })
+        }}
         cancelQueryFn={cancelSqlQuery}
       />
 
@@ -71,13 +97,11 @@ export default () => {
             disableCloseBtn={editors.length < 2}
             activeEditorRef={activeEditorRef}
             updateCacheFn={sql => {
-              setImmediate(() => {
-                setEditors(
-                  [...editors].map(editor =>
-                    editor.id === id ? Object.assign({ ...editor }, { sql }) : editor
-                  )
+              setEditors(
+                [...editors].map(editor =>
+                  editor.id === id ? Object.assign({ ...editor }, { sql }) : editor
                 )
-              })
+              )
             }}
             closeEditorFn={() => {
               const newEditors = [...editors].filter(({ id: eId }) => id !== eId)

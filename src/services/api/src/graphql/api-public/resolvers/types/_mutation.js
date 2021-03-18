@@ -7,6 +7,7 @@ export default {
   persistSearchState: await _import('../mutations/persist-search-state.js'),
   createDashboard: await _import('../mutations/create-dashboard.js'),
   updateDashboard: await _import('../mutations/update-dashboard.js'),
+  updateDatabook: await _import('../mutations/update-databook.js'),
   deleteDashboard: await _import('../mutations/delete-dashboard.js'),
   dashboard: await _import('../mutations/dashboard.js'),
   createChart: await _import('../mutations/create-chart.js'),

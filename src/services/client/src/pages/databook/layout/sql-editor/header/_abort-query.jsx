@@ -14,9 +14,9 @@ export default ({ onClick }) => {
 
   return (
     <Tooltip title="Cancel running query" placement="left-start">
-      <span className={clsx(classes.cancelButton)}>
+      <span>
         <IconButton disabled={!loading} onClick={onClick} size="small">
-          <StopIcon style={!loading ? {} : { color: theme.palette.error.main }} />
+          <StopIcon size={20} style={!loading ? {} : { color: theme.palette.error.main }} />
         </IconButton>
       </span>
     </Tooltip>

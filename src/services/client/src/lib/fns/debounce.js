@@ -1,7 +1,9 @@
 export default (cb, duration = 0) => {
-  var timer
+  let timer
   return (...args) => {
     clearTimeout(timer)
-    timer = setTimeout(() => cb(...args), duration)
+    timer = setTimeout(() => {
+      cb(...args)
+    }, duration)
   }
 }

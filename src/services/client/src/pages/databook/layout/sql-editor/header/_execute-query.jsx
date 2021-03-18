@@ -12,7 +12,7 @@ export default ({ onClick }) => {
   return (
     <Tooltip title="Execute query" placement="left-start">
       <IconButton className={clsx(classes.playButton)} onClick={onClick} size="small">
-        <PlayIcon style={{ color: theme.palette.success.main }} />
+        <PlayIcon size={20} style={{ color: theme.palette.success.main }} />
       </IconButton>
     </Tooltip>
   )

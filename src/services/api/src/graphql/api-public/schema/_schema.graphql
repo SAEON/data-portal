@@ -84,6 +84,7 @@ type Mutation {
     description: String
     filters: [ID!]
   ): Dashboard!
+  updateDatabook(id: ID!, editors: JSON): Databook!
   # Return a Dashboard entity
   dashboard(id: ID!): Dashboard
   deleteDashboard(id: ID!): Boolean!
