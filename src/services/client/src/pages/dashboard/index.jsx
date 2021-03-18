@@ -2,7 +2,6 @@ import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks/use-share-link'
 import getUriState from '../../lib/fns/get-uri-state'
 import Loading from '../../components/loading'
-import Footer from '../../components/footer'
 import DashboardContextProvider from './context'
 import { gql, useQuery } from '@apollo/client'
 import AppBar from '@material-ui/core/AppBar'
@@ -33,7 +32,9 @@ export default ({ id }) => {
           subtitle
           description
           layout
-          filters
+          filters {
+            id
+          }
         }
       }
     `,
@@ -54,7 +55,8 @@ export default ({ id }) => {
     startPolling(POLLING_INTERVAL)
   }
 
-  const { layout, filters: filterIds, title, subtitle, description } = data.dashboard
+  const { layout, filters, title, subtitle, description } = data.dashboard
+  const filterIds = filters.map(({ id }) => id)
 
   return (
     <>
@@ -92,13 +94,8 @@ export default ({ id }) => {
               <Layout items={layout} />
             </div>
           </Grid>
-          {/* <Grid item xs={12} style={{ margin: '16px 0' }} />   */}
-          {/* <Grid item xs={12}> */}
-          {/* <Footer /> */}
-          {/* </Grid> */}
         </DashboardContextProvider>
       </Grid>
-      <Footer />
     </>
   )
 }

@@ -7,14 +7,27 @@ import clsx from 'clsx'
 
 export default ({ filter, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id } = filter
+  const { id, name } = filter
+
   return (
     <>
       {/* Header */}
-      <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>
-        <Typography>{id}</Typography>
-        <span style={{ marginLeft: 'auto' }} />
-        <Delete id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+      <Toolbar disableGutters className={clsx(classes.toolbar)} variant={'dense'}>
+        <div style={{ display: 'flex', width: '100%' }}>
+          <Typography
+            style={{
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}
+            variant="overline"
+          >
+            {name || id}
+          </Typography>
+        </div>
+        <div style={{ marginLeft: 'auto', display: 'flex' }}>
+          <Delete id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+        </div>
       </Toolbar>
 
       {/* Filter */}

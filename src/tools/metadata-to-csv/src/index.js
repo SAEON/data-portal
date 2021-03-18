@@ -26,7 +26,6 @@ stringify(
     })
     .map(
       ({ id, doi, subjects = [], titles = [], institution, collection, projects = [], schema }) => {
-        console.log(titles)
         return {
           id,
           doi,

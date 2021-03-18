@@ -5,6 +5,19 @@ import authenticateWithOdp from '../../lib/authenticate-with-odp.js'
 import fetch from 'node-fetch'
 import { gql } from 'apollo-server-koa'
 
+/**
+ * TODO
+ *
+ * This will fail when there are more than 10 000
+ * Elasticsearch results. To fix, make multiple
+ * trips to Elasticsearch to append to the client
+ * stream.
+ *
+ * This shouldn't be that complicated since the
+ * catalogue records endpoint already supports
+ * pagination
+ */
+
 const { ObjectID } = mongo
 
 export default async ctx => {

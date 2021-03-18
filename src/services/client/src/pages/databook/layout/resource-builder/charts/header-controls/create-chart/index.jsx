@@ -23,7 +23,7 @@ export default ({ setActiveTabIndex }) => {
       >
         <span>
           <IconButton
-            disabled={!Boolean(data?.length)}
+            disabled={!data?.length}
             style={{ marginLeft: theme.spacing(1) }}
             onClick={() => setOpen(true)}
             size="small"

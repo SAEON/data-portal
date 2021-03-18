@@ -10,7 +10,7 @@ export default () => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query filters($ids: [ID!]) {
+      query filters($ids: [ID!]!) {
         filters(ids: $ids) {
           id
           name
@@ -30,7 +30,6 @@ export default () => {
   }
 
   if (error) {
-    console.error(error)
     throw error
   }
 

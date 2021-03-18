@@ -1,20 +1,26 @@
-import ChartStub from './chart'
-import FilterStub from './filter'
-import Grid from '@material-ui/core/Grid'
+import Chart from './chart'
+import Filter from './filter'
+import Toolbar from '@material-ui/core/Toolbar'
+import useTheme from '@material-ui/core/styles/useTheme'
 import useStyles from '../style'
 import clsx from 'clsx'
 
-export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
-  const { id: dashboardId, filters: filterIds = [] } = dashboard
+export default ({ dashboardId, chartIds, filterIds, gridElRef, gridCache, gridItemsRef }) => {
   const classes = useStyles()
+  const theme = useTheme()
 
   return (
-    <>
-      <Grid container justify="center">
+    <div style={{ height: 'calc(100% - 48px)', position: 'relative' }}>
+      <Toolbar
+        disableGutters
+        style={{ marginRight: theme.spacing(4), marginLeft: theme.spacing(4), overflowX: 'auto' }}
+        variant="dense"
+      >
         {filterIds?.map(id => (
-          <FilterStub key={id} filterId={id} dashboard={dashboard} />
+          <Filter key={id} filterId={id} dashboardId={dashboardId} />
         ))}
-      </Grid>
+      </Toolbar>
+
       <div className={clsx(classes.gridContainer)}>
         <div ref={gridElRef} className={clsx('grid-stack', classes.grid)}>
           {chartIds?.map(id => {
@@ -23,7 +29,7 @@ export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
             )
             return (
               <div
-                ref={refs.current[id]}
+                ref={gridItemsRef.current[id]}
                 key={id}
                 className={clsx('grid-stack-item', classes.gridItem)}
                 {...Object.fromEntries(
@@ -34,7 +40,7 @@ export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
               >
                 <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>
                   <span id={id} data-type={'Chart'}>
-                    <ChartStub chart={id} dashboard={dashboard} />
+                    <Chart id={id} dashboardId={dashboardId} />
                   </span>
                 </div>
               </div>
@@ -42,6 +48,6 @@ export default ({ gridElRef, chartIds, gridCache, dashboard, refs }) => {
           })}
         </div>
       </div>
-    </>
+    </div>
   )
 }

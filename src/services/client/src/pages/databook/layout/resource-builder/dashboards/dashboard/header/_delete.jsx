@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
-import DeleteIcon from 'mdi-react/DeleteIcon'
+import DeleteIcon from 'mdi-react/TrashCanOutlineIcon'
 import { useMutation, gql } from '@apollo/client'
 import { context as databookContext } from '../../../../../contexts/databook-provider'
 

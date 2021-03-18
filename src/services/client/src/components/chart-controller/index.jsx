@@ -8,7 +8,7 @@ import Fade from '@material-ui/core/Fade'
 export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query($chartIds: [ID!]!, $filterIds: [ID!]) {
+      query($chartIds: [ID!]!, $filterIds: [ID!]!) {
         charts(ids: $chartIds) {
           id
           title

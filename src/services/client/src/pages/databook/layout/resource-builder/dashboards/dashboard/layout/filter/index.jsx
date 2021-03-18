@@ -1,46 +1,31 @@
-import { useContext } from 'react'
-import RemoveFilter from './_remove-filter'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import useStyles from './style'
-import clsx from 'clsx'
+import Chip from './_chip'
 import { gql, useQuery } from '@apollo/client'
-import { context as databookContext } from '../../../../../../contexts/databook-provider'
+import Loading from '../../../../../../../../components/loading-circular'
 
-export default ({ filterId, dashboard }) => {
-  const { id: databookId } = useContext(databookContext)
-  const classes = useStyles()
-
+export default ({ filterId, dashboardId }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query databook($id: ID!) {
-        databook(id: $id) {
+      query filters($ids: [ID!]!) {
+        filters(ids: $ids) {
           id
-          filters {
-            id
-            name
-          }
+          name
         }
       }
     `,
     {
-      variables: { id: databookId },
+      variables: { ids: [filterId] },
     }
   )
 
   if (loading) {
-    return <Typography variant="overline">{filterId}</Typography>
+    return <Loading />
   }
 
   if (error) {
     throw error
   }
 
-  const filterName = data?.filters[0].name
-  return (
-    <Grid item className={clsx(classes.filter)}>
-      <Typography variant="overline">{filterName || filterId}</Typography>
-      <RemoveFilter filterId={filterId} dashboard={dashboard} />
-    </Grid>
-  )
+  const filter = data.filters[0]
+
+  return <Chip {...filter} dashboardId={dashboardId} />
 }

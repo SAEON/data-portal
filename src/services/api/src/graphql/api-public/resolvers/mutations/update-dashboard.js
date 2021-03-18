@@ -5,27 +5,32 @@ export default async (_, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
   const { Dashboards } = await ctx.mongo.collections
 
-  //STEVEN: making sure to not overwrite layout(or any other property) when setting new values.
-  //There may be a better shorthand for this
-  const updates = {}
-  if (args.hasOwnProperty('layout')) updates.layout = args.layout
-  if (args.hasOwnProperty('title')) updates.title = args.title
-  if (args.hasOwnProperty('subtitle')) updates.subtitle = args.subtitle
-  if (args.hasOwnProperty('description')) updates.description = args.description
+  const { id, layout, filters, ...otherArgs } = args
+  const $set = { ...otherArgs, modifiedAt: new Date() }
 
-  const oldDashboard = await Dashboards.findOneAndUpdate(
-    { _id: ObjectID(args.id) },
+  // dashboard.layout requires changing strings to MongoIDs
+  if (layout) {
+    $set.layout = layout.map(item => ({
+      ...item,
+      content: { ...item.content, id: ObjectID(item.content.id) },
+    }))
+  }
+
+  // dashboard.filters requires changing strings to MongoIDs
+  if (filters) {
+    $set.filters = filters.map(id => ObjectID(id))
+  }
+
+  const response = await Dashboards.findOneAndUpdate(
+    { _id: ObjectID(id) },
     {
-      $set: updates,
+      $set,
+    },
+    {
+      returnOriginal: false,
+      upsert: false,
     }
-    // {
-    //   returnNewDocument: true,
-    //   upsert: false,
-    // }
   )
-  // const { value } = oldDashboard
-  // return value
-  //STEVEN: findOneAndUpdate keeps returning the dashboard pre-update value (despite returnNewDocument:true)
-  // so I set the return to find the updated value
-  return await Dashboards.findOne({ _id: ObjectID(args.id) })
+
+  return response.value
 }

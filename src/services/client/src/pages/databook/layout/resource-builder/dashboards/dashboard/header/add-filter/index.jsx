@@ -1,4 +1,4 @@
-import AddFilterIcon from 'mdi-react/FilterPlusOutlineIcon'
+import AddFilterIcon from 'mdi-react/FilterVariantPlusIcon'
 import MessageDialogue from '../../../../../../../../components/message-dialogue'
 import WithFilters from './_with-filters'
 import Form from './_form'
@@ -7,7 +7,7 @@ export default ({ id: dashboardId }) => (
   <MessageDialogue
     tooltipProps={{
       title: 'Add filter to current dashboard',
-      placement: 'bottom-start',
+      placement: 'left-start',
     }}
     title="Add filter"
     iconProps={{ size: 'small' }}

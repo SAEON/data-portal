@@ -29,7 +29,7 @@ export default () => {
               in={active === 'dashboards'}
               unmountOnExit
               mountOnEnter={false}
-              key="dasboards-in"
+              key="dashboards-in"
             >
               <span>
                 <Dashboards ref={ref} />

@@ -5,7 +5,7 @@ import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../../config'
 
 export default ({ id }) => {
   return (
-    <Tooltip title="Open dashboard" placement="bottom-start">
+    <Tooltip title="Open dashboard" placement="left-start">
       <IconButton
         onClick={() => {
           window.open(`${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`)

@@ -2,11 +2,10 @@ import { forwardRef } from 'react'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
-import Grid from '@material-ui/core/Grid'
 import useStyles from '../../../style'
 import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
 import ChartsIcon from 'mdi-react/ChartBoxOutlineIcon'
-import FilterIcon from 'mdi-react/FilterOutlineIcon'
+import FilterIcon from 'mdi-react/FilterVariantIcon'
 import clsx from 'clsx'
 import useTheme from '@material-ui/core/styles/useTheme'
 
@@ -16,24 +15,21 @@ export default forwardRef(({ active, setActive }, ref) => {
 
   return (
     <Toolbar disableGutters className={clsx(classes.toolbar)} variant="dense">
-      <Grid container justify="flex-start" style={{ overflow: 'hidden' }}>
-        {/* Allow children of sibling to populate the toolbar appropriately */}
-        <Grid item innerRef={ref} style={{ flexGrow: 1 }} />
-
-        {/* Toggle charts / dashboards / Filters */}
-        <Grid
-          item
+      <div style={{ display: 'flex', width: '100%' }}>
+        <div ref={ref} style={{ overflow: 'hidden' }} />
+        <div
           style={{
-            padding: '0 24px',
+            marginLeft: 'auto',
+            marginRight: theme.spacing(1),
             height: 48,
             lineHeight: `48px`,
             alignSelf: 'center',
             textAlign: 'center',
           }}
         >
-          <Tooltip title="Show dashboards">
+          <Tooltip placement="left-start" title="Show dashboards">
             <IconButton
-              style={{ marginRight: 10 }}
+              style={{ marginRight: theme.spacing(0.5) }}
               onClick={() => setActive('dashboards')}
               size="small"
             >
@@ -47,8 +43,12 @@ export default forwardRef(({ active, setActive }, ref) => {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Show charts">
-            <IconButton style={{ marginLeft: 10 }} onClick={() => setActive('charts')} size="small">
+          <Tooltip placement="left-start" title="Show charts">
+            <IconButton
+              style={{ marginLeft: theme.spacing(0.5) }}
+              onClick={() => setActive('charts')}
+              size="small"
+            >
               <ChartsIcon
                 style={{
                   color:
@@ -57,9 +57,9 @@ export default forwardRef(({ active, setActive }, ref) => {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Show Filters">
+          <Tooltip placement="left-start" title="Show Filters">
             <IconButton
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: theme.spacing(0.5) }}
               onClick={() => setActive('filters')}
               size="small"
             >
@@ -71,8 +71,8 @@ export default forwardRef(({ active, setActive }, ref) => {
               />
             </IconButton>
           </Tooltip>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </Toolbar>
   )
 })

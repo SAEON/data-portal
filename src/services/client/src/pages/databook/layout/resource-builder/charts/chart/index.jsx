@@ -6,27 +6,42 @@ import Share from './_share'
 import Edit from './_edit'
 import useStyles from './style'
 import clsx from 'clsx'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const EChart = lazy(() => import('../../../../../../components/chart-controller'))
 
 export default ({ chart, activeTabIndex, setActiveTabIndex }) => {
   const classes = useStyles()
-  const { id } = chart
+  const { id, title } = chart
+  const theme = useTheme()
 
   return (
     <>
-      <Toolbar className={clsx(classes.toolbar)} variant={'dense'}>
-        <Typography>{id}</Typography>
-        <span style={{ marginLeft: 'auto' }} />
-        <Edit id={id} />
-        <span style={{ marginRight: 8 }} />
-        <Share id={id} />
-        <span style={{ marginRight: 8 }} />
-        <Delete id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+      <Toolbar disableGutters className={clsx(classes.toolbar)} variant={'dense'}>
+        <div style={{ display: 'flex', width: '100%' }}>
+          <Typography
+            style={{
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}
+            variant="overline"
+          >
+            {title || id}
+          </Typography>
+        </div>
+
+        <div style={{ marginLeft: 'auto', display: 'flex' }}>
+          <Edit id={id} />
+          <span style={{ marginRight: theme.spacing(1) }} />
+          <Share id={id} />
+          <span style={{ marginRight: theme.spacing(1) }} />
+          <Delete id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+        </div>
       </Toolbar>
       <Suspense fallback={null}>
         <div style={{ height: 'calc(100% - 48px)', margin: 0, position: 'relative' }}>
-          <EChart style={{ padding: 16 }} id={id} />
+          <EChart style={{ padding: theme.spacing(4) }} id={id} />
         </div>
       </Suspense>
     </>

@@ -23,7 +23,9 @@ export default ({ closeDialogueFn, dashboardId, filters }) => {
           id
           addFilter(id: $filterId) {
             id
-            filters
+            filters {
+              id
+            }
           }
         }
       }
@@ -36,7 +38,9 @@ export default ({ closeDialogueFn, dashboardId, filters }) => {
               id
               dashboards {
                 id
-                filters
+                filters {
+                  id
+                }
               }
             }
           }
