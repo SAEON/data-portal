@@ -78,11 +78,7 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
                 {renameEntityLazy => {
                   const onEnter = () => {
                     setEditActive(false)
-                    const result = renameEntityLazy()
-                    if (result.error) {
-                      setText(tableName)
-                      alert('Unable to rename PostgreSQL object')
-                    }
+                    renameEntityLazy()
                   }
                   return (
                     <input
