@@ -5,7 +5,7 @@ import { ExpiredException } from './_custom-exceptions.js'
 
 const _fetch = uri => fetch(uri).then(res => res.json())
 
-const formatJson = json => json.map(str => str.replace(/-/g, '_')).join('\n')
+export const formatJson = json => json.map(str => str.replace(/-/g, '_')).join('\n')
 
 const MAX_CACHE_AGE_DAYS = 10
 
