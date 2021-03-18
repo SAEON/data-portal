@@ -4,8 +4,11 @@ import DialogActions from '@material-ui/core/DialogActions'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
 import LanguageSelector from './_language-selector'
 import StyleSelector from './_style-selector'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({
   doi,
@@ -14,6 +17,8 @@ export default ({
   DEFAULT_CITATION_LANG,
   DEFAULT_CITATION_STYLE,
 }) => {
+  const theme = useTheme()
+
   const { error, loading, data } = useQuery(
     gql`
       query($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
@@ -45,13 +50,15 @@ export default ({
 
   return (
     <>
+      <div style={{ marginTop: theme.spacing(3) }} />
+
       <LanguageSelector
         setCitationParams={setCitationParams}
         citationParams={citationParams}
         defaultLanguage={DEFAULT_CITATION_LANG}
       />
 
-      <div style={{ marginTop: 12 }} />
+      <div style={{ marginTop: theme.spacing(3) }} />
 
       <StyleSelector
         setCitationParams={setCitationParams}
@@ -59,10 +66,21 @@ export default ({
         defaultStyle={DEFAULT_CITATION_STYLE}
       />
 
-      <div style={{ marginTop: 24 }} />
+      <div style={{ marginTop: theme.spacing(6) }} />
 
-      <samp>{data.catalogue.records.nodes[0].citation}</samp>
-      <DialogActions>
+      <pre style={theme.pre}>{data.catalogue.records.nodes[0].citation}</pre>
+
+      <div style={{ marginTop: theme.spacing(3) }} />
+
+      <DialogActions style={{ paddingLeft: 0, paddingRight: 0 }}>
+        {/* DISCLAIMER */}
+        <Typography variant="caption" style={{ marginRight: 'auto' }}>
+          Powerd by{' '}
+          <Link target="_blank" rel="noopener noreferrer" href="https://citation.crosscite.org/">
+            crosscite.org
+          </Link>
+        </Typography>
+
         <Button
           aria-label="Copy citation"
           disabled={error || loading}
