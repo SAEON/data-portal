@@ -3,7 +3,7 @@ import babel from '@rollup/plugin-babel'
 import json from '@rollup/plugin-json'
 
 export default {
-  external: [/ol\//, 'react', /@babel\/runtime/],
+  external: [/ol\//, 'react', 'react/jsx-runtime', /@babel\/runtime/],
   input: ['src/index.js'],
   output: [
     {
@@ -29,7 +29,9 @@ export default {
             corejs: { version: 3, proposals: true },
           },
         ],
-        ['@babel/preset-react'],
+        ['@babel/preset-react', {
+          "runtime": "automatic"
+        }],
       ],
       plugins: [['@babel/plugin-transform-runtime'], ['@babel/plugin-proposal-class-properties']],
     }),
