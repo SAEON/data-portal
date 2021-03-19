@@ -1,4 +1,5 @@
 import 'react-resizable/css/styles.css'
+import { createPortal } from 'react-dom'
 import { useState, useEffect, forwardRef } from 'react'
 import Draggable from 'react-draggable'
 import { ResizableBox } from 'react-resizable'
@@ -38,7 +39,6 @@ export default forwardRef(
       PORTAL_MARGIN_LEFT,
 
       // From hook
-      renderMenu,
       getDefaultPosition,
       getActiveMenuZIndex,
 
@@ -115,7 +115,7 @@ export default forwardRef(
       )
     }
 
-    return renderMenu(
+    return createPortal(
       <div style={{ display: open ? 'block' : 'none' }}>
         <EventBoundary>
           {/* Snap ghost */}
@@ -417,7 +417,9 @@ export default forwardRef(
             </Draggable>
           </div>
         </EventBoundary>
-      </div>
+      </div>,
+
+      PORTAL
     )
   }
 )

@@ -9,13 +9,9 @@ export default {
   input: ['src/index.js', 'src/provider.jsx'],
   output: [
     {
-      dir: 'dist/cjs',
+      exports: 'auto',
+      dir: 'dist',
       format: 'cjs',
-      exports: "auto"
-    },
-    {
-      dir: 'dist/esm',
-      format: 'esm',
     },
   ],
   plugins: [
@@ -35,9 +31,7 @@ export default {
             corejs: { version: 3, proposals: true },
           },
         ],
-        ['@babel/preset-react', {
-          "runtime": "automatic"
-        }],
+        ['@babel/preset-react'],
       ],
       plugins: [['@babel/plugin-transform-runtime']],
     }),

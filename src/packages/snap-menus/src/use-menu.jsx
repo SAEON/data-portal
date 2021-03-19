@@ -1,5 +1,4 @@
 import { useRef, useContext } from 'react'
-import { createPortal } from 'react-dom'
 import SnapMenu from './menu/index.jsx'
 import context from './context.js'
 
@@ -52,7 +51,6 @@ export default ({ id }) => {
       PORTAL_MARGIN_BOTTOM={PORTAL_MARGIN_BOTTOM}
       PORTAL_MARGIN_LEFT={PORTAL_MARGIN_LEFT}
       // This hook
-      renderMenu={C => createPortal(C, PORTAL)}
       getDefaultPosition={getDefaultPosition}
       getActiveMenuZIndex={getActiveMenuZIndex}
       ref={ref}

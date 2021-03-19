@@ -2,19 +2,20 @@
   "name": "@saeon/snap-menus",
   "version": "5.3.4",
   "description": "Draggable, snappable menus",
-  "main": "dist/cjs/index.js",
+  "main": "src/index.js",
   "type": "module",
   "files": [
+    "src",
     "dist"
   ],
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
+      "import": "./src/index.jsx",
+      "require": "./dist/index.js"
     },
     "./provider": {
-      "require": "./dist/cjs/provider.js",
-      "import": "./dist/esm/provider.js"
+      "import": "./src/provider.jsx",
+      "require": "./dist/provider.js"
     }
   },
   "peerDependencies": {
