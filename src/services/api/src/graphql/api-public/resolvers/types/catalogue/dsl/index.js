@@ -5,7 +5,16 @@ import doisQuery from './_dois.js'
 import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
 
-export default ({ dsl, ids, dois, text, terms, extent, identifiers, isAggregation = false }) => {
+export default ({
+  dsl, // The base query
+  ids, // A list of ODP IDs
+  dois, // A list of DOIs
+  text, // Text to search
+  terms, // Terms to search
+  extent, // A GIS extent to limit by
+  identifiers, // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
+  isAggregation = false,
+}) => {
   if (isAggregation) {
     if (extent || terms?.length || text || ids?.length || dois?.length || identifiers?.length) {
       dsl.query = {
@@ -20,6 +29,8 @@ export default ({ dsl, ids, dois, text, terms, extent, identifiers, isAggregatio
   if (terms?.length || text) {
     dsl.min_score = min_score
   }
+
+  console.log('i am an identifier', identifiers)
 
   if (identifiers && identifiers.length) {
     dsl.query.bool.should = [idsQuery(identifiers), doisQuery(identifiers)]
