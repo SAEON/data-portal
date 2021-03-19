@@ -1,6 +1,10 @@
 import { insertList } from './db.js'
-import { spreadsheetId, range } from './config.js'
+import { spreadsheetId, range, CONNECTION_STRING } from './config.js'
 import { getValues } from './sheets.js'
+
+const CATALOGUE_CLIENT_HOST = CONNECTION_STRING.includes('localhost')
+  ? 'http://localhost:3001'
+  : 'https://catalogue.saeon.ac.za'
 
 /**
  * The res is actually a network response
@@ -24,7 +28,7 @@ for (const row of rows) {
     const savedList = await insertList(...row)
     const id = savedList.value?._id || savedList.lastErrorObject.upserted
     successes.push(
-      `${collectionName} ~ https://catalogue.saeon.ac.za/render/records?disableSidebar=true&search=${id}&showSearchBar=true`
+      `${collectionName} ~ ${CATALOGUE_CLIENT_HOST}/render/records?disableSidebar=true&search=${id}&showSearchBar=true`
     )
   } catch (error) {
     errors.push(`${collectionName}-v${version}`)
