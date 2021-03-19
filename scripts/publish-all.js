@@ -4,7 +4,7 @@ import { getDirname, apply, exec, print } from './tools.js'
 
 const __dirname = getDirname(import.meta.url)
 
-const TIMEOUT = 10000
+const TIMEOUT = 30000
 
 const ARGS = arg({
   '--semver': String,
