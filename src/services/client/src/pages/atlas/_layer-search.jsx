@@ -1,4 +1,4 @@
-import MenuProvider from '@saeon/snap-menus/src/provider'
+import MenuProvider from '@saeon/snap-menus/provider'
 import SideMenu from './side-menu'
 import Loading from '../../components/loading'
 import { useQuery, gql } from '@apollo/client'

@@ -41,6 +41,14 @@ module.exports = () => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
       alias: {
+
+        /**
+         * Webpack doesn't seem to respect the package.json
+         * exports field. That is why saeon packages are 
+         * referenced by dist folder, and not just the 
+         * package
+         */
+
         // OpenLayers
         'ol/control': path.resolve(__dirname, './node_modules/ol/control'),
         'ol/format': path.resolve(__dirname, './node_modules/ol/format'),
@@ -65,19 +73,19 @@ module.exports = () => {
         // @saeon/quick-form
         '@saeon/quick-form': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/quick-form' : '../../packages/quick-form'
+          mode === 'production' ? './node_modules/@saeon/quick-form/dist/esm' : '../../packages/quick-form/dist/esm'
         ),
 
         // @saeon/snap-menus
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus'
+          mode === 'production' ? './node_modules/@saeon/snap-menus/dist/esm' : '../../packages/snap-menus/dist/esm'
         ),
 
         // @saeon/ol-react
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/ol-react' : '../../packages/ol-react'
+          mode === 'production' ? './node_modules/@saeon/ol-react/dist/esm' : '../../packages/ol-react/dist/esm'
         ),
 
         // @saeon/logger

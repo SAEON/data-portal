@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "googleapis": "^67.1.1",
+    "googleapis": "^68.0.0",
     "mongodb": "^3.6.5",
     "prettier": "^2.2.1"
   },
