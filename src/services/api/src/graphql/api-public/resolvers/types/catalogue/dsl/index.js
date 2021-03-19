@@ -7,12 +7,12 @@ import min_score from './_min-score.js'
 
 export default ({
   dsl, // The base query
-  ids, // A list of ODP IDs
-  dois, // A list of DOIs
+  ids = [], // A list of ODP IDs
+  dois = [], // A list of DOIs
   text, // Text to search
   terms, // Terms to search
   extent, // A GIS extent to limit by
-  identifiers, // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
+  identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
   isAggregation = false,
 }) => {
   if (isAggregation) {
@@ -30,8 +30,10 @@ export default ({
     dsl.min_score = min_score
   }
 
-  console.log('i am an identifier', identifiers)
-
+  /**
+   * Collapse DOIs, IDs, and identifiers args
+   */
+  identifiers = [...identifiers, ...ids, ...dois]
   if (identifiers && identifiers.length) {
     dsl.query.bool.should = [idsQuery(identifiers), doisQuery(identifiers)]
     dsl.query.bool.filter = [
@@ -41,24 +43,29 @@ export default ({
         },
       },
     ]
-  } else if (ids && ids.length) {
-    dsl.query.bool.must = [idsQuery(ids)]
-    dsl.query.bool.filter = [idsQuery(ids)]
-  } else if (dois && dois.length) {
-    dsl.query.bool.must = [doisQuery(dois)]
-    dsl.query.bool.filter = [doisQuery(dois)]
-  } else {
-    if (text) {
-      dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(text.toLowerCase())]
-    }
-    if (terms?.length) {
-      dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
-      dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
-    }
-    if (extent) {
-      dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
-      dsl.query.bool.filter = [...dsl.query.bool.filter, geoShape(extent)]
-    }
+  }
+
+  /**
+   * Text search applied to many field
+   */
+  if (text) {
+    dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(text.toLowerCase())]
+  }
+
+  /**
+   * Terms (exact matches)
+   */
+  if (terms?.length) {
+    dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
+    dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
+  }
+
+  /**
+   * Extent
+   */
+  if (extent) {
+    dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
+    dsl.query.bool.filter = [...dsl.query.bool.filter, geoShape(extent)]
   }
 
   return dsl
