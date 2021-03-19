@@ -5,7 +5,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 import postcss from 'rollup-plugin-postcss'
 
 export default {
-  external: [/@material-ui\//, 'react', 'react-dom', 'clsx', /@babel\/runtime/],
+  external: [/@material-ui\//, 'react', 'react-dom', 'react/jsx-runtime', 'clsx', /@babel\/runtime/],
   input: ['src/index.js', 'src/provider.jsx'],
   output: [
     {
@@ -35,7 +35,9 @@ export default {
             corejs: { version: 3, proposals: true },
           },
         ],
-        ['@babel/preset-react'],
+        ['@babel/preset-react', {
+          "runtime": "automatic"
+        }],
       ],
       plugins: [['@babel/plugin-transform-runtime']],
     }),
