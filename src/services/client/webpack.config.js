@@ -79,7 +79,7 @@ module.exports = () => {
         // @saeon/snap-menus
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/snap-menus/dist/esm' : '../../packages/snap-menus/dist/esm'
+          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus'
         ),
 
         // @saeon/ol-react

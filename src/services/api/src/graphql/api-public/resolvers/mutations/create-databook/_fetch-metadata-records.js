@@ -9,8 +9,8 @@ export default async (search, ctx) => {
     terms = undefined,
     text = undefined,
     size = 200,
-    ids = undefined,
-    dois = undefined,
+    ids = [],
+    dois = [],
   } = search
 
   const searchResult = await graphql(

@@ -49,7 +49,6 @@ export default () => {
         left: 0,
       }}
     >
-      {' '}
       <LayerSearch
         snapMenusContainer={snapMenusContainer}
         referrer={referrer}
