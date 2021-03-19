@@ -24,14 +24,16 @@ const errors = []
 
 for (const row of rows) {
   const [collectionName, , version] = row
+  const hashedSearch = `${collectionName}-v${version}`
+
   try {
     const savedList = await insertList(...row)
     const id = savedList.value?._id || savedList.lastErrorObject.upserted
     successes.push(
-      `${collectionName} ~ ${CATALOGUE_CLIENT_HOST}/render/records?disableSidebar=true&search=${id}&showSearchBar=true`
+      `${collectionName} ~ ${CATALOGUE_CLIENT_HOST}/render/records?search=${id}&showSearchBar=true&disableSidebar=false&referrer=${hashedSearch}`
     )
   } catch (error) {
-    errors.push(`${collectionName}-v${version}`)
+    errors.push(hashedSearch)
   }
 }
 
