@@ -9,9 +9,13 @@ export default {
   input: ['src/index.js', 'src/provider.jsx'],
   output: [
     {
-      exports: 'auto',
-      dir: 'dist',
+      dir: 'dist/cjs',
       format: 'cjs',
+      exports: "auto"
+    },
+    {
+      dir: 'dist/esm',
+      format: 'esm',
     },
   ],
   plugins: [

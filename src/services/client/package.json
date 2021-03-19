@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/catalogue.git"
+    "url": "git+https://github.com/SAEON/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/catalogue/issues"
+    "url": "https://github.com/SAEON/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/client#readme",
+  "homepage": "https://github.com/SAEON/catalogue/tree/master/src/@saeon/client#readme",
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {

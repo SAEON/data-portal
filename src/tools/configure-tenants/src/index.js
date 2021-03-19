@@ -15,15 +15,29 @@ const { data } = await getValues(spreadsheetId, range)
  * for the purposes of this function
  */
 const rows = data.values.slice(1)
+const successes = []
+const errors = []
 
 for (const row of rows) {
-  const [collectionName] = row
-  const savedList = await insertList(...row)
-  const id = savedList.value?._id || savedList.lastErrorObject.upserted
-  console.log(
-    collectionName,
-    `https://catalogue.saeon.ac.za/render/records?disableSidebar=true&search=${id}&showSearchBar=false`
-  )
+  const [collectionName, , version] = row
+  try {
+    const savedList = await insertList(...row)
+    const id = savedList.value?._id || savedList.lastErrorObject.upserted
+    successes.push(
+      `${collectionName} ~ https://catalogue.saeon.ac.za/render/records?disableSidebar=true&search=${id}&showSearchBar=true`
+    )
+  } catch (error) {
+    errors.push(`${collectionName}-v${version}`)
+  }
+}
+
+console.log('SUCCESSFUL UPDATES', '\n')
+console.log(successes.join('\n'))
+console.log('\n\n')
+
+if (errors.length) {
+  console.log('FAILED UPDATES', '\n')
+  console.log(errors.join('\n'))
 }
 
 process.exit(0)

@@ -6,8 +6,12 @@ export default {
   input: 'src/index.js',
   output: [
     {
-      dir: 'dist',
+      dir: 'dist/cjs',
       format: 'cjs',
+    },
+    {
+      dir: 'dist/esm',
+      format: 'esm',
     },
   ],
   plugins: [

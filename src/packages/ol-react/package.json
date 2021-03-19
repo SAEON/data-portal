@@ -30,12 +30,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/catalogue.git"
+    "url": "git+https://github.com/SAEON/catalogue.git"
   },
   "bugs": {
-    "url": "https://github.com/SAEONData/catalogue/issues"
+    "url": "https://github.com/SAEON/catalogue/issues"
   },
-  "homepage": "https://github.com/SAEONData/catalogue/tree/master/src/@saeon/ol-react",
+  "homepage": "https://github.com/SAEON/catalogue/tree/next/src/packages/ol-react",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {

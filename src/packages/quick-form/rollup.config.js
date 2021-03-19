@@ -5,9 +5,13 @@ export default {
   input: ['src/index.js'],
   output: [
     {
-      exports: 'auto',
-      dir: 'dist',
+      dir: 'dist/cjs',
       format: 'cjs',
+      exports: "default"
+    },
+    {
+      dir: 'dist/esm',
+      format: 'esm',
     },
   ],
   plugins: [

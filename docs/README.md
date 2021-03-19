@@ -1,5 +1,5 @@
 # Source code
-A public release of the latest stable source code is available [HERE](https://github.com/SAEONData/catalogue)
+A public release of the latest stable source code is available [HERE](https://github.com/SAEON/catalogue)
 
 # Deployment
 Deploy the software stack via the `docker-compose` CLI. From the root directory of the source code run the following shell command:

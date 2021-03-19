@@ -25,6 +25,7 @@ export const insertList = (
   DOIs
 ) => {
   const hashedSearch = `${collectionName}-v${version}`
+
   return db
     .then(db => db.collection('lists'))
     .then(Lists =>

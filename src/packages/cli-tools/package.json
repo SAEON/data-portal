@@ -2,14 +2,17 @@
   "name": "@saeon/cli-tools",
   "version": "0.0.16",
   "description": "Build CLI applications declaratively",
+  "main": "dist/cjs/index.js",
   "type": "module",
-  "main": "./dist/index.js",
-  "exports": {
-    ".": "./dist/index.js"
-  },
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
   "peerDependencies": {},
   "scripts": {
     "build": "rm -rf dist && rollup --config rollup.config.js",
@@ -30,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/single-sign-on/single-sign-on/issues"
   },
-  "homepage": "https://github.com/single-sign-on/single-sign-on/tree/master/src/@single-sign-on/cli-tools",
+  "homepage": "https://github.com/single-sign-on/single-sign-on/tree/next/src/@single-sign-on/cli-tools",
   "author": "zach@single-sign-on.ac.za",
   "license": "MIT",
   "dependencies": {

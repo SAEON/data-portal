@@ -7,7 +7,7 @@ export const CATALOGUE_DEPLOYMENT_ENV = process.env.CATALOGUE_DEPLOYMENT_ENV
 export const CATALOGUE_CLIENT_DEFAULT_NOTICES = process.env.CATALOGUE_CLIENT_DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
 
 export const CATALOGUE_SOURCE_CODE_URI =
-  process.env.CATALOGUE_SOURCE_CODE_URI || 'https://github.com/SAEONData/catalogue'
+  process.env.CATALOGUE_SOURCE_CODE_URI || 'https://github.com/SAEON/catalogue'
 
 export const CATALOGUE_CURATOR_CONTACT =
   process.env.CATALOGUE_CURATOR_CONTACT || 'curation@saeon.ac.za'

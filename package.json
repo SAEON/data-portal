@@ -49,7 +49,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAEONData/catalogue.git"
+    "url": "git+https://github.com/SAEON/catalogue.git"
   },
-  "homepage": "https://github.com/SAEONData/catalogue"
+  "homepage": "https://github.com/SAEON/catalogue"
 }
