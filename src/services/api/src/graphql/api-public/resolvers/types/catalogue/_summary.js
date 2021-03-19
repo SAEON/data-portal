@@ -157,8 +157,26 @@ export default async (_, args, ctx) => {
     ),
   }
 
+  /**
+   * It's fine to run an aggregation with no query
+   * defined - that would just not limit the index
+   * by a query
+   *
+   * It's also necessary to be ablt to run an aggregation
+   * over a subset of docs. To do this, a query must be
+   * defined in addition to the aggregation
+   */
+  if (extent || terms?.length || text || ids?.length || dois?.length || identifiers?.length) {
+    dsl.query = {
+      bool: {
+        must: [],
+        filter: [],
+      },
+    }
+  }
+
   const result = await catalogue.query(
-    buildDsl({ dsl, ids, dois, text, terms, identifiers, extent, isAggregation: true })
+    buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
   )
 
   return Object.entries(result.aggregations).map(([name, result]) => {

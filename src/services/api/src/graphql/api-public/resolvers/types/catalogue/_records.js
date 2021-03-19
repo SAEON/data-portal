@@ -7,7 +7,8 @@ import buildDsl from './dsl/index.js'
  * I haven't found a way to check if there is a previous page
  * if only a before cursor is specified (and the results.length
  * === pageSize). Pagination is not as good as it could be as a
- * result
+ * result. I suspect there is a better way of querying ES than
+ * this.
  */
 
 export default async (_, args, ctx) => {
@@ -62,9 +63,7 @@ export default async (_, args, ctx) => {
     dsl.search_after = [cursor.score || 0, cursor.id]
   }
 
-  const data = await catalogue.query(
-    buildDsl({ dsl, ids, dois, text, terms, extent, identifiers, isAggregation: false })
-  )
+  const data = await catalogue.query(buildDsl({ dsl, ids, dois, text, terms, extent, identifiers }))
 
   if (data.error) {
     return new GraphQLError(`${JSON.stringify(data.error, null, 2)}`)

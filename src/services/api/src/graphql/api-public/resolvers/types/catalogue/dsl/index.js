@@ -13,19 +13,7 @@ export default ({
   terms, // Terms to search
   extent, // A GIS extent to limit by
   identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
-  isAggregation = false,
 }) => {
-  if (isAggregation) {
-    if (extent || terms?.length || text || ids?.length || dois?.length || identifiers?.length) {
-      dsl.query = {
-        bool: {
-          must: [],
-          filter: [],
-        },
-      }
-    }
-  }
-
   if (terms?.length || text) {
     dsl.min_score = min_score
   }
