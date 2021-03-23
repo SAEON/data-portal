@@ -2,16 +2,7 @@ import 'react-resizable/css/styles.css'
 import { createPortal } from 'react-dom'
 import { useState, useEffect, forwardRef } from 'react'
 import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
 import Fade from '@material-ui/core/Fade'
-import CloseIcon from '@material-ui/icons/Close'
-import MinimizeIcon from '@material-ui/icons/Minimize'
-import MaximizeIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import useStyles from './style.js'
 import getDimensions from './fns/get-dimensions.js'
 import getPosition from './fns/get-position.js'
@@ -19,6 +10,8 @@ import clsx from 'clsx'
 import DragContainer from './drag-container/index.jsx'
 import ResizeContainer from './resize-container/index.jsx'
 import EventBoundary from './event-boundary.jsx'
+import MenuHeader from './header/index.jsx'
+import MenuContent from './content/index.jsx'
 
 const MENU_HEADER_HEIGHT = 25
 
@@ -162,100 +155,17 @@ export default forwardRef(
                       defaultHeight={defaultHeight}
                     >
                       <div style={{ height: '100%', position: 'relative' }}>
-                        <CardContent style={{ padding: 0 }}>
-                          <AppBar position="relative" variant="outlined">
-                            <Toolbar
-                              style={{ cursor: draggable ? 'grab' : 'default', minHeight: '25px' }}
-                              disableGutters
-                              className={clsx({
-                                'drag-handle': draggable ? true : false,
-                              })}
-                            >
-                              {state.minimized ? undefined : (
-                                <Typography
-                                  style={{ margin: 'auto', fontSize: '0.7em' }}
-                                  variant="overline"
-                                >
-                                  {title}
-                                </Typography>
-                              )}
-                              <div style={{ position: 'absolute', right: 0 }}>
-                                {disableMinify ? undefined : (
-                                  <Tooltip
-                                    title={
-                                      state.minimized ? `Expand ${title}` : `Collapse ${title}`
-                                    }
-                                  >
-                                    <IconButton
-                                      onTouchStart={onMinify}
-                                      onClick={onMinify}
-                                      edge="start"
-                                      color="inherit"
-                                      style={{
-                                        order: 2,
-                                        marginLeft: 'auto',
-                                        padding: 2,
-                                      }}
-                                      size="small"
-                                      aria-label="close"
-                                    >
-                                      {state.minimized ? (
-                                        <Fade key="menu-minimized" in={state.minimized}>
-                                          <MaximizeIcon fontSize="small" />
-                                        </Fade>
-                                      ) : (
-                                        <span>
-                                          <Fade key="menu-maximized" in={!state.minimized}>
-                                            <MinimizeIcon fontSize="small" />
-                                          </Fade>
-                                        </span>
-                                      )}
-                                    </IconButton>
-                                  </Tooltip>
-                                )}
-
-                                {onClose ? (
-                                  <Tooltip title={open ? `Close ${title}` : ''}>
-                                    <IconButton
-                                      onTouchStart={onClose}
-                                      onClick={() => onClose()}
-                                      edge="start"
-                                      color="inherit"
-                                      style={{
-                                        order: 2,
-                                        marginLeft: 'auto',
-                                        padding: 2,
-                                      }}
-                                      aria-label="close"
-                                      size="small"
-                                    >
-                                      <CloseIcon fontSize="small" />
-                                    </IconButton>
-                                  </Tooltip>
-                                ) : null}
-                              </div>
-                            </Toolbar>
-                          </AppBar>
-                        </CardContent>
-
-                        <div
-                          className={clsx({
-                            [classes.menuContent]: true,
-                          })}
-                        >
-                          <div
-                            className={clsx({
-                              [classes.resizing]: state.isResizing,
-                            })}
-                          >
-                            {typeof children === 'function'
-                              ? children({
-                                  height: state.dimensions.height - 31,
-                                  width: state.dimensions.width,
-                                })
-                              : children}
-                          </div>
-                        </div>
+                        <MenuHeader
+                          draggable={draggable}
+                          state={state}
+                          title={title}
+                          onMinify={onMinify}
+                          disableMinify={disableMinify}
+                          onClose={onClose}
+                        />
+                        <MenuContent state={state} classes={classes}>
+                          {children}
+                        </MenuContent>
                       </div>
                     </ResizeContainer>
                   </Card>
