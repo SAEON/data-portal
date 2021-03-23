@@ -1,8 +1,6 @@
 import 'react-resizable/css/styles.css'
 import { createPortal } from 'react-dom'
 import { useState, useEffect, forwardRef } from 'react'
-import Draggable from 'react-draggable'
-import { ResizableBox } from 'react-resizable'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import AppBar from '@material-ui/core/AppBar'
@@ -15,17 +13,13 @@ import CloseIcon from '@material-ui/icons/Close'
 import MinimizeIcon from '@material-ui/icons/Minimize'
 import MaximizeIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import useStyles from './style.js'
-import debounce from '../lib/debounce.js'
-import EventBoundary from '../lib/event-boundary.jsx'
-import getDimensions from './get-dimensions.js'
-import getSnapZone from './get-snap-zone.js'
-import getPosition from './get-position.js'
+import getDimensions from './fns/get-dimensions.js'
+import getPosition from './fns/get-position.js'
 import clsx from 'clsx'
-import parseEventXY from './parse-event-x-y.js'
-import offset from '../lib/offset.js'
+import DragContainer from './drag-container/index.jsx'
+import ResizeContainer from './resize-container/index.jsx'
+import EventBoundary from './event-boundary.jsx'
 
-var allowInteractions = true
-var timer
 const MENU_HEADER_HEIGHT = 25
 
 export default forwardRef(
@@ -116,8 +110,8 @@ export default forwardRef(
     }
 
     return createPortal(
-      <div style={{ display: open ? 'block' : 'none' }}>
-        <EventBoundary>
+      <EventBoundary>
+        <div style={{ display: open ? 'block' : 'none' }}>
           {/* Snap ghost */}
           <div
             style={{
@@ -135,184 +129,37 @@ export default forwardRef(
           </div>
 
           {/* Menu */}
-          <div style={{ position: 'absolute' }}>
-            <Draggable
-              axis="both"
-              handle=".drag-handle"
-              defaultPosition={
-                defaultSnap
-                  ? getPosition(defaultSnap, PORTAL, GHOST_GUTTER_X)
-                  : defaultPosition || getDefaultPosition()
-              }
-              bounds={{ left: 0, top: 0 }}
-              position={state.position}
-              grid={[1, 1]}
-              scale={1}
-              onStart={ev => {
-                /**
-                 * Stop interactions with the menus for 1 second
-                 */
-                allowInteractions = false
-                clearTimeout(timer)
-                timer = setTimeout(() => (allowInteractions = true), 100)
-
-                const { x, y } = parseEventXY(ev)
-                const { target } = ev
-                const { className } = target
-
-                /**
-                 * Make sure that drag-handle is the event target
-                 * There can be other elements in the header that
-                 * SHOULD NOT trigger drag
-                 */
-                if (typeof className !== 'string') return
-
-                /**
-                 * If the drag handle is selected
-                 * update the zIndex
-                 */
-                setZIndex(getActiveMenuZIndex())
-
-                /**
-                 * previousDimensions is only set when
-                 * a menu is 'snapped'
-                 */
-                if (state.previousDimensions && !state.minimized) {
-                  setState(
-                    Object.assign(
-                      { ...state },
-                      {
-                        position: {
-                          x: x - state.previousDimensions.width / 2 - offset(PORTAL).left,
-                          y: y - 15 - offset(PORTAL).top,
-                        },
-                        dimensions: Object.assign(
-                          { ...state.previousDimensions },
-                          {
-                            height: state.minimized
-                              ? MENU_HEADER_HEIGHT
-                              : state.maximizedHeight || state.previousDimensions.height,
-                          }
-                        ),
-                        previousDimensions: null,
-                        maximizedHeight: defaultHeight,
-                      }
-                    )
-                  )
-                }
-              }}
-              onDrag={debounce(ev => {
-                const { x, y } = parseEventXY(ev)
-
-                /**
-                 * Check if the user is hovering over a snap zone
-                 */
-                const newSnapZone = getSnapZone(x, y, PORTAL)
-
-                if (snapZone && !newSnapZone) {
-                  setSnapZone(null)
-                } else if (newSnapZone) {
-                  setSnapZone(newSnapZone)
-                }
-              }, 10)}
-              onStop={ev => {
-                /**
-                 * For touch devices, this event
-                 * is fired twice. discard the non-touch
-                 * event (but either could be discarded)
-                 */
-                if (ev.constructor !== TouchEvent && ev.constructor !== MouseEvent) {
-                  return
-                }
-
-                const { x, y } = parseEventXY(ev)
-
-                /**
-                 * Reset state.snapZone (used by the ghost component)
-                 */
-                setSnapZone(undefined)
-
-                /**
-                 * Check if the menu has been
-                 * dropped in a snap zone
-                 *
-                 * allowInteractions is false for
-                 * 100ms after a menu is clicked
-                 * to prevent immediate snapping
-                 */
-                const snapZone = allowInteractions ? getSnapZone(x, y, PORTAL) : undefined
-
-                if (snapZone) {
-                  setState(
-                    Object.assign(
-                      { ...state },
-                      {
-                        minimized: false,
-                        snapped: true,
-                        dimensions: getDimensions(snapZone, PORTAL, GHOST_GUTTER_X),
-                        position: getPosition(snapZone, PORTAL, GHOST_GUTTER_X),
-                        previousDimensions: state.dimensions,
-                      }
-                    )
-                  )
-                } else {
-                  setState(
-                    Object.assign(
-                      { ...state },
-                      {
-                        snapped: false,
-                        position: undefined,
-                      }
-                    )
-                  )
-                }
-              }}
-            >
-              <div
-                style={Object.assign(style, {
-                  opacity,
-                  zIndex,
-                  position: 'relative',
-                })}
+          <Fade key="menu-fade" in={open}>
+            <div style={{ position: 'absolute' }}>
+              <DragContainer
+                draggable={draggable}
+                defaultSnap={defaultSnap}
+                defaultHeight={defaultHeight}
+                defaultPosition={defaultPosition}
+                getDefaultPosition={getDefaultPosition}
+                state={state}
+                setState={setState}
+                setZIndex={setZIndex}
+                getActiveMenuZIndex={getActiveMenuZIndex}
+                PORTAL={PORTAL}
+                snapZone={snapZone}
+                setSnapZone={setSnapZone}
+                GHOST_GUTTER_X={GHOST_GUTTER_X}
               >
-                <Fade key="menu-fade" in={open}>
+                <div
+                  style={Object.assign(style, {
+                    opacity,
+                    zIndex,
+                    position: 'relative',
+                  })}
+                >
                   <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">
-                    <ResizableBox
-                      resizeHandles={resizable ? ['se'] : []}
-                      width={state.dimensions.width}
-                      height={state.dimensions.height}
-                      axis={resizable ? 'both' : 'none'}
-                      minConstraints={[Math.min(250, defaultWidth), Math.min(200, defaultHeight)]}
-                      draggableOpts={{ grid: [1, 1] }}
-                      onResizeStart={() => {
-                        if (!resizable) return
-                        setState(
-                          Object.assign(
-                            { ...state },
-                            {
-                              isResizing: true,
-                              dimensions: { ...state.dimensions },
-                            }
-                          )
-                        )
-                      }}
-                      onResizeStop={(e, { size }) => {
-                        if (!resizable) return
-                        setState(
-                          Object.assign(
-                            { ...state },
-                            {
-                              snapped: false,
-                              previousDimensions: null,
-                              dimensions: {
-                                width: size.width,
-                                height: size.height,
-                              },
-                              isResizing: false,
-                            }
-                          )
-                        )
-                      }}
+                    <ResizeContainer
+                      resizable={resizable}
+                      state={state}
+                      setState={setState}
+                      defaultWidth={defaultWidth}
+                      defaultHeight={defaultHeight}
                     >
                       <div style={{ height: '100%', position: 'relative' }}>
                         <CardContent style={{ padding: 0 }}>
@@ -410,14 +257,14 @@ export default forwardRef(
                           </div>
                         </div>
                       </div>
-                    </ResizableBox>
+                    </ResizeContainer>
                   </Card>
-                </Fade>
-              </div>
-            </Draggable>
-          </div>
-        </EventBoundary>
-      </div>,
+                </div>
+              </DragContainer>
+            </div>
+          </Fade>
+        </div>
+      </EventBoundary>,
 
       PORTAL
     )
