@@ -1,6 +1,6 @@
-import CloseIcon from '@material-ui/icons/Close'
-import MinimizeIcon from '@material-ui/icons/Minimize'
-import MaximizeIcon from '@material-ui/icons/CheckBoxOutlineBlank'
+import CloseIcon from 'mdi-react/CloseIcon'
+import MinimizeIcon from 'mdi-react/WindowMinimizeIcon'
+import MaximizeIcon from 'mdi-react/WindowMaximizeIcon'
 import CardContent from '@material-ui/core/CardContent'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -30,8 +30,8 @@ export default ({ draggable, state, title, onMinify, disableMinify, onClose }) =
             {title}
           </Typography>
 
-          {/* MINIFY */}
           <div style={{ position: 'absolute', right: 0 }}>
+            {/* MINIFY */}
             <IconButton
               onTouchStart={onMinify}
               onClick={onMinify}
@@ -48,8 +48,8 @@ export default ({ draggable, state, title, onMinify, disableMinify, onClose }) =
               size="small"
               aria-label="close"
             >
-              {state.minimized && <MaximizeIcon fontSize="small" />}
-              {!state.minimized && <MinimizeIcon fontSize="small" />}
+              {state.minimized && <MaximizeIcon size="20" />}
+              {!state.minimized && <MinimizeIcon size="20" />}
             </IconButton>
 
             {/* CLOSE */}
@@ -69,7 +69,7 @@ export default ({ draggable, state, title, onMinify, disableMinify, onClose }) =
               aria-label="close"
               size="small"
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon size="20" />
             </IconButton>
           </div>
         </Toolbar>

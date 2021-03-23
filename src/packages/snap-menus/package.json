@@ -9,18 +9,18 @@
   ],
   "exports": {
     ".": {
-      "import": "./src/index.jsx",
+      "import": "./dist/esm/index.jsx",
       "require": "./dist/cjs/index.js"
     },
     "./provider": {
-      "import": "./src/provider.jsx",
+      "import": "./dist/esm/provider.jsx",
       "require": "./dist/cjs/provider.js"
     }
   },
   "peerDependencies": {
     "@material-ui/core": ">=4",
-    "@material-ui/icons": ">=4",
     "clsx": "*",
+    "mdi-react": "^7.5.0",
     "react": "*",
     "react-dom": "*",
     "react-draggable": "*",
@@ -56,6 +56,7 @@
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
+    "mdi-react": "^7.5.0",
     "npm-check-updates": "^11.3.0",
     "postcss": "^8.2.8",
     "react-draggable": "^4.4.3",

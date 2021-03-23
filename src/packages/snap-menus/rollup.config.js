@@ -7,6 +7,7 @@ import postcss from 'rollup-plugin-postcss'
 export default {
   external: [
     /@material-ui\//,
+    'mdi-react',
     'react',
     'react-dom',
     'react/jsx-runtime',
