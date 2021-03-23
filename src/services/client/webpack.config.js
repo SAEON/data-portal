@@ -41,11 +41,10 @@ module.exports = () => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
       alias: {
-
         /**
          * Webpack doesn't seem to respect the package.json
-         * exports field. That is why saeon packages are 
-         * referenced by dist folder, and not just the 
+         * exports field. That is why saeon packages are
+         * referenced by dist folder, and not just the
          * package
          */
 
@@ -73,19 +72,23 @@ module.exports = () => {
         // @saeon/quick-form
         '@saeon/quick-form': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/quick-form/dist/esm' : '../../packages/quick-form/dist/esm'
+          mode === 'production'
+            ? './node_modules/@saeon/quick-form/dist/esm'
+            : '../../packages/quick-form/dist/esm'
         ),
 
         // @saeon/snap-menus
         '@saeon/snap-menus': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/snap-menus' : '../../packages/snap-menus'
+          mode === 'production' ? './node_modules/@saeon/snap-menus/dist/esm' : '../../packages/snap-menus/src'
         ),
 
         // @saeon/ol-react
         '@saeon/ol-react': path.resolve(
           __dirname,
-          mode === 'production' ? './node_modules/@saeon/ol-react/dist/esm' : '../../packages/ol-react/dist/esm'
+          mode === 'production'
+            ? './node_modules/@saeon/ol-react/dist/esm'
+            : '../../packages/ol-react/dist/esm'
         ),
 
         // @saeon/logger

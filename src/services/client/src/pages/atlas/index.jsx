@@ -49,11 +49,7 @@ export default () => {
         left: 0,
       }}
     >
-      <LayerSearch
-        snapMenusContainer={snapMenusContainer}
-        referrer={referrer}
-        search={data.atlas.search}
-      />
+      <LayerSearch ref={snapMenusContainer} referrer={referrer} search={data.atlas.search} />
     </div>
   )
 }

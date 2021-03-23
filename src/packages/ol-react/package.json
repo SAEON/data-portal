@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "ol": ">=6",
-    "react": ">=17.0"
+    "react": "*"
   },
   "scripts": {
     "build": "rimraf ./dist && rollup --config rollup.config.js",
@@ -50,7 +50,7 @@
     "@rollup/plugin-node-resolve": "^11.2.0",
     "npm-check-updates": "^11.3.0",
     "ol": "^6.3.1",
-    "react": "^16.13.1",
+    "react": "*",
     "rimraf": "^3.0.2",
     "rollup": "^2.42.3"
   }

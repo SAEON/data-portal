@@ -7,7 +7,7 @@ export default {
     {
       dir: 'dist/cjs',
       format: 'cjs',
-      exports: "default"
+      exports: 'default',
     },
     {
       dir: 'dist/esm',

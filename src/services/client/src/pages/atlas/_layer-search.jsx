@@ -1,4 +1,5 @@
-import MenuProvider from '@saeon/snap-menus/src/provider'
+import { forwardRef } from 'react'
+import MenuProvider from '@saeon/snap-menus/provider'
 import SideMenu from './side-menu'
 import Loading from '../../components/loading'
 import { useQuery, gql } from '@apollo/client'
@@ -7,7 +8,7 @@ import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../config'
 import StateProvider from './state'
 import Map from './map'
 
-export default ({ search, referrer, snapMenusContainer }) => {
+export default forwardRef(({ search, referrer }, snapMenusContainer) => {
   const {
     ids = undefined,
     dois = undefined,
@@ -88,4 +89,4 @@ export default ({ search, referrer, snapMenusContainer }) => {
       </OlReactProvider>
     </StateProvider>
   )
-}
+})

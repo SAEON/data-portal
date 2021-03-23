@@ -36,7 +36,7 @@ export const apply = ({ PATH, script, args = [], debug = false, ignore = [] }) =
     if (!existsSync(join(p, 'package.json'))) return
     const _script = NPM_NATIVE_SCRIPTS.includes(script)
       ? `npm --prefix ${p} ${script} ${`${args.join(' ')}`.trim()}`
-      : `npm --prefix ${p} run "${`${script} ${(args).join(' ')}`.trim()}"`
+      : `npm --prefix ${p} run "${`${script} ${args.join(' ')}`.trim()}"`
     print(`${name} dependencies`)
     console.log('script', _script)
     exec(_script, debug)

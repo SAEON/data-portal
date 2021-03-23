@@ -1,8 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
-
-module.exports = ({production}) => {
+module.exports = ({ production }) => {
   const output = 'dist'
   const mode = production ? 'production' : 'development'
 
