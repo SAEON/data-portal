@@ -7,7 +7,7 @@ const FIELD_TO_SELECTOR = {
   date: '$createdAt',
 }
 
-export default selectionSet => {
+export default (selectionSet, { sortBy } = {}) => {
   // eslint-disable-next-line
   const { count, ...dimensions } = Object.fromEntries(
     selectionSet.map(field => [field, FIELD_TO_SELECTOR[field]])
@@ -35,5 +35,6 @@ export default selectionSet => {
         newRoot: '$_id',
       },
     },
+    { $sort: { count: -1 } },
   ]
 }
