@@ -8,6 +8,7 @@ const FIELD_TO_SELECTOR = {
 }
 
 export default selectionSet => {
+  // eslint-disable-next-line
   const { count, ...dimensions } = Object.fromEntries(
     selectionSet.map(field => [field, FIELD_TO_SELECTOR[field]])
   )
