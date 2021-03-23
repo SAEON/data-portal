@@ -1,3 +1,5 @@
+const _import = p => import(p).then(({ default: fn }) => fn)
+
 export default {
-  helloWorld: async () => 'hello world',
+  downloadsReport: await _import('../queries/downloads-report/index.js'),
 }

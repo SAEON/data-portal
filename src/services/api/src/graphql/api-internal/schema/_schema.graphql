@@ -1,7 +1,20 @@
 scalar JSON
+scalar DateTime
+
+type DownloadSummary {
+  # DOI of metadata record (or SAEON id if no DOI)
+  id: ID!
+  clientSession: String
+  clientIpAddress: String
+  clientUserAgent: String
+  clientPathname: String
+  # Download date, rounded down to the hour
+  date: DateTime!
+  count: Int!
+}
 
 type Query {
-  helloWorld: String!
+  downloadsReport: [DownloadSummary]!
 }
 
 # type Subscription {}
