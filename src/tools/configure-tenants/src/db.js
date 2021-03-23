@@ -24,6 +24,9 @@ export const insertList = (
   createdBy,
   DOIs
 ) => {
+  if (isNaN(parseInt(version, 10))) {
+    throw new Error('No version specified')
+  }
   const hashedSearch = `${collectionName}-v${version}`
 
   return db
