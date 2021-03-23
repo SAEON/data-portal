@@ -4,7 +4,8 @@ const FIELD_TO_SELECTOR = {
   clientIpAddress: '$clientInfo.ipAddress',
   clientUserAgent: '$clientInfo.userAgent',
   clientPathname: '$info.pathname',
-  date: '$createdAt',
+  // date: '$createdAt',
+  date: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
 }
 
 export default (selectionSet, { sortBy } = {}) => {
