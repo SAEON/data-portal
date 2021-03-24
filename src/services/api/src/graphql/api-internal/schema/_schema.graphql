@@ -6,6 +6,8 @@ type DownloadSummary {
   id: ID!
   clientSession: String
   clientIpAddress: String
+  # Resolve an IP Address to location using https://ip-api.com/
+  clientIpLocation: String
   clientUserAgent: String
   clientPathname: String
   # Download date, rounded down to the hour

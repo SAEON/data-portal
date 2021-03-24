@@ -8,7 +8,7 @@ export default async (self, args, ctx) => {
     ...logs.map(log =>
       Object.assign(
         {
-          clientSession: ctx.cookies.get(CATALOGUE_CLIENT_ID),
+          clientSession: ctx.cookies.get(CATALOGUE_CLIENT_ID) || 'no-session', // This can happen if the user blocks cookies
           clientInfo: {
             ipAddress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
             userAgent: ctx.request.headers['user-agent'],

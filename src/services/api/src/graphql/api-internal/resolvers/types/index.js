@@ -1,5 +1,5 @@
 export { default as JSON } from '../../../common-types/json.js'
 export { default as DateTime } from '../../../common-types/datetime.js'
-export { default as DownloadSummary } from './_download-summary.js'
+export { default as DownloadSummary } from './download-summary/index.js'
 export { default as Query } from './_query.js'
 export { default as Mutation } from './_mutation.js'

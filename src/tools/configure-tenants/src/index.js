@@ -10,6 +10,7 @@ const CATALOGUE_CLIENT_HOST = CONNECTION_STRING.includes('localhost')
  * The res is actually a network response
  * { headers, data, etc. }
  **/
+console.info('Reading spreadsheet')
 const { data } = await getValues(spreadsheetId, range)
 
 /**
@@ -22,6 +23,7 @@ const rows = data.values.slice(1)
 const successes = []
 const errors = []
 
+console.info('Loading rows into Mongo')
 for (const row of rows) {
   const [collectionName, , version] = row
   const hashedSearch = `${collectionName}-v${version}`
