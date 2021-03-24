@@ -35,7 +35,7 @@ for (const row of rows) {
       `${collectionName} ~ ${CATALOGUE_CLIENT_HOST}/render/records?search=${id}&showSearchBar=true&disableSidebar=false&referrer=${hashedSearch}`
     )
   } catch (error) {
-    errors.push(hashedSearch)
+    errors.push({ hashedSearch, error })
   }
 }
 
@@ -45,7 +45,7 @@ console.log('\n\n')
 
 if (errors.length) {
   console.log('FAILED UPDATES', '\n')
-  console.log(errors.join('\n'))
+  console.log(errors)
 }
 
 process.exit(0)

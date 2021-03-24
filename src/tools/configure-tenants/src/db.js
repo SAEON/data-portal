@@ -27,6 +27,11 @@ export const insertList = (
   if (isNaN(parseInt(version, 10))) {
     throw new Error('No version specified')
   }
+
+  if (!createdDate) {
+    throw new Error('No createdAt date specified')
+  }
+
   const hashedSearch = `${collectionName}-v${version}`
 
   return db

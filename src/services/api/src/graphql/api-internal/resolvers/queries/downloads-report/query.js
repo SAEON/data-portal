@@ -2,6 +2,7 @@ const FIELD_TO_SELECTOR = {
   id: { $ifNull: ['$info.doi', '$info.odpId'] },
   clientSession: '$clientSession',
   clientIpAddress: '$clientInfo.ipAddress',
+  clientIpLocation: '$clientInfo.ipAddress',
   clientUserAgent: '$clientInfo.userAgent',
   clientPathname: '$info.pathname',
   // date: '$createdAt',
