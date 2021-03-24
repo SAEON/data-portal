@@ -1,3 +1,8 @@
+/**
+ * Convert fields specified as
+ * GraphQL fields to Mongo
+ * selectors
+ */
 const FIELD_TO_SELECTOR = {
   id: { $ifNull: ['$info.doi', '$info.odpId'] },
   clientSession: '$clientSession',
@@ -5,14 +10,25 @@ const FIELD_TO_SELECTOR = {
   clientIpLocation: '$clientInfo.ipAddress',
   clientUserAgent: '$clientInfo.userAgent',
   clientPathname: '$info.pathname',
-  // date: '$createdAt',
   date: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
 }
 
-export default (selectionSet, { sortBy } = {}) => {
+/**
+ * Sometimes the fields specified as
+ * GraphQL fields don't correlate to
+ * fields in Mongo docs. Rename these
+ */
+const FIELD_TO_FIELD = {
+  clientIpLocation: 'clientIpAddress',
+}
+
+export default selectionSet => {
   // eslint-disable-next-line
   const { count, ...dimensions } = Object.fromEntries(
-    selectionSet.map(field => [field, FIELD_TO_SELECTOR[field]])
+    selectionSet.map(field => {
+      field = FIELD_TO_FIELD[field] || field
+      return [field, FIELD_TO_SELECTOR[field]]
+    })
   )
 
   return [
