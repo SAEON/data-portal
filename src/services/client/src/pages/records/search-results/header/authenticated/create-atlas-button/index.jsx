@@ -1,11 +1,10 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import IconButton from '@material-ui/core/IconButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
 import MapIcon from '@material-ui/icons/Explore'
-import { gql } from '@apollo/client'
-import { useApolloClient } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
@@ -18,13 +17,33 @@ import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
 export default ({ cache, catalogue }) => {
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global
-  const [savedSearchLoading, setSavedSearchLoading] = useState(false)
-  const client = useApolloClient()
   const history = useHistory()
 
-  if (savedSearchLoading) {
+  const [createAtlas, { error, loading }] = useMutation(
+    gql`
+      mutation($search: JSON!, $createdBy: String!) {
+        createAtlas(search: $search, createdBy: $createdBy)
+      }
+    `,
+    {
+      onCompleted: data => {
+        if (data) {
+          history.push({
+            pathname: window.location.pathname.includes('render') ? '/render/atlas' : '/atlas',
+            search: `?atlas=${data.createAtlas}`,
+          })
+        }
+      },
+    }
+  )
+
+  if (error) {
+    throw new Error(`Error creating atlas - ${error.message}`)
+  }
+
+  if (loading) {
     return (
-      <Fade key="loading" in={savedSearchLoading}>
+      <Fade key="loading" in={loading}>
         <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
       </Fade>
     )
@@ -37,7 +56,7 @@ export default ({ cache, catalogue }) => {
   const available = validCount && validCount < CATALOGUE_CLIENT_MAX_ATLAS_LAYERS
 
   return (
-    <Fade key="not-loading" in={!savedSearchLoading}>
+    <Fade key="not-loading" in={!loading}>
       <Tooltip
         title={getTooltip(
           selectAll,
@@ -51,15 +70,8 @@ export default ({ cache, catalogue }) => {
         <span>
           <IconButton
             disabled={!available}
-            onClick={async e => {
-              e.stopPropagation()
-              setSavedSearchLoading(true)
-              const { data } = await client.mutate({
-                mutation: gql`
-                  mutation($search: JSON!, $createdBy: String!) {
-                    createAtlas(search: $search, createdBy: $createdBy)
-                  }
-                `,
+            onClick={() =>
+              createAtlas({
                 variables: {
                   createdBy: `${packageJson.name} v${packageJson.version}`,
                   search: createSearchObject(
@@ -68,17 +80,7 @@ export default ({ cache, catalogue }) => {
                   ),
                 },
               })
-              if (data) {
-                history.push({
-                  pathname: window.location.pathname.includes('render')
-                    ? '/render/atlas'
-                    : '/atlas',
-                  search: `?atlas=${data.createAtlas}`,
-                })
-              } else {
-                throw new Error('Error creating atlas')
-              }
-            }}
+            }
           >
             <StyledBadge
               color={available ? 'primary' : 'default'}

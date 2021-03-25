@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import Fade from '@material-ui/core/Fade'
@@ -8,19 +8,10 @@ import { context as globalContext } from '../../../../../../contexts/global'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
 import StyledBadge from '../../components/styled-badge'
 import { CATALOGUE_API_ADDRESS } from '../../../../../../config'
-import { gql, useApolloClient } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
 
-const MUTATION = gql`
-  mutation($search: JSON!, $createdBy: String!) {
-    persistSearchState(search: $search, createdBy: $createdBy)
-  }
-`
-
 export default ({ catalogue }) => {
-  const client = useApolloClient()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
   const resultCount = catalogue?.records.totalCount
   const { isAuthenticated } = useContext(authorizationContext)
   const { global } = useContext(globalContext)
@@ -30,6 +21,21 @@ export default ({ catalogue }) => {
   if (!isAuthenticated) {
     return null
   }
+
+  const [persistSearchState, { error, loading }] = useMutation(
+    gql`
+      mutation($search: JSON!, $createdBy: String!) {
+        persistSearchState(search: $search, createdBy: $createdBy)
+      }
+    `,
+    {
+      onCompleted: data => {
+        if (data) {
+          window.open(`${CATALOGUE_API_ADDRESS}/metadata-records?search=${data.persistSearchState}`)
+        }
+      },
+    }
+  )
 
   if (loading) {
     return (
@@ -54,29 +60,18 @@ export default ({ catalogue }) => {
       >
         <span>
           <IconButton
-            onClick={async () => {
-              setLoading(true)
-              const { data } = await client
-                .mutate({
-                  mutation: MUTATION,
-                  variables: {
-                    createdBy: `${packageJson.name} v${packageJson.version}`,
-                    search: selectedIds.length
-                      ? { ids: selectedIds }
-                      : Object.fromEntries(
-                          Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
-                        ),
-                  },
-                })
-                .catch(error => setError(error))
-                .finally(() => setLoading(false))
-
-              if (data) {
-                window.open(
-                  `${CATALOGUE_API_ADDRESS}/metadata-records?search=${data.persistSearchState}`
-                )
-              }
-            }}
+            onClick={() =>
+              persistSearchState({
+                variables: {
+                  createdBy: `${packageJson.name} v${packageJson.version}`,
+                  search: selectedIds.length
+                    ? { ids: selectedIds }
+                    : Object.fromEntries(
+                        Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
+                      ),
+                },
+              })
+            }
             disabled={!applicableRecordsCount}
           >
             <StyledBadge

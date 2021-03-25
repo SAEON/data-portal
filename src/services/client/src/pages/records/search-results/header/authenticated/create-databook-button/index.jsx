@@ -5,8 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
-import { gql } from '@apollo/client'
-import { useApolloClient } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import {
   CATALOGUE_CLIENT_MAX_DATABOOK_TABLES,
@@ -25,20 +24,36 @@ export default ({ catalogue, cache }) => {
   const { global } = useContext(globalContext)
   const { isDataScientist } = useContext(authorizationContext)
   const { selectedIds, selectAll } = global
-  const [error, setError] = useState(undefined)
-  const [savedSearchLoading, setSavedSearchLoading] = useState(false)
-  const client = useApolloClient()
   const history = useHistory()
+
+  const [createDatabook, { error, loading }] = useMutation(
+    gql`
+      mutation($search: JSON!, $createdBy: String!) {
+        createDatabook(search: $search, createdBy: $createdBy)
+      }
+    `,
+    {
+      onCompleted: data => {
+        if (data) {
+          history.push({
+            pathname: window.location.pathname.includes('render')
+              ? `/render/databooks/${data.createDatabook}`
+              : `/databooks/${data.createDatabook}`,
+          })
+        }
+      },
+    }
+  )
 
   // Return early
   if (error) {
-    throw new Error(`Error creating databook. ${error}`)
+    throw new Error(`Error creating databook. ${error.message}`)
   }
 
   // Return early
-  if (savedSearchLoading) {
+  if (loading) {
     return (
-      <Fade key="loading" in={savedSearchLoading}>
+      <Fade key="loading" in={loading}>
         <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
       </Fade>
     )
@@ -73,38 +88,16 @@ export default ({ catalogue, cache }) => {
           disabled={!available}
           onClick={
             isDataScientist
-              ? async e => {
-                  e.stopPropagation()
-                  setSavedSearchLoading(true)
-                  try {
-                    const { data } = await client.mutate({
-                      mutation: gql`
-                        mutation($search: JSON!, $createdBy: String!) {
-                          createDatabook(search: $search, createdBy: $createdBy)
-                        }
-                      `,
-                      variables: {
-                        createdBy: `${packageJson.name} v${packageJson.version}`,
-                        search: createSearchObject(
-                          global,
-                          selectedIds.length && selectedIds.filter(id => cache[id])
-                        ),
-                      },
-                    })
-
-                    if (data) {
-                      history.push({
-                        pathname: window.location.pathname.includes('render')
-                          ? `/render/databooks/${data.createDatabook}`
-                          : `/databooks/${data.createDatabook}`,
-                      })
-                    } else {
-                      setSavedSearchLoading(false)
-                    }
-                  } catch (error) {
-                    setError(error.message)
-                  }
-                }
+              ? () =>
+                  createDatabook({
+                    variables: {
+                      createdBy: `${packageJson.name} v${packageJson.version}`,
+                      search: createSearchObject(
+                        global,
+                        selectedIds.length && selectedIds.filter(id => cache[id])
+                      ),
+                    },
+                  })
               : () =>
                   alert(
                     `Your login is not authorized to use this feature. Please request access (${CATALOGUE_TECHNICAL_CONTACT})`
