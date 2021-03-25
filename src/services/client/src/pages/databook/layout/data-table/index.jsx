@@ -7,6 +7,7 @@ import useStyles from '../../style'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
 import VirtualTable from '../../../../components/virtual-table'
+import Timer from '../../../../components/timer'
 
 const Content = ({ error, loading, data }) => {
   const classes = useStyles()
@@ -14,7 +15,12 @@ const Content = ({ error, loading, data }) => {
   if (loading) {
     return (
       <Fade key="loading" in={Boolean(loading)}>
-        <Loading />
+        <span>
+          <Loading />
+          <Typography className={clsx(classes.msgBox)}>
+            <Timer />
+          </Typography>
+        </span>
       </Fade>
     )
   }
