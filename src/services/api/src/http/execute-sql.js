@@ -13,6 +13,9 @@ export default async ctx => {
   const password = ctx.crypto.decrypt(encryptedPassword)
   const { createClient } = ctx.postgis
 
+  // set timeout to 20 minutes
+  ctx.request.socket.setTimeout(20 * 60 * 1000)
+
   /**
    * Configure the query
    */
