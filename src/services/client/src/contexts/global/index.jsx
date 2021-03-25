@@ -5,17 +5,31 @@ import FromSavedSearch from './from-saved-search'
 
 export const context = createContext()
 
+/**
+ * From URL query:
+ * "search" indicates the ID of a saved search
+ * "text" is the text value of search input
+ * "referrer" is for tracking page source
+ *
+ * NOTE
+ * referrer will be set once per app load,
+ * navigating to other routes will NOT reset
+ * referrer since this component will only be
+ * rendered once!!
+ *
+ * Updating the global state actually results in
+ * the QuickForm component rerendering. Might
+ * have been better to split the component into
+ * a parent and child, but works as expected.
+ */
 export default ({ children }) => {
-  /**
-   * search => a uri param that indicates the ID of a saved search
-   */
   const { search, text = undefined, referrer = undefined } = getUriState()
 
   return (
     <FromSavedSearch id={search}>
       {search => (
         <QuickForm
-          referrer={referrer || undefined}
+          referrer={referrer}
           text={text || search?.text || undefined}
           extent={search?.extent || undefined}
           terms={search?.terms || []}

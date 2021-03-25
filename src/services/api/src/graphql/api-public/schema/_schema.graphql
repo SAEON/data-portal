@@ -116,6 +116,7 @@ type BrowserEvent implements Node {
   info: JSON!
   clientVersion: String!
   commitHash: String!
+  referrer: String
 }
 
 input BrowserEventInput {
@@ -124,4 +125,5 @@ input BrowserEventInput {
   info: JSON!
   clientVersion: String!
   commitHash: String!
+  referrer: String
 }

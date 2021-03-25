@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import SimpleLink from '../link'
-import { context as clientInfoContext } from '../../contexts/client-info'
+import { context as globalContext } from '../../contexts/global'
 import { CATALOGUE_API_ADDRESS, CATALOGUE_LATEST_COMMIT } from '../../config'
 import RegisterEventLog from '../../components/application-logger/register-event-log'
 import packageJson from '../../../package.json'
@@ -27,7 +27,8 @@ export default ({
   tooltipPlacement,
   buttonProps,
 }) => {
-  const clientInfo = useContext(clientInfoContext)
+  const { global } = useContext(globalContext)
+  const { referrer } = global
   const [open, setOpen] = useState(false)
   const theme = useTheme()
   const { resourceDescription, resourceDownload } = immutableResource || {}
@@ -102,6 +103,7 @@ export default ({
               console.gql({
                 clientVersion: packageJson.version,
                 type: 'download',
+                referrer,
                 commitHash: CATALOGUE_LATEST_COMMIT,
                 createdAt: new Date(),
                 info: {
