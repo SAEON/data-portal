@@ -8,6 +8,7 @@ const FIELD_TO_SELECTOR = {
   clientSession: '$clientSession',
   clientIpAddress: '$clientInfo.ipAddress',
   clientIpLocation: '$clientInfo.ipAddress',
+  referrer: '$referrer',
   clientUserAgent: '$clientInfo.userAgent',
   clientPathname: '$info.pathname',
   date: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },

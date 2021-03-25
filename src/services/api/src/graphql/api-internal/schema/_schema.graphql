@@ -10,6 +10,7 @@ type DownloadSummary {
   clientIpLocation: String
   clientUserAgent: String
   clientPathname: String
+  referrer: String
   # Download date, rounded down to the hour
   date: DateTime!
   count: Int!
