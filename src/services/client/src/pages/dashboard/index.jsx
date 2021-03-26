@@ -77,7 +77,7 @@ export default ({ id }) => {
     <DashboardContextProvider filterIds={filterIds || []}>
       {/* HEADER */}
       <ElevationScroll>
-        <AppBar color="inherit">
+        <AppBar>
           <Toolbar variant="dense" style={{ display: 'flex' }}>
             <Typography style={{ margin: 'auto' }} variant="overline">
               {title || 'Untitled'}
