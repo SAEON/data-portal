@@ -4,6 +4,8 @@ import 'gridstack/dist/gridstack.min.css'
 import 'gridstack/dist/h5/gridstack-dd-native'
 import Chart from './chart'
 import useStyles from '../style'
+import useTheme from '@material-ui/core/styles/useTheme'
+import Card from '@material-ui/core/Card'
 import clsx from 'clsx'
 
 const components = {
@@ -11,6 +13,7 @@ const components = {
 }
 
 export default ({ items }) => {
+  const theme = useTheme()
   const classes = useStyles()
   const gridRef = useRef()
   const gridStackRef = useRef()
@@ -49,8 +52,9 @@ export default ({ items }) => {
           disableDrag: true,
           disableResize: true,
           float: false,
-          margin: 0,
-          cellHeight: '150px',
+          margin: theme.spacing(1),
+          cellHeightUnit: 'px',
+          cellHeight: 150,
         },
         gridRef.current
       )
@@ -69,35 +73,36 @@ export default ({ items }) => {
   }, [itemIds])
 
   return (
-    <div className={clsx(classes.gridContainer)}>
-      <div ref={gridRef} className={clsx('grid-stack', classes.grid)}>
-        {itemIds.map(id => {
-          const hydratedState = items.find(({ content }) => content.id === id)
-          const { type } = hydratedState.content
-          const Component = components[type.toUpperCase().trim()]
+    <div ref={gridRef} className={clsx('grid-stack')}>
+      {itemIds.map(id => {
+        const hydratedState = items.find(({ content }) => content.id === id)
+        const { type } = hydratedState.content
+        const Component = components[type.toUpperCase().trim()]
 
-          return (
-            <div
-              ref={refs.current[id]}
-              key={id}
-              className={clsx('grid-stack-item', classes.gridItem)}
-              {...Object.fromEntries(
-                Object.entries(hydratedState)
-                  .filter(([key]) => key !== 'content')
-                  .map(([key, value]) => {
-                    return [`gs-${key}`, value]
-                  })
-              )}
-            >
-              <div className={clsx('grid-stack-item-content', classes.gridItemContent)}>
-                <span id={id} data-type={'Chart'} className={clsx(classes.item)}>
-                  <Component id={id} />
-                </span>
-              </div>
+        return (
+          <div
+            ref={refs.current[id]}
+            key={id}
+            className={clsx('grid-stack-item')}
+            {...Object.fromEntries(
+              Object.entries(hydratedState)
+                .filter(([key]) => key !== 'content')
+                .map(([key, value]) => {
+                  return [`gs-${key}`, value]
+                })
+            )}
+          >
+            <div className={clsx('grid-stack-item-content')}>
+              <Card
+                variant="overline"
+                style={{ height: '100%', width: '100%', backgroundColor: theme.backgroundColor }}
+              >
+                <Component id={id} />
+              </Card>
             </div>
-          )
-        })}
-      </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

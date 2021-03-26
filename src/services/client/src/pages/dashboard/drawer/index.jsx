@@ -14,10 +14,11 @@ export default () => {
   return (
     <>
       <IconButton
+        size="small"
+        style={{ float: 'right' }}
         onClick={() => {
           setOpen(!open)
         }}
-        className={open ? clsx(classes.iconActive) : clsx(classes.icon)}
       >
         <FilterIcon />
       </IconButton>

@@ -1,3 +1,4 @@
+import { cloneElement } from 'react'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks/use-share-link'
 import getUriState from '../../lib/fns/get-uri-state'
@@ -5,18 +6,32 @@ import Loading from '../../components/loading'
 import DashboardContextProvider from './context'
 import { gql, useQuery } from '@apollo/client'
 import AppBar from '@material-ui/core/AppBar'
-import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Layout from './layout'
-import useStyles from './style'
-import clsx from 'clsx'
 import FiltersDrawer from './drawer/index'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Box from '@material-ui/core/Box'
+import Container from '@material-ui/core/Container'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const POLLING_INTERVAL = 500
 
+const ElevationScroll = ({ children }) => {
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  })
+
+  return cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  })
+}
+
 export default ({ id }) => {
-  const classes = useStyles()
+  const theme = useTheme()
   const { poll } = getUriState()
   setShareLink({
     uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
@@ -59,43 +74,57 @@ export default ({ id }) => {
   const filterIds = filters.map(({ id }) => id)
 
   return (
-    <>
-      <Grid container justify="center">
-        <DashboardContextProvider filterIds={filterIds || []}>
-          <Grid item xs={12}>
-            <div style={{ flexGrow: 1 }}>
-              <AppBar
-                style={window.location.pathname.includes('/render') ? {} : { marginTop: 48 }}
-                variant="elevation"
-              >
-                <Toolbar variant="dense" style={{ overflowX: 'auto', display: 'block' }}>
-                  <FiltersDrawer filterIds={filterIds} />
-                </Toolbar>
-              </AppBar>
-            </div>
-          </Grid>
-          <Grid item xs={12} style={{ margin: '36px 0' }} />
-          <div style={{ height: '400px', width: '1px' }}></div>
-          <Grid justify="space-evenly" container item xs={12} sm={10} md={8}>
-            <Grid item xs={12}>
-              <div className={clsx(classes.layout)}>
-                <Typography variant="h2" className={clsx(classes.title)}>
-                  {title || 'Untitled'}
-                </Typography>
-                <Typography className={clsx(classes.subtitle)} variant="overline">
-                  {subtitle || 'No subtitle'}
-                </Typography>
-                <Typography className={clsx(classes.description)} variant="body2">
-                  {description || 'No description'}
-                </Typography>
-              </div>
-            </Grid>
-            <div style={{ position: 'relative', width: '100%' }}>
-              <Layout items={layout} />
-            </div>
-          </Grid>
-        </DashboardContextProvider>
-      </Grid>
-    </>
+    <DashboardContextProvider filterIds={filterIds || []}>
+      {/* HEADER */}
+      <ElevationScroll>
+        <AppBar>
+          <Toolbar variant="dense" style={{ display: 'flex' }}>
+            <Typography style={{ margin: 'auto' }} variant="overline">
+              {title || 'Untitled'}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <Toolbar />
+      <Container>
+        {/* OVERVIEW */}
+        <Box my={2}>
+          <Card
+            variant="outlined"
+            style={{ backgroundColor: theme.backgroundColor, margin: theme.spacing(1) }}
+          >
+            <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography style={{ margin: 'auto' }} variant="overline">
+                {subtitle || 'No subtitle'}
+              </Typography>
+              <Typography style={{ margin: 'auto', marginTop: theme.spacing(2) }} variant="body2">
+                {description || 'No description'}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+      {/* TOOLBAR */}
+      <Container>
+        <Box my={1}>
+          <Card
+            variant="outlined"
+            style={{
+              backgroundColor: theme.backgroundColor,
+              margin: theme.spacing(1),
+              padding: theme.spacing(1),
+            }}
+          >
+            <FiltersDrawer filterIds={filterIds} />
+          </Card>
+        </Box>
+      </Container>
+      {/* GRID */}
+      <Container>
+        <Box my={1}>
+          <Layout items={layout} />
+        </Box>
+      </Container>
+    </DashboardContextProvider>
   )
 }
