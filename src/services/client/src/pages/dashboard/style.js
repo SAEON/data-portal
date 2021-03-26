@@ -21,7 +21,7 @@ export default makeStyles(theme => {
       },
     },
     drawer: {
-      width: 400,
+      maxWidth: 400,
       margin: '10px',
       '& .close-button': { color: theme.palette.info.dark },
     },
