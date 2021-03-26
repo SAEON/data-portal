@@ -1,11 +1,5 @@
-import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
 
 export default ({ children }) => {
-  return (
-    <Grid container justify="center">
-      <Grid item xs={12} sm={8} md={6}>
-        {children}
-      </Grid>
-    </Grid>
-  )
+  return <Container>{children}</Container>
 }
