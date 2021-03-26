@@ -94,10 +94,13 @@ export default ({ id }) => {
             style={{ backgroundColor: theme.backgroundColor, margin: theme.spacing(1) }}
           >
             <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography style={{ margin: 'auto' }} variant="overline">
+              <Typography style={{ margin: 'auto', textAlign: 'center' }} variant="overline">
                 {subtitle || 'No subtitle'}
               </Typography>
-              <Typography style={{ margin: 'auto', marginTop: theme.spacing(2) }} variant="body2">
+              <Typography
+                style={{ margin: 'auto', textAlign: 'justify', marginTop: theme.spacing(2) }}
+                variant="body2"
+              >
                 {description || 'No description'}
               </Typography>
             </CardContent>
