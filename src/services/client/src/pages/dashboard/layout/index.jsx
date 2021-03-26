@@ -94,7 +94,7 @@ export default ({ items }) => {
           >
             <div className={clsx('grid-stack-item-content')}>
               <Card
-                variant="overline"
+                variant="outlined"
                 style={{ height: '100%', width: '100%', backgroundColor: theme.backgroundColor }}
               >
                 <Component id={id} />
