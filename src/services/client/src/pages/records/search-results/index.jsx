@@ -23,6 +23,7 @@ const DEFAULT_CURSORS = {
 export default ({ disableSidebar = false }) => {
   const [showSidebar, setShowSidebar] = useState(!disableSidebar && !isMobile)
   const ref = useRef()
+  const mainRef = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   const showTopMenu = !window.location.pathname.includes('/render')
@@ -139,7 +140,7 @@ export default ({ disableSidebar = false }) => {
     : data.catalogue.records.nodes
 
   return (
-    <main id="search-results">
+    <main id="search-results" ref={el => (mainRef.current = el)}>
       <Header
         disableSidebar={disableSidebar}
         showSidebar={showSidebar}
@@ -150,6 +151,7 @@ export default ({ disableSidebar = false }) => {
         pageSize={pageSize}
         loading={loading}
         catalogue={data?.catalogue}
+        ref={mainRef}
       >
         <div
           style={{
