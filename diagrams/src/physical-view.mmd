@@ -1,4 +1,6 @@
-graph 
+flowchart TD
+
+    User <--> Nginx
 
     %% CentOS boundary
     subgraph CentOS_boundary ["CentOS 7.6"]
@@ -7,6 +9,7 @@ graph
         Nginx --- ClientProxy1
         Nginx --- ClientProxy2
         Nginx --- ClientProxy3
+        Nginx --- ClientProxy4
         Nginx --- API
 
         %% Docker Engine boundary
@@ -27,18 +30,21 @@ graph
             end     
             subgraph 3c ["node:15.11"]
                 ClientProxy3(Proxy)
-            end                     
+            end    
+            subgraph 3d ["node:15.11"]
+                ClientProxy4(Proxy)
+            end                                 
             subgraph 4 ["node:15.11"]
                 ApiProxy(Proxy)
             end
             subgraph 5 ["docker.elastic.co/elasticsearch/elasticsearch:7.10.2"]
-                Elasticsearch(Elasticsearch)
+                Elasticsearch[(Elasticsearch)]
             end     
             subgraph 6 ["mongo:4.4.3"]
-                Mongo(MongoDB)
+                Mongo[(Mongo)]
             end    
             subgraph 7 ["src/services/postgis"]
-                PostGIS(PostGIS)
+                PostGIS[(PostGIS)]
             end
             subgraph 8 ["osgeo/gdal:latest"]
                 GDAL(GDAL)
