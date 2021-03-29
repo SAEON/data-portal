@@ -17,6 +17,9 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 ## Physical view
 ![Topology of deployed platform](/diagrams/dist/physical-view.svg)
 
+<object type="image/svg+xml" data="/diagrams/dist/physical-view.svg"></object>
+
+
 # README Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
