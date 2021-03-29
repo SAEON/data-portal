@@ -1,76 +1,77 @@
 flowchart
 
-    User("User (human / machine)") <--> Nginx
+    User("User (human / machine)") <--> nginx
 
     %% CentOS boundary
     subgraph CentOS_boundary ["CentOS 7.6"]
 
-        Nginx(Nginx) --- Client
-        Nginx --- ClientProxy1
-        Nginx --- ClientProxy2
-        Nginx --- ClientProxy3
-        Nginx --- ClientProxy4
-        ClientProxy1 --- Elasticsearch
-        ClientProxy2 --- Elasticsearch
-        ClientProxy3 --- Elasticsearch
-        ClientProxy4 --- Elasticsearch
-        Nginx --- API
+        nginx(Nginx)
+        nginx --- client_container
+        nginx --- proxy_container_2
+        nginx --- proxy_container_3
+        nginx --- proxy_container_4
+        nginx --- proxy_container_5
+        proxy_container_2 --- es_container
+        proxy_container_3 --- es_container
+        proxy_container_4 --- es_container
+        proxy_container_5 --- es_container
+        nginx --- api_container
 
         %% Docker Engine boundary
         subgraph Docker_boundary ["Docker Engine"]
 
             %% Docker container boundaries
-            subgraph 1 ["nginx:alpine"]
-                Client(Client)
+            subgraph client_container [React.js Client]
+                client("nginx:alpine")
             end
-            subgraph 2 ["node:15.11"]
-                API(API)
+            subgraph api_container [API]
+                api("node:15.11")
             end
-            subgraph 3a ["node:15.11"]
-                ClientProxy1(Proxy)
+            subgraph proxy_container_1 [Proxy]
+                ClientProxy1("node:15.11")
             end     
-            subgraph 3b ["node:15.11"]
-                ClientProxy2(Proxy)
+            subgraph proxy_container_2 [Proxy]
+                ClientProxy2("node:15.11")
             end     
-            subgraph 3c ["node:15.11"]
-                ClientProxy3(Proxy)
+            subgraph proxy_container_3 [Proxy]
+                ClientProxy3("node:15.11")
             end    
-            subgraph 3d ["node:15.11"]
-                ClientProxy4(Proxy)
-            end                                 
-            subgraph 4 ["node:15.11"]
-                ApiProxy(Proxy)
+            subgraph proxy_container_4 [Proxy]
+                ClientProxy4("node:15.11")
             end
-            subgraph 5a ["docker.elastic.co/elasticsearch/elasticsearch:7.10.2"]
-                Elasticsearch[(Elasticsearch)]
+            subgraph proxy_container_5 [Proxy]
+                ApiProxy("node:15.11")
             end
-            subgraph 5b ["docker.elastic.co/kibana/kibana:7.10.2"]
-                Kibana(Kibana)
-            end                 
-            subgraph 6 ["mongo:4.4.3"]
-                Mongo[(Mongo)]
+            subgraph es_container ["Elasticsearch"]
+                Elasticsearch(docker.elastic.co/elasticsearch/elasticsearch:7.10.2)
+            end
+            subgraph kibana_container[kibana]
+                Kibana("docker.elastic.co/kibana/kibana:7.10.2")
+            end
+            subgraph mongo_container [MongoDB]
+                Mongo[("mongo:4.4.3")]
             end    
-            subgraph 7 ["src/services/postgis"]
-                PostGIS[(PostGIS)]
+            subgraph postgis_container [PostGIS]
+                PostGIS[("postgis/postgis:13-3.1<br />(src/services/postgis)")]
             end
-            subgraph 8 ["osgeo/gdal:latest"]
-                GDAL(GDAL)
+            subgraph gdal_container [GDAL]
+                GDAL("osgeo/gdal:latest")
             end
 
             %% Topology
-            API --- ApiProxy
-            API --- Mongo
-            API --- PostGIS
-            API --- GDAL
-            ApiProxy --- Elasticsearch
-            Mongo --- Host("Mapped Docker/Host interface")
-            PostGIS --- Host
-            Kibana --- Host
+            api_container --- proxy_container_1
+            proxy_container_1 --- es_container
+            api_container --- mongo_container
+            api_container --- postgis_container
+            api_container --- gdal_container
+            
+            Host("Mapped Docker/Host interface")
+            mongo_container --- Host
+            postgis_container --- Host
+            kibana_container --- Host
         end
 
         Host --- Host_interface("Host interface (0.0.0.0)")
-
-  
     end
 
     Host_interface <--> User2("User (internal on VPN)")

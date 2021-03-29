@@ -1,0 +1,11 @@
+{
+  "htmlLabels": true,
+  "theme": "neutral",
+  "flowchart": {
+    "useMaxWidth": false,
+    "curve":"cardinal",
+    "diagramPadding": 16,
+    "nodeSpacing": 50,
+    "rankSpacing":50
+  }
+}
