@@ -9,3 +9,7 @@ Diagrams are generated using the [CLI](https://github.com/mermaidjs/mermaid.cli)
 ```sh
 docker pull minlag/mermaid-cli:latest
 ```
+
+## TODO
+
+- Generate physical-view mmd from the docker-compose file
