@@ -1,6 +1,6 @@
-flowchart TD
+flowchart
 
-    User <--> Nginx
+    User("User (human / machine)") <--> Nginx
 
     %% CentOS boundary
     subgraph CentOS_boundary ["CentOS 7.6"]
@@ -10,6 +10,10 @@ flowchart TD
         Nginx --- ClientProxy2
         Nginx --- ClientProxy3
         Nginx --- ClientProxy4
+        ClientProxy1 --- Elasticsearch
+        ClientProxy2 --- Elasticsearch
+        ClientProxy3 --- Elasticsearch
+        ClientProxy4 --- Elasticsearch
         Nginx --- API
 
         %% Docker Engine boundary
@@ -37,9 +41,12 @@ flowchart TD
             subgraph 4 ["node:15.11"]
                 ApiProxy(Proxy)
             end
-            subgraph 5 ["docker.elastic.co/elasticsearch/elasticsearch:7.10.2"]
+            subgraph 5a ["docker.elastic.co/elasticsearch/elasticsearch:7.10.2"]
                 Elasticsearch[(Elasticsearch)]
-            end     
+            end
+            subgraph 5b ["docker.elastic.co/kibana/kibana:7.10.2"]
+                Kibana(Kibana)
+            end                 
             subgraph 6 ["mongo:4.4.3"]
                 Mongo[(Mongo)]
             end    
@@ -56,8 +63,14 @@ flowchart TD
             API --- PostGIS
             API --- GDAL
             ApiProxy --- Elasticsearch
-
+            Mongo --- Host("Mapped Docker/Host interface")
+            PostGIS --- Host
+            Kibana --- Host
         end
+
+        Host --- Host_interface("Host interface (0.0.0.0)")
 
   
     end
+
+    Host_interface <--> User2("User (internal on VPN)")
