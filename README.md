@@ -15,10 +15,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 ## Physical view
-<div>
-  <img style="width: 100%;" src="/diagrams/dist/physical-view.svg" alt="Topology of deployed platform"/>
-</div>
-
+![Topology of deployed platform](/diagrams/dist/physical-view.svg)
 
 # README Contents
 
@@ -44,6 +41,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Client](#client)
   - [Server configuration](#server-configuration)
   - [NPM packages](#npm-packages)
+  - [Updating Diagrams](#updating-diagrams)
   - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -257,6 +255,10 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 ## NPM packages
 
 [src/packages/README.md](src/packages/)
+
+## Updating Diagrams
+
+[diagrams/README.md](diagrams/)
 
 ## Repository tools
 
