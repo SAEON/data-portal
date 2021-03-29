@@ -30,11 +30,11 @@
     "graphql": "^15.5.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
     "npm-check-updates": "^11.3.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.42.4"
+    "rollup": "^2.43.1"
   }
 }
