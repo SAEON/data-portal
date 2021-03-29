@@ -21,5 +21,4 @@ docker pull minlag/mermaid-cli:latest
 ```
 
 ## TODO
-
-- Generate physical-view mmd from the docker-compose file
+The physical view can largely be produced automatically. To do this, read the source code and call mermaid cli with and input stream instead of a file input. Container image versions can be obtained from config. Containers themselves can be obtained from `docker-compose.yml`

@@ -5,6 +5,7 @@ import {
   POSTGIS_HOST,
   CATALOGUE_API_TEMP_DIRECTORY,
   CATALOGUE_DOCKER_TMP_VOLUME,
+  GDAL_DOCKER_IMAGE
 } from '../config.js'
 
 export default ({
@@ -22,7 +23,7 @@ export default ({
     '-v',
     `${CATALOGUE_DOCKER_TMP_VOLUME}:${CATALOGUE_API_TEMP_DIRECTORY}`,
     '--rm',
-    'osgeo/gdal:latest',
+    GDAL_DOCKER_IMAGE,
     'ogr2ogr',
     '--config',
     'PG_USE_COPY YES',

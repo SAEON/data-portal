@@ -63,6 +63,8 @@ export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || 'password'
 
 export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
 
+export const GDAL_DOCKER_IMAGE = process.env.GDAL_DOCKER_IMAGE || 'osgeo/gdal:latest'
+
 /**
  * Local development the API doesn't run dockerized,
  * so PostGIS is on local. However the ogr2ogr

@@ -4,6 +4,7 @@
   "description": "Mermaid diagrams",
   "type": "module",
   "scripts": {
+    "build": "npm run physical-view",
     "physical-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -i /data/src/physical-view.mmd -o /data/dist/physical-view.svg"
   },
   "author": "zach@saeon.ac.za",
