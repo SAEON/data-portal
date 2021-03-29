@@ -5,6 +5,7 @@ token.json
 .DS_STORE
 .build
 dist
+!diagrams/dist
 node_modules
 scripts/flow/*/.flowconfig
 *~

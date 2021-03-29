@@ -1,0 +1,14 @@
+{
+  "name": "@saeon/mermaid",
+  "version": "0.0.1",
+  "description": "Mermaid diagrams",
+  "type": "module",
+  "scripts": {
+    "physical-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -i /data/src/physical-view.mmd -o /data/dist/physical-view.svg"
+  },
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "dependencies": {
+    "mermaid.cli": "^0.5.1"
+  }
+}

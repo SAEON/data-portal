@@ -1,0 +1,12 @@
+graph TD
+    
+    %% React.js client 
+    Client(Client) --- API(Node.js API)
+    Client --- ClientProxy(AnyProxy * 3)
+
+    %% Node.js API
+    API --- ApiProxy(AnyProxy)
+    ApiProxy --- Elasticsearch(Elasticsearch)
+    API --- Mongo(MongoDB)
+    API --- PostGIS(PostGIS)
+    API --- GDAL(GDAL)
