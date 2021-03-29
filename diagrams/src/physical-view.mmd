@@ -1,4 +1,4 @@
-graph TD
+graph 
 
     %% CentOS boundary
     subgraph CentOS_boundary ["CentOS 7.6"]
@@ -42,12 +42,16 @@ graph TD
             end
             subgraph 8 ["osgeo/gdal:latest"]
                 GDAL(GDAL)
-            end                                          
+            end
 
             %% Topology
             API --- ApiProxy
-            ApiProxy --- Elasticsearch
             API --- Mongo
             API --- PostGIS
+            API --- GDAL
+            ApiProxy --- Elasticsearch
+
         end
+
+  
     end
