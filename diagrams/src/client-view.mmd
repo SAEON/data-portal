@@ -1,0 +1,30 @@
+flowchart TD
+  subgraph client ["catalogue.saeon.ac.za"]
+      _client("React.js static website")
+  end
+  subgraph api ["api.catalogue.saeon.ac.za"]
+      _api("Node.js application")
+  end
+  subgraph public_proxy ["proxy.catalogue.saeon.ac.za"]
+      _nginx("Nginx load balancer<br /><br />Clients can potentially make many<br/>network requests to WMS servers<br />for WMS map tiles")
+      _nginx --- _proxy_2("AnyProxy")
+      _nginx --- _proxy_3("AnyProxy")
+      _nginx --- _proxy_4("AnyProxy")
+      _nginx --- _proxy_5("AnyProxy")
+  end
+  internal_proxy("AnyProxy")
+  mongo("MongoDB")
+  postgis("PostGIS")
+  gdal("GDAL")
+  elasticsearch("Elasticsearch")
+
+  
+  client ---- api
+  client --- public_proxy
+
+  api --- internal_proxy
+  api --- mongo
+  api --- gdal
+  api --- postgis
+
+  internal_proxy --- elasticsearch

@@ -17,6 +17,10 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 ## Deployment view
 ![Topology of deployed platform](/diagrams/dist/deployment-view.png)
 
+## Application instance view
+Clients, once invoked on a browser such as Chrome make further network requests to the origin. This can be observed in the network tab - the diagram shows the same.
+![Application instance view](/diagrams/dist/client-view.png)
+
 
 # README Contents
 
