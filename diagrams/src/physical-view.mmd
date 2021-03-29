@@ -1,51 +1,53 @@
 graph TD
 
     %% CentOS boundary
-    subgraph CentOS 7.6
+    subgraph 0 ["CentOS 7.6"]
 
-        Nginx --- Client
+        Nginx(Nginx) --- Client
         Nginx --- ClientProxy1
         Nginx --- ClientProxy2
         Nginx --- ClientProxy3
         Nginx --- API
 
-        %% Define Docker boundaries
-        subgraph 1 ["nginx:alpine"]
-            Client(Client)
-        end
-        subgraph 2 ["node:15.11"]
-            API(API)
-        end
-        subgraph 3a ["node:15.11"]
-            ClientProxy1(Proxy)
-        end     
-        subgraph 3b ["node:15.11"]
-            ClientProxy2(Proxy)
-        end     
-        subgraph 3c ["node:15.11"]
-            ClientProxy3(Proxy)
-        end                     
-        subgraph 4 ["node:15.11"]
-            ApiProxy(Proxy)
-        end
-        subgraph 5 ["docker.elastic.co/elasticsearch/elasticsearch:7.10.2"]
-            Elasticsearch(Elasticsearch)
-        end     
-        subgraph 6 ["mongo:4.4.3"]
-            Mongo(MongoDB)
-        end    
-        subgraph 7 ["src/services/postgis"]
-            PostGIS(PostGIS)
-        end
-        subgraph 8 ["osgeo/gdal:latest"]
-            GDAL(GDAL)
-        end                                          
+        %% Docker Engine boundary
+        subgraph Docker_boundary ["Docker Engine"]
 
-        %% Define topology
-        API --- ApiProxy
-        ApiProxy --- Elasticsearch
-        API --- Mongo
-        API --- PostGIS
-        API --- GDAL
+            %% Docker container boundaries
+            subgraph 1 ["nginx:alpine"]
+                Client(Client)
+            end
+            subgraph 2 ["node:15.11"]
+                API(API)
+            end
+            subgraph 3a ["node:15.11"]
+                ClientProxy1(Proxy)
+            end     
+            subgraph 3b ["node:15.11"]
+                ClientProxy2(Proxy)
+            end     
+            subgraph 3c ["node:15.11"]
+                ClientProxy3(Proxy)
+            end                     
+            subgraph 4 ["node:15.11"]
+                ApiProxy(Proxy)
+            end
+            subgraph 5 ["docker.elastic.co/elasticsearch/elasticsearch:7.10.2"]
+                Elasticsearch(Elasticsearch)
+            end     
+            subgraph 6 ["mongo:4.4.3"]
+                Mongo(MongoDB)
+            end    
+            subgraph 7 ["src/services/postgis"]
+                PostGIS(PostGIS)
+            end
+            subgraph 8 ["osgeo/gdal:latest"]
+                GDAL(GDAL)
+            end                                          
+
+            %% Topology
+            API --- ApiProxy
+            ApiProxy --- Elasticsearch
+            API --- Mongo
+            API --- PostGIS
+        end
     end
-    
