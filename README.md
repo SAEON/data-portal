@@ -16,7 +16,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 ## Physical view
 <div>
-  <img src="/diagrams/dist/physical-view.svg" alt="Kiwi standing on oval" alt="Topology of deployed platform"/>
+  <img style="width: 100%;" src="/diagrams/dist/physical-view.svg" alt="Topology of deployed platform"/>
 </div>
 
 
