@@ -15,7 +15,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 ## Physical view
-![Topology of deployed platform](/diagrams/dist/physical-view.png)
+![Topology of deployed platform](/diagrams/dist/physical-view.svg)
 
 
 # README Contents

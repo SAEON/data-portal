@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "npm run physical-view",
-    "physical-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -i /data/src/physical-view.mmd -o /data/dist/physical-view.png -t dark -b transparent"
+    "physical-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -i /data/src/physical-view.mmd -o /data/dist/physical-view.svg -t neutral"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT",
