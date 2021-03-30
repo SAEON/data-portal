@@ -1,6 +1,6 @@
-flowchart
+flowchart TD
 
-    User("User (human / machine)") <--> nginx
+    User("User (frontend)") <--> nginx
 
     %% CentOS boundary
     subgraph CentOS_boundary ["CentOS 7.6"]
@@ -64,14 +64,15 @@ flowchart
             api_container --- mongo_container
             api_container --- postgis_container
             api_container --- gdal_container
-            
-            Host("Mapped Docker/Host interface")
-            mongo_container --- Host
-            postgis_container --- Host
-            kibana_container --- Host
-        end
 
-        Host --- Host_interface("Host interface (0.0.0.0)")
+        end
+            
+        docker_interface("Docker/Host binding to 0.0.0.0<br />Accesible on VPN")
+        api_container --- docker_interface
+        mongo_container ---- docker_interface
+        postgis_container ---- docker_interface
+        es_container --- docker_interface
+        kibana_container --- docker_interface
     end
 
-    Host_interface <--> User2("User (internal on VPN)")
+    docker_interface <--> User2("User (backend)")
