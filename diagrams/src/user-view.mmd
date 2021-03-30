@@ -3,12 +3,12 @@ flowchart TD
       _client("React.js static website")
   end
 
-  subgraph gql_public ["GQL Playground (public)"]
-    api.catalogue.saeon.ac.za/graphql
+  subgraph gql_public ["api.catalogue.saeon.ac.za/graphql"]
+    _gql1("GQL Playground (public client served by API)")
   end
 
-subgraph gql_internal ["GQL Playground (internal)"]
-    api.catalogue.saeon.int:5002/graphql
+  subgraph gql_internal ["api.catalogue.saeon.int:5002/graphql"]
+    _gql2("GQL Playground (internal client served by API)")
   end
   
   subgraph api ["api.catalogue.saeon.ac.za"]
@@ -27,17 +27,15 @@ subgraph gql_internal ["GQL Playground (internal)"]
   end
 
   subgraph public_proxy ["proxy.catalogue.saeon.ac.za"]
-      _nginx("Nginx load balancer")
-      _nginx --- _proxy_2("AnyProxy")
-      _nginx --- _proxy_3("AnyProxy")
-      _nginx --- _proxy_4("AnyProxy")
-      _nginx --- _proxy_5("AnyProxy")
+      _proxy("Nginx load balancer")
+      _proxy --- _proxy_2("AnyProxy")
+      _proxy --- _proxy_3("AnyProxy")
+      _proxy --- _proxy_4("AnyProxy")
+      _proxy --- _proxy_5("AnyProxy")
   end
 
-  _api <====> gql_public
-  _api <====> gql_internal
-  client <====> _api
-  client <==> _nginx
-
-
+  gql_internal <===> api
+  gql_public <===> api
+  client <===> api
+  client <===> public_proxy
   
