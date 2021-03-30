@@ -184,23 +184,19 @@ The platform is currently deployed using docker-compose - the resultant deployme
 
 ## Docker-compose (quick deployment)
 
-From the root of the source code directory run the following shell command to start the services:
+From the root of the source code directory run the following shell command to start the services using default configuration:
 
 ```sh
-CATALOGUE_API_ODP_CLIENT_SECRET="<secret>" \
-MONGO_DB_USERNAME="<username>" \
-MONGO_DB_PASSWORD="<password>" \
-POSTGIS_USERNAME="<username>" \
-POSTGIS_PASSWORD="<password>" \
-CATALOGUE_LATEST_COMMIT= \
-CATALOGUE_DEPLOYMENT_ENV="development" \
-CATALOGUE_API_ADDRESS="http://localhost:3000" \
-CATALOGUE_API_ALLOWED_ORIGINS="http://localhost:3001,http://localhost:3000" \
-CATALOGUE_API_GQL_ADDRESS="http://localhost:3000/graphql" \
-CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS="ws://localhost:3000/graphql" \
-CATALOGUE_CLIENT_ADDRESS="http://localhost:3001" \
-CATALOGUE_CLIENT_DEFAULT_NOTICES="<Your welcome message here>,info" \
-CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of admin email addresses" \
+docker-compose --env-file docker-compose.env up -d --force-recreate --build
+```
+
+(NOTE - the command doesn't work with default configurations yet. This is a TODO)
+
+Override default configuration by specifing environment variables (refer to [docer-compose.env](docker-compose.env) for the list of configuration options that can be overriden):
+
+```sh
+ENV_VAR_1=x \
+ENV_VAR_2=x \
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ```
 
