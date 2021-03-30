@@ -54,11 +54,7 @@ In summary, this software facilitates:
 - Exploring shapefile datasets linked to by the metadata records
 
 ## Scenarios
-The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). These available clients are:
-
-- The React.js user inteface
-- GraphQL playground (for the public API)
-- GraphQL playground (for the internal API)
+The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programatically. The internal API is provided as a means for programatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data).
 
 ![Application instance view](/diagrams/dist/user-view.png)
 
