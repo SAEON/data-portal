@@ -21,9 +21,8 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 - [Overview](#overview)
   - [Scenarios](#scenarios)
-    - [Search](#search)
-    - [WMS preview](#wms-preview)
-    - [Create databook](#create-databook)
+    - [User/client scenarios](#userclient-scenarios)
+    - [Databook scenarios](#databook-scenarios)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
@@ -56,18 +55,17 @@ In summary, this software facilitates:
 - Exploring shapefile datasets linked to by the metadata records
 
 ## Scenarios
-The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programatically. The internal API is provided as a means for programatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data).
+The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programatically. The internal API is provided as a means for programatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data). From a user perspective, the available websites are represented by the following diagram:
 
-![Browser clients scenario view](/diagrams/dist/user-view.png)
+![User perspective of available web clients](/diagrams/dist/user-view.png)
 
-### Search
-A diagram showing the communication round trip from user to server and back in response to using the UI (updating search term or filters)
-![Search sequence scenario](/diagrams/dist/scenarios/search.png)
+### User/client scenarios
+The platform is primarily driven by user interactions with the React.js UI application. This sequence diagram shows all the user/client scenarios for the basic search / preview / download functionality:
 
-### WMS preview
-TODO
+![Search sequence scenario](/diagrams/dist/client-scenarios.png)
 
-### Create databook
+
+### Databook scenarios
 TODO
 
 

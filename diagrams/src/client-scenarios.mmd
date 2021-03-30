@@ -1,0 +1,55 @@
+sequenceDiagram
+    autonumber
+
+    participant user as User
+    participant client as SAEON Data Portal
+    participant api as API
+    participant proxy_external as Proxy (public)
+    participant proxy_internal as Proxy (internal)
+    participant es as Elasticsearch
+    participant mongo as MongoDB
+    participant external_services as 3rd Party Services
+
+    Note right of user: SEARCH
+    user->>client: Updates the search context <br />on the UI
+    Note over client,api: Client / API communication <br /> is in the form of GraphQL messages
+    client->>api: POST query
+    api->>mongo: Log search details
+    api->>+proxy_internal: Forward POST
+    Note over api,proxy_internal: GraphQL requests are converted <br />into Elasticsearch DSL at this point
+    proxy_internal->>+es: Forward POST
+    Note over proxy_internal,es: Search queries are passed<br /> through a proxy so that<br /> Elasticsearch DSL is viewable<br /> at catalogue.saeon.int:8002 
+    Note right of es: Elasticsearch performs an index scan <br /> and returns sensible results
+    es->>-proxy_internal: Return
+    proxy_internal->>api: Return
+    api->>client: Return
+    client->>user: Show search result
+
+    Note right of user: WMS PREVIEW REQUEST
+    user->>client: Select WMS preview of a record
+    client->>proxy_external: Tile request to WMS servers
+    proxy_external->>+external_services: Requests to 3rd party resources (GeoServers usually)
+    external_services->>-client: Return
+    client->>user: Show map
+
+    Note right of user: DATA DOWNLOAD
+    user->>client: Select record
+    client->>user: Show record view
+    user->>client: Click download button
+    client->>user: Show terms of user notice
+    user->>client: Accept terms
+    client->>api: Log download request
+    api->>mongo: Log download details
+    client->>user: Redirect to download link<br />(for HTTPS URIs)
+    client->>api: Forward download request
+    api->>user: Download via proxy for allowed domains (if HTTP)
+
+    Note right of user: GENERAL UI INTERACTIONS
+    loop UI Interactions
+      user->>client: Mousemoves/clicks/etc
+      client->>api: Log UI interactions
+      api->>mongo: Log interaction details
+    end
+
+
+
