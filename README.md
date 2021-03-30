@@ -21,9 +21,9 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 - [Overview](#overview)
   - [Scenarios](#scenarios)
-      - [Search](#search)
-      - [WMS preview](#wms-preview)
-      - [Create databook](#create-databook)
+    - [Search](#search)
+    - [WMS preview](#wms-preview)
+    - [Create databook](#create-databook)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
@@ -60,13 +60,14 @@ The platform is centered around a Node.js API for interacting with supporting se
 
 ![Browser clients scenario view](/diagrams/dist/user-view.png)
 
-#### Search
+### Search
+A diagram showing the communication round trip from user to server and back in response to using the UI (updating search term or filters)
 ![Search sequence scenario](/diagrams/dist/scenarios/search.png)
 
-#### WMS preview
+### WMS preview
 TODO
 
-#### Create databook
+### Create databook
 TODO
 
 
