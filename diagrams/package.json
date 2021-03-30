@@ -5,13 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "npm run deployment-view && npm run user-view && npm run client-scenarios",
-    "deployment-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/deployment-view.mmd -o /data/dist/deployment-view.png",
-    "user-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/user-view.mmd -o /data/dist/user-view.png",
-    "client-scenarios": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/client-scenarios.mmd -o /data/dist/client-scenarios.png"
+    "deployment-view": "docker run --rm -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/deployment-view.mmd -o /data/dist/deployment-view.png",
+    "user-view": "docker run -it --rm -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/user-view.mmd -o /data/dist/user-view.png",
+    "client-scenarios": "docker run --rm -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/client-scenarios.mmd -o /data/dist/client-scenarios.png"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT",
-  "dependencies": {
-    "mermaid.cli": "^0.5.1"
-  }
+  "dependencies": {}
 }
