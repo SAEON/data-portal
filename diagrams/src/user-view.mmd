@@ -2,6 +2,14 @@ flowchart TD
   subgraph client ["catalogue.saeon.ac.za"]
       _client("React.js static website")
   end
+
+  subgraph gql_public ["GQL Playground (public)"]
+    api.catalogue.saeon.ac.za/graphql
+  end
+
+subgraph gql_internal ["GQL Playground (internal)"]
+    api.catalogue.saeon.int:5002/graphql
+  end
   
   subgraph api ["api.catalogue.saeon.ac.za"]
       _api("Node.js application")
@@ -26,8 +34,10 @@ flowchart TD
       _nginx --- _proxy_5("AnyProxy")
   end
 
-  client <---> api
-  client <---> public_proxy
+  _api <====> gql_public
+  _api <====> gql_internal
+  client <====> _api
+  client <==> _nginx
 
 
   
