@@ -4,7 +4,10 @@
   "sequenceDiagram": {
     "noteFontSize": 10,
     "messageFontSize": 10,
-    "mirrorActors": false
+    "mirrorActors": true,
+    "useMaxWidth": false,
+    "diagramMarginY": 50,
+    "showSequenceNumbers": false 
   },
   "flowchart": {
     "useMaxWidth": false,
