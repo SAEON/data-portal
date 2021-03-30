@@ -14,19 +14,14 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
 - Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
-## Deployment view
-![Topology of deployed platform](/diagrams/dist/deployment-view.png)
-
-## Application instance view
-Clients, once invoked on a browser such as Chrome make further network requests to the origin. This can be observed in the network tab - the diagram shows the same.
-![Application instance view](/diagrams/dist/user-view.png)
-
-
 # README Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [Overview](#overview)
+  - [Scenarios](#scenarios)
+      - [Basic search](#basic-search)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
@@ -50,6 +45,26 @@ Clients, once invoked on a browser such as Chrome make further network requests 
   - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Overview
+In summary, this software facilitates:
+
+- Searching metadata records
+- Previewing WMS maps when metadata records support this
+- Exploring shapefile datasets linked to by the metadata records
+
+## Scenarios
+The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). These available clients are:
+
+- The React.js user inteface
+- GraphQL playground (for the public API)
+- GraphQL playground (for the internal API)
+
+![Application instance view](/diagrams/dist/user-view.png)
+
+#### Basic search
+TODO
+
 
 # Quick start
 
@@ -160,6 +175,9 @@ mutation {
 ```
 
 # Deployment and installation
+The platform is currently deployed using docker-compose - the resultant deployment topology is shown in the diagram.
+
+![Topology of deployed platform](/diagrams/dist/deployment-view.png)
 
 ## Docker-compose (quick deployment)
 
