@@ -31,7 +31,8 @@ sequenceDiagram
       user->>client: Select WMS preview of a record
       client->>proxy_external: Tile request to WMS servers
       proxy_external->>+external_services: Requests to 3rd party resources (GeoServers usually)
-      external_services->>-client: Return
+      external_services->>-proxy_external: Return
+      proxy_external->>client: Return
       client->>user: Show map    
     end
 
