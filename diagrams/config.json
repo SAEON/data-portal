@@ -2,8 +2,6 @@
   "htmlLabels": true,
   "theme": "neutral",
   "sequenceDiagram": {
-    "noteFontSize": 10,
-    "messageFontSize": 10,
     "mirrorActors": true,
     "useMaxWidth": false,
     "diagramMarginY": 50,
