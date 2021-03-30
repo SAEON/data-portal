@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+
+    participant user as User
+    participant client as SAEON Data Portal
+    participant api as API
+    participant proxy as Proxy (internal)
+    participant es as Elasticsearch
+
+    user->>client: Updates the search context <br />on the UI
+    Note over client,api: Client / API communication <br /> is in the form of GraphQL messages
+    client->>api: POST query
+    api->>+proxy: Forward POST
+    Note over api,proxy: GraphQL requests are converted <br />into Elasticsearch DSL at this point
+    proxy->>+es: Forward POST
+    Note over proxy,es: Search queries are passed<br /> through a proxy so that<br /> Elasticsearch DSL is viewable<br /> at catalogue.saeon.int:8002 
+    Note right of es: Elasticsearch performs an index scan <br /> and returns sensible results
+    es->>-proxy: Return
+    proxy->>api: Return
+    api->>client: Return
+    client->>user: Show search result

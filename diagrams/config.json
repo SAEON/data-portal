@@ -1,6 +1,11 @@
 {
   "htmlLabels": true,
   "theme": "neutral",
+  "sequenceDiagram": {
+    "noteFontSize": 10,
+    "messageFontSize": 10,
+    "mirrorActors": false
+  },
   "flowchart": {
     "useMaxWidth": false,
     "curve":"cardinal",

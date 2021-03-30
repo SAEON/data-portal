@@ -21,7 +21,9 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 - [Overview](#overview)
   - [Scenarios](#scenarios)
-      - [Basic search](#basic-search)
+      - [Search](#search)
+      - [WMS preview](#wms-preview)
+      - [Create databook](#create-databook)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
@@ -56,9 +58,15 @@ In summary, this software facilitates:
 ## Scenarios
 The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programatically. The internal API is provided as a means for programatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data).
 
-![Application instance view](/diagrams/dist/user-view.png)
+![Browser clients scenario view](/diagrams/dist/user-view.png)
 
-#### Basic search
+#### Search
+![Search sequence scenario](/diagrams/dist/scenarios/search.png)
+
+#### WMS preview
+TODO
+
+#### Create databook
 TODO
 
 
@@ -72,9 +80,9 @@ Setup the repository for development on a local machine. The Node.js and React s
 2. Node.js **v15.11** (Versions lower than **v14.13** will not work)
 
 ```sh
-# Make sure that Node.js ^14.15 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^15.11 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
 sudo apt-get install -y nodejs
 ```

@@ -4,9 +4,10 @@
   "description": "Mermaid diagrams",
   "type": "module",
   "scripts": {
-    "build": "npm run deployment-view && npm run user-view",
+    "build": "npm run deployment-view && npm run user-view && npm run search-scenario",
     "deployment-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/deployment-view.mmd -o /data/dist/deployment-view.png",
-    "user-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/user-view.mmd -o /data/dist/user-view.png"
+    "user-view": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/user-view.mmd -o /data/dist/user-view.png",
+    "search-scenario": "docker run -it -v /home/zach/code/catalogue/diagrams:/data minlag/mermaid-cli:latest -C /data/style.css -c /data/config.json -i /data/src/scenarios/search.mmd -o /data/dist/scenarios/search.png"
   },
   "author": "zach@saeon.ac.za",
   "license": "MIT",
