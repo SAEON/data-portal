@@ -32,11 +32,6 @@
     "************ DEPLOYMENT **********": "",
     "configure-centos-7-server": "ansible-playbook platform/ansible/playbooks/centos-7.yml -i platform/ansible/inventories/centos-7"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run doc && npm run bump-patch && npm run prettier:changed && npm run update-git-snapshot"
-    }
-  },
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
