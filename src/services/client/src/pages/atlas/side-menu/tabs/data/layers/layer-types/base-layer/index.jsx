@@ -32,7 +32,7 @@ export default memo(({ layer, proxy }) => {
             <CardHeader
               title={
                 <Typography style={{ wordBreak: 'break-word' }} variant="caption">
-                  {title.truncate(55)}
+                  {title?.truncate(55)}
                 </Typography>
               }
               component={forwardRef(({ children }, ref) => (

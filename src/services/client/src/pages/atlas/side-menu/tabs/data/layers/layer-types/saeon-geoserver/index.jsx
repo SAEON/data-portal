@@ -73,7 +73,7 @@ export default ({
             <CardHeader
               title={
                 <Typography style={{ wordBreak: 'break-word' }} variant="caption">
-                  {title.truncate(75)}
+                  {title?.truncate(75)}
                 </Typography>
               }
               component={forwardRef(({ children }, ref) => (

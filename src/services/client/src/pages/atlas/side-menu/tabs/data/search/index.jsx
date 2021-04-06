@@ -178,7 +178,7 @@ export default () => {
                             style={{ marginRight: 'auto', alignSelf: 'center' }}
                             variant="overline"
                           >
-                            {DOI.truncate(30)}
+                            {DOI?.truncate(30)}
                           </Typography>
                           {/* TODO this code is defined in 3 places */}
                           <MessageDialogue
@@ -220,7 +220,7 @@ export default () => {
 
                         {/* Title */}
                         <Box m={1}>
-                          <Typography variant="caption">{description.truncate(95)}</Typography>
+                          <Typography variant="caption">{description?.truncate(95)}</Typography>
                           <Typography
                             style={{ position: 'absolute', right: 12, bottom: 0 }}
                             variant="overline"
