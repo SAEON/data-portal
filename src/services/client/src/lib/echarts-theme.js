@@ -23,22 +23,8 @@ var palette = [
   '#c14089',
 ]
 
-const palette2 = [
-  '#c23531',
-  '#2f4554',
-  '#61a0a8',
-  '#d48265',
-  '#91c7ae',
-  '#749f83',
-  '#ca8622',
-  '#bda29a',
-  '#6e7074',
-  '#546570',
-  '#c4ccd3',
-]
 export default {
-  // color: palette,
-  color: palette2,
+  color: palette,
   backgroundColor: 'rgba(0,0,0,0)',
   // textStyle: {},
   title: {
@@ -349,14 +335,8 @@ export default {
       borderColor: '#444',
       borderWidth: 1,
     },
-
     label: {
       color: '#d87a80',
-    },
-    emphasis: {
-      label: {
-        color: 'rgb(100,0,0)',
-      },
     },
     feature: {
       saveAsImage: {},
@@ -368,7 +348,6 @@ export default {
       magicType: {
         type: ['line', 'bar'],
         title: { line: 'View as line chart', bar: 'View as bar chart' },
-        // title: [',View as line chart', 'View as bar chart'],
       },
     },
   },

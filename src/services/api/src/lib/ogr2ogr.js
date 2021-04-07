@@ -5,7 +5,7 @@ import {
   POSTGIS_HOST,
   CATALOGUE_API_TEMP_DIRECTORY,
   CATALOGUE_DOCKER_TMP_VOLUME,
-  GDAL_DOCKER_IMAGE
+  GDAL_DOCKER_IMAGE,
 } from '../config.js'
 
 export default ({
