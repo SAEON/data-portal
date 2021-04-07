@@ -47,7 +47,7 @@
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.0",
     "date-fns": "^2.19.0",
     "npm-check-updates": "^11.3.0",
     "prettier": "^2.2.1",
