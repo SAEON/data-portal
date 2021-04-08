@@ -4,12 +4,9 @@ export default makeStyles(theme => ({
   card: {
     backgroundColor: theme.backgroundColor,
     padding: theme.spacing(3),
-    width: '100%',
   },
-  notMobile: {
-    ...theme.notMobile,
+  mdAndUp: {
+    margin: `0 ${theme.spacing(16)}px`,
   },
-  mobile: {
-    ...theme.mobile,
-  },
+  mdAndDown: {},
 }))

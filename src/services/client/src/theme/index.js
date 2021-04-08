@@ -8,12 +8,6 @@ const defaultTheme = createMuiTheme()
 export default createMuiTheme({
   ...muiDefaults,
   overrides: overrides(defaultTheme),
-  notMobile: {
-    margin: '0 25%',
-  },
-  mobile: {
-    padding: defaultTheme.spacing(4),
-  },
   link: {
     color: defaultTheme.palette.primary,
     display: 'inline-block',
