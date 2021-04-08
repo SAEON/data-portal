@@ -9,7 +9,7 @@ import clsx from 'clsx'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import { setShareLink } from '../../hooks/use-share-link'
 import SkipLink from '../../components/skip-link'
-import SearchSummary from './_search'
+import SearchSummary from './_search-summary'
 import Search from '../../components/search'
 import Container from '@material-ui/core/Container'
 
