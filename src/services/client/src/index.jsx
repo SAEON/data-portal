@@ -1,3 +1,4 @@
+import './lib/log-config'
 if (!window.crypto) window.crypto = window.msCrypto // IE 11 (nanoid package)
 import 'core-js' // babel.useBuiltIns = entry
 import 'cross-fetch/polyfill' // IE 11

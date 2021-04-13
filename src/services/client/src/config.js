@@ -44,33 +44,3 @@ export const CATALOGUE_SUPPORTED_DATABOOK_FORMATS = process.env
   .CATALOGUE_SUPPORTED_DATABOOK_FORMATS || ['SHAPEFILE', 'NETCDF']
 
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
-
-if (CATALOGUE_DEPLOYMENT_ENV !== 'production') {
-  console.log(
-    'Configuration',
-    Object.fromEntries(
-      Object.entries({
-        CATALOGUE_SUPPORTED_DATABOOK_FORMATS,
-        PACKAGE_DESCRIPTION,
-        PACKAGE_KEYWORDS,
-        CATALOGUE_CURATOR_CONTACT,
-        CATALOGUE_TECHNICAL_CONTACT,
-        CATALOGUE_DEPLOYMENT_ENV,
-        CATALOGUE_SOURCE_CODE_URI,
-        CATALOGUE_LATEST_COMMIT,
-        CATALOGUE_API_ADDRESS,
-        CATALOGUE_API_GQL_ADDRESS,
-        CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS,
-        CATALOGUE_CLIENT_BACKGROUNDS,
-        CATALOGUE_CLIENT_DEFAULT_NOTICES,
-        CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
-        CATALOGUE_CLIENT_ADDRESS,
-        CATALOGUE_CLIENT_FILTER_CONFIG,
-      }).sort(([aKey], [bKey]) => {
-        if (aKey > bKey) return 1
-        if (bKey > aKey) return -1
-        return 0
-      })
-    )
-  )
-}
