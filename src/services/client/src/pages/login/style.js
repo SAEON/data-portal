@@ -1,10 +1,6 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 export default makeStyles(theme => ({
-  grid: {
-    padding: theme.spacing(2),
-    paddingTop: theme.spacing(12),
-  },
   card: {
     backgroundColor: theme.backgroundColor,
     paddingBottom: theme.spacing(1),
