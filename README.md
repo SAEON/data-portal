@@ -76,10 +76,10 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Desktop
-2. Node.js **v15.11** (Versions lower than **v14.13** will not work)
+2. Node.js **v15.14** (Versions lower than **v14.13** will not work)
 
 ```sh
-# Make sure that Node.js ^15.11 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^15.14 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings

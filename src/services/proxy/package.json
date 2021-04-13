@@ -27,14 +27,14 @@
     "@babel/runtime": "^7.13.10",
     "@saeon/logger": "^6.2.8",
     "anyproxy": "^4.1.3",
-    "date-fns": "^2.19.0",
+    "date-fns": "^2.20.3",
     "dotenv": "^8.2.0",
     "redis": "^3.1.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",
-    "npm-check-updates": "^11.3.0",
+    "npm-check-updates": "^11.4.1",
     "prettier": "^2.2.1"
   }
 }
