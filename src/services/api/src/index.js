@@ -101,7 +101,7 @@ publicApp
 const publicHttpServer = createServer(publicApp.callback())
 const privateHttpServer = createServer(internalApp.callback())
 
-// Configure Apollo public server
+// Configure Apollo servers
 const { publicServer, internalServer } = apolloServers
 publicServer.applyMiddleware({ app: publicApp })
 publicServer.installSubscriptionHandlers(publicHttpServer)
