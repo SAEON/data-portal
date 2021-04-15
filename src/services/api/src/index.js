@@ -69,7 +69,7 @@ publicApp
     })
   )
   .use(koaBody())
-  .use(blacklistRoute(koaSession(passportCookieConfig, publicApp), '/proxy'))
+  .use(blacklistRoute(koaSession(passportCookieConfig, publicApp), '/proxy')) // TODO - is this needed now that proxy is proxy.saeon.ac.za?
   .use(cors)
   .use(clientSession)
   .use(koaPassport.initialize())
