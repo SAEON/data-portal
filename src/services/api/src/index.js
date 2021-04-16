@@ -69,7 +69,7 @@ publicApp
     })
   )
   .use(koaBody())
-  .use(blacklistRoute(koaSession(passportCookieConfig, publicApp), '/proxy'))
+  .use(blacklistRoute(koaSession(passportCookieConfig, publicApp), '/proxy')) // TODO - is this needed now that proxy is proxy.saeon.ac.za?
   .use(cors)
   .use(clientSession)
   .use(koaPassport.initialize())
@@ -101,7 +101,7 @@ publicApp
 const publicHttpServer = createServer(publicApp.callback())
 const privateHttpServer = createServer(internalApp.callback())
 
-// Configure Apollo public server
+// Configure Apollo servers
 const { publicServer, internalServer } = apolloServers
 publicServer.applyMiddleware({ app: publicApp })
 publicServer.installSubscriptionHandlers(publicHttpServer)
