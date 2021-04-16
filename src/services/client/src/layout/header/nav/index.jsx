@@ -21,7 +21,7 @@ export default () => {
       </IconButton>
 
       <Menu
-        id="simple-menu"
+        id="site-navigation-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
