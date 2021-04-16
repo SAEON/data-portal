@@ -212,6 +212,14 @@
         regexp: '^%runner ALL=NOPASSWD: /home/runner/svc.sh'
         line: 'runner ALL=NOPASSWD: /home/runner/svc.sh'
         validate: /usr/sbin/visudo -cf %s
+
+    - name: GitHub Actions-runner (sudo installdependencies.sh)
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh'
+        line: 'runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh'
+        validate: /usr/sbin/visudo -cf %s        
     
     - name: Ensure SELinux is disabled
       lineinfile:
