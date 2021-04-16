@@ -87,6 +87,7 @@
     "react-split-pane": "^0.1.92",
     "react-virtualized-auto-sizer": "^1.0.5",
     "react-window": "^1.8.6",
+    "regenerator-runtime": "^0.13.7",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "subscriptions-transport-ws": "^0.9.18",
