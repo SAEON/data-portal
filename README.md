@@ -256,6 +256,19 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - postgis://catalogue.saeon.int:5442
 - mongodb://catalogue.saeon.int:27017
 
+## Restoring MongoDB
+As part of the Ansible server setup, MongoDB backups are taken via the following command:
+
+```sh
+docker container exec -i mongo sh -c mongodump --username <username> --password <pswd> --authenticationDatabase admin -d catalogue --archive > filename.archive
+```
+
+The command to restore these backups is:
+
+```sh
+docker container exec -i mongo sh -c "mongorestore --username <username> --password <pswd> --authenticationDatabase admin --nsInclude catalogue.* --archive filename.archive"
+```
+
 # Documentation
 
 ## API
