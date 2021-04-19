@@ -257,7 +257,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - mongodb://catalogue.saeon.int:27017
 
 ## MongoDB database management
-These commands should work for taking and restoring backups on localhost (i.e. the `docker-compose` deployment with no overriding configuration).
+These commands should work for taking and restoring backups on localhost (i.e. the `docker-compose` deployment with no overriding configuration). Adjust appropriately for MongoDB authentication credentials in the deployed environment.
 
 ```sh
 # Create a zipped backup archive 
