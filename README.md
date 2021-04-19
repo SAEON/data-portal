@@ -260,7 +260,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 These commands should work for taking and restoring backups on localhost (i.e. the `docker-compose` deployment with no overriding configuration).
 
 ```sh
-# Create a zipped backup archive from 
+# Create a zipped backup archive 
 cd ~
 docker run \
   --net=catalogue_default \
