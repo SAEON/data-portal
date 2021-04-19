@@ -55,7 +55,7 @@ In summary, this software facilitates:
 - Exploring shapefile datasets linked to by the metadata records
 
 ## Scenarios
-The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programatically. The internal API is provided as a means for programatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data). From a user perspective, the available websites are represented by the following diagram:
+The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programmatically. The internal API is provided as a means for programmatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data). From a user perspective, the available websites are represented by the following diagram:
 
 ![User perspective of available web clients](/diagrams/dist/user-view.png)
 
@@ -256,17 +256,46 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - postgis://catalogue.saeon.int:5442
 - mongodb://catalogue.saeon.int:27017
 
-## Restoring MongoDB
-As part of the Ansible server setup, MongoDB backups are taken via the following command:
+## MongoDB database management
+These commands should work for taking and restoring backups on localhost (i.e. the `docker-compose` deployment with no overriding configuration).
 
 ```sh
-docker container exec -i mongo sh -c mongodump --username <username> --password <pswd> --authenticationDatabase admin -d catalogue --archive > filename.archive
-```
+# Create a zipped backup archive from 
+cd ~
+docker run \
+  --net=catalogue_default \
+  -v /home/$USER:/mongo-bak \
+  --rm \
+  mongo:4.4.3 \
+  sh -c \
+  "mongodump \
+    --uri=mongodb://mongo:27017 \
+    -u=admin \
+    -p=password \
+    --authenticationDatabase=admin \
+    -d=catalogue \
+    --archive \
+    --gzip \
+    > \
+    /mongo-bak/mongo-backup.archive"
 
-The command to restore these backups is:
-
-```sh
-docker container exec -i mongo sh -c "mongorestore --username <username> --password <pswd> --authenticationDatabase admin --nsInclude catalogue.* --archive filename.archive"
+# Restore the zipped backup archive to a database
+cd ~
+docker run \
+  -i \
+  --net=catalogue_default \
+  -v /home/$USER:/mongo-bak \
+  --rm \
+  mongo:4.4.3 \
+  sh -c \
+  "mongorestore \
+    --uri=mongodb://mongo:27017 \
+    -u=admin \
+    -p=password \
+    --authenticationDatabase=admin \
+    --gzip \
+    --archive=/mongo-bak/mongo-backup.archive \
+    --nsInclude=catalogue.*"
 ```
 
 # Documentation

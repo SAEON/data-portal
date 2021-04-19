@@ -27,7 +27,7 @@ export default ({ children }) => {
         <DialogContent>
           <Typography>
             Many features of this website will not work as expected on this browser (including
-            viewing maps). A newer browser (Chrome, Edge, Firefox, Safari, etc.) will certianly
+            viewing maps). A newer browser (Chrome, Edge, Firefox, Safari, etc.) will certainly
             provide a nicer experience.
           </Typography>
         </DialogContent>

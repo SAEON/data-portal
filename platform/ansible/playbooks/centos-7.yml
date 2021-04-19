@@ -105,7 +105,7 @@
         day: "*"
         month: "*"
         weekday: "*"
-        job: docker exec mongo sh -c 'exec mongodump --username {{ MONGO_DB_USERNAME }} --password {{ MONGO_DB_PASSWORD }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1
+        job: docker exec mongo sh -c 'exec mongodump --username {{ MONGO_DB_USERNAME }} --password {{ MONGO_DB_PASSWORD }} --authenticationDatabase admin -d catalogue --archive' > /opt/dbak/catalogue_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive` 2>&1 # The -c flag stands for 'chained', and allows for running chained commands (might not be required actually in this case) 
     
     - name: Prune MongoDB backups
       cron:
