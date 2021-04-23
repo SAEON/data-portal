@@ -1,7 +1,7 @@
 import mongo from 'mongodb'
 const { ObjectID } = mongo
 
-export default async (databook, args, ctx) => {
+export default async (_, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
 
   const { Charts } = await ctx.mongo.collections
