@@ -112,6 +112,7 @@ export default async () => {
   }
 
   const t1 = performance.now()
-  console.log('Index integration complete', `${Math.round((t1 - t0) / 1000, 2)} seconds`)
-  return { runtime: `${Math.round((t1 - t0) / 1000, 2)} seconds`, ...result }
+  const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
+  console.log('Index integration complete', runtime)
+  return { runtime, ...result }
 }

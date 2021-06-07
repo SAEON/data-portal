@@ -5,13 +5,13 @@
     "mirrorActors": true,
     "useMaxWidth": false,
     "diagramMarginY": 50,
-    "showSequenceNumbers": false 
+    "showSequenceNumbers": false
   },
   "flowchart": {
     "useMaxWidth": false,
-    "curve":"cardinal",
+    "curve": "cardinal",
     "diagramPadding": 16,
     "nodeSpacing": 50,
-    "rankSpacing":50
+    "rankSpacing": 50
   }
 }

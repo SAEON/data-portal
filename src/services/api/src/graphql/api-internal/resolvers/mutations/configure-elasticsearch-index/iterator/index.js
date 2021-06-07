@@ -33,39 +33,58 @@ const iterate = async ({ offset = 0, token }) => {
   const next = () => iterate({ offset: offset + odpResponseJson.length, token })
   const done = !odpResponseJson?.length
 
-  const data = odpResponseJson
-    .map(({ id, doi, institution, collection, projects, schema, metadata, published }, i) => {
-      if (DEBUG_IDS.includes(id)) {
-        console.debug(id, JSON.stringify(odpResponseJson[i], null, 2))
-      }
+  /**
+   * TODO what should sid do
+   */
 
-      try {
-        return published
-          ? {
-              id,
-              doi,
-              institution,
-              collection,
-              projects,
-              schema,
-              ...Object.fromEntries(
-                Object.entries(metadata).map(([key, value]) =>
-                  key === 'immutableResource'
-                    ? [key, parseImmutableResource(id, value)]
-                    : key === 'dates'
-                    ? [key, parseDates(id, value)]
-                    : key === 'geoLocations'
-                    ? [key, parseSpatial(id, value)]
-                    : [key, value]
-                )
-              ),
-            }
-          : undefined // published === false
-      } catch (error) {
-        console.error(id, error.message)
-        return undefined
+  const data = odpResponseJson
+    .map(
+      (
+        {
+          id,
+          sid, // eslint-disable-line
+          doi,
+          institution_key: institution,
+          collection_key: collection,
+          project_keys: projects,
+          schema_key: schema,
+          metadata,
+          published,
+        },
+        i
+      ) => {
+        if (DEBUG_IDS.includes(id)) {
+          console.debug(id, JSON.stringify(odpResponseJson[i], null, 2))
+        }
+
+        try {
+          return published
+            ? {
+                id,
+                doi,
+                institution,
+                collection,
+                projects,
+                schema,
+                ...Object.fromEntries(
+                  Object.entries(metadata).map(([key, value]) =>
+                    key === 'immutableResource'
+                      ? [key, parseImmutableResource(id, value)]
+                      : key === 'dates'
+                      ? [key, parseDates(id, value)]
+                      : key === 'geoLocations'
+                      ? [key, parseSpatial(id, value)]
+                      : [key, value]
+                  )
+                ),
+              }
+            : undefined // published === false
+        } catch (error) {
+          console.error(id, error.message)
+          return undefined
+        }
       }
-    })
+    )
     // Filter away published === false
     .filter(_ => _)
 

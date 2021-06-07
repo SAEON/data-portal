@@ -201,6 +201,7 @@ export default ({ disableSidebar = false }) => {
                       margin: '32px 0 16px 0',
                     }}
                   >
+                    {/* TODO should be container */}
                     <Grid container item lg={10} xl={8}>
                       {showSidebar ? (
                         <Grid style={{ paddingRight: 16 }} item md={4}>

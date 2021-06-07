@@ -8,7 +8,7 @@ export default ({ children, effects, ...formFields }) => {
       effects?.forEach(effect => {
         effect(fields)
       }),
-    [fields] // TODO - The suggested fix by eslint breaks the code
+    [fields] // TODO - The suggested fix by eslint breaks the code - a better approach is in the nccs code component
   )
 
   const updateForm = obj => {
