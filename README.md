@@ -102,7 +102,7 @@ npm run install-dependencies
 # Build local packages
 npm run build-all-packages
 ```
-
+ 
 ## Local development
 
 The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
