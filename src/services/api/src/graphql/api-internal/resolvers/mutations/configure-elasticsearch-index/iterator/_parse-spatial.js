@@ -13,12 +13,8 @@ export default (id, spatial) => {
     }
 
     if (geoLocationBox) {
-      const {
-        westBoundLongitude,
-        northBoundLatitude,
-        eastBoundLongitude,
-        southBoundLatitude,
-      } = geoLocationBox
+      const { westBoundLongitude, northBoundLatitude, eastBoundLongitude, southBoundLatitude } =
+        geoLocationBox
 
       // Sometimes points are defined in the box field
       if (westBoundLongitude === eastBoundLongitude && northBoundLatitude === southBoundLatitude) {

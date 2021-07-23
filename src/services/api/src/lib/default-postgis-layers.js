@@ -13,8 +13,7 @@ export default {
   },
   'sa-district-boundaries-2016': {
     source: 'public',
-    uri:
-      'http://www.demarcation.org.za/site/wp-content/uploads/2016/12/2016-Boundaries-District.zip',
+    uri: 'http://www.demarcation.org.za/site/wp-content/uploads/2016/12/2016-Boundaries-District.zip',
     description: 'Detailed district boundary polygons from http://www.demarcation.org.za',
   },
   'sa-provinces-2011-simplified': {

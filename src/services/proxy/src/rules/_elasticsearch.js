@@ -2,9 +2,13 @@ import { URL } from 'url'
 import { normalize } from 'path'
 import { ELASTICSEARCH_ADDRESS } from '../config.js'
 
-const { protocol, hostname, port, host, pathname: destinationPathname } = new URL(
-  ELASTICSEARCH_ADDRESS
-)
+const {
+  protocol,
+  hostname,
+  port,
+  host,
+  pathname: destinationPathname,
+} = new URL(ELASTICSEARCH_ADDRESS)
 
 export default (requestDetail, { pathname: originPathname, search }) => {
   const index = originPathname.match(/(?<=\/elasticsearch\/)(.*)$/)[0].replace('/_search', '')

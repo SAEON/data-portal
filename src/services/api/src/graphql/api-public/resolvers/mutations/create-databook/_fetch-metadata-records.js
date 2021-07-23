@@ -16,7 +16,7 @@ export default async (search, ctx) => {
   const searchResult = await graphql(
     schema,
     print(gql`
-      query(
+      query (
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]

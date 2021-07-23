@@ -40,7 +40,7 @@ export default async ctx => {
   const { data } = await execute(
     publicSchema,
     gql`
-      query(
+      query (
         $ids: [ID!]
         $dois: [String!]
         $text: String
