@@ -131,13 +131,13 @@ docker run --net=catalogue --name elasticsearch --restart always -e xpack.licens
 docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.2
 
 # Start the Node.js proxy server
-npm run start:proxy
+npm run proxy
 
 # Start the Node.js API server
-npm run start:api
+npm run api
 
 # Start the React.js client
-npm run start:client
+npm run client
 ```
 
 Then [configure the API for first use](#api-configuration)

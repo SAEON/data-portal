@@ -5,9 +5,9 @@
   "scripts": {
     "************ TESTS **********": "",
     "************ START SCRIPTS **********": "",
-    "start:api": "npm --prefix src/services/api start",
-    "start:client": "npm --prefix src/services/client start",
-    "start:proxy": "npm --prefix src/services/proxy start",
+    "api": "npm --prefix src/services/api start",
+    "client": "npm --prefix src/services/client start",
+    "proxy": "npm --prefix src/services/proxy start",
     "************ REPOSITORY TOOLING **********": "",
     "prepare": "husky install",
     "doc": "doctoc README.md && doctoc platform/README.md && doctoc diagrams/README.md && doctoc src/packages/README.md && doctoc src/tools/README.md && doctoc src/services/client/README.md && doctoc src/services/api/README.md && doctoc src/services/proxy/README.md && doctoc platform/README.md && npm run --prefix diagrams build",
