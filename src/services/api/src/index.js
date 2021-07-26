@@ -102,22 +102,20 @@ const publicHttpServer = createServer(publicApp.callback())
 const privateHttpServer = createServer(internalApp.callback())
 
 // Configure Apollo servers
-const { publicServer, internalServer } = apolloServers
-publicServer.applyMiddleware({ app: publicApp })
-publicServer.installSubscriptionHandlers(publicHttpServer)
-internalServer.applyMiddleware({ app: internalApp })
-internalServer.installSubscriptionHandlers(privateHttpServer)
+const { publicServer: publicGqlServer, internalServer: internalGqlServer } = apolloServers
+publicGqlServer.start().then(() => publicGqlServer.applyMiddleware({ app: publicApp, cors: false }))
+internalGqlServer
+  .start()
+  .then(() => internalGqlServer.applyMiddleware({ app: internalApp, cors: false }))
 
 // Start public HTTP server
 publicHttpServer.listen(CATALOGUE_API_ADDRESS_PORT, () => {
   console.log(`@saeon/catalogue API server ready`)
   console.log(`@saeon/catalogue GraphQL server ready`)
-  console.log(`@saeon/catalogue GraphQL subscriptions server ready`)
 })
 
 // Start internal HTTP server
 privateHttpServer.listen(CATALOGUE_API_INTERNAL_ADDRESS_PORT, () => {
   console.log(`@saeon/catalogue API server ready (internal)`)
   console.log(`@saeon/catalogue GraphQL server ready (internal)`)
-  console.log(`@saeon/catalogue GraphQL subscriptions server ready (internal)`)
 })

@@ -65,8 +65,6 @@ type Query {
   userRoles: [UserRole!]!
 }
 
-# type Subscription {}
-
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): Void
   # Save a web-browser's search context for retrieving as a databook

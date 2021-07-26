@@ -20,8 +20,6 @@ type Query {
   downloadsReport: [DownloadSummary]!
 }
 
-# type Subscription {}
-
 type Mutation {
   configureElasticsearchTemplate: JSON!
   configureElasticsearchIndex: JSON!
