@@ -1,2 +1,0 @@
-# Package Test
-I'm consistently struggling with CommonJS/ESM/etc import formats from the packages. This seems like a good way to test packages created with Rollup, in a client that is similar to services/client
