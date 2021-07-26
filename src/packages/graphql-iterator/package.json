@@ -27,14 +27,14 @@
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
-    "graphql": "^15.5.0"
+    "graphql": "^15.5.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-commonjs": "^19.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "npm-check-updates": "^11.4.1",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "npm-check-updates": "^11.8.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.45.2"
+    "rollup": "^2.54.0"
   }
 }
