@@ -65,7 +65,7 @@ export default {
           <>
             {value?.map((markline, i) => {
               return (
-                <Grid key={i} container justify="space-between">
+                <Grid key={i} container justifyContent="space-between">
                   <Grid item xs={10} style={{ marginBottom: '30px' }}>
                     <TextField
                       id={`chart-select-markline-${i}-name`}

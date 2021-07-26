@@ -8,7 +8,7 @@ export default ({ tablesReady, tables }) => {
   return (
     <div>
       <Loading />
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid item xs={12} sm={6} md={4}>
           <Card variant="outlined" style={{ marginTop: 16 }}>
             <CardContent style={{ justifyContent: 'center', display: 'flex' }}>

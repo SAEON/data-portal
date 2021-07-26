@@ -1,5 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => ({
   input: {
@@ -18,7 +18,7 @@ export default makeStyles(theme => ({
     },
     // When hovered
     '&:hover': {
-      backgroundColor: fade(theme.palette.secondary.main, 0.1),
+      backgroundColor: alpha(theme.palette.secondary.main, 0.1),
     },
     '& .MuiInput-underline:hover:before': {
       border: 'none',
@@ -31,7 +31,7 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   toolbar: {
-    backgroundColor: fade(theme.palette.common.black, 0.5),
+    backgroundColor: alpha(theme.palette.common.black, 0.5),
     minHeight: theme.customSizes.thickToolbar.minHeight,
   },
 }))

@@ -1,10 +1,10 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => ({
   layout: {
     height: '100%',
-    backgroundColor: fade(theme.palette.secondary.light, 0.1),
+    backgroundColor: alpha(theme.palette.secondary.light, 0.1),
     position: 'relative',
     overflow: 'hidden',
   },

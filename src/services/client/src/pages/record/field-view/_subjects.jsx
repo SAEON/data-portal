@@ -10,7 +10,7 @@ export default ({ subjects }) => {
   const history = useHistory()
   return (
     <Row title="Keywords">
-      <Grid container spacing={1} justify="flex-start">
+      <Grid container spacing={1} justifyContent="flex-start">
         {subjects
           .slice(0)
           .sort((a, b) => (a.subject >= b.subject ? 1 : -1))

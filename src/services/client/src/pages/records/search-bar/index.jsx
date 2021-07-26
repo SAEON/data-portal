@@ -21,7 +21,7 @@ export default ({ children }) => {
       }}
     >
       <Toolbar style={{ padding: 8, width: '100%' }} className={classes.toolbar}>
-        <Grid container spacing={0} justify="center">
+        <Grid container spacing={0} justifyContent="center">
           <Grid container item xs={12} sm={8} direction={isMobile ? 'column' : 'row'}>
             <Grid style={{ display: 'flex' }} item>
               <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>

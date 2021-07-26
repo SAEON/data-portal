@@ -46,7 +46,7 @@ export default ({ disableSidebar = false }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query(
+      query (
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
@@ -160,7 +160,7 @@ export default ({ disableSidebar = false }) => {
             }px - 48px - 49px)`,
           }}
         >
-          <Grid container direction="row" justify="center">
+          <Grid container direction="row" justifyContent="center">
             {/* SEARCH LOADING */}
             {loading && (
               <Grid item xs={12} style={{ position: 'relative' }}>

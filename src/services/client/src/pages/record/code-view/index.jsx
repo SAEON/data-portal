@@ -12,7 +12,7 @@ export default ({ codeView, json }) => {
         style={{ padding: theme.spacing(4) }}
         container
         direction="column"
-        justify="space-evenly"
+        justifyContent="space-evenly"
         alignItems="stretch"
       >
         <Row title={'Metadata Source JSON'}>

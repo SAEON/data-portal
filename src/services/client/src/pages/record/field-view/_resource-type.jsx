@@ -7,7 +7,7 @@ export default ({ immutableResource }) => {
 
   return (
     <Row title="Resource type">
-      <Grid container spacing={1} justify="flex-start">
+      <Grid container spacing={1} justifyContent="flex-start">
         {_archive === true && (
           <Grid item>
             <Chip size="small" color="primary" clickable={false} label={'ARCHIVE'} />

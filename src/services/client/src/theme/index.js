@@ -1,5 +1,5 @@
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import createMuiTheme from '@material-ui/core/styles/createTheme'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 import overrides from './_mui-overrides'
 import muiDefaults from './_mui'
 
@@ -27,7 +27,7 @@ export default createMuiTheme({
     wordBreak: 'break-all',
     padding: defaultTheme.spacing(1),
   },
-  backgroundColor: fade(defaultTheme.palette.common.white, 0.9),
+  backgroundColor: alpha(defaultTheme.palette.common.white, 0.9),
   boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
   customSizes: {
     thickToolbar: {

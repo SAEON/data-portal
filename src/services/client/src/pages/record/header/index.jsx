@@ -17,7 +17,7 @@ export default ({ codeView, toggleCodeView, _source }) => {
   return (
     <AppBar color="inherit" position="sticky" variant="outlined">
       <Toolbar variant="dense">
-        <Grid container spacing={2} justify="flex-end">
+        <Grid container spacing={2} justifyContent="flex-end">
           <Grid item xs style={{ alignSelf: 'center' }}>
             <Title {..._source} />
           </Grid>

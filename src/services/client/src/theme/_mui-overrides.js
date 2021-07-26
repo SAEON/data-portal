@@ -1,4 +1,4 @@
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default theme => ({
   MuiTypography: {
@@ -31,7 +31,7 @@ export default theme => ({
   MuiAppBar: {
     colorPrimary: {
       border: 'none',
-      borderBottom: `1px solid ${fade(theme.palette.grey[200], 0.6)}`,
+      borderBottom: `1px solid ${alpha(theme.palette.grey[200], 0.6)}`,
     },
   },
   MuiPaper: {
@@ -39,7 +39,7 @@ export default theme => ({
       borderRadius: 2,
     },
     outlined: {
-      border: `1px solid ${fade(theme.palette.grey[200], 0.6)}`,
+      border: `1px solid ${alpha(theme.palette.grey[200], 0.6)}`,
     },
   },
   MuiButton: {

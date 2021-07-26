@@ -23,10 +23,10 @@ import ImmutableResource from './_immutable-resource'
 export default ({ codeView, ..._source }) => {
   return (
     <div style={{ margin: isMobile ? '16px 0 16px' : '32px 0px 32px' }}>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid item lg={10} xl={8}>
           <Fade key="field-view" in={!codeView}>
-            <Grid container direction="column" justify="space-evenly" alignItems="stretch">
+            <Grid container direction="column" justifyContent="space-evenly" alignItems="stretch">
               {/* TITLE */}
               {Boolean(_source.titles?.length) && <Titles {..._source} />}
 
