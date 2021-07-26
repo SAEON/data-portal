@@ -23,7 +23,7 @@ export default () => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query($id: ID!) {
+      query ($id: ID!) {
         atlas(id: $id)
       }
     `,

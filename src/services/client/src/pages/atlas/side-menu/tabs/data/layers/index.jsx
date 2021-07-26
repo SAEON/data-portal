@@ -24,8 +24,11 @@ export default ({ LegendMenu, DataMenu }) => {
             .map(layer => {
               const id = layer.get('id')
 
-              const { id: record_id, geoExtent, immutableResource } =
-                layers.find(({ layerId }) => layerId === id) || {}
+              const {
+                id: record_id,
+                geoExtent,
+                immutableResource,
+              } = layers.find(({ layerId }) => layerId === id) || {}
 
               return record_id ? (
                 <SaeonGeoserverLayer

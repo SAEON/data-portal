@@ -12,7 +12,7 @@ export default ({ gridState, id: dashboardId, layout }) => {
 
   const [saveLayout, { error, loading }] = useMutation(
     gql`
-      mutation($id: ID!, $layout: JSON) {
+      mutation ($id: ID!, $layout: JSON) {
         updateDashboard(id: $id, layout: $layout) {
           id
           layout

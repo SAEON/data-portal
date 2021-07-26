@@ -9,7 +9,7 @@ export default ({ id, setActiveTabIndex, activeTabIndex }) => {
   const { id: databookId } = useContext(databookContext)
   const [deleteFilter] = useMutation(
     gql`
-      mutation($id: ID!) {
+      mutation ($id: ID!) {
         deleteFilter(id: $id)
       }
     `,

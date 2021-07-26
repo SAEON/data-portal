@@ -10,7 +10,7 @@ export default ({ id, activeTabIndex, setActiveTabIndex }) => {
 
   const [deleteDashboard] = useMutation(
     gql`
-      mutation($id: ID!) {
+      mutation ($id: ID!) {
         deleteDashboard(id: $id)
       }
     `,

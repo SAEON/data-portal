@@ -24,7 +24,7 @@ export default ({ catalogue }) => {
 
   const [persistSearchState, { error, loading }] = useMutation(
     gql`
-      mutation($search: JSON!, $createdBy: String!) {
+      mutation ($search: JSON!, $createdBy: String!) {
         persistSearchState(search: $search, createdBy: $createdBy)
       }
     `,

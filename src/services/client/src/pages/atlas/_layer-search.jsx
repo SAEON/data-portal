@@ -19,7 +19,7 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query(
+      query (
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]

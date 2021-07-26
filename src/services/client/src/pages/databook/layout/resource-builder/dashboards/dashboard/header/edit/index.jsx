@@ -7,7 +7,7 @@ import Form from './_form'
 export default ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query($id: ID!) {
+      query ($id: ID!) {
         dashboard(id: $id) {
           id
           title

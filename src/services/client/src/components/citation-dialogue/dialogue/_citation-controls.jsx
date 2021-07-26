@@ -21,7 +21,7 @@ export default ({
 
   const { error, loading, data } = useQuery(
     gql`
-      query($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
+      query ($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
         catalogue {
           records(dois: $dois) {
             nodes {

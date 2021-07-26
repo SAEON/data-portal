@@ -21,7 +21,7 @@ export default ({
   const [description, setDescription] = useState(_description)
 
   const [updateDashboard, { loading, error }] = useMutation(gql`
-    mutation($id: ID!, $title: String, $subtitle: String, $description: String) {
+    mutation ($id: ID!, $title: String, $subtitle: String, $description: String) {
       updateDashboard(id: $id, title: $title, subtitle: $subtitle, description: $description) {
         id
         title

@@ -28,7 +28,7 @@ export default ({ catalogue, cache }) => {
 
   const [createDatabook, { error, loading }] = useMutation(
     gql`
-      mutation($search: JSON!, $createdBy: String!) {
+      mutation ($search: JSON!, $createdBy: String!) {
         createDatabook(search: $search, createdBy: $createdBy)
       }
     `,

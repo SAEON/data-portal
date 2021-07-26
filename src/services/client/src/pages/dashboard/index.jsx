@@ -40,7 +40,7 @@ export default ({ id }) => {
 
   const { error, loading, data, startPolling } = useQuery(
     gql`
-      query($id: ID!) {
+      query ($id: ID!) {
         dashboard(id: $id) {
           id
           title

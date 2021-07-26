@@ -84,7 +84,7 @@ const initialEditorText = `function setOption(data) {
 }`
 
 const CHARTS_QUERY = gql`
-  query($ids: [ID]!) {
+  query ($ids: [ID]!) {
     charts(ids: $ids) {
       id
       title
@@ -250,7 +250,7 @@ export default ({ id: chartId }) => {
             onClick={async () => {
               await client.mutate({
                 mutation: gql`
-                  mutation($id: ID!, $setOption: FunctionString) {
+                  mutation ($id: ID!, $setOption: FunctionString) {
                     editChart(id: $id, setOption: $setOption) {
                       id
                       setOption

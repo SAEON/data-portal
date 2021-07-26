@@ -21,7 +21,7 @@ export default ({ cache, catalogue }) => {
 
   const [createAtlas, { error, loading }] = useMutation(
     gql`
-      mutation($search: JSON!, $createdBy: String!) {
+      mutation ($search: JSON!, $createdBy: String!) {
         createAtlas(search: $search, createdBy: $createdBy)
       }
     `,
