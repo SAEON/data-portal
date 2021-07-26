@@ -1,14 +1,28 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, createRef } from 'react'
 
 export default ({ children, effects, ...formFields }) => {
   const [fields, updateAllFields] = useState(formFields)
+  const refs = useRef({})
+
+  /**
+   * Register effects on first render
+   */
+  if (effects && !Object.keys(refs.current).length) {
+    effects.forEach((effect, i) => {
+      if (!refs.current[i]) {
+        const ref = createRef()
+        ref.current = effect
+        refs.current[i] = ref.current
+      }
+    })
+  }
 
   useEffect(
     () =>
-      effects?.forEach(effect => {
+      Object.entries(refs?.current)?.forEach(([, effect]) => {
         effect(fields)
       }),
-    [fields] // TODO - The suggested fix by eslint breaks the code - a better approach is in the nccs code component
+    [fields]
   )
 
   const updateForm = obj => {

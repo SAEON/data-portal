@@ -22,7 +22,9 @@
     "publish:minor": "npm run build && TC=utc node ../../../scripts/publish.js -p @saeon/quick-form -s minor",
     "publish:major": "npm run build && TC=utc node ../../../scripts/publish.js -p @saeon/quick-form -s major",
     "ncu": "ncu",
-    "ncu -u": "ncu -u"
+    "ncu -u": "ncu -u",
+    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs)\""
   },
   "keywords": [
     "@saeon/quick-form"
@@ -38,8 +40,18 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/eslint-parser": "^7.14.7",
+    "@babel/eslint-plugin": "^7.14.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-react": "^7.14.5",
     "@rollup/plugin-json": "^4.1.0",
+    "eslint": "^7.31.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "npm-check-updates": "^11.8.3",
+    "prettier": "^2.3.2",
     "react": "*",
     "rimraf": "^3.0.2",
     "rollup": "^2.54.0"
