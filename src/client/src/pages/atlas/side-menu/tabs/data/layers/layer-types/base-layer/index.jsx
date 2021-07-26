@@ -26,7 +26,7 @@ export default memo(({ layer, proxy }) => {
 
   return (
     <div>
-      <QuickForm>
+      <QuickForm expanded={false}>
         {(update, { expanded }) => (
           <Card style={{ marginBottom: 10 }}>
             <CardHeader

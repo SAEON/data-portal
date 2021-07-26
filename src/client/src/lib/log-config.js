@@ -1,7 +1,7 @@
 import * as config from '../config'
 
 if (config.CATALOGUE_DEPLOYMENT_ENV !== 'production') {
-  console.log(
+  console.info(
     'Configuration',
     Object.fromEntries(
       Object.entries(config)

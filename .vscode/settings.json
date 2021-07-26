@@ -1,5 +1,5 @@
 {
-  "eslint.workingDirectories": ["src/api", "src/proxy", "src/client"],
+  "eslint.workingDirectories": ["src/api", "src/proxy", "src/client", "src/packages/quick-form"],
   "cSpell.words": [
     "CLIs",
     "Cleanup",
@@ -22,6 +22,7 @@
     "autodrain",
     "bodyparser",
     "btree",
+    "builtins",
     "clsx",
     "cmds",
     "containerd",

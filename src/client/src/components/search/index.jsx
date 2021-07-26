@@ -24,13 +24,7 @@ export default ({
   return (
     <div {...props}>
       <QuickForm
-        effects={[
-          debounce(({ text = '' }) => {
-            if (text !== (global.text || '')) {
-              setGlobal({ text })
-            }
-          }, 500),
-        ]}
+        effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
         text={global.text || ''}
       >
         {(update, { text }) => {
