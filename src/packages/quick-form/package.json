@@ -39,9 +39,9 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
-    "npm-check-updates": "^11.4.1",
+    "npm-check-updates": "^11.8.3",
     "react": "*",
     "rimraf": "^3.0.2",
-    "rollup": "^2.45.2"
+    "rollup": "^2.54.0"
   }
 }
