@@ -26,57 +26,62 @@ export default async ctx => {
     ctx.throw(400, 'No search ID provided. Unable to download records')
   }
 
-  // Set appropriate response headers
-  ctx.set('Content-disposition', `attachment; filename=odp-${new Date().toISOString()}.json`)
-  ctx.set('Content-Type', 'application/force-download')
+  try {
+    // Set appropriate response headers
+    ctx.set('Content-disposition', `attachment; filename=odp-${new Date().toISOString()}.json`)
+    ctx.set('Content-Type', 'application/force-download')
 
-  // Load the saved search state
-  const { search: searchState } = (await findLists({ _id: ObjectId(search) }))[0]
+    // Load the saved search state
+    const { search: searchState } = (await findLists({ _id: ObjectId(search) }))[0]
 
-  // Query the catalogue for the IDs associated with this search state
-  const { data } = await execute(
-    publicSchema,
-    gql`
-      query (
-        $ids: [ID!]
-        $dois: [String!]
-        $text: String
-        $terms: [TermInput!]
-        $extent: WKT_4326
-        $size: Int
-      ) {
-        catalogue {
-          records(
-            ids: $ids
-            dois: $dois
-            text: $text
-            terms: $terms
-            extent: $extent
-            size: $size
-          ) {
-            nodes {
-              id
+    // Query the catalogue for the IDs associated with this search state
+    const { data } = await execute(
+      publicSchema,
+      gql`
+        query (
+          $ids: [ID!]
+          $dois: [String!]
+          $text: String
+          $terms: [TermInput!]
+          $extent: WKT_4326
+          $size: Int
+        ) {
+          catalogue {
+            records(
+              ids: $ids
+              dois: $dois
+              text: $text
+              terms: $terms
+              extent: $extent
+              size: $size
+            ) {
+              nodes {
+                id
+              }
             }
           }
         }
-      }
-    `,
-    null,
-    ctx,
-    Object.assign({ size: 10000 }, searchState)
-  )
+      `,
+      null,
+      ctx,
+      Object.assign({ size: 10000 }, searchState)
+    )
 
-  // Authenticate with the ODP
-  const { token_type, access_token } = await authenticateWithOdp()
+    // Authenticate with the ODP
+    const { token_type, access_token } = await authenticateWithOdp()
 
-  // Stream the ODP response to the client
-  ctx.body = await fetch(`${ODP_ADDRESS_CATALOGUE_ENDPOINT}/?limit=10000`, {
-    method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: [token_type, access_token].join(' '),
-    },
-    body: JSON.stringify(data.catalogue.records.nodes.map(({ id }) => id)),
-  }).then(res => res.body)
+    // Stream the ODP response to the client
+    ctx.body = await fetch(`${ODP_ADDRESS_CATALOGUE_ENDPOINT}/?limit=10000`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: [token_type, access_token].join(' '),
+      },
+      body: JSON.stringify(data.catalogue.records.nodes.map(({ id }) => id)),
+    }).then(res => res.body)
+  } catch (error) {
+    console.error('Error searching metadata catalogue', error)
+    ctx.throw(400, `Error searching metadata catalogue. ${error.message}`)
+  }
 }

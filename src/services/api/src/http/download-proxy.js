@@ -1,12 +1,12 @@
 import fetch from 'request'
-import { parse } from 'url'
+import { URL } from 'url'
 import { CATALOGUE_CURATOR_CONTACT } from '../config.js'
 
 const HOSTNAME_WHITELIST = ['media.dirisa.org', 'dap.saeon.ac.za']
 
 export default async ctx => {
   const { uri } = ctx.request.query
-  const { hostname } = parse(uri)
+  const { hostname } = new URL(uri)
 
   if (HOSTNAME_WHITELIST.includes(hostname)) {
     ctx.body = fetch(uri)
