@@ -2,18 +2,13 @@ import { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 import Footer from '../../components/footer'
-import { setShareLink } from '../../hooks/use-share-link'
 import FieldView from './field-view'
 import Header from './header'
 import CodeView from './code-view'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
+import Container from '@material-ui/core/Container'
+import Fade from '@material-ui/core/Fade'
 
 export default ({ id }) => {
-  setShareLink({
-    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/record?id=${id}`,
-    params: false,
-  })
-
   const [codeView, updateCodeView] = useState(false)
 
   const { error, loading, data } = useQuery(
@@ -58,17 +53,18 @@ export default ({ id }) => {
         toggleCodeView={() => updateCodeView(!codeView)}
         _source={{ ...data?.catalogue?.records?.nodes?.[0]?.metadata?._source }}
       />
-      {codeView ? (
-        <CodeView
-          codeView={codeView}
-          json={data?.catalogue?.records?.nodes?.[0]?.metadata?._source}
-        />
-      ) : (
-        <FieldView
-          codeView={codeView}
-          {...data?.catalogue?.records?.nodes?.[0]?.metadata?._source}
-        />
-      )}
+      <Container>
+        <Fade key="code-view-in" in={codeView}>
+          <span style={{ display: codeView ? 'inherit' : 'none' }}>
+            <CodeView json={data?.catalogue?.records?.nodes?.[0]?.metadata?._source} />
+          </span>
+        </Fade>
+        <Fade key="field-view-in" in={!codeView}>
+          <span style={{ display: codeView ? 'none' : 'inherit' }}>
+            <FieldView {...data?.catalogue?.records?.nodes?.[0]?.metadata?._source} />
+          </span>
+        </Fade>
+      </Container>
       <Footer />
     </>
   )

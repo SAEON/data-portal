@@ -7,6 +7,11 @@ const defaultTheme = createMuiTheme()
 
 export default createMuiTheme({
   ...muiDefaults,
+  props: {
+    MuiUseMediaQuery: {
+      noSsr: true,
+    },
+  },
   overrides: overrides(defaultTheme),
   link: {
     color: defaultTheme.palette.primary,

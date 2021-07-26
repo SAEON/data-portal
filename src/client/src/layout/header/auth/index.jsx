@@ -1,10 +1,10 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { isMobile } from 'react-device-detect'
 import { context as authContext } from '../../../contexts/authentication'
 import Login from './_login'
 import Logout from './_logout'
 import UserAvatar from './_user-avatar'
+import Hidden from '@material-ui/core/Hidden'
 
 export default () => {
   const theme = useTheme()
@@ -23,17 +23,14 @@ export default () => {
                 style={{ display: 'flex', alignItems: 'center', marginRight: theme.spacing(1) }}
                 userInfo={userInfo}
               />
-              {!isMobile && <UserAvatar style={{ display: 'flex' }} userInfo={userInfo} />}
+              <Hidden xsDown>
+                <UserAvatar style={{ display: 'flex' }} userInfo={userInfo} />
+              </Hidden>
             </div>
           )
         }
 
-        return null
-
-        /**
-         * Login disabled for now
-         */
-        // return <Login />
+        return <Login />
       }}
     </authContext.Consumer>
   )

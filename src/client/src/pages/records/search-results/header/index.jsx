@@ -2,7 +2,6 @@ import { Suspense, lazy, useContext, cloneElement, forwardRef } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { isMobile } from 'react-device-detect'
 import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
 import CreateListButton from './_create-list-button'
@@ -11,6 +10,7 @@ import PageForwardButton from './_page-forward-button'
 import LoadingCircular from '../../../../components/loading-circular'
 import { context as authorizationContext } from '../../../../contexts/authorization'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Hidden from '@material-ui/core/Hidden'
 // import ResetFiltersButton from './_reset-filters-button'
 
 const AuthenticatedOnly = lazy(() => import('./authenticated'))
@@ -47,6 +47,7 @@ export default forwardRef(
   ) => {
     const { isAuthenticated } = useContext(authorizationContext)
     const theme = useTheme()
+    const sidebarEnabled = !disableSidebar
 
     return (
       <>
@@ -54,24 +55,28 @@ export default forwardRef(
           <AppBar color="inherit" position="sticky" style={{ zIndex: 1200 }}>
             <Toolbar disableGutters variant="dense" style={{ borderBottom: 'none' }}>
               {/* MOBILE FILTER TOGGLE */}
-              {isMobile && !disableSidebar ? (
-                <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
-              ) : undefined}
+              {sidebarEnabled && (
+                <Hidden xsDown>
+                  <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+                </Hidden>
+              )}
 
               {/* SEARCH RESULT COUNT */}
-              {!isMobile && (
+              <Hidden xsDown>
                 <Suspense fallback={<LoadingCircular />}>
                   <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
                 </Suspense>
-              )}
+              </Hidden>
 
               <span style={{ marginLeft: 'auto' }} />
 
               {/* ATLAS and DATABOOK */}
-              {!isMobile && isAuthenticated && (
-                <Suspense fallback={<LoadingCircular />}>
-                  <AuthenticatedOnly catalogue={catalogue} />
-                </Suspense>
+              {isAuthenticated && (
+                <Hidden xsDown>
+                  <Suspense fallback={<LoadingCircular />}>
+                    <AuthenticatedOnly catalogue={catalogue} />
+                  </Suspense>
+                </Hidden>
               )}
 
               {/* CREATE LIST */}
@@ -84,11 +89,12 @@ export default forwardRef(
               {/* <ResetFiltersButton /> */}
 
               {/* PAGINATION CONFIG */}
-              {!isMobile && (
+
+              <Hidden xsDown>
                 <Suspense fallback={<LoadingCircular />}>
                   <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
                 </Suspense>
-              )}
+              </Hidden>
 
               {/* PAGE BACK */}
               <PageBackButton
@@ -99,11 +105,11 @@ export default forwardRef(
               />
 
               {/* CURRENT PAGE */}
-              {!isMobile && (
+              <Hidden xsDown>
                 <Suspense fallback={<LoadingCircular />}>
                   <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
                 </Suspense>
-              )}
+              </Hidden>
 
               {/* PAGE FORWARD */}
               <PageForwardButton

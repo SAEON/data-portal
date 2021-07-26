@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Transition from './_transition'
+import getUriState from '../../lib/fns/get-uri-state'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
@@ -137,11 +138,13 @@ export default withRouter(() => {
         key={'records'}
         exact
         path={'/records'}
-        render={() => (
-          <Transition tKey="records">
-            <RecordsPage />
-          </Transition>
-        )}
+        render={() => {
+          return (
+            <Transition tKey="records">
+              <RecordsPage {...getUriState()} />
+            </Transition>
+          )
+        }}
       />
 
       {/* RECORD */}

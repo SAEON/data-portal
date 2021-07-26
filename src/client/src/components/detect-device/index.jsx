@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import { isIE } from 'react-device-detect'
+import UAParser from 'ua-parser-js'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+
+const parseUa = new UAParser()
+const isIE = parseUa.getBrowser().name.toLowerCase().includes('explorer')
 
 export default ({ children }) => {
   const [open, setOpen] = useState(false)

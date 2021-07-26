@@ -4,12 +4,14 @@ import Header from './header'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
 import Grid from '@material-ui/core/Grid'
-import { isMobile } from 'react-device-detect'
 import Footer from '../../../components/footer'
 import Loading from '../../../components/loading'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
+import Container from '@material-ui/core/Container'
+import Hidden from '@material-ui/core/Hidden'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const MobileSideMenu = lazy(() => import('./_side-menu'))
 const Filters = lazy(() => import('./filters'))
@@ -20,14 +22,14 @@ const DEFAULT_CURSORS = {
   currentPage: 0,
 }
 
-export default ({ disableSidebar = false }) => {
-  const [showSidebar, setShowSidebar] = useState(!disableSidebar && !isMobile)
+export default ({ disableSidebar }) => {
+  const xsDown = useMediaQuery(theme => theme.breakpoints.down('xs'))
+  const [showSidebar, setShowSidebar] = useState(!disableSidebar && !xsDown)
   const ref = useRef()
   const mainRef = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
-  const showTopMenu = !window.location.pathname.includes('/render')
-  const { showSearchBar, referrer } = getUriState()
+  const { referrer } = getUriState()
   const { global } = useContext(globalContext)
   const { terms, extent = undefined, text = undefined, ids = [], dois = [] } = global
 
@@ -153,80 +155,60 @@ export default ({ disableSidebar = false }) => {
         catalogue={data?.catalogue}
         ref={mainRef}
       >
-        <div
-          style={{
-            minHeight: `calc(${window.innerHeight}px - ${showTopMenu ? 48 : 0}px - ${
-              showSearchBar === 'true' || !showSearchBar ? '128' : '0'
-            }px - 48px - 49px)`,
-          }}
-        >
-          <Grid container direction="row" justifyContent="center">
-            {/* SEARCH LOADING */}
-            {loading && (
-              <Grid item xs={12} style={{ position: 'relative' }}>
-                <Loading />
-              </Grid>
-            )}
+        <Container>
+          {/* SEARCH LOADING */}
+          {loading && (
+            <Grid item xs={12} style={{ position: 'relative' }}>
+              <Loading />
+            </Grid>
+          )}
 
-            {/* SEARCH RESULTS & HEADER */}
-            {!loading && (
-              <>
-                {/* MOBILE */}
-                {isMobile && (
-                  <>
-                    {!disableSidebar && (
-                      <Suspense fallback={<Loading />}>
-                        <MobileSideMenu
-                          setShowSidebar={setShowSidebar}
-                          showSidebar={showSidebar}
-                          data={data}
-                        />
+          {/* SEARCH RESULTS & HEADER */}
+          {loading ? null : (
+            <>
+              {/* MOBILE */}
+              <Hidden smUp>
+                <>
+                  {!disableSidebar && (
+                    <Suspense fallback={<Loading />}>
+                      <MobileSideMenu
+                        setShowSidebar={setShowSidebar}
+                        showSidebar={showSidebar}
+                        data={data}
+                      />
+                    </Suspense>
+                  )}
+
+                  <Records results={results} />
+                </>
+              </Hidden>
+
+              {/* LARGER SCREENS */}
+              <Hidden xsDown>
+                <Grid container spacing={2}>
+                  {showSidebar && !disableSidebar && (
+                    <Grid item md={4}>
+                      <Suspense
+                        fallback={
+                          <div style={{ position: 'relative' }}>
+                            <Loading />
+                          </div>
+                        }
+                      >
+                        <Filters catalogue={data?.catalogue} />
                       </Suspense>
-                    )}
-
-                    <Grid item xs style={{ flexGrow: 1 }}>
-                      <Records results={results} />
                     </Grid>
-                  </>
-                )}
-
-                {/* LARGER SCREENS */}
-                {!isMobile && (
-                  <Grid
-                    item
-                    xs={12}
-                    style={{
-                      justifyContent: 'center',
-                      display: 'flex',
-                      margin: '32px 0 16px 0',
-                    }}
-                  >
-                    {/* TODO should be container */}
-                    <Grid container item lg={10} xl={8}>
-                      {showSidebar ? (
-                        <Grid style={{ paddingRight: 16 }} item md={4}>
-                          <Suspense
-                            fallback={
-                              <div style={{ position: 'relative' }}>
-                                <Loading />
-                              </div>
-                            }
-                          >
-                            <Filters catalogue={data?.catalogue} />
-                          </Suspense>
-                        </Grid>
-                      ) : null}
-                      <Grid item xs style={{ flexGrow: 1 }}>
-                        <Records results={results} />
-                      </Grid>
-                    </Grid>
+                  )}
+                  <Grid item xs style={{ flexGrow: 1 }}>
+                    <Records results={results} />
                   </Grid>
-                )}
-              </>
-            )}
-          </Grid>
-        </div>
-        {loading ? undefined : <Footer />}
+                </Grid>
+              </Hidden>
+            </>
+          )}
+        </Container>
+
+        {loading ? null : <Footer />}
       </Header>
     </main>
   )

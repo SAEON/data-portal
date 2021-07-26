@@ -8,7 +8,6 @@ import {
   useRef,
   useEffect,
 } from 'react'
-import useTheme from '@material-ui/core/styles/useTheme'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { VariableSizeList } from 'react-window'
@@ -29,8 +28,7 @@ const OuterElementContext = createContext({})
 
 export default forwardRef(({ children, ...other }, ref) => {
   const itemData = Children.toArray(children)
-  const theme = useTheme()
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true })
+  const smUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
   const itemCount = itemData.length
   const itemSize = smUp ? 36 : 48
 

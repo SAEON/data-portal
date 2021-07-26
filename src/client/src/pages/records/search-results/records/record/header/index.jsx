@@ -8,7 +8,7 @@ import PreviewAtlasButton from '../../../../../../components/preview-atlas-butto
 import CitationButton from '../../../../../../components/citation-dialogue'
 import LoadingCircular from '../../../../../../components/loading-circular'
 import ToggleItemButton from './_toggle-item-button'
-import { isMobile } from 'react-device-detect'
+import Hidden from '@material-ui/core/Hidden'
 
 const DataDownloadButton = lazy(() => import('../../../../../../components/data-download'))
 const CreateDatabookButton = lazy(() =>
@@ -34,11 +34,13 @@ export default ({
       <Title {..._source} />
 
       {/* DATABOOK */}
-      {showDatabook && !isMobile && (
-        <Suspense fallback={<LoadingCircular />}>
-          <CreateDatabookButton {..._source} />
-        </Suspense>
-      )}
+      <Hidden xsDown>
+        {showDatabook && (
+          <Suspense fallback={<LoadingCircular />}>
+            <CreateDatabookButton {..._source} />
+          </Suspense>
+        )}
+      </Hidden>
 
       {/* ATLAS PREVIEW */}
       {showPreview && <PreviewAtlasButton {..._source} />}
@@ -47,15 +49,17 @@ export default ({
       <CitationButton style={!showSelect && !showDownload ? { marginRight: 8 } : {}} {..._source} />
 
       {/* DOWNLOAD */}
-      {showDownload && !isMobile && (
-        <Suspense fallback={<LoadingCircular />}>
-          <DataDownloadButton
-            buttonProps={{ style: showSelect ? {} : { marginRight: 8 } }}
-            size={16}
-            {..._source}
-          />
-        </Suspense>
-      )}
+      <Hidden xsDown>
+        {showDownload && (
+          <Suspense fallback={<LoadingCircular />}>
+            <DataDownloadButton
+              buttonProps={{ style: showSelect ? {} : { marginRight: 8 } }}
+              size={16}
+              {..._source}
+            />
+          </Suspense>
+        )}
+      </Hidden>
 
       {/* SELECT */}
       {showSelect && (
