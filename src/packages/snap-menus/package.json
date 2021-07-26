@@ -64,5 +64,6 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.54.0",
     "rollup-plugin-postcss": "^4.0.0"
-  }
+  },
+  "dependencies": {}
 }

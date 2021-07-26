@@ -36,6 +36,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
+  - [MongoDB database management](#mongodb-database-management)
 - [Documentation](#documentation)
   - [API](#api)
   - [Proxy](#proxy)
