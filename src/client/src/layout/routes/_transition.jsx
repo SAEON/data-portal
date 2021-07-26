@@ -5,9 +5,9 @@ import Loading from '../../components/loading'
 export default ({ children, tKey }) => {
   return (
     <Fade key={tKey} in={true}>
-      <div>
+      <span>
         <Suspense fallback={<Loading />}>{children}</Suspense>
-      </div>
+      </span>
     </Fade>
   )
 }

@@ -40,16 +40,27 @@ export default () => {
 
   return (
     <div
-      ref={snapMenusContainer}
       style={{
         position: 'absolute',
         top: 0,
         bottom: 0,
-        right: 0,
         left: 0,
+        right: 0,
+        marginTop: 48,
       }}
     >
-      <LayerSearch ref={snapMenusContainer} referrer={referrer} search={data.atlas.search} />
+      <div
+        ref={snapMenusContainer}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+        }}
+      >
+        <LayerSearch ref={snapMenusContainer} referrer={referrer} search={data.atlas.search} />
+      </div>
     </div>
   )
 }
