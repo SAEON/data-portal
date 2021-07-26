@@ -38,16 +38,16 @@
   "license": "MIT",
   "dependencies": {
     "arg": "^5.0.0",
-    "ora": "^5.4.0"
+    "ora": "^5.4.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-commonjs": "^19.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "nodemon": "^2.0.7",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "nodemon": "^2.0.12",
     "onchange": "^7.1.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.45.2"
+    "rollup": "^2.54.0"
   }
 }
