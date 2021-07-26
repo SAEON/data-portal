@@ -108,7 +108,7 @@ npm run build-all-packages
 
 The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
 
-Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/services/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
 
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
@@ -117,7 +117,7 @@ docker network create --driver bridge catalogue
 # Start a MongoDB server
 docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:4.4.3
 
-# Start a PostGIS server (from the /src/services/postgis directory)
+# Start a PostGIS server (from the /src/postgis directory)
 docker build -t postgis .
 docker run --name postgis -v /var/lib/catalogue-api:/var/lib/catalogue-api --net=catalogue -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d postgis
 
@@ -303,15 +303,15 @@ docker run \
 
 ## API
 
-[src/services/api/README.md](src/services/api/)
+[src/api/README.md](src/api/)
 
 ## Proxy
 
-[src/services/proxy/README.md](src/services/proxy/)
+[src/proxy/README.md](src/proxy/)
 
 ## Client
 
-[src/services/client/README.md](src/services/client/)
+[src/client/README.md](src/client/)
 
 ## Server configuration
 

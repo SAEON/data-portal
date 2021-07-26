@@ -1,0 +1,9 @@
+**/node_modules/**
+**/dist/**
+**/.build/**
+
+src/graphql/api-public/schema/datacite.graphql/index.js
+src/postgis/setup.js
+src/index.js
+src/config.js
+src/mongo/index.js

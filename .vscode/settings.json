@@ -1,4 +1,5 @@
 {
+  "eslint.workingDirectories": ["src/api", "src/proxy", "src/client"],
   "cSpell.words": [
     "CLIs",
     "Cleanup",

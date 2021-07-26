@@ -74,7 +74,7 @@ services:
     container_name: $POSTGIS_CONTAINER_NAME
     restart: always
     build:
-      context: src/services/postgis
+      context: src/postgis
       dockerfile: Dockerfile
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
@@ -93,7 +93,7 @@ services:
     container_name: proxy1
     restart: always
     build:
-      context: src/services/proxy
+      context: src/proxy
       dockerfile: Dockerfile
       args:
         CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
@@ -110,7 +110,7 @@ services:
     container_name: proxy2
     restart: always
     build:
-      context: src/services/proxy
+      context: src/proxy
       dockerfile: Dockerfile
       args:
         CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
@@ -127,7 +127,7 @@ services:
     container_name: proxy3
     restart: always
     build:
-      context: src/services/proxy
+      context: src/proxy
       dockerfile: Dockerfile
       args:
         CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
@@ -144,7 +144,7 @@ services:
     container_name: proxy4
     restart: always
     build:
-      context: src/services/proxy
+      context: src/proxy
       dockerfile: Dockerfile
       args:
         CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
@@ -161,7 +161,7 @@ services:
     container_name: proxy5
     restart: always
     build:
-      context: src/services/proxy
+      context: src/proxy
       dockerfile: Dockerfile
       args:
         CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
@@ -178,7 +178,7 @@ services:
     container_name: api
     restart: always
     build:
-      context: src/services/api
+      context: src/api
       dockerfile: Dockerfile
       args:
         GDAL_DOCKER_IMAGE: $GDAL_DOCKER_IMAGE
@@ -241,7 +241,7 @@ services:
     container_name: client
     restart: always
     build:
-      context: src/services/client
+      context: src/client
       dockerfile: Dockerfile
       args:
         CATALOGUE_CLIENT_PROXY_ADDRESS: $CATALOGUE_CLIENT_PROXY_ADDRESS
