@@ -1,5 +1,4 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 export default async (databook, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
@@ -9,7 +8,7 @@ export default async (databook, args, ctx) => {
 
   return (
     await Filters.insertOne({
-      databookId: ObjectID(databookId),
+      databookId: ObjectId(databookId),
       modifiedAt: new Date(),
       ..._args,
     })

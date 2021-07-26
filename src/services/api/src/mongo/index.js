@@ -1,4 +1,4 @@
-import MongoClient from 'mongodb'
+import { MongoClient } from 'mongodb'
 import {
   MONGO_DB as DB,
   MONGO_DB_ADDRESS,
@@ -15,15 +15,16 @@ import sift from 'sift'
 
 const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
 
-export const db = MongoClient.connect(CONNECTION_STRING, {
+export const db = new MongoClient(CONNECTION_STRING, {
   auth: {
-    user: MONGO_DB_USERNAME,
+    username: MONGO_DB_USERNAME,
     password: MONGO_DB_PASSWORD,
   },
   authMechanism: 'SCRAM-SHA-256',
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
+  .connect()
   .then(client => client.db(DB))
   .catch(error => {
     console.error('Unable to connect to MongoDB', error)

@@ -1,5 +1,4 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 //update Chart
 export default async (_, args, ctx) => {
@@ -15,7 +14,7 @@ export default async (_, args, ctx) => {
   if (args.hasOwnProperty('setOption')) updates.setOption = args.setOption
   console.log(3)
   const oldChart = await Charts.findOneAndUpdate(
-    { _id: ObjectID(args.id) },
+    { _id: ObjectId(args.id) },
     {
       $set: updates,
     }
@@ -29,5 +28,5 @@ export default async (_, args, ctx) => {
   // return value
   //STEVEN: findOneAndUpdate keeps returning the dashboard pre-update value (despite returnNewDocument:true)
   // so I set the return to find the updated value
-  return await Charts.findOne({ _id: ObjectID(args.id) })
+  return await Charts.findOne({ _id: ObjectId(args.id) })
 }

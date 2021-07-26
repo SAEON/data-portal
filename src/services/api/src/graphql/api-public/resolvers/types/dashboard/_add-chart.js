@@ -1,10 +1,9 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
   const { Charts, Dashboards } = await ctx.mongo.collections
-  chartId = ObjectID(chartId)
+  chartId = ObjectId(chartId)
 
   if (!(await Charts.countDocuments({ _id: chartId }))) {
     throw new Error('Unable to find the chart specified. Does it exist')

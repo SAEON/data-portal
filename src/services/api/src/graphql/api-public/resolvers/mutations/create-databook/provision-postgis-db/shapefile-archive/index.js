@@ -1,5 +1,5 @@
 import mongodb from 'mongodb'
-const { ObjectID } = mongodb
+const { ObjectId } = mongodb
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
 import { createWriteStream, mkdtemp } from 'fs'
@@ -89,7 +89,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
        * indicate that this table is ready
        */
       await Databooks.findOneAndUpdate(
-        { _id: ObjectID(databookId) },
+        { _id: ObjectId(databookId) },
         {
           $set: {
             [`tables.${tableName}.ready`]: true,
@@ -106,7 +106,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
       error.message
     )
     await Databooks.findOneAndUpdate(
-      { _id: ObjectID(databook._id) },
+      { _id: ObjectId(databook._id) },
       {
         $set: {
           [`tables.${tableName}.error`]: error.message,
@@ -124,7 +124,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
      * that no more work is to be done on it
      */
     await Databooks.findOneAndUpdate(
-      { _id: ObjectID(databook._id) },
+      { _id: ObjectId(databook._id) },
       {
         $set: {
           complete: true,

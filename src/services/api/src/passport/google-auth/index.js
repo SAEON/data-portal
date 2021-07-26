@@ -57,6 +57,7 @@ export default () => {
               ).value
             )
           } catch (error) {
+            console.error('Google authentication error', error.message)
             cb(error, null)
           }
         }

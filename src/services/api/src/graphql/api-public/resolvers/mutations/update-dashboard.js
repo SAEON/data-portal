@@ -1,5 +1,4 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 export default async (_, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
@@ -12,17 +11,17 @@ export default async (_, args, ctx) => {
   if (layout) {
     $set.layout = layout.map(item => ({
       ...item,
-      content: { ...item.content, id: ObjectID(item.content.id) },
+      content: { ...item.content, id: ObjectId(item.content.id) },
     }))
   }
 
   // dashboard.filters requires changing strings to MongoIDs
   if (filters) {
-    $set.filters = filters.map(id => ObjectID(id))
+    $set.filters = filters.map(id => ObjectId(id))
   }
 
   const response = await Dashboards.findOneAndUpdate(
-    { _id: ObjectID(id) },
+    { _id: ObjectId(id) },
     {
       $set,
     },

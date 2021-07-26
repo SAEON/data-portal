@@ -1,11 +1,10 @@
 import { spawn } from 'child_process'
 import { POSTGIS_DB, POSTGIS_PORT, POSTGIS_HOST, POSTGIS_CONTAINER_NAME } from '../../config.js'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
-import mongo from 'mongodb'
+import { ObjectId } from 'mongodb'
 import { createReadStream } from 'fs'
 import { basename, join } from 'path'
 import CombinedStream from 'combined-stream'
-const { ObjectID } = mongo
 import archiver from 'archiver'
 
 const __dirname = getCurrentDirectory(import.meta)
@@ -16,7 +15,7 @@ export default async ctx => {
   const databookId = schema
   const { findDatabooks } = ctx.mongo.dataFinders
   const { query } = ctx.postgis
-  const databook = (await findDatabooks({ _id: ObjectID(databookId) }))[0]
+  const databook = (await findDatabooks({ _id: ObjectId(databookId) }))[0]
   const { username, password: encryptedPassword } = databook.authentication
   const password = ctx.crypto.decrypt(encryptedPassword)
 

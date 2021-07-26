@@ -1,5 +1,4 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 export default async (_, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
@@ -9,7 +8,7 @@ export default async (_, args, ctx) => {
   const $set = { ...otherArgs, modifiedAt: new Date() }
 
   const response = await Databooks.findOneAndUpdate(
-    { _id: ObjectID(id) },
+    { _id: ObjectId(id) },
     {
       $set,
     },

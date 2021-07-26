@@ -5,7 +5,7 @@ import fetch from 'node-fetch'
 import { CATALOGUE_API_DATA_DIRECTORY } from '../../../../../../../config.js'
 import raster2pgsql from '../raster2pgsql/index.js'
 import { nanoid } from 'nanoid'
-const { ObjectID } = mongodb
+const { ObjectId } = mongodb
 
 const DATA_DIRECTORY = `${CATALOGUE_API_DATA_DIRECTORY}${sep}`
 const createUniqueDirectory = async () => {
@@ -59,7 +59,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
      * indicate that this table is ready
      */
     await Databooks.findOneAndUpdate(
-      { _id: ObjectID(databookId) },
+      { _id: ObjectId(databookId) },
       {
         $set: {
           [`tables.${tableName}.ready`]: true,
@@ -75,7 +75,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
       error.message
     )
     await Databooks.findOneAndUpdate(
-      { _id: ObjectID(databook._id) },
+      { _id: ObjectId(databook._id) },
       {
         $set: {
           [`tables.${tableName}.error`]: error.message,
@@ -88,7 +88,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
      * that no more work is to be done on it
      */
     await Databooks.findOneAndUpdate(
-      { _id: ObjectID(databook._id) },
+      { _id: ObjectId(databook._id) },
       {
         $set: {
           complete: true,

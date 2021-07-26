@@ -1,5 +1,4 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 export default async (_, args, ctx) => {
   await ctx.user.ensureDataScientist(ctx)
@@ -8,7 +7,7 @@ export default async (_, args, ctx) => {
   const { id } = args
 
   const { result } = await Dashboards.remove({
-    _id: ObjectID(id),
+    _id: ObjectId(id),
   })
 
   return Boolean(result?.n)

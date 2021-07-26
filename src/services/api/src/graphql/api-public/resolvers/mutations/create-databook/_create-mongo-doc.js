@@ -1,5 +1,5 @@
 import mongodb from 'mongodb'
-const { ObjectID } = mongodb
+const { ObjectId } = mongodb
 import hash from 'object-hash'
 import { nanoid } from 'nanoid'
 
@@ -10,9 +10,9 @@ export default async (records, ctx, createdBy) => {
 
   const { encrypt } = ctx.crypto
 
-  const userId = ObjectID(ctx.userInfo._id)
+  const userId = ObjectId(ctx.userInfo._id)
 
-  const _id = ObjectID()
+  const _id = ObjectId()
   const password = encrypt(nanoid(36))
 
   return Databooks.insertOne({

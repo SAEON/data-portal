@@ -1,7 +1,6 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
+import { ObjectId } from 'mongodb'
 
 export default async ({ filters: filterIds }, args, ctx) => {
   const { findFilters } = ctx.mongo.dataFinders
-  return await findFilters({ _id: { $in: (filterIds || []).map(id => ObjectID(id)) } })
+  return await findFilters({ _id: { $in: (filterIds || []).map(id => ObjectId(id)) } })
 }

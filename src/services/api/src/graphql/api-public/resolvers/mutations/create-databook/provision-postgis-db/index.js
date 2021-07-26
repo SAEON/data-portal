@@ -2,7 +2,7 @@ import provisionSchema from './provision-schema/index.js'
 import loadShapefileArchive from './shapefile-archive/index.js'
 import loadNetCdfFile from './netcdf/index.js'
 import mongodb from 'mongodb'
-const { ObjectID } = mongodb
+const { ObjectId } = mongodb
 
 /**
  * NOTE
@@ -70,7 +70,7 @@ export default async (ctx, { records, databookId }) => {
       }
     } catch (error) {
       await Databooks.findOneAndUpdate(
-        { _id: ObjectID(databook._id) },
+        { _id: ObjectId(databook._id) },
         {
           $set: {
             [`tables.${tableName}`]: {

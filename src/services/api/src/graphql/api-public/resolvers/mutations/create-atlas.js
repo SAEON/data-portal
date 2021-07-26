@@ -1,5 +1,4 @@
-import mongodb from 'mongodb'
-const { ObjectID } = mongodb
+import { ObjectId } from 'mongodb'
 import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
@@ -12,7 +11,7 @@ export default async (self, args, ctx) => {
     },
     {
       $setOnInsert: {
-        _id: ObjectID(),
+        _id: ObjectId(),
         hashedSearch: hash(search),
         search,
         createdAt: new Date(),

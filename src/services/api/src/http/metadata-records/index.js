@@ -1,5 +1,5 @@
 import { execute } from 'graphql'
-import mongo from 'mongodb'
+import { ObjectId } from 'mongodb'
 import { ODP_ADDRESS_CATALOGUE_ENDPOINT } from '../../config.js'
 import authenticateWithOdp from '../../lib/authenticate-with-odp.js'
 import fetch from 'node-fetch'
@@ -17,9 +17,6 @@ import { gql } from 'apollo-server-koa'
  * catalogue records endpoint already supports
  * pagination
  */
-
-const { ObjectID } = mongo
-
 export default async ctx => {
   const { findLists } = ctx.mongo.dataFinders
   const { search } = ctx.query
@@ -34,7 +31,7 @@ export default async ctx => {
   ctx.set('Content-Type', 'application/force-download')
 
   // Load the saved search state
-  const { search: searchState } = (await findLists({ _id: ObjectID(search) }))[0]
+  const { search: searchState } = (await findLists({ _id: ObjectId(search) }))[0]
 
   // Query the catalogue for the IDs associated with this search state
   const { data } = await execute(
