@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { context as layoutContext } from '../../layout/context'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
@@ -11,6 +13,7 @@ import Container from '@material-ui/core/Container'
 import Hidden from '@material-ui/core/Hidden'
 
 export default () => {
+  const { contentRef } = useContext(layoutContext)
   const theme = useTheme()
 
   return (
@@ -18,7 +21,7 @@ export default () => {
       <SkipLink href="#home-search" text="Skip to main content" />
       <Container
         style={{
-          height: `calc(${`100% - ${window.location.pathname.includes('render') ? 0 : 48}px`})`,
+          height: contentRef.offsetHeight,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

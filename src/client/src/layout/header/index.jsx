@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, forwardRef } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -12,14 +12,20 @@ import { context as globalContext } from '../../contexts/global'
 import NavMenu from './nav'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default () => {
+const TITLE = `SAEON DATA PORTAL ${
+  CATALOGUE_DEPLOYMENT_ENV === 'production'
+    ? ''
+    : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`
+}`
+
+export default forwardRef((props, ref) => {
   useLocation() // Trigger re-render on location changes
   const { global } = useContext(globalContext)
   const { selectedIds } = global
   const theme = useTheme()
 
   return (
-    <>
+    <div ref={ref}>
       <AppBar color="primary" variant="outlined" position="fixed">
         <Toolbar disableGutters={true} variant="dense">
           <NavMenu />
@@ -31,10 +37,7 @@ export default () => {
               display="block"
               variant="body2"
             >
-              SAEON DATA PORTAL{' '}
-              {CATALOGUE_DEPLOYMENT_ENV === 'production'
-                ? undefined
-                : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`}
+              {TITLE}
             </Typography>
           </header>
 
@@ -56,7 +59,8 @@ export default () => {
         </Toolbar>
       </AppBar>
 
-      <div style={{ minHeight: 48 }} />
-    </>
+      {/* PUSH PAGE DOWN */}
+      <Toolbar disableGutters={true} variant="dense" />
+    </div>
   )
-}
+})
