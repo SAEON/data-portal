@@ -42,7 +42,7 @@
     "@material-ui/lab": "4.0.0-alpha.60",
     "@saeon/logger": "^6.2.9",
     "@saeon/ol-react": "^10.2.6",
-    "@saeon/quick-form": "3.2.0",
+    "@saeon/quick-form": "3.2.1",
     "@saeon/snap-menus": "^5.3.7",
     "@svgr/webpack": "^5.5.0",
     "abortcontroller-polyfill": "^1.7.3",
