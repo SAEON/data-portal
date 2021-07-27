@@ -17,18 +17,18 @@ import Q from '@saeon/quick-form'
 
 ```jsx
 const Component = props => (
-  <div>
-    <MyForm>
-      {/* Specify form fields as attributes */}
-      <Q value={false}>
-        {(updateForm, { value }) => (
-          <div
-          onClick={() => updateForm({value: !value})}
-          >{value}</div>
-        )}
-      </Q>
-    </MyForm>
-  </div>
+  <MyForm>
+    <Q value1={false} value2={true}>
+      {(updateForm, { value1, value2 }) => (
+        <div>
+          {/* Input 1 */}
+          <button onClick={() => updateForm({ value1: !value1 })}>{value1}</button>
+          {/* Input 2 */}
+          <button onClick={() => updateForm({ value2: !value2 })}>{value2}</button>
+        </div>
+      )}
+    </Q>
+  </MyForm>
 )
 ```
 
@@ -45,9 +45,7 @@ The Q component will (or at least should) re-render every time a form attribute'
  ]}
 >
   {(updateForm, { ...fields }) => (
-    <div
-      onClick={() => updateForm({value: !value})}
-    >{fields.value}</div>
+    <div onClick={() => updateForm({value: !value})}>{fields.value}</div>
   )}
 </Q>
 )
