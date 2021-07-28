@@ -2,27 +2,22 @@ import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from 'mdi-react/SearchIcon'
 import QuickForm from '@saeon/quick-form'
 import { context as globalContext } from '../../contexts/global'
 import debounce from '../../lib/fns/debounce'
+import useStyles from './style'
+import clsx from 'clsx'
+import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({
-  children,
-  autofocus,
-  onFocus,
-  onBlur,
-  resetGlobalStateOnSearch = false,
-  iconProps,
-  inputProps,
-  color,
-  ...props
-}) => {
+export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
   const history = useHistory()
   const { global, setGlobal } = useContext(globalContext)
+  const classes = useStyles()
+  const theme = useTheme()
 
   return (
-    <div {...props}>
+    <div className={classes.recordsSearchBox} style={style}>
       <QuickForm
         effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
         text={global.text || ''}
@@ -36,29 +31,34 @@ export default ({
               fullWidth
               id="saeon-data-search"
               size="medium"
-              color={color}
+              color={'secondary'}
               onChange={e => update({ text: e.target.value })}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon {...iconProps} />
+                    <SearchIcon
+                      style={{ color: theme.palette.common.white, margin: theme.spacing(4) }}
+                      size={36}
+                    />
                   </InputAdornment>
                 ),
                 inputProps: {
-                  'aria-label': 'Text input for searching SAEON catalogue',
+                  'aria-label': 'Enter search text and press enter',
                 },
-                ...inputProps,
+                className: clsx(classes.input),
               }}
               value={text}
               placeholder="Search our data"
               variant="standard"
               onKeyDown={({ key }) => {
                 if (key === 'Enter') {
-                  setGlobal({ text }, resetGlobalStateOnSearch)
-                  history.push('/records')
+                  setGlobal({ text }, false)
+                  if (history.location.pathname !== '/records') {
+                    history.push('/records')
+                  }
                 }
               }}
-              autoFocus={autofocus || false}
+              autoFocus={autofocus}
             />
           )
         }}

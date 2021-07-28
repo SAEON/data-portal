@@ -4,7 +4,7 @@ import { alpha } from '@material-ui/core/styles/colorManipulator'
 export default makeStyles(theme => ({
   input: {
     color: theme.palette.common.white,
-    padding: `32px 0`,
+    padding: `${theme.spacing(4)}px 0`,
     caretColor: theme.palette.common.white,
   },
   recordsSearchBox: {
@@ -24,14 +24,10 @@ export default makeStyles(theme => ({
       border: 'none',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: theme.palette.secondary.main,
+      borderBottomColor: alpha(theme.palette.secondary.main, 0.5),
     },
   },
   divider: {
     backgroundColor: theme.palette.secondary.main,
-  },
-  toolbar: {
-    backgroundColor: alpha(theme.palette.common.black, 0.5),
-    minHeight: theme.customSizes.thickToolbar.minHeight,
   },
 }))

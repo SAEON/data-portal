@@ -34,9 +34,4 @@ export default createMuiTheme({
   },
   backgroundColor: alpha(defaultTheme.palette.common.white, 0.9),
   boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
-  customSizes: {
-    thickToolbar: {
-      minHeight: 128,
-    },
-  },
 })

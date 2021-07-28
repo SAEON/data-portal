@@ -1,64 +1,35 @@
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import useTheme from '@material-ui/core/styles/useTheme'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
 import SkipLink from '../../components/skip-link'
-import SearchSummary from './_search-summary'
-import Search from '../../components/search'
-import Container from '@material-ui/core/Container'
-import Hidden from '@material-ui/core/Hidden'
+import Search from './search'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
+import clsx from 'clsx'
+
+const useStyles = makeStyles(theme => ({
+  bg1: {
+    padding: theme.spacing(12),
+    backgroundColor: alpha(theme.palette.common.white, 0.5),
+  },
+
+  bg2: {
+    padding: theme.spacing(12),
+    backgroundColor: alpha(theme.palette.common.black, 0.4),
+  },
+  bg3: {
+    padding: theme.spacing(12),
+    backgroundColor: alpha(theme.palette.common.white, 0.65),
+  },
+}))
 
 export default () => {
-  const theme = useTheme()
+  const classes = useStyles()
 
   return (
     <>
       <SkipLink href="#home-search" text="Skip to main content" />
-      <Container
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Card
-          style={{
-            backgroundColor: theme.backgroundColor,
-            padding: theme.spacing(3),
-            width: '100%',
-          }}
-          variant="outlined"
-        >
-          <Grid container item xs={12}>
-            <Hidden smDown>
-              <Grid style={{ display: 'flex' }} item>
-                <a style={{ display: 'block', margin: 'auto' }} href={CATALOGUE_CLIENT_ADDRESS}>
-                  <img
-                    style={{
-                      height: 56,
-                    }}
-                    src="/saeon-logo.png"
-                    alt="Logo"
-                  />
-                </a>
-              </Grid>
-              <Divider variant="middle" orientation={'vertical'} flexItem />
-            </Hidden>
-
-            <Grid item style={{ flexGrow: 1 }}>
-              <main id="home-search">
-                <Search resetGlobalStateOnSearch={true} autofocus={true}>
-                  <Typography variant="overline">
-                    <SearchSummary />
-                  </Typography>
-                </Search>
-              </main>
-            </Grid>
-          </Grid>
-        </Card>
-      </Container>
+      <Search />
+      <div className={clsx(classes.bg3)}></div>
+      <div className={clsx(classes.bg1)}></div>
+      <div className={clsx(classes.bg2)}></div>
     </>
   )
 }

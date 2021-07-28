@@ -13,12 +13,20 @@ export default () => {
   return (
     <div style={{ position: 'relative' }}>
       <AppBar position="relative" color="primary">
-        <Container style={{ paddingTop: theme.spacing(2) }}>
-          {/* DISCLAIMERS */}
-          <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        {/* DISCLAIMERS */}
+        <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
             {NavItems.filter(({ includeInFooter }) => includeInFooter).map(
               ({ label, Icon, to }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center' }}>
+                <div
+                  key={label}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: theme.spacing(2),
+                    marginTop: theme.spacing(2),
+                  }}
+                >
                   <Icon size={18} />
                   <Typography
                     component={({ style, ...otherProps }) => (
@@ -42,15 +50,19 @@ export default () => {
                 </div>
               )
             )}
-          </Toolbar>
+          </Container>
+        </Toolbar>
 
-          {/* COPYRIGHT */}
-          <Toolbar style={{ display: 'flex', justifyContent: 'center' }} variant="dense">
+        {/* COPYRIGHT */}
+        <Toolbar
+          style={{ backgroundColor: theme.palette.primary.dark, minHeight: theme.spacing(1) }}
+        >
+          <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="overline" variantMapping={{ overline: 'p' }}>
               © SAEON 2020 - {new Date().getFullYear()}
             </Typography>
-          </Toolbar>
-        </Container>
+          </Container>
+        </Toolbar>
       </AppBar>
     </div>
   )

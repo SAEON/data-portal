@@ -1,8 +1,7 @@
 import { useContext } from 'react'
-import { context as globalContext } from '../../contexts/global'
+import { context as globalContext } from '../../../contexts/global'
 import { gql, useQuery } from '@apollo/client'
-import Fade from '@material-ui/core/Fade'
-import { CATALOGUE_API_GQL_ADDRESS } from '../../config'
+import { CATALOGUE_API_GQL_ADDRESS } from '../../../config'
 
 export default () => {
   const { global } = useContext(globalContext)
@@ -29,13 +28,5 @@ export default () => {
     )
   }
 
-  return loading ? (
-    <Fade key="waiting" in={loading}>
-      <span>...</span>
-    </Fade>
-  ) : (
-    <Fade key="results" in={!loading}>
-      <span>{data?.catalogue.records.totalCount} records</span>
-    </Fade>
-  )
+  return { error, loading, data }
 }
