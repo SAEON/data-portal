@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuIcon from 'mdi-react/MenuIcon'
 import navItems from './_nav-items'
 import NavItem from './_nav-item'
-import { context as authorizationContext } from '../../../contexts/authorization'
+import { context as authorizationContext } from '../../../../contexts/authorization'
 
 export default () => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -28,9 +28,12 @@ export default () => {
         onClose={() => setAnchorEl(null)}
       >
         {navItems
-          .filter(({ authorization = false }) =>
-            authorization ? isAuthorized(authorization) : true
-          )
+          .filter(({ authorization = false, excludeFromNav = false }) => {
+            if (excludeFromNav) {
+              return false
+            }
+            return authorization ? isAuthorized(authorization) : true
+          })
           .map(({ label, Icon, to }) => (
             <NavItem
               onClick={() => setAnchorEl(null)}

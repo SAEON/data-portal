@@ -4,7 +4,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import FlatPage from '../../components/flat-page'
-import Footer from '../../components/footer'
 import useStyles from './style'
 import clsx from 'clsx'
 
@@ -161,7 +160,6 @@ export default () => {
           </CardContent>
         </Card>
       </FlatPage>
-      <Footer />
     </>
   )
 }

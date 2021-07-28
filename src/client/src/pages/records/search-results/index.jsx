@@ -4,7 +4,6 @@ import Header from './header'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
 import Grid from '@material-ui/core/Grid'
-import Footer from '../../../components/footer'
 import Loading from '../../../components/loading'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
@@ -207,8 +206,6 @@ export default ({ disableSidebar }) => {
             </>
           )}
         </Container>
-
-        {loading ? null : <Footer />}
       </Header>
     </main>
   )

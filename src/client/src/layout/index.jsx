@@ -1,36 +1,37 @@
+import LayoutProvider, { context as layoutContext } from '../contexts/layout'
 import { useContext } from 'react'
-import LayoutProvider, { context as layoutContext } from './context'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Header from './header'
+import Header from '../components/header'
 import Routes from './routes'
+import Footer from '../components/footer'
 
-const Layout = () => {
-  const { pathname } = window.location
-  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0] // eslint-disable-line
-  const { headerRef, setHeaderRef, contentRef, setContentRef } = useContext(layoutContext)
-
-  const headerLess = currentRoute === '/render'
+const Content = () => {
+  const { headerRef, contentRef, setContentRef } = useContext(layoutContext)
 
   return (
-    <Router>
-      {!headerLess && <Header contentRef={contentRef} ref={el => setHeaderRef(el)} />}
-      {(headerRef || headerLess) && (
-        <div
-          ref={el => setContentRef(el)}
-          style={{
-            position: 'relative',
-            minHeight: `calc(100% - ${headerRef?.offsetHeight || 0}px)`,
-          }}
-        >
-          <Routes />
-        </div>
-      )}
-    </Router>
+    <div
+      ref={el => {
+        contentRef.current = el
+        setContentRef(contentRef)
+      }}
+      style={{
+        position: 'relative',
+        minHeight: `calc(100% - ${headerRef?.offsetHeight || 0}px)`,
+      }}
+    >
+      <Routes />
+    </div>
   )
 }
 
-export default () => (
-  <LayoutProvider>
-    <Layout />
-  </LayoutProvider>
-)
+export default () => {
+  return (
+    <Router>
+      <LayoutProvider>
+        <Header />
+        <Content />
+        <Footer />
+      </LayoutProvider>
+    </Router>
+  )
+}

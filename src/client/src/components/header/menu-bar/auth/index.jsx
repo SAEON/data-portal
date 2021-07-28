@@ -1,6 +1,6 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { context as authContext } from '../../../contexts/authentication'
+import { context as authContext } from '../../../../contexts/authentication'
 import Login from './_login'
 import Logout from './_logout'
 import UserAvatar from './_user-avatar'

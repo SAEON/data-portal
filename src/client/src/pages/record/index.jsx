@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
-import Footer from '../../components/footer'
 import FieldView from './field-view'
 import Header from './header'
 import CodeView from './code-view'
@@ -65,7 +64,6 @@ export default ({ id }) => {
           </span>
         </Fade>
       </Container>
-      <Footer />
     </>
   )
 }

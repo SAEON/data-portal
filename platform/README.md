@@ -164,7 +164,7 @@ sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<
 sudo service nginx restart
 ```
 ## SAEON SSL certificates
-This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be different to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/). Usually this correct trick is to append interm.cer to the cert.cer file. For example:
+This is a helpful link refarding ordering certs for Nginx (it's worth noting that Nginx requires SSL certificates in a specific order that seems to be different to order in which they are generated at SAEON). Read this! [How to install an SSL Certificate on a Nginx Server](https://www.ssls.com/knowledgebase/how-to-install-an-ssl-certificate-on-a-nginx-server/). Usually the correct trick is to append interm.cer to the cert.cer file. For example:
 
 ```sh
 cat <file name>.cert.cer > <file name>.cer
