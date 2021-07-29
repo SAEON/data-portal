@@ -22,10 +22,10 @@ export default () => {
     >
       <Container>
         <Grid container spacing={2}>
-          <Grid xs={12} md={9} item>
+          <Grid xs={12} md={8} lg={9} item>
             <Search style={{ width: '100%' }} minHeight={theme.spacing(24)} />
           </Grid>
-          <Grid style={{ minHeight: 112 }} item xs={12} md={3}>
+          <Grid style={{ minHeight: 112 }} item xs={12} md={4} lg={3}>
             <FancyButton
               disabled={count === 0}
               title={`${
