@@ -19,7 +19,7 @@ const Header = forwardRef((props, ref) => {
   }
 
   return (
-    <div ref={ref}>
+    <div id="header" ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={props.contentRef}>

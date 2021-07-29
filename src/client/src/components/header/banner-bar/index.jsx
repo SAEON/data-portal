@@ -17,40 +17,46 @@ const TITLE = `SAEON DATA PORTAL ${
 
 export default () => {
   const theme = useTheme()
-  const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
 
   return (
     <Toolbar>
       {/* SAEON LOGO */}
-      <a
-        style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
-        target="_blank"
-        rel="noreferrer"
-        href="http://www.saeon.ac.za/"
-      >
-        <img
-          style={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
-          src="/saeon-logo.png"
-          alt="SAEON logo"
-        />
-      </a>
+      {mdAndUp && (
+        <a
+          style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
+          target="_blank"
+          rel="noreferrer"
+          href="http://www.saeon.ac.za/"
+        >
+          <img
+            style={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
+            src="/saeon-logo.png"
+            alt="SAEON logo"
+          />
+        </a>
+      )}
 
       {/* TITLE */}
-      <MuiLink component={Link} to="/">
-        <header>
-          <Typography
-            color="textPrimary"
-            style={{ display: 'flex', flexBasis: 0, flexGrow: 1, textAlign: 'center' }}
-            variant="h5"
-            variantMapping={{ h5: 'h1' }}
-          >
+      <header
+        style={{
+          display: 'flex',
+          flexBasis: 0,
+          flexGrow: 1,
+          textAlign: 'center',
+          minHeight: IMAGE_HEIGHT,
+          alignItems: 'center',
+        }}
+      >
+        <MuiLink style={{ display: 'block', width: '100%' }} component={Link} to="/">
+          <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
             {TITLE}
           </Typography>
-        </header>
-      </MuiLink>
+        </MuiLink>
+      </header>
 
-      {/* NRF LOGO */}
-      {smAndUp && (
+      {/* SARVA LOGO */}
+      {mdAndUp && (
         <a
           style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
           target="_blank"

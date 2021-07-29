@@ -7,6 +7,7 @@ const fs = require('fs')
 const packageJson = require('./package.json')
 // eslint-disable-next-line
 const { GenerateSW } = require('workbox-webpack-plugin')
+// eslint-disable-next-line
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 require('dotenv').config()
 
@@ -29,7 +30,7 @@ module.exports = () => {
     target: mode === 'production' ? ['web', 'es5'] : 'web',
     mode,
     entry: {
-      index: './src/index.jsx',
+      "saeon-data-portal": './src/index.jsx',
     },
     output: {
       filename: '[name].[contenthash].js',
@@ -164,6 +165,14 @@ module.exports = () => {
       new HtmlWebPackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, output, 'index.html'),
+        PUBLIC_PATH: '',
+        PACKAGE_DESCRIPTION: packageJson.description,
+        PACKAGE_KEYWORDS: packageJson.keywords,
+        chunks: ['saeon-data-portal']
+      }),
+      new HtmlWebPackPlugin({
+        template: 'atlas.html',
+        filename: path.join(__dirname, output, 'atlas.html'),
         PUBLIC_PATH: '',
         PACKAGE_DESCRIPTION: packageJson.description,
         PACKAGE_KEYWORDS: packageJson.keywords,
