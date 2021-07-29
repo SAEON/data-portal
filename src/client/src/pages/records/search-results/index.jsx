@@ -154,7 +154,7 @@ export default ({ disableSidebar }) => {
         loading={loading}
         catalogue={data?.catalogue}
       >
-        <Container style={{ marginTop: theme.spacing(4) }}>
+        <Container style={{ marginTop: theme.spacing(2) }}>
           {/* SEARCH LOADING */}
           {loading && (
             <Grid item xs={12} style={{ position: 'relative' }}>

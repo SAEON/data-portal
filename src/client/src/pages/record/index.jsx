@@ -6,9 +6,11 @@ import Header from './header'
 import CodeView from './code-view'
 import Container from '@material-ui/core/Container'
 import Fade from '@material-ui/core/Fade'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({ id }) => {
   const [codeView, updateCodeView] = useState(false)
+  const theme = useTheme()
 
   const { error, loading, data } = useQuery(
     gql`
@@ -52,6 +54,7 @@ export default ({ id }) => {
         toggleCodeView={() => updateCodeView(!codeView)}
         _source={{ ...data?.catalogue?.records?.nodes?.[0]?.metadata?._source }}
       />
+      <div style={{ marginTop: theme.spacing(1) }} />
       <Container>
         <Fade key="code-view-in" in={codeView}>
           <span style={{ display: codeView ? 'inherit' : 'none' }}>

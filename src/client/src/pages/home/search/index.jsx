@@ -4,17 +4,19 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import Container from '@material-ui/core/Container'
 import { alpha } from '@material-ui/core/styles/colorManipulator'
 import Toolbar from '@material-ui/core/Toolbar'
-import Button from './_button'
+import FancyButton from '../../../components/fancy-button'
 
 export default () => {
   const theme = useTheme()
   const { data } = useSummary()
 
+  const count = data?.catalogue.records.totalCount
+
   return (
     <Toolbar
       style={{
         backgroundColor: alpha(theme.palette.common.black, 0.7),
-        minHeight: theme.spacing(24),
+        height: '80vh',
       }}
     >
       <Container style={{ display: 'flex', overflow: 'hidden' }}>
@@ -28,7 +30,12 @@ export default () => {
             marginLeft: theme.spacing(2),
           }}
         >
-          <Button count={data?.catalogue.records.totalCount || '...'} />
+          <FancyButton
+            disabled={count === 0}
+            title={`${
+              isNaN(count) ? '...' : count === 0 ? 'No search results' : `Explore ${count} records`
+            }`}
+          />
         </div>
       </Container>
     </Toolbar>

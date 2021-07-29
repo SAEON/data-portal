@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: alpha(theme.palette.common.black, 0.4),
   },
   bg3: {
-    padding: theme.spacing(12),
-    backgroundColor: alpha(theme.palette.common.white, 0.65),
+    height: '20vh',
+    backgroundColor: alpha(theme.palette.common.black, 0.7),
   },
 }))
 
@@ -30,8 +30,8 @@ export default () => {
       <Header />
       <Search />
       <div className={clsx(classes.bg3)}></div>
-      <div className={clsx(classes.bg1)}></div>
-      <div className={clsx(classes.bg2)}></div>
+      {/* <div className={clsx(classes.bg1)}></div>
+      <div className={clsx(classes.bg2)}></div> */}
     </>
   )
 }

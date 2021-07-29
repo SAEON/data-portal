@@ -22,7 +22,7 @@ export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
       {showSearchBar && (
         <Toolbar
           style={{
-            backgroundColor: alpha(theme.palette.common.black, 0.5),
+            backgroundColor: alpha(theme.palette.common.black, 0.65),
             minHeight: theme.spacing(16),
           }}
         >
