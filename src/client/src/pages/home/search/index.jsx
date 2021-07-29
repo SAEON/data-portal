@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container'
 import { alpha } from '@material-ui/core/styles/colorManipulator'
 import Toolbar from '@material-ui/core/Toolbar'
 import FancyButton from '../../../components/fancy-button'
+import Grid from '@material-ui/core/Grid'
 
 export default () => {
   const theme = useTheme()
@@ -19,24 +20,24 @@ export default () => {
         height: '80vh',
       }}
     >
-      <Container style={{ display: 'flex', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}>
-          <Search style={{ width: '100%' }} minHeight={theme.spacing(24)} />
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexBasis: 0,
-            marginLeft: theme.spacing(2),
-          }}
-        >
-          <FancyButton
-            disabled={count === 0}
-            title={`${
-              isNaN(count) ? '...' : count === 0 ? 'No search results' : `Explore ${count} datasets`
-            }`}
-          />
-        </div>
+      <Container>
+        <Grid container spacing={2}>
+          <Grid xs={12} md={9} item>
+            <Search style={{ width: '100%' }} minHeight={theme.spacing(24)} />
+          </Grid>
+          <Grid style={{ minHeight: 112 }} item xs={12} md={3}>
+            <FancyButton
+              disabled={count === 0}
+              title={`${
+                isNaN(count)
+                  ? '...'
+                  : count === 0
+                  ? 'No search results'
+                  : `Explore ${count} datasets`
+              }`}
+            />
+          </Grid>
+        </Grid>
       </Container>
     </Toolbar>
   )

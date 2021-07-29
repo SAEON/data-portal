@@ -8,7 +8,7 @@ export default ({ title, disabled = false }) => {
   const classes = useStyles()
 
   return (
-    <div style={{ minWidth: 302 }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <div className={classes.root}>
         <ButtonBase
           disabled={disabled}
@@ -19,7 +19,8 @@ export default ({ title, disabled = false }) => {
             [classes.button]: !disabled,
           })}
           style={{
-            width: 300,
+            width: '100%',
+            height: '100%',
           }}
         >
           <span
