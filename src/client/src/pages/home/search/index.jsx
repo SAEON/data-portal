@@ -33,7 +33,7 @@ export default () => {
           <FancyButton
             disabled={count === 0}
             title={`${
-              isNaN(count) ? '...' : count === 0 ? 'No search results' : `Explore ${count} records`
+              isNaN(count) ? '...' : count === 0 ? 'No search results' : `Explore ${count} datasets`
             }`}
           />
         </div>
