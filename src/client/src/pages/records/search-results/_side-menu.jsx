@@ -13,13 +13,17 @@ export default ({ showSidebar, data, setShowSidebar }) => {
       <Drawer
         id="mobile-filters-menu"
         PaperProps={{ style: { maxWidth: '100%' } }}
-        anchor="right"
+        anchor="left"
         open={showSidebar}
         onOpen={() => setShowSidebar(true)}
         onClose={() => setShowSidebar(false)}
       >
         <Grid item xs={12}>
-          <IconButton aria-label="Toggle search filters" onClick={() => setShowSidebar(false)}>
+          <IconButton
+            style={{ marginLeft: 'auto', display: 'flex' }}
+            aria-label="Toggle search filters"
+            onClick={() => setShowSidebar(false)}
+          >
             <CloseIcon />
           </IconButton>
 

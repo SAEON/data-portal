@@ -26,7 +26,10 @@ export default ({ title }) => {
         position="relative"
         variant="outlined"
         color="inherit"
-        style={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0` }}
+        style={{
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
+          zIndex: 1,
+        }}
       >
         <Toolbar variant="regular">
           <Typography

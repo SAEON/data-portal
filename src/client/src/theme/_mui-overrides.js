@@ -1,5 +1,3 @@
-import { alpha } from '@material-ui/core/styles/colorManipulator'
-
 export default theme => ({
   MuiTypography: {
     h1: {
@@ -26,20 +24,6 @@ export default theme => ({
     barColorSecondary: {},
     root: {
       height: theme.spacing(0.5),
-    },
-  },
-  MuiAppBar: {
-    colorPrimary: {
-      border: 'none',
-      borderBottom: `1px solid ${alpha(theme.palette.grey[200], 0.6)}`,
-    },
-  },
-  MuiPaper: {
-    rounded: {
-      borderRadius: 2,
-    },
-    outlined: {
-      border: `1px solid ${alpha(theme.palette.grey[200], 0.6)}`,
     },
   },
   MuiButton: {

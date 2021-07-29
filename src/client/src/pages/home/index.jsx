@@ -3,6 +3,7 @@ import Search from './search'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { alpha } from '@material-ui/core/styles/colorManipulator'
 import clsx from 'clsx'
+import Header from './header'
 
 const useStyles = makeStyles(theme => ({
   bg1: {
@@ -26,6 +27,7 @@ export default () => {
   return (
     <>
       <SkipLink href="#home-search" text="Skip to main content" />
+      <Header />
       <Search />
       <div className={clsx(classes.bg3)}></div>
       <div className={clsx(classes.bg1)}></div>

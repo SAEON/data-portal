@@ -1,6 +1,4 @@
-import { Suspense, lazy, useContext, cloneElement, forwardRef } from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
+import { Suspense, lazy, useContext } from 'react'
 import useTheme from '@material-ui/core/styles/useTheme'
 import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
@@ -9,8 +7,8 @@ import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
 import LoadingCircular from '../../../../components/loading-circular'
 import { context as authorizationContext } from '../../../../contexts/authorization'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Hidden from '@material-ui/core/Hidden'
+import ToolbarHeader from '../../../../components/toolbar-header'
 // import ResetFiltersButton from './_reset-filters-button'
 
 const AuthenticatedOnly = lazy(() => import('./authenticated'))
@@ -18,113 +16,92 @@ const ConfigurePaginationButton = lazy(() => import('./_configure-pagination-but
 const CurrentPageInfo = lazy(() => import('./_current-page-info'))
 const Title = lazy(() => import('./_title'))
 
-const ElevationScroll = forwardRef(({ children }, ref) => {
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: ref.current?.offsetTop || 200,
-  })
+export default ({
+  catalogue,
+  setPageSize,
+  loading,
+  cursors,
+  setCursors,
+  pageSize,
+  disableSidebar,
+  children,
+  showSidebar,
+  setShowSidebar,
+}) => {
+  const { isAuthenticated } = useContext(authorizationContext)
+  const theme = useTheme()
+  const sidebarEnabled = !disableSidebar
 
-  return cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-  })
-})
+  return (
+    <>
+      <ToolbarHeader>
+        {/* MOBILE FILTER TOGGLE */}
+        {sidebarEnabled && (
+          <Hidden mdUp>
+            <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+          </Hidden>
+        )}
 
-export default forwardRef(
-  (
-    {
-      catalogue,
-      setPageSize,
-      loading,
-      cursors,
-      setCursors,
-      pageSize,
-      disableSidebar,
-      children,
-      showSidebar,
-      setShowSidebar,
-    },
-    ref
-  ) => {
-    const { isAuthenticated } = useContext(authorizationContext)
-    const theme = useTheme()
-    const sidebarEnabled = !disableSidebar
+        {/* SEARCH RESULT COUNT */}
+        <Hidden xsDown>
+          <Suspense fallback={<LoadingCircular />}>
+            <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
+          </Suspense>
+        </Hidden>
 
-    return (
-      <>
-        <ElevationScroll ref={ref}>
-          <AppBar color="inherit" position="sticky" style={{ zIndex: 1200 }}>
-            <Toolbar disableGutters variant="dense" style={{ borderBottom: 'none' }}>
-              {/* MOBILE FILTER TOGGLE */}
-              {sidebarEnabled && (
-                <Hidden xsDown>
-                  <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
-                </Hidden>
-              )}
+        <span style={{ marginLeft: 'auto' }} />
 
-              {/* SEARCH RESULT COUNT */}
-              <Hidden xsDown>
-                <Suspense fallback={<LoadingCircular />}>
-                  <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
-                </Suspense>
-              </Hidden>
+        {/* ATLAS and DATABOOK */}
+        {isAuthenticated && (
+          <Hidden xsDown>
+            <Suspense fallback={<LoadingCircular />}>
+              <AuthenticatedOnly catalogue={catalogue} />
+            </Suspense>
+          </Hidden>
+        )}
 
-              <span style={{ marginLeft: 'auto' }} />
+        {/* CREATE LIST */}
+        <CreateListButton catalogue={catalogue} />
 
-              {/* ATLAS and DATABOOK */}
-              {isAuthenticated && (
-                <Hidden xsDown>
-                  <Suspense fallback={<LoadingCircular />}>
-                    <AuthenticatedOnly catalogue={catalogue} />
-                  </Suspense>
-                </Hidden>
-              )}
+        {/* RESET SELECTION */}
+        <ToggleSelectionButton catalogue={catalogue} />
 
-              {/* CREATE LIST */}
-              <CreateListButton catalogue={catalogue} />
+        {/* RESET FILTERS */}
+        {/* <ResetFiltersButton /> */}
 
-              {/* RESET SELECTION */}
-              <ToggleSelectionButton catalogue={catalogue} />
+        {/* PAGINATION CONFIG */}
 
-              {/* RESET FILTERS */}
-              {/* <ResetFiltersButton /> */}
+        <Hidden xsDown>
+          <Suspense fallback={<LoadingCircular />}>
+            <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
+          </Suspense>
+        </Hidden>
 
-              {/* PAGINATION CONFIG */}
+        {/* PAGE BACK */}
+        <PageBackButton
+          setCursors={setCursors}
+          loading={loading}
+          cursors={cursors}
+          catalogue={catalogue}
+        />
 
-              <Hidden xsDown>
-                <Suspense fallback={<LoadingCircular />}>
-                  <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
-                </Suspense>
-              </Hidden>
+        {/* CURRENT PAGE */}
+        <Hidden xsDown>
+          <Suspense fallback={<LoadingCircular />}>
+            <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
+          </Suspense>
+        </Hidden>
 
-              {/* PAGE BACK */}
-              <PageBackButton
-                setCursors={setCursors}
-                loading={loading}
-                cursors={cursors}
-                catalogue={catalogue}
-              />
-
-              {/* CURRENT PAGE */}
-              <Hidden xsDown>
-                <Suspense fallback={<LoadingCircular />}>
-                  <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
-                </Suspense>
-              </Hidden>
-
-              {/* PAGE FORWARD */}
-              <PageForwardButton
-                setCursors={setCursors}
-                loading={loading}
-                cursors={cursors}
-                pageSize={pageSize}
-                catalogue={catalogue}
-              />
-            </Toolbar>
-          </AppBar>
-        </ElevationScroll>
-
-        {children}
-      </>
-    )
-  }
-)
+        {/* PAGE FORWARD */}
+        <PageForwardButton
+          setCursors={setCursors}
+          loading={loading}
+          cursors={cursors}
+          pageSize={pageSize}
+          catalogue={catalogue}
+        />
+      </ToolbarHeader>
+      {children}
+    </>
+  )
+}

@@ -11,6 +11,7 @@ import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
 import Container from '@material-ui/core/Container'
 import Hidden from '@material-ui/core/Hidden'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const MobileSideMenu = lazy(() => import('./_side-menu'))
 const Filters = lazy(() => import('./filters'))
@@ -22,10 +23,10 @@ const DEFAULT_CURSORS = {
 }
 
 export default ({ disableSidebar }) => {
+  const theme = useTheme()
   const xsDown = useMediaQuery(theme => theme.breakpoints.down('xs'))
   const [showSidebar, setShowSidebar] = useState(!disableSidebar && !xsDown)
   const ref = useRef()
-  const mainRef = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   const { referrer } = getUriState()
@@ -141,7 +142,7 @@ export default ({ disableSidebar }) => {
     : data.catalogue.records.nodes
 
   return (
-    <main id="search-results" ref={el => (mainRef.current = el)}>
+    <main id="search-results">
       <Header
         disableSidebar={disableSidebar}
         showSidebar={showSidebar}
@@ -152,9 +153,8 @@ export default ({ disableSidebar }) => {
         pageSize={pageSize}
         loading={loading}
         catalogue={data?.catalogue}
-        ref={mainRef}
       >
-        <Container>
+        <Container style={{ marginTop: theme.spacing(4) }}>
           {/* SEARCH LOADING */}
           {loading && (
             <Grid item xs={12} style={{ position: 'relative' }}>
@@ -166,7 +166,7 @@ export default ({ disableSidebar }) => {
           {loading ? null : (
             <>
               {/* MOBILE */}
-              <Hidden smUp>
+              <Hidden mdUp>
                 <>
                   {!disableSidebar && (
                     <Suspense fallback={<Loading />}>
@@ -183,7 +183,7 @@ export default ({ disableSidebar }) => {
               </Hidden>
 
               {/* LARGER SCREENS */}
-              <Hidden xsDown>
+              <Hidden smDown>
                 <Grid container spacing={2}>
                   {showSidebar && !disableSidebar && (
                     <Grid item md={4}>
