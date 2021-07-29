@@ -7,7 +7,7 @@ const AnimateVariant = ({ children }) =>
   cloneElement(children, {
     variant: useScrollTrigger({
       disableHysteresis: true,
-      threshold: 0,
+      threshold: 2,
     })
       ? 'regular'
       : 'dense',
