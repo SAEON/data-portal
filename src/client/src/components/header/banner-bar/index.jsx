@@ -51,7 +51,18 @@ export default () => {
 
       {/* NRF LOGO */}
       {smAndUp && (
-        <div style={{ display: 'flex', flexBasis: 0, flexGrow: 1, justifyContent: 'flex-end' }} />
+        <a
+          style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
+          target="_blank"
+          rel="noreferrer"
+          href="http://sarva.ac.za/"
+        >
+          <img
+            style={{ maxHeight: IMAGE_HEIGHT, width: 'auto', display: 'block', marginLeft: 'auto' }}
+            src="/sarva-logo-cropped.png"
+            alt="SARVA logo"
+          />
+        </a>
       )}
     </Toolbar>
   )

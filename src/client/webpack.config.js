@@ -7,7 +7,7 @@ const fs = require('fs')
 const packageJson = require('./package.json')
 // eslint-disable-next-line
 const { GenerateSW } = require('workbox-webpack-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 require('dotenv').config()
 
 let {

@@ -48,6 +48,7 @@
     "gdal",
     "geoserver",
     "gridstack",
+    "gtag",
     "intarray",
     "kibana",
     "lineinfile",

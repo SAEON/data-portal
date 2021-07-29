@@ -67,6 +67,7 @@ export default ({ id }) => {
           </span>
         </Fade>
       </Container>
+      <div style={{ marginTop: theme.spacing(1) }} />
     </>
   )
 }
