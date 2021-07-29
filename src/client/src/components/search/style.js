@@ -11,6 +11,7 @@ export default makeStyles(theme => ({
     transitionTimingFunction: theme.transitions.easing.easeInOut,
     transitionDuration: theme.transitions.duration.standard,
     transitionProperty: 'background-color',
+    backgroundColor: alpha(theme.palette.secondary.main, 0.1),
 
     // When not hovered, not active
     '& .MuiInput-underline:before': {
@@ -18,7 +19,7 @@ export default makeStyles(theme => ({
     },
     // When hovered
     '&:hover': {
-      backgroundColor: alpha(theme.palette.secondary.main, 0.1),
+      backgroundColor: alpha(theme.palette.secondary.main, 0.2),
     },
     '& .MuiInput-underline:hover:before': {
       border: 'none',

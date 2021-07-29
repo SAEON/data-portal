@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   bg3: {
     height: '20vh',
-    backgroundColor: alpha(theme.palette.common.black, 0.7),
+    backgroundColor: alpha(theme.palette.common.black, 0.4),
   },
 }))
 
@@ -27,7 +27,7 @@ export default () => {
   return (
     <>
       <SkipLink href="#home-search" text="Skip to main content" />
-      <Header />
+      {/* <Header /> */}
       <Search />
       <div className={clsx(classes.bg3)}></div>
       {/* <div className={clsx(classes.bg1)}></div>

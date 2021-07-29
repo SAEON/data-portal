@@ -16,7 +16,7 @@ export default () => {
   return (
     <Toolbar
       style={{
-        backgroundColor: alpha(theme.palette.common.black, 0.7),
+        backgroundColor: alpha(theme.palette.common.black, 0.4),
         height: '80vh',
       }}
     >

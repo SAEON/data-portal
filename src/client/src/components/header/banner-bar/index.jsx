@@ -7,7 +7,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import packageJson from '../../../../package.json'
 import { CATALOGUE_DEPLOYMENT_ENV } from '../../../config'
 
-export const IMAGE_HEIGHT = 96
+export const IMAGE_HEIGHT = 48
 
 const TITLE = `SAEON DATA PORTAL ${
   CATALOGUE_DEPLOYMENT_ENV === 'production'
