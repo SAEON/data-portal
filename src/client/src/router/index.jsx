@@ -6,14 +6,11 @@ import Routes from './routes'
 import Footer from '../components/footer'
 
 const Content = () => {
-  const { headerRef, contentRef, setContentRef } = useContext(layoutContext)
+  const { headerRef, setContentRef } = useContext(layoutContext)
 
   return (
     <div
-      ref={el => {
-        contentRef.current = el
-        setContentRef(contentRef)
-      }}
+      ref={el => setContentRef(el)}
       style={{
         position: 'relative',
         minHeight: `calc(100% - ${headerRef?.offsetHeight || 0}px)`,

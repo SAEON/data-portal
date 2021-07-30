@@ -17,7 +17,7 @@ export default () => {
     <Toolbar
       style={{
         backgroundColor: alpha(theme.palette.common.black, 0.4),
-        height: '80vh',
+        height: '90vh',
       }}
     >
       <Container>

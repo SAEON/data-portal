@@ -13,17 +13,11 @@ if (branch !== 'next') {
 /**
  * Bump API
  */
-exec(
-  `npm --prefix ${normalize(
-    join(__dirname, '../src/api')
-  )} version patch -m "on-commit patch"`
-)
+exec(`npm --prefix ${normalize(join(__dirname, '../src/api'))} version patch -m "on-commit patch"`)
 
 /**
  * Bump Client
  */
 exec(
-  `npm --prefix ${normalize(
-    join(__dirname, '../src/client')
-  )} version patch -m "on-commit patch"`
+  `npm --prefix ${normalize(join(__dirname, '../src/client'))} version patch -m "on-commit patch"`
 )

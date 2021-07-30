@@ -43,14 +43,6 @@ const Header = forwardRef((props, ref) => {
 })
 
 export default () => {
-  const { headerRef, setHeaderRef, contentRef } = useContext(layoutContext)
-  return (
-    <Header
-      contentRef={contentRef}
-      ref={el => {
-        headerRef.current = el
-        setHeaderRef(headerRef)
-      }}
-    />
-  )
+  const { setHeaderRef, contentRef } = useContext(layoutContext)
+  return <Header contentRef={contentRef} ref={el => setHeaderRef(el)} />
 }

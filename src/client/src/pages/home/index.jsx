@@ -6,7 +6,7 @@ import clsx from 'clsx'
 
 const useStyles = makeStyles(theme => ({
   bg: {
-    height: '20vh',
+    height: '10vh',
     backgroundColor: alpha(theme.palette.common.black, 0.4),
   },
 }))

@@ -236,13 +236,11 @@ export default withRouter(() => {
         key={'atlas'}
         path={'/atlas'}
         exact
-        render={() => {
-          return (
-            <Transition tKey="atlas">
-              <AtlasPage />
-            </Transition>
-          )
-        }}
+        render={() => (
+          <Transition tKey="atlas">
+            <AtlasPage />
+          </Transition>
+        )}
       />
     </Switch>
   )
