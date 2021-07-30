@@ -171,8 +171,8 @@ module.exports = () => {
         chunks: ['saeon-data-portal']
       }),
       new HtmlWebPackPlugin({
-        template: 'atlas.html',
-        filename: path.join(__dirname, output, 'atlas.html'),
+        template: 'render.html',
+        filename: path.join(__dirname, output, 'render.html'),
         PUBLIC_PATH: '',
         PACKAGE_DESCRIPTION: packageJson.description,
         PACKAGE_KEYWORDS: packageJson.keywords,

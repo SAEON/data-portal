@@ -8,9 +8,7 @@ export default makeStyles(theme => ({
     caretColor: theme.palette.common.white,
   },
   recordsSearchBox: {
-    transitionTimingFunction: theme.transitions.easing.easeInOut,
-    transitionDuration: theme.transitions.duration.standard,
-    transitionProperty: 'background-color',
+    transition: theme.transitions.create('background-color'),
     backgroundColor: alpha(theme.palette.secondary.main, 0.1),
 
     // When not hovered, not active
