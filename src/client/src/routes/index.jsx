@@ -1,4 +1,4 @@
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Transition from './_transition'
 import getUriState from '../lib/fns/get-uri-state'
 
@@ -7,7 +7,6 @@ import {
   RecordPage,
   CompactRecordPage,
   RecordsPage,
-  Render,
   AtlasPage,
   DatabookPage,
   DatabooksPage,
@@ -110,16 +109,14 @@ export default withRouter(() => {
         )}
       />
 
-      {/* Render individual components */}
+      {/* When the entry point is /render/*, rewrite the in-browser history to the normal route */}
       <Route
         key={'render'}
         exact={false}
         path={'/render'}
-        render={props => (
-          <Transition tKey="render">
-            <Render {...props} />
-          </Transition>
-        )}
+        render={({ location: { pathname } }) => {
+          return <Redirect to={pathname.replace('/render', '')} />
+        }}
       />
 
       {/* HOME */}
