@@ -7,7 +7,7 @@ export default ({ children, tKey }) => {
 
   return (
     <Fade key={tKey} in={true}>
-      <div>
+      <div style={{ position: 'relative', height: '100%' }}>
         <Suspense fallback={<Loading />}>{children}</Suspense>
       </div>
     </Fade>

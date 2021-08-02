@@ -46,6 +46,8 @@ export default makeStyles(theme => ({
     transition: theme.transitions.create('opacity'),
   },
   title: {
+    textAlign: 'center',
+    margin: theme.spacing(2),
     color: alpha(theme.palette.common.white, 1),
     border: `1px solid ${alpha(theme.palette.common.white, 0)}`,
     transition: theme.transitions.create(['border', 'color']),

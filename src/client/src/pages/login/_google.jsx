@@ -1,27 +1,20 @@
 import { CATALOGUE_API_ADDRESS } from '../../config'
-import GoogleIcon from 'mdi-react/GoogleIcon'
-import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
-import clsx from 'clsx'
-import useStyles from './style'
+import FancyButton from '../../components/fancy-button'
 
 export default ({ redirect }) => {
-  const classes = useStyles()
-
   return (
-    <Tooltip title={'Login via your Google account (SAEON employees only)'} placement="bottom-end">
+    <Tooltip
+      title={"Login or signup. If you don't have an account you can create one"}
+      placement="top"
+    >
       <span>
-        <Button
-          href={`${CATALOGUE_API_ADDRESS}/login/google?redirect=${redirect}`}
-          fullWidth
-          className={clsx(classes.button)}
-          color="primary"
-          disableElevation={true}
-          variant="outlined"
-          startIcon={<GoogleIcon size={22} />}
-        >
-          Connect with Google
-        </Button>
+        <div style={{ width: 250, height: 250 }}>
+          <FancyButton
+            title="Log in to the SAEON Open Data platform"
+            href={`${CATALOGUE_API_ADDRESS}/login/google?redirect=${redirect}`}
+          />
+        </div>
       </span>
     </Tooltip>
   )

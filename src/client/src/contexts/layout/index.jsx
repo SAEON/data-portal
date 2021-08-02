@@ -34,7 +34,7 @@ export const SizeContentDynamically = ({ children }) => {
       ref={setContentRef}
       style={{
         position: 'relative',
-        minHeight: `calc(100% - ${headerRef?.offsetHeight || 0}px)`,
+        minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)`,
       }}
     >
       {children}
