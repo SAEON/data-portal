@@ -15,37 +15,43 @@ import DefaultApplicationNotices from '../components/default-application-notices
 import ErrorBoundary from '../components/error-boundary'
 import DetectDevice from '../components/detect-device'
 import CookieConsent from '../components/cookie-consent'
+import { BrowserRouter as Router } from 'react-router-dom'
+import LayoutProvider from '../contexts/layout'
 
 export default ({ children }) => {
   return (
-    <CssBaseline>
-      <ThemeProvider theme={theme}>
-        <ErrorBoundary>
-          <DetectDevice>
-            <NativeExtensions>
-              <Apollo>
-                <ClientInfoProvider>
-                  <CookieConsent>
-                    <AuthenticationProvider>
-                      <AuthorizationProvider>
-                        <GlobalProvider>
-                          <BackgroundImageProvider>
-                            <ApplicationLogger>
-                              <SnackbarProvider>
-                                <DefaultApplicationNotices>{children}</DefaultApplicationNotices>
-                              </SnackbarProvider>
-                            </ApplicationLogger>
-                          </BackgroundImageProvider>
-                        </GlobalProvider>
-                      </AuthorizationProvider>
-                    </AuthenticationProvider>
-                  </CookieConsent>
-                </ClientInfoProvider>
-              </Apollo>
-            </NativeExtensions>
-          </DetectDevice>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </CssBaseline>
+    <Router>
+      <CssBaseline>
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary>
+            <DetectDevice>
+              <NativeExtensions>
+                <Apollo>
+                  <ClientInfoProvider>
+                    <CookieConsent>
+                      <AuthenticationProvider>
+                        <AuthorizationProvider>
+                          <GlobalProvider>
+                            <BackgroundImageProvider>
+                              <ApplicationLogger>
+                                <SnackbarProvider>
+                                  <DefaultApplicationNotices>
+                                    <LayoutProvider>{children}</LayoutProvider>
+                                  </DefaultApplicationNotices>
+                                </SnackbarProvider>
+                              </ApplicationLogger>
+                            </BackgroundImageProvider>
+                          </GlobalProvider>
+                        </AuthorizationProvider>
+                      </AuthenticationProvider>
+                    </CookieConsent>
+                  </ClientInfoProvider>
+                </Apollo>
+              </NativeExtensions>
+            </DetectDevice>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </CssBaseline>
+    </Router>
   )
 }

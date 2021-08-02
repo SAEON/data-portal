@@ -11,15 +11,8 @@ import ElevationOnScroll from './animations/elevation-on-scroll'
 import { IMAGE_HEIGHT } from './banner-bar'
 
 const Header = forwardRef((props, ref) => {
-  const { pathname } = window.location
-  const currentRoute = pathname.match(/[^\/]*\/[^\/]*/)[0] // eslint-disable-line
-  const headerLess = currentRoute === '/render'
-  if (headerLess) {
-    return null
-  }
-
   return (
-    <div id="header" ref={ref}>
+    <div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={props.contentRef}>
@@ -44,5 +37,5 @@ const Header = forwardRef((props, ref) => {
 
 export default () => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <Header contentRef={contentRef} ref={el => setHeaderRef(el)} />
+  return <Header contentRef={contentRef} ref={setHeaderRef} />
 }

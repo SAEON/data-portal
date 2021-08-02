@@ -33,7 +33,7 @@ module.exports = () => {
     target: mode === 'production' ? ['web', 'es5'] : 'web',
     mode,
     entry: {
-      search: path.join(ROOT, 'src/entry-points/search/index.jsx'),
+      index: path.join(ROOT, 'src/entry-points/index/index.jsx'),
       render: path.join(ROOT, 'src/entry-points/render/index.jsx'),
     },
     output: {
@@ -117,7 +117,7 @@ module.exports = () => {
         disableDotRule: true,
         rewrites: [
           { from: /^\/render/, to: '/render.html' },
-          { from: /./, to: '/search.html' },
+          { from: /./, to: '/index.html' },
         ],
       },
       compress: true,

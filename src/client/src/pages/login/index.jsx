@@ -22,7 +22,6 @@ export default () => {
         display: 'flex',
         alignItems: 'center',
         position: 'absolute',
-        top: window.location.pathname.includes('render') ? 0 : 48,
         bottom: 0,
         left: 0,
         right: 0,

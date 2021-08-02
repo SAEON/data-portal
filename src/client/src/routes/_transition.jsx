@@ -1,13 +1,9 @@
 import { Suspense } from 'react'
 import Fade from '@material-ui/core/Fade'
-import Loading from '../../components/loading'
+import Loading from '../components/loading'
 
 export default ({ children, tKey }) => {
-  if (location.pathname === '/') {
-    window.scrollTo(0, 0)
-  } else {
-    window.scrollTo(0, 1)
-  }
+  window.scrollTo(0, 0)
 
   return (
     <Fade key={tKey} in={true}>

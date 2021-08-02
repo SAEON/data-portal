@@ -7,15 +7,19 @@ const ROOT = path.normalize(path.join(__dirname, '../'))
 
 module.exports = output => {
   const entries = fs.readdirSync(path.join(ROOT, 'src/entry-points'))
-  return entries.map(
-    name =>
-      new HtmlWebPackPlugin({
-        template: path.join(ROOT, `src/entry-points/${name}/index.html`),
-        filename: path.join(ROOT, output, `${name}.html`),
-        PUBLIC_PATH: '',
-        PACKAGE_DESCRIPTION: packageJson.description,
-        PACKAGE_KEYWORDS: packageJson.keywords,
-        chunks: [name],
-      })
-  )
+  return entries
+    .filter(name =>
+      fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory()
+    )
+    .map(
+      name =>
+        new HtmlWebPackPlugin({
+          template: path.join(ROOT, `src/entry-points/${name}/index.html`),
+          filename: path.join(ROOT, output, `${name}.html`),
+          PUBLIC_PATH: '',
+          PACKAGE_DESCRIPTION: packageJson.description,
+          PACKAGE_KEYWORDS: packageJson.keywords,
+          chunks: [name],
+        })
+    )
 }

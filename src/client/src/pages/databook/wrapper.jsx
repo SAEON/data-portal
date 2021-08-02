@@ -7,12 +7,7 @@ export default ({ children }) => {
   const classes = useStyles()
 
   return (
-    <div
-      style={{ backgroundColor: theme.palette.common.white }}
-      className={clsx(classes.layout, {
-        [classes.pushDown]: !window.location.pathname.includes('/render'),
-      })}
-    >
+    <div style={{ backgroundColor: theme.palette.common.white }} className={clsx(classes.layout)}>
       {children}
     </div>
   )

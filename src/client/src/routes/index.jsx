@@ -1,26 +1,27 @@
-import { lazy } from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Transition from './_transition'
-import getUriState from '../../lib/fns/get-uri-state'
+import getUriState from '../lib/fns/get-uri-state'
 
-const HomePage = lazy(() => import('../../pages/home'))
-const RecordPage = lazy(() => import('../../pages/record'))
-const CompactRecordPage = lazy(() => import('../../pages/compact-record'))
-const RecordsPage = lazy(() => import('../../pages/records'))
-const Render = lazy(() => import('../../pages/render'))
-const AtlasPage = lazy(() => import('../../pages/atlas'))
-const DatabookPage = lazy(() => import('../../pages/databook'))
-const DatabooksPage = lazy(() => import('../../pages/databooks'))
-const UsersPage = lazy(() => import('../../pages/users'))
-const DashboardPage = lazy(() => import('../../pages/dashboard'))
-const ChartPage = lazy(() => import('../../pages/chart'))
-const LoginPage = lazy(() => import('../../pages/login'))
-const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
-const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
-const AboutPage = lazy(() => import('../../pages/about'))
-const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
-const ContactPage = lazy(() => import('../../pages/contact'))
-const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
+import {
+  HomePage,
+  RecordPage,
+  CompactRecordPage,
+  RecordsPage,
+  Render,
+  AtlasPage,
+  DatabookPage,
+  DatabooksPage,
+  UsersPage,
+  DashboardPage,
+  ChartPage,
+  LoginPage,
+  TermsOfServicePage,
+  TermsOfUsePage,
+  AboutPage,
+  PrivacyPolicyPage,
+  ContactPage,
+  DisclaimerPage,
+} from './lazy-pages'
 
 export default withRouter(() => {
   return (

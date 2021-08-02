@@ -9,9 +9,6 @@ export default makeStyles(theme => ({
     left: 0,
     right: 0,
   },
-  pushDown: {
-    marginTop: 48,
-  },
   pre: Object.fromEntries(Object.entries(theme.pre).filter(([key]) => key !== 'backgroundColor')),
 
   toolbar: {
@@ -43,7 +40,7 @@ export default makeStyles(theme => ({
 
   content: {
     position: 'relative',
-    height: 'calc(100% - 48px)',
+    height: '100%',
   },
 
   playButton: {
