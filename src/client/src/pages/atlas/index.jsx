@@ -40,6 +40,7 @@ export default () => {
 
   return (
     <div
+      className="debug"
       style={{
         position: 'absolute',
         top: 0,

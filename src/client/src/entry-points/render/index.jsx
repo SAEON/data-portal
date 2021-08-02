@@ -1,3 +1,4 @@
+import '../../application/configure-client'
 import { lazy, Suspense } from 'react'
 import { render } from 'react-dom'
 import Loading from '../../components/loading'
