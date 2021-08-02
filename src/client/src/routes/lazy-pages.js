@@ -2,7 +2,6 @@ import { lazy } from 'react'
 
 export const HomePage = lazy(() => import('../pages/home'))
 export const RecordPage = lazy(() => import('../pages/record'))
-export const CompactRecordPage = lazy(() => import('../pages/compact-record'))
 export const RecordsPage = lazy(() => import('../pages/records'))
 export const AtlasPage = lazy(() => import('../pages/atlas'))
 export const DatabookPage = lazy(() => import('../pages/databook'))
@@ -17,4 +16,3 @@ export const AboutPage = lazy(() => import('../pages/about'))
 export const PrivacyPolicyPage = lazy(() => import('../pages/privacy-policy'))
 export const ContactPage = lazy(() => import('../pages/contact'))
 export const DisclaimerPage = lazy(() => import('../pages/disclaimer'))
-export const RenderPage = lazy(() => import('../pages/render'))

@@ -10,7 +10,7 @@
     "proxy": "npm --prefix src/proxy start",
     "************ REPOSITORY TOOLING **********": "",
     "prepare": "husky install",
-    "doc": "doctoc README.md && doctoc platform/README.md && doctoc diagrams/README.md && doctoc src/packages/README.md && doctoc src/tools/README.md && doctoc src/client/README.md && doctoc src/api/README.md && doctoc src/proxy/README.md && doctoc platform/README.md && npm run --prefix diagrams build",
+    "doc": "doctoc README.md && doctoc platform/README.md && doctoc diagrams/README.md && doctoc src/packages/README.md && doctoc src/tools/README.md && doctoc src/client/README.md && doctoc src/api/README.md && doctoc src/proxy/README.md && doctoc platform/README.md && doctoc src/client/tests/README.md && npm run --prefix diagrams build",
     "prettier:changed": "pretty-quick",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "bump-patch": "TC=utc node scripts/bump-patch.js",

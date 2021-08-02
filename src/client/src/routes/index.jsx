@@ -1,11 +1,10 @@
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Transition from './_transition'
 import getUriState from '../lib/fns/get-uri-state'
 
 import {
   HomePage,
   RecordPage,
-  CompactRecordPage,
   RecordsPage,
   AtlasPage,
   DatabookPage,
@@ -19,7 +18,6 @@ import {
   AboutPage,
   PrivacyPolicyPage,
   ContactPage,
-  RenderPage,
   DisclaimerPage,
 } from './lazy-pages'
 
@@ -115,11 +113,9 @@ export default withRouter(() => {
         key={'render'}
         exact={false}
         path={'/render'}
-        render={props => (
-          <Transition>
-            <RenderPage {...props} />
-          </Transition>
-        )}
+        render={({ location: { pathname } }) => {
+          return <Redirect to={pathname.replace('/render', '')} />
+        }}
       />
 
       {/* HOME */}
