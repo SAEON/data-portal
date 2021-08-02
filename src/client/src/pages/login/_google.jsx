@@ -11,7 +11,7 @@ export default ({ redirect }) => {
       <span>
         <div style={{ width: 250, height: 250 }}>
           <FancyButton
-            title="Log in to the SAEON Open Data platform"
+            title="Log in"
             href={`${CATALOGUE_API_ADDRESS}/login/google?redirect=${redirect}`}
           />
         </div>

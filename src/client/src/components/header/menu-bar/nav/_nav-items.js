@@ -9,7 +9,7 @@ import DisclaimerIcon from 'mdi-react/WarningIcon'
 
 export default [
   {
-    label: 'Search our data',
+    label: 'Search SAEON data',
     Icon: SearchIcon,
     to: '/records',
   },

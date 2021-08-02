@@ -48,7 +48,7 @@ export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
                 className: clsx(classes.input),
               }}
               value={text}
-              placeholder="Search our data"
+              placeholder="Search SAEON data"
               variant="standard"
               onKeyDown={({ key }) => {
                 if (key === 'Enter') {
