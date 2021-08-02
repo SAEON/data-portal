@@ -156,18 +156,6 @@ export default withRouter(() => {
         )}
       />
 
-      {/* COMPACT RECORD */}
-      <Route
-        key={'compact-record'}
-        exact
-        path={'/compact-record'}
-        render={() => (
-          <Transition tKey="compact-record">
-            <CompactRecordPage />
-          </Transition>
-        )}
-      />
-
       {/* DATABOOKS */}
       <Route
         key={'databooks'}
