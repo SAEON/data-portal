@@ -1,41 +1,29 @@
-const Dotenv = require('dotenv-webpack')
-const webpack = require('webpack')
-const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
-const fs = require('fs')
-const loadEntryPoints = require('./load-entry-points.js')
+const configurePlugins = require('./plugins.js')
 const loadAliases = require('./load-aliases.js')
-const packageJson = require('../package.json')
-// eslint-disable-next-line
-const { GenerateSW } = require('workbox-webpack-plugin')
-// eslint-disable-next-line
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const configureDevServer = require('./dev-server')
+const configureRules = require('./rules.js')
+const fs = require('fs')
 require('dotenv').config()
 
 const ROOT = path.normalize(path.join(__dirname, '../'))
+const { NODE_ENV: mode, CATALOGUE_DEPLOYMENT_ENV = 'local' } = process.env
 
-let {
-  NODE_ENV: mode,
-  CATALOGUE_DEPLOYMENT_ENV = 'local',
-  CATALOGUE_LATEST_COMMIT = '',
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
-} = process.env
-
-CATALOGUE_CLIENT_FILTER_CONFIG_PATH = CATALOGUE_CLIENT_FILTER_CONFIG_PATH
-  ? path.join(ROOT, CATALOGUE_CLIENT_FILTER_CONFIG_PATH)
-  : path.join(ROOT, '../../deployment-configs/next/client-filters.json')
+const entries = Object.fromEntries(
+  fs
+    .readdirSync(path.join(ROOT, 'src/entry-points'))
+    .filter(name => fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory())
+    .map(name => [name, path.join(ROOT, `src/entry-points/${name}/index.jsx`)])
+)
 
 module.exports = () => {
   const output = 'dist'
 
   return {
-    devtool: mode === 'production' ? false : false, // I haven't been able to get source maps to work nicely
-    target: mode === 'production' ? ['web', 'es5'] : 'web',
     mode,
-    entry: {
-      index: path.join(ROOT, 'src/entry-points/index/index.jsx'),
-      render: path.join(ROOT, 'src/entry-points/render/index.jsx'),
-    },
+    devtool: mode === 'production' ? false : false,
+    target: mode === 'production' ? ['web', 'es5'] : 'web',
+    entry: entries,
     output: {
       filename: '[name].[contenthash].js',
       chunkFilename: '[name].[contenthash].js',
@@ -45,82 +33,16 @@ module.exports = () => {
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
-      alias: loadAliases(mode),
+      alias: loadAliases(ROOT, mode),
     },
     optimization: {
       minimize: ['local', 'development'].includes(CATALOGUE_DEPLOYMENT_ENV) ? false : true,
       splitChunks: { chunks: 'all' },
     },
     module: {
-      rules: [
-        {
-          test: /\.(js|jsx|ts|tsx)$/,
-          exclude: mode === 'production' ? /@babel(?:\/|\\{1,2})runtime|core-js/ : /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              envName: mode,
-            },
-          },
-        },
-        {
-          test: /\.*css$/,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
-        },
-        {
-          test: /\.(woff|woff2|eot|ttf)$/,
-          type: 'asset/resource',
-        },
-        {
-          test: /\.svg$/,
-          use: ['@svgr/webpack'],
-        },
-        {
-          test: /\.(png|jpg|gif)$/,
-          type: 'asset/inline',
-        },
-      ],
+      rules: configureRules(mode),
     },
-    plugins: [
-      new Dotenv(),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(mode),
-        'process.env.CATALOGUE_LATEST_COMMIT': JSON.stringify(CATALOGUE_LATEST_COMMIT),
-        'process.env.CATALOGUE_DEPLOYMENT_ENV': JSON.stringify(CATALOGUE_DEPLOYMENT_ENV),
-        'process.env.CATALOGUE_CLIENT_BACKGROUNDS': JSON.stringify(
-          fs
-            .readdirSync('public/bg')
-            .filter(f => ['.jpg', '.jpeg'].includes(f.match(/\.[0-9a-z]{1,5}$/i)?.[0] || undefined))
-            .join(',')
-        ),
-        'process.env.CATALOGUE_CLIENT_FILTER_CONFIG': JSON.stringify(
-          fs.readFileSync(CATALOGUE_CLIENT_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
-        ),
-        'process.env.PACKAGE_DESCRIPTION': JSON.stringify(packageJson.description),
-        'process.env.PACKAGE_KEYWORDS': JSON.stringify(packageJson.keywords),
-      }),
-      new CopyPlugin({
-        patterns: [
-          {
-            from: path.resolve(ROOT, './public'),
-            to: path.resolve(ROOT, './dist'),
-          },
-        ],
-      }),
-      // mode === 'production' ? new GenerateSW({}) : null,
-      // new BundleAnalyzerPlugin()
-      ...loadEntryPoints(output),
-    ].filter(_ => _),
-    devServer: {
-      contentBase: path.join(ROOT, output),
-      historyApiFallback: {
-        disableDotRule: true,
-        rewrites: [
-          { from: /^\/render/, to: '/render.html' },
-          { from: /./, to: '/index.html' },
-        ],
-      },
-      compress: true,
-    },
+    plugins: configurePlugins(ROOT, output),
+    devServer: configureDevServer(ROOT, output),
   }
 }

@@ -3,14 +3,10 @@ const packageJson = require('../package.json')
 const path = require('path')
 const fs = require('fs')
 
-const ROOT = path.normalize(path.join(__dirname, '../'))
-
-module.exports = output => {
+module.exports = (ROOT, output) => {
   const entries = fs.readdirSync(path.join(ROOT, 'src/entry-points'))
   return entries
-    .filter(name =>
-      fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory()
-    )
+    .filter(name => fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory())
     .map(
       name =>
         new HtmlWebPackPlugin({

@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
 
-const Header = forwardRef(({ contentRef, routes }, ref) => {
+const FullHeader = forwardRef(({ contentRef, routes }, ref) => {
   return (
     <div ref={ref}>
       <ElevationOnScroll>
@@ -35,7 +35,34 @@ const Header = forwardRef(({ contentRef, routes }, ref) => {
   )
 })
 
+const BannerOnly = forwardRef(({ contentRef }, ref) => {
+  return (
+    <div ref={ref}>
+      <ElevationOnScroll>
+        <AppBar color="inherit">
+          <HideOnScroll contentRef={contentRef}>
+            <ApplicationBanner />
+          </HideOnScroll>
+          <Divider />
+        </AppBar>
+      </ElevationOnScroll>
+
+      {/* PUSH CONTENT DOWN */}
+      <HideOnScroll contentRef={contentRef}>
+        <ApplicationBanner_>
+          <div style={{ minHeight: IMAGE_HEIGHT }} />
+        </ApplicationBanner_>
+      </HideOnScroll>
+    </div>
+  )
+})
+
 export default ({ routes }) => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <Header contentRef={contentRef} ref={setHeaderRef} routes={routes} />
+  return <FullHeader contentRef={contentRef} ref={setHeaderRef} routes={routes} />
+}
+
+export const Banner = () => {
+  const { setHeaderRef, contentRef } = useContext(layoutContext)
+  return <BannerOnly contentRef={contentRef} ref={setHeaderRef} />
 }

@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 import SearchIcon from 'mdi-react/SearchIcon'
 import AboutIcon from 'mdi-react/AboutIcon'
 import TermsIcon from 'mdi-react/ContractIcon'
@@ -12,24 +13,22 @@ import getUriState from '../../lib/fns/get-uri-state'
 import HomeIcon from 'mdi-react/HomeIcon'
 import { Redirect } from 'react-router-dom'
 
-import {
-  HomePage,
-  RecordPage,
-  RecordsPage,
-  AtlasPage,
-  DatabookPage,
-  DatabooksPage,
-  UsersPage,
-  DashboardPage,
-  ChartPage,
-  LoginPage,
-  TermsOfServicePage,
-  TermsOfUsePage,
-  AboutPage,
-  PrivacyPolicyPage,
-  DisclaimerPage,
-  ContactPage,
-} from '../../index/lazy-pages'
+const HomePage = lazy(() => import('../../pages/home'))
+const RecordPage = lazy(() => import('../../pages/record'))
+const RecordsPage = lazy(() => import('../../pages/records'))
+const AtlasPage = lazy(() => import('../../pages/atlas'))
+const DatabookPage = lazy(() => import('../../pages/databook'))
+const DatabooksPage = lazy(() => import('../../pages/databooks'))
+const UsersPage = lazy(() => import('../../pages/users'))
+const DashboardPage = lazy(() => import('../../pages/dashboard'))
+const ChartPage = lazy(() => import('../../pages/chart'))
+const LoginPage = lazy(() => import('../../pages/login'))
+const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
+const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
+const AboutPage = lazy(() => import('../../pages/about'))
+const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
+const ContactPage = lazy(() => import('../../pages/contact'))
+const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 
 export default [
   {

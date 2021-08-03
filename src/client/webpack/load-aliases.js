@@ -1,7 +1,6 @@
 const path = require('path')
-const ROOT = path.normalize(path.join(__dirname, '../'))
 
-module.exports = mode => ({
+module.exports = (ROOT, mode) => ({
   /**
    * Webpack doesn't seem to respect the package.json
    * exports field. That is why saeon packages are

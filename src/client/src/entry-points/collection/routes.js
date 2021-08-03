@@ -4,10 +4,7 @@ import AboutIcon from 'mdi-react/AboutIcon'
 import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
 import ContactIcon from 'mdi-react/ContactMailIcon'
-import DatabookIcon from 'mdi-react/DatabaseCogIcon'
-import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import DisclaimerIcon from 'mdi-react/WarningIcon'
-import LoginIcon from 'mdi-react/LoginIcon'
 import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
 import HomeIcon from 'mdi-react/HomeIcon'
@@ -16,13 +13,6 @@ import { Redirect } from 'react-router-dom'
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
-const AtlasPage = lazy(() => import('../../pages/atlas'))
-const DatabookPage = lazy(() => import('../../pages/databook'))
-const DatabooksPage = lazy(() => import('../../pages/databooks'))
-const UsersPage = lazy(() => import('../../pages/users'))
-const DashboardPage = lazy(() => import('../../pages/dashboard'))
-const ChartPage = lazy(() => import('../../pages/chart'))
-const LoginPage = lazy(() => import('../../pages/login'))
 const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const AboutPage = lazy(() => import('../../pages/about'))
@@ -45,16 +35,15 @@ export default [
     },
   },
   {
-    label: 'Databooks',
-    to: '/databooks',
+    label: 'Home',
+    to: '/',
     exact: true,
-    Icon: DatabookIcon,
-    render: props => (
-      <Transition tKey={'databooks'}>
-        <DatabooksPage {...props} />
+    Icon: HomeIcon,
+    render: () => (
+      <Transition>
+        <HomePage />
       </Transition>
     ),
-    authorization: ['admin', 'datascientist'],
   },
   {
     label: 'Record',
@@ -68,20 +57,11 @@ export default [
       </Transition>
     ),
   },
-  {
-    label: 'Home',
-    to: '/',
-    exact: true,
-    Icon: HomeIcon,
-    render: () => (
-      <Transition>
-        <HomePage />
-      </Transition>
-    ),
-  },
+
   {
     label: 'About',
     Icon: AboutIcon,
+    includeInFooter: true,
     to: '/about',
     exact: true,
     render: () => (
@@ -143,25 +123,13 @@ export default [
     includeInFooter: true,
   },
   {
-    label: 'Render',
-    to: '/render',
+    label: 'Collection',
+    to: '/collection',
     exact: false,
     render: ({ location: { pathname } }) => {
-      return <Redirect to={pathname.replace('/render', '')} />
+      return <Redirect to={pathname.replace('/collection', '')} />
     },
     excludeFromNav: true,
-  },
-  {
-    label: 'Login',
-    Icon: LoginIcon,
-    excludeFromNav: true,
-    to: '/login',
-    exact: true,
-    render: () => (
-      <Transition>
-        <LoginPage />
-      </Transition>
-    ),
   },
   {
     label: 'Contact us',
@@ -171,62 +139,6 @@ export default [
     render: () => (
       <Transition>
         <ContactPage />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Databook',
-    to: '/databooks/:id',
-    exact: true,
-    render: props => (
-      <Transition tKey={'databook'}>
-        <DatabookPage id={props.match.params.id} {...props} />
-      </Transition>
-    ),
-    excludeFromNav: true,
-  },
-  {
-    label: 'Dashboard',
-    to: '/dashboards/:id',
-    excludeFromNav: true,
-    exact: true,
-    render: props => (
-      <Transition tKey={'dashboard'}>
-        <DashboardPage id={props.match.params.id} {...props} />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Chart',
-    to: '/charts/:id',
-    exact: true,
-    excludeFromNav: true,
-    render: props => (
-      <Transition tKey={'chart'}>
-        <ChartPage id={props.match.params.id} {...props} />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Atlas',
-    to: '/atlas',
-    excludeFromNav: true,
-    exact: true,
-    render: () => (
-      <Transition tKey="atlas">
-        <AtlasPage />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Users',
-    Icon: UsersIcon,
-    to: '/users',
-    authorization: ['admin'],
-    exact: true,
-    render: props => (
-      <Transition tKey={'users'}>
-        <UsersPage {...props} />
       </Transition>
     ),
   },
