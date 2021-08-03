@@ -16,7 +16,6 @@ import { Redirect } from 'react-router-dom'
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
-const AtlasPage = lazy(() => import('../../pages/atlas'))
 const DatabookPage = lazy(() => import('../../pages/databook'))
 const DatabooksPage = lazy(() => import('../../pages/databooks'))
 const UsersPage = lazy(() => import('../../pages/users'))
@@ -204,17 +203,6 @@ export default [
     render: props => (
       <Transition tKey={'chart'}>
         <ChartPage id={props.match.params.id} {...props} />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Atlas',
-    to: '/atlas',
-    excludeFromNav: true,
-    exact: true,
-    render: () => (
-      <Transition tKey="atlas">
-        <AtlasPage />
       </Transition>
     ),
   },

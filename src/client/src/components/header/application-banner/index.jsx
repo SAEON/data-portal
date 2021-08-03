@@ -37,13 +37,12 @@ export default () => {
           textAlign: 'center',
           minHeight: IMAGE_HEIGHT,
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <MuiLink style={{ display: 'block', width: '100%' }} component={Link} to="/">
-          <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
-            {TITLE}
-          </Typography>
-        </MuiLink>
+        <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
+          {TITLE}
+        </Typography>
       </header>
 
       {/* SARVA LOGO */}

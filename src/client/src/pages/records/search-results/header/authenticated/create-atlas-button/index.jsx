@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
 import MapIcon from '@material-ui/icons/Explore'
 import { gql, useMutation } from '@apollo/client'
-import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
 import packageJson from '../../../../../../../package.json'
@@ -17,7 +16,6 @@ import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../../../../../config'
 export default ({ cache, catalogue }) => {
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global
-  const history = useHistory()
 
   const [createAtlas, { error, loading }] = useMutation(
     gql`
@@ -28,10 +26,7 @@ export default ({ cache, catalogue }) => {
     {
       onCompleted: data => {
         if (data) {
-          history.push({
-            pathname: window.location.pathname.includes('render') ? '/render/atlas' : '/atlas',
-            search: `?atlas=${data.createAtlas}`,
-          })
+          window.open(`/atlas/${data.createAtlas}`, '_blank')
         }
       },
     }

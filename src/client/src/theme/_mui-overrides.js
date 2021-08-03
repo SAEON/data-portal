@@ -6,6 +6,9 @@ export default theme => ({
     h2: {
       fontSize: '2rem',
     },
+    h5: {
+      fontSize: '1.2rem',
+    },
     h6: {
       fontSize: '1rem',
     },

@@ -7,8 +7,10 @@ import OlReactProvider from '../../contexts/ol-react'
 import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../config'
 import StateProvider from './state'
 import Map from './map'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default forwardRef(({ search, referrer }, snapMenusContainer) => {
+  const theme = useTheme()
   const {
     ids = undefined,
     dois = undefined,
@@ -77,10 +79,10 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
     <StateProvider data={data}>
       <OlReactProvider>
         <MenuProvider
-          MARGIN_TOP={5}
-          MARGIN_RIGHT={5}
-          MARGIN_BOTTOM={5}
-          MARGIN_LEFT={5}
+          MARGIN_TOP={theme.spacing(1)}
+          MARGIN_RIGHT={theme.spacing(1)}
+          MARGIN_BOTTOM={theme.spacing(1)}
+          MARGIN_LEFT={theme.spacing(1)}
           SNAP_MENUS_CONTAINER_REF={snapMenusContainer}
         >
           <SideMenu snapMenusContainer={snapMenusContainer} />
