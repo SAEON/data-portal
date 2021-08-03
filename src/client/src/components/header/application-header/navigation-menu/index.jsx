@@ -2,11 +2,10 @@ import { useState, useContext } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuIcon from 'mdi-react/MenuIcon'
-import navItems from './_nav-items'
 import NavItem from './_nav-item'
 import { context as authorizationContext } from '../../../../contexts/authorization'
 
-export default () => {
+export default ({ routes: navItems }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const { isAuthorized } = useContext(authorizationContext)
 

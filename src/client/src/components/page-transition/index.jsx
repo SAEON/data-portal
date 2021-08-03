@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import Fade from '@material-ui/core/Fade'
-import Loading from '../components/loading'
+import Loading from '../loading'
 
 export default ({ children, tKey }) => {
   window.scrollTo(0, 0)

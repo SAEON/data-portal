@@ -1,22 +1,23 @@
-import '../../application/configure-client'
+import '../../index/main'
 import { lazy, Suspense } from 'react'
 import { render } from 'react-dom'
 import Loading from '../../components/loading'
-import Routes from '../../routes'
-import { SizeContentDynamically } from '../../contexts/layout'
+import RouteSwitcher from '../../index/route-switcher'
+import { SizeContent } from '../../contexts/layout'
 import Footer from '../../components/footer'
 import Header from '../../components/header'
+import routes from './routes'
 
-const App = lazy(() => import('../../application'))
+const App = lazy(() => import('../../index/application'))
 
 render(
   <Suspense fallback={<Loading />}>
     <App>
-      <Header />
-      <SizeContentDynamically>
-        <Routes />
-      </SizeContentDynamically>
-      <Footer />
+      <Header routes={routes} />
+      <SizeContent>
+        <RouteSwitcher routes={routes} />
+      </SizeContent>
+      <Footer routes={routes} />
     </App>
   </Suspense>,
   document.getElementById('root')

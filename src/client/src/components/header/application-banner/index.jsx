@@ -1,28 +1,19 @@
 import { Link } from 'react-router-dom'
 import MuiLink from '@material-ui/core/Link'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Typography from '@material-ui/core/Typography'
-import Toolbar from './toolbar'
-import useTheme from '@material-ui/core/styles/useTheme'
-import packageJson from '../../../../package.json'
-import { CATALOGUE_DEPLOYMENT_ENV } from '../../../config'
+import Toolbar_ from './toolbar'
+import Hidden from '@material-ui/core/Hidden'
+import { TITLE } from '../../../config'
 
 export const IMAGE_HEIGHT = 48
 
-const TITLE = `SAEON DATA PORTAL ${
-  CATALOGUE_DEPLOYMENT_ENV === 'production'
-    ? ''
-    : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`
-}`
+export const Toolbar = Toolbar_
 
 export default () => {
-  const theme = useTheme()
-  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
-
   return (
-    <Toolbar>
+    <Toolbar_>
       {/* SAEON LOGO */}
-      {mdAndUp && (
+      <Hidden mdDown>
         <a
           style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
           target="_blank"
@@ -35,7 +26,7 @@ export default () => {
             alt="SAEON logo"
           />
         </a>
-      )}
+      </Hidden>
 
       {/* TITLE */}
       <header
@@ -56,20 +47,25 @@ export default () => {
       </header>
 
       {/* SARVA LOGO */}
-      {mdAndUp && (
+      <Hidden mdDown>
         <a
           style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
           target="_blank"
           rel="noreferrer"
-          href="http://sarva.ac.za/"
+          href="http://sarva.saeon.ac.za/"
         >
           <img
-            style={{ maxHeight: IMAGE_HEIGHT, width: 'auto', display: 'block', marginLeft: 'auto' }}
+            style={{
+              maxHeight: IMAGE_HEIGHT,
+              width: 'auto',
+              display: 'block',
+              marginLeft: 'auto',
+            }}
             src="/sarva-logo-cropped.png"
             alt="SARVA logo"
           />
         </a>
-      )}
-    </Toolbar>
+      </Hidden>
+    </Toolbar_>
   )
 }

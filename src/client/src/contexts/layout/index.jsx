@@ -22,7 +22,7 @@ export default ({ children }) => {
   )
 }
 
-export const SizeContentDynamically = ({ children }) => {
+export const SizeContent = ({ children, style = {} }) => {
   const { headerRef, setContentRef } = useContext(context)
 
   if (!headerRef) {
@@ -35,6 +35,7 @@ export const SizeContentDynamically = ({ children }) => {
       style={{
         position: 'relative',
         minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)`,
+        ...style,
       }}
     >
       {children}

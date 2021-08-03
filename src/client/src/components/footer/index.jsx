@@ -2,12 +2,11 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
-import NavItems from '../header/menu-bar/nav/_nav-items'
 import Link from '@material-ui/core/Link'
 import { Link as RouterLink } from 'react-router-dom'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default () => {
+export default ({ routes }) => {
   const theme = useTheme()
 
   return (
@@ -16,8 +15,9 @@ export default () => {
         {/* DISCLAIMERS */}
         <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
-            {NavItems.filter(({ includeInFooter }) => includeInFooter).map(
-              ({ label, Icon, to }) => (
+            {routes
+              .filter(({ includeInFooter }) => includeInFooter)
+              .map(({ label, Icon, to }) => (
                 <div
                   key={label}
                   style={{
@@ -48,8 +48,7 @@ export default () => {
                     {label}
                   </Typography>
                 </div>
-              )
-            )}
+              ))}
           </Container>
         </Toolbar>
 

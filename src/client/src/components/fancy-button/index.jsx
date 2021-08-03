@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import clsx from 'clsx'
 
-export default ({ title, disabled = false, href = undefined, to = '/records' }) => {
+export default ({ title, disabled = false, href = undefined, to = '/records', style = {} }) => {
   const classes = useStyles()
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={Object.assign({ width: '100%', height: '100%' }, style)}>
       <div className={classes.root}>
         <ButtonBase
           disabled={disabled}

@@ -1,3 +1,5 @@
+import packageJson from '../package.json'
+
 export const CATALOGUE_LATEST_COMMIT = process.env.CATALOGUE_LATEST_COMMIT || ''
 
 export const CATALOGUE_CLIENT_BACKGROUNDS = process.env.CATALOGUE_CLIENT_BACKGROUNDS || ''
@@ -22,7 +24,6 @@ export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
 
 export const CATALOGUE_API_ADDRESS = process.env.CATALOGUE_API_ADDRESS || 'http://localhost:3000'
 
-// TODO
 export const CATALOGUE_CLIENT_PROXY_ADDRESS =
   process.env.CATALOGUE_CLIENT_PROXY_ADDRESS || 'http://localhost:8001'
 
@@ -44,3 +45,9 @@ export const CATALOGUE_SUPPORTED_DATABOOK_FORMATS = process.env
   .CATALOGUE_SUPPORTED_DATABOOK_FORMATS || ['SHAPEFILE', 'NETCDF']
 
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
+
+export const TITLE = `SAEON DATA PORTAL ${
+  CATALOGUE_DEPLOYMENT_ENV === 'production'
+    ? ''
+    : `${CATALOGUE_DEPLOYMENT_ENV}.${packageJson.version}`
+}`

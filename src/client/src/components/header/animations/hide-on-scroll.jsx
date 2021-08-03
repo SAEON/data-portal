@@ -1,6 +1,6 @@
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Collapse from '@material-ui/core/Collapse'
-import { IMAGE_HEIGHT } from '../banner-bar'
+import { IMAGE_HEIGHT } from '../application-banner'
 
 export default ({ children, contentRef }) => {
   const trigger = useScrollTrigger({
