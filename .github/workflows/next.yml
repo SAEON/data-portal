@@ -20,11 +20,9 @@ jobs:
 
       - name: Deploy services
         run: >-
+          HOSTNAME="https://catalogue.saeon.dvn"
           CATALOGUE_API_ODP_FILTER_PATH="odp-filter.js"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
-          CATALOGUE_API_TWITTER_CLIENT_ID="${{ secrets.CATALOGUE_API_TWITTER_CLIENT_ID}}"
-          CATALOGUE_API_TWITTER_CLIENT_SECRET="${{ secrets.CATALOGUE_API_TWITTER_CLIENT_SECRET}}"
-          CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS="https://api.catalogue.saeon.dvn/authenticate/redirect/twitter"        
           CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS="https://api.catalogue.saeon.dvn/authenticate/redirect/saeon-identity-server"
           CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET}}"
           CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,bryan@saeon.ac.za"
@@ -32,11 +30,8 @@ jobs:
           CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.dvn"
           CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
-          CATALOGUE_API_GOOGLE_CLIENT_ID=
-          CATALOGUE_API_GOOGLE_CLIENT_SECRET=
           CATALOGUE_API_KEY="${{ secrets.CATALOGUE_API_KEY }}"
           CATALOGUE_API_NODE_ENV=production
-          CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS=
           CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001

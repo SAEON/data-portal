@@ -17,7 +17,7 @@ export default ({ userInfo, style }) => {
           variant="overline"
           href={`${CATALOGUE_API_ADDRESS}/logout?redirect=${window.location.href}`}
         >
-          Logout{xsDown ? '' : ` ${userInfo.username}`}
+          Logout{xsDown ? '' : ` ${userInfo.name || userInfo.emailAddress}`}
         </Link>
       </span>
     </Tooltip>

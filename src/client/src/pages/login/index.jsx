@@ -12,7 +12,7 @@ export default () => {
         <FancyButton
           style={{ width: 250, height: 250 }}
           title="Log in"
-          href={`${CATALOGUE_API_ADDRESS}/login/google?redirect=${redirect}`}
+          href={`${CATALOGUE_API_ADDRESS}/login?redirect=${redirect}`}
         />
       </Container>
     </main>

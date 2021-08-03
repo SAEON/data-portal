@@ -18,16 +18,12 @@ import clientInfoRoute from './http/client-info.js'
 import downloadProxyRoute from './http/download-proxy.js'
 import executeSql from './http/execute-sql.js'
 import authenticateRoute from './http/authenticate.js'
-import signupRoute from './http/login-signup.js'
 import logoutRoute from './http/logout.js'
 import pgDumpRoute from './http/pg-dump/index.js'
 import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
 import apolloServers from './graphql/index.js'
-import configureGoogleAuth from './passport/google-auth/index.js'
-import configureTwitterAuth from './passport/twitter-auth/index.js'
-import configureSaeonAuth from './passport/saeon-identity-server/index.js'
-import configureLocalAuth from './passport/local-auth/index.js'
+import configureAuth from './passport/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
 import './postgis/setup.js'
 import {
@@ -37,10 +33,7 @@ import {
 } from './config.js'
 
 // Configure passport authentication
-const { login: googleLogin, authenticate: googleAuthenticate } = configureGoogleAuth()
-const { login: twitterLogin, authenticate: twitterAuthenticate } = configureTwitterAuth()
-const { login: saeonLogin, authenticate: saeonAuthenticate } = configureSaeonAuth()
-const { authenticate: localAuthenticate } = configureLocalAuth()
+const { login, authenticate } = configureAuth()
 
 // Configure internal app
 const internalApp = new Koa()
@@ -84,14 +77,8 @@ publicApp
       .get('/pg-dump/:schema', pgDumpRoute)
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
-      .get('/authenticate/redirect/google', googleAuthenticate, loginSuccessRoute) // passport
-      .get('/login/google', googleLogin) // passport
-      .get('/authenticate/redirect/twitter', twitterAuthenticate, loginSuccessRoute) // passport
-      .get('/login/twitter', twitterLogin) // passport
-      .get('/authenticate/redirect/saeon-identity-server', saeonAuthenticate, loginSuccessRoute) // passport
-      .get('/login/saeon-identity-server', saeonLogin) // passport
-      .post('/login/local', localAuthenticate) // passport
-      .post('/login/signup', signupRoute)
+      .get('/authenticate/redirect', authenticate, loginSuccessRoute) // passport
+      .get('/login', login) // passport
       .get('/authenticate', authenticateRoute)
       .get('/logout', logoutRoute)
       .routes()

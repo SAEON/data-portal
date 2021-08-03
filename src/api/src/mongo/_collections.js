@@ -12,9 +12,22 @@ export default {
   },
   Users: {
     name: 'users',
+    validator: {
+      $jsonSchema: {
+        bsonType: 'object',
+        description: 'User document',
+        required: ['emailAddress'],
+        properties: {
+          emailAddress: {
+            bsonType: 'string',
+            description: "User's email address (used as a primary key)",
+          },
+        },
+      },
+    },
     indices: [
       {
-        index: 'username',
+        index: 'emailAddress',
         options: {
           unique: true,
         },

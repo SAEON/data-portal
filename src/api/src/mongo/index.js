@@ -93,13 +93,13 @@ await db
   .then(({ _id: adminRoleId }) =>
     db.then(db =>
       Promise.all(
-        CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(email =>
+        CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(emailAddress =>
           db.collection(_collections.Users.name).findOneAndUpdate(
             {
-              username: email,
+              emailAddress,
             },
             {
-              $setOnInsert: { emails: [{ email, verified: true }], username: email },
+              $setOnInsert: { emailAddress },
               $addToSet: {
                 userRoles: adminRoleId,
               },

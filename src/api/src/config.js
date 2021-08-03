@@ -14,29 +14,15 @@ export const CATALOGUE_API_KEY =
 export const CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES =
   process.env.CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES || ''
 
-export const CATALOGUE_API_TWITTER_CLIENT_ID = process.env.CATALOGUE_API_TWITTER_CLIENT_ID || ''
-export const CATALOGUE_API_TWITTER_CLIENT_SECRET =
-  process.env.CATALOGUE_API_TWITTER_CLIENT_SECRET || ''
-export const CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS =
-  process.env.CATALOGUE_API_TWITTER_OAUTH_REDIRECT_ADDRESS ||
-  'http://localhost:3000/authenticate/redirect/twitter'
-
-export const CATALOGUE_API_GOOGLE_CLIENT_ID = process.env.CATALOGUE_API_GOOGLE_CLIENT_ID || ''
-export const CATALOGUE_API_GOOGLE_CLIENT_SECRET =
-  process.env.CATALOGUE_API_GOOGLE_CLIENT_SECRET || ''
-export const CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS =
-  process.env.CATALOGUE_API_GOOGLE_OAUTH_REDIRECT_ADDRESS ||
-  'http://localhost:3000/authenticate/redirect/google'
-
 export const CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID =
-  process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID || 'saeon-data-portal'
+  process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID || 'SAEON.DataPortal'
 export const CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET =
   process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET || ''
 export const CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES =
-  process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES || 'ODP.Catalogue,openid,offline'
+  process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES || 'SAEON.DataPortal'
 export const CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS =
   process.env.CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS ||
-  'http://localhost:3000/authenticate/redirect/saeon-identity-server'
+  'http://localhost:3000/authenticate/redirect'
 
 export const CATALOGUE_API_ODP_CLIENT_SECRET = process.env.CATALOGUE_API_ODP_CLIENT_SECRET || ''
 
@@ -89,6 +75,8 @@ export const CATALOGUE_API_GQL_ADDRESS = `${CATALOGUE_API_ADDRESS}/graphql`
 export const CATALOGUE_API_INTERNAL_ADDRESS =
   process.env.CATALOGUE_API_INTERNAL_ADDRESS || 'http://localhost:4000'
 
+export const HOSTNAME = process.env.HOSTNAME || 'http://localhost:3001'
+
 export const CATALOGUE_API_INTERNAL_ADDRESS_PORT =
   process.env.CATALOGUE_API_INTERNAL_ADDRESS || 4000
 
@@ -100,7 +88,7 @@ export const CATALOGUE_API_PROXY_ADDRESS =
 export const CATALOGUE_API_ALLOWED_ORIGINS =
   process.env.CATALOGUE_API_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
-export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.dvn'
+export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
 
 export const ODP_ADDRESS_CATALOGUE_ENDPOINT = `${ODP_ADDRESS}/api/catalogue`
 
@@ -108,6 +96,7 @@ export const CATALOGUE_API_ODP_CLIENT_ID =
   process.env.CATALOGUE_API_ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
 
 export const CATALOGUE_API_ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
+export const SAEON_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 
 export const CATALOGUE_API_ODP_FILTER_PATH = process.env.CATALOGUE_API_ODP_FILTER_PATH
   ? join(__apiRootDirectory, process.env.CATALOGUE_API_ODP_FILTER_PATH)
