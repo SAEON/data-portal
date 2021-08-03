@@ -1,0 +1,55 @@
+<!-- DON'T EDIT THIS FILE -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177266667-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', 'UA-177266667-1')
+    </script>
+
+    <meta charset="utf-8" />
+    <link rel="manifest" href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>/manifest.json" />
+    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>/favicon.ico" />
+
+    <title>SAEON Collection</title>
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="<%= htmlWebpackPlugin.options.PACKAGE_DESCRIPTION %>" />
+    <meta name="keywords" content="<%= htmlWebpackPlugin.options.PACKAGE_KEYWORDS %>" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <!-- Open Graph meta tags (Facebook) -->
+    <meta property="og:site_name" content="NRF - SAEON" />
+    <meta property="og:title" content="SAEON Catalogue" />
+    <meta
+      property="og:description"
+      content="<%= htmlWebpackPlugin.options.PACKAGE_DESCRIPTION %>"
+    />
+    <meta
+      property="og:image"
+      content="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>/sarva-logo.png"
+    />
+    <meta property="og:url" content="https://catalogue.saeon.ac.za" />
+
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+    <!-- Twitter (above Open Graph + these cards) -->
+    <meta name="twitter:image:alt" content="SAEON catalogue logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="dnd-portal"></div>
+    <div id="root"></div>
+  </body>
+</html>

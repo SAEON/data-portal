@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Fade from '@material-ui/core/Fade'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -8,7 +8,6 @@ import { CATALOGUE_TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } fro
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'
 import { gql, useMutation } from '@apollo/client'
-import { useHistory } from 'react-router-dom'
 import { context as globalContext } from '../../contexts/global'
 import { context as authorizationContext } from '../../contexts/authorization'
 
@@ -16,7 +15,6 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
   const isAllowed = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(immutableResource?._fileFormat)
   const { setGlobal } = useContext(globalContext)
   const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
-  const history = useHistory()
   const theme = useTheme()
 
   if (!isAuthenticated) {
@@ -32,11 +30,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     {
       onCompleted: data => {
         if (data) {
-          history.push({
-            pathname: window.location.pathname.includes('render')
-              ? `render/databooks/${data.createDatabook}`
-              : `/databooks/${data.createDatabook}`,
-          })
+          window.open(`/databooks/${data.createDatabook}`, '_blank')
         } else {
           throw new Error('createDatabook mutation failed')
         }

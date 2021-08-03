@@ -1,16 +1,12 @@
 import { useContext } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import useStyles from '../../../../style'
-import clsx from 'clsx'
 import CreateFilter from './create-filter'
 import Label from '../../../../components/tab-label'
 import { context as filterContext } from '../../../../contexts/filters-provider'
 
 export default ({ activeTabIndex, setActiveTabIndex }) => {
   const filters = useContext(filterContext)
-  const classes = useStyles()
-
   return (
     <div style={{ display: 'flex' }}>
       {/* TABS */}
@@ -23,7 +19,10 @@ export default ({ activeTabIndex, setActiveTabIndex }) => {
         {filters.map(({ id }, i) => (
           <Tab
             key={id}
-            className={clsx(classes.tab)}
+            style={{
+              minWidth: 'unset',
+              width: 50,
+            }}
             label={
               <Label title={`Filter ${id}`} color="purple">
                 {i + 1}

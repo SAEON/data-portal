@@ -5,7 +5,7 @@ import ApplicationBanner, {
   IMAGE_HEIGHT,
   Toolbar as ApplicationBanner_,
 } from './application-banner'
-import ApplicationHeader, { Toolbar as ApplicationHeader_ } from './application-header'
+import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
 import Divider from '@material-ui/core/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
@@ -19,7 +19,7 @@ const FullHeader = forwardRef(({ contentRef, routes }, ref) => {
             <ApplicationBanner />
           </HideOnScroll>
           <Divider />
-          <ApplicationHeader routes={routes} />
+          <AppHeader routes={routes} />
           <Divider />
         </AppBar>
       </ElevationOnScroll>
@@ -31,6 +31,22 @@ const FullHeader = forwardRef(({ contentRef, routes }, ref) => {
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />
+    </div>
+  )
+})
+
+const AppHeaderOnly = forwardRef(({ routes, color = 'inherit', ...props }, ref) => {
+  return (
+    <div ref={ref}>
+      <ElevationOnScroll>
+        <AppBar color={color}>
+          <AppHeader {...props} routes={routes} />
+          <Divider />
+        </AppBar>
+      </ElevationOnScroll>
+
+      {/* PUSH CONTENT DOWN */}
+      <ApplicationHeader_ {...props} />
     </div>
   )
 })
@@ -65,4 +81,9 @@ export default ({ routes }) => {
 export const Banner = () => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
   return <BannerOnly contentRef={contentRef} ref={setHeaderRef} />
+}
+
+export const ApplicationHeader = ({ routes, ...props }) => {
+  const { setHeaderRef } = useContext(layoutContext)
+  return <AppHeaderOnly routes={routes} ref={setHeaderRef} {...props} />
 }

@@ -30,8 +30,11 @@ export default ({
       >
         {editors.map(({ id }, i) => (
           <Tab
+            style={{
+              minWidth: 'unset',
+              width: 50,
+            }}
             key={id}
-            className={clsx(classes.tab)}
             label={<Label title={`Query editor ${id}`}>{i + 1}</Label>}
             id={`tab-${id}`}
           />

@@ -5,7 +5,7 @@ import MenuIcon from 'mdi-react/MenuIcon'
 import NavItem from './_nav-item'
 import { context as authorizationContext } from '../../../../contexts/authorization'
 
-export default ({ routes: navItems }) => {
+export default ({ routes }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const { isAuthorized } = useContext(authorizationContext)
 
@@ -26,22 +26,28 @@ export default ({ routes: navItems }) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        {navItems
+        {routes
           .filter(({ authorization = false, excludeFromNav = false }) => {
             if (excludeFromNav) {
               return false
             }
             return authorization ? isAuthorized(authorization) : true
           })
-          .map(({ label, Icon, to }) => (
-            <NavItem
-              onClick={() => setAnchorEl(null)}
-              key={label}
-              Icon={Icon}
-              label={label}
-              to={to}
-            />
-          ))}
+          .map(({ label, Icon, to }) => {
+            if (!Icon) {
+              throw new Error('Cannot draw menu item without an Icon')
+            }
+
+            return (
+              <NavItem
+                onClick={() => setAnchorEl(null)}
+                key={label}
+                Icon={Icon}
+                label={label}
+                to={to}
+              />
+            )
+          })}
       </Menu>
     </>
   )

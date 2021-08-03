@@ -1,5 +1,4 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { blue, deepOrange, green, purple } from '@material-ui/core/colors'
 
 export default makeStyles(theme => ({
   layout: {
@@ -19,25 +18,6 @@ export default makeStyles(theme => ({
     boxSizing: 'content-box',
   },
 
-  smallAvatar: {
-    width: theme.spacing(2),
-    height: theme.spacing(2),
-    fontSize: 10,
-    backgroundColor: deepOrange[500],
-  },
-
-  blue: {
-    backgroundColor: blue[500],
-  },
-
-  green: {
-    backgroundColor: green[500],
-  },
-
-  purple: {
-    backgroundColor: purple[500],
-  },
-
   content: {
     position: 'relative',
     height: '100%',
@@ -48,9 +28,6 @@ export default makeStyles(theme => ({
   },
   saveButton: {
     marginLeft: 'auto',
-  },
-  tab: {
-    minWidth: 30,
   },
   msgBox: {
     padding: theme.spacing(1),

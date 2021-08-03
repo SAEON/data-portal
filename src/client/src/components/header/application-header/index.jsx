@@ -7,13 +7,13 @@ import useTheme from '@material-ui/core/styles/useTheme'
 
 export const Toolbar = Toolbar_
 
-export default ({ routes }) => {
+export default ({ routes, ...props }) => {
   const theme = useTheme()
   const { pathname } = useLocation()
   const isLoginPage = useMemo(() => pathname.includes('login'), [pathname])
 
   return (
-    <Toolbar_>
+    <Toolbar_ {...props}>
       <NavigationMenu routes={routes} />
       <Authentication
         style={{

@@ -2,13 +2,10 @@ import { useContext } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { context as dashboardsContext } from '../../../../contexts/dashboards-provider'
-import useStyles from '../../../../style'
-import clsx from 'clsx'
 import Label from '../../../../components/tab-label'
 import CreateDashboard from './_create-dashboard'
 
 export default ({ activeTabIndex, setActiveTabIndex }) => {
-  const classes = useStyles()
   const dashboards = useContext(dashboardsContext)
 
   return (
@@ -23,7 +20,10 @@ export default ({ activeTabIndex, setActiveTabIndex }) => {
         {dashboards.map(({ id }, i) => (
           <Tab
             key={id}
-            className={clsx(classes.tab)}
+            style={{
+              minWidth: 'unset',
+              width: 50,
+            }}
             label={
               <Label title={`Dashboard ${id}`} color="blue">
                 {i + 1}
