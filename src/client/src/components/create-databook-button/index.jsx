@@ -14,12 +14,14 @@ import { context as authorizationContext } from '../../contexts/authorization'
 export default ({ id, immutableResource, buttonSize = 'small' }) => {
   const isAllowed = CATALOGUE_SUPPORTED_DATABOOK_FORMATS.includes(immutableResource?._fileFormat)
   const { setGlobal } = useContext(globalContext)
-  const { isDataScientist, isAuthenticated } = useContext(authorizationContext)
+  const { hasPermission, isAuthenticated } = useContext(authorizationContext)
   const theme = useTheme()
 
   if (!isAuthenticated) {
     return null
   }
+
+  const _hasPermission = hasPermission('databook:create')
 
   const [createDatabook, { error, loading }] = useMutation(
     gql`
@@ -64,13 +66,13 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
           style={
             isAllowed
               ? {
-                  color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main,
+                  color: _hasPermission ? theme.palette.primary.main : theme.palette.warning.main,
                 }
               : {}
           }
           disabled={!isAllowed}
           onClick={
-            isDataScientist
+            _hasPermission
               ? e => {
                   e.stopPropagation()
                   setGlobal({ selectedIds: [id] })
