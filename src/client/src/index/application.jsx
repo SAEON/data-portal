@@ -17,7 +17,7 @@ import CookieConsent from '../components/cookie-consent'
 import { BrowserRouter as Router } from 'react-router-dom'
 import LayoutProvider from '../contexts/layout'
 
-export default ({ children }) => {
+export default ({ children, ...config }) => {
   return (
     <Router>
       <CssBaseline>
@@ -31,7 +31,7 @@ export default ({ children }) => {
                       <AuthenticationProvider>
                         <AuthorizationProvider>
                           <GlobalProvider>
-                            <BackgroundImageProvider>
+                            <BackgroundImageProvider {...config}>
                               <ApplicationLogger>
                                 <SnackbarProvider>
                                   <DefaultApplicationNotices>

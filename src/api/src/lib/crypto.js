@@ -33,19 +33,19 @@ export const getKeyFromPassword = (password, salt) => {
 
 /**
  *
- * @param {Buffer} messagetext - The clear text message to be encrypted
+ * @param {Buffer} messageText - The clear text message to be encrypted
  * @param {Buffer} key - The key to be used for encryption
  *
  * The caller of this function has the responsibility to clear
  * the Buffer after the encryption to prevent the message text
  * and the key from lingering in the memory
  */
-export const encrypt = (messagetext, key) => {
+export const encrypt = (messageText, key) => {
   const iv = getIV()
   const cipher = crypto.createCipheriv(ALGORITHM.BLOCK_CIPHER, key, iv, {
     authTagLength: ALGORITHM.AUTH_TAG_BYTE_LEN,
   })
-  let encryptedMessage = cipher.update(messagetext)
+  let encryptedMessage = cipher.update(messageText)
   encryptedMessage = Buffer.concat([encryptedMessage, cipher.final()])
   return Buffer.concat([iv, encryptedMessage, cipher.getAuthTag()])
 }
@@ -67,7 +67,7 @@ export const decrypt = (ciphertext, key) => {
     authTagLength: ALGORITHM.AUTH_TAG_BYTE_LEN,
   })
   decipher.setAuthTag(authTag)
-  let messagetext = decipher.update(encryptedMessage)
-  messagetext = Buffer.concat([messagetext, decipher.final()])
-  return messagetext
+  let messageText = decipher.update(encryptedMessage)
+  messageText = Buffer.concat([messageText, decipher.final()])
+  return messageText
 }

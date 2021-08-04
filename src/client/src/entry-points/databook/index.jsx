@@ -9,9 +9,13 @@ import routes from './routes'
 
 const App = lazy(() => import('../../index/application'))
 
+const config = {
+  backgroundImage: false,
+}
+
 render(
   <Suspense fallback={<Loading />}>
-    <App>
+    <App {...config}>
       <ApplicationHeader routes={routes} color="primary" variant="dense" />
       <SizeContent style={{ height: 0 }}>
         <RouteSwitcher routes={routes} />

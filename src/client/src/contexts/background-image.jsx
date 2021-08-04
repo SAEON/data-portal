@@ -1,6 +1,5 @@
 import { createContext } from 'react'
 import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
-import getUriState from '../lib/fns/get-uri-state'
 
 /**
  * Provides some measure of control over which background
@@ -19,28 +18,24 @@ const getBackgroundImagePath = () => {
 
 export const BgImageContext = createContext()
 
-export default ({ children }) => {
-  const { disableBackground = false } = getUriState()
-
-  if (disableBackground === 'true') {
-    return children
-  }
-
+export default ({ children, backgroundImage = true }) => {
   return (
     <>
-      <div
-        id="bg"
-        style={{
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundSize: 'cover',
-          backgroundImage: getBackgroundImagePath(),
-          zIndex: -1,
-        }}
-      />
+      {backgroundImage && (
+        <div
+          id="bg"
+          style={{
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundSize: 'cover',
+            backgroundImage: getBackgroundImagePath(),
+            zIndex: -1,
+          }}
+        />
+      )}
 
       {children}
     </>
