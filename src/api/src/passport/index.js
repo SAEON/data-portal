@@ -34,7 +34,7 @@ export default () => {
         callbackURL: ODP_SSO_CLIENT_REDIRECT,
       },
       async (token, tokenSecret, _, cb) => {
-        const { Users, UserRoles } = await collections
+        const { Users, Roles } = await collections
         const {
           email,
           sub: saeonId,
@@ -46,10 +46,11 @@ export default () => {
           },
         }).then(res => res.json())
 
-        const datascientistRoleId = (await UserRoles.find({ name: 'datascientist' }).toArray())[0]
-          ._id
+        const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
+        const publicRoleId = (await Roles.find({ name: 'public' }).toArray())[0]._id
 
         const emailAddress = email.toLowerCase()
+        const isSaeon = emailAddress.match(/@saeon\.ac\.za$/)
 
         try {
           const user = await Users.findOneAndUpdate(
@@ -59,24 +60,24 @@ export default () => {
             {
               $setOnInsert: {
                 emailAddress,
+                roles: [isSaeon ? saeonRoleId : publicRoleId],
               },
               $set: {
                 saeonId,
                 name,
               },
               $addToSet: {
-                userRoles: emailAddress.match(/@saeon\.ac\.za$/) ? datascientistRoleId : '',
                 links: {
                   picture,
                 },
               },
             },
             {
-              returnOriginal: false,
               upsert: true,
+              returnOriginal: false,
             }
           )
-          cb(null, user.value)
+          cb(null, user.value || (await Users.findOne({ _id: user.lastErrorObject.upserted })))
         } catch (error) {
           console.error('Error authenticating', error.message)
           cb(error, null)

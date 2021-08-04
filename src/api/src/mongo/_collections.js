@@ -1,6 +1,6 @@
 export default {
-  UserRoles: {
-    name: 'userRoles',
+  Roles: {
+    name: 'roles',
     indices: [
       {
         index: 'name',

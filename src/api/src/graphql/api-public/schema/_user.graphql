@@ -1,0 +1,20 @@
+type User {
+  id: ID!
+  emailAddress: String!
+  name: String
+  roles: [Role!]!
+  permissions: [Permission!]!
+}
+
+type Role {
+  id: ID!
+  name: String!
+  description: String
+  permissions: [Permission!]!
+}
+
+type Permission {
+  id: Int!
+  name: String!
+  description: String
+}

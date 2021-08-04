@@ -39,12 +39,6 @@ type StatusHash {
   id: ID!
 }
 
-type UserRole {
-  id: ID!
-  name: String!
-  description: String
-}
-
 type Query {
   # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
   catalogue(referrer: String): Catalogue!
@@ -62,7 +56,8 @@ type Query {
   atlas(id: ID!): JSON
   # Retrieve dashboards by id
   dashboards(ids: [ID!]!): [Dashboard!]
-  userRoles: [UserRole!]!
+  roles: [Role!]!
+  user(id: ID!): User
 }
 
 type Mutation {

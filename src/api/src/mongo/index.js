@@ -9,7 +9,7 @@ import {
 } from '../config.js'
 import _collections from './_collections.js'
 import _Logger from './_logger.js'
-import userRoles from './_user-roles.js'
+import roles from './_roles.js'
 import DataLoader from 'dataloader'
 import sift from 'sift'
 
@@ -76,9 +76,9 @@ await db.then(db =>
 // Insert user roles
 await db.then(db =>
   Promise.all(
-    userRoles.map(userRole => {
-      const { name, ...other } = userRole
-      db.collection(_collections.UserRoles.name).findOneAndUpdate(
+    roles.map(role => {
+      const { name, ...other } = role
+      db.collection(_collections.Roles.name).findOneAndUpdate(
         { name },
         { $setOnInsert: { name }, $set: { ...other } },
         { upsert: true }
@@ -89,7 +89,7 @@ await db.then(db =>
 
 // Setup default admins
 await db
-  .then(db => db.collection(_collections.UserRoles.name).findOne({ name: 'admin' }))
+  .then(db => db.collection(_collections.Roles.name).findOne({ name: 'admin' }))
   .then(({ _id: adminRoleId }) =>
     db.then(db =>
       Promise.all(
@@ -101,7 +101,7 @@ await db
             {
               $setOnInsert: { emailAddress },
               $addToSet: {
-                userRoles: adminRoleId,
+                roles: adminRoleId,
               },
             },
             { upsert: true }

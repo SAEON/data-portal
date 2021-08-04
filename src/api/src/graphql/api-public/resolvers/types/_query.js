@@ -6,7 +6,8 @@ import filters from '../queries/filters.js'
 import databook from '../queries/databook.js'
 import searchState from '../queries/search-state.js'
 import atlas from '../queries/atlas.js'
-import userRoles from '../queries/user-roles.js'
+import roles from '../queries/roles.js'
+import user from '../queries/user.js'
 
 export default {
   catalogue,
@@ -17,5 +18,6 @@ export default {
   databook,
   searchState,
   atlas,
-  userRoles,
+  roles,
+  user,
 }
