@@ -69,7 +69,7 @@ export default async () => {
           headers: {
             'Content-Type': 'application/x-ndjson',
           },
-          body: await filter(iterator.data)
+          body: (await filter(iterator.data))
             .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
             .join(''),
         }

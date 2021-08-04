@@ -24,7 +24,7 @@ jobs:
           ODP_FILTER_PATH="odp-filter.js"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
           ODP_SSO_CLIENT_REDIRECT="https://api.catalogue.saeon.dvn/authenticate/redirect/saeon-identity-server"
-          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
+          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
           DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,bryan@saeon.ac.za"
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.dvn"
@@ -32,7 +32,7 @@ jobs:
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           APP_KEY="${{ secrets.APP_KEY }}"
           NODE_ENV=production
-          ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
+          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"

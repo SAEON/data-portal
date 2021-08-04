@@ -32,7 +32,7 @@ jobs:
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
           APP_KEY="${{ secrets.APP_KEY }}"
           NODE_ENV=production
-          ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_STABLE }}"
+          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET }}"
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
