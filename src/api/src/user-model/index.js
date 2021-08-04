@@ -1,13 +1,9 @@
-import ensureRole from './_ensure-role.js'
 import ensureAuthenticated from './_ensure-authenticated.js'
-
-const ROLES = {
-  datascientist: 'datascientist',
-  admin: 'admin',
-}
+import ensurePermission from './_ensure-permission.js'
 
 export default {
+  info: ctx => ctx.userInfo,
   ensureAuthenticated: ctx => ensureAuthenticated(ctx),
-  ensureDataScientist: ctx => ensureRole(ctx, ROLES.datascientist),
-  ensureAdmin: ctx => ensureRole(ctx, ROLES.admin),
+  ensurePermission: ({ ctx, permission }) => ensurePermission(ctx, permission),
+  ensurePermissions: ({ ctx, permissions }) => ensurePermission(ctx, ...permissions),
 }
