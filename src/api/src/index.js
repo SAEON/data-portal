@@ -26,18 +26,14 @@ import apolloServers from './graphql/index.js'
 import configureAuth from './passport/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
 import './postgis/setup.js'
-import {
-  CATALOGUE_API_ADDRESS_PORT,
-  CATALOGUE_API_INTERNAL_ADDRESS_PORT,
-  CATALOGUE_API_KEY,
-} from './config.js'
+import { PUBLIC_PORT, INTERNAL_PORT, APP_KEY } from './config.js'
 
 // Configure passport authentication
 const { login, authenticate } = configureAuth()
 
 // Configure internal app
 const internalApp = new Koa()
-internalApp.keys = [CATALOGUE_API_KEY]
+internalApp.keys = [APP_KEY]
 internalApp.proxy = false
 internalApp
   .use(
@@ -52,7 +48,7 @@ internalApp
 
 // Configure public app
 const publicApp = new Koa()
-publicApp.keys = [CATALOGUE_API_KEY]
+publicApp.keys = [APP_KEY]
 publicApp.proxy = true
 publicApp
   .use(
@@ -96,13 +92,13 @@ internalGqlServer
   .then(() => internalGqlServer.applyMiddleware({ app: internalApp, cors: false }))
 
 // Start public HTTP server
-publicHttpServer.listen(CATALOGUE_API_ADDRESS_PORT, () => {
+publicHttpServer.listen(PUBLIC_PORT, () => {
   console.log(`@saeon/catalogue API server ready`)
   console.log(`@saeon/catalogue GraphQL server ready`)
 })
 
 // Start internal HTTP server
-privateHttpServer.listen(CATALOGUE_API_INTERNAL_ADDRESS_PORT, () => {
+privateHttpServer.listen(INTERNAL_PORT, () => {
   console.log(`@saeon/catalogue API server ready (internal)`)
   console.log(`@saeon/catalogue GraphQL server ready (internal)`)
 })

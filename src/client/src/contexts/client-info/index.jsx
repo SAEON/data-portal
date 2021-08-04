@@ -1,13 +1,13 @@
 import { createContext } from 'react'
 import WithFetch from './with-fetch'
 import Loading from '../../components/loading'
-import { CATALOGUE_API_ADDRESS } from '../../config'
+import { API_PUBLIC_ADDRESS } from '../../config'
 
 export const context = createContext()
 
 export default ({ children }) => {
   return (
-    <WithFetch uri={`${CATALOGUE_API_ADDRESS}/client-info`}>
+    <WithFetch uri={`${API_PUBLIC_ADDRESS}/client-info`}>
       {({ error, loading, data }) => {
         if (loading) {
           return <Loading />

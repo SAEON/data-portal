@@ -3,7 +3,7 @@
   hosts: catalogue
   become: yes
   vars_prompt:
-    - name: CATALOGUE_DEPLOYMENT_ENV
+    - name: DEPLOYMENT_ENV
       prompt: Which deployment environment is this for? [next, stable]
       default: "next"
       private: no

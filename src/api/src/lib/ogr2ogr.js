@@ -1,10 +1,10 @@
 import { spawn } from 'child_process'
 import {
-  CATALOGUE_DOCKER_NETWORK,
+  DOCKER_NETWORK,
   POSTGIS_DB,
   POSTGIS_HOST,
-  CATALOGUE_API_TEMP_DIRECTORY,
-  CATALOGUE_DOCKER_TMP_VOLUME,
+  TEMP_DIRECTORY,
+  DOCKER_TMP_VOLUME,
   GDAL_DOCKER_IMAGE,
 } from '../config.js'
 
@@ -19,9 +19,9 @@ export default ({
 }) => {
   const ogr2ogrProcess = spawn('docker', [
     'run',
-    `--net=${CATALOGUE_DOCKER_NETWORK}`,
+    `--net=${DOCKER_NETWORK}`,
     '-v',
-    `${CATALOGUE_DOCKER_TMP_VOLUME}:${CATALOGUE_API_TEMP_DIRECTORY}`,
+    `${DOCKER_TMP_VOLUME}:${TEMP_DIRECTORY}`,
     '--rm',
     GDAL_DOCKER_IMAGE,
     'ogr2ogr',

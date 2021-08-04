@@ -1,6 +1,6 @@
-import { CATALOGUE_API_ADDRESS } from '../../../../config'
+import { API_PUBLIC_ADDRESS } from '../../../../config'
 
-const EXE_SQL_URI = `${CATALOGUE_API_ADDRESS}/execute-sql`
+const EXE_SQL_URI = `${API_PUBLIC_ADDRESS}/execute-sql`
 
 export default ({ sql, databookId, signal }) => {
   return fetch(EXE_SQL_URI, {

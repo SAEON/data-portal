@@ -4,8 +4,8 @@ import {
   MONGO_DB_ADDRESS,
   MONGO_DB_USERNAME,
   MONGO_DB_PASSWORD,
-  CATALOGUE_API_NODE_ENV,
-  CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES,
+  NODE_ENV,
+  DEFAULT_ADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
 import _collections from './_collections.js'
 import _Logger from './_logger.js'
@@ -28,7 +28,7 @@ export const db = new MongoClient(CONNECTION_STRING, {
   .then(client => client.db(DB))
   .catch(error => {
     console.error('Unable to connect to MongoDB', error)
-    if (CATALOGUE_API_NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
+    if (NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
   })
 
 export const collections = Object.entries(_collections)
@@ -93,7 +93,7 @@ await db
   .then(({ _id: adminRoleId }) =>
     db.then(db =>
       Promise.all(
-        CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(emailAddress =>
+        DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(emailAddress =>
           db.collection(_collections.Users.name).findOneAndUpdate(
             {
               emailAddress,

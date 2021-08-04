@@ -3,10 +3,10 @@ import * as config from '../config.js'
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
 const MASKED_FIELDS = [
-  'CATALOGUE_API_KEY',
+  'APP_KEY',
   'CATALOGUE_API_TWITTER_CLIENT_SECRET',
   'CATALOGUE_API_GOOGLE_CLIENT_SECRET',
-  'CATALOGUE_API_ODP_CLIENT_SECRET',
+  'ODP_CLIENT_SECRET',
   'MONGO_DB_USERNAME',
   'MONGO_DB_PASSWORD',
   'POSTGIS_USERNAME',

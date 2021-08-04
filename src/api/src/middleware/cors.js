@@ -1,9 +1,9 @@
-import { CATALOGUE_API_ALLOWED_ORIGINS } from '../config.js'
+import { ALLOWED_ORIGINS } from '../config.js'
 
 export default async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
-  if (CATALOGUE_API_ALLOWED_ORIGINS.includes(origin)) {
+  if (ALLOWED_ORIGINS.includes(origin)) {
     ctx.set('Access-Control-Allow-Origin', origin)
   }
   ctx.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')

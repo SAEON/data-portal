@@ -1,5 +1,5 @@
 import fetchContent, { formatJson } from './_fetch-content.js'
-import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../config.js'
+import { TEMP_DIRECTORY } from '../../../../config.js'
 
 /**
  * NOTE
@@ -29,7 +29,7 @@ const dataciteCitationStyles = `
   enum CitationStyle {
     ${(
       await fetchContent({
-        cachePath: `${CATALOGUE_API_TEMP_DIRECTORY}/datacite-citation-styles.json`,
+        cachePath: `${TEMP_DIRECTORY}/datacite-citation-styles.json`,
         contentUri: 'https://citation.crosscite.org/styles/',
       })
     )
@@ -42,7 +42,7 @@ const dataciteCitationStyles = `
 const dataciteCitationLocales = `
   enum CitationLocale {
     ${await fetchContent({
-      cachePath: `${CATALOGUE_API_TEMP_DIRECTORY}/datacite-citation-locales.json`,
+      cachePath: `${TEMP_DIRECTORY}/datacite-citation-locales.json`,
       contentUri: 'https://citation.crosscite.org/locales/',
     })}
   }`

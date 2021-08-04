@@ -5,12 +5,12 @@ import {
   POSTGIS_USERNAME,
   POSTGIS_PASSWORD,
   POSTGIS_PORT,
-  CATALOGUE_API_NODE_ENV,
+  NODE_ENV,
 } from '../config.js'
 import createPool from './pool.js'
 import _createClient from './client.js'
 
-const PG_HOST = CATALOGUE_API_NODE_ENV === 'production' ? POSTGIS_HOST : POSTGIS_HOST_DEV
+const PG_HOST = NODE_ENV === 'production' ? POSTGIS_HOST : POSTGIS_HOST_DEV
 
 const pool = createPool(PG_HOST, POSTGIS_USERNAME, POSTGIS_DB, POSTGIS_PASSWORD, POSTGIS_PORT)
 

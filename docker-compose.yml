@@ -2,7 +2,7 @@ version: '3.8'
 
 networks:
   catalogue_default:
-    name: $CATALOGUE_DOCKER_NETWORK
+    name: $DOCKER_NETWORK
 
 volumes:
   mongo:
@@ -40,7 +40,7 @@ services:
       - 9200:9200
       - 9300:9300
     networks:
-      - $CATALOGUE_DOCKER_NETWORK
+      - $DOCKER_NETWORK
 
   kibana:
     container_name: kibana
@@ -53,7 +53,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK      
+      - $DOCKER_NETWORK      
 
   mongo:
     container_name: mongo
@@ -67,7 +67,7 @@ services:
     ports:
       - 27017:27017
     networks:
-      - $CATALOGUE_DOCKER_NETWORK      
+      - $DOCKER_NETWORK      
 
   postgis:
     image: $POSTGIS_IMAGE_NAME
@@ -87,7 +87,7 @@ services:
       - postgis:/var/lib/postgresql/data/pgdata
       - data:/var/lib/catalogue-api
     networks:
-      - $CATALOGUE_DOCKER_NETWORK      
+      - $DOCKER_NETWORK      
 
   proxy1:
     container_name: proxy1
@@ -96,7 +96,7 @@ services:
       context: src/proxy
       dockerfile: Dockerfile
       args:
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        LATEST_COMMIT: $LATEST_COMMIT
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
     ports:
       - 8001:8001
@@ -104,7 +104,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK
+      - $DOCKER_NETWORK
 
   proxy2:
     container_name: proxy2
@@ -113,7 +113,7 @@ services:
       context: src/proxy
       dockerfile: Dockerfile
       args:
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        LATEST_COMMIT: $LATEST_COMMIT
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
     ports:
       - 8003:8001
@@ -121,7 +121,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK
+      - $DOCKER_NETWORK
 
   proxy3:
     container_name: proxy3
@@ -130,7 +130,7 @@ services:
       context: src/proxy
       dockerfile: Dockerfile
       args:
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        LATEST_COMMIT: $LATEST_COMMIT
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
     ports:
       - 8005:8001
@@ -138,7 +138,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK
+      - $DOCKER_NETWORK
 
   proxy4:
     container_name: proxy4
@@ -147,7 +147,7 @@ services:
       context: src/proxy
       dockerfile: Dockerfile
       args:
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        LATEST_COMMIT: $LATEST_COMMIT
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
     ports:
       - 8007:8001
@@ -155,7 +155,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK
+      - $DOCKER_NETWORK
 
   proxy5:
     container_name: proxy5
@@ -164,7 +164,7 @@ services:
       context: src/proxy
       dockerfile: Dockerfile
       args:
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        LATEST_COMMIT: $LATEST_COMMIT
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
     ports:
       - 8009:8001
@@ -172,7 +172,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $CATALOGUE_DOCKER_NETWORK              
+      - $DOCKER_NETWORK              
 
   api:
     container_name: api
@@ -185,27 +185,27 @@ services:
         CATALOGUE_PROXIED_ELASTICSEARCH_ADDRESS: $CATALOGUE_PROXIED_ELASTICSEARCH_ADDRESS
         POSTGIS_CONTAINER_NAME: $POSTGIS_CONTAINER_NAME
         POSTGIS_IMAGE_NAME: $POSTGIS_IMAGE_NAME
-        CATALOGUE_DOCKER_DATA_VOLUME: $CATALOGUE_DOCKER_DATA_VOLUME
-        CATALOGUE_DOCKER_TMP_VOLUME: $CATALOGUE_DOCKER_TMP_VOLUME
+        DOCKER_DATA_VOLUME: $DOCKER_DATA_VOLUME
+        DOCKER_TMP_VOLUME: $DOCKER_TMP_VOLUME
         HOSTNAME: $HOSTNAME
-        CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID: $CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID
-        CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET: $CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET
-        CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES: $CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES
-        CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS: $CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS
-        CATALOGUE_API_INTERNAL_ADDRESS: $CATALOGUE_API_INTERNAL_ADDRESS
-        CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES: $CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES
-        CATALOGUE_API_ALLOWED_ORIGINS: $CATALOGUE_API_ALLOWED_ORIGINS
-        CATALOGUE_API_KEY: $CATALOGUE_API_KEY
-        CATALOGUE_API_ADDRESS: $CATALOGUE_API_ADDRESS
-        CATALOGUE_API_NODE_ENV: $CATALOGUE_API_NODE_ENV
-        CATALOGUE_API_ODP_CLIENT_SECRET: $CATALOGUE_API_ODP_CLIENT_SECRET
-        CATALOGUE_API_ODP_FILTER_PATH: $CATALOGUE_API_ODP_FILTER_PATH
-        CATALOGUE_CURATOR_CONTACT: $CATALOGUE_CURATOR_CONTACT
+        ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
+        ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
+        ODP_SSO_CLIENT_SCOPES: $ODP_SSO_CLIENT_SCOPES
+        ODP_SSO_CLIENT_REDIRECT: $ODP_SSO_CLIENT_REDIRECT
+        API_INTERNAL_ADDRESS: $API_INTERNAL_ADDRESS
+        DEFAULT_ADMIN_EMAIL_ADDRESSES: $DEFAULT_ADMIN_EMAIL_ADDRESSES
+        ALLOWED_ORIGINS: $ALLOWED_ORIGINS
+        APP_KEY: $APP_KEY
+        API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
+        NODE_ENV: $NODE_ENV
+        ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
+        ODP_FILTER_PATH: $ODP_FILTER_PATH
+        CURATOR_CONTACT: $CURATOR_CONTACT
         CATALOGUE_TECHNICAL_CONTACT: $CATALOGUE_TECHNICAL_CONTACT
-        CATALOGUE_DEPLOYMENT_ENV: $CATALOGUE_DEPLOYMENT_ENV
-        CATALOGUE_DOCKER_NETWORK: $CATALOGUE_DOCKER_NETWORK
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
-        CATALOGUE_API_PROXY_ADDRESS: $CATALOGUE_API_PROXY_ADDRESS
+        DEPLOYMENT_ENV: $DEPLOYMENT_ENV
+        DOCKER_NETWORK: $DOCKER_NETWORK
+        LATEST_COMMIT: $LATEST_COMMIT
+        PROXY_ADDRESS: $PROXY_ADDRESS
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
         MONGO_DB_ADDRESS: $MONGO_DB_ADDRESS
         MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
@@ -230,7 +230,7 @@ services:
       - elasticsearch
       - postgis
     networks:
-      - $CATALOGUE_DOCKER_NETWORK      
+      - $DOCKER_NETWORK      
 
   client:
     container_name: client
@@ -240,14 +240,14 @@ services:
       dockerfile: Dockerfile
       args:
         CATALOGUE_CLIENT_PROXY_ADDRESS: $CATALOGUE_CLIENT_PROXY_ADDRESS
-        CATALOGUE_API_ADDRESS: $CATALOGUE_API_ADDRESS
+        API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
         CATALOGUE_CLIENT_ADDRESS: $CATALOGUE_CLIENT_ADDRESS
         CATALOGUE_CLIENT_DEFAULT_NOTICES: $CATALOGUE_CLIENT_DEFAULT_NOTICES
         CATALOGUE_CLIENT_FILTER_CONFIG_PATH: $CATALOGUE_CLIENT_FILTER_CONFIG_PATH
-        CATALOGUE_CURATOR_CONTACT: $CATALOGUE_CURATOR_CONTACT
+        CURATOR_CONTACT: $CURATOR_CONTACT
         CATALOGUE_TECHNICAL_CONTACT: $CATALOGUE_TECHNICAL_CONTACT
-        CATALOGUE_DEPLOYMENT_ENV: $CATALOGUE_DEPLOYMENT_ENV
-        CATALOGUE_LATEST_COMMIT: $CATALOGUE_LATEST_COMMIT
+        DEPLOYMENT_ENV: $DEPLOYMENT_ENV
+        LATEST_COMMIT: $LATEST_COMMIT
         CATALOGUE_LEGAL_CONTACT: $CATALOGUE_LEGAL_CONTACT
     ports:
       - $CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING:80
@@ -258,4 +258,4 @@ services:
       - proxy4
       - proxy5      
     networks:
-      - $CATALOGUE_DOCKER_NETWORK      
+      - $DOCKER_NETWORK      

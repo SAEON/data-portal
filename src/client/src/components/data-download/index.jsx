@@ -11,7 +11,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import SimpleLink from '../link'
 import { context as globalContext } from '../../contexts/global'
-import { CATALOGUE_API_ADDRESS, CATALOGUE_LATEST_COMMIT } from '../../config'
+import { API_PUBLIC_ADDRESS, LATEST_COMMIT } from '../../config'
 import RegisterEventLog from '../../components/application-logger/register-event-log'
 import packageJson from '../../../package.json'
 
@@ -34,7 +34,7 @@ export default ({
   const { resourceDescription, resourceDownload } = immutableResource || {}
   const downloadURL =
     new URL(resourceDownload?.downloadURL || PLACEHOLDER_URI).protocol === 'http:'
-      ? `${CATALOGUE_API_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
+      ? `${API_PUBLIC_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
       : resourceDownload?.downloadURL
 
   if (!resourceDownload?.downloadURL) {
@@ -104,7 +104,7 @@ export default ({
                 clientVersion: packageJson.version,
                 type: 'download',
                 referrer,
-                commitHash: CATALOGUE_LATEST_COMMIT,
+                commitHash: LATEST_COMMIT,
                 createdAt: new Date(),
                 info: {
                   pathname: window.location.pathname,

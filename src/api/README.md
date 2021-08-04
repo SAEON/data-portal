@@ -33,8 +33,8 @@ Default configuration values can be found in [src/config.js](src/config.js). To 
 
 ```sh
 # src/api/.env
-CATALOGUE_API_ODP_CLIENT_SECRET=<some secret>
-CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of email addresses"
+ODP_CLIENT_SECRET=<some secret>
+DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of email addresses"
 ```
 
 # PostGIS configuration
@@ -53,7 +53,7 @@ Provide a path to a different filter function to configure this filter:
 
 ```sh
 # .env
-CATALOGUE_API_ODP_FILTER_PATH=some-other-filter.js # This assumes you have copied the file to the root of the API source code (src/api)
+ODP_FILTER_PATH=some-other-filter.js # This assumes you have copied the file to the root of the API source code (src/api)
 ```
 
 For example, to include records for only one project, the filter function could look like this:

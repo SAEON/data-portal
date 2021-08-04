@@ -13,8 +13,8 @@ require('dotenv').config()
 
 let {
   NODE_ENV: mode,
-  CATALOGUE_DEPLOYMENT_ENV = 'local',
-  CATALOGUE_LATEST_COMMIT = '',
+  DEPLOYMENT_ENV = 'local',
+  LATEST_COMMIT = '',
   CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
 } = process.env
 
@@ -27,8 +27,8 @@ module.exports = (ROOT, output) => {
     new Dotenv(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(mode),
-      'process.env.CATALOGUE_LATEST_COMMIT': JSON.stringify(CATALOGUE_LATEST_COMMIT),
-      'process.env.CATALOGUE_DEPLOYMENT_ENV': JSON.stringify(CATALOGUE_DEPLOYMENT_ENV),
+      'process.env.LATEST_COMMIT': JSON.stringify(LATEST_COMMIT),
+      'process.env.DEPLOYMENT_ENV': JSON.stringify(DEPLOYMENT_ENV),
       'process.env.CATALOGUE_CLIENT_BACKGROUNDS': JSON.stringify(
         fs
           .readdirSync('public/bg')

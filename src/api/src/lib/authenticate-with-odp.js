@@ -1,17 +1,12 @@
 import fetch from 'request-promise'
 import btoa from 'btoa'
-import {
-  CATALOGUE_API_ODP_CLIENT_ID,
-  CATALOGUE_API_ODP_CLIENT_SECRET,
-  CATALOGUE_API_ODP_AUTH_ADDRESS,
-  CATALOGUE_API_ODP_AUTH_SCOPE,
-} from '../config.js'
+import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH_ADDRESS, ODP_AUTH_SCOPE } from '../config.js'
 
-const TOKEN = btoa(`${CATALOGUE_API_ODP_CLIENT_ID}:${CATALOGUE_API_ODP_CLIENT_SECRET}`)
+const TOKEN = btoa(`${ODP_CLIENT_ID}:${ODP_CLIENT_SECRET}`)
 
 export default async () =>
   fetch({
-    uri: `${CATALOGUE_API_ODP_AUTH_ADDRESS}/oauth2/token`,
+    uri: `${ODP_AUTH_ADDRESS}/oauth2/token`,
     json: true,
     method: 'POST',
     headers: {
@@ -19,7 +14,7 @@ export default async () =>
     },
     form: {
       grant_type: 'client_credentials',
-      scope: CATALOGUE_API_ODP_AUTH_SCOPE,
+      scope: ODP_AUTH_SCOPE,
     },
   })
     .then(({ access_token, expires_in, scope, token_type }) => ({

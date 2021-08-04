@@ -7,7 +7,7 @@ const fs = require('fs')
 require('dotenv').config()
 
 const ROOT = path.normalize(path.join(__dirname, '../'))
-const { NODE_ENV: mode, CATALOGUE_DEPLOYMENT_ENV = 'local' } = process.env
+const { NODE_ENV: mode, DEPLOYMENT_ENV = 'local' } = process.env
 
 const entries = Object.fromEntries(
   fs
@@ -36,7 +36,7 @@ module.exports = () => {
       alias: loadAliases(ROOT, mode),
     },
     optimization: {
-      minimize: ['local', 'development'].includes(CATALOGUE_DEPLOYMENT_ENV) ? false : true,
+      minimize: ['local', 'development'].includes(DEPLOYMENT_ENV) ? false : true,
       splitChunks: { chunks: 'all' },
     },
     module: {

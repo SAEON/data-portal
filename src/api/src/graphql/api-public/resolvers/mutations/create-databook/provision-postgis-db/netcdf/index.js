@@ -2,12 +2,12 @@ import mongodb from 'mongodb'
 import { createWriteStream, mkdir } from 'fs'
 import { join, basename, sep } from 'path'
 import fetch from 'node-fetch'
-import { CATALOGUE_API_DATA_DIRECTORY } from '../../../../../../../config.js'
+import { DATA_DIRECTORY as _D } from '../../../../../../../config.js'
 import raster2pgsql from '../raster2pgsql/index.js'
 import { nanoid } from 'nanoid'
 const { ObjectId } = mongodb
 
-const DATA_DIRECTORY = `${CATALOGUE_API_DATA_DIRECTORY}${sep}`
+const DATA_DIRECTORY = `${_D}${sep}`
 const createUniqueDirectory = async () => {
   const p = join(DATA_DIRECTORY, nanoid())
   return await new Promise((resolve, reject) =>

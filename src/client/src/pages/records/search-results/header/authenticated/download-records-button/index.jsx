@@ -7,7 +7,7 @@ import DownloadIcon from 'mdi-react/DownloadCircleIcon'
 import { context as globalContext } from '../../../../../../contexts/global'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
 import StyledBadge from '../../components/styled-badge'
-import { CATALOGUE_API_ADDRESS } from '../../../../../../config'
+import { API_PUBLIC_ADDRESS } from '../../../../../../config'
 import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
 
@@ -31,7 +31,7 @@ export default ({ catalogue }) => {
     {
       onCompleted: data => {
         if (data) {
-          window.open(`${CATALOGUE_API_ADDRESS}/metadata-records?search=${data.persistSearchState}`)
+          window.open(`${API_PUBLIC_ADDRESS}/metadata-records?search=${data.persistSearchState}`)
         }
       },
     }

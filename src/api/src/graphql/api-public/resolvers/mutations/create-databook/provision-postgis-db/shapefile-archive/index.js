@@ -3,14 +3,14 @@ const { ObjectId } = mongodb
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
 import { createWriteStream, mkdtemp } from 'fs'
-import { CATALOGUE_API_TEMP_DIRECTORY } from '../../../../../../../config.js'
+import { TEMP_DIRECTORY } from '../../../../../../../config.js'
 import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import ogr2ogr from '../ogr2ogr/index.js'
 
 const INCLUDE_EXTENSIONS = ['.dbf', '.shp', '.shx', '.qpj', '.prj', '.cpg']
 
-const _temp = `${CATALOGUE_API_TEMP_DIRECTORY}${sep}`
+const _temp = `${TEMP_DIRECTORY}${sep}`
 
 export default async (ctx, databook, tableName, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections

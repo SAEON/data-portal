@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import FlatPage from '../../components/flat-page'
 import useStyles from './style'
 import clsx from 'clsx'
-import { CATALOGUE_CURATOR_CONTACT, CATALOGUE_TECHNICAL_CONTACT } from '../../config'
+import { CURATOR_CONTACT, CATALOGUE_TECHNICAL_CONTACT } from '../../config'
 
 export default () => {
   const classes = useStyles()
@@ -27,7 +27,7 @@ export default () => {
               Data enquiries
             </Typography>
             <Typography className={clsx(classes.body)} variant="body2">
-              {CATALOGUE_CURATOR_CONTACT.replace('@', ' [ at ] ')}
+              {CURATOR_CONTACT.replace('@', ' [ at ] ')}
             </Typography>
           </CardContent>
         </Card>

@@ -1,10 +1,10 @@
 import { nanoid } from 'nanoid'
-import { CATALOGUE_API_NODE_ENV, CATALOGUE_CLIENT_ID } from '../config.js'
+import { NODE_ENV, PASSPORT_SSO_SESSION_ID } from '../config.js'
 
 export default async (ctx, next) => {
-  if (!ctx.cookies.get(CATALOGUE_CLIENT_ID)) {
+  if (!ctx.cookies.get(PASSPORT_SSO_SESSION_ID)) {
     ctx.cookies.set(
-      CATALOGUE_CLIENT_ID,
+      PASSPORT_SSO_SESSION_ID,
       Buffer.from(
         JSON.stringify({
           date: new Date(),
@@ -14,8 +14,8 @@ export default async (ctx, next) => {
       {
         signed: true,
         httpOnly: true,
-        secure: CATALOGUE_API_NODE_ENV === 'development' ? false : true,
-        sameSite: CATALOGUE_API_NODE_ENV === 'development' ? 'lax' : 'none',
+        secure: NODE_ENV === 'development' ? false : true,
+        sameSite: NODE_ENV === 'development' ? 'lax' : 'none',
       }
     )
   }

@@ -5,15 +5,15 @@ import { OAuth2Strategy } from 'passport-oauth'
 import base64url from 'base64url'
 import {
   HOSTNAME,
-  CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET,
-  CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID,
-  CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES,
-  CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS,
-  SAEON_AUTH_ADDRESS,
+  ODP_SSO_CLIENT_SECRET,
+  ODP_SSO_CLIENT_ID,
+  ODP_SSO_CLIENT_SCOPES,
+  ODP_SSO_CLIENT_REDIRECT,
+  ODP_AUTH_ADDRESS,
 } from '../config.js'
 
 export default () => {
-  if (!CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID || !CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET) {
+  if (!ODP_SSO_CLIENT_ID || !ODP_SSO_CLIENT_SECRET) {
     console.info('SAEON OAUTH credentials not provided. Skipping setup')
     return {
       authenticate: ctx => ctx.throw(401),
@@ -27,11 +27,11 @@ export default () => {
     'provider',
     new OAuth2Strategy(
       {
-        tokenURL: `${SAEON_AUTH_ADDRESS}/oauth2/token`,
-        authorizationURL: `${SAEON_AUTH_ADDRESS}/oauth2/auth`,
-        clientID: CATALOGUE_API_ODP_USER_AUTH_CLIENT_ID,
-        clientSecret: CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET,
-        callbackURL: CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS,
+        tokenURL: `${ODP_AUTH_ADDRESS}/oauth2/token`,
+        authorizationURL: `${ODP_AUTH_ADDRESS}/oauth2/auth`,
+        clientID: ODP_SSO_CLIENT_ID,
+        clientSecret: ODP_SSO_CLIENT_SECRET,
+        callbackURL: ODP_SSO_CLIENT_REDIRECT,
       },
       async (token, tokenSecret, _, cb) => {
         const { Users, UserRoles } = await collections
@@ -40,7 +40,7 @@ export default () => {
           sub: saeonId,
           name,
           picture,
-        } = await fetch(`${SAEON_AUTH_ADDRESS}/userinfo`, {
+        } = await fetch(`${ODP_AUTH_ADDRESS}/userinfo`, {
           headers: {
             Authorization: `bearer ${token}`,
           },
@@ -108,7 +108,7 @@ export default () => {
         : HOSTNAME
 
       return passport.authenticate('provider', {
-        scope: CATALOGUE_API_ODP_USER_AUTH_CLIENT_SCOPES.split(','),
+        scope: ODP_SSO_CLIENT_SCOPES.split(','),
         state: base64url(JSON.stringify({ redirect })),
       })(ctx, next)
     },

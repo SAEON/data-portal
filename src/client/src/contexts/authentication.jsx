@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
-import { CATALOGUE_CLIENT_ADDRESS, CATALOGUE_API_ADDRESS } from '../config'
+import { CATALOGUE_CLIENT_ADDRESS, API_PUBLIC_ADDRESS } from '../config'
 
 export const context = createContext()
 
@@ -21,7 +21,7 @@ export default ({ children }) => {
     ;(async () => {
       setAuthenticating(true)
       try {
-        const response = await fetch(`${CATALOGUE_API_ADDRESS}/authenticate`, {
+        const response = await fetch(`${API_PUBLIC_ADDRESS}/authenticate`, {
           credentials: 'include',
           mode: 'cors',
           signal: abortController.signal,

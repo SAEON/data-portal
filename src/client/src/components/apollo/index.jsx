@@ -1,5 +1,5 @@
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
-import { CATALOGUE_API_GQL_ADDRESS } from '../../config'
+import { PUBLIC_GQL_ADDRESS } from '../../config'
 import mergeListByIds from './_merge-list-by-ids'
 
 export default ({ children }) => (
@@ -31,7 +31,7 @@ export default ({ children }) => (
           },
         }),
         link: new HttpLink({
-          uri: CATALOGUE_API_GQL_ADDRESS,
+          uri: PUBLIC_GQL_ADDRESS,
           credentials: 'include',
         }),
       })

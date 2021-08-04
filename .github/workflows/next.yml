@@ -21,23 +21,23 @@ jobs:
       - name: Deploy services
         run: >-
           HOSTNAME="https://catalogue.saeon.dvn"
-          CATALOGUE_API_ODP_FILTER_PATH="odp-filter.js"
+          ODP_FILTER_PATH="odp-filter.js"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
-          CATALOGUE_API_ODP_USER_AUTH_CLIENT_REDIRECT_ADDRESS="https://api.catalogue.saeon.dvn/authenticate/redirect/saeon-identity-server"
-          CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_USER_AUTH_CLIENT_SECRET}}"
-          CATALOGUE_DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,bryan@saeon.ac.za"
-          CATALOGUE_API_ADDRESS="https://api.catalogue.saeon.dvn"
+          ODP_SSO_CLIENT_REDIRECT="https://api.catalogue.saeon.dvn/authenticate/redirect/saeon-identity-server"
+          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
+          DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,bryan@saeon.ac.za"
+          API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.dvn"
-          CATALOGUE_API_ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
+          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
           CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
-          CATALOGUE_API_KEY="${{ secrets.CATALOGUE_API_KEY }}"
-          CATALOGUE_API_NODE_ENV=production
-          CATALOGUE_API_ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
+          APP_KEY="${{ secrets.APP_KEY }}"
+          NODE_ENV=production
+          ODP_CLIENT_SECRET="${{ secrets.CATALOGUE_API_ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
-          CATALOGUE_DEPLOYMENT_ENV="development"
-          CATALOGUE_LATEST_COMMIT=$(git rev-parse HEAD)
+          DEPLOYMENT_ENV="development"
+          LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
           ODP_ADDRESS="https://odp.saeon.dvn"

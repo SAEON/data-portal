@@ -50,7 +50,7 @@ For a full list of `--build-arg`'s that is accepted refer to the [Dockerfile](Do
 # Create a Docker image
 docker build -t client . \
 --build-arg CATALOGUE_CLIENT_ADDRESS=http://localhost:3001 \
---build-arg CATALOGUE_DEPLOYMENT_ENV=development \
+--build-arg DEPLOYMENT_ENV=development \
 ... etc
 
 # Run as a Docker container
@@ -71,7 +71,7 @@ The full list of possible configuration options and default values is logged to 
 
 ```sh
 # .env
-CATALOGUE_API_ADDRESS=...
+API_PUBLIC_ADDRESS=...
 DEFAULT_ERROR=...
 etc
 ```

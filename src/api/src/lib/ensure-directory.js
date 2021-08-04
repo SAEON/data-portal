@@ -1,28 +1,42 @@
-import { existsSync, mkdirSync } from 'fs'
+import { mkdir, access } from 'fs'
 
-export default filename => {
-  let filepath = filename.replace(/\\/g, '/')
+export default async directoryPath => {
+  directoryPath = directoryPath.replace(/\\/g, '/')
 
   // -- preparation to allow absolute paths as well
   let root = ''
-  if (filepath[0] === '/') {
+  if (directoryPath[0] === '/') {
     root = '/'
-    filepath = filepath.slice(1)
-  } else if (filepath[1] === ':') {
-    root = filepath.slice(0, 3) // c:\
-    filepath = filepath.slice(3)
+    directoryPath = directoryPath.slice(1)
+  } else if (directoryPath[1] === ':') {
+    root = directoryPath.slice(0, 3) // c:\
+    directoryPath = directoryPath.slice(3)
   }
 
   // -- create folders all the way down
-  const folders = filepath.split('/').slice(0, -1) // remove last item (the file)
-  folders.reduce(
-    (acc, folder) => {
-      const folderPath = acc + folder + '/'
-      if (!existsSync(folderPath)) {
-        mkdirSync(folderPath)
-      }
-      return folderPath
-    },
-    root // first 'acc', important
-  )
+  const folders = directoryPath.split('/')
+  let folderPath = `${root}`
+  for (const folder of folders) {
+    folderPath = `${folderPath}${folder}/`
+
+    const folderExists = await new Promise(resolve =>
+      access(folderPath, error => {
+        if (error) {
+          resolve(false)
+        }
+        resolve(true)
+      })
+    )
+
+    if (!folderExists) {
+      await new Promise((resolve, reject) =>
+        mkdir(folderPath, error => {
+          if (error) {
+            reject(`Error creating ${folderPath}`)
+          }
+          resolve(folderPath)
+        })
+      )
+    }
+  }
 }

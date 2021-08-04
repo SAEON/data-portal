@@ -1,10 +1,10 @@
 import hash from 'object-hash'
 import packageJson from '../../../../../package.json'
-import { CATALOGUE_CLIENT_ID } from '../../../../config.js'
+import { PASSPORT_SSO_SESSION_ID } from '../../../../config.js'
 
 export default async (_, args, ctx, info) => {
   const referrer = args?.referrer || undefined
-  const clientSession = ctx?.cookies.get(CATALOGUE_CLIENT_ID) || 'no-session' // This can happen if the user blocks cookies or if the API is used programmatically
+  const clientSession = ctx?.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session' // This can happen if the user blocks cookies or if the API is used programmatically
   const { operation, fragments, variableValues } = info
   const { logToMongo } = ctx.mongo
 

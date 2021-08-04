@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-export const CATALOGUE_LATEST_COMMIT = process.env.CATALOGUE_LATEST_COMMIT || undefined
+export const LATEST_COMMIT = process.env.LATEST_COMMIT || undefined
 
 export const CATALOGUE_PROXY_PORT = process.env.CATALOGUE_PROXY_PORT
   ? parseInt(process.env.CATALOGUE_PROXY_PORT, 10)
@@ -35,7 +35,7 @@ export const CATALOGUE_PROXY_HST_ESRI_PROXY = 'https://gisportal.saeon.ac.za/ser
 
 console.log('Configuration', {
   ELASTICSEARCH_ADDRESS,
-  CATALOGUE_LATEST_COMMIT,
+  LATEST_COMMIT,
   CATALOGUE_PROXY_PORT,
   CATALOGUE_PROXY_ENABLE_WEB_INTERFACE,
   CATALOGUE_PROXY_WEB_INTERFACE_PORT,

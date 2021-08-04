@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { context as globalContext } from '../../../contexts/global'
 import { gql, useQuery } from '@apollo/client'
-import { CATALOGUE_API_GQL_ADDRESS } from '../../../config'
+import { PUBLIC_GQL_ADDRESS } from '../../../config'
 
 export default () => {
   const { global } = useContext(globalContext)
@@ -24,7 +24,7 @@ export default () => {
 
   if (error) {
     throw new Error(
-      `${CATALOGUE_API_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
+      `${PUBLIC_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
     )
   }
 
