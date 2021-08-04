@@ -7,7 +7,7 @@ import { context as authorizationContext } from '../../../../contexts/authorizat
 
 export default ({ routes }) => {
   const [anchorEl, setAnchorEl] = useState(null)
-  const { isAuthorized } = useContext(authorizationContext)
+  const { hasPermission } = useContext(authorizationContext)
 
   return (
     <>
@@ -27,11 +27,11 @@ export default ({ routes }) => {
         onClose={() => setAnchorEl(null)}
       >
         {routes
-          .filter(({ authorization = false, excludeFromNav = false }) => {
+          .filter(({ requiredPermission = false, excludeFromNav = false }) => {
             if (excludeFromNav) {
               return false
             }
-            return authorization ? isAuthorized(authorization) : true
+            return requiredPermission ? hasPermission(requiredPermission) : true
           })
           .map(({ label, Icon, to }) => {
             if (!Icon) {

@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { CATALOGUE_CLIENT_BACKGROUNDS } from '../config'
+import { CATALOGUE_CLIENT_BACKGROUNDS } from '../../config'
 
 /**
  * Provides some measure of control over which background

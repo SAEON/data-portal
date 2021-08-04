@@ -1,17 +1,17 @@
 import { useState, useEffect, createContext } from 'react'
-import { CATALOGUE_CLIENT_ADDRESS, API_PUBLIC_ADDRESS } from '../config'
+import { API_PUBLIC_ADDRESS } from '../../config'
 
 export const context = createContext()
 
 export default ({ children }) => {
-  const [userInfo, setUserInfo] = useState(false)
+  const [user, setUser] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
   const authenticate = () => {
-    if (userInfo) {
+    if (user) {
       return true
     } else {
-      window.location.href = `${CATALOGUE_CLIENT_ADDRESS}/login?redirect=${window.location.href}`
+      window.location.href = `/login?redirect=${window.location.href}`
     }
   }
 
@@ -27,7 +27,7 @@ export default ({ children }) => {
           signal: abortController.signal,
         })
         const userInfo = await response.json()
-        setUserInfo(userInfo)
+        setUser(userInfo)
         setAuthenticating(false)
       } catch (error) {
         throw new Error('Error authenticating user ::' + error.message)
@@ -42,7 +42,7 @@ export default ({ children }) => {
   return (
     <context.Provider
       value={{
-        userInfo,
+        user,
         authenticating,
         authenticate,
       }}

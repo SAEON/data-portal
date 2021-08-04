@@ -4,7 +4,6 @@ import AboutIcon from 'mdi-react/AboutIcon'
 import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
 import ContactIcon from 'mdi-react/ContactMailIcon'
-import DatabookIcon from 'mdi-react/DatabaseCogIcon'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import DisclaimerIcon from 'mdi-react/WarningIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
@@ -16,7 +15,6 @@ import { Redirect } from 'react-router-dom'
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
-const DatabooksPage = lazy(() => import('../../pages/databooks'))
 const UsersPage = lazy(() => import('../../pages/users'))
 const DashboardPage = lazy(() => import('../../pages/dashboard'))
 const ChartPage = lazy(() => import('../../pages/chart'))
@@ -27,6 +25,7 @@ const AboutPage = lazy(() => import('../../pages/about'))
 const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 const ContactPage = lazy(() => import('../../pages/contact'))
 const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
+const AccessPage = lazy(() => import('../../pages/access'))
 
 export default [
   {
@@ -41,18 +40,6 @@ export default [
         </Transition>
       )
     },
-  },
-  {
-    label: 'Databooks',
-    to: '/databooks',
-    exact: true,
-    Icon: DatabookIcon,
-    render: props => (
-      <Transition tKey={'databooks'}>
-        <DatabooksPage {...props} />
-      </Transition>
-    ),
-    authorization: ['admin', 'datascientist'],
   },
   {
     label: 'Record',
@@ -195,10 +182,22 @@ export default [
     ),
   },
   {
+    label: 'Access',
+    Icon: UsersIcon,
+    to: '/access',
+    requiredPermission: 'view-/access',
+    exact: true,
+    render: props => (
+      <Transition tKey={'access'}>
+        <AccessPage {...props} />
+      </Transition>
+    ),
+  },
+  {
     label: 'Users',
     Icon: UsersIcon,
     to: '/users',
-    authorization: ['admin'],
+    excludeFromNav: true,
     exact: true,
     render: props => (
       <Transition tKey={'users'}>

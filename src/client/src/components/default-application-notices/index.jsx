@@ -11,15 +11,15 @@ import { context as authContext } from '../../contexts/authentication'
 export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
   const { disableNotices } = getUriState()
-  const { userInfo } = useContext(authContext)
+  const { user } = useContext(authContext)
 
   useEffect(() => {
-    if (!userInfo) return
+    if (!user) return
 
     if (disableNotices !== 'true') {
-      enqueueSnackbar(`Welcome back ${userInfo.name || userInfo.emailAddress}`, { variant: 'info' })
+      enqueueSnackbar(`Welcome back ${user.name || user.emailAddress}`, { variant: 'info' })
     }
-  }, [disableNotices, enqueueSnackbar, userInfo])
+  }, [disableNotices, enqueueSnackbar, user])
 
   useEffect(() => {
     const _ = async () => {

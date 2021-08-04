@@ -1,3 +1,3 @@
-export default () => {
-  return 'Coming soon'
-}
+import { Redirect } from 'react-router-dom'
+
+export default () => <Redirect to="/access" />

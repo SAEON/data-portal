@@ -10,17 +10,17 @@ export default ({ style }) => {
   return (
     <div style={style}>
       <authContext.Consumer>
-        {({ userInfo, authenticating }) => {
+        {({ user, authenticating }) => {
           if (authenticating) {
             return <CircularProgress color="inherit" thickness={2} size={18} />
           }
 
-          if (userInfo) {
+          if (user) {
             return (
               <div style={{ display: 'flex' }}>
                 <Logout
                   style={{ display: 'flex', alignItems: 'center', marginRight: theme.spacing(1) }}
-                  userInfo={userInfo}
+                  user={user}
                 />
               </div>
             )
