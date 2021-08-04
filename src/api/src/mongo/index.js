@@ -6,6 +6,7 @@ import {
   MONGO_DB_PASSWORD,
   NODE_ENV,
   DEFAULT_ADMIN_EMAIL_ADDRESSES,
+  DEFAULT_SYSADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
 import _collections from './_collections.js'
 import _Logger from './_logger.js'
@@ -58,71 +59,101 @@ export const getDataFinders = () =>
  */
 
 // Create collections
-await db.then(db =>
-  Promise.all(
-    Object.entries(_collections).map(([, { name, validator = {} }]) =>
-      db.createCollection(name, { validator }).catch(error => {
-        if (error.code == 48) {
-          console.info(`Collection already exists`, name)
-        } else {
-          console.error(error)
-          process.exit(1)
-        }
+;(async () => {
+  await db.then(db =>
+    Promise.all(
+      Object.entries(_collections).map(([, { name, validator = {} }]) =>
+        db.createCollection(name, { validator }).catch(error => {
+          if (error.code == 48) {
+            console.info(`Collection already exists`, name)
+          } else {
+            console.error(error)
+            process.exit(1)
+          }
+        })
+      )
+    )
+  )
+
+  // Insert user roles
+  await db.then(db =>
+    Promise.all(
+      roles.map(role => {
+        const { name, ...other } = role
+        db.collection(_collections.Roles.name).findOneAndUpdate(
+          { name },
+          { $setOnInsert: { name }, $set: { ...other } },
+          { upsert: true }
+        )
       })
     )
   )
-)
 
-// Insert user roles
-await db.then(db =>
-  Promise.all(
-    roles.map(role => {
-      const { name, ...other } = role
-      db.collection(_collections.Roles.name).findOneAndUpdate(
-        { name },
-        { $setOnInsert: { name }, $set: { ...other } },
-        { upsert: true }
-      )
-    })
-  )
-)
-
-// Setup default admins
-await db
-  .then(db => db.collection(_collections.Roles.name).findOne({ name: 'admin' }))
-  .then(({ _id: adminRoleId }) =>
-    db.then(db =>
-      Promise.all(
-        DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').map(emailAddress =>
-          db.collection(_collections.Users.name).findOneAndUpdate(
-            {
-              emailAddress,
-            },
-            {
-              $setOnInsert: { emailAddress },
-              $addToSet: {
-                roles: adminRoleId,
-              },
-            },
-            { upsert: true }
-          )
+  // Setup default sysadmins
+  await db
+    .then(db => db.collection(_collections.Roles.name).findOne({ name: 'sysadmin' }))
+    .then(({ _id: roleId }) =>
+      db.then(db =>
+        Promise.all(
+          DEFAULT_SYSADMIN_EMAIL_ADDRESSES.split(',')
+            .filter(_ => _)
+            .map(emailAddress =>
+              db.collection(_collections.Users.name).findOneAndUpdate(
+                {
+                  emailAddress,
+                },
+                {
+                  $setOnInsert: { emailAddress },
+                  $addToSet: {
+                    roles: roleId,
+                  },
+                },
+                { upsert: true }
+              )
+            )
         )
       )
     )
-  )
 
-// Apply indices
-await db.then(db =>
-  Promise.all(
-    Object.entries(_collections)
-      .map(([, { name, indices = [] }]) =>
-        indices.map(({ index, options }) => db.collection(name).createIndex(index, options))
+  // Setup default admins
+  await db
+    .then(db => db.collection(_collections.Roles.name).findOne({ name: 'admin' }))
+    .then(({ _id: roleId }) =>
+      db.then(db =>
+        Promise.all(
+          DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
+            .filter(_ => _)
+            .map(emailAddress =>
+              db.collection(_collections.Users.name).findOneAndUpdate(
+                {
+                  emailAddress,
+                },
+                {
+                  $setOnInsert: { emailAddress },
+                  $addToSet: {
+                    roles: roleId,
+                  },
+                },
+                { upsert: true }
+              )
+            )
+        )
       )
-      .flat()
-  )
-)
+    )
 
-console.info('MongoDB configured')
+  // Apply indices
+  await db.then(db =>
+    Promise.all(
+      Object.entries(_collections)
+        .map(([, { name, indices = [] }]) =>
+          indices.map(({ index, options }) => db.collection(name).createIndex(index, options))
+        )
+        .flat()
+    )
+  )
+
+  console.info('MongoDB configured')
+})().catch(error => console.error('Error seeding MongoDB', error.message))
 
 /**
  * Application-level batching for inserting UI logs

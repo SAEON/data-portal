@@ -25,7 +25,7 @@ jobs:
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
           ODP_SSO_CLIENT_REDIRECT="https://api.catalogue.saeon.dvn/authenticate/redirect"
           ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
-          DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za,bryan@saeon.ac.za"
+          DEFAULT_ADMIN_EMAIL_ADDRESSES="bryan@saeon.ac.za"
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.dvn"
           ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"

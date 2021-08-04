@@ -43,6 +43,7 @@ export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'c
 export const HOSTNAME = process.env.HOSTNAME || 'http://localhost:3001'
 export const APP_KEY = process.env.APP_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0EdIqD3RAUUCU='
 export const DEFAULT_ADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_ADMIN_EMAIL_ADDRESSES || ''
+export const DEFAULT_SYSADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES || ''
 export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'leo@saeon.ac.za'
 export const GDAL_DOCKER_IMAGE = process.env.GDAL_DOCKER_IMAGE || 'osgeo/gdal:latest'
 export const LATEST_COMMIT = process.env.LATEST_COMMIT || ''

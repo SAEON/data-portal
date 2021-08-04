@@ -47,7 +47,7 @@ export default () => {
         }).then(res => res.json())
 
         const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
-        const publicRoleId = (await Roles.find({ name: 'public' }).toArray())[0]._id
+        const userRoleId = (await Roles.find({ name: 'user' }).toArray())[0]._id
 
         const emailAddress = email.toLowerCase()
         const isSaeon = emailAddress.match(/@saeon\.ac\.za$/)
@@ -60,7 +60,7 @@ export default () => {
             {
               $setOnInsert: {
                 emailAddress,
-                roles: [isSaeon ? saeonRoleId : publicRoleId],
+                roles: [isSaeon ? saeonRoleId : userRoleId],
               },
               $set: {
                 saeonId,
