@@ -1,27 +1,36 @@
-import { useMemo } from 'react'
 import Toolbar_ from './toolbar'
 import Authentication from './authentication'
-import { useLocation } from 'react-router-dom'
 import NavigationMenu from './navigation-menu'
 import useTheme from '@material-ui/core/styles/useTheme'
+import Hidden from '@material-ui/core/Hidden'
+import Divider from '@material-ui/core/Divider'
+import Breadcrumbs from './breadcrumbs'
 
 export const Toolbar = Toolbar_
 
 export default ({ routes, ...props }) => {
   const theme = useTheme()
-  const { pathname } = useLocation()
-  const isLoginPage = useMemo(() => pathname.includes('login'), [pathname])
 
   return (
     <Toolbar_ {...props}>
+      {/* NAVIGATION MENU */}
+      <div style={{ marginLeft: theme.spacing(1) }} />
       <NavigationMenu routes={routes} />
-      <Authentication
-        style={{
-          marginRight: theme.spacing(1),
-          marginLeft: 'auto',
-          display: isLoginPage ? 'none' : 'block',
-        }}
-      />
+      <Hidden xsDown>
+        <Divider
+          flexItem
+          orientation="vertical"
+          style={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(2) }}
+        />
+      </Hidden>
+
+      <Hidden smDown>
+        <Breadcrumbs routes={routes} />
+      </Hidden>
+
+      <div style={{ marginLeft: 'auto' }} />
+
+      <Authentication />
     </Toolbar_>
   )
 }
