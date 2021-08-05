@@ -12,8 +12,8 @@ export default ({ name, description, permissions }) => {
       title={`${name.toUpperCase()} permissions`}
       subheader={description}
     >
-      <CardContent>
-        <Suspense fallback={<Loading />}>
+      <CardContent style={{ position: 'relative' }}>
+        <Suspense fallback={<Loading style={{ bottom: '0' }} />}>
           <Table permissions={permissions} />
         </Suspense>
       </CardContent>
