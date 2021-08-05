@@ -7,4 +7,16 @@ export default Object.freeze({
     name: 'databook:create',
     description: 'Create databook from vector-based spatial datasets',
   },
+  'users:view': {
+    name: 'users:view',
+    description: 'View all user details',
+  },
+  'roles:view': {
+    name: 'roles:view',
+    description: 'View all role details',
+  },
+  'permissions:view': {
+    name: 'permissions:view',
+    description: 'View all permission details',
+  },
 })

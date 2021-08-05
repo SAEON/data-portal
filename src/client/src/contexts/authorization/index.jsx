@@ -10,14 +10,11 @@ export default ({ children }) => {
 
   const { loading, data } = useQuery(
     gql`
-      query user($id: Int!) {
+      query user($id: ID!) {
         user(id: $id) {
           id
-          roles {
-            id
-            name
-            description
-          }
+          emailAddress
+          name
           permissions {
             id
             name

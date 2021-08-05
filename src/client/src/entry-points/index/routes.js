@@ -185,7 +185,7 @@ export default [
     label: 'Access',
     Icon: UsersIcon,
     to: '/access',
-    requiredPermission: 'view-/access',
+    requiredPermission: '/access',
     exact: true,
     render: props => (
       <Transition tKey={'access'}>

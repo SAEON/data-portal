@@ -6,11 +6,12 @@ import ContentNav from '../../components/content-nav'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import RolesIcon from 'mdi-react/AccountLockIcon'
 import PermissionsIcon from 'mdi-react/AxisLockIcon'
-import ToolbarHeader from '../../components/toolbar-header'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Fade from '@material-ui/core/Fade'
+import Container from '@material-ui/core/Container'
+import Header from './header'
 
 const Users = lazy(() => import('./users'))
 const Roles = lazy(() => import('./roles'))
@@ -21,21 +22,21 @@ const sections = [
     primaryText: 'Users',
     secondaryText: 'Manage application users',
     Icon: UsersIcon,
-    requiredPermission: 'view-users',
+    requiredPermission: 'users:view',
     Section: Users,
   },
   {
     primaryText: 'Roles',
     secondaryText: 'Manage application roles',
     Icon: RolesIcon,
-    requiredPermission: 'view-roles',
+    requiredPermission: 'roles:view',
     Section: Roles,
   },
   {
     primaryText: 'Permissions',
     secondaryText: 'Manage application permissions',
     Icon: PermissionsIcon,
-    requiredPermission: 'view-permissions',
+    requiredPermission: 'permissions:view',
     Section: Permissions,
   },
 ]
@@ -49,48 +50,57 @@ export default () => {
     return <Loading />
   }
 
-  if (!hasPermission('view-/access')) {
-    return <AccessDenied requiredPermission="Admin" />
+  if (!hasPermission('/access')) {
+    return (
+      <div style={{ marginTop: theme.spacing(2) }}>
+        <AccessDenied requiredPermission="/access" />
+      </div>
+    )
   }
 
   return (
     <UserRolesProvider>
-      <ToolbarHeader />
-
-      <ContentNav
-        navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
-      >
-        {({ activeIndex }) =>
-          sections
-            .filter(({ requiredPermission }) => hasPermission(requiredPermission))
-            .map(({ Section, primaryText, requiredPermission }, i) => (
-              <Suspense
-                key={primaryText}
-                fallback={
-                  <Fade
-                    timeout={theme.transitions.duration.regular}
-                    in={activeIndex === i}
-                    key={'loading'}
+      <Header />
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container>
+        <ContentNav
+          navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
+        >
+          {({ activeIndex }) =>
+            sections
+              .filter(({ requiredPermission }) => hasPermission(requiredPermission))
+              .map(({ Section, primaryText }, i) => {
+                return (
+                  <Suspense
+                    key={primaryText}
+                    fallback={
+                      <Fade
+                        timeout={theme.transitions.duration.regular}
+                        in={activeIndex === i}
+                        key={'loading'}
+                      >
+                        <span>
+                          <Loading />
+                        </span>
+                      </Fade>
+                    }
                   >
-                    <span>
-                      <Loading />
-                    </span>
-                  </Fade>
-                }
-              >
-                <Fade
-                  timeout={theme.transitions.duration.regular}
-                  in={activeIndex === i}
-                  key={'loaded'}
-                >
-                  <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                    <Section permission={requiredPermission} />
-                  </span>
-                </Fade>
-              </Suspense>
-            ))
-        }
-      </ContentNav>
+                    <Fade
+                      timeout={theme.transitions.duration.regular}
+                      in={activeIndex === i}
+                      key={'loaded'}
+                    >
+                      <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                        <Section active={activeIndex === i} />
+                      </span>
+                    </Fade>
+                  </Suspense>
+                )
+              })
+          }
+        </ContentNav>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </UserRolesProvider>
   )
 }

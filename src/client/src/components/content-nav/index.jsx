@@ -15,25 +15,35 @@ const RenderNavContent = memo(
   }
 )
 
-export default ({ navItems, subNavChildren = null, children }) => {
+export default ({ navItems, children }) => {
   const theme = useTheme()
   const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const setIndex = useCallback(val => setActiveIndex(() => val), [setActiveIndex])
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} lg={3}>
-        <List style={{ padding: 0, display: 'flex', flexDirection: lgAndUp ? 'column' : 'row' }}>
+        <List
+          style={{
+            backgroundColor: theme.palette.common.white,
+            padding: 0,
+            display: 'flex',
+            flexDirection: lgAndUp ? 'column' : 'row',
+          }}
+        >
           {navItems.map((props, i) => (
-            <NavItem i={i} setActiveIndex={setIndex} activeIndex={activeIndex} {...props} key={i} />
+            <NavItem
+              i={i}
+              setActiveIndex={val => setActiveIndex(() => val)}
+              activeIndex={activeIndex}
+              {...props}
+              key={i}
+            />
           ))}
         </List>
-        {subNavChildren && subNavChildren({ setActiveIndex })}
       </Grid>
 
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={9} style={{ position: 'relative', height: '100%' }}>
         <RenderNavContent setActiveIndex={setActiveIndex} activeIndex={activeIndex}>
           {children}
         </RenderNavContent>

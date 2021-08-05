@@ -12,7 +12,6 @@ export default ({ children }) => {
         id
         emailAddress
         name
-        familyName
         roles {
           id
           name

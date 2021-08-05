@@ -56,7 +56,8 @@ type Query {
   atlas(id: ID!): JSON
   # Retrieve dashboards by id
   dashboards(ids: [ID!]!): [Dashboard!]
-  roles: [Role!]!
+  roles: [Role]!
+  permissions: [Permission]!
   users: [User]!
   user(id: ID!): User
 }

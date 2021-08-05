@@ -53,7 +53,7 @@ export default () => {
         const isSaeon = emailAddress.match(/@saeon\.ac\.za$/)
 
         try {
-          const user = await Users.findOneAndUpdate(
+          const userQuery = await Users.findOneAndUpdate(
             {
               emailAddress,
             },
@@ -77,7 +77,10 @@ export default () => {
               returnOriginal: false,
             }
           )
-          cb(null, user.value || (await Users.findOne({ _id: user.lastErrorObject.upserted })))
+
+          const user =
+            userQuery.value || (await Users.findOne({ _id: userQuery.lastErrorObject.upserted }))
+          cb(null, { id: user._id, emailAddress: user.emailAddress, name: user.name })
         } catch (error) {
           console.error('Error authenticating', error.message)
           cb(error, null)

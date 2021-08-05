@@ -15,7 +15,13 @@ const saeon = {
 const admin = {
   name: 'admin',
   description: 'Site administrators',
-  permissions: [...saeon.permissions, permissions['/access']],
+  permissions: [
+    ...saeon.permissions,
+    permissions['/access'],
+    permissions['users:view'],
+    permissions['roles:view'],
+    permissions['permissions:view'],
+  ],
 }
 
 const sysadmin = {

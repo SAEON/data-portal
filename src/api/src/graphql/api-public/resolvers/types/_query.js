@@ -7,6 +7,7 @@ import databook from '../queries/databook.js'
 import searchState from '../queries/search-state.js'
 import atlas from '../queries/atlas.js'
 import roles from '../queries/roles.js'
+import permissions from '../queries/permissions.js'
 import user from '../queries/user.js'
 import users from '../queries/users.js'
 
@@ -22,4 +23,5 @@ export default {
   roles,
   user,
   users,
+  permissions,
 }

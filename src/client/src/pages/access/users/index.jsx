@@ -1,19 +1,19 @@
-import { useContext } from 'react'
-import { context as authContext } from '../../../contexts/authorization'
+import { useContext, lazy, Suspense } from 'react'
 import { context as userRolesContext } from '../context'
-import Table from './_table'
+import Loading from '../../../components/loading'
 
-export default ({ permission }) => {
+const Render = lazy(() => import('./_render'))
+
+export default ({ active }) => {
   const { users } = useContext(userRolesContext)
-  const { hasPermission } = useContext(authContext)
 
-  if (!hasPermission(permission)) {
+  if (!active) {
     return null
   }
 
   return (
-    <div style={{ width: '100%', position: 'relative' }}>
-      <Table users={users} />
-    </div>
+    <Suspense fallback={<Loading />}>
+      <Render users={users} />
+    </Suspense>
   )
 }

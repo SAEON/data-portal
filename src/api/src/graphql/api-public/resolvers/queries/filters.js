@@ -1,5 +1,4 @@
-import mongodb from 'mongodb'
-const { ObjectId } = mongodb
+import { ObjectId } from 'mongodb'
 
 export default async (_, { ids = null }, ctx) => {
   const { findFilters } = ctx.mongo.dataFinders

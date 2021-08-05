@@ -42,12 +42,12 @@ export default ({ users }) => {
             <DataGrid
               pageSize={25}
               rowHeight={theme.spacing(5)}
-              rows={users.map(({ id, emailAddress, name, familyName, roles }) => {
+              rows={users.map(({ id, emailAddress, name, roles }) => {
                 return {
                   id,
                   emailAddress,
                   name,
-                  familyName,
+
                   roles,
                 }
               })}
@@ -62,7 +62,6 @@ export default ({ users }) => {
                 },
                 { field: 'emailAddress', headerName: 'Email Address', flex: 0.5 },
                 { field: 'name', headerName: 'Name', flex: 0.5 },
-                { field: 'familyName', headerName: 'Family name', flex: 0.5 },
                 {
                   field: 'roles',
                   headerName: 'Roles',
