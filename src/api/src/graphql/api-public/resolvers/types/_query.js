@@ -8,6 +8,7 @@ import searchState from '../queries/search-state.js'
 import atlas from '../queries/atlas.js'
 import roles from '../queries/roles.js'
 import user from '../queries/user.js'
+import users from '../queries/users.js'
 
 export default {
   catalogue,
@@ -20,4 +21,5 @@ export default {
   atlas,
   roles,
   user,
+  users,
 }

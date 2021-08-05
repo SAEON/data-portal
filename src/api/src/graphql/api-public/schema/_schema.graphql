@@ -57,6 +57,7 @@ type Query {
   # Retrieve dashboards by id
   dashboards(ids: [ID!]!): [Dashboard!]
   roles: [Role!]!
+  users: [User]!
   user(id: ID!): User
 }
 

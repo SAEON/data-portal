@@ -8,11 +8,11 @@ import {
   DEFAULT_ADMIN_EMAIL_ADDRESSES,
   DEFAULT_SYSADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
-import _collections from './_collections.js'
+import _collections from './collections/index.js'
 import _Logger from './_logger.js'
-import roles from './_roles.js'
-import DataLoader from 'dataloader'
-import sift from 'sift'
+import insertUsers from './_insert-users.js'
+import configureRolesAndPermissions from './_configure-roles-and-permissions.js'
+import makeDataFinders from './_data-finders.js'
 
 const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
 
@@ -29,7 +29,12 @@ export const db = new MongoClient(CONNECTION_STRING, {
   .then(client => client.db(DB))
   .catch(error => {
     console.error('Unable to connect to MongoDB', error)
-    if (NODE_ENV === 'production') process.exit(1) // Allow local development without Mongo
+
+    /**
+     * Allow local development without Mongo
+     * Useful for changes to the React clients
+     */
+    if (NODE_ENV === 'production') process.exit(1)
   })
 
 export const collections = Object.entries(_collections)
@@ -40,17 +45,7 @@ export const collections = Object.entries(_collections)
   }, Promise.resolve({}))
   .catch(error => console.error('Unable to load MongoDB collections', error))
 
-export const getDataFinders = () =>
-  Object.entries(_collections).reduce((acc, [alias, { name }]) => {
-    const loader = new DataLoader(filters =>
-      db
-        .then(db => db.collection(name))
-        .then(collection => collection.find({ $or: filters }).toArray())
-        .then(docs => filters.map(filter => docs.filter(sift(filter))))
-    )
-    acc[`find${alias}`] = filter => loader.load(filter)
-    return acc
-  }, {})
+export const getDataFinders = makeDataFinders(db)
 
 /**
  * ================================================
@@ -60,100 +55,52 @@ export const getDataFinders = () =>
 
 // Create collections
 ;(async () => {
-  await db.then(db =>
-    Promise.all(
-      Object.entries(_collections).map(([, { name, validator = {} }]) =>
-        db.createCollection(name, { validator }).catch(error => {
-          if (error.code == 48) {
-            console.info(`Collection already exists`, name)
-          } else {
-            console.error(error)
-            process.exit(1)
-          }
-        })
-      )
-    )
-  )
+  const _db = await db
 
-  // Insert user roles
-  await db.then(db =>
-    Promise.all(
-      roles.map(role => {
-        const { name, ...other } = role
-        db.collection(_collections.Roles.name).findOneAndUpdate(
-          { name },
-          { $setOnInsert: { name }, $set: { ...other } },
-          { upsert: true }
-        )
+  await Promise.all(
+    Object.entries(_collections).map(([, { name, validator = {} }]) =>
+      _db.createCollection(name, { validator }).catch(error => {
+        if (error.code == 48) {
+          console.info(`Collection already exists`, name)
+        } else {
+          console.error(error)
+          process.exit(1)
+        }
       })
     )
   )
 
+  // Configure roles
+  await configureRolesAndPermissions(_db)
+
   // Setup default sysadmins
-  await db
-    .then(db => db.collection(_collections.Roles.name).findOne({ name: 'sysadmin' }))
-    .then(({ _id: roleId }) =>
-      db.then(db =>
-        Promise.all(
-          DEFAULT_SYSADMIN_EMAIL_ADDRESSES.split(',')
-            .filter(_ => _)
-            .map(emailAddress =>
-              db.collection(_collections.Users.name).findOneAndUpdate(
-                {
-                  emailAddress,
-                },
-                {
-                  $setOnInsert: { emailAddress },
-                  $addToSet: {
-                    roles: roleId,
-                  },
-                },
-                { upsert: true }
-              )
-            )
-        )
-      )
-    )
+  await insertUsers(
+    _db,
+    DEFAULT_SYSADMIN_EMAIL_ADDRESSES.split(',').filter(_ => _),
+    'sysadmin'
+  )
 
   // Setup default admins
-  await db
-    .then(db => db.collection(_collections.Roles.name).findOne({ name: 'admin' }))
-    .then(({ _id: roleId }) =>
-      db.then(db =>
-        Promise.all(
-          DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
-            .filter(_ => _)
-            .map(emailAddress =>
-              db.collection(_collections.Users.name).findOneAndUpdate(
-                {
-                  emailAddress,
-                },
-                {
-                  $setOnInsert: { emailAddress },
-                  $addToSet: {
-                    roles: roleId,
-                  },
-                },
-                { upsert: true }
-              )
-            )
-        )
-      )
-    )
+  await insertUsers(
+    _db,
+    DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').filter(_ => _),
+    'admin'
+  )
 
   // Apply indices
-  await db.then(db =>
-    Promise.all(
-      Object.entries(_collections)
-        .map(([, { name, indices = [] }]) =>
-          indices.map(({ index, options }) => db.collection(name).createIndex(index, options))
-        )
-        .flat()
-    )
+  await Promise.all(
+    Object.entries(_collections)
+      .map(([, { name, indices = [] }]) =>
+        indices.map(({ index, options }) => _db.collection(name).createIndex(index, options))
+      )
+      .flat()
   )
 
   console.info('MongoDB configured')
-})().catch(error => console.error('Error seeding MongoDB', error.message))
+})().catch(error => {
+  console.error('Error seeding MongoDB', error.message)
+  process.exit(1)
+})
 
 /**
  * Application-level batching for inserting UI logs

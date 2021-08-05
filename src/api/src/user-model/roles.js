@@ -1,4 +1,4 @@
-import permissions from './_permissions.js'
+import permissions from './permissions.js'
 
 const user = {
   name: 'user',

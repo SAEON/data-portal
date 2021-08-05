@@ -14,7 +14,7 @@ type Role {
 }
 
 type Permission {
-  id: Int!
+  id: ID!
   name: String!
   description: String
 }
