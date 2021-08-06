@@ -53,7 +53,6 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-compress": "^5.0.1",
-    "koa-morgan": "^1.0.1",
     "koa-passport": "^4.1.4",
     "koa-session": "^6.2.0",
     "mongodb": "^4.1.0",

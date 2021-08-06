@@ -12,7 +12,7 @@ export default async ({ _id: selfId, filters = [] }, { id: filterId }, ctx) => {
       },
     },
     {
-      returnOriginal: false,
+      returnDocument: 'after',
       upsert: false,
     }
   )

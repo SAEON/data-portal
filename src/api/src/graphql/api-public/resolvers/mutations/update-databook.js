@@ -13,7 +13,7 @@ export default async (_, args, ctx) => {
       $set,
     },
     {
-      returnOriginal: false,
+      returnDocument: 'after',
       upsert: false,
     }
   )

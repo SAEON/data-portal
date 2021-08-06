@@ -1,20 +1,16 @@
-import Link from '@material-ui/core/Link'
-import { Link as RouterLink } from 'react-router-dom'
-import clsx from 'clsx'
-import useStyles from './style'
+import { Link } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton'
+import LoginIcon from 'mdi-react/LoginVariantIcon'
+import Tooltip from '@material-ui/core/Tooltip'
 
-export default () => {
-  const classes = useStyles()
-
+export default props => {
   return (
-    <Link
-      to={`/login?redirect=${window.location.href}`}
-      component={RouterLink}
-      className={clsx(classes.link)}
-      color="inherit"
-      variant="overline"
-    >
-      Login
-    </Link>
+    <Tooltip title="Log in">
+      <span>
+        <IconButton component={Link} to={`/login?redirect=${window.location.href}`} {...props}>
+          <LoginIcon />
+        </IconButton>
+      </span>
+    </Tooltip>
   )
 }

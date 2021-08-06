@@ -102,6 +102,7 @@ type Mutation {
     sql: String
   ): Filter!
   deleteFilter(id: ID!): Boolean!
+  assignRolesToUser(userId: ID!, roleIds: [ID!]!): User!
 }
 
 type BrowserEvent implements Node {

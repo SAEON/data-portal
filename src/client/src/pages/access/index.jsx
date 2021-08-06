@@ -62,7 +62,7 @@ export default () => {
     <UserRolesProvider>
       <Header />
       <div style={{ marginTop: theme.spacing(2) }} />
-      <Container>
+      <Container style={{ minHeight: 1000 }}>
         <ContentNav
           navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
         >

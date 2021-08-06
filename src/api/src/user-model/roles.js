@@ -1,18 +1,18 @@
 import permissions from './permissions.js'
 
-const user = {
+export const user = {
   name: 'user',
   description: 'Default login role',
   permissions: [],
 }
 
-const saeon = {
+export const saeon = {
   name: 'saeon',
   description: 'Default login roles for @saeon.ac.za email addresses',
   permissions: [permissions['databook:create']],
 }
 
-const admin = {
+export const admin = {
   name: 'admin',
   description: 'Site administrators',
   permissions: [
@@ -24,7 +24,7 @@ const admin = {
   ],
 }
 
-const sysadmin = {
+export const sysadmin = {
   name: 'sysadmin',
   description: 'System administrators',
   permissions: [...admin.permissions],

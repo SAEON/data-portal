@@ -74,12 +74,11 @@ export default () => {
             },
             {
               upsert: true,
-              returnOriginal: false,
+              returnDocument: 'after',
             }
           )
 
-          const user =
-            userQuery.value || (await Users.findOne({ _id: userQuery.lastErrorObject.upserted }))
+          const user = userQuery.value
           cb(null, { id: user._id, emailAddress: user.emailAddress, name: user.name })
         } catch (error) {
           console.error('Error authenticating', error.message)

@@ -12,6 +12,7 @@ import editChart from '../mutations/edit-chart.js'
 import deleteChart from '../mutations/delete-chart.js'
 import createFilter from '../mutations/create-filter.js'
 import deleteFilter from '../mutations/delete-filter.js'
+import assignRolesToUser from '../mutations/assign-roles-to-user.js'
 
 export default {
   logBrowserEvents,
@@ -28,4 +29,5 @@ export default {
   deleteChart,
   createFilter,
   deleteFilter,
+  assignRolesToUser,
 }

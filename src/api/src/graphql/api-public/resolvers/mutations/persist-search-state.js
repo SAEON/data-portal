@@ -24,9 +24,9 @@ export default async (self, args, ctx) => {
     },
     {
       upsert: true,
-      returnOriginal: false,
+      returnDocument: 'after',
     }
   )
 
-  return (result.value?._id || result.lastErrorObject?.upserted).toString()
+  return result.value._id.toString()
 }

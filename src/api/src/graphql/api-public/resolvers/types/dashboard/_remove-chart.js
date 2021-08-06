@@ -14,7 +14,7 @@ export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
       },
     },
     {
-      returnOriginal: false,
+      returnDocument: 'after',
       upsert: false,
     }
   )

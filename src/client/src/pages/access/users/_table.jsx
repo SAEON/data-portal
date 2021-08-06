@@ -14,10 +14,10 @@ export default ({ users }) => {
   const theme = useTheme()
   const classes = useStyles()
 
-  const [assignUserRoles, { error, loading }] = useMutation(
+  const [assignRolesToUser, { error, loading }] = useMutation(
     gql`
-      mutation assignUserRoles($userId: Int!, $roleIds: [Int!]!) {
-        assignUserRoles(userId: $userId, roleIds: $roleIds) {
+      mutation assignRolesToUser($userId: ID!, $roleIds: [ID!]!) {
+        assignRolesToUser(userId: $userId, roleIds: $roleIds) {
           id
           roles {
             id
@@ -85,7 +85,7 @@ export default ({ users }) => {
                           .map(({ name }) => name)}
                         value={value.map(({ name }) => name)}
                         setValue={roleNames => {
-                          assignUserRoles({
+                          assignRolesToUser({
                             variables: {
                               userId,
                               roleIds:
