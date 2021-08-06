@@ -22,6 +22,7 @@ export default ({ routes }) => {
       <Menu
         id="site-navigation-menu"
         anchorEl={anchorEl}
+        disableScrollLock
         keepMounted
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}

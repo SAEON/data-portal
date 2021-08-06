@@ -29,7 +29,7 @@ export default props => {
         open={Boolean(anchor)}
         onClose={onClose}
       >
-        <Logout {...props} />
+        <Logout />
       </Menu>
     </div>
   )

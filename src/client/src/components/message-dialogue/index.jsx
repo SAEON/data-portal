@@ -75,6 +75,7 @@ export default ({
       )}
 
       <Dialog
+        disableScrollLock
         id={id}
         {...dialogueProps}
         open={open}
