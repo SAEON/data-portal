@@ -56,6 +56,7 @@ export default ({
           multiple
           value={value}
           MenuProps={{
+            disableScrollLock: true,
             MenuListProps: {
               style: {
                 padding: 0,

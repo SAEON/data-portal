@@ -26,7 +26,7 @@ export default {
     },
     secondary: {
       // light calculated from main
-      main: '#dee1e5',
+      main: '#002791',
       // dark calculated from main
     },
   },

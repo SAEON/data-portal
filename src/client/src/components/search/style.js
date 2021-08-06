@@ -9,7 +9,7 @@ export default makeStyles(theme => ({
   },
   recordsSearchBox: {
     transition: theme.transitions.create('background-color'),
-    backgroundColor: alpha(theme.palette.secondary.main, 0.1),
+    backgroundColor: alpha(theme.palette.common.white, 0.1),
 
     // When not hovered, not active
     '& .MuiInput-underline:before': {
@@ -17,16 +17,16 @@ export default makeStyles(theme => ({
     },
     // When hovered
     '&:hover': {
-      backgroundColor: alpha(theme.palette.secondary.main, 0.2),
+      backgroundColor: alpha(theme.palette.common.white, 0.2),
     },
     '& .MuiInput-underline:hover:before': {
       border: 'none',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: alpha(theme.palette.secondary.main, 0.5),
+      borderBottomColor: alpha(theme.palette.common.white, 0.5),
     },
   },
   divider: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.common.white,
   },
 }))
