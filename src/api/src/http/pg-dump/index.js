@@ -10,7 +10,6 @@ import archiver from 'archiver'
 const __dirname = getCurrentDirectory(import.meta)
 
 export default async ctx => {
-  await ctx.user.ensureDataScientist(ctx)
   const { schema } = ctx.params
   const databookId = schema
   const { findDatabooks } = ctx.mongo.dataFinders

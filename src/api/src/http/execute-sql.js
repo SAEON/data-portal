@@ -3,7 +3,6 @@ import QueryStream from 'pg-query-stream'
 import JSONStream from 'JSONStream'
 
 export default async ctx => {
-  await ctx.user.ensureDataScientist(ctx)
   const { findDatabooks } = ctx.mongo.dataFinders
   const { databookId, sql } = ctx.request.body
   const databook = (await findDatabooks({ _id: ObjectId(databookId) }))[0]

@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { context as globalContext } from '../../contexts/global'
-import Link from '../link'
+import { context as globalContext } from '../../../../../../contexts/global'
+import Link from '../../../../../../components/link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
-import { getShareLink } from '../../hooks/use-share-link'
-import packageJson from '../../../package.json'
+import packageJson from '../../../../../../../package.json'
+import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../config'
 
 /**
  * Dialogue contents of the share dialogue
@@ -15,8 +15,7 @@ import packageJson from '../../../package.json'
  * dialogue is opened. The useEffect hook will
  * fire every time the dialogue is opened
  */
-export default ({ tabIndex, search = undefined, params = {} }) => {
-  const { uri: shareLink, params: includeParams } = getShareLink()
+export default ({ tabIndex, search = undefined }) => {
   const isAtlasPage = window.location.pathname.includes('atlas')
 
   const { global } = useContext(globalContext)
@@ -38,20 +37,7 @@ export default ({ tabIndex, search = undefined, params = {} }) => {
   }, [isAtlasPage, global, persistSearchState, search])
 
   const id = data?.persistSearchState || undefined
-
-  const uri = isAtlasPage
-    ? shareLink
-    : `${shareLink}${
-        includeParams
-          ? `${shareLink.includes('?') ? '&' : '?'}search=${id}&${Object.entries(params)
-              .map(([param, val]) => `${param}=${val}`)
-              .join('&')}`
-          : ''
-      }`
-        // Remove trailing ampersand
-        .split('&')
-        .filter(_ => _)
-        .join('&')
+  const uri = `${CATALOGUE_CLIENT_ADDRESS}/collection/records?disableSidebar=true&showSearchBar=true&search=${id}`
 
   return error ? (
     'Error'

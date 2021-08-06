@@ -1,6 +1,4 @@
 import { cloneElement } from 'react'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
-import { setShareLink } from '../../hooks/use-share-link'
 import getUriState from '../../lib/fns/get-uri-state'
 import Loading from '../../components/loading'
 import DashboardContextProvider from './context'
@@ -33,10 +31,6 @@ const ElevationScroll = ({ children }) => {
 export default ({ id }) => {
   const theme = useTheme()
   const { poll } = getUriState()
-  setShareLink({
-    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}`,
-    params: false,
-  })
 
   const { error, loading, data, startPolling } = useQuery(
     gql`

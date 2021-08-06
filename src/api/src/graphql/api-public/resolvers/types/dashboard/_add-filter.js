@@ -1,7 +1,6 @@
 import { ObjectId } from 'mongodb'
 
 export default async ({ _id: selfId, filters = [] }, { id: filterId }, ctx) => {
-  await ctx.user.ensureDataScientist(ctx)
   const { Filters, Dashboards } = await ctx.mongo.collections
   filterId = ObjectId(filterId)
 

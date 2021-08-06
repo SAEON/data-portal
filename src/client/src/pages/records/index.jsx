@@ -19,7 +19,7 @@ export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
   return (
     <>
       <SkipLink href="#search-results" text="Skip to search results" />
-      {showSearchBar && (
+      {showSearchBar.toBoolean() && (
         <Toolbar
           style={{
             backgroundColor: alpha(theme.palette.common.black, 0.4),

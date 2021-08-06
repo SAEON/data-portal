@@ -1,5 +1,4 @@
 export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
-  await ctx.user.ensureDataScientist(ctx)
   const { Dashboards } = await ctx.mongo.collections
 
   const response = await Dashboards.findOneAndUpdate(

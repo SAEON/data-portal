@@ -29,6 +29,17 @@ const AccessPage = lazy(() => import('../../pages/access'))
 
 export default [
   {
+    label: 'Home',
+    to: '/',
+    exact: true,
+    Icon: HomeIcon,
+    render: () => (
+      <Transition>
+        <HomePage />
+      </Transition>
+    ),
+  },
+  {
     label: 'Search SAEON data',
     Icon: SearchIcon,
     to: '/records',
@@ -54,18 +65,7 @@ export default [
     ),
   },
   {
-    label: 'Home',
-    to: '/',
-    exact: true,
-    Icon: HomeIcon,
-    render: () => (
-      <Transition>
-        <HomePage />
-      </Transition>
-    ),
-  },
-  {
-    label: 'About',
+    label: 'About the data portal',
     Icon: AboutIcon,
     to: '/about',
     exact: true,
@@ -131,8 +131,8 @@ export default [
     label: 'Render',
     to: '/render',
     exact: false,
-    render: ({ location: { pathname } }) => {
-      return <Redirect to={pathname.replace('/render', '')} />
+    render: ({ location: { pathname, search } }) => {
+      return <Redirect to={`${pathname.replace('/render', '')}${search}`} />
     },
     excludeFromNav: true,
   },

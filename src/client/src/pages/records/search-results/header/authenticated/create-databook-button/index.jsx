@@ -21,7 +21,7 @@ import getValidCount from './_get-valid-count'
 export default ({ catalogue, cache }) => {
   const theme = useTheme()
   const { global } = useContext(globalContext)
-  const { isDataScientist } = useContext(authorizationContext)
+  const { hasPermission } = useContext(authorizationContext)
   const { selectedIds, selectAll } = global
 
   const [createDatabook, { error, loading }] = useMutation(
@@ -33,7 +33,7 @@ export default ({ catalogue, cache }) => {
     {
       onCompleted: data => {
         if (data) {
-          window.open(`/render/databooks/${data.createDatabook}`)
+          window.open(`/databooks/${data.createDatabook}`)
         }
       },
     }
@@ -75,13 +75,15 @@ export default ({ catalogue, cache }) => {
           style={
             available
               ? {
-                  color: isDataScientist ? theme.palette.primary.main : theme.palette.warning.main,
+                  color: hasPermission('databook:create')
+                    ? theme.palette.primary.main
+                    : theme.palette.warning.main,
                 }
               : {}
           }
           disabled={!available}
           onClick={
-            isDataScientist
+            hasPermission('databook:create')
               ? () =>
                   createDatabook({
                     variables: {

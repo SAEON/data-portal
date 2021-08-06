@@ -113,8 +113,8 @@ export default [
     label: 'Render',
     to: '/render',
     exact: false,
-    render: ({ location: { pathname } }) => {
-      return <Redirect to={pathname.replace('/render', '')} />
+    render: ({ location: { pathname, search } }) => {
+      return <Redirect to={`${pathname.replace('/render', '')}${search}`} />
     },
     excludeFromNav: true,
   },

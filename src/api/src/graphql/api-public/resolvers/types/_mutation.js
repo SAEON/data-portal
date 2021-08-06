@@ -13,11 +13,13 @@ import deleteChart from '../mutations/delete-chart.js'
 import createFilter from '../mutations/create-filter.js'
 import deleteFilter from '../mutations/delete-filter.js'
 import assignRolesToUser from '../mutations/assign-roles-to-user.js'
+import PERMISSIONS from '../../../../user-model/permissions.js'
+import authorize from '../../../../user-model/authorize.js'
 
 export default {
   logBrowserEvents,
-  createDatabook,
-  createAtlas,
+  createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
+  createAtlas: authorize(PERMISSIONS['atlas:create'])(createAtlas),
   persistSearchState,
   createDashboard,
   updateDashboard,
@@ -29,5 +31,5 @@ export default {
   deleteChart,
   createFilter,
   deleteFilter,
-  assignRolesToUser,
+  assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
 }

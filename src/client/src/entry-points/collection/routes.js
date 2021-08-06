@@ -126,8 +126,8 @@ export default [
     label: 'Collection',
     to: '/collection',
     exact: false,
-    render: ({ location: { pathname } }) => {
-      return <Redirect to={pathname.replace('/collection', '')} />
+    render: ({ location: { pathname, search } }) => {
+      return <Redirect to={`${pathname.replace('/collection', '')}${search}`} />
     },
     excludeFromNav: true,
   },

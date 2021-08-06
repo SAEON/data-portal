@@ -2,11 +2,7 @@ import createPostgisWorkspace from './provision-postgis-db/index.js'
 import fetchMetadataRecords from './_fetch-metadata-records.js'
 import createMongoDoc from './_create-mongo-doc.js'
 
-export default async (_, args, ctx) => {
-  await ctx.user.ensureDataScientist(ctx)
-
-  const { search, createdBy } = args
-
+export default async (_, { search, createdBy }, ctx) => {
   /**
    * Search the catalogue with the provided state
    * for a list of record IDs that should be included

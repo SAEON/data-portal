@@ -1,7 +1,6 @@
 import { ObjectId } from 'mongodb'
 
 export default async ({ _id: selfId, layout = [] }, { id: chartId }, ctx) => {
-  await ctx.user.ensureDataScientist(ctx)
   const { Charts, Dashboards } = await ctx.mongo.collections
   chartId = ObjectId(chartId)
 

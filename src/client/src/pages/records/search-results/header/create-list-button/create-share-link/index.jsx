@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import MessageDialogue from '../message-dialogue'
+import MessageDialogue from '../../../../../../components/message-dialogue'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import ShareIcon from 'mdi-react/LinkPlusIcon'

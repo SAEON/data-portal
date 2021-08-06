@@ -4,8 +4,6 @@ import makeSql from './sql.js'
 const sharedTables = Object.keys(Object.assign({}, defaultLayers))
 
 export default async (self, args, ctx) => {
-  await ctx.user.ensureDataScientist(ctx)
-
   const { _id: schema, authentication } = self
   const { username, password: encryptedPassword } = authentication
   const { query } = ctx.postgis

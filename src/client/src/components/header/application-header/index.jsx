@@ -24,9 +24,7 @@ export default ({ routes, ...props }) => {
         />
       </Hidden>
 
-      <Hidden smDown>
-        <Breadcrumbs routes={routes} />
-      </Hidden>
+      <Hidden smDown>{!props.disableBreadcrumbs && <Breadcrumbs routes={routes} />}</Hidden>
 
       <div style={{ marginLeft: 'auto' }} />
 

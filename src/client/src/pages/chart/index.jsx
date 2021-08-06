@@ -1,15 +1,9 @@
-import { CATALOGUE_CLIENT_ADDRESS } from '../../config'
-import { setShareLink } from '../../hooks/use-share-link'
 import RenderChart from '../../components/chart-controller'
 import useStyles from './style'
 import clsx from 'clsx'
 
 export default ({ id }) => {
   const classes = useStyles()
-  setShareLink({
-    uri: `${CATALOGUE_CLIENT_ADDRESS}/render/chart?id=${id}`,
-    params: false,
-  })
 
   return (
     <div

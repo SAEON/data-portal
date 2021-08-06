@@ -10,6 +10,10 @@ import roles from '../queries/roles.js'
 import permissions from '../queries/permissions.js'
 import user from '../queries/user.js'
 import users from '../queries/users.js'
+import PERMISSIONS from '../../../../user-model/permissions.js'
+import authorize from '../../../../user-model/authorize.js'
+
+const getUserOwner = async ([, args, ctx]) => ctx.userInfo.id === args.id
 
 export default {
   catalogue,
@@ -17,11 +21,12 @@ export default {
   dashboards,
   charts,
   filters,
-  databook,
+  databook, // TODO
   searchState,
   atlas,
-  roles,
-  user,
-  users,
-  permissions,
+  roles: authorize(PERMISSIONS['roles:view'])(roles),
+  user: async (...args) =>
+    authorize(PERMISSIONS['users:view'], await getUserOwner(args))(user)(...args),
+  users: authorize(PERMISSIONS['users:view'])(users),
+  permissions: authorize(PERMISSIONS['permissions:view'])(permissions),
 }

@@ -1,8 +1,6 @@
 import { ObjectId } from 'mongodb'
 
 export default async (databook, args, ctx) => {
-  await ctx.user.ensureDataScientist(ctx)
-
   const { Filters } = await ctx.mongo.collections
   const { databookId, ..._args } = args
 

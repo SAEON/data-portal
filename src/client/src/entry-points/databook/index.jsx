@@ -16,7 +16,7 @@ const config = {
 render(
   <Suspense fallback={<Loading />}>
     <App {...config}>
-      <ApplicationHeader routes={routes} color="primary" variant="dense" />
+      <ApplicationHeader disableBreadcrumbs routes={routes} color="primary" variant="dense" />
       <SizeContent style={{ height: 0 }}>
         <RouteSwitcher routes={routes} />
       </SizeContent>

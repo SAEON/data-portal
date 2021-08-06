@@ -3,7 +3,7 @@ import permissions from './permissions.js'
 export const user = {
   name: 'user',
   description: 'Default login role',
-  permissions: [],
+  permissions: [permissions['atlas:create']],
 }
 
 export const saeon = {
@@ -17,6 +17,7 @@ export const admin = {
   description: 'Site administrators',
   permissions: [
     ...saeon.permissions,
+    permissions['users:assign-roles'],
     permissions['/access'],
     permissions['users:view'],
     permissions['roles:view'],

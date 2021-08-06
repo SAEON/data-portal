@@ -1,8 +1,6 @@
 import { ObjectId } from 'mongodb'
 
-//update Chart
 export default async (_, args, ctx) => {
-  // await ctx.user.ensureDataScientist(ctx)
   const { Charts } = await ctx.mongo.collections
 
   //STEVEN: making sure to not overwrite layout(or any other property) when setting new values.
