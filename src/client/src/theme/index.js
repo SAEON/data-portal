@@ -11,9 +11,6 @@ export default createMuiTheme({
     MuiUseMediaQuery: {
       noSsr: true,
     },
-    MuiContainer: {
-      disableGutters: false,
-    },
   },
   overrides: overrides(defaultTheme),
   link: {

@@ -15,8 +15,7 @@ export default theme => ({
   },
   MuiToolbar: {
     gutters: {
-      // TODO - this should be dynamic
-      '@media (min-width: 600px)': {
+      [theme.breakpoints.up('sm')]: {
         paddingLeft: 16,
         paddingRight: 16,
       },
