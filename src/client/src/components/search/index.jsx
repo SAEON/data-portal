@@ -17,7 +17,7 @@ export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
   const theme = useTheme()
 
   return (
-    <div className={classes.recordsSearchBox} style={style}>
+    <div className={clsx(classes.recordsSearchBox)} style={style}>
       <QuickForm
         effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
         text={global.text || ''}

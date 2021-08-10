@@ -32,7 +32,9 @@ export default ({ codeView, toggleCodeView, _source }) => {
           <CitationButton {..._source} buttonSize="medium" />
         </Hidden>
 
-        <DataDownloadButton buttonProps={{ color: 'primary' }} {..._source} />
+        <Hidden xsDown>
+          <DataDownloadButton buttonProps={{ color: 'primary' }} {..._source} />
+        </Hidden>
       </Grid>
     </FancyHeader>
   )

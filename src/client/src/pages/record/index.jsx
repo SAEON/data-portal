@@ -7,9 +7,12 @@ import CodeView from './code-view'
 import Container from '@material-ui/core/Container'
 import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Hidden from '@material-ui/core/Hidden'
 
 export default ({ id }) => {
   const [codeView, updateCodeView] = useState(false)
+  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(
@@ -54,8 +57,10 @@ export default ({ id }) => {
         toggleCodeView={() => updateCodeView(!codeView)}
         _source={{ ...data?.catalogue?.records?.nodes?.[0]?.metadata?._source }}
       />
-      <div style={{ marginTop: theme.spacing(1) }} />
-      <Container>
+      <Hidden smDown>
+        <div style={{ marginTop: theme.spacing(1) }} />
+      </Hidden>
+      <Container disableGutters={smDown}>
         <Fade key="code-view-in" in={codeView}>
           <span style={{ display: codeView ? 'inherit' : 'none' }}>
             <CodeView json={data?.catalogue?.records?.nodes?.[0]?.metadata?._source} />

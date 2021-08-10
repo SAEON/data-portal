@@ -25,6 +25,7 @@ const DEFAULT_CURSORS = {
 export default ({ disableSidebar }) => {
   const theme = useTheme()
   const xsDown = useMediaQuery(theme => theme.breakpoints.down('xs'))
+  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const [showSidebar, setShowSidebar] = useState(!disableSidebar && !xsDown)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
@@ -154,7 +155,10 @@ export default ({ disableSidebar }) => {
         loading={loading}
         catalogue={data?.catalogue}
       >
-        <Container style={{ marginTop: theme.spacing(2), minHeight: 1000 }}>
+        <Hidden smDown>
+          <div style={{ marginTop: theme.spacing(2) }} />
+        </Hidden>
+        <Container disableGutters={smDown} style={{ minHeight: 1000 }}>
           {/* SEARCH LOADING */}
           {loading && (
             <Grid item xs={12} style={{ position: 'relative' }}>
