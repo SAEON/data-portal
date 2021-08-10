@@ -21,7 +21,12 @@ const useStyles = makeStyles(theme => ({
 export default function IconBreadcrumbs({ routes }) {
   const classes = useStyles()
   const { pathname } = useLocation() // Trigger re-render on location changes
-  const tree = [...new Set(pathname.split('/'))].map(p => {
+
+  const _pathname = pathname.match(/\/records\/./)
+    ? ['', 'records', ...new Set(pathname.split('/records/')).filter(_ => _)]
+    : [...new Set(pathname.split('/'))]
+
+  const tree = _pathname.map(p => {
     return (
       routes.find(({ to }) => {
         to = to.replace('/', '')
