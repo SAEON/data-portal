@@ -17,20 +17,20 @@ export default {
   plugins: [
     commonjs(),
     resolve(),
-    babel({
-      babelHelpers: 'runtime',
-      presets: [
-        [
-          '@babel/preset-env',
-          {
-            debug: false,
-            useBuiltIns: 'entry',
-            corejs: { version: 3, proposals: true },
-          },
-        ],
-      ],
-      plugins: [['@babel/plugin-transform-runtime']],
-    }),
+    // babel({
+    //   babelHelpers: 'runtime',
+    //   presets: [
+    //     [
+    //       '@babel/preset-env',
+    //       {
+    //         debug: false,
+    //         useBuiltIns: 'entry',
+    //         corejs: { version: 3, proposals: true },
+    //       },
+    //     ],
+    //   ],
+    //   plugins: [['@babel/plugin-transform-runtime']],
+    // }),
 
     json({
       compact: true,
