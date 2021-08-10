@@ -1,4 +1,4 @@
-FROM node:14.16.1
+FROM node:16.6.1
 
 ARG ALLOWED_ORIGINS
 ENV ALLOWED_ORIGINS=$ALLOWED_ORIGINS
@@ -111,7 +111,7 @@ ENV HOSTNAME=$HOSTNAME
 WORKDIR /app
 COPY --from=docker:19.03 /usr/local/bin/docker /usr/local/bin/
 COPY . .
-RUN npm ci --only=production
+RUN npm ci --legacy-peer-deps --only=production
 EXPOSE 3000 4000
 
 CMD \

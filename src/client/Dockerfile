@@ -1,5 +1,5 @@
 # Build client
-FROM node:14.16.1 as build
+FROM node:16.6.1 as build
 
 ARG API_PUBLIC_ADDRESS
 ARG CATALOGUE_CLIENT_ADDRESS
@@ -26,7 +26,7 @@ RUN echo "CATALOGUE_TECHNICAL_CONTACT=$CATALOGUE_TECHNICAL_CONTACT" >> .env
 RUN echo "CATALOGUE_LEGAL_CONTACT=$CATALOGUE_LEGAL_CONTACT" >> .env
 
 COPY . .
-RUN npm ci --only=production
+RUN npm ci --legacy-peer-deps --only=production
 RUN npm run build
 
 # Serve static files
