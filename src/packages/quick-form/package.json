@@ -54,6 +54,5 @@
     "react": "*",
     "rimraf": "^3.0.2",
     "rollup": "^2.56.2"
-  },
-  "dependencies": {}
+  }
 }
