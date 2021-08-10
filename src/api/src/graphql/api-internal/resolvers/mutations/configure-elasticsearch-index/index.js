@@ -32,7 +32,7 @@ export default async () => {
     await testOdpConnection()
   } catch (error) {
     const msg = 'Unable to integrate with the ODP - are you on the VPN?'
-    console.error(msg)
+    console.error(msg, error)
     return {
       runtime: `${Math.round((performance.now() - t0) / 1000, 2)} seconds`,
       ...result,
