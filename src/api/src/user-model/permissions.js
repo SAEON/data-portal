@@ -3,6 +3,14 @@ export default Object.freeze({
     name: '/access',
     description: 'View the /access route on client apps',
   },
+  '/usage': {
+    name: '/usage',
+    description: 'View the /usage route on client apps',
+  },
+  'site-analytics:view': {
+    name: 'site-analytics:view',
+    description: 'View catalogue deployment analytics',
+  },
   'databook:create': {
     name: 'databook:create',
     description: 'Create databook from vector-based spatial datasets',

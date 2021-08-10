@@ -10,6 +10,7 @@ import LoginIcon from 'mdi-react/LoginIcon'
 import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
 import HomeIcon from 'mdi-react/HomeIcon'
+import UsageIcon from 'mdi-react/ChartBoxIcon'
 import { Redirect } from 'react-router-dom'
 
 const HomePage = lazy(() => import('../../pages/home'))
@@ -26,6 +27,7 @@ const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 const ContactPage = lazy(() => import('../../pages/contact'))
 const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 const AccessPage = lazy(() => import('../../pages/access'))
+const UsageReportsPage = lazy(() => import('../../pages/usage'))
 
 export default [
   {
@@ -36,6 +38,18 @@ export default [
     render: () => (
       <Transition>
         <HomePage />
+      </Transition>
+    ),
+  },
+  {
+    label: 'Usage reports',
+    to: '/usage',
+    exact: true,
+    Icon: UsageIcon,
+    requiredPermission: '/usage',
+    render: () => (
+      <Transition>
+        <UsageReportsPage />
       </Transition>
     ),
   },
