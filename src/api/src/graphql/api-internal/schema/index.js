@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools'
+import { makeExecutableSchema } from '@graphql-tools/schema'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import getCurrentDirectory from '../../../lib/get-current-directory.js'

@@ -1,4 +1,4 @@
-import fetch from 'request-promise'
+import fetch from 'node-fetch'
 import btoa from 'btoa'
 import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH_ADDRESS, ODP_AUTH_SCOPE } from '../config.js'
 

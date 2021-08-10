@@ -1,4 +1,4 @@
-import fetch from 'request'
+import fetch from 'node-fetch'
 import { URL } from 'url'
 import { CURATOR_CONTACT } from '../config.js'
 
