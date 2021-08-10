@@ -9,7 +9,7 @@ export const user = {
 export const saeon = {
   name: 'saeon',
   description: 'Default login roles for @saeon.ac.za email addresses',
-  permissions: [permissions['databook:create']],
+  permissions: [...user.permissions, permissions['databook:create']],
 }
 
 export const admin = {
