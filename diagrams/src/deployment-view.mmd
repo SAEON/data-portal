@@ -49,7 +49,7 @@ flowchart TD
                 Kibana("docker.elastic.co/kibana/kibana:7.10.2")
             end
             subgraph mongo_container [MongoDB]
-                Mongo[("mongo:4.4.3")]
+                Mongo[("mongo:5.0.2")]
             end    
             subgraph postgis_container [PostGIS]
                 PostGIS[("postgis/postgis:13-3.1<br />(src/postgis)")]

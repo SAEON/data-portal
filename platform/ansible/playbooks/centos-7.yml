@@ -105,7 +105,7 @@
         day: "*"
         month: "*"
         weekday: "*"
-        job: docker run --net=catalogue_default -v /opt/dbak:/dbak --rm mongo:4.4.3 sh -c "mongodump --uri=mongodb://mongo:27017 -u={{ MONGO_DB_USERNAME }} -p={{ MONGO_DB_PASSWORD }} --authenticationDatabase=admin -d=catalogue --archive --gzip > /dbak/catalogue_bak_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive`" # The -c flag stands for 'chained', and allows for running chained commands (might not be required actually in this case) 
+        job: docker run --net=catalogue_default -v /opt/dbak:/dbak --rm mongo:5.0.2 sh -c "mongodump --uri=mongodb://mongo:27017 -u={{ MONGO_DB_USERNAME }} -p={{ MONGO_DB_PASSWORD }} --authenticationDatabase=admin -d=catalogue --archive --gzip > /dbak/catalogue_bak_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive`" # The -c flag stands for 'chained', and allows for running chained commands (might not be required actually in this case) 
     
     - name: Prune MongoDB backups
       cron:
