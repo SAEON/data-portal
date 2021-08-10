@@ -26,7 +26,7 @@ RUN echo "CATALOGUE_TECHNICAL_CONTACT=$CATALOGUE_TECHNICAL_CONTACT" >> .env
 RUN echo "CATALOGUE_LEGAL_CONTACT=$CATALOGUE_LEGAL_CONTACT" >> .env
 
 COPY . .
-RUN npm ci --legacy-peer-deps --only=production
+RUN npm ci --force --only=production
 RUN npm run build
 
 # Serve static files

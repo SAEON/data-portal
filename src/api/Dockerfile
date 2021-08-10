@@ -111,7 +111,7 @@ ENV HOSTNAME=$HOSTNAME
 WORKDIR /app
 COPY --from=docker:19.03 /usr/local/bin/docker /usr/local/bin/
 COPY . .
-RUN npm ci --legacy-peer-deps --only=production
+RUN npm ci --force --only=production
 EXPOSE 3000 4000
 
 CMD \

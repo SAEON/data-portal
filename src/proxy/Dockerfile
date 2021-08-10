@@ -8,7 +8,7 @@ ENV LATEST_COMMIT=$LATEST_COMMIT
 
 WORKDIR /app
 COPY . .
-RUN npm ci --legacy-peer-deps --only=production
+RUN npm ci --force --only=production
 EXPOSE 8001 8002
 
 CMD ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS \
