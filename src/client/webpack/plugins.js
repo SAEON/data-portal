@@ -50,7 +50,7 @@ module.exports = (ROOT, output) => {
       ],
     }),
     // mode === 'production' ? new GenerateSW({}) : null,
-    // new BundleAnalyzerPlugin()
+    // new BundleAnalyzerPlugin(),
     ...loadEntryPoints(ROOT, output),
   ].filter(_ => _)
 }

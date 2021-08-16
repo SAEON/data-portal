@@ -1,5 +1,3 @@
-import downloadsReport from '../queries/downloads-report/index.js'
+import placeholder from '../queries/placeholder.js'
 
-export default {
-  downloadsReport,
-}
+export default { placeholder }

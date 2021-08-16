@@ -39,6 +39,29 @@ type StatusHash {
   id: ID!
 }
 
+enum DateBucket {
+  minute
+  hour
+  day
+  month
+  year
+}
+
+type DownloadSummary {
+  # DOI of metadata record (or SAEON id if no DOI)
+  id: ID!
+  clientSession: String
+  clientIpAddress: String
+  # Resolve an IP Address to location using https://ip-api.com/
+  clientIpLocation: String
+  clientUserAgent: String
+  clientPathname: String
+  referrer: String
+  # Download date, rounded down to the hour
+  date(bucket: DateBucket): DateTime!
+  count: Int!
+}
+
 type Query {
   # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
   catalogue(referrer: String): Catalogue!
@@ -56,6 +79,7 @@ type Query {
   atlas(id: ID!): JSON
   # Retrieve dashboards by id
   dashboards(ids: [ID!]!): [Dashboard!]
+  downloadsReport: [DownloadSummary]!
   roles: [Role]!
   permissions: [Permission]!
   users: [User]!

@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
-import Avatar from '@material-ui/core/Avatar'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({
@@ -13,7 +12,6 @@ export default ({
   title,
   subheader = undefined,
   Icon = undefined,
-  avatarStyle = {},
   defaultExpanded = false,
   actions = [],
   cardStyle = {},
@@ -30,13 +28,7 @@ export default ({
         subheader={subheader || ''}
         style={{ cursor: 'pointer' }}
         onClick={() => setCollapsed(!collapsed)}
-        avatar={
-          Icon && (
-            <Avatar style={avatarStyle}>
-              <Icon />
-            </Avatar>
-          )
-        }
+        avatar={Icon && <Icon />}
         title={title}
         action={[
           ...actions,

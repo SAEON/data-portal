@@ -12,6 +12,7 @@ import user from '../queries/user.js'
 import users from '../queries/users.js'
 import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
+import downloadsReport from '../queries/downloads-report/index.js'
 
 const getUserOwner = async ([, args, ctx]) => ctx.userInfo.id === args.id
 
@@ -24,6 +25,7 @@ export default {
   databook, // TODO
   searchState,
   atlas,
+  downloadsReport: authorize(PERMISSIONS['site-analytics:view'])(downloadsReport),
   roles: authorize(PERMISSIONS['roles:view'])(roles),
   user: async (...args) =>
     authorize(PERMISSIONS['users:view'], await getUserOwner(args))(user)(...args),
