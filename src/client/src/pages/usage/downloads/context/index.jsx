@@ -11,7 +11,6 @@ export default ({ children }) => {
         downloadsReport {
           id
           clientIpAddress
-          clientIpLocation
           clientUserAgent
           referrer
           date(bucket: $dateBucket)
