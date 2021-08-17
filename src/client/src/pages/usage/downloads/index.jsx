@@ -6,32 +6,142 @@ import Icon from 'mdi-react/ChartPieIcon'
 import ReactECharts from 'echarts-for-react'
 import theme from '../../../lib/echarts-theme.js'
 
+var bgColor = '#2E2733'
+
+const otherData = [
+  {
+    name: 'Grandpa',
+    children: [
+      {
+        name: 'Uncle Leo',
+        value: 15,
+        children: [
+          {
+            name: 'Cousin Jack',
+            value: 2,
+          },
+          {
+            name: 'Cousin Mary',
+            value: 5,
+            children: [
+              {
+                name: 'Jackson',
+                value: 2,
+              },
+            ],
+          },
+          {
+            name: 'Cousin Ben',
+            value: 4,
+          },
+        ],
+      },
+      {
+        name: 'Aunt Jane',
+        children: [
+          {
+            name: 'Cousin Kate',
+            value: 4,
+          },
+        ],
+      },
+      {
+        name: 'Father',
+        value: 10,
+        children: [
+          {
+            name: 'Me',
+            value: 5,
+            itemStyle: {
+              color: 'red',
+            },
+          },
+          {
+            name: 'Brother Peter',
+            value: 1,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Mike',
+    children: [
+      {
+        name: 'Uncle Dan',
+        children: [
+          {
+            name: 'Cousin Lucy',
+            value: 3,
+          },
+          {
+            name: 'Cousin Luck',
+            value: 4,
+            children: [
+              {
+                name: 'Nephew',
+                value: 2,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Nancy',
+    children: [
+      {
+        name: 'Uncle Nike',
+        children: [
+          {
+            name: 'Cousin Betty',
+            value: 1,
+          },
+          {
+            name: 'Cousin Jenny',
+            value: 2,
+          },
+        ],
+      },
+    ],
+  },
+]
+
 export default () => {
   const { downloads } = useContext(downloadsContext)
-  console.log('downloads', downloads)
 
   const data = downloads.reduce((a, c) => {
-    const { referrer, date, clientIpLocation, count } = c
-    if (!a[referrer]) {
-      a[referrer] = {}
+    let { referrer, date, id, count } = c
+    referrer = referrer || 'UNKNOWN'
+
+    let _referrer = a.find(({ name }) => name === referrer)
+
+    if (!_referrer) {
+      _referrer = { name: referrer, children: [] }
+      a.push(_referrer)
     }
 
-    if (!a[referrer][date]) {
-      a[referrer][date] = {}
+    let _date = _referrer.children.find(({ name }) => name === date)
+
+    if (!_date) {
+      _date = { name: date, children: [], value: count }
+      _referrer.children.push(_date)
+    } else {
+      _date.value += count
     }
 
-    if (!a[referrer][date][clientIpLocation]) {
-      a[referrer][date][clientIpLocation] = {
-        value: count,
-      }
-    }
+    let _id = _date.children.find(({ name }) => name === id)
 
-    a[referrer][date][clientIpLocation].value = a[referrer][date][clientIpLocation].value + count
+    if (!_id) {
+      _id = { name: id, value: count }
+      _date.children.push(_id)
+    } else {
+      _id.value += count
+    }
 
     return a
-  }, {})
-
-  console.log('data', data)
+  }, [])
 
   return (
     <Collapse Icon={Icon} title="by Referrer">
@@ -49,110 +159,16 @@ export default () => {
                   color: ['#2F93C8', '#AEC48F', '#FFDB5C', '#F98862'],
                 },
               },
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)',
+              },
               series: {
                 type: 'sunburst',
-                data: [
-                  {
-                    name: 'Grandpa',
-                    children: [
-                      {
-                        name: 'Uncle Leo',
-                        value: 15,
-                        children: [
-                          {
-                            name: 'Cousin Jack',
-                            value: 2,
-                          },
-                          {
-                            name: 'Cousin Mary',
-                            value: 5,
-                            children: [
-                              {
-                                name: 'Jackson',
-                                value: 2,
-                              },
-                            ],
-                          },
-                          {
-                            name: 'Cousin Ben',
-                            value: 4,
-                          },
-                        ],
-                      },
-                      {
-                        name: 'Aunt Jane',
-                        children: [
-                          {
-                            name: 'Cousin Kate',
-                            value: 4,
-                          },
-                        ],
-                      },
-                      {
-                        name: 'Father',
-                        value: 10,
-                        children: [
-                          {
-                            name: 'Me',
-                            value: 5,
-                            itemStyle: {
-                              color: 'red',
-                            },
-                          },
-                          {
-                            name: 'Brother Peter',
-                            value: 1,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    name: 'Mike',
-                    children: [
-                      {
-                        name: 'Uncle Dan',
-                        children: [
-                          {
-                            name: 'Cousin Lucy',
-                            value: 3,
-                          },
-                          {
-                            name: 'Cousin Luck',
-                            value: 4,
-                            children: [
-                              {
-                                name: 'Nephew',
-                                value: 2,
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    name: 'Nancy',
-                    children: [
-                      {
-                        name: 'Uncle Nike',
-                        children: [
-                          {
-                            name: 'Cousin Betty',
-                            value: 1,
-                          },
-                          {
-                            name: 'Cousin Jenny',
-                            value: 2,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-                radius: [0, '90%'],
+                data,
+                radius: [0, '95%'],
                 label: {
-                  rotate: 'radial',
+                  show: false,
                 },
               },
             }}

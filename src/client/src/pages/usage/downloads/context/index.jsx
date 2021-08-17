@@ -10,8 +10,6 @@ export default ({ children }) => {
       query downloadsReport($dateBucket: DateBucket) {
         downloadsReport {
           id
-          clientIpAddress
-          clientUserAgent
           referrer
           date(bucket: $dateBucket)
           count

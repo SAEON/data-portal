@@ -23,6 +23,6 @@ export default {
     const {
       value: { value: bucket },
     } = args[0]
-    return { $dateToString: { format: DATE_FORMATS[bucket || 'minute'], date: '$createdAt' } }
+    return { $dateToString: { format: DATE_FORMATS[bucket || 'month'], date: '$createdAt' } }
   },
 }
