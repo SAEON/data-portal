@@ -1,25 +1,35 @@
 import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../../components/loading'
+import UAParser from 'ua-parser-js'
 
 export const context = createContext()
 
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query downloadsReport($dateBucket: DateBucket) {
-        downloadsReport {
-          id
+      query ($bucket: DateBucket) {
+        downloadCount: downloadsReport {
+          count
+        }
+
+        referrerCount: downloadsReport {
           referrer
-          date(bucket: $dateBucket)
+          date(bucket: $bucket)
+          count
+        }
+
+        deviceCount: downloadsReport {
+          clientUserAgent
           count
         }
       }
     `,
     {
       variables: {
-        dateBucket: 'minute',
+        bucket: 'day',
       },
+      fetchPolicy: 'no-cache',
     }
   )
 
@@ -31,7 +41,44 @@ export default ({ children }) => {
     throw new Error('Error retrieving download report data', error.message)
   }
 
-  const { downloadsReport: downloads } = data
+  const {
+    downloadCount: [downloadCount],
+    referrerCount,
+    deviceCount,
+  } = data
 
-  return <context.Provider value={{ downloads }}>{children}</context.Provider>
+  return (
+    <context.Provider
+      value={{
+        downloadCount,
+        referrerCount,
+        deviceCount: Object.entries(
+          deviceCount
+            .map(({ clientUserAgent, ...other }) => {
+              const ua = new UAParser(clientUserAgent)
+              const { name: osName } = ua.getOS()
+              const { name } = ua.getBrowser()
+
+              return {
+                device: `${name} (${osName})`,
+                ...other,
+              }
+            })
+            .reduce(
+              (devices, { device, count, ...other }) =>
+                Object.assign(devices, {
+                  [device]: {
+                    count: count + (devices[device]?.count || 0),
+                    device,
+                    ...other,
+                  },
+                }),
+              {}
+            )
+        ).map(([, fields]) => fields),
+      }}
+    >
+      {children}
+    </context.Provider>
+  )
 }

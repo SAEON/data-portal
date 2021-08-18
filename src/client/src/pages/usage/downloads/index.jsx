@@ -1,78 +1,78 @@
-import { useContext } from 'react'
+import { useContext, lazy, Suspense } from 'react'
 import { context as downloadsContext } from './context'
-import Collapse from '../../../components/collapse'
+import Card from '@material-ui/core/Card'
+import Grid from '@material-ui/core/Grid'
 import CardContent from '@material-ui/core/CardContent'
-import Icon from 'mdi-react/ChartPieIcon'
-import ReactECharts from 'echarts-for-react'
-import theme from '../../../lib/echarts-theme.js'
+import Loading from '../../../components/loading'
+import useTheme from '@material-ui/core/styles/useTheme'
+import Typography from '@material-ui/core/Typography'
+import Collapse from '../../../components/collapse'
+
+const BarChart = lazy(() => import('./charts/bar-chart'))
 
 export default () => {
-  const { downloads } = useContext(downloadsContext)
-
-  const data = downloads.reduce((a, c) => {
-    let { referrer, date, id, count } = c
-    referrer = referrer || 'UNKNOWN'
-
-    let _referrer = a.find(({ name }) => name === referrer)
-
-    if (!_referrer) {
-      _referrer = { name: referrer, children: [] }
-      a.push(_referrer)
-    }
-
-    let _date = _referrer.children.find(({ name }) => name === date)
-
-    if (!_date) {
-      _date = { name: date, children: [], value: count }
-      _referrer.children.push(_date)
-    } else {
-      _date.value += count
-    }
-
-    let _id = _date.children.find(({ name }) => name === id)
-
-    if (!_id) {
-      _id = { name: id, value: count }
-      _date.children.push(_id)
-    } else {
-      _id.value += count
-    }
-
-    return a
-  }, [])
+  const theme = useTheme()
+  const { downloadCount, referrerCount, deviceCount } = useContext(downloadsContext)
 
   return (
-    <Collapse Icon={Icon} title="by Referrer">
-      <CardContent>
-        <div style={{ height: 700 }}>
-          <ReactECharts
-            theme={theme}
-            style={{ height: '100%' }}
-            option={{
-              visualMap: {
-                type: 'continuous',
-                min: 0,
-                max: 10,
-                inRange: {
-                  color: ['#2F93C8', '#AEC48F', '#FFDB5C', '#F98862'],
-                },
-              },
-              tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)',
-              },
-              series: {
-                type: 'sunburst',
-                data,
-                radius: [0, '95%'],
-                label: {
-                  show: false,
-                },
-              },
-            }}
-          />
-        </div>
-      </CardContent>
-    </Collapse>
+    <Grid container spacing={2}>
+      {/* TITLE */}
+      <Grid item xs={12}>
+        <Card variant="outlined">
+          <CardContent style={{ padding: theme.spacing(2) }}>
+            <Typography style={{ display: 'block', textAlign: 'center' }} variant="overline">
+              Downloads: {downloadCount.count}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* COLLECTION */}
+      <Grid item xs={12}>
+        <Collapse
+          cardStyle={{ backgroundColor: theme.palette.common.white }}
+          defaultExpanded
+          title="Downloads by collection (total)"
+        >
+          <Suspense fallback={<Loading style={{ position: 'relative' }} />}>
+            <BarChart
+              filter={datum => Boolean(datum.referrer)}
+              seriesFieldName="date"
+              categoryFieldName="referrer"
+              data={referrerCount}
+            />
+          </Suspense>
+        </Collapse>
+      </Grid>
+
+      {/* DATE */}
+      <Grid item xs={12}>
+        <Collapse
+          title="Downloads by date (total)"
+          cardStyle={{ backgroundColor: theme.palette.common.white }}
+        >
+          <Suspense fallback={<Loading style={{ position: 'relative' }} />}>
+            <BarChart seriesFieldName="referrer" categoryFieldName="date" data={referrerCount} />
+          </Suspense>
+        </Collapse>
+      </Grid>
+
+      {/* DEVICE */}
+      <Grid item xs={12}>
+        <Collapse
+          title="Downloads by device (total)"
+          cardStyle={{ backgroundColor: theme.palette.common.white }}
+        >
+          <Suspense fallback={<Loading style={{ position: 'relative' }} />}>
+            <BarChart
+              yScale="log"
+              seriesFieldName="referrer"
+              categoryFieldName="device"
+              data={deviceCount}
+            />
+          </Suspense>
+        </Collapse>
+      </Grid>
+    </Grid>
   )
 }

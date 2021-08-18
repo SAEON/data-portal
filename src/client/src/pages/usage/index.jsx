@@ -1,5 +1,5 @@
 import { useContext, Suspense, lazy } from 'react'
-import DownloadsContext from './downloads/context'
+import DownloadsContextProvider from './downloads/context'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
@@ -50,7 +50,7 @@ export default () => {
   }
 
   return (
-    <DownloadsContext>
+    <DownloadsContextProvider>
       <Header />
       <div style={{ marginTop: theme.spacing(2) }} />
       <Container style={{ minHeight: 1000 }}>
@@ -92,6 +92,6 @@ export default () => {
         </ContentNav>
       </Container>
       <div style={{ marginTop: theme.spacing(2) }} />
-    </DownloadsContext>
+    </DownloadsContextProvider>
   )
 }
