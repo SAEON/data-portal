@@ -23,6 +23,12 @@ export default ({ children }) => {
           clientUserAgent
           count
         }
+
+        ipLocationCount: downloadsReport {
+          clientIpAddress
+          clientIpLocation
+          count
+        }
       }
     `,
     {
@@ -45,6 +51,7 @@ export default ({ children }) => {
     downloadCount: [downloadCount],
     referrerCount,
     deviceCount,
+    ipLocationCount,
   } = data
 
   return (
@@ -52,6 +59,7 @@ export default ({ children }) => {
       value={{
         downloadCount,
         referrerCount,
+        ipLocationCount,
         deviceCount: Object.entries(
           deviceCount
             .map(({ clientUserAgent, ...other }) => {

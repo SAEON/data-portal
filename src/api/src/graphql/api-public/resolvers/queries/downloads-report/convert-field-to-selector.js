@@ -12,10 +12,17 @@ const DATE_FORMATS = {
  * selectors
  */
 export default {
-  id: () => ({ $ifNull: ['$info.doi', '$info.odpId'] }),
+  doi: () => ({ $ifNull: ['$info.doi', '$info.odpId'] }),
   clientSession: () => '$clientSession',
   clientIpAddress: () => '$clientInfo.ipAddress',
-  clientIpLocation: () => '$clientInfo.ipAddress',
+  /**
+   * Currently the clientIpLocation is not ever requested from
+   * Mongo, since it's replaced with clientIpAddress in query.js
+   * (the location comes from an API). However I suspect that this
+   * will need to change, with this report prepared eagerly rather
+   * than lazily. that is why this line is still here
+   */
+  // clientIpLocation: () => '$clientInfo.ipAddress',
   referrer: () => '$referrer',
   clientUserAgent: () => '$clientInfo.userAgent',
   clientPathname: () => '$info.pathname',

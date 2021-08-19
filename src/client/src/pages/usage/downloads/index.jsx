@@ -12,7 +12,8 @@ const BarChart = lazy(() => import('./charts/bar-chart'))
 
 export default () => {
   const theme = useTheme()
-  const { downloadCount, referrerCount, deviceCount } = useContext(downloadsContext)
+  const { downloadCount, referrerCount, deviceCount, ipLocationCount } =
+    useContext(downloadsContext)
 
   return (
     <Grid container spacing={2}>
@@ -41,6 +42,25 @@ export default () => {
                 seriesFieldName="date"
                 categoryFieldName="referrer"
                 data={referrerCount}
+              />
+            </Suspense>
+          </CardContent>
+        </Collapse>
+      </Grid>
+
+      {/* LOCATION */}
+      <Grid item xs={12}>
+        <Collapse
+          title="Downloads by location (total - stacked by IP)"
+          cardStyle={{ backgroundColor: theme.palette.common.white }}
+        >
+          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+            <Suspense fallback={<Loading />}>
+              <BarChart
+                tooltip={{ show: false }}
+                seriesFieldName="clientIpAddress"
+                categoryFieldName="clientIpLocation"
+                data={ipLocationCount}
               />
             </Suspense>
           </CardContent>

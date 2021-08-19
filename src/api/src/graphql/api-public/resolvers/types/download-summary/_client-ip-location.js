@@ -10,8 +10,8 @@ const API_URL = 'http://ip-api.com/batch'
  *
  * keys: [ip1, ip2, etc]
  */
-const resolveIps = async keys => {
-  const response = await fetch(API_URL, {
+const resolveIpBatch = async keys => {
+  const res = await fetch(API_URL, {
     method: 'POST',
     body: JSON.stringify(
       keys.map(query => ({
@@ -24,15 +24,23 @@ const resolveIps = async keys => {
       'Content-type': 'application/json',
     },
   })
-    .then(res => res.json())
-    .catch(error => {
-      throw new Error(error)
-    })
 
-  return keys.map(ipAddress => response.find(({ query }) => query === ipAddress))
+  const xTtl = res.headers.get('X-Ttl')
+  const xRl = res.headers.get('X-Rl')
+
+  if (xRl < 2) {
+    throw new Error(
+      `Usage limit of the ${API_URL} endpoint (15 requests per minute). Please wait ${xTtl} seconds before requesting IP location Information again`
+    )
+  }
+
+  const json = await res.json()
+  return keys.map(ipAddress => json.find(({ query }) => query === ipAddress))
 }
 
-const locationFinder = new DataLoader(ipAddresses => resolveIps(ipAddresses))
+const locationFinder = new DataLoader(ipAddresses => resolveIpBatch(ipAddresses), {
+  maxBatchSize: 100,
+})
 
 export default async ({ clientIpAddress = '' }) => {
   const { countryCode, city, district } = await locationFinder.load(clientIpAddress)

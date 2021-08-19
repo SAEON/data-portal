@@ -8,6 +8,7 @@ export default ({
   filter = () => true,
   title,
   yScale = 'value',
+  tooltip = {},
 }) => {
   const series = {}
   const xAxis = {
@@ -74,6 +75,7 @@ export default ({
       axisPointer: {
         type: 'line',
       },
+      ...tooltip,
     },
     grid: {
       show: false,

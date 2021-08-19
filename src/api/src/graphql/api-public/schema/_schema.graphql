@@ -49,7 +49,7 @@ enum DateBucket {
 
 type DownloadSummary {
   # DOI of metadata record (or SAEON id if no DOI)
-  id: ID!
+  doi: ID!
   clientSession: String
   clientIpAddress: String
   # Resolve an IP Address to location using https://ip-api.com/
@@ -127,16 +127,6 @@ type Mutation {
   ): Filter!
   deleteFilter(id: ID!): Boolean!
   assignRolesToUser(userId: ID!, roleIds: [ID!]!): User!
-}
-
-type BrowserEvent implements Node {
-  id: ID!
-  type: String!
-  createdAt: DateTime
-  info: JSON!
-  clientVersion: String!
-  commitHash: String!
-  referrer: String
 }
 
 input BrowserEventInput {
