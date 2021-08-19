@@ -10,6 +10,7 @@ import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
 import HomeIcon from 'mdi-react/HomeIcon'
 import UsageIcon from 'mdi-react/ChartBoxIcon'
+import CollectionsIcon from 'mdi-react/PackageVariantIcon'
 import { Redirect } from 'react-router-dom'
 
 const HomePage = lazy(() => import('../../pages/home'))
@@ -26,6 +27,7 @@ const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const UsageReportsPage = lazy(() => import('../../pages/usage'))
+const CollectionsPage = lazy(() => import('../../pages/data-collections'))
 
 export default [
   {
@@ -62,6 +64,18 @@ export default [
     render: () => (
       <Transition>
         <UsageReportsPage />
+      </Transition>
+    ),
+  },
+  {
+    label: 'Data collections',
+    to: '/data-collections',
+    exact: true,
+    Icon: CollectionsIcon,
+    requiredPermission: '/data-collections',
+    render: () => (
+      <Transition>
+        <CollectionsPage />
       </Transition>
     ),
   },

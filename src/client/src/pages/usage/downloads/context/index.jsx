@@ -44,7 +44,7 @@ export default ({ children }) => {
   }
 
   if (error) {
-    throw new Error('Error retrieving download report data', error.message)
+    throw new Error(`Error retrieving download report data: ${error.message.truncate(1000)}`)
   }
 
   const {

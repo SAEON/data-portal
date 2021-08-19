@@ -1,7 +1,7 @@
 import passport from 'koa-passport'
 import fetch from 'node-fetch'
 import { collections } from '../mongo/index.js'
-import { OAuth2Strategy } from 'passport-oauth'
+import OAuth2Strategy from 'passport-oauth2'
 import base64url from 'base64url'
 import {
   HOSTNAME,
@@ -11,6 +11,14 @@ import {
   ODP_SSO_CLIENT_REDIRECT,
   ODP_AUTH_ADDRESS,
 } from '../config.js'
+
+/**
+ * TODO
+ * passport-oauth2 is abandoned and doesn't support
+ * openid
+ *
+ * Switch to https://codeburst.io/how-to-implement-openid-authentication-with-openid-client-and-passport-in-node-js-43d020121e87
+ */
 
 export default () => {
   if (!ODP_SSO_CLIENT_ID || !ODP_SSO_CLIENT_SECRET) {
@@ -32,8 +40,11 @@ export default () => {
         clientID: ODP_SSO_CLIENT_ID,
         clientSecret: ODP_SSO_CLIENT_SECRET,
         callbackURL: ODP_SSO_CLIENT_REDIRECT,
+        scope: ODP_SSO_CLIENT_SCOPES.split(','),
       },
-      async (token, tokenSecret, _, cb) => {
+      async (...args) => {
+        console.log(args)
+        const [accessToken, refreshToken, profile, cb] = args
         const { Users, Roles } = await collections
         const {
           email,
@@ -42,7 +53,7 @@ export default () => {
           picture,
         } = await fetch(`${ODP_AUTH_ADDRESS}/userinfo`, {
           headers: {
-            Authorization: `bearer ${token}`,
+            Authorization: `bearer ${accessToken}`,
           },
         }).then(res => res.json())
 
@@ -65,6 +76,7 @@ export default () => {
               $set: {
                 saeonId,
                 name,
+                mostRecentToken: accessToken,
               },
               $addToSet: {
                 links: {

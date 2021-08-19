@@ -13,6 +13,7 @@ const __apiRootDirectory = join(__dirname, '../')
 export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
 export const ODP_ADDRESS_CATALOGUE_ENDPOINT = `${ODP_ADDRESS}/api/catalogue`
 export const ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
+export const ODP_LOGOUT_REDIRECT_ADDRESS = `${ODP_AUTH_ADDRESS}/oauth2/sessions/logout`
 
 /**
  * ODP catalogue integration
@@ -26,16 +27,6 @@ export const ODP_FILTER_PATH = process.env.ODP_FILTER_PATH
 export const ODP_FILTER = import(ODP_FILTER_PATH).then(({ default: fn }) => fn)
 export const ODP_DEBUG_IDS = process.env.ODP_DEBUG_IDS || ''
 export const ODP_INTEGRATION_BATCH_SIZE = process.env.ODP_INTEGRATION_BATCH_SIZE || 100
-
-/**
- * SSO via ODP
- */
-export const ODP_SSO_CLIENT_ID = process.env.ODP_SSO_CLIENT_ID || 'SAEON.DataPortal'
-export const ODP_SSO_CLIENT_SECRET = process.env.ODP_SSO_CLIENT_SECRET || ''
-export const ODP_SSO_CLIENT_SCOPES = process.env.ODP_SSO_CLIENT_SCOPES || 'SAEON.DataPortal'
-export const ODP_SSO_CLIENT_REDIRECT =
-  process.env.ODP_SSO_CLIENT_REDIRECT || 'http://localhost:3000/authenticate/redirect'
-export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'client.sess'
 
 /**
  * Application config
@@ -58,6 +49,16 @@ export const ALLOWED_ORIGINS =
   process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 export const TEMP_DIRECTORY = '/tmp/catalogue-api'
 export const DATA_DIRECTORY = '/var/lib/catalogue-api'
+
+/**
+ * SSO via ODP
+ */
+export const ODP_SSO_CLIENT_ID = process.env.ODP_SSO_CLIENT_ID || 'SAEON.DataPortal'
+export const ODP_SSO_CLIENT_SECRET = process.env.ODP_SSO_CLIENT_SECRET || ''
+export const ODP_SSO_CLIENT_SCOPES = process.env.ODP_SSO_CLIENT_SCOPES || 'SAEON.DataPortal,openid'
+export const ODP_SSO_CLIENT_REDIRECT =
+  process.env.ODP_SSO_CLIENT_REDIRECT || `${API_PUBLIC_ADDRESS}/authenticate/redirect`
+export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'client.sess'
 
 /**
  * Deployment config

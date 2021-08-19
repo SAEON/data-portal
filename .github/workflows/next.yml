@@ -23,7 +23,6 @@ jobs:
           HOSTNAME="https://catalogue.saeon.dvn"
           ODP_FILTER_PATH="odp-filter.js"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
-          ODP_SSO_CLIENT_REDIRECT="https://api.catalogue.saeon.dvn/authenticate/redirect"
           ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
           CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.dvn"
