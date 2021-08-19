@@ -3,7 +3,6 @@ import SearchIcon from 'mdi-react/SearchIcon'
 import AboutIcon from 'mdi-react/AboutIcon'
 import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
-import ContactIcon from 'mdi-react/ContactMailIcon'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import DisclaimerIcon from 'mdi-react/WarningIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
@@ -24,7 +23,6 @@ const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const AboutPage = lazy(() => import('../../pages/about'))
 const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
-const ContactPage = lazy(() => import('../../pages/contact'))
 const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const UsageReportsPage = lazy(() => import('../../pages/usage'))
@@ -41,18 +39,7 @@ export default [
       </Transition>
     ),
   },
-  {
-    label: 'Usage reports',
-    to: '/usage',
-    exact: true,
-    Icon: UsageIcon,
-    requiredPermission: '/usage',
-    render: () => (
-      <Transition>
-        <UsageReportsPage />
-      </Transition>
-    ),
-  },
+
   {
     label: 'Search SAEON data',
     Icon: SearchIcon,
@@ -65,6 +52,18 @@ export default [
         </Transition>
       )
     },
+  },
+  {
+    label: 'Usage reports',
+    to: '/usage',
+    exact: true,
+    Icon: UsageIcon,
+    requiredPermission: '/usage',
+    render: () => (
+      <Transition>
+        <UsageReportsPage />
+      </Transition>
+    ),
   },
   {
     label: 'Record',
@@ -83,6 +82,8 @@ export default [
     Icon: AboutIcon,
     to: '/about',
     exact: true,
+    excludeFromNav: true,
+    includeInFooter: true,
     render: () => (
       <Transition>
         <AboutPage />
@@ -159,17 +160,6 @@ export default [
     render: () => (
       <Transition>
         <LoginPage />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Contact us',
-    Icon: ContactIcon,
-    to: '/contact',
-    exact: true,
-    render: () => (
-      <Transition>
-        <ContactPage />
       </Transition>
     ),
   },

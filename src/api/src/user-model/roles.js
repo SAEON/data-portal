@@ -9,7 +9,13 @@ export const user = {
 export const saeon = {
   name: 'saeon',
   description: 'Default login roles for @saeon.ac.za email addresses',
-  permissions: [...user.permissions, permissions['atlas:create'], permissions['databook:create']],
+  permissions: [
+    ...user.permissions,
+    permissions['atlas:create'],
+    permissions['databook:create'],
+    permissions['/usage'],
+    permissions['site-analytics:view'],
+  ],
 }
 
 export const admin = {
@@ -18,8 +24,6 @@ export const admin = {
   permissions: [
     ...saeon.permissions,
     permissions['/access'],
-    permissions['/usage'],
-    permissions['site-analytics:view'],
     permissions['users:assign-roles'],
     permissions['users:view'],
     permissions['roles:view'],

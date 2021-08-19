@@ -52,17 +52,12 @@ export default ({
   const _series = Object.entries(series).map(([, series]) => series)
 
   const option = {
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-        dataView: false,
-        magicType: false,
-        restore: false,
-        brush: false,
-      },
-      left: 'middle',
-    },
     dataZoom: [
+      {
+        type: 'slider',
+        showDataShadow: 'auto',
+        height: 24,
+      },
       {
         type: 'inside',
       },
@@ -75,18 +70,24 @@ export default ({
       : false,
     tooltip: {
       trigger: 'axis',
+      appendToBody: true,
       axisPointer: {
         type: 'line',
       },
     },
     grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
+      show: false,
+      left: 16,
+      right: 16,
+      bottom: 64,
+      top: 16,
       containLabel: true,
     },
     yAxis: {
       type: yScale,
+      axisLine: {
+        show: true,
+      },
     },
     xAxis,
     series: _series.map(series => {

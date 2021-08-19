@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 const parseUa = new UAParser()
-const isIE = parseUa.getBrowser().name.toLowerCase().includes('explorer')
+const isIE = parseUa.getBrowser().name === 'IE'
 
 export default ({ children }) => {
   const [open, setOpen] = useState(false)

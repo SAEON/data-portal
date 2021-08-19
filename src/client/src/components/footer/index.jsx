@@ -5,6 +5,8 @@ import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
 import { Link as RouterLink } from 'react-router-dom'
 import useTheme from '@material-ui/core/styles/useTheme'
+import Grid from '@material-ui/core/Grid'
+import Contact from './_contact'
 
 export default ({ routes }) => {
   const theme = useTheme()
@@ -15,40 +17,46 @@ export default ({ routes }) => {
         {/* DISCLAIMERS */}
         <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
-            {routes
-              .filter(({ includeInFooter }) => includeInFooter)
-              .map(({ label, Icon, to }) => (
-                <div
-                  key={label}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: theme.spacing(2),
-                    marginTop: theme.spacing(2),
-                  }}
-                >
-                  <Icon size={18} />
-                  <Typography
-                    component={({ style, ...otherProps }) => (
-                      <Link
-                        {...otherProps}
-                        style={Object.assign(
-                          { ...style },
-                          { color: 'white', marginLeft: theme.spacing(1) }
-                        )}
-                        to={to}
-                        component={RouterLink}
-                        key={label}
+            <Grid container>
+              <Grid container item xs={12} sm={6}>
+                {routes
+                  .filter(({ includeInFooter }) => includeInFooter)
+                  .map(({ label, Icon, to }) => (
+                    <Grid item xs={12} key={label}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
                       >
-                        {label}
-                      </Link>
-                    )}
-                    variant="overline"
-                  >
-                    {label}
-                  </Typography>
-                </div>
-              ))}
+                        <Icon size={18} />
+                        <Typography
+                          component={({ style, ...otherProps }) => (
+                            <Link
+                              {...otherProps}
+                              style={Object.assign(
+                                { ...style },
+                                { color: 'white', marginLeft: theme.spacing(1) }
+                              )}
+                              to={to}
+                              component={RouterLink}
+                              key={label}
+                            >
+                              {label}
+                            </Link>
+                          )}
+                          variant="overline"
+                        >
+                          {label}
+                        </Typography>
+                      </div>
+                    </Grid>
+                  ))}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Contact />
+              </Grid>
+            </Grid>
           </Container>
         </Toolbar>
 

@@ -3,7 +3,6 @@ import SearchIcon from 'mdi-react/SearchIcon'
 import AboutIcon from 'mdi-react/AboutIcon'
 import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
-import ContactIcon from 'mdi-react/ContactMailIcon'
 import DisclaimerIcon from 'mdi-react/WarningIcon'
 import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
@@ -17,7 +16,6 @@ const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const AboutPage = lazy(() => import('../../pages/about'))
 const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
-const ContactPage = lazy(() => import('../../pages/contact'))
 const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 
 export default [
@@ -130,16 +128,5 @@ export default [
       return <Redirect to={`${pathname.replace('/collection', '')}${search}`} />
     },
     excludeFromNav: true,
-  },
-  {
-    label: 'Contact us',
-    Icon: ContactIcon,
-    to: '/contact',
-    exact: true,
-    render: () => (
-      <Transition>
-        <ContactPage />
-      </Transition>
-    ),
   },
 ]

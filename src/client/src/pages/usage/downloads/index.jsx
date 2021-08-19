@@ -34,14 +34,16 @@ export default () => {
           defaultExpanded
           title="Downloads by collection (total)"
         >
-          <Suspense fallback={<Loading style={{ position: 'relative' }} />}>
-            <BarChart
-              filter={datum => Boolean(datum.referrer)}
-              seriesFieldName="date"
-              categoryFieldName="referrer"
-              data={referrerCount}
-            />
-          </Suspense>
+          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+            <Suspense fallback={<Loading />}>
+              <BarChart
+                filter={datum => Boolean(datum.referrer)}
+                seriesFieldName="date"
+                categoryFieldName="referrer"
+                data={referrerCount}
+              />
+            </Suspense>
+          </CardContent>
         </Collapse>
       </Grid>
 
@@ -51,9 +53,11 @@ export default () => {
           title="Downloads by date (total)"
           cardStyle={{ backgroundColor: theme.palette.common.white }}
         >
-          <Suspense fallback={<Loading style={{ position: 'relative' }} />}>
-            <BarChart seriesFieldName="referrer" categoryFieldName="date" data={referrerCount} />
-          </Suspense>
+          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+            <Suspense fallback={<Loading />}>
+              <BarChart seriesFieldName="referrer" categoryFieldName="date" data={referrerCount} />
+            </Suspense>
+          </CardContent>
         </Collapse>
       </Grid>
 
@@ -63,14 +67,16 @@ export default () => {
           title="Downloads by device (total)"
           cardStyle={{ backgroundColor: theme.palette.common.white }}
         >
-          <Suspense fallback={<Loading style={{ position: 'relative' }} />}>
-            <BarChart
-              yScale="log"
-              seriesFieldName="referrer"
-              categoryFieldName="device"
-              data={deviceCount}
-            />
-          </Suspense>
+          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+            <Suspense fallback={<Loading />}>
+              <BarChart
+                yScale="log"
+                seriesFieldName="referrer"
+                categoryFieldName="device"
+                data={deviceCount}
+              />
+            </Suspense>
+          </CardContent>
         </Collapse>
       </Grid>
     </Grid>

@@ -39,7 +39,7 @@ export default ({
         ]}
       />
 
-      <Collapse unmountOnExit in={!collapsed}>
+      <Collapse mountOnEnter unmountOnExit in={!collapsed}>
         {typeof children === 'function' ? children(collapsed) : children}
       </Collapse>
     </Card>
