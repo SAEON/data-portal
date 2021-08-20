@@ -15,14 +15,7 @@ export default {
   doi: () => ({ $ifNull: ['$info.doi', '$info.odpId'] }),
   clientSession: () => '$clientSession',
   clientIpAddress: () => '$clientInfo.ipAddress',
-  /**
-   * Currently the clientIpLocation is not ever requested from
-   * Mongo, since it's replaced with clientIpAddress in query.js
-   * (the location comes from an API). However I suspect that this
-   * will need to change, with this report prepared eagerly rather
-   * than lazily. that is why this line is still here
-   */
-  // clientIpLocation: () => '$clientInfo.ipAddress',
+  clientIpLocation: () => '$clientInfo.ipLocation',
   referrer: () => '$referrer',
   clientUserAgent: () => '$clientInfo.userAgent',
   clientPathname: () => '$info.pathname',
