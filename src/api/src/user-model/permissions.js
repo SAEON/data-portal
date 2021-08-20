@@ -7,9 +7,9 @@ export default Object.freeze({
     name: '/usage',
     description: 'View the /usage route on client apps',
   },
-  '/data-collections': {
-    name: '/data-collections',
-    description: 'View the /data-collections route on client apps',
+  '/data-lists': {
+    name: '/data-lists',
+    description: 'View the /data-lists route on client apps',
   },
   'site-analytics:view': {
     name: 'site-analytics:view',

@@ -17,10 +17,10 @@ export default () => {
     return <Loading />
   }
 
-  if (!hasPermission('/data-collections')) {
+  if (!hasPermission('/data-lists')) {
     return (
       <div style={{ marginTop: theme.spacing(2) }}>
-        <AccessDenied requiredPermission="/data-collections" />
+        <AccessDenied requiredPermission="/data-lists" />
       </div>
     )
   }

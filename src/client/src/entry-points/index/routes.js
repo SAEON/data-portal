@@ -27,7 +27,7 @@ const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
 const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const UsageReportsPage = lazy(() => import('../../pages/usage'))
-const CollectionsPage = lazy(() => import('../../pages/data-collections'))
+const DataListsPage = lazy(() => import('../../pages/data-lists'))
 
 export default [
   {
@@ -68,14 +68,14 @@ export default [
     ),
   },
   {
-    label: 'Data collections',
-    to: '/data-collections',
+    label: 'Data lists',
+    to: '/data-lists',
     exact: true,
     Icon: CollectionsIcon,
-    requiredPermission: '/data-collections',
+    requiredPermission: '/data-lists',
     render: () => (
       <Transition>
-        <CollectionsPage />
+        <DataListsPage />
       </Transition>
     ),
   },
