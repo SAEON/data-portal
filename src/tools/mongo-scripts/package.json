@@ -1,0 +1,18 @@
+{
+  "name": "mongo-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --trace-warnings --experimental-json-modules index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dataloader": "^2.0.0",
+    "dotenv": "^10.0.0",
+    "mongodb": "^4.1.0",
+    "node-fetch": "^2.6.1"
+  }
+}

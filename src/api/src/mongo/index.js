@@ -14,9 +14,7 @@ import insertUsers from './_insert-users.js'
 import configureRolesAndPermissions from './_configure-roles-and-permissions.js'
 import makeDataFinders from './_data-finders.js'
 
-const CONNECTION_STRING = `${MONGO_DB_ADDRESS}`
-
-export const db = new MongoClient(CONNECTION_STRING, {
+export const db = new MongoClient(MONGO_DB_ADDRESS, {
   auth: {
     username: MONGO_DB_USERNAME,
     password: MONGO_DB_PASSWORD,
