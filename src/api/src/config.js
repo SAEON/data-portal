@@ -13,6 +13,7 @@ const __apiRootDirectory = join(__dirname, '../')
 export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
 export const ODP_ADDRESS_CATALOGUE_ENDPOINT = `${ODP_ADDRESS}/api/catalogue`
 export const ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
+export const ODP_WELL_KNOWN_ADDRESS = `${ODP_AUTH_ADDRESS}/.well-known/openid-configuration`
 export const ODP_LOGOUT_REDIRECT_ADDRESS = `${ODP_AUTH_ADDRESS}/oauth2/sessions/logout`
 
 /**
@@ -55,7 +56,7 @@ export const DATA_DIRECTORY = '/var/lib/catalogue-api'
  */
 export const ODP_SSO_CLIENT_ID = process.env.ODP_SSO_CLIENT_ID || 'SAEON.DataPortal'
 export const ODP_SSO_CLIENT_SECRET = process.env.ODP_SSO_CLIENT_SECRET || ''
-export const ODP_SSO_CLIENT_SCOPES = process.env.ODP_SSO_CLIENT_SCOPES || 'SAEON.DataPortal,openid'
+export const ODP_SSO_CLIENT_SCOPES = process.env.ODP_SSO_CLIENT_SCOPES || 'openid SAEON.DataPortal'
 export const ODP_SSO_CLIENT_REDIRECT =
   process.env.ODP_SSO_CLIENT_REDIRECT || `${API_PUBLIC_ADDRESS}/authenticate/redirect`
 export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'client.sess'

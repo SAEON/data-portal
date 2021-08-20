@@ -66,6 +66,7 @@
     "netcdf",
     "nofile",
     "notistack",
+    "oidc",
     "osgeo",
     "pgcrypto",
     "pgsql",

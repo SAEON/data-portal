@@ -1,5 +1,7 @@
 import { PASSPORT_SSO_SESSION_ID } from '../../../../config.js'
 
+// TODO - add ipLocation here
+
 export default async (self, args, ctx) => {
   const { input: logs, referrer = undefined } = args
   const { logToMongo } = ctx.mongo
