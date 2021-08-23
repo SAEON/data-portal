@@ -18,6 +18,7 @@ export default async ips => {
 
   const xTtl = res.headers.get('X-Ttl')
   const xRl = res.headers.get('X-Rl')
+  console.info('IP API usage:', `${xRl} / 15`)
 
   if (xRl < 1) {
     throw new Error(
