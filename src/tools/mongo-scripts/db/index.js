@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb'
-import { MONGO_DB_ADDRESS, MONGO_DB_USERNAME, MONGO_DB_PASSWORD, MONGO_DB } from './config.js'
+import { MONGO_DB_ADDRESS, MONGO_DB_USERNAME, MONGO_DB_PASSWORD, MONGO_DB } from '../config.js'
 
 export const db = new MongoClient(MONGO_DB_ADDRESS, {
   auth: {

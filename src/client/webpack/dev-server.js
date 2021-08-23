@@ -15,7 +15,11 @@ module.exports = (ROOT, output) => {
     })
 
   return {
-    contentBase: path.join(ROOT, output),
+    static: {
+      staticOptions: {
+        contentBase: path.join(ROOT, output),
+      }
+    },
     historyApiFallback: {
       disableDotRule: true,
       rewrites,

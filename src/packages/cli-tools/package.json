@@ -37,7 +37,7 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
-    "arg": "^5.0.0",
+    "arg": "^5.0.1",
     "ora": "^5.4.1"
   },
   "devDependencies": {
@@ -48,6 +48,6 @@
     "onchange": "^7.1.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.56.2"
+    "rollup": "^2.56.3"
   }
 }
