@@ -6,8 +6,9 @@ import updateLogs from './_update-logs.js'
 export default async () => {
   const distinctIps = await getDistinctIps()
 
+  let ipIterator
   do {
-    let ipIterator = iterateOverArray(distinctIps)
+    ipIterator = iterateOverArray(distinctIps)
     const locations = await resolveIpLocations(ipIterator.items)
     for (const location of locations) {
       await updateLogs(location)
