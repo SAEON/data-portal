@@ -14,8 +14,8 @@ export default async ctx => {
    */
   const { user } = ctx
   const { findUsers } = ctx.mongo.dataFinders
-  const id_token = (await findUsers({ _id: ObjectId(user.info(ctx).id) }))[0].id_token
   ctx.session = null
+  const id_token = (await findUsers({ _id: ObjectId(user.info(ctx).id) }))[0]?.id_token || null
   return ctx.redirect(
     `${ODP_LOGOUT_REDIRECT_ADDRESS}?id_token_hint=${id_token}&post_logout_redirect_uri=${API_PUBLIC_ADDRESS}/logout`
   )
