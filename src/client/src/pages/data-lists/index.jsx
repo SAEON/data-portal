@@ -7,6 +7,7 @@ import { context as authorizationContext } from '../../contexts/authorization'
 import AccessDenied from '../../components/access-denied'
 import Header from './header'
 import Loading from '../../components/loading'
+import Layout from './layout'
 
 export default () => {
   const theme = useTheme()
@@ -29,7 +30,9 @@ export default () => {
     <CollectionsProvider>
       <Header />
       <div style={{ marginTop: theme.spacing(2) }} />
-      <Container style={{ minHeight: 1000 }}>hi</Container>
+      <Container style={{ minHeight: 1000 }}>
+        <Layout />
+      </Container>
       <div style={{ marginTop: theme.spacing(2) }} />
     </CollectionsProvider>
   )

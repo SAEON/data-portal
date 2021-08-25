@@ -29,6 +29,8 @@ export default ({ navItems, children }) => {
             padding: 0,
             display: 'flex',
             flexDirection: lgAndUp ? 'column' : 'row',
+            maxHeight: 1000,
+            overflow: 'auto',
           }}
         >
           {navItems.map((props, i) => (

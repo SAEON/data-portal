@@ -23,6 +23,7 @@ export const admin = {
   description: 'Site administrators',
   permissions: [
     ...saeon.permissions,
+    permissions['lists:view'],
     permissions['/data-lists'],
     permissions['/access'],
     permissions['users:assign-roles'],

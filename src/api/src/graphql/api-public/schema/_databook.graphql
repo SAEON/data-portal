@@ -5,7 +5,9 @@ type Databook {
   dashboards: [Dashboard!]
   charts: [Chart!]
   filters: [Filter!]
-  # Returns a sub-document with a field 'id' that is a hash. This value changes to reflect status change
+  """
+  Returns a sub-document with a field 'id' that is a hash. This value changes to reflect status change
+  """
   statusHash: StatusHash!
   editors: JSON
 }
@@ -16,13 +18,21 @@ type Dashboard {
   subtitle: String
   description: String
   databookId: ID!
-  # Associate an existing chart with this dashboard
+  """
+  Associate an existing chart with this dashboard
+  """
   addChart(id: ID!): Dashboard!
-  # Remove a chart's association with this dashboard
+  """
+  Remove a chart's association with this dashboard
+  """
   removeChart(id: ID!): Dashboard!
-  # Associate an existing filter with this dashboard
+  """
+  Associate an existing filter with this dashboard
+  """
   addFilter(id: ID!): Dashboard!
-  # Remove a filter's association with this dashboard
+  """
+  Remove a filter's association with this dashboard
+  """
   removeFilter(id: ID!): Dashboard!
   charts: [Chart!]
   filters: [Filter!]

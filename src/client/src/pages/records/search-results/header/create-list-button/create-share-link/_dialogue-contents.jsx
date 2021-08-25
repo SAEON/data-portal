@@ -19,24 +19,24 @@ export default ({ tabIndex, search = undefined }) => {
   const isAtlasPage = window.location.pathname.includes('atlas')
 
   const { global } = useContext(globalContext)
-  const [persistSearchState, { loading, error, data }] = useMutation(gql`
+  const [saveList, { loading, error, data }] = useMutation(gql`
     mutation($search: JSON!, $createdBy: String!) {
-      ${isAtlasPage ? 'createAtlas' : 'persistSearchState'}(search: $search, createdBy: $createdBy)
+      ${isAtlasPage ? 'createAtlas' : 'saveList'}(search: $search, createdBy: $createdBy)
     }
   `)
 
   useEffect(() => {
     if (!isAtlasPage) {
-      persistSearchState({
+      saveList({
         variables: {
           createdBy: `${packageJson.name} v${packageJson.version}`,
           search: search || global,
         },
       })
     }
-  }, [isAtlasPage, global, persistSearchState, search])
+  }, [isAtlasPage, global, saveList, search])
 
-  const id = data?.persistSearchState || undefined
+  const id = data?.saveList || undefined
   const uri = `${CATALOGUE_CLIENT_ADDRESS}/collection/records?disableSidebar=true&showSearchBar=true&search=${id}`
 
   return error ? (

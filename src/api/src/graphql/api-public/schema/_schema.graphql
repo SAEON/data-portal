@@ -18,13 +18,21 @@ interface Node {
 }
 
 interface Connection {
-  # A list of edges
+  """
+  A list of edges
+  """
   edges: [Edge!]!
-  # A list of nodes
+  """
+  A list of nodes
+  """
   nodes: [Node!]
-  # Information to aid in pagination
+  """
+  Information to aid in pagination
+  """
   pageInfo: PageInfo!
-  # Count of total results
+  """
+  Count of total results
+  """
   totalCount: Int!
 }
 
@@ -48,36 +56,69 @@ enum DateBucket {
 }
 
 type DownloadSummary {
-  # DOI of metadata record (or SAEON id if no DOI)
+  """
+  DOI of metadata record (or SAEON id if no DOI)
+  """
   doi: ID!
   clientSession: String
   clientIpAddress: String
-  # Resolve an IP Address to location using https://ip-api.com/
+  """
+  Resolve an IP Address to location using https://ip-api.com/
+  """
   clientIpLocation: String
   clientUserAgent: String
   clientPathname: String
   referrer: String
-  # Download date, rounded down to the hour
+  """
+  Download date, rounded down to the hour
+  """
   date(bucket: DateBucket): DateTime!
   count: Int!
 }
 
+type List {
+  id: ID!
+  search: JSON!
+  name: String
+  description: String
+}
+
 type Query {
-  # Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
+  """
+  Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
+  """
   catalogue(referrer: String): Catalogue!
-  # Return a Dashboard entity
+  """
+  Return a Dashboard entity
+  """
   dashboard(id: ID!): Dashboard
-  # Find a chart
+  """
+  Find a chart
+  """
   charts(ids: [ID!]!): [Chart!]
-  # Find a filter
+  """
+  Find a filter
+  """
   filters(ids: [ID!]!): [Filter!]
-  # Retrieve a web-browser's previously saved databook
+  """
+  Retrieve a web-browser's previously saved databook
+  """
   databook(id: ID!): Databook
-  # Retrieve a web-browser's previously saved search context
-  searchState(id: ID!): JSON
-  # Retrieve a web-browser's previously saved atlas TODO - should be on query
+  """
+  Retrieve search context (i.e. a dynamic list)
+  """
+  list(id: ID!): JSON # TODO - convert this to return type List
+  """
+  Retrieve many search contexts (i.e. many dynamic lists)
+  """
+  lists: [List!]!
+  """
+  Retrieve a web-browser's previously saved atlas TODO - should be on query
+  """
   atlas(id: ID!): JSON
-  # Retrieve dashboards by id
+  """
+  Retrieve dashboards by id
+  """
   dashboards(ids: [ID!]!): [Dashboard!]
   downloadsReport: [DownloadSummary]!
   roles: [Role]!
@@ -88,12 +129,18 @@ type Query {
 
 type Mutation {
   logBrowserEvents(input: [BrowserEventInput]!): Void
-  # Save a web-browser's search context for retrieving as a databook
+  """
+  Save a web-browser's search context for retrieving as a databook
+  """
   createDatabook(search: JSON!, createdBy: String!): ID!
-  # Save a web-browser's search context for retrieving as an atlas
+  """
+  Save a web-browser's search context for retrieving as an atlas
+  """
   createAtlas(search: JSON!, createdBy: String!): ID!
-  # Save a web-browser's search context for retrieving
-  persistSearchState(search: JSON!, createdBy: String!): ID!
+  """
+  Save a search context (i.e. a dynamic list)
+  """
+  saveList(search: JSON!, createdBy: String!): ID!
   createDashboard(title: String, subtitle: String, description: String, databookId: ID!): Dashboard!
   updateDashboard(
     id: ID!
@@ -104,7 +151,9 @@ type Mutation {
     filters: [ID!]
   ): Dashboard!
   updateDatabook(id: ID!, editors: JSON): Databook!
-  # Return a Dashboard entity
+  """
+  Return a Dashboard entity
+  """
   dashboard(id: ID!): Dashboard
   deleteDashboard(id: ID!): Boolean!
   createChart(

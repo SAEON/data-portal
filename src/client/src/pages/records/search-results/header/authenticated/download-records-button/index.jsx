@@ -22,16 +22,16 @@ export default ({ catalogue }) => {
     return null
   }
 
-  const [persistSearchState, { error, loading }] = useMutation(
+  const [saveList, { error, loading }] = useMutation(
     gql`
       mutation ($search: JSON!, $createdBy: String!) {
-        persistSearchState(search: $search, createdBy: $createdBy)
+        saveList(search: $search, createdBy: $createdBy)
       }
     `,
     {
       onCompleted: data => {
         if (data) {
-          window.open(`${API_PUBLIC_ADDRESS}/metadata-records?search=${data.persistSearchState}`)
+          window.open(`${API_PUBLIC_ADDRESS}/metadata-records?search=${data.saveList}`)
         }
       },
     }
@@ -61,7 +61,7 @@ export default ({ catalogue }) => {
         <span>
           <IconButton
             onClick={() =>
-              persistSearchState({
+              saveList({
                 variables: {
                   createdBy: `${packageJson.name} v${packageJson.version}`,
                   search: selectedIds.length

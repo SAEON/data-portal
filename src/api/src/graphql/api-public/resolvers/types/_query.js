@@ -4,7 +4,8 @@ import dashboards from '../queries/dashboards.js'
 import charts from '../queries/charts.js'
 import filters from '../queries/filters.js'
 import databook from '../queries/databook.js'
-import searchState from '../queries/search-state.js'
+import list from '../queries/list.js'
+import lists from '../queries/lists.js'
 import atlas from '../queries/atlas.js'
 import roles from '../queries/roles.js'
 import permissions from '../queries/permissions.js'
@@ -23,7 +24,8 @@ export default {
   charts,
   filters,
   databook, // TODO
-  searchState,
+  list,
+  lists: authorize(PERMISSIONS['lists:view'])(lists),
   atlas,
   downloadsReport: authorize(PERMISSIONS['site-analytics:view'])(downloadsReport),
   roles: authorize(PERMISSIONS['roles:view'])(roles),

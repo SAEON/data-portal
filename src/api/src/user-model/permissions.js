@@ -7,6 +7,10 @@ export default Object.freeze({
     name: '/usage',
     description: 'View the /usage route on client apps',
   },
+  'lists:view': {
+    name: 'lists:view',
+    description: 'View all curated data lists',
+  },
   '/data-lists': {
     name: '/data-lists',
     description: 'View the /data-lists route on client apps',

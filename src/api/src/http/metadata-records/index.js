@@ -32,7 +32,7 @@ export default async ctx => {
     ctx.set('Content-Type', 'application/force-download')
 
     // Load the saved search state
-    const { search: searchState } = (await findLists({ _id: ObjectId(search) }))[0]
+    const { search: list } = (await findLists({ _id: ObjectId(search) }))[0]
 
     // Query the catalogue for the IDs associated with this search state
     const { data } = await execute(
@@ -64,7 +64,7 @@ export default async ctx => {
       `,
       null,
       ctx,
-      Object.assign({ size: 10000 }, searchState)
+      Object.assign({ size: 10000 }, list)
     )
 
     // Authenticate with the ODP

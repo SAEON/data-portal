@@ -7,7 +7,7 @@ export default ({ id, children }) =>
     <WithGqlQuery
       QUERY={gql`
         query ($id: ID!) {
-          searchState(id: $id)
+          list(id: $id)
         }
       `}
       variables={{ id }}
@@ -21,7 +21,7 @@ export default ({ id, children }) =>
           throw new Error('Unable to load saved search.' + error.message)
         }
 
-        return children(data?.searchState.search)
+        return children(data?.list.search)
       }}
     </WithGqlQuery>
   ) : (

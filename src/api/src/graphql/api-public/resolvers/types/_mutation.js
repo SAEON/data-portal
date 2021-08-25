@@ -1,7 +1,7 @@
 import logBrowserEvents from '../mutations/log-browser-events.js'
 import createDatabook from '../mutations/create-databook/index.js'
 import createAtlas from '../mutations/create-atlas.js'
-import persistSearchState from '../mutations/persist-search-state.js'
+import saveList from '../mutations/save-list.js'
 import createDashboard from '../mutations/create-dashboard.js'
 import updateDashboard from '../mutations/update-dashboard.js'
 import updateDatabook from '../mutations/update-databook.js'
@@ -20,7 +20,7 @@ export default {
   logBrowserEvents,
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
   createAtlas: authorize(PERMISSIONS['atlas:create'])(createAtlas),
-  persistSearchState,
+  saveList,
   createDashboard,
   updateDashboard,
   updateDatabook,

@@ -35,8 +35,17 @@ export default memo(
 
     return (
       <Tooltip
-        title={tooltipTitle || disabled ? 'This option is disabled' : secondaryText}
-        placement="top-end"
+        PopperProps={{
+          style: {
+            zIndex: 500, // Keep it under AppBars and ToolBars
+          },
+        }}
+        title={
+          tooltipTitle || disabled
+            ? 'This option is disabled'
+            : secondaryText || 'Missing secondaryText'
+        }
+        placement="right"
       >
         <ButtonBase
           disabled={disabled}
@@ -49,7 +58,7 @@ export default memo(
           <ListItem style={{ justifyContent: 'center' }}>
             {(xsAndDown || mdAndUp) && (
               <ListItemIcon style={{ justifyContent: 'center' }}>
-                <Icon />
+                <Icon active={activeIndex === i} />
               </ListItemIcon>
             )}
 
@@ -65,8 +74,8 @@ export default memo(
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
                 }}
-                primary={primaryText}
-                secondary={mdAndUp && secondaryText}
+                primary={primaryText || 'Missing primaryText'}
+                secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}
               />
             )}
 
