@@ -60,17 +60,17 @@
         state: directory
         mode: '0755'
 
-    - name: Ensure /opt/ssl-keys directory
+    - name: Ensure /opt/ssl directory
       file:
-        path: /opt/ssl-keys
+        path: /opt/ssl
         state: directory
         mode: '0751'
 
     - name: Generate dhparams
       shell: |
-        openssl dhparam -out /opt/ssl-keys/dhparam.pem {{ DHPARAM_SIZE }}
+        openssl dhparam -out /opt/ssl/dhparam.pem {{ DHPARAM_SIZE }}
       args:
-        creates: /opt/ssl-keys/dhparam.pem      
+        creates: /opt/ssl/dhparam.pem      
 
     - name: Install latest Git
       yum:

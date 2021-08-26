@@ -158,9 +158,9 @@ Currently setting up SSL is a manual process. After running the Ansible playbook
 You can generate appropriate self-signed SSL certs via the following commands:
 
 ```sh
-sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<hostname>.key -out  /opt/ssl-keys/<hostname>.cer
-sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/api.<hostname>.key -out  /opt/ssl-keys/api.<hostname>.cer
-sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl-keys/<proxy hostname>.key -out  /opt/ssl-keys/<proxy hostname>.cer
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl/<hostname>.key -out  /opt/ssl/<hostname>.cer
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl/api.<hostname>.key -out  /opt/ssl/api.<hostname>.cer
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl/<proxy hostname>.key -out  /opt/ssl/<proxy hostname>.cer
 sudo service nginx restart
 ```
 ## SAEON SSL certificates
