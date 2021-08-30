@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb'
 
 export default async (_, { id }, ctx) => {
   const { Charts } = await ctx.mongo.collections
-  const { result } = await Charts.remove({ _id: ObjectId(id) })
+  const { result } = await Charts.deleteOne({ _id: ObjectId(id) })
   const { n } = result
 
   if (!n) {

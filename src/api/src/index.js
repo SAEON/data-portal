@@ -1,6 +1,6 @@
 import '@saeon/logger'
-import './lib/log-config.js'
 import './lib/native-extensions.js'
+import './lib/log-config.js'
 import { createServer } from 'http'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'

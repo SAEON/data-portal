@@ -4,11 +4,22 @@ export default async (databook, args, ctx) => {
   const { Filters } = await ctx.mongo.collections
   const { databookId, ..._args } = args
 
-  return (
-    await Filters.insertOne({
-      databookId: ObjectId(databookId),
-      modifiedAt: new Date(),
-      ..._args,
-    })
-  ).ops[0]
+  const result = await Filters.findOneAndUpdate(
+    {
+      _id: ObjectId(),
+    },
+    {
+      $set: {
+        databookId: ObjectId(databookId),
+        modifiedAt: new Date(),
+        ..._args,
+      },
+    },
+    {
+      upsert: true,
+      returnDocument: 'after',
+    }
+  )
+
+  return result.value
 }

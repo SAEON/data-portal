@@ -8,7 +8,7 @@ import Breadcrumbs from './breadcrumbs'
 
 export const Toolbar = Toolbar_
 
-export default ({ routes, ...props }) => {
+export default ({ routes, disableBreadcrumbs, ...props }) => {
   const theme = useTheme()
 
   return (
@@ -24,7 +24,7 @@ export default ({ routes, ...props }) => {
         />
       </Hidden>
 
-      <Hidden smDown>{!props.disableBreadcrumbs && <Breadcrumbs routes={routes} />}</Hidden>
+      <Hidden smDown>{!disableBreadcrumbs && <Breadcrumbs routes={routes} />}</Hidden>
 
       <div style={{ marginLeft: 'auto' }} />
 

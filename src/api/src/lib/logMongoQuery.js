@@ -1,3 +1,9 @@
+import { LOG_QUERY_DETAILS } from '../config.js'
+
 export default (query, name = 'Mongo query') => {
-  console.info('\n\n# Mongo query ::', name.toUpperCase(), JSON.stringify(query, null, 2))
+  if (LOG_QUERY_DETAILS) {
+    console.info('\n# Mongo query ::', name.toUpperCase(), JSON.stringify(query, null, 2), '\n')
+  } else {
+    console.info('# Mongo query ::', name.toUpperCase())
+  }
 }

@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import Loading from '../../../../components/loading'
 import { context as dataContext } from '../../contexts/data-provider'
-import Header from './header'
 import clsx from 'clsx'
 import useStyles from '../../style'
 import Fade from '@material-ui/core/Fade'
@@ -76,7 +75,6 @@ export default () => {
 
   return (
     <div className={clsx(classes.layout)}>
-      <Header />
       <Content {...ctx} />
     </div>
   )

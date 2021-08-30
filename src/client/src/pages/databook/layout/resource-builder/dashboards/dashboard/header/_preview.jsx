@@ -36,7 +36,7 @@ export default ({ id }) => {
             <DialogActions>
               <Button
                 onClick={() => {
-                  window.open(`${CATALOGUE_CLIENT_ADDRESS}/render/dashboard?id=${id}&poll=true`)
+                  window.open(`${CATALOGUE_CLIENT_ADDRESS}/dashboard/${id}?poll=true`)
                   close()
                 }}
                 variant="text"

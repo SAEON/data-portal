@@ -50,6 +50,7 @@ export const ALLOWED_ORIGINS =
   process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 export const TEMP_DIRECTORY = '/tmp/catalogue-api'
 export const DATA_DIRECTORY = '/var/lib/catalogue-api'
+export const LOG_QUERY_DETAILS = (process.env.LOG_QUERY_DETAILS || 'false').toBoolean()
 
 /**
  * SSO via ODP

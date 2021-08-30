@@ -18,17 +18,17 @@ export default ({ id }) => {
   }
 
   return (
-    <DatabookProvider id={id}>
-      <div
-        style={{
-          backgroundColor: theme.palette.common.white,
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
+    <div
+      style={{
+        backgroundColor: theme.palette.common.white,
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }}
+    >
+      <DatabookProvider id={id}>
         <SchemaProvider>
           <DataProvider>
             <FiltersProvider>
@@ -40,7 +40,7 @@ export default ({ id }) => {
             </FiltersProvider>
           </DataProvider>
         </SchemaProvider>
-      </div>
-    </DatabookProvider>
+      </DatabookProvider>
+    </div>
   )
 }

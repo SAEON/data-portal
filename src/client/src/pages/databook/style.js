@@ -11,8 +11,7 @@ export default makeStyles(theme => ({
   pre: Object.fromEntries(Object.entries(theme.pre).filter(([key]) => key !== 'backgroundColor')),
 
   toolbar: {
-    backgroundColor: theme.palette.secondary.light,
-    borderBottom: `1px solid ${theme.palette.secondary.dark}`,
+    borderBottom: `1px solid ${theme.palette.grey[400]}`,
     display: 'flex',
     justifyContent: 'flex-start',
     boxSizing: 'content-box',

@@ -4,13 +4,24 @@ export default async (_, args, ctx) => {
   const { Dashboards } = await ctx.mongo.collections
   const { title, subtitle, description, databookId } = args
 
-  return (
-    await Dashboards.insertOne({
-      databookId: ObjectId(databookId),
-      modifiedAt: new Date(),
-      title,
-      subtitle,
-      description,
-    })
-  ).ops[0]
+  const result = await Dashboards.findOneAndUpdate(
+    {
+      _id: ObjectId(),
+    },
+    {
+      $set: {
+        databookId: ObjectId(databookId),
+        modifiedAt: new Date(),
+        title,
+        subtitle,
+        description,
+      },
+    },
+    {
+      upsert: true,
+      returnDocument: 'after',
+    }
+  )
+
+  return result.value
 }

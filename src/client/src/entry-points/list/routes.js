@@ -121,11 +121,11 @@ export default [
     includeInFooter: true,
   },
   {
-    label: 'Collection',
-    to: '/collection',
+    label: 'Data list',
+    to: '/list',
     exact: false,
     render: ({ location: { pathname, search } }) => {
-      return <Redirect to={`${pathname.replace('/collection', '')}${search}`} />
+      return <Redirect to={`${pathname.replace('/list', '')}${search}`} />
     },
     excludeFromNav: true,
   },

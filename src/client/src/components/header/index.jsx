@@ -35,21 +35,23 @@ const FullHeader = forwardRef(({ contentRef, routes }, ref) => {
   )
 })
 
-const AppHeaderOnly = forwardRef(({ routes, color = 'inherit', ...props }, ref) => {
-  return (
-    <div ref={ref}>
-      <ElevationOnScroll>
-        <AppBar color={color}>
-          <AppHeader {...props} routes={routes} />
-          <Divider />
-        </AppBar>
-      </ElevationOnScroll>
+const AppHeaderOnly = forwardRef(
+  ({ routes, color = 'inherit', disableBreadcrumbs, ...props }, ref) => {
+    return (
+      <div ref={ref}>
+        <ElevationOnScroll>
+          <AppBar color={color}>
+            <AppHeader disableBreadcrumbs={disableBreadcrumbs} {...props} routes={routes} />
+            <Divider />
+          </AppBar>
+        </ElevationOnScroll>
 
-      {/* PUSH CONTENT DOWN */}
-      <ApplicationHeader_ {...props} />
-    </div>
-  )
-})
+        {/* PUSH CONTENT DOWN */}
+        <ApplicationHeader_ {...props} />
+      </div>
+    )
+  }
+)
 
 const BannerOnly = forwardRef(({ contentRef }, ref) => {
   return (

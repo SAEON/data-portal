@@ -8,7 +8,7 @@ export default ({ id }) => {
     <Tooltip title="Open chart" placement="left-start">
       <IconButton
         onClick={() => {
-          window.open(`${CATALOGUE_CLIENT_ADDRESS}/render/chart?id=${id}`)
+          window.open(`${CATALOGUE_CLIENT_ADDRESS}/chart/${id}`)
         }}
         size="small"
       >

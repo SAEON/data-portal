@@ -1,32 +1,17 @@
-import { cloneElement } from 'react'
 import getUriState from '../../lib/fns/get-uri-state'
 import Loading from '../../components/loading'
 import DashboardContextProvider from './context'
 import { gql, useQuery } from '@apollo/client'
-import AppBar from '@material-ui/core/AppBar'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Layout from './layout'
 import FiltersDrawer from './drawer/index'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 const POLLING_INTERVAL = 500
-
-const ElevationScroll = ({ children }) => {
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  })
-
-  return cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-  })
-}
 
 export default ({ id }) => {
   const theme = useTheme()
@@ -69,17 +54,6 @@ export default ({ id }) => {
 
   return (
     <DashboardContextProvider filterIds={filterIds || []}>
-      {/* HEADER */}
-      <ElevationScroll>
-        <AppBar>
-          <Toolbar variant="dense" style={{ display: 'flex' }}>
-            <Typography style={{ margin: 'auto' }} variant="overline">
-              {title || 'Untitled'}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
-      <Toolbar />
       <Container>
         {/* OVERVIEW */}
         <Box my={2}>
@@ -88,6 +62,9 @@ export default ({ id }) => {
             style={{ backgroundColor: theme.backgroundColor, margin: theme.spacing(1) }}
           >
             <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography style={{ margin: 'auto', textAlign: 'center' }} variant="h5">
+                {title || 'Untitled'}
+              </Typography>
               <Typography style={{ margin: 'auto', textAlign: 'center' }} variant="overline">
                 {subtitle || 'No subtitle'}
               </Typography>

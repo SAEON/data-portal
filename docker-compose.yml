@@ -53,7 +53,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $DOCKER_NETWORK      
+      - $DOCKER_NETWORK
 
   mongo:
     container_name: mongo
@@ -67,7 +67,7 @@ services:
     ports:
       - 27017:27017
     networks:
-      - $DOCKER_NETWORK      
+      - $DOCKER_NETWORK
 
   postgis:
     image: $POSTGIS_IMAGE_NAME
@@ -87,7 +87,7 @@ services:
       - postgis:/var/lib/postgresql/data/pgdata
       - data:/var/lib/catalogue-api
     networks:
-      - $DOCKER_NETWORK      
+      - $DOCKER_NETWORK
 
   proxy1:
     container_name: proxy1
@@ -172,7 +172,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - $DOCKER_NETWORK              
+      - $DOCKER_NETWORK
 
   api:
     container_name: api
@@ -181,6 +181,7 @@ services:
       context: src/api
       dockerfile: Dockerfile
       args:
+        LOG_QUERY_DETAILS: $LOG_QUERY_DETAILS
         GDAL_DOCKER_IMAGE: $GDAL_DOCKER_IMAGE
         POSTGIS_CONTAINER_NAME: $POSTGIS_CONTAINER_NAME
         POSTGIS_IMAGE_NAME: $POSTGIS_IMAGE_NAME
@@ -214,7 +215,7 @@ services:
         POSTGIS_DB: $POSTGIS_DB
         POSTGIS_HOST: $POSTGIS_HOST
         POSTGIS_PASSWORD: $POSTGIS_PASSWORD
-        POSTGIS_PORT: $POSTGIS_PORT            
+        POSTGIS_PORT: $POSTGIS_PORT
         POSTGIS_USERNAME: $POSTGIS_USERNAME
     ports:
       - $CATALOGUE_API_CONTAINER_PORT_MAPPING:3000
@@ -229,7 +230,7 @@ services:
       - elasticsearch
       - postgis
     networks:
-      - $DOCKER_NETWORK      
+      - $DOCKER_NETWORK
 
   client:
     container_name: client
@@ -255,6 +256,6 @@ services:
       - proxy2
       - proxy3
       - proxy4
-      - proxy5      
+      - proxy5
     networks:
-      - $DOCKER_NETWORK      
+      - $DOCKER_NETWORK

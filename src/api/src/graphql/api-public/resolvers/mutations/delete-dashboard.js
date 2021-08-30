@@ -4,7 +4,7 @@ export default async (_, args, ctx) => {
   const { Dashboards } = await ctx.mongo.collections
   const { id } = args
 
-  const { result } = await Dashboards.remove({
+  const { result } = await Dashboards.deleteOne({
     _id: ObjectId(id),
   })
 
