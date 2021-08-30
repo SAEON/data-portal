@@ -37,7 +37,7 @@ export default ({ tabIndex, search = undefined }) => {
   }, [isAtlasPage, global, saveList, search])
 
   const id = data?.saveList || undefined
-  const uri = `${CATALOGUE_CLIENT_ADDRESS}/collection/records?disableSidebar=true&showSearchBar=true&search=${id}`
+  const uri = `${CATALOGUE_CLIENT_ADDRESS}/list/records?disableSidebar=true&showSearchBar=true&search=${id}`
 
   return error ? (
     'Error'
