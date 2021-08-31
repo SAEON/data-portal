@@ -84,6 +84,8 @@ type List {
   referrer: String
   url: String
   createdBy: String
+  disableSidebar: Boolean
+  showSearchBar: Boolean
 }
 
 type Query {

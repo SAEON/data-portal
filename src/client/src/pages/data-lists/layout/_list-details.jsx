@@ -4,12 +4,14 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 
-export default ({ title, description, search, url, createdBy }) => {
+export default ({ title, description, search, url, createdBy, showSearchBar, disableSidebar }) => {
   return (
     <Card variant="outlined">
       <CardHeader title={title} subheader={description} />
       <CardContent>
         <Typography gutterBottom>Created by: {createdBy}</Typography>
+        <Typography gutterBottom>Search bar: {'' + showSearchBar}</Typography>
+        <Typography gutterBottom>Side filters: {'' + !disableSidebar}</Typography>
         <Link target="_blank" rel="noopener noreferrer" href={url}>
           {url}
         </Link>

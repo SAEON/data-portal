@@ -16,6 +16,8 @@ export default ({ children }) => {
           url
           referrer
           createdBy
+          disableSidebar
+          showSearchBar
         }
       }
     `,
