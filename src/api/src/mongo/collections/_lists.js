@@ -5,6 +5,7 @@ export default {
       index: 'hashedSearch',
       options: {
         unique: true,
+        partialFilterExpression: { hashedSearch: { $exists: true } },
       },
     },
   ],

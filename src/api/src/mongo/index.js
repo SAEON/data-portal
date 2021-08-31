@@ -85,12 +85,42 @@ export const getDataFinders = makeDataFinders(db)
     'admin'
   )
 
-  // Apply indices
+  /**
+   * Apply indices
+   *
+   * Error code 85 represents an index that
+   * needs to be rebuilt (the definition was
+   * changed in the source code).
+   *
+   * NOTE - Don't change indices directly in
+   * MongoDB!!
+   */
   await Promise.all(
     Object.entries(_collections)
-      .map(([, { name, indices = [] }]) =>
-        indices.map(({ index, options }) => _db.collection(name).createIndex(index, options))
-      )
+      .map(([, { name, indices = [] }]) => {
+        return Promise.all(
+          indices.map(async ({ index, options }) => {
+            console.info('Applying index', index, 'to collection', name, options)
+            return _db
+              .collection(name)
+              .createIndex(index, options)
+              .catch(async error => {
+                if (error.code === 85) {
+                  console.info('Recreating index on', name, ':: Index name:', index)
+                  try {
+                    console.log(index)
+                    await _db.collection(name).dropIndex(`${index}_1`)
+                    await _db.collection(name).createIndex(index, options)
+                  } catch (error) {
+                    throw new Error(`Unable to recreate index. ${error.message}`)
+                  }
+                } else {
+                  throw error
+                }
+              })
+          })
+        )
+      })
       .flat()
   )
 
