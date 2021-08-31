@@ -25,22 +25,22 @@ flowchart TD
                 client("nginx:alpine")
             end
             subgraph api_container [API]
-                api("node:15.11")
+                api("node:16.7")
             end
             subgraph proxy_container_1 [Proxy]
-                ClientProxy1("node:15.11")
+                ClientProxy1("node:16.7")
             end     
             subgraph proxy_container_2 [Proxy]
-                ClientProxy2("node:15.11")
+                ClientProxy2("node:16.7")
             end     
             subgraph proxy_container_3 [Proxy]
-                ClientProxy3("node:15.11")
+                ClientProxy3("node:16.7")
             end    
             subgraph proxy_container_4 [Proxy]
-                ClientProxy4("node:15.11")
+                ClientProxy4("node:16.7")
             end
             subgraph proxy_container_5 [Proxy]
-                ApiProxy("node:15.11")
+                ApiProxy("node:16.7")
             end
             subgraph es_container ["Elasticsearch"]
                 Elasticsearch(docker.elastic.co/elasticsearch/elasticsearch:7.10.2)
