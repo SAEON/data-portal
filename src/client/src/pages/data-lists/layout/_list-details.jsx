@@ -1,11 +1,19 @@
 import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
 
-export default ({ name, description, search }) => {
+export default ({ title, description, search, url, createdBy }) => {
   return (
     <Card variant="outlined">
+      <CardHeader title={title} subheader={description} />
       <CardContent>
-        <pre>{JSON.stringify(search, null, 2)}</pre>
+        <Typography gutterBottom>Created by: {createdBy}</Typography>
+        <Link target="_blank" rel="noopener noreferrer" href={url}>
+          {url}
+        </Link>
+        <pre style={{ maxHeight: 800, overflow: 'auto' }}>{JSON.stringify(search, null, 2)}</pre>
       </CardContent>
     </Card>
   )

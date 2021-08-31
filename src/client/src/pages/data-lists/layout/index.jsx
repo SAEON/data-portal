@@ -11,10 +11,10 @@ export default () => {
   const theme = useTheme()
   const { lists } = useContext(ListsContext)
 
-  const navItems = lists.map(({ name, description, ...props }) => ({
-    name,
+  const navItems = lists.map(({ title, description, ...props }) => ({
+    title,
     description,
-    primaryText: name,
+    primaryText: title,
     secondaryText: description,
     Icon: ({ active }) => (active ? <ActiveIcon /> : <InactiveIcon />),
     Section: ListDetails,

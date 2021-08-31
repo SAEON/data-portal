@@ -11,8 +11,11 @@ export default ({ children }) => {
         lists {
           id
           search
-          name
+          title
           description
+          url
+          referrer
+          createdBy
         }
       }
     `,

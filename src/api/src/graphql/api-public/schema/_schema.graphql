@@ -79,8 +79,11 @@ type DownloadSummary {
 type List {
   id: ID!
   search: JSON!
-  name: String
+  title: String
   description: String
+  referrer: String
+  url: String
+  createdBy: String
 }
 
 type Query {
