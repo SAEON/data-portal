@@ -53,34 +53,40 @@ const iterate = async ({ offset = 0, token }) => {
         },
         i
       ) => {
-        if (DEBUG_IDS.includes(id)) {
-          console.debug(id, JSON.stringify(odpResponseJson[i], null, 2))
+        if (DEBUG_IDS.includes(id) || DEBUG_IDS.includes(doi)) {
+          console.debug('DEBUG', id, JSON.stringify(odpResponseJson[i], null, 2))
         }
 
         try {
-          return published
-            ? {
-                id,
-                doi,
-                institution,
-                collection,
-                projects,
-                schema,
-                ...Object.fromEntries(
-                  Object.entries(metadata).map(([key, value]) =>
-                    key === 'immutableResource'
-                      ? [key, parseImmutableResource(id, value)]
-                      : key === 'dates'
-                      ? [key, parseDates(id, value)]
-                      : key === 'geoLocations'
-                      ? [key, parseSpatial(id, value)]
-                      : [key, value]
-                  )
-                ),
-              }
-            : undefined // published === false
+          if (!published) {
+            return undefined
+          }
+
+          return {
+            id,
+            doi,
+            institution,
+            collection,
+            projects,
+            schema,
+            ...Object.fromEntries(
+              Object.entries(metadata).map(([key, value]) =>
+                key === 'immutableResource'
+                  ? [key, parseImmutableResource(id, value)]
+                  : key === 'dates'
+                  ? [key, parseDates(id, value)]
+                  : key === 'geoLocations'
+                  ? [key, parseSpatial(id, value)]
+                  : [key, value]
+              )
+            ),
+          }
         } catch (error) {
-          console.error(id, error.message)
+          console.error(
+            'ERROR processing record from the ODP. Try debugging by setting the ID for ODP_DEBUG_IDS',
+            id,
+            error.message
+          )
           return undefined
         }
       }

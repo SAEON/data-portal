@@ -5,7 +5,7 @@ export default {
       bsonType: 'object',
       properties: {
         type: {
-          enum: ['curated'],
+          enum: ['curated', 'public'],
           description: 'A curated list is a list defined on the /data-lists UI',
         },
       },

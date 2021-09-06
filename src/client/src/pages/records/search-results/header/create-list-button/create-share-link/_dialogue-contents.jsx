@@ -21,7 +21,9 @@ export default ({ tabIndex, search = undefined }) => {
   const { global } = useContext(globalContext)
   const [saveList, { loading, error, data }] = useMutation(gql`
     mutation($search: JSON!, $createdBy: String!) {
-      ${isAtlasPage ? 'createAtlas' : 'saveList'}(search: $search, createdBy: $createdBy)
+      ${isAtlasPage ? 'createAtlas' : 'saveList'}(search: $search, createdBy: $createdBy) {
+        id
+      }
     }
   `)
 
@@ -36,7 +38,7 @@ export default ({ tabIndex, search = undefined }) => {
     }
   }, [isAtlasPage, global, saveList, search])
 
-  const id = data?.saveList || undefined
+  const id = data?.saveList.id || undefined
   const uri = `${CATALOGUE_CLIENT_ADDRESS}/list/records?disableSidebar=true&showSearchBar=true&search=${id}`
 
   return error ? (

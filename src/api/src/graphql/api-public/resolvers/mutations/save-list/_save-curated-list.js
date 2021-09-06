@@ -1,25 +1,25 @@
-import mongodb from 'mongodb'
-const { ObjectId } = mongodb
-import hash from 'object-hash'
+import { ObjectId } from 'mongodb'
 
 export default async (self, args, ctx) => {
-  const { search, createdBy } = args
+  const { id, search, createdBy, ...otherFields } = args
   const { Lists } = await ctx.mongo.collections
+
+  const _id = ObjectId()
 
   const result = await Lists.findOneAndUpdate(
     {
-      hashedSearch: hash(search),
+      _id: id ? ObjectId(id) : _id,
     },
     {
       $setOnInsert: {
-        _id: ObjectId(),
-        hashedSearch: hash(search),
-        search,
+        _id,
         createdAt: new Date(),
         createdBy,
       },
       $set: {
         modifiedAt: new Date(),
+        search,
+        ...otherFields,
       },
     },
     {
@@ -28,5 +28,5 @@ export default async (self, args, ctx) => {
     }
   )
 
-  return result.value._id.toString()
+  return result.value
 }

@@ -1,5 +1,5 @@
 import Header from '../../../components/toolbar-header'
-import NewList from './_new-list'
+import NewList from './new-list'
 import DownloadDetails from './_download'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Divider from '@material-ui/core/Divider'

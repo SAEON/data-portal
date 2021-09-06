@@ -76,6 +76,11 @@ type DownloadSummary {
   count: Int!
 }
 
+enum ListType {
+  curated
+  public
+}
+
 type List {
   id: ID!
   search: JSON!
@@ -86,6 +91,7 @@ type List {
   createdBy: String
   disableSidebar: Boolean
   showSearchBar: Boolean
+  type: ListType
 }
 
 type Query {
@@ -145,7 +151,16 @@ type Mutation {
   """
   Save a search context (i.e. a dynamic list)
   """
-  saveList(search: JSON!, createdBy: String!): ID!
+  saveList(
+    search: JSON!
+    createdBy: String!
+    type: ListType
+    title: String
+    description: String
+    referrer: String
+    disableSidebar: Boolean
+    showSearchBar: Boolean
+  ): List!
   createDashboard(title: String, subtitle: String, description: String, databookId: ID!): Dashboard!
   updateDashboard(
     id: ID!

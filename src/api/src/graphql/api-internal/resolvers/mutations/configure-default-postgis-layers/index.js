@@ -4,7 +4,7 @@ import defaultLayers from '../../../../../lib/default-postgis-layers.js'
 
 export default async () => {
   for (const [tableName, { uri }] of Object.entries(defaultLayers)) {
-    console.log('Configuring PostGIS', tableName, uri)
+    console.info('Configuring PostGIS', tableName, uri)
     await ogr2ogr({
       tableName,
       username: POSTGIS_USERNAME,

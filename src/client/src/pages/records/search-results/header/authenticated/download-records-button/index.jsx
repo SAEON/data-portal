@@ -25,13 +25,15 @@ export default ({ catalogue }) => {
   const [saveList, { error, loading }] = useMutation(
     gql`
       mutation ($search: JSON!, $createdBy: String!) {
-        saveList(search: $search, createdBy: $createdBy)
+        saveList(search: $search, createdBy: $createdBy) {
+          id
+        }
       }
     `,
     {
       onCompleted: data => {
         if (data) {
-          window.open(`${API_PUBLIC_ADDRESS}/metadata-records?search=${data.saveList}`)
+          window.open(`${API_PUBLIC_ADDRESS}/metadata-records?search=${data.saveList.id}`)
         }
       },
     }

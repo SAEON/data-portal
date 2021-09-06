@@ -55,7 +55,7 @@ export default async () => {
       }
     )
     const odpJson = await elasticsearchTemplateResponse.json()
-    console.log(`${ELASTICSEARCH_INDEX} deleted on refresh`, odpJson)
+    console.info(`${ELASTICSEARCH_INDEX} deleted on refresh`, odpJson)
 
     /**
      * Fetch from the source, and push to the destination in batches
@@ -77,7 +77,7 @@ export default async () => {
       const elasticsResponseJson = await elasticsResponse.json()
 
       if (elasticsResponseJson.errors) {
-        console.log(
+        console.info(
           'Failure integrating the following ODP records into the Elasticsearch index',
           JSON.stringify(
             elasticsResponseJson.items
@@ -91,7 +91,7 @@ export default async () => {
         )
       }
 
-      console.log(
+      console.info(
         `Processed ${
           elasticsResponseJson.items?.length || 0
         } docs into the ${ELASTICSEARCH_INDEX} index`
@@ -110,12 +110,12 @@ export default async () => {
     }
   } catch (error) {
     result.errors = error.message
-    console.log(result)
+    console.error('ERROR', result)
     process.exit(1)
   }
 
   const t1 = performance.now()
   const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
-  console.log('Index integration complete', runtime)
+  console.info('Index integration complete', runtime)
   return { runtime, ...result }
 }
