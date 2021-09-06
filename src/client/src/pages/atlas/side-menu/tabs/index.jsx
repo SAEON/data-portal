@@ -3,11 +3,11 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import AppBar from '@material-ui/core/AppBar'
 import Fade from '@material-ui/core/Fade'
-import FilterIcon from '@material-ui/icons/FilterList'
-import LayersIcon from '@material-ui/icons/Layers'
+import FilterIcon from 'mdi-react/LayersSearchIcon'
+import LayersIcon from 'mdi-react/LayersIcon'
 import { TabsContext } from '../'
-import Data from './data'
-import Filters from './filters'
+import ActiveLayers from './active-layers'
+import AvailableLayers from './available-layers'
 
 const a11yProps = index => ({
   id: `full-width-tab-${index}`,
@@ -17,7 +17,7 @@ const a11yProps = index => ({
 const TabPanel = ({ children, value, index }) => (
   <Fade in={value === index}>
     <div
-      style={{ height: 'calc(100% - 49px)', position: 'relative' }}
+      style={{ height: 'calc(100% - 50px)', position: 'relative' }}
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -33,7 +33,7 @@ export default ({ LegendMenu, DataMenu }) => {
 
   return (
     <div style={{ height: '100%', position: 'relative' }}>
-      <AppBar color="secondary" variant="outlined" position="static">
+      <AppBar color="inherit" variant="outlined" position="static">
         <Tabs
           value={activeTabIndex}
           onChange={(e, index) => setActiveTabIndex(index)}
@@ -42,15 +42,19 @@ export default ({ LegendMenu, DataMenu }) => {
           variant="fullWidth"
           aria-label="Tabs - select mode on atlas menu"
         >
-          <Tab icon={<LayersIcon fontSize="small" />} {...a11yProps(0)} />
-          <Tab icon={<FilterIcon fontSize="small" />} {...a11yProps(1)} />
+          <Tab icon={<LayersIcon size={18} />} {...a11yProps(0)} />
+          <Tab icon={<FilterIcon size={18} />} {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={activeTabIndex} index={0}>
-        <Data DataMenu={DataMenu} LegendMenu={LegendMenu} />
+        <ActiveLayers
+          setActiveTabIndex={setActiveTabIndex}
+          DataMenu={DataMenu}
+          LegendMenu={LegendMenu}
+        />
       </TabPanel>
       <TabPanel value={activeTabIndex} index={1}>
-        <Filters />
+        <AvailableLayers />
       </TabPanel>
     </div>
   )

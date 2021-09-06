@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { MapContext } from '../../../../../../contexts/ol-react'
 import { AtlasContext } from '../../../../state'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Tooltip from '@material-ui/core/Tooltip'
 import IconButton from '@material-ui/core/IconButton'
@@ -9,14 +8,13 @@ import AddIcon from '@material-ui/icons/Add'
 import SaeonGeoserverLayer from './layer-types/saeon-geoserver'
 import BaseLayer from './layer-types/base-layer'
 
-export default ({ LegendMenu, DataMenu }) => {
+export default ({ setActiveTabIndex, LegendMenu, DataMenu }) => {
   const { proxy } = useContext(MapContext)
   const { layers } = useContext(AtlasContext)
 
   return (
     <>
       <Box m={1}>
-        <Typography variant="overline">Active Layers</Typography>
         <Box style={{ display: 'flex', flexDirection: 'column' }}>
           {proxy
             .getLayers()
@@ -47,19 +45,11 @@ export default ({ LegendMenu, DataMenu }) => {
             })
             .filter(_ => _)}
         </Box>
-        <Tooltip placement="right" title="Add layer via server address">
-          <IconButton
-            onClick={() =>
-              alert('Users will be able to add external layers (GeoServer or Esri) to the map')
-            }
-            style={{ float: 'right' }}
-            size="small"
-          >
+        <Tooltip placement="right" title="Add layer">
+          <IconButton onClick={() => setActiveTabIndex(1)} style={{ float: 'right' }} size="small">
             <AddIcon fontSize="small" />
           </IconButton>
         </Tooltip>
-
-        <div style={{ clear: 'both' }} />
       </Box>
     </>
   )

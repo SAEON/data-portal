@@ -5,7 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import Tooltip from '@material-ui/core/Tooltip'
 import Badge from '@material-ui/core/Badge'
-import InfoIcon from '@material-ui/icons/Info'
+import InfoIcon from 'mdi-react/InformationVariantIcon'
 import { nanoid } from 'nanoid'
 
 export default ({
@@ -59,15 +59,13 @@ export default ({
               {badgeProps ? (
                 badgeProps._component ? (
                   <badgeProps._component {...badgeProps}>
-                    {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
+                    {icon || <InfoIcon size={18} />}
                   </badgeProps._component>
                 ) : (
-                  <Badge {...badgeProps}>
-                    {icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />}
-                  </Badge>
+                  <Badge {...badgeProps}>{icon || <InfoIcon size={18} />}</Badge>
                 )
               ) : (
-                icon || <InfoIcon fontSize={iconProps?.fontSize || 'default'} />
+                icon || <InfoIcon size={18} />
               )}
             </IconButton>
           </span>

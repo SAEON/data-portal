@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import { MapContext } from '../../../contexts/ol-react'
 import { AtlasContext } from '../state'
 import { createLayer, LayerTypes } from '../../../lib/ol'
-import SaeonGeoServerLegend from '../side-menu/tabs/data/layers/layer-types/saeon-geoserver/legend'
+import SaeonGeoServerLegend from '../side-menu/tabs/active-layers/layers/layer-types/saeon-geoserver/legend'
 
 const MAX_AUTO_LAYERS = 1
 

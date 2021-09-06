@@ -8,13 +8,11 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
 import useTheme from '@material-ui/core/styles/useTheme'
-import AddIcon from '@material-ui/icons/Add'
-import CloseIcon from '@material-ui/icons/Close'
-import SearchIcon from '@material-ui/icons/Search'
+import CloseIcon from 'mdi-react/CloseIcon'
+import SearchIcon from 'mdi-react/SearchIcon'
 import MessageDialogue from '../../../../../../components/message-dialogue'
-import Record from '../../../../../../pages/record'
+import Record from '../../../../../record'
 import Minisearch from 'minisearch'
 import QuickForm from '@saeon/quick-form'
 import debounce from '../../../../../../lib/fns/debounce'
@@ -22,7 +20,7 @@ import { MapContext } from '../../../../../../contexts/ol-react'
 import useStyles from './style'
 import clsx from 'clsx'
 import { createLayer, LayerTypes } from '../../../../../../lib/ol'
-import SaeonGeoServerLegend from '../layers/layer-types/saeon-geoserver/legend'
+import SaeonGeoServerLegend from '../../active-layers/layers/layer-types/saeon-geoserver/legend'
 
 const LIST_PADDING_SIZE = 0
 const ITEM_SIZE = 116
@@ -31,7 +29,6 @@ const ITEM_X_PADDING_LEFT = 2
 const ITEM_X_PADDING_RIGHT = 8
 
 const SEARCH_BOX_HEIGHT = 71
-const ADD_DATASET_BUTTON_HEIGHT = 26
 const SEARCH_BOX_MARGIN = 52
 
 var cachedSearch
@@ -68,7 +65,7 @@ export default () => {
 
   return (
     <>
-      <Box m={1}>
+      <Box p={1}>
         <Typography variant="overline">{`Available datasets (${searchResults?.length})`}</Typography>
         <QuickForm
           value={textSearch}
@@ -88,7 +85,7 @@ export default () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon fontSize="small" />
+                    <SearchIcon size={18} />
                   </InputAdornment>
                 ),
               }}
@@ -100,7 +97,7 @@ export default () => {
       <Box
         className={clsx(classes.sortList)}
         style={{
-          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${ADD_DATASET_BUTTON_HEIGHT}px - ${SEARCH_BOX_MARGIN}px)`,
+          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${SEARCH_BOX_MARGIN}px)`,
         }}
         m={1}
       >
@@ -195,7 +192,7 @@ export default () => {
                                   }}
                                   style={{ marginLeft: 'auto', alignSelf: 'center' }}
                                 >
-                                  <CloseIcon />
+                                  <CloseIcon size={18} />
                                 </IconButton>
                               </div>
                             )}
@@ -238,21 +235,6 @@ export default () => {
         ) : (
           <Typography variant="body2">No results</Typography>
         )}
-      </Box>
-      <Box m={1}>
-        <Tooltip placement="right" title="Add layer via server address">
-          <IconButton
-            onClick={() =>
-              alert('Users will be able to add additional datasets from the catalogue to the atlas')
-            }
-            style={{ float: 'right' }}
-            size="small"
-          >
-            <AddIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-
-        <div style={{ clear: 'both' }} />
       </Box>
     </>
   )
