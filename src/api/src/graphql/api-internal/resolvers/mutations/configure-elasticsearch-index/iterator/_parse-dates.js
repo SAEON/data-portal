@@ -20,7 +20,7 @@ const _parse = (id, dt) => {
     return parse(dt, LOCALE_0, new Date())
   }
 
-  throw new Error(id, 'Unexpected date format from ODP', JSON.stringify(dt))
+  throw new Error(`Unexpected date format returned by ODP - ${JSON.stringify(dt, null, 2)}`)
 }
 
 export default (id, dates) => {
