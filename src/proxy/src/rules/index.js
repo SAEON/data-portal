@@ -4,6 +4,7 @@ import hstRule from './_hst.js'
 import elasticsearchRule from './_elasticsearch.js'
 import saeonGeoServersRule from './_saeon-geoservers.js'
 import saeonGeoServerApp04Rule from './_saeon-geoserver-app04.js'
+import saeonGeoServerApp04Rule2 from './_saeon-geoserver-app04-2.js'
 import corsRule from './_cors.js'
 import ahocevarRule from './_ahocevar.js'
 import terrestrisRule from './_terrestris.js'
@@ -24,6 +25,8 @@ const beforeSendRequest = async requestDetail => {
       proxiedRequest = saeonGeoServersRule(requestDetail, url)
     } else if (pathname.includes('/saeon-spatialdata/geoserver.saeon.ac.za')) {
       proxiedRequest = saeonGeoServerApp04Rule(requestDetail, url)
+    } else if (pathname.includes('/saeon-spatialdata/app04.saeon.ac.za')) {
+      proxiedRequest = saeonGeoServerApp04Rule2(requestDetail, url)
     } else if (pathname.includes('/ahocevar')) {
       proxiedRequest = ahocevarRule(requestDetail, url)
     } else if (pathname.includes('/terrestris')) {
