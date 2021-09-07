@@ -23,8 +23,8 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     '-q', // Wrap SQL in quotes
     '-R', // Out of DB file (filePath)
     '-I', // Create a GIST spatial index
-    '-f', // Change default raster data column name
-    'raster_data', // From 'rast' to 'raster_data'
+    '-t',
+    '128x128', // https://gis.stackexchange.com/a/281936/82513
     filePath,
     `${schema}.${tableName}`,
     '-c',

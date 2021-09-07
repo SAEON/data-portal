@@ -1,5 +1,6 @@
 import provisionSchema from './provision-schema/index.js'
 import loadShapefileArchive from './shapefile-archive/index.js'
+import loadAscArchive from './asc-archive/index.js'
 import loadNetCdfFile from './netcdf/index.js'
 import mongodb from 'mongodb'
 const { ObjectId } = mongodb
@@ -63,7 +64,9 @@ export default async (ctx, { records, databookId }) => {
           break
 
         case 'asc-archive':
-          throw new Error('ASC files are not supported yet')
+          console.log(databook._id, 'Importing ASC archive to PostGIS as raster')
+          await loadAscArchive(ctx, databook, tableName, _source)
+          break
 
         default:
           throw new Error('Unknown immutable resource format')

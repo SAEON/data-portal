@@ -1,5 +1,4 @@
-import mongodb from 'mongodb'
-const { ObjectId } = mongodb
+import { ObjectId } from 'mongodb'
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
 import { createWriteStream, mkdtemp } from 'fs'

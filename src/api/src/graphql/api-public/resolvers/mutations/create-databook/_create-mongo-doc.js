@@ -29,11 +29,11 @@ export default async (records, ctx, createdBy) => {
         const { resourceDownload } = immutableResource
         const { archive, archivedFormats, fileFormat } = resourceDownload
 
-        const type = fileFormat?.includes('nc')
+        const type = fileFormat?.toLowerCase().includes('nc')
           ? 'netcdf'
-          : archive && archivedFormats?.includes('shp')
+          : archive && archivedFormats?.map(f => f.toLowerCase()).includes('shp')
           ? 'shapefile-archive'
-          : archive && archivedFormats?.includes('asc')
+          : archive && archivedFormats?.map(f => f.toLowerCase()).includes('asc')
           ? 'asc-archive'
           : 'unknown'
 
