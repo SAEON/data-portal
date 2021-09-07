@@ -3,19 +3,13 @@ import permissions from './permissions.js'
 export const user = {
   name: 'user',
   description: 'Default login role',
-  permissions: [],
+  permissions: [permissions['atlas:create'], permissions['databook:create']],
 }
 
 export const saeon = {
   name: 'saeon',
   description: 'Default login roles for @saeon.ac.za email addresses',
-  permissions: [
-    ...user.permissions,
-    permissions['atlas:create'],
-    permissions['databook:create'],
-    permissions['/usage'],
-    permissions['site-analytics:view'],
-  ],
+  permissions: [...user.permissions, permissions['/usage'], permissions['site-analytics:view']],
 }
 
 export const admin = {
