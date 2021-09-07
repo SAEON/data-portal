@@ -68,6 +68,7 @@ services:
       - 27017:27017
     networks:
       - $DOCKER_NETWORK
+    command: --wiredTigerCacheSizeGB=2 --dbpath /data/db
 
   postgis:
     image: $POSTGIS_IMAGE_NAME
