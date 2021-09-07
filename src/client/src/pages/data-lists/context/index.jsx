@@ -1,6 +1,9 @@
-import { createContext } from 'react'
+import { createContext, useMemo } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
+import InactiveIcon from 'mdi-react/FolderIcon'
+import ActiveIcon from 'mdi-react/FolderOpenIcon'
+import ListDetails from '../components/list-details'
 
 export const context = createContext()
 
@@ -24,6 +27,22 @@ export default ({ children }) => {
     { variables: {} }
   )
 
+  const lists = useMemo(() => data?.lists || [], [data])
+
+  const navItems = useMemo(
+    () =>
+      lists.map(({ title, description, ...props }) => ({
+        title,
+        description,
+        primaryText: title,
+        secondaryText: description,
+        Icon: ({ active }) => (active ? <ActiveIcon /> : <InactiveIcon />),
+        Section: ListDetails,
+        ...props,
+      })),
+    [lists]
+  )
+
   if (loading) {
     return <Loading />
   }
@@ -32,5 +51,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ lists: data.lists }}>{children}</context.Provider>
+  return <context.Provider value={{ navItems }}>{children}</context.Provider>
 }

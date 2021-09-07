@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Container from '@material-ui/core/Container'
 import useTheme from '@material-ui/core/styles/useTheme'
-import CollectionsProvider from './context'
+import ListsProvider from './context'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import AccessDenied from '../../components/access-denied'
@@ -27,13 +27,16 @@ export default () => {
   }
 
   return (
-    <CollectionsProvider>
+    <ListsProvider>
       <Header />
+
       <div style={{ marginTop: theme.spacing(2) }} />
+
       <Container style={{ minHeight: 1000 }}>
         <Layout />
       </Container>
+
       <div style={{ marginTop: theme.spacing(2) }} />
-    </CollectionsProvider>
+    </ListsProvider>
   )
 }

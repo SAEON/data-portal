@@ -1,54 +1,81 @@
-import Button from '@material-ui/core/Button'
+import { useContext } from 'react'
+import { context as authContext } from '../../../../contexts/authentication'
 import NewListIcon from 'mdi-react/DatabaseAddIcon'
-import { gql, useMutation } from '@apollo/client'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import MessageDialogue from '../../../../components/message-dialogue'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+import TextField from '@material-ui/core/TextField'
+import Q from '@saeon/quick-form'
+import SaveList from './_save-list'
 
 export default () => {
-  const [saveList, { error, loading }] = useMutation(
-    gql`
-      mutation ($search: JSON!, $createdBy: String!, $type: ListType, $title: String) {
-        saveList(search: $search, createdBy: $createdBy, type: $type, title: $title) {
-          id
-          title
-          description
-        }
-      }
-    `,
-    {
-      update: (cache, data) => {
-        // TODO update root query.lists cache
-      },
-    }
-  )
-
-  if (error) {
-    throw error
-  }
+  const { user } = useContext(authContext)
 
   return (
-    <Button
-      onClick={() =>
-        saveList({
-          variables: {
-            createdBy: 'TODO',
-            search: {},
-            title: 'AAA',
-            type: 'curated',
-          },
-        })
-      }
-      startIcon={
-        loading ? (
-          <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
-        ) : (
-          <NewListIcon size={18} />
-        )
-      }
-      variant="text"
-      size="small"
-      disableElevation
+    <MessageDialogue
+      buttonType="button"
+      buttonProps={{
+        children: 'New list',
+        size: 'small',
+        variant: 'text',
+        startIcon: <NewListIcon size={18} />,
+      }}
+      title="New list"
+      tooltipProps={{
+        title: 'Add new list',
+      }}
     >
-      New list
-    </Button>
+      {closeFn => {
+        return (
+          <Q title="" description="" createdBy={user?.name || user.emailAddress || ''}>
+            {(update, { title, description, createdBy }) => {
+              return (
+                <>
+                  <DialogContent>
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      value={title}
+                      variant="outlined"
+                      placeholder="List title"
+                      helperText="What would you like to name the new list?"
+                      onChange={({ target: { value: title } }) => update({ title })}
+                    />
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      value={description}
+                      variant="outlined"
+                      placeholder="Description"
+                      helperText="What is the purpose of the list?"
+                      multiline
+                      minRows={4}
+                      onChange={({ target: { value: description } }) => update({ description })}
+                    />
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      value={createdBy}
+                      variant="outlined"
+                      placeholder="List owner"
+                      helperText="Who is creator/owner of this list"
+                      onChange={({ target: { value: createdBy } }) => update({ createdBy })}
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <SaveList
+                      title={title}
+                      description={description}
+                      closeFn={closeFn}
+                      createdBy={createdBy}
+                    />
+                  </DialogActions>
+                </>
+              )
+            }}
+          </Q>
+        )
+      }}
+    </MessageDialogue>
   )
 }

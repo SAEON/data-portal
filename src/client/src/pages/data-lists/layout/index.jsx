@@ -3,28 +3,26 @@ import { context as ListsContext } from '../context'
 import ContentNav from '../../../components/content-nav'
 import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
-import InactiveIcon from 'mdi-react/FolderIcon'
-import ActiveIcon from 'mdi-react/FolderOpenIcon'
-import ListDetails from './_list-details'
+import NoLists from '../components/no-lists'
 
 export default () => {
   const theme = useTheme()
-  const { lists } = useContext(ListsContext)
+  const { navItems } = useContext(ListsContext)
 
-  const navItems = lists.map(({ title, description, ...props }) => ({
-    title,
-    description,
-    primaryText: title,
-    secondaryText: description,
-    Icon: ({ active }) => (active ? <ActiveIcon /> : <InactiveIcon />),
-    Section: ListDetails,
-    ...props,
-  }))
+  if (!navItems.length) {
+    return (
+      <Fade unmountOnExit mountOnEnter timeout={theme.transitions.duration.regular} in={true}>
+        <span>
+          <NoLists />
+        </span>
+      </Fade>
+    )
+  }
 
   return (
     <ContentNav navItems={navItems}>
-      {({ activeIndex }) =>
-        navItems.map(({ Section, primaryText, ...props }, i) => {
+      {({ activeIndex }) => {
+        return navItems.map(({ Section, primaryText, ...props }, i) => {
           return (
             <Fade
               unmountOnExit
@@ -39,7 +37,7 @@ export default () => {
             </Fade>
           )
         })
-      }
+      }}
     </ContentNav>
   )
 }

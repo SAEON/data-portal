@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react'
-import IconButton from '@material-ui/core/IconButton'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import Tooltip from '@material-ui/core/Tooltip'
-import Badge from '@material-ui/core/Badge'
-import InfoIcon from 'mdi-react/InformationVariantIcon'
 import { nanoid } from 'nanoid'
+import ToggleButton from './_toggle-button'
 
 export default ({
   id,
   iconProps,
   tooltipProps,
+  buttonType = 'icon',
   title = undefined,
   titleProps = {},
   text = 'Text missing',
@@ -26,6 +25,7 @@ export default ({
   defaultOpen = false,
   ariaLabel = 'Toggle dialogue',
   permanent = false,
+  buttonProps = {},
   disabled = false,
   handleClose = () => {},
 }) => {
@@ -41,37 +41,27 @@ export default ({
 
   return (
     <span onClick={e => e.stopPropagation()}>
+      {/* TOGGLE BUTTON */}
       {hideIcon ? undefined : (
         <Tooltip placement="right-end" {...tooltipProps}>
           <span>
-            <IconButton
+            <ToggleButton
+              buttonType={buttonType}
               disabled={disabled}
-              aria-label={ariaLabel}
-              aria-controls={id}
-              aria-haspopup="true"
-              aria-expanded={open}
-              onClick={e => {
-                e.stopPropagation()
-                setOpen(!open)
-              }}
+              ariaLabel={ariaLabel}
+              id={id}
+              setOpen={setOpen}
+              badgeProps={badgeProps}
+              icon={icon}
+              open={open}
               {...iconProps}
-            >
-              {badgeProps ? (
-                badgeProps._component ? (
-                  <badgeProps._component {...badgeProps}>
-                    {icon || <InfoIcon size={18} />}
-                  </badgeProps._component>
-                ) : (
-                  <Badge {...badgeProps}>{icon || <InfoIcon size={18} />}</Badge>
-                )
-              ) : (
-                icon || <InfoIcon size={18} />
-              )}
-            </IconButton>
+              {...buttonProps}
+            />
           </span>
         </Tooltip>
       )}
 
+      {/* DIALOGUE */}
       <Dialog
         disableScrollLock
         id={id}
@@ -86,17 +76,33 @@ export default ({
         }}
         PaperProps={paperProps}
       >
+        {/* TITLE */}
         {title ? (
           <DialogTitle {...titleProps}>
             {typeof title === 'function' ? title(() => setOpen(false)) : title}
           </DialogTitle>
         ) : undefined}
-        <div style={{ position: 'relative' }}>
-          {children && typeof children === 'function'
-            ? children(() => setOpen(false), open)
-            : children}
-          {children ? null : <DialogContent {...dialogueContentProps}>{text}</DialogContent>}
-        </div>
+
+        {/**
+         * CONTENT
+         *
+         * if 'children' is provided, then assume
+         * that the controlling component is providing
+         * the content.
+         *
+         * Otherwise render the text
+         *
+         */}
+
+        {children ? (
+          typeof children === 'function' ? (
+            children(() => setOpen(false), open)
+          ) : (
+            children
+          )
+        ) : (
+          <DialogContent {...dialogueContentProps}>{text}</DialogContent>
+        )}
       </Dialog>
     </span>
   )

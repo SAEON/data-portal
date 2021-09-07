@@ -1,10 +1,21 @@
-import Button from '@material-ui/core/Button'
 import DownloadIcon from 'mdi-react/DownloadMultipleIcon'
+import MessageDialogue from '../../../components/message-dialogue'
 
 export default () => {
   return (
-    <Button startIcon={<DownloadIcon size={18} />} variant="text" size="small" disableElevation>
-      Download lists details
-    </Button>
+    <MessageDialogue
+      buttonType="button"
+      buttonProps={{
+        children: 'Download lists',
+        size: 'small',
+        variant: 'text',
+        startIcon: <DownloadIcon size={18} />,
+      }}
+      title="Download list details"
+      text="Not implemented yet"
+      tooltipProps={{
+        title: 'Download lists in .xlsx format',
+      }}
+    />
   )
 }
