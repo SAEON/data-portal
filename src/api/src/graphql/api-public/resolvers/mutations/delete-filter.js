@@ -2,12 +2,6 @@ import { ObjectId } from 'mongodb'
 
 export default async (_, { id }, ctx) => {
   const { Filters } = await ctx.mongo.collections
-  const { result } = await Filters.deleteOne({ _id: ObjectId(id) })
-  const { n } = result
-
-  if (!n) {
-    throw new Error(`No filter deleted. Are you sure that filter id = ${id} exists?`)
-  }
-
-  return true
+  const { acknowledged } = await Filters.deleteOne({ _id: ObjectId(id) })
+  return acknowledged
 }

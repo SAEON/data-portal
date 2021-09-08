@@ -1,12 +1,9 @@
 import { ObjectId } from 'mongodb'
 
-export default async (_, args, ctx) => {
+export default async (_, { id }, ctx) => {
   const { Dashboards } = await ctx.mongo.collections
-  const { id } = args
-
-  const { result } = await Dashboards.deleteOne({
+  const { acknowledged } = await Dashboards.deleteOne({
     _id: ObjectId(id),
   })
-
-  return Boolean(result?.n)
+  return acknowledged
 }
