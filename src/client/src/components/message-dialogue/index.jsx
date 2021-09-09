@@ -2,31 +2,33 @@ import { useState, useEffect } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 import Tooltip from '@material-ui/core/Tooltip'
 import { nanoid } from 'nanoid'
 import ToggleButton from './_toggle-button'
 
 export default ({
-  id,
-  iconProps,
-  tooltipProps,
+  actions = undefined,
+  ariaLabel = 'Toggle dialogue',
+  badgeProps = undefined,
+  buttonProps = {},
   buttonType = 'icon',
-  title = undefined,
-  titleProps = {},
-  text = 'Text missing',
   children = undefined,
+  defaultOpen = false,
   dialogueContentProps,
   dialogueProps,
-  paperProps,
-  icon = undefined,
-  onOpenEffect = undefined,
-  badgeProps = undefined,
-  hideIcon = false,
-  defaultOpen = false,
-  ariaLabel = 'Toggle dialogue',
-  permanent = false,
-  buttonProps = {},
   disabled = false,
+  hideIcon = false,
+  icon = undefined,
+  iconProps,
+  id,
+  onOpenEffect = undefined,
+  paperProps,
+  permanent = false,
+  text = 'Text missing',
+  title = undefined,
+  titleProps = {},
+  tooltipProps,
   handleClose = () => {},
 }) => {
   const [open, setOpen] = useState(defaultOpen)
@@ -103,6 +105,14 @@ export default ({
         ) : (
           <DialogContent {...dialogueContentProps}>{text}</DialogContent>
         )}
+
+        {actions ? (
+          <DialogActions>
+            {actions.map((Action, i) => (
+              <Action toggle={() => setOpen(!open)} key={i} />
+            ))}
+          </DialogActions>
+        ) : null}
       </Dialog>
     </span>
   )

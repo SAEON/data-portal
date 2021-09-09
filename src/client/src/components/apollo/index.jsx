@@ -8,6 +8,13 @@ export default ({ children }) => (
       new ApolloClient({
         cache: new InMemoryCache({
           typePolicies: {
+            Query: {
+              fields: {
+                lists: {
+                  merge: mergeListByIds,
+                },
+              },
+            },
             Databook: {
               fields: {
                 dashboards: {

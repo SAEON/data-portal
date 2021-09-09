@@ -2,6 +2,7 @@ import logBrowserEvents from '../mutations/log-browser-events.js'
 import createDatabook from '../mutations/create-databook/index.js'
 import createAtlas from '../mutations/create-atlas.js'
 import saveList from '../mutations/save-list/index.js'
+import deleteList from '../mutations/delete-list/index.js'
 import createDashboard from '../mutations/create-dashboard.js'
 import updateDashboard from '../mutations/update-dashboard.js'
 import updateDatabook from '../mutations/update-databook.js'
@@ -17,9 +18,11 @@ import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
 
 export default {
-  logBrowserEvents,
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
   createAtlas: authorize(PERMISSIONS['atlas:create'])(createAtlas),
+  deleteList: authorize(PERMISSIONS['list:delete'])(deleteList),
+  assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
+  logBrowserEvents,
   saveList,
   createDashboard,
   updateDashboard,
@@ -31,5 +34,4 @@ export default {
   deleteChart,
   createFilter,
   deleteFilter,
-  assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
 }

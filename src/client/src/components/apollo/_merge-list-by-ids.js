@@ -1,10 +1,17 @@
 /**
- * This is just an example of how to merge arrays
- * Might be useful for merging on non-id fields.
+ * I think that this is the default Apollo logic for merging list fields onto types,
+ * however it's worth having here explicitly in case this changes / as a reference on
+ * how to merge lists in custom ways
  *
- * But mostly this should be done automatically.
+ * NOTE
  *
- * https://www.apollographql.com/docs/react/caching/cache-field-behavior/#merging-arrays-of-non-normalized-objects
+ * It might be tempting to delete items from the cache using cache.writeQuery,
+ * but this doesn't work. This merge function will only add information to existing
+ * items in the Apollo cache. There are many possibilities where a query returns a
+ * partial list of data that DOESN'T mean that missing items compared to the existing
+ * cache should be deleted
+ *
+ * Instead use cache.evict({ id: `<Type>:<ID>` })
  */
 export default (existing, incoming, { readField, mergeObjects }) => {
   const merged = existing ? existing.slice(0) : []
@@ -23,7 +30,7 @@ export default (existing, incoming, { readField, mergeObjects }) => {
       if (typeof i === 'number') {
         merged[i] = mergeObjects(merged[i], obj)
       } else {
-        idMap[i] = merged.length
+        idMap[id] = merged.length
         merged.push(obj)
       }
     })

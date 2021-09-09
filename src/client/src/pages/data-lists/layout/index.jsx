@@ -1,19 +1,35 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { context as ListsContext } from '../context'
 import ContentNav from '../../../components/content-nav'
 import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
-import NoLists from '../components/no-lists'
+import NoItems from '../components/no-items'
+import ListItem from '../components/list-item'
+import InactiveIcon from 'mdi-react/FolderIcon'
+import ActiveIcon from 'mdi-react/FolderOpenIcon'
 
 export default () => {
   const theme = useTheme()
-  const { navItems } = useContext(ListsContext)
+  const { lists } = useContext(ListsContext)
+
+  const navItems = useMemo(
+    () =>
+      lists.map(({ title, description, ...props }) => ({
+        title,
+        description,
+        primaryText: title,
+        secondaryText: description,
+        Icon: ({ active }) => (active ? <ActiveIcon /> : <InactiveIcon />),
+        ...props,
+      })),
+    [lists]
+  )
 
   if (!navItems.length) {
     return (
-      <Fade unmountOnExit mountOnEnter timeout={theme.transitions.duration.regular} in={true}>
+      <Fade unmountOnExit mountOnEnter timeout={theme.transitions.duration.standard} in={true}>
         <span>
-          <NoLists />
+          <NoItems />
         </span>
       </Fade>
     )
@@ -22,17 +38,17 @@ export default () => {
   return (
     <ContentNav navItems={navItems}>
       {({ activeIndex }) => {
-        return navItems.map(({ Section, primaryText, ...props }, i) => {
+        return navItems.map(({ primaryText, ...props }, i) => {
           return (
             <Fade
               unmountOnExit
               mountOnEnter
-              timeout={theme.transitions.duration.regular}
+              timeout={theme.transitions.duration.standard}
               in={activeIndex === i}
               key={primaryText || i}
             >
               <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                <Section {...props} />
+                <ListItem {...props} />
               </span>
             </Fade>
           )

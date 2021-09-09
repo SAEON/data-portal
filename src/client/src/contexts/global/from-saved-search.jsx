@@ -7,7 +7,18 @@ export default ({ id, children }) =>
     <WithGqlQuery
       QUERY={gql`
         query ($id: ID!) {
-          list(id: $id)
+          list(id: $id) {
+            id
+            search
+            title
+            description
+            referrer
+            url
+            createdBy
+            disableSidebar
+            showSearchBar
+            type
+          }
         }
       `}
       variables={{ id }}

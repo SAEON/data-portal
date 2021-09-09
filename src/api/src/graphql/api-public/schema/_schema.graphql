@@ -118,7 +118,7 @@ type Query {
   """
   Retrieve search context (i.e. a dynamic list)
   """
-  list(id: ID!): JSON # TODO - convert this to return type List
+  list(id: ID!): List
   """
   Retrieve many search contexts (i.e. many dynamic lists)
   """
@@ -148,6 +148,10 @@ type Mutation {
   Save a web-browser's search context for retrieving as an atlas
   """
   createAtlas(search: JSON!, createdBy: String!): ID!
+  """
+  Delete a saved list (only curated lists can be deleted)
+  """
+  deleteList(id: ID!): Boolean!
   """
   Save a search context (i.e. a dynamic list)
   """

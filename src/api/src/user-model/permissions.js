@@ -11,6 +11,10 @@ export default Object.freeze({
     name: 'lists:view',
     description: 'View all curated data lists',
   },
+  'list:delete': {
+    name: 'list:delete',
+    description: 'Delete a saved list (only lists of type = "curated" can be deleted)',
+  },
   '/data-lists': {
     name: '/data-lists',
     description: 'View the /data-lists route on client apps',

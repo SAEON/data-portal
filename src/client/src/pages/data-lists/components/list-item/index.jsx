@@ -3,8 +3,19 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
+import CardActions from '@material-ui/core/CardActions'
+import DeleteItem from './_delete-item'
 
-export default ({ title, description, search, url, createdBy, showSearchBar, disableSidebar }) => {
+export default ({
+  id,
+  title,
+  description,
+  search,
+  url,
+  createdBy,
+  showSearchBar,
+  disableSidebar,
+}) => {
   return (
     <Card variant="outlined">
       <CardHeader title={title} subheader={description} />
@@ -17,6 +28,9 @@ export default ({ title, description, search, url, createdBy, showSearchBar, dis
         </Link>
         <pre style={{ maxHeight: 800, overflow: 'auto' }}>{JSON.stringify(search, null, 2)}</pre>
       </CardContent>
+      <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <DeleteItem id={id} />
+      </CardActions>
     </Card>
   )
 }
