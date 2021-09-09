@@ -36,7 +36,7 @@ export default () => {
   }
 
   return (
-    <ContentNav navItems={navItems}>
+    <ContentNav activeIndex={lists.length - 1} navItems={navItems}>
       {({ activeIndex }) => {
         return navItems.map(({ primaryText, ...props }, i) => {
           return (

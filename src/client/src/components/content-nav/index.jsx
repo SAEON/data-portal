@@ -1,4 +1,4 @@
-import { useState, useCallback, memo } from 'react'
+import { useState, useEffect, memo } from 'react'
 import List from '@material-ui/core/List'
 import Grid from '@material-ui/core/Grid'
 import useTheme from '@material-ui/core/styles/useTheme'
@@ -15,10 +15,14 @@ const RenderNavContent = memo(
   }
 )
 
-export default ({ navItems, children }) => {
+export default ({ navItems, children, activeIndex: _a = 0 }) => {
   const theme = useTheme()
   const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(_a)
+
+  useEffect(() => {
+    setActiveIndex(_a)
+  }, [_a])
 
   return (
     <Grid container spacing={2}>
