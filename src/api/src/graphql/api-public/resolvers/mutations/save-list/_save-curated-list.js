@@ -17,11 +17,11 @@ export default async (self, args, ctx) => {
       $setOnInsert: {
         _id,
         createdAt: new Date(),
-        createdBy,
       },
       $set: {
         modifiedAt: new Date(),
         search,
+        createdBy,
         ...otherFields,
       },
     },
