@@ -156,14 +156,12 @@ type Mutation {
   Save a search context (i.e. a dynamic list)
   """
   saveList(
+    id: ID
     search: JSON!
     createdBy: String!
     type: ListType
     title: String
     description: String
-    referrer: String
-    disableSidebar: Boolean
-    showSearchBar: Boolean
   ): List!
   createDashboard(title: String, subtitle: String, description: String, databookId: ID!): Dashboard!
   updateDashboard(

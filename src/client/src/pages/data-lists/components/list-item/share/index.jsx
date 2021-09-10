@@ -1,5 +1,3 @@
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -7,19 +5,12 @@ import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Q from '@saeon/quick-form'
 import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../config'
+import Collapse from '../../../../../components/collapse'
 
-export default ({ id, showSearchBar, disableSidebar, url, referrer }) => {
+export default ({ id, url }) => {
   return (
-    <Card variant="outlined">
-      <CardHeader
-        title={'Link sharing and embedding'}
-        subheader={'Create and share links to this link'}
-      />
-      <Q
-        referrer={referrer || ''}
-        disableSidebar={disableSidebar || false}
-        showSearchBar={showSearchBar || false}
-      >
+    <Collapse title="Link sharing and embedding" subheader="Create and share links to this link">
+      <Q referrer={''} disableSidebar={false} showSearchBar={false}>
         {(update, { disableSidebar, showSearchBar, referrer }) => {
           return (
             <CardContent>
@@ -55,6 +46,6 @@ ${url.replace('/list/', '/render/')}`}</pre>
           )
         }}
       </Q>
-    </Card>
+    </Collapse>
   )
 }

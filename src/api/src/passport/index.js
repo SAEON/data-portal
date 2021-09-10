@@ -53,7 +53,7 @@ export default () => {
         const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
         const userRoleId = (await Roles.find({ name: 'user' }).toArray())[0]._id
         const emailAddress = email.toLowerCase()
-        const isSaeon = emailAddress.match(/@saeon\.ac\.za$/)
+        const isSaeon = emailAddress.match(/@saeon\.nrf\.ac\.za$/)
 
         try {
           const userQuery = await Users.findOneAndUpdate(

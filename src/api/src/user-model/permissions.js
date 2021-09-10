@@ -7,6 +7,10 @@ export default Object.freeze({
     name: '/usage',
     description: 'View the /usage route on client apps',
   },
+  'list:update': {
+    name: 'list:update',
+    description: "Update curated lists (other lists types can't be updated",
+  },
   'lists:view': {
     name: 'lists:view',
     description: 'View all curated data lists',

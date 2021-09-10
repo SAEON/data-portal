@@ -13,10 +13,8 @@ export default ({ children }) => {
           title
           description
           url
-          referrer
           createdBy
-          disableSidebar
-          showSearchBar
+          type
         }
       }
     `,

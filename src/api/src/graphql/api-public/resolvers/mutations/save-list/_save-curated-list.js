@@ -1,6 +1,9 @@
 import { ObjectId } from 'mongodb'
+import userModel from '../../../../../user-model/index.js'
+import PERMISSIONS from '../../../../../user-model/permissions.js'
 
 export default async (self, args, ctx) => {
+  await userModel.ensurePermission({ ctx, permission: PERMISSIONS['list:update'] })
   const { id, search, createdBy, ...otherFields } = args
   const { Lists } = await ctx.mongo.collections
 

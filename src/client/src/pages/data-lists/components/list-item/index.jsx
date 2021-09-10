@@ -1,31 +1,48 @@
 import Grid from '@material-ui/core/Grid'
-import DeleteItem from './delete'
+import Header from './header'
 import Search from './search'
 import Details from './details'
 import Share from './share'
+import ListItemContextProvider from './_context'
+import QuickForm from '@saeon/quick-form'
 
 export default props => {
+  const { search, createdBy, title, description, type } = props
   return (
-    <Grid container spacing={2}>
-      {/* DELETE */}
-      <Grid item xs={12}>
-        <DeleteItem {...props} />
-      </Grid>
+    <QuickForm
+      search={search}
+      createdBy={createdBy}
+      title={title}
+      description={description}
+      type={type}
+    >
+      {(update, fields) => {
+        return (
+          <ListItemContextProvider update={update} id={props.id} {...fields}>
+            <Grid container spacing={2}>
+              {/* HEADER */}
+              <Grid item xs={12}>
+                <Header {...props} />
+              </Grid>
 
-      {/* SHARE */}
-      <Grid item xs={12}>
-        <Share {...props} />
-      </Grid>
+              {/* DETAILS */}
+              <Grid item xs={12}>
+                <Details />
+              </Grid>
 
-      {/* DETAILS */}
-      <Grid item xs={12}>
-        <Details {...props} />
-      </Grid>
+              {/* SHARE */}
+              <Grid item xs={12}>
+                <Share {...props} />
+              </Grid>
 
-      {/* SEARCH */}
-      <Grid item xs={12}>
-        <Search {...props} />
-      </Grid>
-    </Grid>
+              {/* SEARCH */}
+              <Grid item xs={12}>
+                <Search />
+              </Grid>
+            </Grid>
+          </ListItemContextProvider>
+        )
+      }}
+    </QuickForm>
   )
 }
