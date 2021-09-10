@@ -34,12 +34,7 @@ export default ({ toggle }) => {
           type
         }
       }
-    `,
-    {
-      update: (cache, { data: { saveList: savedList } }) => {
-        console.log('s', savedList)
-      },
-    }
+    `
   )
 
   if (error) {
