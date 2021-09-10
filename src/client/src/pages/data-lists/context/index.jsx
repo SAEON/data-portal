@@ -20,7 +20,7 @@ export default ({ children }) => {
         }
       }
     `,
-    { fetchPolicy: 'cache-and-network', variables: {} }
+    { variables: {} }
   )
 
   if (loading) {

@@ -1,36 +1,31 @@
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
-import CardActions from '@material-ui/core/CardActions'
-import DeleteItem from './_delete-item'
+import Grid from '@material-ui/core/Grid'
+import DeleteItem from './delete'
+import Search from './search'
+import Details from './details'
+import Share from './share'
 
-export default ({
-  id,
-  title,
-  description,
-  search,
-  url,
-  createdBy,
-  showSearchBar,
-  disableSidebar,
-}) => {
+export default props => {
   return (
-    <Card variant="outlined">
-      <CardHeader title={title} subheader={description} />
-      <CardContent>
-        <Typography gutterBottom>Created by: {createdBy}</Typography>
-        <Typography gutterBottom>Search bar: {'' + showSearchBar}</Typography>
-        <Typography gutterBottom>Side filters: {'' + !disableSidebar}</Typography>
-        <Link target="_blank" rel="noopener noreferrer" href={url}>
-          {url}
-        </Link>
-        <pre style={{ maxHeight: 800, overflow: 'auto' }}>{JSON.stringify(search, null, 2)}</pre>
-      </CardContent>
-      <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <DeleteItem id={id} />
-      </CardActions>
-    </Card>
+    <Grid container spacing={2}>
+      {/* DELETE */}
+      <Grid item xs={12}>
+        <DeleteItem {...props} />
+      </Grid>
+
+      {/* SHARE */}
+      <Grid item xs={12}>
+        <Share {...props} />
+      </Grid>
+
+      {/* DETAILS */}
+      <Grid item xs={12}>
+        <Details {...props} />
+      </Grid>
+
+      {/* SEARCH */}
+      <Grid item xs={12}>
+        <Search {...props} />
+      </Grid>
+    </Grid>
   )
 }
