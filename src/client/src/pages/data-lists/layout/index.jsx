@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext, useMemo, useState, useEffect } from 'react'
 import { context as ListsContext } from '../context'
 import ContentNav from '../../../components/content-nav'
 import Fade from '@material-ui/core/Fade'
@@ -9,12 +9,14 @@ import InactiveIcon from 'mdi-react/FolderIcon'
 import ActiveIcon from 'mdi-react/FolderOpenIcon'
 
 export default () => {
+  const [renderCount, setRenderCount] = useState(0)
   const theme = useTheme()
   const { lists } = useContext(ListsContext)
 
   const navItems = useMemo(
     () =>
-      lists.map(({ title, description, ...props }) => ({
+      lists.map(({ id, title, description, ...props }) => ({
+        id,
         title,
         description,
         primaryText: title,
@@ -24,6 +26,10 @@ export default () => {
       })),
     [lists]
   )
+
+  useEffect(() => {
+    setRenderCount(c => c + 1)
+  }, [navItems])
 
   if (!navItems.length) {
     return (
@@ -36,23 +42,21 @@ export default () => {
   }
 
   return (
-    <ContentNav activeIndex={lists.length - 1} navItems={navItems}>
+    <ContentNav activeIndex={renderCount === 1 ? 0 : lists.length - 1} navItems={navItems}>
       {({ activeIndex }) => {
-        return navItems.map(({ primaryText, ...props }, i) => {
-          return (
-            <Fade
-              unmountOnExit
-              mountOnEnter
-              timeout={theme.transitions.duration.standard}
-              in={activeIndex === i}
-              key={primaryText || i}
-            >
-              <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                <ListItem {...props} />
-              </span>
-            </Fade>
-          )
-        })
+        return navItems.map(({ id, ...props }, i) => (
+          <Fade
+            unmountOnExit
+            mountOnEnter
+            timeout={theme.transitions.duration.standard}
+            in={activeIndex === i}
+            key={id}
+          >
+            <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+              <ListItem key={id} id={id} {...props} />
+            </span>
+          </Fade>
+        ))
       }}
     </ContentNav>
   )

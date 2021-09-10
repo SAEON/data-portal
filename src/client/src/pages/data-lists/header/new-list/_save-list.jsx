@@ -32,6 +32,8 @@ export default ({ closeFn, title, description, createdBy }) => {
           query {
             lists {
               id
+              title
+              description
             }
           }
         `
@@ -40,10 +42,12 @@ export default ({ closeFn, title, description, createdBy }) => {
           query,
         })
 
+        const merged = [...existingLists, newList]
+
         cache.writeQuery({
           query,
           data: {
-            lists: [...existingLists, newList],
+            lists: merged,
           },
         })
 

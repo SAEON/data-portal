@@ -1,4 +1,4 @@
-import { createContext, useMemo } from 'react'
+import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 export const context = createContext()
@@ -20,10 +20,8 @@ export default ({ children }) => {
         }
       }
     `,
-    { variables: {} }
+    { fetchPolicy: 'cache-and-network', variables: {} }
   )
-
-  const lists = useMemo(() => data?.lists || [], [data])
 
   if (loading) {
     return <Loading />
@@ -33,5 +31,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ lists }}>{children}</context.Provider>
+  return <context.Provider value={{ lists: data.lists }}>{children}</context.Provider>
 }
