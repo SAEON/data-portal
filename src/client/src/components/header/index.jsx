@@ -53,6 +53,12 @@ const AppHeaderOnly = forwardRef(
   }
 )
 
+/**
+ * TODO
+ * elevation and hiding on scroll
+ * should be configurable for this
+ * component
+ */
 const BannerOnly = forwardRef(({ contentRef }, ref) => {
   return (
     <div ref={ref}>
