@@ -32,10 +32,9 @@ const Component = props => (
 )
 ```
 
-The Q component will (or at least should) re-render every time a form attribute's value changes. You can specify effects to run when this happens:
+The Q component will re-render every time a form attribute's value changes. You can specify effects to run when this happens:
 
 ```jsx
-...
 <Q
  value={false}
  effects={[
@@ -48,5 +47,62 @@ The Q component will (or at least should) re-render every time a form attribute'
     <div onClick={() => updateForm({value: !value})}>{fields.value}</div>
   )}
 </Q>
+)
+```
+
+It's especially useful to use in a 'nested' fashion for maintaining performance of controlled inputs in large forms
+
+```jsx
+const debounce = (cb, duration = 0) => {
+  let timer
+  return (...args) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      cb(...args)
+    }, duration)
+  }
+}
+
+const Form = () => (
+  <Q val1 val2 val3 val4 etc>
+    {(update, fields) => {
+      return (
+        <div>
+          {/* val1  */}
+          <Q
+            effects={[
+              /**
+               * Debounce the update
+               * to the main form
+               */
+              debounce(({ value }) => {
+                if (fields.val1 !== value) {
+                  update({ val1: value })
+                }
+              }, 500),
+            ]}
+            value={fields.val1}
+          >
+            {(update, { value }) => (
+              /**
+               * Debouncing the onChange handler
+               * doesn't work so well
+               */
+              <input onChange={e => update({ value: e.target.value })} value={value} />
+            )}
+          </Q>
+
+          {/* val2 */}
+          <Q>...</Q>
+
+          {/* val2 */}
+          <Q>...</Q>
+
+          {/* val99 */}
+          <Q>...</Q>
+        </div>
+      )
+    }}
+  </Q>
 )
 ```

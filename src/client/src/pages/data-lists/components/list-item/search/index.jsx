@@ -1,4 +1,4 @@
-import { useContext, useRef, memo } from 'react'
+import { useContext, useRef, memo, useCallback } from 'react'
 import { context as listContext } from '../_context'
 import CardContent from '@material-ui/core/CardContent'
 import Collapse from '../../../../../components/collapse'
@@ -13,6 +13,15 @@ import 'ace-builds/src-min-noconflict/ext-language_tools'
 const Editor = memo(
   ({ update, search, id }) => {
     const ref = useRef(null)
+
+    const doUpdate = useCallback(
+      obj => {
+        if (JSON.stringify(search) !== JSON.stringify(obj.search)) {
+          update(obj)
+        }
+      },
+      [search, update]
+    )
 
     return (
       <Collapse title="Search" subheader="Configure list search DSL object" defaultExpanded>
@@ -30,9 +39,9 @@ const Editor = memo(
                     onValidate={debounce(annotations => {
                       const error = annotations.find(({ type }) => type === 'error')
                       if (error) {
-                        update({ preventSave: JSON.stringify(error) })
+                        doUpdate({ preventSave: JSON.stringify(error) })
                       } else {
-                        update({ search: JSON.parse(search), preventSave: false })
+                        doUpdate({ search: JSON.parse(search), preventSave: false })
                       }
                     }, 500)}
                     onChange={debounce(search => updateQ({ search }))}

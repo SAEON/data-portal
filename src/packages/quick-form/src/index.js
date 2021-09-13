@@ -20,7 +20,7 @@ export default ({ children, effects = [], ...formFields }) => {
   )
 
   const updateForm = obj => {
-    updateAllFields(Object.assign({ ...fields }, obj))
+    updateAllFields(fields => Object.assign({ ...fields }, obj))
   }
 
   return children(updateForm, {

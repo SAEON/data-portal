@@ -12,7 +12,7 @@ export default () => {
         startIcon: <DownloadIcon size={18} />,
       }}
       title="Download list details"
-      text="Not implemented yet"
+      text={`Not implemented yet - this will be implemented if requested (${'https://github.com/SAEON/catalogue/issues/18'})`}
       tooltipProps={{
         title: 'Download lists in .xlsx format',
       }}

@@ -3,6 +3,8 @@ import { context as listContext } from '../_context'
 import CardContent from '@material-ui/core/CardContent'
 import TextField from '@material-ui/core/TextField'
 import Collapse from '../../../../../components/collapse'
+import Q from '@saeon/quick-form'
+import debounce from '../../../../../lib/fns/debounce'
 
 export default () => {
   const { update, title, description, createdBy } = useContext(listContext)
@@ -11,42 +13,87 @@ export default () => {
     <Collapse title="Details" subheader="Configure general list details here" defaultExpanded>
       <CardContent>
         {/* TITLE */}
-        <TextField
+        <Q
+          effects={[
+            debounce(({ value }) => {
+              if (title !== value) {
+                update({ title: value })
+              }
+            }, 500),
+          ]}
           value={title}
-          name="title"
-          variant="outlined"
-          fullWidth
-          placeholder={title}
-          margin="normal"
-          helperText="What is the title of this curated list?"
-          onChange={({ target: { value: title } }) => update({ title })}
-        />
+        >
+          {(update, { value }) => {
+            return (
+              <TextField
+                value={value}
+                name="title"
+                variant="outlined"
+                fullWidth
+                placeholder={value}
+                margin="normal"
+                helperText="What is the title of this curated list?"
+                onChange={({ target: { value } }) => update({ value })}
+              />
+            )
+          }}
+        </Q>
 
         {/* DESCRIPTION */}
-        <TextField
+        <Q
+          effects={[
+            debounce(({ value }) => {
+              if (description !== value) {
+                update({ description: value })
+              }
+            }, 500),
+          ]}
           value={description}
-          name="description"
-          variant="outlined"
-          multiline
-          minRows={4}
-          fullWidth
-          placeholder={description}
-          margin="normal"
-          helperText="What is the description of this curated list?"
-          onChange={({ target: { value: description } }) => update({ description })}
-        />
+        >
+          {(update, { value }) => {
+            return (
+              <TextField
+                value={value}
+                name="description"
+                variant="outlined"
+                multiline
+                minRows={4}
+                fullWidth
+                placeholder={value}
+                margin="normal"
+                helperText="What is the description of this curated list?"
+                onChange={({ target: { value } }) => update({ value })}
+              />
+            )
+          }}
+        </Q>
 
         {/* CREATED BY */}
-        <TextField
+        <Q
+          effects={[
+            debounce(({ value }) => {
+              if (createdBy !== value) {
+                update({ createdBy: value })
+              }
+            }, 500),
+          ]}
           value={createdBy}
-          name="createdBy"
-          variant="outlined"
-          fullWidth
-          placeholder={createdBy}
-          margin="normal"
-          helperText="Who created / is the owner of this list?"
-          onChange={({ target: { value: createdBy } }) => update({ createdBy })}
-        />
+        >
+          {(update, { value }) => {
+            return (
+              <TextField
+                value={value}
+                name="createdBy"
+                variant="outlined"
+                fullWidth
+                placeholder={value}
+                margin="normal"
+                helperText="Who created / is the owner of this list?"
+                onChange={({ target: { value } }) => update({ value })}
+              />
+            )
+          }}
+        </Q>
       </CardContent>
     </Collapse>
   )
