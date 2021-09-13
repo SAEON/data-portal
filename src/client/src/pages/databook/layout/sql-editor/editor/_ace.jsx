@@ -2,9 +2,9 @@ import { forwardRef, memo } from 'react'
 import AceEditor from 'react-ace'
 import debounce from '../../../../../lib/fns/debounce'
 import 'ace-builds/webpack-resolver'
-import 'ace-builds/src-noconflict/mode-pgsql'
-import 'ace-builds/src-noconflict/theme-sqlserver'
-import 'ace-builds/src-noconflict/ext-language_tools'
+import 'ace-builds/src-min-noconflict/mode-pgsql'
+import 'ace-builds/src-min-noconflict/theme-sqlserver'
+import 'ace-builds/src-min-noconflict/ext-language_tools'
 
 export default memo(
   forwardRef(({ editor, updateCache }, ref) => {
