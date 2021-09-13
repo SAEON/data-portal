@@ -11,9 +11,10 @@ export default props => {
   return (
     <QuickForm
       search={search}
-      createdBy={createdBy}
-      title={title}
-      description={description}
+      createdBy={createdBy || ''}
+      title={title || ''}
+      description={description || ''}
+      preventSave={false}
       type={type}
     >
       {(update, fields) => {
