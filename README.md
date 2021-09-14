@@ -56,7 +56,7 @@ In summary, this software facilitates:
 - Exploring shapefile datasets linked to by the metadata records
 
 ## Scenarios
-The platform is centered around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programmatically. The internal API is provided as a means for programmatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data). From a user perspective, the available websites are represented by the following diagram:
+The platform is centred around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programmatically. The internal API is provided as a means for programmatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data). From a user perspective, the available websites are represented by the following diagram:
 
 ![User perspective of available web clients](/diagrams/dist/user-view.png)
 
@@ -238,7 +238,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - https://api.catalogue.saeon.dvn/graphql (public API)
 - http://api.catalogue.saeon.dvn:5002/graphql (internal API)
 - https://proxy.saeon.dvn
-- http://catalogue.saeon.dvn:8002|8004|8006|8008|8010 (for proxy logs)
+- http://catalogue.saeon.dvn:8002|8004|8006|8008 (for proxy logs)
 - http://elasticsearch.saeon.dvn
 - http://kibana.saeon.dvn
 - postgis://catalogue.saeon.dvn:5442
@@ -251,7 +251,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - https://api.catalogue.saeon.ac.za/graphql (public API)
 - http://api.catalogue.saeon.int:5002/graphql (internal API)
 - https://proxy.saeon.ac.za
-- http://catalogue.saeon.int:8002|8004|8006|8008|8010 (for proxy logs)
+- http://catalogue.saeon.int:8002|8004|8006|8008 (for proxy logs)
 - http://elasticsearch.saeon.int
 - http://kibana.saeon.int
 - postgis://catalogue.saeon.int:5442
