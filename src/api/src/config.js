@@ -51,6 +51,7 @@ export const ALLOWED_ORIGINS =
 export const TEMP_DIRECTORY = '/tmp/catalogue-api'
 export const DATA_DIRECTORY = '/var/lib/catalogue-api'
 export const LOG_QUERY_DETAILS = (process.env.LOG_QUERY_DETAILS || 'false').toBoolean()
+export const GIS_MAX_RESOLUTION_DECIMALS = 5 // About 1.1M accuracy. higher values result in Elasticsearch parsing errors
 
 /**
  * SSO via ODP

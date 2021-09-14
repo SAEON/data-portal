@@ -1,10 +1,5 @@
 {
   "properties": {
-    "geoLocationBox": {
-      "type": "geo_shape",
-      "orientation": "counterclockwise",
-      "ignore_malformed": true
-    },
     "creators": {
       "type": "nested",
       "include_in_parent": true,
@@ -103,6 +98,17 @@
         },
         "match_mapping_type": "string",
         "match": "gte|lte"
+      }
+    },
+    {
+      "spatial": {
+        "mapping": {
+          "type": "geo_shape",
+          "orientation": "counterclockwise",
+          "ignore_malformed": true
+        },
+        "match_mapping_type": "string",
+        "match": "geoLocationBox*"
       }
     },
     {

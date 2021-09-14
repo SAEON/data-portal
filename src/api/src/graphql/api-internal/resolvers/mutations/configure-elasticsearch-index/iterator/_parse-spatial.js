@@ -1,4 +1,5 @@
 import { stringify as createWkt_4326 } from 'wkt'
+import { GIS_MAX_RESOLUTION_DECIMALS as GIS_DECIMALS } from '../../../../../../config.js'
 
 /**
  * Polygons are counterclockwise. This is specifically
@@ -17,10 +18,14 @@ export default (id, spatial) => {
         const { westBoundLongitude, northBoundLatitude, eastBoundLongitude, southBoundLatitude } =
           geoLocationBox
 
-        // Sometimes points are defined in the box field
+        /**
+         * Sometimes points are defined in the box field
+         * These need to be converted to points. To check
+         * for this, points are rounded to 5 decimal points
+         */
         if (
-          westBoundLongitude === eastBoundLongitude &&
-          northBoundLatitude === southBoundLatitude
+          westBoundLongitude.toFixed(GIS_DECIMALS) === eastBoundLongitude.toFixed(GIS_DECIMALS) &&
+          northBoundLatitude.toFixed(GIS_DECIMALS) === southBoundLatitude.toFixed(GIS_DECIMALS)
         ) {
           console.warn(
             id,
@@ -28,13 +33,20 @@ export default (id, spatial) => {
             JSON.stringify(geoLocationBox)
           )
 
+          /**
+           * Just make sure the curators haven't defined
+           * a tiny box AND a point
+           */
           if (geoLocationPoint) {
             throw new Error('Cannot overwrite existing point field')
           }
 
           shp.geoLocationPoint = createWkt_4326({
             type: 'Point',
-            coordinates: [westBoundLongitude, northBoundLatitude],
+            coordinates: [
+              westBoundLongitude.toFixed(GIS_DECIMALS),
+              northBoundLatitude.toFixed(GIS_DECIMALS),
+            ],
           })
         } else {
           shp.geoLocationBox = createWkt_4326({
@@ -54,6 +66,7 @@ export default (id, spatial) => {
 
       if (geoLocationPoint) {
         const { pointLatitude, pointLongitude } = geoLocationPoint
+
         shp.geoLocationPoint = createWkt_4326({
           type: 'Point',
           coordinates: [pointLongitude, pointLatitude],
