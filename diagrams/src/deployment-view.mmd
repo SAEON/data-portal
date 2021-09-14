@@ -56,10 +56,10 @@ flowchart TD
             end
 
             %% Topology
-            api_container --- es_container
-            api_container --- mongo_container
-            api_container --- postgis_container
-            api_container --- gdal_container
+            api_container ---- es_container
+            api_container ---- mongo_container
+            api_container ---- postgis_container
+            api_container ---- gdal_container
 
         end
             
