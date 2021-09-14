@@ -158,23 +158,6 @@ services:
     networks:
       - $DOCKER_NETWORK
 
-  proxy5:
-    container_name: proxy5
-    restart: always
-    build:
-      context: src/proxy
-      dockerfile: Dockerfile
-      args:
-        LATEST_COMMIT: $LATEST_COMMIT
-        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
-    ports:
-      - 8009:8001
-      - 8010:8002
-    depends_on:
-      - elasticsearch
-    networks:
-      - $DOCKER_NETWORK
-
   api:
     container_name: api
     restart: always
@@ -206,7 +189,6 @@ services:
         DEPLOYMENT_ENV: $DEPLOYMENT_ENV
         DOCKER_NETWORK: $DOCKER_NETWORK
         LATEST_COMMIT: $LATEST_COMMIT
-        PROXY_ADDRESS: $PROXY_ADDRESS
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
         MONGO_DB_ADDRESS: $MONGO_DB_ADDRESS
         MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
@@ -226,7 +208,6 @@ services:
       - tmp:/tmp/catalogue-api
       - data:/var/lib/catalogue-api
     depends_on:
-      - proxy1
       - mongo
       - elasticsearch
       - postgis
@@ -254,9 +235,9 @@ services:
       - $CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING:80
     depends_on:
       - api
+      - proxy1
       - proxy2
       - proxy3
       - proxy4
-      - proxy5
     networks:
       - $DOCKER_NETWORK

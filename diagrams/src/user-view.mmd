@@ -13,25 +13,23 @@ flowchart TD
   
   subgraph api ["api.catalogue.saeon.ac.za"]
       _api("Node.js application")
-      _internal_proxy("AnyProxy")
       _mongo("MongoDB")
       _postgis("PostGIS")
       _gdal("GDAL")
       _elasticsearch("Elasticsearch")
 
-      _api --- _internal_proxy
+      _api --- _elasticsearch
       _api --- _mongo
       _api --- _gdal
       _api --- _postgis
-      _internal_proxy --- _elasticsearch
   end
 
   subgraph public_proxy ["proxy.catalogue.saeon.ac.za"]
       _proxy("Nginx load balancer")
+      _proxy --- _proxy_1("AnyProxy")
       _proxy --- _proxy_2("AnyProxy")
       _proxy --- _proxy_3("AnyProxy")
       _proxy --- _proxy_4("AnyProxy")
-      _proxy --- _proxy_5("AnyProxy")
   end
 
   gql_internal <===> api

@@ -1,22 +1,19 @@
 import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/index.js'
 import postgisQuery, { createClient } from '../postgis/query.js'
-import Catalogue from '../lib/catalogue.js'
-import { PROXY_ADDRESS, ELASTICSEARCH_INDEX, APP_KEY } from '../config.js'
+import { query as elasticQuery } from '../elasticsearch/index.js'
+import { APP_KEY } from '../config.js'
 import { publicSchema, internalSchema } from '../graphql/index.js'
 import userModel from '../user-model/index.js'
 import { encrypt, decrypt } from '../lib/crypto.js'
-
-const catalogue = new Catalogue({
-  dslAddress: `${PROXY_ADDRESS}/elasticsearch`,
-  index: ELASTICSEARCH_INDEX,
-})
 
 const logToMongo = new Logger() // Application-level batching
 
 export default app => async (ctx, next) => {
   app.context.userInfo = ctx.state.user
 
-  app.context.catalogue = catalogue
+  app.context.elastic = {
+    query: elasticQuery,
+  }
 
   app.context.mongo = {
     db: mongoDb,

@@ -7,14 +7,14 @@ flowchart TD
 
         nginx(Nginx)
         nginx --- client_container
+        nginx --- proxy_container_1
         nginx --- proxy_container_2
         nginx --- proxy_container_3
         nginx --- proxy_container_4
-        nginx --- proxy_container_5
+        proxy_container_1 --- es_container
         proxy_container_2 --- es_container
         proxy_container_3 --- es_container
         proxy_container_4 --- es_container
-        proxy_container_5 --- es_container
         nginx --- api_container
 
         %% Docker Engine boundary
@@ -28,18 +28,15 @@ flowchart TD
                 api("node:16.7")
             end
             subgraph proxy_container_1 [Proxy]
-                ClientProxy1("node:16.7")
-            end     
-            subgraph proxy_container_2 [Proxy]
                 ClientProxy2("node:16.7")
             end     
-            subgraph proxy_container_3 [Proxy]
+            subgraph proxy_container_2 [Proxy]
                 ClientProxy3("node:16.7")
             end    
-            subgraph proxy_container_4 [Proxy]
+            subgraph proxy_container_3 [Proxy]
                 ClientProxy4("node:16.7")
             end
-            subgraph proxy_container_5 [Proxy]
+            subgraph proxy_container_4 [Proxy]
                 ApiProxy("node:16.7")
             end
             subgraph es_container ["Elasticsearch"]
@@ -59,8 +56,7 @@ flowchart TD
             end
 
             %% Topology
-            api_container --- proxy_container_1
-            proxy_container_1 --- es_container
+            api_container --- es_container
             api_container --- mongo_container
             api_container --- postgis_container
             api_container --- gdal_container

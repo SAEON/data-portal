@@ -19,7 +19,7 @@ import buildDsl from './dsl/index.js'
  */
 
 export default async (_, args, ctx) => {
-  const { catalogue } = ctx
+  const { elastic } = ctx
   const {
     fields,
     filterByText: text = undefined,
@@ -162,7 +162,7 @@ export default async (_, args, ctx) => {
    * defined - that would just not limit the index
    * by a query
    *
-   * It's also necessary to be ablt to run an aggregation
+   * It's also necessary to be able to run an aggregation
    * over a subset of docs. To do this, a query must be
    * defined in addition to the aggregation
    */
@@ -175,7 +175,7 @@ export default async (_, args, ctx) => {
     }
   }
 
-  const result = await catalogue.query(
+  const { body: result } = await elastic.query(
     buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
   )
 

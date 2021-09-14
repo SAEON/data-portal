@@ -12,7 +12,7 @@ import buildDsl from './dsl/index.js'
  */
 
 export default async (_, args, ctx) => {
-  const { catalogue } = ctx
+  const { elastic } = ctx
 
   const {
     size = 10000,
@@ -63,7 +63,9 @@ export default async (_, args, ctx) => {
     dsl.search_after = [cursor.score || 0, cursor.id]
   }
 
-  const data = await catalogue.query(buildDsl({ dsl, ids, dois, text, terms, extent, identifiers }))
+  const { body: data } = await elastic.query(
+    buildDsl({ dsl, ids, dois, text, terms, extent, identifiers })
+  )
 
   if (data.error) {
     return new GraphQLError(`${JSON.stringify(data.error, null, 2)}`)

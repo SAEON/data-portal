@@ -32,6 +32,7 @@
     "prettier": "^2.4.0"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.14.1",
     "@graphql-tools/schema": "^8.2.0",
     "@koa/router": "^10.1.1",
     "@saeon/logger": "^6.2.13",
