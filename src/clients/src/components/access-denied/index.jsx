@@ -12,7 +12,7 @@ export default ({ requiredPermission = 'NA' }) => {
 
   return (
     <Container>
-      <Card style={{ backgroundColor: theme.backgroundColor }}>
+      <Card variant="outlined" style={{ backgroundColor: theme.backgroundColor }}>
         <CardHeader
           avatar={
             <Avatar

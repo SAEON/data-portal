@@ -1,9 +1,10 @@
-import { useState, useEffect, createContext } from 'react'
-import { API_PUBLIC_ADDRESS } from '../../config'
+import { useState, useEffect, createContext, useContext } from 'react'
+import { API_PUBLIC_ADDRESS, context as configContext } from '../../config'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const { contentBase } = useContext(configContext)
   const [user, setUser] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
@@ -11,7 +12,7 @@ export default ({ children }) => {
     if (user) {
       return true
     } else {
-      window.location.href = `/login?redirect=${window.location.href}`
+      window.location.href = `${contentBase}/login?redirect=${window.location.href}`
     }
   }
 

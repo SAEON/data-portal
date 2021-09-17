@@ -1,4 +1,8 @@
 export default Object.freeze({
+  '/curator-tools': {
+    name: '/curator-tools',
+    description: 'View the curator tools app',
+  },
   '/access': {
     name: '/access',
     description: 'View the /access route on client apps',

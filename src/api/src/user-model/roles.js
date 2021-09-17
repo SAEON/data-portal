@@ -12,11 +12,18 @@ export const saeon = {
   permissions: [...user.permissions, permissions['/usage'], permissions['site-analytics:view']],
 }
 
+export const curator = {
+  name: 'curator',
+  description: 'Data curators',
+  permissions: [...saeon.permissions, permissions['/curator-tools']],
+}
+
 export const admin = {
   name: 'admin',
   description: 'Site administrators',
   permissions: [
     ...saeon.permissions,
+    permissions['/curator-tools'],
     permissions['list:update'],
     permissions['list:delete'],
     permissions['lists:view'],
