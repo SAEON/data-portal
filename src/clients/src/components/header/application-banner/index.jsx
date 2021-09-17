@@ -1,15 +1,12 @@
-import { Link } from 'react-router-dom'
-import MuiLink from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import Toolbar_ from './toolbar'
 import Hidden from '@material-ui/core/Hidden'
-import { TITLE } from '../../../config'
 
 export const IMAGE_HEIGHT = 48
 
 export const Toolbar = Toolbar_
 
-export default () => {
+export default ({ title }) => {
   return (
     <Toolbar_>
       {/* SAEON LOGO */}
@@ -41,7 +38,7 @@ export default () => {
         }}
       >
         <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
-          {TITLE}
+          {title || 'SAEON Data'}
         </Typography>
       </header>
 

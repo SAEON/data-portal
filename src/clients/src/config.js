@@ -1,4 +1,4 @@
-import packageJson from '../package.json'
+import { createContext } from 'react'
 
 export const LATEST_COMMIT = process.env.LATEST_COMMIT || ''
 
@@ -45,6 +45,14 @@ export const CATALOGUE_SUPPORTED_DATABOOK_FORMATS = process.env
 
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
 
-export const TITLE = `SAEON DATA PORTAL ${
-  DEPLOYMENT_ENV === 'production' ? '' : `${DEPLOYMENT_ENV}.${packageJson.version}`
-}`
+export const SUBDOMAIN_APP_ENTRIES = process.env.SUBDOMAIN_APP_ENTRIES || ''
+
+/**
+ * Dynamic config
+ */
+
+export const context = createContext()
+
+export default ({ children, contentBase }) => {
+  return <context.Provider value={{ contentBase }}>{children}</context.Provider>
+}

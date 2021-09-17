@@ -15,42 +15,45 @@ import ErrorBoundary from '../components/error-boundary'
 import DetectDevice from '../components/detect-device'
 import CookieConsent from '../components/cookie-consent'
 import { BrowserRouter as Router } from 'react-router-dom'
+import DynamicConfigProvider from '../config'
 import LayoutProvider from '../contexts/layout'
 
 export default ({ children, ...config }) => {
   return (
-    <Router>
-      <CssBaseline>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundary>
-            <DetectDevice>
-              <NativeExtensions>
-                <Apollo>
-                  <ClientInfoProvider>
-                    <CookieConsent>
-                      <AuthenticationProvider>
-                        <AuthorizationProvider>
-                          <GlobalProvider>
-                            <BackgroundImageProvider {...config}>
-                              <ApplicationLogger>
-                                <SnackbarProvider>
-                                  <DefaultApplicationNotices>
-                                    <LayoutProvider>{children}</LayoutProvider>
-                                  </DefaultApplicationNotices>
-                                </SnackbarProvider>
-                              </ApplicationLogger>
-                            </BackgroundImageProvider>
-                          </GlobalProvider>
-                        </AuthorizationProvider>
-                      </AuthenticationProvider>
-                    </CookieConsent>
-                  </ClientInfoProvider>
-                </Apollo>
-              </NativeExtensions>
-            </DetectDevice>
-          </ErrorBoundary>
-        </ThemeProvider>
-      </CssBaseline>
-    </Router>
+    <DynamicConfigProvider contentBase={config.contentBase || '/'}>
+      <Router>
+        <CssBaseline>
+          <ThemeProvider theme={theme}>
+            <ErrorBoundary>
+              <DetectDevice>
+                <NativeExtensions>
+                  <Apollo>
+                    <ClientInfoProvider>
+                      <CookieConsent>
+                        <AuthenticationProvider>
+                          <AuthorizationProvider>
+                            <GlobalProvider>
+                              <BackgroundImageProvider {...config}>
+                                <ApplicationLogger>
+                                  <SnackbarProvider>
+                                    <DefaultApplicationNotices>
+                                      <LayoutProvider>{children}</LayoutProvider>
+                                    </DefaultApplicationNotices>
+                                  </SnackbarProvider>
+                                </ApplicationLogger>
+                              </BackgroundImageProvider>
+                            </GlobalProvider>
+                          </AuthorizationProvider>
+                        </AuthenticationProvider>
+                      </CookieConsent>
+                    </ClientInfoProvider>
+                  </Apollo>
+                </NativeExtensions>
+              </DetectDevice>
+            </ErrorBoundary>
+          </ThemeProvider>
+        </CssBaseline>
+      </Router>
+    </DynamicConfigProvider>
   )
 }

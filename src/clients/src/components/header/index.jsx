@@ -10,16 +10,16 @@ import Divider from '@material-ui/core/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
 
-const FullHeader = forwardRef(({ contentRef, routes }, ref) => {
+const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
   return (
     <div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={contentRef}>
-            <ApplicationBanner />
+            <ApplicationBanner title={title} />
           </HideOnScroll>
           <Divider />
-          <AppHeader routes={routes} />
+          <AppHeader contentBase={contentBase} routes={routes} />
           <Divider />
         </AppBar>
       </ElevationOnScroll>
@@ -36,12 +36,17 @@ const FullHeader = forwardRef(({ contentRef, routes }, ref) => {
 })
 
 const AppHeaderOnly = forwardRef(
-  ({ routes, color = 'inherit', disableBreadcrumbs, ...props }, ref) => {
+  ({ contentBase, routes, color = 'inherit', disableBreadcrumbs, ...props }, ref) => {
     return (
       <div ref={ref}>
         <ElevationOnScroll>
           <AppBar color={color}>
-            <AppHeader disableBreadcrumbs={disableBreadcrumbs} {...props} routes={routes} />
+            <AppHeader
+              contentBase={contentBase}
+              disableBreadcrumbs={disableBreadcrumbs}
+              {...props}
+              routes={routes}
+            />
             <Divider />
           </AppBar>
         </ElevationOnScroll>
@@ -59,13 +64,13 @@ const AppHeaderOnly = forwardRef(
  * should be configurable for this
  * component
  */
-const BannerOnly = forwardRef(({ contentRef }, ref) => {
+const BannerOnly = forwardRef(({ title, contentRef }, ref) => {
   return (
     <div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={contentRef}>
-            <ApplicationBanner />
+            <ApplicationBanner title={title} />
           </HideOnScroll>
           <Divider />
         </AppBar>
@@ -81,17 +86,25 @@ const BannerOnly = forwardRef(({ contentRef }, ref) => {
   )
 })
 
-export default ({ routes }) => {
+export default ({ contentBase, title, routes }) => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <FullHeader contentRef={contentRef} ref={setHeaderRef} routes={routes} />
+  return (
+    <FullHeader
+      contentBase={contentBase}
+      title={title}
+      contentRef={contentRef}
+      ref={setHeaderRef}
+      routes={routes}
+    />
+  )
 }
 
-export const Banner = () => {
+export const Banner = ({ title }) => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <BannerOnly contentRef={contentRef} ref={setHeaderRef} />
+  return <BannerOnly title={title} contentRef={contentRef} ref={setHeaderRef} />
 }
 
-export const ApplicationHeader = ({ routes, ...props }) => {
+export const ApplicationHeader = ({ contentBase, routes, ...props }) => {
   const { setHeaderRef } = useContext(layoutContext)
-  return <AppHeaderOnly routes={routes} ref={setHeaderRef} {...props} />
+  return <AppHeaderOnly contentBase={contentBase} routes={routes} ref={setHeaderRef} {...props} />
 }

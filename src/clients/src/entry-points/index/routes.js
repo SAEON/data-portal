@@ -157,15 +157,6 @@ export default [
     includeInFooter: true,
   },
   {
-    label: 'Render',
-    to: '/render',
-    exact: false,
-    render: ({ location: { pathname, search } }) => {
-      return <Redirect to={`${pathname.replace('/render', '')}${search}`} />
-    },
-    excludeFromNav: true,
-  },
-  {
     label: 'Login',
     Icon: LoginIcon,
     excludeFromNav: true,

@@ -1,13 +1,16 @@
 import { useContext } from 'react'
-import Row from '../_row'
+import { useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Chip from '@material-ui/core/Chip'
+import { context as configContext } from '../../../config'
 import { context as globalContext } from '../../../contexts/global'
-import { useHistory } from 'react-router-dom'
+import Row from '../_row'
 
 export default ({ subjects }) => {
   const { setGlobal } = useContext(globalContext)
+  const { contentBase } = useContext(configContext)
   const history = useHistory()
+
   return (
     <Row title="Keywords">
       <Grid container spacing={1} justifyContent="flex-start">
@@ -33,7 +36,7 @@ export default ({ subjects }) => {
                     },
                     true
                   )
-                  history.push('/records')
+                  history.push(`${contentBase}/records`)
                 }}
                 label={subject.subject.toUpperCase()}
               />

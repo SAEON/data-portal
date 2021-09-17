@@ -14,7 +14,7 @@ const config = {}
 render(
   <Suspense fallback={<Loading />}>
     <App {...config}>
-      <Banner />
+      <Banner title="SAEON Data" />
       <SizeContent>
         <div style={{ minHeight: 1000 }}>
           <RouteSwitcher routes={routes} />

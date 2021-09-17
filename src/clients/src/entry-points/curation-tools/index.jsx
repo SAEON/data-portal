@@ -6,21 +6,24 @@ import RouteSwitcher from '../../index/route-switcher'
 import { SizeContent } from '../../contexts/layout'
 import Footer from '../../components/footer'
 import Header from '../../components/header'
-import routes from './routes'
-import { DEPLOYMENT_ENV } from '../../config'
-import packageJson from '../../../package.json'
+import configureRoutes from './routes'
+import { SUBDOMAIN_APP_ENTRIES } from '../../config'
 
 const App = lazy(() => import('../../index/application'))
 
+const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('curation-tools')
+
+const config = {
+  backgroundImage: true,
+  contentBase: isSubdomainEntry ? undefined : '/curation-tools',
+}
+
+const routes = configureRoutes(config)
+
 render(
   <Suspense fallback={<Loading />}>
-    <App>
-      <Header
-        title={`SAEON DATA PORTAL ${
-          DEPLOYMENT_ENV === 'production' ? '' : `${DEPLOYMENT_ENV}.${packageJson.version}`
-        }`}
-        routes={routes}
-      />
+    <App {...config}>
+      <Header {...config} title="SAEON Curation Tools" routes={routes} />
       <SizeContent>
         <RouteSwitcher routes={routes} />
       </SizeContent>

@@ -15,13 +15,20 @@ module.exports = (ROOT, output) => {
     })
 
   return {
+    bonjour: false,
+    http2: false, // TODO - make this true, but then the API needs to also be https for dev purposes
+    host: 'localhost',
+    allowedHosts: [
+      '.localhost'
+    ],
     static: {
       staticOptions: {
         contentBase: path.join(ROOT, output),
       }
     },
     historyApiFallback: {
-      disableDotRule: true,
+      verbose: true,
+      disableDotRule: false,
       rewrites,
     },
     compress: true,

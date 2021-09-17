@@ -45,8 +45,7 @@ export const PUBLIC_GQL_ADDRESS = `${API_PUBLIC_ADDRESS}/graphql`
 export const API_INTERNAL_ADDRESS = process.env.API_INTERNAL_ADDRESS || 'http://localhost:4000'
 export const INTERNAL_PORT = process.env.API_INTERNAL_ADDRESS || 4000
 export const INTERNAL_GQL_ADDRESS = `${API_INTERNAL_ADDRESS}/graphql`
-export const ALLOWED_ORIGINS =
-  process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
+export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || 'http://localhost:3001'
 export const TEMP_DIRECTORY = '/tmp/catalogue-api'
 export const DATA_DIRECTORY = '/var/lib/catalogue-api'
 export const LOG_QUERY_DETAILS = (process.env.LOG_QUERY_DETAILS || 'false').toBoolean()
