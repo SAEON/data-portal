@@ -12,7 +12,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - GDAL (Docker image)
 - GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
 - Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
-- Browser client ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
+- Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 # README Contents
 
@@ -137,8 +137,8 @@ npm run proxy
 # Start the Node.js API server
 npm run api
 
-# Start the React.js client
-npm run client
+# Start the React.js clients
+npm run clients
 ```
 
 Then [configure the API for first use](#api-configuration)
@@ -309,9 +309,9 @@ docker run \
 
 [src/proxy/README.md](src/proxy/)
 
-## Client
+## Clients
 
-[src/client/README.md](src/client/)
+[src/clients/README.md](src/clients/)
 
 ## Server configuration
 

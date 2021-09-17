@@ -16,7 +16,7 @@ jobs:
       - name: Configure services
         run: |
           cp deployment-configs/stable/odp-filter.js src/api/odp-filter.js
-          cp deployment-configs/stable/client-filters.json src/client/client-filters.json          
+          cp deployment-configs/stable/client-filters.json src/clients/client-filters.json          
 
       - name: Deploy services
         run: >-

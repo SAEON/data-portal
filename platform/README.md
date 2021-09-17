@@ -144,7 +144,7 @@ ansible-playbook playbooks/centos-7.yml -i inventories/centos-7
 ```
 
 # SSL
-Using the ansible script in this repository will configure Nginx such that non-https traffic is redirected to https for all public facing host addresses (the client and api). If you look at the [Nginx configuration files](playbooks/templates/nginx) you will see that the Nginx server blocks specify paths to SSL certificates as well as the path to dhparam.pem, used for the [Diffie–Hellman key exchange
+Using the ansible script in this repository will configure Nginx such that non-https traffic is redirected to https for all public facing host addresses (the clients and api). If you look at the [Nginx configuration files](playbooks/templates/nginx) you will see that the Nginx server blocks specify paths to SSL certificates as well as the path to dhparam.pem, used for the [Diffie–Hellman key exchange
 ](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange). The `dhparam.pem` file is created during Ansible configuration, however, the SSL certificates are NOT!
 
 Currently setting up SSL is a manual process. After running the Ansible playbook, the Nginx service will fail until the appropriate certificates are created. Three certificates are required, these are:

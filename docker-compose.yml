@@ -214,11 +214,11 @@ services:
     networks:
       - $DOCKER_NETWORK
 
-  client:
-    container_name: client
+  clients:
+    container_name: clients
     restart: always
     build:
-      context: src/client
+      context: src/clients
       dockerfile: Dockerfile
       args:
         CATALOGUE_CLIENT_PROXY_ADDRESS: $CATALOGUE_CLIENT_PROXY_ADDRESS

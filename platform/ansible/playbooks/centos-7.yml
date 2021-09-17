@@ -147,10 +147,10 @@
         mode: '0644'
         force: yes
         
-    - name: Copy Nginx config (Client)
+    - name: Copy Nginx config (Clients)
       template:
-        src: templates/nginx/server-blocks/client.conf
-        dest: /etc/nginx/conf.d/client.conf
+        src: templates/nginx/server-blocks/clients.conf
+        dest: /etc/nginx/conf.d/clients.conf
         owner: root
         group: root
         mode: '0644'
