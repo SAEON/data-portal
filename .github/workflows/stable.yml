@@ -21,9 +21,12 @@ jobs:
       - name: Deploy services
         run: >-
           HOSTNAME="https://catalogue.saeon.ac.za"
+          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.ac.za
+          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
           ODP_FILTER_PATH="odp-filter.js"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"        
           ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
+          SUBDOMAIN_APP_ENTRIES="curation-tools"
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
           CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.ac.za"
           ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"

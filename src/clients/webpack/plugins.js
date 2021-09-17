@@ -16,6 +16,7 @@ let {
   DEPLOYMENT_ENV = 'local',
   LATEST_COMMIT = '',
   CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
+  SUBDOMAIN_APP_ENTRIES = ''
 } = process.env
 
 module.exports = (ROOT, output) => {
@@ -35,6 +36,7 @@ module.exports = (ROOT, output) => {
           .filter(f => ['.jpg', '.jpeg'].includes(f.match(/\.[0-9a-z]{1,5}$/i)?.[0] || undefined))
           .join(',')
       ),
+      'process.env.SUBDOMAIN_APP_ENTRIES': JSON.stringify(SUBDOMAIN_APP_ENTRIES),
       'process.env.CATALOGUE_CLIENT_FILTER_CONFIG': JSON.stringify(
         fs.readFileSync(CATALOGUE_CLIENT_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
       ),

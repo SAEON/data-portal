@@ -8,7 +8,7 @@
       default: "next"
       private: no
 
-    - name: CATALOGUE_HOSTNAME
+    - name: CATALOGUE_NGINX_SERVER_NAME
       prompt: What hostname or IP address will this deployment be on?
       private: no
 

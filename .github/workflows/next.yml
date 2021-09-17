@@ -21,6 +21,8 @@ jobs:
       - name: Deploy services
         run: >-
           HOSTNAME="https://catalogue.saeon.dvn"
+          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.dvn
+          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.dvn
           ODP_FILTER_PATH="odp-filter.js"
           CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
           ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
@@ -35,6 +37,7 @@ jobs:
           CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING=5001
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
           DEPLOYMENT_ENV="development"
+          SUBDOMAIN_APP_ENTRIES="curation-tools"
           LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
