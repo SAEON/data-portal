@@ -38,7 +38,7 @@
   "license": "MIT",
   "dependencies": {
     "arg": "^5.0.1",
-    "ora": "^6.0.0"
+    "ora": "^6.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^20.0.0",
@@ -46,7 +46,7 @@
     "@rollup/plugin-node-resolve": "^13.0.4",
     "nodemon": "^2.0.12",
     "onchange": "^7.1.0",
-    "prettier": "^2.4.0",
+    "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.56.3"
   }

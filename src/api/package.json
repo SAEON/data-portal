@@ -29,7 +29,7 @@
     "eslint": "^7.32.0",
     "nodemon": "^2.0.12",
     "npm-check-updates": "^11.8.5",
-    "prettier": "^2.4.0"
+    "prettier": "^2.4.1"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.14.1",
@@ -57,11 +57,11 @@
     "koa-compress": "^5.1.0",
     "koa-passport": "^4.1.4",
     "koa-session": "^6.2.0",
-    "mongodb": "^4.1.1",
+    "mongodb": "^4.1.2",
     "nanoid": "^3.1.25",
     "node-fetch": "^3.0.0",
     "object-hash": "^2.2.0",
-    "openid-client": "^4.7.5",
+    "openid-client": "^4.8.0",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
