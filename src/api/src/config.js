@@ -100,9 +100,8 @@ export const POSTGIS_CONTAINER_NAME = process.env.POSTGIS_CONTAINER_NAME || 'pos
  */
 export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || `http://localhost:9200`
 export const ELASTICSEARCH_TEMPLATE = process.env.ELASTICSEARCH_TEMPLATE || 'saeon-odp'
-export const ELASTICSEARCH_INDEX = `${ELASTICSEARCH_TEMPLATE}-${
-  process.env.ELASTICSEARCH_INDEX || 'catalogue-search'
-}`
+export const ELASTICSEARCH_INDEX =
+  process.env.ELASTICSEARCH_INDEX || `${ELASTICSEARCH_TEMPLATE}-catalogue-search`
 
 /**
  * Ensure required directories exists
