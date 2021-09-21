@@ -20,6 +20,7 @@ jobs:
 
       - name: Deploy services
         run: >-
+          ELASTICSEARCH_ADDRESS=http://7.14.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.ac.za"
           CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.ac.za
           CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za

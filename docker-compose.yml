@@ -7,8 +7,6 @@ networks:
 volumes:
   mongo:
     driver: local
-  elasticsearch:
-    driver: local
   postgis:
     driver: local
   data:
@@ -17,44 +15,6 @@ volumes:
     driver: local
 
 services:
-  elasticsearch:
-    container_name: elasticsearch
-    restart: always
-    image: $ELASTICSEARCH_IMAGE
-    environment:
-      - xpack.security.enabled=false
-      - xpack.license.self_generated.type=basic
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    cap_add:
-      - IPC_LOCK
-    volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
-    networks:
-      - $DOCKER_NETWORK
-
-  kibana:
-    container_name: kibana
-    restart: always
-    image: $KIBANA_IMAGE
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
-    networks:
-      - $DOCKER_NETWORK
-
   mongo:
     container_name: mongo
     restart: always
@@ -102,8 +62,6 @@ services:
     ports:
       - 8001:8001
       - 8002:8002
-    depends_on:
-      - elasticsearch
     networks:
       - $DOCKER_NETWORK
 
@@ -119,8 +77,6 @@ services:
     ports:
       - 8003:8001
       - 8004:8002
-    depends_on:
-      - elasticsearch
     networks:
       - $DOCKER_NETWORK
 
@@ -136,8 +92,6 @@ services:
     ports:
       - 8005:8001
       - 8006:8002
-    depends_on:
-      - elasticsearch
     networks:
       - $DOCKER_NETWORK
 
@@ -153,8 +107,6 @@ services:
     ports:
       - 8007:8001
       - 8008:8002
-    depends_on:
-      - elasticsearch
     networks:
       - $DOCKER_NETWORK
 
@@ -209,7 +161,6 @@ services:
       - data:/var/lib/catalogue-api
     depends_on:
       - mongo
-      - elasticsearch
       - postgis
     networks:
       - $DOCKER_NETWORK

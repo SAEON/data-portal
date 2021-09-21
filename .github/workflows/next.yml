@@ -20,6 +20,7 @@ jobs:
 
       - name: Deploy services
         run: >-
+          ELASTICSEARCH_ADDRESS=http://next.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.dvn"
           CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.dvn
           CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.dvn
