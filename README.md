@@ -315,7 +315,7 @@ docker run \
 
 ## Server configuration
 
-[platform/README.md](platform/)
+[platform/README.md](platform/) 
 
 ## NPM packages
 
