@@ -171,7 +171,7 @@ mutation {
 mutation {
   configureElasticsearchTemplate
 }
-
+ 
 # Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
 mutation {
   configureElasticsearchIndex
