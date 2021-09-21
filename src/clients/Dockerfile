@@ -39,6 +39,5 @@ ARG CATALOGUE_NGINX_SERVER_NAME
 
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/localhost.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

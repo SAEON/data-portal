@@ -120,8 +120,8 @@ services:
     networks:
       - $DOCKER_NETWORK
 
-  clients:
-    container_name: clients
+  internal-clients:
+    container_name: internal-clients
     restart: always
     build:
       context: src/clients
@@ -141,7 +141,35 @@ services:
         LATEST_COMMIT: $LATEST_COMMIT
         CATALOGUE_LEGAL_CONTACT: $CATALOGUE_LEGAL_CONTACT
     ports:
-      - $CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING:80
+      - $INTERNAL_CLIENTS_CONTAINER_PORT_MAPPING:80
+    depends_on:
+      - api
+      - proxy
+    networks:
+      - $DOCKER_NETWORK      
+
+  public-clients:
+    container_name: public-clients
+    restart: always
+    build:
+      context: src/clients
+      dockerfile: Dockerfile
+      args:
+        CURATION_TOOLS_NGINX_SERVER_NAME: $CURATION_TOOLS_NGINX_SERVER_NAME
+        CATALOGUE_NGINX_SERVER_NAME: $CATALOGUE_NGINX_SERVER_NAME
+        SUBDOMAIN_APP_ENTRIES: $SUBDOMAIN_APP_ENTRIES
+        CATALOGUE_CLIENT_PROXY_ADDRESS: $CATALOGUE_CLIENT_PROXY_ADDRESS
+        API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
+        CATALOGUE_CLIENT_ADDRESS: $CATALOGUE_CLIENT_ADDRESS
+        CATALOGUE_CLIENT_DEFAULT_NOTICES: $CATALOGUE_CLIENT_DEFAULT_NOTICES
+        CATALOGUE_CLIENT_FILTER_CONFIG_PATH: $CATALOGUE_CLIENT_FILTER_CONFIG_PATH
+        CURATOR_CONTACT: $CURATOR_CONTACT
+        CATALOGUE_TECHNICAL_CONTACT: $CATALOGUE_TECHNICAL_CONTACT
+        DEPLOYMENT_ENV: $DEPLOYMENT_ENV
+        LATEST_COMMIT: $LATEST_COMMIT
+        CATALOGUE_LEGAL_CONTACT: $CATALOGUE_LEGAL_CONTACT
+    ports:
+      - $PUBLIC_CLIENTS_CONTAINER_PORT_MAPPING:80
     depends_on:
       - api
       - proxy

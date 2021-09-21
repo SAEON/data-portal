@@ -54,6 +54,15 @@
         state: directory
         mode: '0755'
 
+    - name: Ensure /opt/docker-nginx-configs/
+      file:
+        path: /opt/docker-nginx-configs
+        state: directory
+        mode: '0755'
+
+# TODO copy nginx/internal-clients to /opt/docker-nginx-configs/internal-clients
+# TODO copy nginx/public-clients to /opt/docker-nginx-configs/public-clients
+
     - name: Ensure /var/lib/catalogue-api/
       file:
         path: /var/lib/catalogue-api
@@ -131,7 +140,7 @@
 
     - name: Copy Nginx config
       template:
-        src: templates/nginx/nginx.conf
+        src: ../../../nginx/nginx.conf
         dest: /etc/nginx/nginx.conf
         owner: root
         group: root
@@ -140,7 +149,7 @@
 
     - name: Copy Nginx config (API)
       template:
-        src: templates/nginx/server-blocks/api.conf
+        src: ../../../nginx/server-blocks/api.conf
         dest: /etc/nginx/conf.d/api.conf
         owner: root
         group: root
@@ -149,7 +158,7 @@
         
     - name: Copy Nginx config (Clients)
       template:
-        src: templates/nginx/server-blocks/clients.conf
+        src: ../../../nginx/server-blocks/clients.conf
         dest: /etc/nginx/conf.d/clients.conf
         owner: root
         group: root
@@ -158,7 +167,7 @@
         
     - name: Copy Nginx config (Elasticsearch)
       template:
-        src: templates/nginx/server-blocks/elasticsearch.conf
+        src: ../../../nginx/server-blocks/elasticsearch.conf
         dest: /etc/nginx/conf.d/elasticsearch.conf
         owner: root
         group: root
@@ -167,7 +176,7 @@
 
     - name: Copy Nginx config (Kibana)
       template:
-        src: templates/nginx/server-blocks/kibana.conf
+        src: ../../../nginx/server-blocks/kibana.conf
         dest: /etc/nginx/conf.d/kibana.conf
         owner: root
         group: root
@@ -176,7 +185,7 @@
 
     - name: Copy Nginx config (Proxy)
       template:
-        src: templates/nginx/server-blocks/proxy.conf
+        src: ../../../nginx/server-blocks/proxy.conf
         dest: /etc/nginx/conf.d/proxy.conf
         owner: root
         group: root
