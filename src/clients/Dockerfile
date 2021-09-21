@@ -41,7 +41,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/localhost.conf /etc/nginx/conf.d/default.conf
 
-RUN sed 's/__CURATION_TOOLS_NGINX_SERVER_NAME__/$CURATION_TOOLS_NGINX_SERVER_NAME/g' /etc/nginx/conf.g/default.conf
-RUN sed 's/__CATALOGUE_NGINX_SERVER_NAME__/$CATALOGUE_NGINX_SERVER_NAME/g' /etc/nginx/conf.g/default.conf
+RUN sed 's/__CURATION_TOOLS_NGINX_SERVER_NAME__/$CURATION_TOOLS_NGINX_SERVER_NAME/g' /etc/nginx/conf.d/default.conf
+RUN sed 's/__CATALOGUE_NGINX_SERVER_NAME__/$CATALOGUE_NGINX_SERVER_NAME/g' /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
