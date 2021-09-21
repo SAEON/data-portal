@@ -50,8 +50,8 @@ services:
     networks:
       - $DOCKER_NETWORK
 
-  proxy1:
-    container_name: proxy1
+  proxy:
+    container_name: proxy
     restart: always
     build:
       context: src/proxy
@@ -62,51 +62,6 @@ services:
     ports:
       - 8001:8001
       - 8002:8002
-    networks:
-      - $DOCKER_NETWORK
-
-  proxy2:
-    container_name: proxy2
-    restart: always
-    build:
-      context: src/proxy
-      dockerfile: Dockerfile
-      args:
-        LATEST_COMMIT: $LATEST_COMMIT
-        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
-    ports:
-      - 8003:8001
-      - 8004:8002
-    networks:
-      - $DOCKER_NETWORK
-
-  proxy3:
-    container_name: proxy3
-    restart: always
-    build:
-      context: src/proxy
-      dockerfile: Dockerfile
-      args:
-        LATEST_COMMIT: $LATEST_COMMIT
-        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
-    ports:
-      - 8005:8001
-      - 8006:8002
-    networks:
-      - $DOCKER_NETWORK
-
-  proxy4:
-    container_name: proxy4
-    restart: always
-    build:
-      context: src/proxy
-      dockerfile: Dockerfile
-      args:
-        LATEST_COMMIT: $LATEST_COMMIT
-        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
-    ports:
-      - 8007:8001
-      - 8008:8002
     networks:
       - $DOCKER_NETWORK
 
@@ -189,9 +144,6 @@ services:
       - $CATALOGUE_CLIENT_CONTAINER_PORT_MAPPING:80
     depends_on:
       - api
-      - proxy1
-      - proxy2
-      - proxy3
-      - proxy4
+      - proxy
     networks:
       - $DOCKER_NETWORK

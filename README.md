@@ -193,7 +193,7 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 
 (NOTE - the command doesn't work with default configurations yet. This is a TODO)
 
-Override default configuration by specifing environment variables (refer to [docer-compose.env](docker-compose.env) for the list of configuration options that can be overriden):
+Override default configuration by specifying environment variables (refer to [docker-compose.env](docker-compose.env) for the list of configuration options that can be overridden):
 
 ```sh
 ENV_VAR_1=x \
@@ -205,8 +205,6 @@ Check that the services started successfully: `docker container ls`. There shoul
 
 - MongoDB
 - PostGIS
-- Elasticsearch
-- Kibana
 - API
 - Proxy
 - Client
@@ -238,9 +236,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - https://api.catalogue.saeon.dvn/graphql (public API)
 - http://api.catalogue.saeon.dvn:5002/graphql (internal API)
 - https://proxy.saeon.dvn
-- http://catalogue.saeon.dvn:8002|8004|8006|8008 (for proxy logs)
-- http://elasticsearch.saeon.dvn
-- http://kibana.saeon.dvn
+- http://catalogue.saeon.dvn:8002 (for proxy logs)
 - postgis://catalogue.saeon.dvn:5442
 - mongodb://catalogue.saeon.dvn:27017
 
@@ -251,9 +247,7 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - https://api.catalogue.saeon.ac.za/graphql (public API)
 - http://api.catalogue.saeon.int:5002/graphql (internal API)
 - https://proxy.saeon.ac.za
-- http://catalogue.saeon.int:8002|8004|8006|8008 (for proxy logs)
-- http://elasticsearch.saeon.int
-- http://kibana.saeon.int
+- http://catalogue.saeon.int:8002 (for proxy logs)
 - postgis://catalogue.saeon.int:5442
 - mongodb://catalogue.saeon.int:27017
 
