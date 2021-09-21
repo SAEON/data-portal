@@ -12,10 +12,16 @@ import packageJson from '../../../package.json'
 
 const App = lazy(() => import('../../index/application'))
 
+const config = {
+  backgroundImage: true,
+  contentBase: undefined,
+}
+
 render(
   <Suspense fallback={<Loading />}>
-    <App>
+    <App {...config}>
       <Header
+        {...config}
         title={`SAEON DATA PORTAL ${
           DEPLOYMENT_ENV === 'production' ? '' : `${DEPLOYMENT_ENV}.${packageJson.version}`
         }`}

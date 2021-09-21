@@ -53,6 +53,6 @@ export const SUBDOMAIN_APP_ENTRIES = process.env.SUBDOMAIN_APP_ENTRIES || ''
 
 export const context = createContext()
 
-export default ({ children, contentBase }) => {
-  return <context.Provider value={{ contentBase }}>{children}</context.Provider>
-}
+export default ({ children, contentBase }) => (
+  <context.Provider value={{ contentBase }}>{children}</context.Provider>
+)
