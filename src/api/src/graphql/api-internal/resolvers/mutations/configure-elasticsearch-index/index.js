@@ -71,42 +71,48 @@ export default async () => {
           .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
           .join(''),
       })
-      const esResponseTxt = await esResponse.text()
-      let esResponseJson
-      try {
-        esResponseJson = JSON.parse(esResponseTxt)
-      } catch (error) {
-        console.error('Error converting Elasticsearch response to JSON', esResponseTxt)
-      }
 
-      if (esResponseJson.errors) {
-        console.info(
-          'Failure integrating the following ODP records into the Elasticsearch index',
-          JSON.stringify(
-            esResponseJson.items
-              .filter(({ index: doc }) => doc.error)
-              .map(({ index: doc }) => ({
-                [doc._id]: JSON.stringify(doc.error),
-              })),
-            null,
-            2
+      // Process ODP response into Elasticsearch
+      try {
+        const esResponseJson = await esResponse.json()
+
+        if (esResponseJson?.errors) {
+          console.info(
+            'Failure integrating the following ODP records into the Elasticsearch index',
+            JSON.stringify(
+              esResponseJson.items
+                .filter(({ index: doc }) => doc.error)
+                .map(({ index: doc }) => ({
+                  [doc._id]: JSON.stringify(doc.error),
+                })),
+              null,
+              2
+            )
           )
+        }
+
+        console.info(
+          `Processed ${
+            esResponseJson.items?.length || 0
+          } docs into the ${ELASTICSEARCH_INDEX} index`
+        )
+
+        esResponseJson.items?.forEach(({ index }) => {
+          if (index.result) {
+            result[index.result]++
+          }
+
+          if (index.error) {
+            result.errors++
+          }
+        })
+      } catch (error) {
+        console.warn(
+          `Unexpected response received from ${ELASTICSEARCH_ADDRESS}. Some records have NOT been indexed`,
+          error
         )
       }
 
-      console.info(
-        `Processed ${esResponseJson.items?.length || 0} docs into the ${ELASTICSEARCH_INDEX} index`
-      )
-
-      esResponseJson.items?.forEach(({ index }) => {
-        if (index.result) {
-          result[index.result]++
-        }
-
-        if (index.error) {
-          result.errors++
-        }
-      })
       iterator = await iterator.next()
     }
   } catch (error) {

@@ -10,9 +10,7 @@ export default () => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">Website and technical feedback</Typography>
-        <Typography variant="body2">
-          {TECHNICAL_CONTACT.replace('@', ' [ at ] ')}
-        </Typography>
+        <Typography variant="body2">{TECHNICAL_CONTACT.replace('@', ' [ at ] ')}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">Data enquiries</Typography>

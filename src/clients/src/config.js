@@ -15,26 +15,23 @@ export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'curation@saeon.ac
 
 export const LEGAL_CONTACT = process.env.LEGAL_CONTACT || ''
 
-export const TECHNICAL_CONTACT =
-  process.env.TECHNICAL_CONTACT || 'zach@saeon.ac.za'
+export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'zach@saeon.ac.za'
 
 export const CATALOGUE_CLIENT_MAX_ATLAS_LAYERS = 1000
 export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
 
 export const API_PUBLIC_ADDRESS = process.env.API_PUBLIC_ADDRESS || 'http://localhost:3000'
 
-export const PROXY_ADDRESS =
-  process.env.PROXY_ADDRESS || 'http://localhost:8001'
+export const PROXY_ADDRESS = process.env.PROXY_ADDRESS || 'http://localhost:8001'
 
 export const PUBLIC_GQL_ADDRESS = `${API_PUBLIC_ADDRESS}/graphql`
 
 const url = new URL(API_PUBLIC_ADDRESS)
-export const API_GQL_SUBSCRIPTIONS_ADDRESS = `${
-  url.protocol === 'http:' ? 'ws:' : 'wss:'
-}//${url.hostname}${url.port ? `:${url.port}` : ''}/graphql`
+export const API_GQL_SUBSCRIPTIONS_ADDRESS = `${url.protocol === 'http:' ? 'ws:' : 'wss:'}//${
+  url.hostname
+}${url.port ? `:${url.port}` : ''}/graphql`
 
-export const CLIENTS_PUBLIC_ADDRESS =
-  process.env.CLIENTS_PUBLIC_ADDRESS || 'http://localhost:3001'
+export const CLIENTS_PUBLIC_ADDRESS = process.env.CLIENTS_PUBLIC_ADDRESS || 'http://localhost:3001'
 
 export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
 

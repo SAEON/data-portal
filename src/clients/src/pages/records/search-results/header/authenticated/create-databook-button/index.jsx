@@ -6,10 +6,7 @@ import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import { gql, useMutation } from '@apollo/client'
-import {
-  CATALOGUE_CLIENT_MAX_DATABOOK_TABLES,
-  TECHNICAL_CONTACT,
-} from '../../../../../../config'
+import { CATALOGUE_CLIENT_MAX_DATABOOK_TABLES, TECHNICAL_CONTACT } from '../../../../../../config'
 import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
 import packageJson from '../../../../../../../package.json'
