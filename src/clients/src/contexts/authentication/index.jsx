@@ -12,7 +12,7 @@ export default ({ children }) => {
     if (user) {
       return true
     } else {
-      window.location.href = `${contentBase}/login?redirect=${window.location.href}`
+      window.location.href = `${contentBase}login?redirect=${window.location.href}`
     }
   }
 
