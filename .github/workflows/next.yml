@@ -36,7 +36,7 @@ jobs:
           ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET_NEXT }}"
           CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
           PUBLIC_CLIENTS_CONTAINER_PORT_MAPPING=5001
-          INTERNAL_CLIENTS_CONTAINER_PORT_MAPPING=5002
+          INTERNAL_CLIENTS_CONTAINER_PORT_MAPPING=6002
           CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
           DEPLOYMENT_ENV="development"
           SUBDOMAIN_APP_ENTRIES="curation-tools"
