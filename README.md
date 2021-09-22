@@ -176,7 +176,7 @@ mutation {
 mutation {
   configureElasticsearchIndex
 }
-```
+``` 
 
 # Deployment and installation
 The platform is currently deployed using docker-compose - the resultant deployment topology is shown in the diagram.
