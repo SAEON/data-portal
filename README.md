@@ -40,7 +40,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - [Documentation](#documentation)
   - [API](#api)
   - [Proxy](#proxy)
-  - [Client](#client)
+  - [Clients](#clients)
   - [Server configuration](#server-configuration)
   - [NPM packages](#npm-packages)
   - [Updating Diagrams](#updating-diagrams)
