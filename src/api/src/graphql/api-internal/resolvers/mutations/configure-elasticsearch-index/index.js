@@ -71,10 +71,13 @@ export default async () => {
           .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
           .join(''),
       })
-      const esResponseJson = await esResponse.json().catch(error => {
-        console.error('Error fetching JSON', esResponse.text(), error.message)
-        throw new Error(`Error fetching JSON from Elasticsearch`)
-      })
+      const esResponseTxt = await esResponse.text()
+      let esResponseJson
+      try {
+        esResponseJson = JSON.parse(esResponseTxt)
+      } catch (error) {
+        console.error('Error converting Elasticsearch response to JSON', esResponseTxt)
+      }
 
       if (esResponseJson.errors) {
         console.info(
