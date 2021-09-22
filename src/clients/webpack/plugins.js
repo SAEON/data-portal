@@ -16,7 +16,7 @@ let {
   DEPLOYMENT_ENV = 'local',
   LATEST_COMMIT = '',
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
-  SUBDOMAIN_APP_ENTRIES = ''
+  SUBDOMAIN_APP_ENTRIES = '',
 } = process.env
 
 module.exports = (ROOT, output) => {
