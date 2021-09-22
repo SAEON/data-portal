@@ -18,6 +18,10 @@ jobs:
           cp deployment-configs/next/odp-filter.js src/api/odp-filter.js
           cp deployment-configs/next/client-filters.json src/clients/client-filters.json
 
+      - name: Copy Docker Nginx configs
+        run: |
+          sudo /opt/cp-docker-nginx-configs.sh
+
       - name: Deploy services
         run: >-
           ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"

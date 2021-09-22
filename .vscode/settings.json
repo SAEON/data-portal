@@ -47,6 +47,7 @@
     "gridstack",
     "gtag",
     "INITDB",
+    "installdependencies",
     "intarray",
     "kibana",
     "lineinfile",

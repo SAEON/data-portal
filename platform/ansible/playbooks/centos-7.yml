@@ -46,7 +46,20 @@
       file:
         path: /opt
         state: directory
-        mode: '0755'     
+        mode: '0755'
+
+    - name: Ensure /opt/cp-docker-nginx-configs.sh
+      file:
+        path: /opt/cp-docker-nginx-configs.sh
+        state: touch
+        mode: '0755'
+
+    - name: Copy /opt/cp-docker-nginx-configs.sh content
+      copy:
+        dest: "/opt/cp-docker-nginx-configs.sh"
+        content: |
+          cp nginx/clients-public.conf /etc/nginx/docker/clients-public.conf
+          cp nginx/clients-internal.conf /etc/nginx/docker/clients-internal.conf
 
     - name: Ensure /opt/dbak/
       file:
@@ -54,14 +67,11 @@
         state: directory
         mode: '0755'
 
-    - name: Ensure /opt/docker-nginx-configs/
+    - name: Ensure /etc/nginx/docker
       file:
-        path: /opt/docker-nginx-configs
+        path: /etc/nginx/docker
         state: directory
         mode: '0755'
-
-# TODO copy nginx/internal-clients to /opt/docker-nginx-configs/internal-clients
-# TODO copy nginx/public-clients to /opt/docker-nginx-configs/public-clients
 
     - name: Ensure /var/lib/catalogue-api/
       file:
@@ -228,7 +238,15 @@
         state: present
         regexp: '^%runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh'
         line: 'runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh'
-        validate: /usr/sbin/visudo -cf %s        
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: GitHub Actions-runner (sudo installdependencies.sh)
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%runner ALL=NOPASSWD: /opt/cp-docker-nginx-configs.sh'
+        line: 'runner ALL=NOPASSWD: /opt/cp-docker-nginx-configs.sh'
+        validate: /usr/sbin/visudo -cf %s
     
     - name: Ensure SELinux is disabled
       lineinfile:
