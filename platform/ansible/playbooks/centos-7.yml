@@ -58,8 +58,8 @@
       copy:
         dest: "/opt/cp-docker-nginx-configs.sh"
         content: |
-          cp nginx/clients-public.conf /etc/nginx/docker/clients-public.conf
-          cp nginx/clients-internal.conf /etc/nginx/docker/clients-internal.conf
+          cp src/clients/nginx/clients-public.conf /etc/nginx/docker/clients-public.conf
+          cp src/clients/nginx/clients-internal.conf /etc/nginx/docker/clients-internal.conf
 
     - name: Ensure /opt/dbak/
       file:
