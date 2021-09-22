@@ -1,4 +1,9 @@
-# Build client
+###
+# Temporary image
+#
+# Builds static files
+# from client src
+###
 FROM node:16.7 as build
 
 ARG API_PUBLIC_ADDRESS
@@ -31,13 +36,16 @@ COPY . .
 RUN npm ci --force --only=production
 RUN npm run build
 
-# Serve static files
+
+
+###
+# Nginx image serving
+# built static files
+###
 FROM nginx:alpine
-
-ARG CURATION_TOOLS_NGINX_SERVER_NAME
-ARG CATALOGUE_NGINX_SERVER_NAME
-
 COPY --from=build /app/dist /usr/share/nginx/html
+
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/clients-public.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
