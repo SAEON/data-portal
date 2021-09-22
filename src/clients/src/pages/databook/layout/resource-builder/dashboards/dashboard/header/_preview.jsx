@@ -1,5 +1,5 @@
 import ShareIcon from 'mdi-react/FileEyeOutlineIcon'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../../config'
+import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../../config'
 import MessageDialogue from '../../../../../../../components/message-dialogue'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -36,7 +36,7 @@ export default ({ id }) => {
             <DialogActions>
               <Button
                 onClick={() => {
-                  window.open(`${CATALOGUE_CLIENT_ADDRESS}/dashboard/${id}?poll=true`)
+                  window.open(`${CLIENTS_PUBLIC_ADDRESS}/dashboard/${id}?poll=true`)
                   close()
                 }}
                 variant="text"

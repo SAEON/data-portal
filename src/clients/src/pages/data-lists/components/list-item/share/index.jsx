@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Q from '@saeon/quick-form'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../config'
+import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../config'
 import Collapse from '../../../../../components/collapse'
 
 export default ({ id, url }) => {
@@ -37,7 +37,7 @@ export default ({ id, url }) => {
               <div>
                 <pre style={{ whiteSpace: 'break-spaces', wordBreak: 'break-all' }}>{`
 // Current
-${CATALOGUE_CLIENT_ADDRESS}/list/records?search=${id}&referrer=${referrer}&showSearchBar=${showSearchBar}&disableSidebar=${disableSidebar}
+${CLIENTS_PUBLIC_ADDRESS}/list/records?search=${id}&referrer=${referrer}&showSearchBar=${showSearchBar}&disableSidebar=${disableSidebar}
   
 // Legacy
 ${url.replace('/list/', '/render/')}`}</pre>

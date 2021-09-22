@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
-import { CATALOGUE_CLIENT_ADDRESS } from '../../../../../../config'
+import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../config'
 
 /**
  * Dialogue contents of the share dialogue
@@ -39,7 +39,7 @@ export default ({ tabIndex, search = undefined }) => {
   }, [isAtlasPage, global, saveList, search])
 
   const id = data?.saveList.id || undefined
-  const uri = `${CATALOGUE_CLIENT_ADDRESS}/list/records?disableSidebar=true&showSearchBar=true&search=${id}`
+  const uri = `${CLIENTS_PUBLIC_ADDRESS}/list/records?disableSidebar=true&showSearchBar=true&search=${id}`
 
   return error ? (
     'Error'

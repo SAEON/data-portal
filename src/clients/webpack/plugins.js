@@ -15,13 +15,13 @@ let {
   NODE_ENV: mode,
   DEPLOYMENT_ENV = 'local',
   LATEST_COMMIT = '',
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = '',
+  CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
   SUBDOMAIN_APP_ENTRIES = ''
 } = process.env
 
 module.exports = (ROOT, output) => {
-  CATALOGUE_CLIENT_FILTER_CONFIG_PATH = CATALOGUE_CLIENT_FILTER_CONFIG_PATH
-    ? path.join(ROOT, CATALOGUE_CLIENT_FILTER_CONFIG_PATH)
+  CLIENTS_SEARCH_FILTER_CONFIG_PATH = CLIENTS_SEARCH_FILTER_CONFIG_PATH
+    ? path.join(ROOT, CLIENTS_SEARCH_FILTER_CONFIG_PATH)
     : path.join(ROOT, '../../deployment-configs/next/client-filters.json')
 
   return [
@@ -38,7 +38,7 @@ module.exports = (ROOT, output) => {
       ),
       'process.env.SUBDOMAIN_APP_ENTRIES': JSON.stringify(SUBDOMAIN_APP_ENTRIES),
       'process.env.CATALOGUE_CLIENT_FILTER_CONFIG': JSON.stringify(
-        fs.readFileSync(CATALOGUE_CLIENT_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
+        fs.readFileSync(CLIENTS_SEARCH_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
       ),
       'process.env.PACKAGE_DESCRIPTION': JSON.stringify(packageJson.description),
       'process.env.PACKAGE_KEYWORDS': JSON.stringify(packageJson.keywords),

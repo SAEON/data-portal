@@ -49,7 +49,7 @@ For a full list of `--build-arg`'s that is accepted refer to the [Dockerfile](Do
 ```sh
 # Create a Docker image
 docker build -t client . \
---build-arg CATALOGUE_CLIENT_ADDRESS=http://localhost:3001 \
+--build-arg CLIENTS_PUBLIC_ADDRESS=http://localhost:3001 \
 --build-arg DEPLOYMENT_ENV=development \
 ... etc
 

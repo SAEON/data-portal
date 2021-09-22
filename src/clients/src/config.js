@@ -6,7 +6,7 @@ export const CATALOGUE_CLIENT_BACKGROUNDS = process.env.CATALOGUE_CLIENT_BACKGRO
 
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'development'
 
-export const CATALOGUE_CLIENT_DEFAULT_NOTICES = process.env.CATALOGUE_CLIENT_DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
+export const CLIENTS_DEFAULT_NOTICES = process.env.CLIENTS_DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
 
 export const CATALOGUE_SOURCE_CODE_URI =
   process.env.CATALOGUE_SOURCE_CODE_URI || 'https://github.com/SAEON/catalogue'
@@ -23,8 +23,8 @@ export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
 
 export const API_PUBLIC_ADDRESS = process.env.API_PUBLIC_ADDRESS || 'http://localhost:3000'
 
-export const CATALOGUE_CLIENT_PROXY_ADDRESS =
-  process.env.CATALOGUE_CLIENT_PROXY_ADDRESS || 'http://localhost:8001'
+export const PROXY_ADDRESS =
+  process.env.PROXY_ADDRESS || 'http://localhost:8001'
 
 export const PUBLIC_GQL_ADDRESS = `${API_PUBLIC_ADDRESS}/graphql`
 
@@ -33,8 +33,8 @@ export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS = `${
   url.protocol === 'http:' ? 'ws:' : 'wss:'
 }//${url.hostname}${url.port ? `:${url.port}` : ''}/graphql`
 
-export const CATALOGUE_CLIENT_ADDRESS =
-  process.env.CATALOGUE_CLIENT_ADDRESS || 'http://localhost:3001'
+export const CLIENTS_PUBLIC_ADDRESS =
+  process.env.CLIENTS_PUBLIC_ADDRESS || 'http://localhost:3001'
 
 export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
 

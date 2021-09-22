@@ -20,31 +20,31 @@ jobs:
 
       - name: Deploy services
         run: >-
+          ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
+          API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
+          APP_KEY="${{ secrets.APP_KEY }}"
+          CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
+          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
+          CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
+          CLIENTS_INTERNAL_CONTAINER_PORT_MAPPING=3002
+          CLIENTS_PUBLIC_ADDRESS="https://catalogue.saeon.ac.za"
+          CLIENTS_PUBLIC_CONTAINER_PORT_MAPPING=5001
+          CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"        
+          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.ac.za
+          DEPLOYMENT_ENV="production"
           ELASTICSEARCH_ADDRESS=http://7.14.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.ac.za"
-          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.ac.za
-          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
-          ODP_FILTER_PATH="odp-filter.js"
-          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"        
-          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
-          SUBDOMAIN_APP_ENTRIES="curation-tools"
-          API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
-          CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.ac.za"
-          ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,https://api.catalogue.saeon.ac.za"
-          CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
-          APP_KEY="${{ secrets.APP_KEY }}"
-          NODE_ENV=production
-          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET }}"
-          CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.ac.za"
-          PUBLIC_CLIENTS_CONTAINER_PORT_MAPPING=5001
-          INTERNAL_CLIENTS_CONTAINER_PORT_MAPPING=6002
-          CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
-          DEPLOYMENT_ENV="production"
           LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
+          NODE_ENV=production
+          NODE_TLS_REJECT_UNAUTHORIZED=1
           ODP_ADDRESS="https://odp.saeon.ac.za"
+          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET }}"
+          ODP_FILTER_PATH="odp-filter.js"
+          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
-          NODE_TLS_REJECT_UNAUTHORIZED=1
+          PROXY_ADDRESS="https://proxy.saeon.ac.za"
+          SUBDOMAIN_APP_ENTRIES="curation-tools"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

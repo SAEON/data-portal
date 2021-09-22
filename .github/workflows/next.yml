@@ -20,31 +20,31 @@ jobs:
 
       - name: Deploy services
         run: >-
+          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
+          API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
+          APP_KEY="${{ secrets.APP_KEY }}"
+          CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
+          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.dvn
+          CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"
+          CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
+          CLIENTS_INTERNAL_CONTAINER_PORT_MAPPING=3002
+          CLIENTS_PUBLIC_ADDRESS="https://catalogue.saeon.dvn"
+          CLIENTS_PUBLIC_CONTAINER_PORT_MAPPING=5001
+          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.dvn
+          DEPLOYMENT_ENV="development"
           ELASTICSEARCH_ADDRESS=http://next.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.dvn"
-          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.dvn
-          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.dvn
-          ODP_FILTER_PATH="odp-filter.js"
-          CATALOGUE_CLIENT_FILTER_CONFIG_PATH="client-filters.json"
-          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
-          API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
-          CATALOGUE_CLIENT_PROXY_ADDRESS="https://proxy.saeon.dvn"
-          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
-          CATALOGUE_API_CONTAINER_PORT_MAPPING=5000
-          APP_KEY="${{ secrets.APP_KEY }}"
-          NODE_ENV=production
-          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET_NEXT }}"
-          CATALOGUE_CLIENT_ADDRESS="https://catalogue.saeon.dvn"
-          PUBLIC_CLIENTS_CONTAINER_PORT_MAPPING=5001
-          INTERNAL_CLIENTS_CONTAINER_PORT_MAPPING=6002
-          CATALOGUE_CLIENT_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
-          DEPLOYMENT_ENV="development"
-          SUBDOMAIN_APP_ENTRIES="curation-tools"
           LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
           MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
+          NODE_ENV=production
+          NODE_TLS_REJECT_UNAUTHORIZED=0
           ODP_ADDRESS="https://odp.saeon.dvn"
+          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET_NEXT }}"
+          ODP_FILTER_PATH="odp-filter.js"
+          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
-          NODE_TLS_REJECT_UNAUTHORIZED=0
+          PROXY_ADDRESS="https://proxy.saeon.dvn"
+          SUBDOMAIN_APP_ENTRIES="curation-tools"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
