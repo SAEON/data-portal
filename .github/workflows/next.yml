@@ -21,6 +21,7 @@ jobs:
       - name: Copy Docker Nginx configs
         run: |
           sudo /opt/cp-docker-nginx-configs.sh
+          echo 'working'
 
       - name: Deploy services
         run: >-
