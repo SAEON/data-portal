@@ -2,7 +2,7 @@ import { Component } from 'react'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import Link from '@material-ui/core/Link'
 import MessageDialogue from '../../components/message-dialogue'
-import { CATALOGUE_TECHNICAL_CONTACT } from '../../config'
+import { TECHNICAL_CONTACT } from '../../config'
 import withStyles from '@material-ui/core/styles/withStyles'
 import style from './style'
 import clsx from 'clsx'
@@ -40,8 +40,8 @@ class ErrorBoundary extends Component {
               Please try refreshing this page in a few minutes. If the error persists, or if
               assistance is required, please contact{' '}
               {
-                <Link variant="body1" href={`mailto:${CATALOGUE_TECHNICAL_CONTACT}`}>
-                  {CATALOGUE_TECHNICAL_CONTACT}
+                <Link variant="body1" href={`mailto:${TECHNICAL_CONTACT}`}>
+                  {TECHNICAL_CONTACT}
                 </Link>
               }{' '}
               with a screenshot of this page so that we may resolve the issue speedily

@@ -4,7 +4,7 @@ import Fade from '@material-ui/core/Fade'
 import Tooltip from '@material-ui/core/Tooltip'
 import LoadingCircular from '../../components/loading-circular'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { CATALOGUE_TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
+import { TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'
 import { gql, useMutation } from '@apollo/client'
@@ -85,7 +85,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
                 }
               : () =>
                   alert(
-                    `Your login is not authorized to use this feature. Please request access (${CATALOGUE_TECHNICAL_CONTACT})`
+                    `Your login is not authorized to use this feature. Please request access (${TECHNICAL_CONTACT})`
                   )
           }
         >

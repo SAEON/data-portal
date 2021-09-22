@@ -8,7 +8,7 @@ import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import { gql, useMutation } from '@apollo/client'
 import {
   CATALOGUE_CLIENT_MAX_DATABOOK_TABLES,
-  CATALOGUE_TECHNICAL_CONTACT,
+  TECHNICAL_CONTACT,
 } from '../../../../../../config'
 import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
@@ -96,7 +96,7 @@ export default ({ catalogue, cache }) => {
                   })
               : () =>
                   alert(
-                    `Your login is not authorized to use this feature. Please request access (${CATALOGUE_TECHNICAL_CONTACT})`
+                    `Your login is not authorized to use this feature. Please request access (${TECHNICAL_CONTACT})`
                   )
           }
         >

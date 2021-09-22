@@ -13,10 +13,10 @@ export const CATALOGUE_SOURCE_CODE_URI =
 
 export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'curation@saeon.ac.za'
 
-export const CATALOGUE_LEGAL_CONTACT = process.env.CATALOGUE_LEGAL_CONTACT || ''
+export const LEGAL_CONTACT = process.env.LEGAL_CONTACT || ''
 
-export const CATALOGUE_TECHNICAL_CONTACT =
-  process.env.CATALOGUE_TECHNICAL_CONTACT || 'zach@saeon.ac.za'
+export const TECHNICAL_CONTACT =
+  process.env.TECHNICAL_CONTACT || 'zach@saeon.ac.za'
 
 export const CATALOGUE_CLIENT_MAX_ATLAS_LAYERS = 1000
 export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
@@ -29,7 +29,7 @@ export const PROXY_ADDRESS =
 export const PUBLIC_GQL_ADDRESS = `${API_PUBLIC_ADDRESS}/graphql`
 
 const url = new URL(API_PUBLIC_ADDRESS)
-export const CATALOGUE_API_GQL_SUBSCRIPTIONS_ADDRESS = `${
+export const API_GQL_SUBSCRIPTIONS_ADDRESS = `${
   url.protocol === 'http:' ? 'ws:' : 'wss:'
 }//${url.hostname}${url.port ? `:${url.port}` : ''}/graphql`
 

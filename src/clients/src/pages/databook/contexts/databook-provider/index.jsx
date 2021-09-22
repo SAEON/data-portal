@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import CheckStatus from './_check-status'
 import Typography from '@material-ui/core/Typography'
-import { CATALOGUE_TECHNICAL_CONTACT } from '../../../../config'
+import { TECHNICAL_CONTACT } from '../../../../config'
 import useTheme from '@material-ui/core/styles/useTheme'
 import clsx from 'clsx'
 import useStyles from '../../style'
@@ -23,7 +23,7 @@ export default ({ children, id }) => {
             >
               <Typography>
                 Error preparing data. Please send the message below to a system administrator (
-                {CATALOGUE_TECHNICAL_CONTACT})
+                {TECHNICAL_CONTACT})
               </Typography>
               <pre className={clsx(classes.pre)}>
                 {JSON.stringify(
