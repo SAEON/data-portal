@@ -62,25 +62,25 @@ export default async () => {
      */
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
-      const elasticsResponse = await fetch(
-        `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_INDEX}/_bulk`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-ndjson',
-          },
-          body: (await filter(iterator.data))
-            .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
-            .join(''),
-        }
-      )
-      const elasticsResponseJson = await elasticsResponse.json()
+      const esResponse = await fetch(`${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_INDEX}/_bulk`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-ndjson',
+        },
+        body: (await filter(iterator.data))
+          .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
+          .join(''),
+      })
+      const esResponseJson = await esResponse.json().catch(error => {
+        console.error('Error fetching JSON', esResponse.text(), error.message)
+        throw new Error(`Error fetching JSON from Elasticsearch`)
+      })
 
-      if (elasticsResponseJson.errors) {
+      if (esResponseJson.errors) {
         console.info(
           'Failure integrating the following ODP records into the Elasticsearch index',
           JSON.stringify(
-            elasticsResponseJson.items
+            esResponseJson.items
               .filter(({ index: doc }) => doc.error)
               .map(({ index: doc }) => ({
                 [doc._id]: JSON.stringify(doc.error),
@@ -92,12 +92,10 @@ export default async () => {
       }
 
       console.info(
-        `Processed ${
-          elasticsResponseJson.items?.length || 0
-        } docs into the ${ELASTICSEARCH_INDEX} index`
+        `Processed ${esResponseJson.items?.length || 0} docs into the ${ELASTICSEARCH_INDEX} index`
       )
 
-      elasticsResponseJson.items?.forEach(({ index }) => {
+      esResponseJson.items?.forEach(({ index }) => {
         if (index.result) {
           result[index.result]++
         }

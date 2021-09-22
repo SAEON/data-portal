@@ -27,7 +27,10 @@ const iterate = async ({ offset = 0, token }) => {
         Authorization: token,
       },
     }
-  )
+  ).catch(error => {
+    console.error('Error fetching from ODP', error)
+    throw error
+  })
 
   const odpResponseJson = await odpResponse.json()
   const next = () => iterate({ offset: offset + odpResponseJson.length, token })
