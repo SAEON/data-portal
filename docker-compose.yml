@@ -120,8 +120,8 @@ services:
     networks:
       - $DOCKER_NETWORK
 
-  internal-clients:
-    container_name: internal-clients
+  clients_internal:
+    container_name: clients_internal
     restart: always
     build:
       context: src/clients
@@ -146,10 +146,10 @@ services:
       - api
       - proxy
     networks:
-      - $DOCKER_NETWORK      
+      - $DOCKER_NETWORK
 
-  public-clients:
-    container_name: public-clients
+  clients_public:
+    container_name: clients_public
     restart: always
     build:
       context: src/clients
