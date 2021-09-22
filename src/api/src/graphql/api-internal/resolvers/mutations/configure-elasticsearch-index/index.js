@@ -110,6 +110,7 @@ export default async () => {
     }
   } catch (error) {
     result.errors = error.message
+    console.error(error)
     console.error('ERROR', result)
     process.exit(1)
   }
