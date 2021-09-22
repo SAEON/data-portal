@@ -46,6 +46,6 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/clients-public.conf /etc/nginx/conf.d/default.conf
+# A server block needs to be mounted at runtime
 
 EXPOSE 80

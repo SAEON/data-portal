@@ -16,7 +16,11 @@ jobs:
       - name: Configure services
         run: |
           cp deployment-configs/stable/odp-filter.js src/api/odp-filter.js
-          cp deployment-configs/stable/client-filters.json src/clients/client-filters.json          
+          cp deployment-configs/stable/client-filters.json src/clients/client-filters.json
+
+      - name: Copy Docker Nginx configs
+        run: |
+          sudo /opt/cp-docker-nginx-configs.sh
 
       - name: Deploy services
         run: >-
