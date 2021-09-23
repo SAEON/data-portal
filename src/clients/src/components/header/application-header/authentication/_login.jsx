@@ -13,7 +13,7 @@ export default props => {
       <span>
         <IconButton
           component={Link}
-          to={`${contentBase}login?redirect=${window.location.href}`}
+          to={`${`${contentBase}/login`.replace('//', '/')}?redirect=${window.location.href}`}
           {...props}
         >
           <LoginIcon />
