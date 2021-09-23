@@ -5,7 +5,7 @@
   vars_prompt:
     - name: DEPLOYMENT_ENV
       prompt: Which deployment environment is this for? [next, stable]
-      default: "next"
+      default: 'next'
       private: no
 
     - name: CATALOGUE_NGINX_SERVER_NAME
@@ -14,33 +14,33 @@
 
     - name: CATALOGUE_PROXY_HOSTNAME
       prompt: What hostname or IP address will the proxy be available on?
-      private: no      
+      private: no
 
     - name: MONGO_DB_USERNAME
       prompt: Provide a MongoDB username
-      default: "admin"
+      default: 'admin'
       private: no
 
     - name: MONGO_DB_PASSWORD
       prompt: Provide a MongoDB password
-      default: "password"
-      private: yes    
-      
+      default: 'password'
+      private: yes
+
     - name: POSTGIS_USERNAME
       prompt: Provide a PostGIS username
-      default: "admin"
+      default: 'admin'
       private: no
 
     - name: POSTGIS_PASSWORD
       prompt: Provide a PostGIS password
-      default: "password"
-      private: yes    
+      default: 'password'
+      private: yes
 
     - name: DHPARAM_SIZE
       prompt: Specify the SSL dhparam size
-      default: "256"
+      default: '256'
       private: no
-      
+
   tasks:
     - name: Ensure /opt/
       file:
@@ -56,7 +56,7 @@
 
     - name: Copy /opt/cp-docker-nginx-configs.sh content
       copy:
-        dest: "/opt/cp-docker-nginx-configs.sh"
+        dest: '/opt/cp-docker-nginx-configs.sh'
         content: |
           cp src/clients/nginx/clients-public.conf /etc/nginx/docker/clients-public.conf
           cp src/clients/nginx/clients-internal.conf /etc/nginx/docker/clients-internal.conf
@@ -89,12 +89,12 @@
       shell: |
         openssl dhparam -out /opt/ssl/dhparam.pem {{ DHPARAM_SIZE }}
       args:
-        creates: /opt/ssl/dhparam.pem      
+        creates: /opt/ssl/dhparam.pem
 
     - name: Install latest Git
       yum:
         name: https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
-        state: present     
+        state: present
 
     - name: Install Docker
       shell: |
@@ -109,31 +109,31 @@
     - name: Clean up docker files regularly
       cron:
         name: Prune docker system
-        minute: "0"
-        hour: "0"
-        day: "*"
-        month: "*"
-        weekday: "0"
+        minute: '0'
+        hour: '0'
+        day: '*'
+        month: '*'
+        weekday: '0'
         job: docker system prune -f > /opt/docker-system-clean.log 2>&1
 
     - name: Backup catalogue database (MongoDB)
       cron:
         name: Backup catalogue database (MongoDB)
-        minute: "0"
-        hour: "0"
-        day: "*"
-        month: "*"
-        weekday: "*"
-        job: docker run --net=catalogue_default -v /opt/dbak:/dbak --rm mongo:5.0.2 sh -c "mongodump --uri=mongodb://mongo:27017 -u={{ MONGO_DB_USERNAME }} -p={{ MONGO_DB_PASSWORD }} --authenticationDatabase=admin -d=catalogue --archive --gzip > /dbak/catalogue_bak_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive`" # The -c flag stands for 'chained', and allows for running chained commands (might not be required actually in this case) 
-    
+        minute: '0'
+        hour: '0'
+        day: '*'
+        month: '*'
+        weekday: '*'
+        job: docker run --net=catalogue_default -v /opt/dbak:/dbak --rm mongo:5.0.2 sh -c "mongodump --uri=mongodb://mongo:27017 -u={{ MONGO_DB_USERNAME }} -p={{ MONGO_DB_PASSWORD }} --authenticationDatabase=admin -d=catalogue --archive --gzip > /dbak/catalogue_bak_`date +\%Y-\%m-\%d_\%H-\%M-\%S.archive`" # The -c flag stands for 'chained', and allows for running chained commands (might not be required actually in this case)
+
     - name: Prune MongoDB backups
       cron:
         name: Prune MongoDB backups
-        minute: "0"
-        hour: "0"
-        day: "*"
-        month: "*"
-        weekday: "0"
+        minute: '0'
+        hour: '0'
+        day: '*'
+        month: '*'
+        weekday: '0'
         job: find /opt/dbak/ -mtime + 10 -type -f -delete
 
     - name: Install Docker Compose
@@ -150,7 +150,7 @@
 
     - name: Copy Nginx config
       template:
-        src: ../../../nginx/nginx.conf
+        src: ../../../nginx/public-interface/nginx.conf
         dest: /etc/nginx/nginx.conf
         owner: root
         group: root
@@ -159,25 +159,25 @@
 
     - name: Copy Nginx config (API)
       template:
-        src: ../../../nginx/server-blocks/api.conf
+        src: ../../../nginx/public-interface/server-blocks/api.conf
         dest: /etc/nginx/conf.d/api.conf
         owner: root
         group: root
         mode: '0644'
         force: yes
-        
+
     - name: Copy Nginx config (Clients)
       template:
-        src: ../../../nginx/server-blocks/clients.conf
+        src: ../../../nginx/public-interface/server-blocks/clients.conf
         dest: /etc/nginx/conf.d/clients.conf
         owner: root
         group: root
         mode: '0644'
         force: yes
-        
+
     - name: Copy Nginx config (Elasticsearch)
       template:
-        src: ../../../nginx/server-blocks/elasticsearch.conf
+        src: ../../../nginx/public-interface/server-blocks/elasticsearch.conf
         dest: /etc/nginx/conf.d/elasticsearch.conf
         owner: root
         group: root
@@ -186,25 +186,25 @@
 
     - name: Copy Nginx config (Kibana)
       template:
-        src: ../../../nginx/server-blocks/kibana.conf
+        src: ../../../nginx/public-interface/server-blocks/kibana.conf
         dest: /etc/nginx/conf.d/kibana.conf
         owner: root
         group: root
         mode: '0644'
-        force: yes        
+        force: yes
 
     - name: Copy Nginx config (Proxy)
       template:
-        src: ../../../nginx/server-blocks/proxy.conf
+        src: ../../../nginx/public-interface/server-blocks/proxy.conf
         dest: /etc/nginx/conf.d/proxy.conf
         owner: root
         group: root
         mode: '0644'
-        force: yes    
+        force: yes
 
     # TODO https://docs.ansible.com/ansible/2.7/modules/openssl_certificate_module.html
     # TODO https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-ansible-on-ubuntu-18-04
-  
+
     - name: Install and configure firewalld
       shell: |
         yum -y install firewalld
@@ -247,12 +247,12 @@
         regexp: '^%runner ALL=NOPASSWD: /opt/cp-docker-nginx-configs.sh'
         line: 'runner ALL=NOPASSWD: /opt/cp-docker-nginx-configs.sh'
         validate: /usr/sbin/visudo -cf %s
-    
+
     - name: Ensure SELinux is disabled
       lineinfile:
         path: /etc/selinux/config
         regexp: '^SELINUX='
         line: SELINUX=disabled
-    
+
     - name: Finish setup by restarting the server
       reboot:

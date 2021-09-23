@@ -1,2 +1,0 @@
-TODO
-this file should be mapped into the elasticsearch docker container
