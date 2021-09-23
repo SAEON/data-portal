@@ -4,7 +4,6 @@ import { PASSPORT_SSO_SESSION_ID } from '../config.js'
 export default async (ctx, next) => {
   const protocol = ctx.protocol
   const isHttp = protocol === 'http'
-  console.log('e', isHttp)
 
   if (!ctx.cookies.get(PASSPORT_SSO_SESSION_ID)) {
     ctx.cookies.set(
