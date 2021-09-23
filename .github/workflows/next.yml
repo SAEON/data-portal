@@ -24,7 +24,7 @@ jobs:
 
       - name: Deploy services
         run: >-
-          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,https://api.catalogue.saeon.dvn"
+          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,http://curation-tools.saeon.int"
           API_CONTAINER_PORT_MAPPING=5000
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
           APP_KEY="${{ secrets.APP_KEY }}"

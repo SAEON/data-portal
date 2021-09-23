@@ -107,9 +107,9 @@ ansible --version # Just to check that ansible is installed
 # Setup your Ansible inventory
 An ansible inventory is a list of hosts to configure. Running the `ansible-playbook` command will use the default inventory at `/etc/ansible/hosts`. You can edit this file, or you can provide your own inventory (recommended).
 
-An inventory is inlcuded in this respository at [inventories/centos-7](ansible/inventories/centos-7) as a reference. It's also the exact inventory file used to setup the [SAEON Data Portal](https://catalogue.saeon.ac.za) deployments. You won't be able to use this file unless you create a user called `zach` (which I assume is not your name, since it's my name).
+An inventory is included in this repository at [inventories/centos-7](ansible/inventories/centos-7) as a reference. It's also the exact inventory file used to setup the [SAEON Data Portal](https://catalogue.saeon.ac.za) deployments. You won't be able to use this file unless you create a user called `zach` (which I assume is not your name, since it's my name).
 
-Refer to the [inventory file](ansible/inventories/centos-7) and create a suitable variation of this file for youself. When you run the ansible command, specify your inventory file by using the flag `-i <inventory file>`.
+Refer to the [inventory file](ansible/inventories/centos-7) and create a suitable variation of this file for yourself. When you run the ansible command, specify your inventory file by using the flag `-i <inventory file>`.
 
 # Use Ansible!
 Test that your Ansible configuration works, and learn Ansible at the same time! Here are some basic useful examples of using the Ansible CLI
