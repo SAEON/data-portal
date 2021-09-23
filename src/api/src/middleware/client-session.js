@@ -1,7 +1,11 @@
 import { nanoid } from 'nanoid'
-import { NODE_ENV, PASSPORT_SSO_SESSION_ID } from '../config.js'
+import { PASSPORT_SSO_SESSION_ID } from '../config.js'
 
 export default async (ctx, next) => {
+  const protocol = ctx.protocol
+  const isHttp = protocol === 'http'
+  console.log('e', isHttp)
+
   if (!ctx.cookies.get(PASSPORT_SSO_SESSION_ID)) {
     ctx.cookies.set(
       PASSPORT_SSO_SESSION_ID,
@@ -14,8 +18,8 @@ export default async (ctx, next) => {
       {
         signed: true,
         httpOnly: true,
-        secure: NODE_ENV === 'development' ? false : true,
-        sameSite: NODE_ENV === 'development' ? 'lax' : 'none',
+        secure: isHttp ? false : true,
+        sameSite: isHttp ? 'lax' : 'none',
       }
     )
   }

@@ -12,7 +12,6 @@ import zlib from 'zlib'
 import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
-import blacklistRoute from './middleware/blacklist-route.js'
 import homeRoute from './http/home.js'
 import clientInfoRoute from './http/client-info.js'
 import downloadProxyRoute from './http/download-proxy.js'
@@ -24,9 +23,10 @@ import loginSuccessRoute from './http/login-success.js'
 import metadataRecordsRoute from './http/metadata-records/index.js'
 import apolloServers from './graphql/index.js'
 import configureAuth from './passport/index.js'
-import passportCookieConfig from './passport/cookie-config.js'
 import './postgis/setup.js'
 import { PUBLIC_PORT, INTERNAL_PORT, APP_KEY } from './config.js'
+
+const hoursToMilliseconds = hrs => hrs * 60 * 60 * 1000
 
 // Configure passport authentication
 const { login, authenticate } = configureAuth()
@@ -58,7 +58,25 @@ publicApp
     })
   )
   .use(koaBody())
-  .use(blacklistRoute(koaSession(passportCookieConfig, publicApp), '/proxy')) // TODO - is this needed now that proxy is proxy.saeon.ac.za?
+  .use(async (ctx, next) => {
+    const protocol = ctx.protocol
+    const isHttp = protocol === 'http'
+    return koaSession(
+      {
+        key: 'koa.sess',
+        maxAge: hoursToMilliseconds(12),
+        autoCommit: true,
+        overwrite: true,
+        httpOnly: true,
+        signed: true,
+        rolling: true,
+        renew: false,
+        secure: isHttp ? false : true,
+        sameSite: isHttp ? 'lax' : 'none',
+      },
+      publicApp
+    )(ctx, next)
+  })
   .use(cors)
   .use(clientSession)
   .use(koaPassport.initialize())
