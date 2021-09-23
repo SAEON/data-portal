@@ -1,8 +1,20 @@
 scalar JSON
 scalar Void
 
+type Metadata {
+  id: ID!
+  doi: ID
+  sid: ID
+  institution_key: String
+  collection_key: String
+  project_keys: [String!]!
+  schema_key: String
+  metadata: JSON
+}
+
 type Query {
   placeholder: Void
+  metadata(offset: Int, limit: Int): [Metadata!]!
 }
 
 type Mutation {

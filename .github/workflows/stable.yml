@@ -27,6 +27,7 @@ jobs:
           ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,http://curation-tools.saeon.int"
           API_CONTAINER_PORT_MAPPING=5000
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
+          API_INTERNAL_ADDRESS="http://api.catalogue.saeon.int:5002"
           APP_KEY="${{ secrets.APP_KEY }}"
           CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
           CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
