@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
-import { createWriteStream, mkdtemp } from 'fs'
+import { createWriteStream, mkdtemp, readdir, writeFile } from 'fs'
 import { TEMP_DIRECTORY } from '../../../../../../../config.js'
 import unzipper from 'unzipper'
 import rimraf from 'rimraf'
@@ -55,6 +55,40 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
       } else {
         entry.autodrain()
       }
+    }
+
+    /**
+     * The shapefile folder should include a .cpg file
+     * so that gdal ogr2ogr knows what encoding it is in
+     */
+    const hasCpg = await new Promise((resolve, reject) =>
+      readdir(cacheDir, (err, files) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(files.map(filename => extname(filename)).includes('.cpg'))
+        }
+      })
+    )
+
+    if (!hasCpg) {
+      console.info(id, 'No .cpg file found. Defaulting to ISO 88591')
+      const filename = basename(shpFilePath)
+      const contents = 'ISO 88591' // Default encoding if not provided by download. This is a subset of UTF 8 chars
+      await new Promise((resolve, reject) => {
+        writeFile(
+          join(cacheDir, filename.replace('.shp', '.cpg')),
+          contents,
+          { encoding: 'utf8' },
+          err => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve()
+            }
+          }
+        )
+      })
     }
 
     /**
