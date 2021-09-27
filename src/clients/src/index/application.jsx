@@ -1,6 +1,6 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
-import Apollo from '../components/apollo'
+import ApolloProvider from '../components/apollo'
 import GlobalProvider from '../contexts/global'
 import ClientInfoProvider from '../contexts/client-info'
 import AuthorizationProvider from '../contexts/authorization'
@@ -27,7 +27,7 @@ export default ({ children, ...config }) => {
             <ErrorBoundary>
               <DetectDevice>
                 <NativeExtensions>
-                  <Apollo>
+                  <ApolloProvider>
                     <ClientInfoProvider>
                       <CookieConsent>
                         <AuthenticationProvider>
@@ -47,7 +47,7 @@ export default ({ children, ...config }) => {
                         </AuthenticationProvider>
                       </CookieConsent>
                     </ClientInfoProvider>
-                  </Apollo>
+                  </ApolloProvider>
                 </NativeExtensions>
               </DetectDevice>
             </ErrorBoundary>
