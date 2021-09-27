@@ -16,12 +16,14 @@ import deleteFilter from '../mutations/delete-filter.js'
 import assignRolesToUser from '../mutations/assign-roles-to-user.js'
 import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
+import updateRecordDataFormat from '../mutations/update-record-data-format/index.js'
 
 export default {
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
   createAtlas: authorize(PERMISSIONS['atlas:create'])(createAtlas),
   deleteList: authorize(PERMISSIONS['list:delete'])(deleteList),
   assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
+  updateRecordDataFormat: authorize(PERMISSIONS['es-index:update'])(updateRecordDataFormat),
   logBrowserEvents,
   saveList,
   createDashboard,

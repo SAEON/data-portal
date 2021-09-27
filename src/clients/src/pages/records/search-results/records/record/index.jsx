@@ -6,7 +6,7 @@ import Descriptions from './_descriptions'
 import Titles from './_titles'
 import clsx from 'clsx'
 import useStyles from './style'
-import FileFormat from './_file-format'
+import FileFormat from './file-format'
 
 export default _source => {
   const classes = useStyles()

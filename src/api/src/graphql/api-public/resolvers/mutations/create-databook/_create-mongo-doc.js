@@ -26,12 +26,16 @@ export default async (records, ctx, createdBy) => {
     tables: Object.fromEntries(
       records.map(({ _source }) => {
         const { id, immutableResource } = _source
-        const { resourceDownload } = immutableResource
-        const { archive, archivedFormats, fileFormat } = resourceDownload
+        const { resourceDownload, _fileFormat, _archive } = immutableResource
+        let { archive, archivedFormats, fileFormat } = resourceDownload
+        archive = archive || _archive
+        fileFormat = fileFormat || _fileFormat
 
         const type = fileFormat?.toLowerCase().includes('nc')
           ? 'netcdf'
-          : archive && archivedFormats?.map(f => f.toLowerCase()).includes('shp')
+          : archive &&
+            (fileFormat === 'SHAPEFILE' ||
+              archivedFormats?.map(f => f.toLowerCase()).includes('shp'))
           ? 'shapefile-archive'
           : archive && archivedFormats?.map(f => f.toLowerCase()).includes('asc')
           ? 'asc-archive'

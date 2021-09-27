@@ -2,8 +2,7 @@ import provisionSchema from './provision-schema/index.js'
 import loadShapefileArchive from './shapefile-archive/index.js'
 import loadAscArchive from './asc-archive/index.js'
 import loadNetCdfFile from './netcdf/index.js'
-import mongodb from 'mongodb'
-const { ObjectId } = mongodb
+import { ObjectId } from 'mongodb'
 
 /**
  * NOTE

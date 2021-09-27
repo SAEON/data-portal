@@ -6,6 +6,7 @@ import { TEMP_DIRECTORY } from '../../../../../../../config.js'
 import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import ogr2ogr from '../ogr2ogr/index.js'
+import normalizeDownloadUrl from '../../../../../../../lib/normalize-data-download-uri.js'
 
 const INCLUDE_EXTENSIONS = ['.dbf', '.shp', '.shx', '.qpj', '.prj', '.cpg']
 
@@ -13,9 +14,7 @@ const _temp = `${TEMP_DIRECTORY}${sep}`
 
 export default async (ctx, databook, tableName, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections
-  const { downloadURL } = immutableResource.resourceDownload
-
-  console.log(databook._id, 'Creating table', tableName)
+  const downloadURL = await normalizeDownloadUrl(immutableResource?.resourceDownload.downloadURL)
 
   const cacheDir = await new Promise((resolve, reject) =>
     mkdtemp(_temp, (error, directory) => (error ? reject(error) : resolve(directory)))

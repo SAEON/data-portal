@@ -1,11 +1,11 @@
-import mongodb from 'mongodb'
+import { ObjectId } from 'mongodb'
 import { createWriteStream, mkdir } from 'fs'
 import { join, basename, sep } from 'path'
 import fetch from 'node-fetch'
 import { DATA_DIRECTORY as _D } from '../../../../../../../config.js'
 import raster2pgsql from '../raster2pgsql/index.js'
 import { nanoid } from 'nanoid'
-const { ObjectId } = mongodb
+import normalizeDownloadUrl from '../../../../../../../lib/normalize-data-download-uri.js'
 
 const DATA_DIRECTORY = `${_D}${sep}`
 const createUniqueDirectory = async () => {
@@ -23,7 +23,7 @@ export default async (ctx, databook, tableName, { immutableResource, id }) => {
 
   try {
     // Stream the download to the unique directory
-    const { downloadURL } = immutableResource.resourceDownload
+    const downloadURL = await normalizeDownloadUrl(immutableResource?.resourceDownload.downloadURL)
     const rasterFilePath = join(dir, basename(downloadURL))
     const res = await fetch(downloadURL)
     await new Promise((resolve, reject) => {

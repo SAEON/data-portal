@@ -10,10 +10,16 @@ import CodeViewButton from './_code-view-button'
 import Title from './_title'
 import FancyHeader from '../../../components/toolbar-header'
 import useTheme from '@material-ui/core/styles/useTheme'
+import UpdateDataFormat from '../../../components/update-data-format'
+import Tooltip from '@material-ui/core/Tooltip'
+import UpdateIcon from 'mdi-react/DatabaseEditIcon'
+import IconButton from '@material-ui/core/IconButton'
 
 export default ({ codeView, toggleCodeView, _source }) => {
-  const { isAuthenticated } = useContext(authorizationContext)
+  const { isAuthenticated, hasPermission } = useContext(authorizationContext)
   const theme = useTheme()
+
+  const canUpdateIndex = hasPermission('es-index:update')
 
   return (
     <FancyHeader style={{ paddingLeft: theme.spacing(2), paddingRight: theme.spacing(2) }}>
@@ -23,6 +29,19 @@ export default ({ codeView, toggleCodeView, _source }) => {
         </Grid>
 
         <PreviewAtlasButton {..._source} buttonSize="medium" />
+
+        {canUpdateIndex && (
+          <UpdateDataFormat
+            {..._source}
+            Button={({ open, setOpen }) => (
+              <Tooltip placement="top" title="Update this record to include format information">
+                <IconButton style={{ cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+                  <UpdateIcon size={22} />
+                </IconButton>
+              </Tooltip>
+            )}
+          />
+        )}
 
         <Hidden xsDown>
           <CreateDatabookButton {..._source} buttonSize="medium" />

@@ -1,7 +1,16 @@
-import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_INDEX } from '../config.js'
+import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_INDEX as index } from '../config.js'
 import { Client as ElasticClient } from '@elastic/elasticsearch'
 
-const client = new ElasticClient({ node: ELASTICSEARCH_ADDRESS })
+export const client = new ElasticClient({ node: ELASTICSEARCH_ADDRESS })
+
+export const get = async id => await client.get({ index, id }).then(res => res.body)
+
+export const update = async (id, body) =>
+  client.update({
+    id,
+    index,
+    body,
+  })
 
 export const query = async dsl => {
   if (!dsl) {
@@ -12,7 +21,7 @@ export const query = async dsl => {
 
   try {
     return await client.search({
-      index: ELASTICSEARCH_INDEX,
+      index,
       body: dsl,
     })
   } catch (error) {

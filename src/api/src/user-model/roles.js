@@ -1,29 +1,40 @@
 import permissions from './permissions.js'
+import _deduplicate from '../lib/deduplicate-obj.js'
+
+const deduplicate = arr => _deduplicate(arr, (p1, p2) => p1.name === p2.name)
 
 export const user = {
   name: 'user',
   description: 'Default login role',
-  permissions: [permissions['atlas:create'], permissions['databook:create']],
+  permissions: deduplicate([permissions['atlas:create'], permissions['databook:create']]),
 }
 
 export const saeon = {
   name: 'saeon',
   description: 'Default login roles for @saeon.ac.za email addresses',
-  permissions: [...user.permissions, permissions['/usage'], permissions['site-analytics:view']],
+  permissions: deduplicate([
+    ...user.permissions,
+    permissions['/usage'],
+    permissions['site-analytics:view'],
+  ]),
 }
 
 export const curator = {
   name: 'curator',
   description: 'Data curators',
-  permissions: [...saeon.permissions, permissions['/curator-tools']],
+  permissions: deduplicate([
+    ...saeon.permissions,
+    permissions['es-index:update'],
+    permissions['/curator-tools'],
+  ]),
 }
 
 export const admin = {
   name: 'admin',
   description: 'Site administrators',
-  permissions: [
+  permissions: deduplicate([
     ...saeon.permissions,
-    permissions['/curator-tools'],
+    ...curator.permissions,
     permissions['list:update'],
     permissions['list:delete'],
     permissions['lists:view'],
@@ -33,13 +44,13 @@ export const admin = {
     permissions['users:view'],
     permissions['roles:view'],
     permissions['permissions:view'],
-  ],
+  ]),
 }
 
 export const sysadmin = {
   name: 'sysadmin',
   description: 'System administrators',
-  permissions: [...admin.permissions],
+  permissions: deduplicate([...admin.permissions]),
 }
 
-export default [user, saeon, admin, sysadmin]
+export default [user, saeon, curator, admin, sysadmin]

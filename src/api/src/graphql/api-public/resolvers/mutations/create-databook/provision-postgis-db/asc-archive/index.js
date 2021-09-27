@@ -6,6 +6,7 @@ import { DATA_DIRECTORY as _D } from '../../../../../../../config.js'
 import raster2pgsql from '../raster2pgsql/index.js'
 import { nanoid } from 'nanoid'
 import unzipper from 'unzipper'
+import normalizeDownloadUrl from '../../../../../../../lib/normalize-data-download-uri.js'
 
 const INCLUDE_EXTENSIONS = ['.asc', '.aux', '.dsu']
 
@@ -19,9 +20,7 @@ const createUniqueDirectory = async () => {
 
 export default async (ctx, databook, tableName, { immutableResource, id }) => {
   const { Databooks } = await ctx.mongo.collections
-  const { downloadURL } = immutableResource.resourceDownload
-
-  console.log(databook._id, 'Creating table', tableName)
+  const downloadURL = await normalizeDownloadUrl(immutableResource?.resourceDownload.downloadURL)
 
   const dir = await createUniqueDirectory()
 

@@ -55,4 +55,8 @@ export default Object.freeze({
     name: 'permissions:view',
     description: 'View all permission details',
   },
+  'es-index:update': {
+    name: 'es-index:update',
+    description: 'Update indexed metadata',
+  },
 })
