@@ -14,6 +14,7 @@ import RenameOperator from '../_rename-operator'
 import { context as databookContext } from '../../../contexts/databook-provider'
 import MessageDialogue from '../../../../../components/message-dialogue'
 import Record from '../../../../record'
+import MarkPublic from './_mark-public'
 
 const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => {
   const theme = useTheme()
@@ -46,6 +47,14 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
               value: 'Rename',
               onClick: () => {
                 setEditActive(true)
+                handleFocus()
+              },
+              disabled: isSharedTable,
+            },
+            {
+              Item: MarkPublic,
+              value: 'Mark public',
+              onClick: () => {
                 handleFocus()
               },
               disabled: isSharedTable,

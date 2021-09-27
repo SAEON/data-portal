@@ -15,7 +15,8 @@ import clientSession from './middleware/client-session.js'
 import homeRoute from './http/home.js'
 import clientInfoRoute from './http/client-info.js'
 import downloadProxyRoute from './http/download-proxy.js'
-import executeSql from './http/execute-sql.js'
+import sqlPrivate from './http/sql-private.js'
+import sqlPublic from './http/sql-public.js'
 import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import pgDumpRoute from './http/pg-dump/index.js'
@@ -87,7 +88,8 @@ publicApp
       .get('/', homeRoute)
       .post('/', homeRoute)
       .get('/client-info', clientInfoRoute)
-      .post('/execute-sql', executeSql)
+      .post('/_sql', sqlPrivate)
+      .post('/sql', sqlPublic)
       .get('/pg-dump/:schema', pgDumpRoute)
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)

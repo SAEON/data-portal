@@ -10,6 +10,10 @@ type Databook {
   """
   statusHash: StatusHash!
   editors: JSON
+  """
+  Mark a Postgres object as public. This allows for publicly executing SQL on this object
+  """
+  markSchemaObjectPublic(object: String!): Boolean!
 }
 
 type Dashboard {
