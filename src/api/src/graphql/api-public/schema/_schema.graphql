@@ -164,6 +164,10 @@ type Mutation {
     title: String
     description: String
   ): List!
+  """
+  Retrieve a web-browser's previously saved databook
+  """
+  databook(id: ID!): Databook
   createDashboard(title: String, subtitle: String, description: String, databookId: ID!): Dashboard!
   updateDashboard(
     id: ID!

@@ -1,5 +1,4 @@
-import mongodb from 'mongodb'
-const { ObjectId } = mongodb
+import { ObjectId } from 'mongodb'
 import hash from 'object-hash'
 import { nanoid } from 'nanoid'
 

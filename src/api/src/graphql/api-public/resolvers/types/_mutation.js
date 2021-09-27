@@ -17,6 +17,7 @@ import assignRolesToUser from '../mutations/assign-roles-to-user.js'
 import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
 import updateRecordDataFormat from '../mutations/update-record-data-format/index.js'
+import databook from '../queries/databook.js'
 
 export default {
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
@@ -24,6 +25,7 @@ export default {
   deleteList: authorize(PERMISSIONS['list:delete'])(deleteList),
   assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
   updateRecordDataFormat: authorize(PERMISSIONS['es-index:update'])(updateRecordDataFormat),
+  databook, // TODO - should be per resource owner, but that breaks sharing
   logBrowserEvents,
   saveList,
   createDashboard,
