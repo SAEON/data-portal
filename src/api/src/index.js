@@ -102,7 +102,7 @@ publicApp
 
 // Configure HTTP servers
 const publicHttpServer = createServer(publicApp.callback())
-// const privateHttpServer = createServer(internalApp.callback())
+const privateHttpServer = createServer(internalApp.callback())
 
 // Configure Apollo servers
 const { publicServer: publicGqlServer, internalServer: internalGqlServer } = apolloServers
@@ -117,8 +117,8 @@ publicHttpServer.listen(PUBLIC_PORT, () => {
   console.log(`@saeon/catalogue GraphQL server ready`)
 })
 
-// // Start internal HTTP server
-// privateHttpServer.listen(INTERNAL_PORT, () => {
-//   console.log(`@saeon/catalogue API server ready (internal)`)
-//   console.log(`@saeon/catalogue GraphQL server ready (internal)`)
-// })
+// Start internal HTTP server
+privateHttpServer.listen(INTERNAL_PORT, () => {
+  console.log(`@saeon/catalogue API server ready (internal)`)
+  console.log(`@saeon/catalogue GraphQL server ready (internal)`)
+})
