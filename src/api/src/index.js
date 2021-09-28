@@ -81,8 +81,8 @@ publicApp
       publicApp
     )(ctx, next)
   })
-  .use(blacklistRoutes(restrictCors, '/query')) // Strict CORS for all routes except /query/:id
-  .use(whitelistRoutes(openCors, '/query')) // Open CORS policy for /query/:id
+  .use(blacklistRoutes(restrictCors, '/query')) // Strict CORS for all routes except /query
+  .use(whitelistRoutes(openCors, '/query')) // Open CORS policy for /query
   .use(clientSession)
   .use(koaPassport.initialize())
   .use(koaPassport.session())
