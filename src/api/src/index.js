@@ -10,7 +10,10 @@ import koaSession from 'koa-session'
 import koaPassport from 'koa-passport'
 import zlib from 'zlib'
 import createRequestContext from './middleware/create-request-context.js'
-import cors from './middleware/cors.js'
+import restrictCors from './middleware/restrict-cors.js'
+import openCors from './middleware/open-cors.js'
+import blacklistRoutes from './middleware/blacklist-routes.js'
+import whitelistRoutes from './middleware/whitelist-routes.js'
 import clientSession from './middleware/client-session.js'
 import homeRoute from './http/home.js'
 import clientInfoRoute from './http/client-info.js'
@@ -78,7 +81,8 @@ publicApp
       publicApp
     )(ctx, next)
   })
-  .use(cors)
+  .use(blacklistRoutes(restrictCors, '/query/:id')) // Strict CORS for all routes except /query/:id
+  .use(whitelistRoutes(openCors, '/query/:id')) // Open CORS policy for /query/:id
   .use(clientSession)
   .use(koaPassport.initialize())
   .use(koaPassport.session())
@@ -89,7 +93,7 @@ publicApp
       .post('/', homeRoute)
       .get('/client-info', clientInfoRoute)
       .post('/sql', sqlPrivate)
-      .post('/sql/:databookId', sqlPublic)
+      .post('/query/:databookId', sqlPublic)
       .get('/pg-dump/:schema', pgDumpRoute)
       .get('/download-proxy', downloadProxyRoute)
       .get('/metadata-records', metadataRecordsRoute)
