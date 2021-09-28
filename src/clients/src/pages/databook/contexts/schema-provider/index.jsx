@@ -19,6 +19,7 @@ export default ({ children }) => {
               table_schema
               odpRecordId
               description
+              isPublic
               fields {
                 id
                 column_name

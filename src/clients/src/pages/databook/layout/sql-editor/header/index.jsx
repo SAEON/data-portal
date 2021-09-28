@@ -8,6 +8,7 @@ import ExecuteQuery from './_execute-query'
 import AbortQuery from './_abort-query'
 import Label from '../../../components/tab-label'
 import SaveSql from './_save-sql'
+import CopyCode from './_copy-code'
 
 export default ({
   editors,
@@ -44,6 +45,7 @@ export default ({
       {/* BUTTONS */}
       <AddEditor onClick={addEditorFn} />
       <SaveSql onClick={saveSqlFn} />
+      <CopyCode />
       <AbortQuery onClick={cancelQueryFn} />
       <ExecuteQuery onClick={executeQueryFn} />
     </Toolbar>

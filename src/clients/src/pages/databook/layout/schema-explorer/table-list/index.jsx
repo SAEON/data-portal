@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import InfoIcon from 'mdi-react/InformationVariantIcon'
+import Tooltip from '@material-ui/core/Tooltip'
 import CloseIcon from 'mdi-react/CloseIcon'
 import TableIcon from 'mdi-react/TableIcon'
 import clsx from 'clsx'
@@ -16,7 +17,7 @@ import MessageDialogue from '../../../../../components/message-dialogue'
 import Record from '../../../../record'
 import MarkPublic from './_mark-public'
 
-const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => {
+const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, description }) => {
   const theme = useTheme()
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(tableName)
@@ -63,70 +64,76 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
           ]}
         >
           <span>
-            <span
-              onClick={() => {
-                if (!editActive) setExpanded(!expanded)
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexGrow: 1,
-              }}
+            <Tooltip
+              title={isPublic ? `${text} (this schema object can be read publicly)` : text}
+              placement="right-end"
             >
-              <TableIcon
-                size={20}
-                style={{ minWidth: 20, marginRight: '2px', cursor: 'pointer' }}
-              />
-              <RenameOperator
-                variables={{
-                  id: databookId,
-                  tableName: tableName,
-                  newName: text,
+              <span
+                onClick={() => {
+                  if (!editActive) setExpanded(!expanded)
                 }}
-                entityType="table"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexGrow: 1,
+                  color: isPublic ? theme.palette.warning.dark : theme.palette.common.black,
+                }}
               >
-                {renameEntityLazy => {
-                  const onEnter = () => {
-                    setEditActive(false)
-                    renameEntityLazy()
-                  }
-                  return (
-                    <input
-                      style={{
-                        width: '100%',
-                        textOverflow: 'ellipsis',
-                        color: isSharedTable ? theme.palette.grey[500] : 'inherit',
-                      }}
-                      id={inputId}
-                      autoComplete="off"
-                      readOnly={!editActive}
-                      value={text}
-                      className={clsx(classes.inputField, {
-                        [classes.inputFieldActive]: editActive,
-                      })}
-                      onFocus={e => {
-                        if (editActive) e.currentTarget.select()
-                      }}
-                      onInput={e => {
-                        setText(e.target.value)
-                      }}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                          onEnter(e)
-                        } else if (['Escape', 'Tab'].includes(e.key)) {
+                <TableIcon
+                  size={20}
+                  style={{ minWidth: 20, marginRight: '2px', cursor: 'pointer' }}
+                />
+                <RenameOperator
+                  variables={{
+                    id: databookId,
+                    tableName: tableName,
+                    newName: text,
+                  }}
+                  entityType="table"
+                >
+                  {renameEntityLazy => {
+                    const onEnter = () => {
+                      setEditActive(false)
+                      renameEntityLazy()
+                    }
+                    return (
+                      <input
+                        style={{
+                          width: '100%',
+                          textOverflow: 'ellipsis',
+                          color: isSharedTable ? theme.palette.grey[500] : 'inherit',
+                        }}
+                        id={inputId}
+                        autoComplete="off"
+                        readOnly={!editActive}
+                        value={`${isPublic ? '(public)' : ''} ${text}`}
+                        className={clsx(classes.inputField, {
+                          [classes.inputFieldActive]: editActive,
+                        })}
+                        onFocus={e => {
+                          if (editActive) e.currentTarget.select()
+                        }}
+                        onInput={e => {
+                          setText(e.target.value)
+                        }}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter') {
+                            onEnter(e)
+                          } else if (['Escape', 'Tab'].includes(e.key)) {
+                            setEditActive(false)
+                            setText(tableName)
+                          }
+                        }}
+                        onBlur={() => {
                           setEditActive(false)
                           setText(tableName)
-                        }
-                      }}
-                      onBlur={() => {
-                        setEditActive(false)
-                        setText(tableName)
-                      }}
-                    />
-                  )
-                }}
-              </RenameOperator>
-            </span>
+                        }}
+                      />
+                    )
+                  }}
+                </RenameOperator>
+              </span>
+            </Tooltip>
           </span>
         </ContextMenu>
         {/* View Metadata (i) button */}
@@ -203,12 +210,13 @@ export default ({ tables }) => {
     .sort(({ table_schema }) => {
       return table_schema === 'public' ? 1 : -1
     })
-    .map(({ id: tableName, fields, table_schema, odpRecordId, description }) => {
+    .map(({ id: tableName, fields, table_schema, odpRecordId, description, isPublic }) => {
       return (
         <Table
           key={tableName}
           tableName={tableName}
           fields={fields}
+          isPublic={isPublic}
           tableSchema={table_schema}
           odpRecordId={odpRecordId}
           description={description}

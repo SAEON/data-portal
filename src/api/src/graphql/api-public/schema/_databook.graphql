@@ -57,6 +57,7 @@ type PostgisDatabookTable {
   odpRecordId: String
   updateTableName(name: String!): Boolean!
   fields(id: ID): [PostgisDatabookField]
+  isPublic: Boolean!
 }
 
 type PostgisDatabookField {
