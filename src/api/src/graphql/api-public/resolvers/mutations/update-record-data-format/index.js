@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import processApplicationZip from './_application-zip.js'
-import normalizeDataDownloadUri from '../../../../../lib/normalize-data-download-uri.js'
+import normalizeDownloadUrl from '../../../../../lib/normalize-data-download-uri.js'
 
 export default async (self, { id, immutableResource }) => {
   console.info('Updating data format for indexed record', id)
@@ -10,7 +10,7 @@ export default async (self, { id, immutableResource }) => {
     return null
   }
 
-  const blobUri = normalizeDataDownloadUri(downloadURL)
+  const blobUri = await normalizeDownloadUrl(downloadURL)
 
   if (!blobUri) {
     throw new Error(

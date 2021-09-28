@@ -54,6 +54,7 @@ const Table = ({ tableName, fields, tableSchema, odpRecordId, description }) => 
             {
               Item: MarkPublic,
               value: 'Mark public',
+              tableName,
               onClick: () => {
                 handleFocus()
               },

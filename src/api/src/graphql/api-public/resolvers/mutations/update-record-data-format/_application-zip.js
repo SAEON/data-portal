@@ -52,7 +52,7 @@ export default async (id, uri) => {
       await processShapefile(id)
     } else {
       console.error(
-        'Only shapefiles are handled at this point. These extensions were found',
+        'Cannot update record data format - only shapefiles are handled at this point. These extensions were found',
         extensions
       )
     }

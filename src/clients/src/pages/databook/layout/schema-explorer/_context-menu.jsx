@@ -12,7 +12,7 @@ export default ({ menuItems, uniqueIdentifier, children, style = undefined }) =>
         {children}
       </div>
       <Menu id={uniqueIdentifier} style={{ zIndex: 9999 }} animation={false}>
-        {menuItems?.map(({ value, onClick, disabled = false, Item: Item_ = undefined }) => {
+        {menuItems?.map(({ value, onClick, disabled = false, Item: Item_ = undefined, ...props }) => {
           if (!onClick) {
             throw new Error('Context menu requires onClick handler per menu item')
           }
@@ -22,7 +22,7 @@ export default ({ menuItems, uniqueIdentifier, children, style = undefined }) =>
           }
 
           if (Item_) {
-            return <Item_ onClick={onClick} key={value} value={value} disabled={disabled} />
+            return <Item_ onClick={onClick} key={value} value={value} disabled={disabled} {...props} />
           } else {
             return (
               <Item onClick={onClick} key={value} disabled={disabled}>
