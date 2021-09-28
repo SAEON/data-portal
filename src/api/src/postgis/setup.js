@@ -34,7 +34,8 @@ await query({
 })
 
 /**
- * Setup a public read user for public SQL endpoints
+ * Setup a public read user for
+ * public SQL endpoints
  */
 await query({
   text: `
@@ -45,10 +46,17 @@ await query({
         SELECT FROM pg_catalog.pg_roles
         WHERE rolname = '${POSTGIS_USERNAME_PUBLIC}'
      )
-     THEN CREATE ROLE ${POSTGIS_USERNAME_PUBLIC} LOGIN PASSWORD '${POSTGIS_PASSWORD_PUBLIC}';
+     THEN CREATE ROLE "${POSTGIS_USERNAME_PUBLIC}" LOGIN PASSWORD '${POSTGIS_PASSWORD_PUBLIC}';
      END IF;
   END
   $do$;`,
-})
+}).then(() => console.info('Public database server role configured'))
+
+/**
+ * Grant public user connect to the DB
+ */
+await query({
+  text: `grant connect on database "${POSTGIS_DB}" to "${POSTGIS_USERNAME_PUBLIC}"`,
+}).then(() => console.info('Public user granted connect to database'))
 
 console.info('PostGIS extensions configured')

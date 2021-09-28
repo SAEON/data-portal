@@ -1,63 +1,46 @@
-import { nanoid } from 'nanoid'
+import { POSTGIS_USERNAME_PUBLIC } from '../../../../../config.js'
 
 /**
- * Marking an object as public
- *  => Create a public username/password
- *  => Store these credentials in a Mongo DB as encrypted
- *  => Grant this user read access to the
- *     specified object
+ * Marking an object as public involves
+ *  1. Making sure that the public Postgres user can access the db
+ *  2. Adding the public relation to the authentication.public list
  */
 export default async (databook, { object }, ctx) => {
   try {
     const { query } = ctx.postgis
     const schema = databook._id.toString()
-    const username = `${schema}_public`
+    const { Databooks } = await ctx.mongo.collections
 
     /**
-     * If a public user has not already been
-     * setup for this databook, do this
+     * Mark the object as public in the Mongo doc
      */
-    if (!databook.authentication.public) {
-      const { Databooks } = await ctx.mongo.collections
-      const { encrypt } = ctx.crypto
-      const password = nanoid(36)
-      await Databooks.findOneAndUpdate(
-        {
-          _id: databook._id,
+    await Databooks.findOneAndUpdate(
+      {
+        _id: databook._id,
+      },
+      {
+        $addToSet: {
+          'authentication.public': object,
         },
-        {
-          $set: {
-            'authentication.public': {
-              username,
-              password: encrypt(password),
-            },
-          },
-        },
-        {
-          upsert: false,
-          returnDocument: 'after',
-        }
-      )
+      },
+      {
+        upsert: false,
+        returnDocument: 'after',
+      }
+    )
 
-      /**
-       * Create the postgres user
-       */
-      await query({
-        text: `
-        begin;
-          create user "${username}" with encrypted password '${password}';
-        commit;`,
-      })
-    }
+    /**
+     * Create public user usage on schema
+     */
+    await query({
+      text: `grant usage on schema "${schema}" to "${POSTGIS_USERNAME_PUBLIC}";`,
+    })
 
     /**
      * Grant public read access on the specified table to this user
      */
     await query({
-      text: `
-      begin;
-        grant SELECT on "${schema}"."${object}" to "${username}";
-      commit;`,
+      text: `grant select on "${object}" to "${POSTGIS_USERNAME_PUBLIC}";`,
     })
 
     return true

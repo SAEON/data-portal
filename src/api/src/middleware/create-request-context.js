@@ -1,5 +1,5 @@
 import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/index.js'
-import postgisQuery, { createClient } from '../postgis/query.js'
+import postgisQuery, { publicQuery, createClient } from '../postgis/query.js'
 import { query as elasticQuery } from '../elasticsearch/index.js'
 import { APP_KEY } from '../config.js'
 import { publicSchema, internalSchema } from '../graphql/index.js'
@@ -24,6 +24,7 @@ export default app => async (ctx, next) => {
 
   app.context.postgis = {
     query: postgisQuery,
+    publicQuery,
     createClient,
   }
 

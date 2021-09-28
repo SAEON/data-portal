@@ -88,7 +88,7 @@ publicApp
       .get('/', homeRoute)
       .post('/', homeRoute)
       .get('/client-info', clientInfoRoute)
-      .post('/_sql', sqlPrivate)
+      .post('/sql', sqlPrivate)
       .post('/sql/:databookId', sqlPublic)
       .get('/pg-dump/:schema', pgDumpRoute)
       .get('/download-proxy', downloadProxyRoute)
