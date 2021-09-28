@@ -95,6 +95,8 @@ export const POSTGIS_USERNAME = process.env.POSTGIS_USERNAME || 'admin'
 export const POSTGIS_PASSWORD = process.env.POSTGIS_PASSWORD || 'password'
 export const POSTGIS_IMAGE_NAME = process.env.POSTGIS_IMAGE_NAME || 'postgis'
 export const POSTGIS_CONTAINER_NAME = process.env.POSTGIS_CONTAINER_NAME || 'postgis'
+export const POSTGIS_USERNAME_PUBLIC = process.env.POSTGIS_USERNAME_PUBLIC || 'public_user'
+export const POSTGIS_PASSWORD_PUBLIC = process.env.POSTGIS_PASSWORD_PUBLIC || 'password'
 
 /**
  * Elasticsearch

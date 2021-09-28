@@ -50,6 +50,8 @@ jobs:
           ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
+          POSTGIS_USERNAME_PUBLIC="${{ secrets.POSTGIS_USERNAME_PUBLIC }}"
+          POSTGIS_PASSWORD_PUBLIC="${{ secrets.POSTGIS_PASSWORD_PUBLIC }}"          
           PROXY_ADDRESS="https://proxy.saeon.ac.za"
           SUBDOMAIN_APP_ENTRIES="curation-tools"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

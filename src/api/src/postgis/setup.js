@@ -1,4 +1,4 @@
-import { POSTGIS_DB } from '../config.js'
+import { POSTGIS_DB, POSTGIS_USERNAME_PUBLIC, POSTGIS_PASSWORD_PUBLIC } from '../config.js'
 import query from './query.js'
 
 await query({
@@ -31,6 +31,24 @@ await query({
 
 await query({
   text: `alter database ${POSTGIS_DB} set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
+})
+
+/**
+ * Setup a public read user for public SQL endpoints
+ */
+await query({
+  text: `
+  DO
+  $do$
+  BEGIN
+     IF NOT EXISTS (
+        SELECT FROM pg_catalog.pg_roles
+        WHERE rolname = '${POSTGIS_USERNAME_PUBLIC}'
+     )
+     THEN CREATE ROLE ${POSTGIS_USERNAME_PUBLIC} LOGIN PASSWORD '${POSTGIS_PASSWORD_PUBLIC}';
+     END IF;
+  END
+  $do$;`,
 })
 
 console.info('PostGIS extensions configured')

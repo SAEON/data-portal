@@ -3,7 +3,7 @@ import { context as DatabookContext } from '../../../contexts/databook-provider'
 import { Item } from 'react-contexify'
 import { gql, useMutation } from '@apollo/client'
 
-export default ({ onClick, value, disabled }) => {
+export default ({ onClick, value, disabled, tableName }) => {
   const { id: databookId } = useContext(DatabookContext)
 
   const [markSchemaObjectPublic] = useMutation(
@@ -27,7 +27,7 @@ export default ({ onClick, value, disabled }) => {
         markSchemaObjectPublic({
           variables: {
             databookId,
-            object: 'text',
+            object: tableName,
           },
         })
       }}
