@@ -106,7 +106,7 @@ const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, descript
                         id={inputId}
                         autoComplete="off"
                         readOnly={!editActive}
-                        value={`${isPublic ? '(public)' : ''} ${text}`}
+                        value={editActive ? text : `${isPublic ? '(public) ' : ''}${text}`}
                         className={clsx(classes.inputField, {
                           [classes.inputFieldActive]: editActive,
                         })}
