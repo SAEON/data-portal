@@ -6,11 +6,11 @@ import { POSTGIS_USERNAME_PUBLIC } from '../../../../../config.js'
  *  2. Adding the public relation to the authentication.public list
  */
 export default async (databook, { object }, ctx) => {
-  try {
-    const { query } = ctx.postgis
-    const schema = databook._id.toString()
-    const { Databooks } = await ctx.mongo.collections
+  const { query } = ctx.postgis
+  const schema = databook._id.toString()
+  const { Databooks } = await ctx.mongo.collections
 
+  try {
     /**
      * Mark the object as public in the Mongo doc
      */
@@ -40,12 +40,13 @@ export default async (databook, { object }, ctx) => {
      * Grant public read access on the specified table to this user
      */
     await query({
-      text: `grant select on "${object}" to "${POSTGIS_USERNAME_PUBLIC}";`,
+      text: `grant select on "${schema}"."${object}" to "${POSTGIS_USERNAME_PUBLIC}";`,
     })
 
+    console.info(`Successfully marked "${schema}"."${object}" as public`)
     return true
   } catch (error) {
-    console.error('Unable to mark schema object as public', error)
+    console.error(`Unable to mark "${schema}"."${object}" object as public`, error)
     return false
   }
 }

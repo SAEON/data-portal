@@ -28,20 +28,26 @@ let publicPool
 const createPublicPool = () =>
   createPool(PG_HOST, POSTGIS_USERNAME_PUBLIC, POSTGIS_DB, POSTGIS_PASSWORD_PUBLIC, POSTGIS_PORT)
 
-export const publicQuery = ({ text = '', values = [], onEnd, onError }) => {
+export const publicQuery = ({ text = '', values = [], onEnd, onError, search_path }) => {
   if (!publicPool) {
     publicPool = createPublicPool()
   }
 
+  if (!search_path) {
+    throw new Error('search_path must be defined')
+  }
+
   return new Promise(resolve =>
     publicPool.connect().then(client => {
-      const query = new QueryStream(text, values, {
-        batchSize: 100,
+      client.query(`set search_path="${search_path}";`).then(() => {
+        const query = new QueryStream(text, values, {
+          batchSize: 100,
+        })
+        const stream = client.query(query)
+        stream.on('end', onEnd)
+        stream.on('error', onError)
+        resolve({ stream, client })
       })
-      const stream = client.query(query)
-      stream.on('end', onEnd)
-      stream.on('error', onError)
-      resolve({ stream, client })
     })
   )
 }

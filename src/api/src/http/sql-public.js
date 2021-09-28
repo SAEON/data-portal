@@ -15,6 +15,7 @@ export default async ctx => {
      * Configure query stream
      */
     const { stream, client } = await publicQuery({
+      search_path: schema,
       text: sql,
       onEnd: error => {
         client.end(() => {
