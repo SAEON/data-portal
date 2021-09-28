@@ -1,4 +1,5 @@
 export default async (ctx, next) => {
+  console.log('hi')
   const { method, headers } = ctx.req
   const { origin } = headers
   ctx.set('Access-Control-Allow-Origin', origin)
