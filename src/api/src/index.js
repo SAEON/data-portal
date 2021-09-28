@@ -25,7 +25,7 @@ import metadataRecordsRoute from './http/metadata-records/index.js'
 import apolloServers from './graphql/index.js'
 import configureAuth from './passport/index.js'
 import './postgis/setup.js'
-import { PUBLIC_PORT, INTERNAL_PORT, APP_KEY } from './config.js'
+import { API_BIND_PORT_PUBLIC, API_BIND_PORT_INTERNAL, APP_KEY } from './config.js'
 
 const hoursToMilliseconds = hrs => hrs * 60 * 60 * 1000
 
@@ -112,13 +112,13 @@ internalGqlServer
   .then(() => internalGqlServer.applyMiddleware({ app: internalApp, cors: false }))
 
 // Start public HTTP server
-publicHttpServer.listen(PUBLIC_PORT, () => {
+publicHttpServer.listen(API_BIND_PORT_PUBLIC, () => {
   console.log(`@saeon/catalogue API server ready`)
   console.log(`@saeon/catalogue GraphQL server ready`)
 })
 
 // Start internal HTTP server
-privateHttpServer.listen(INTERNAL_PORT, () => {
+privateHttpServer.listen(API_BIND_PORT_INTERNAL, () => {
   console.log(`@saeon/catalogue API server ready (internal)`)
   console.log(`@saeon/catalogue GraphQL server ready (internal)`)
 })

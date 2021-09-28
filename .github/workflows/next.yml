@@ -25,14 +25,15 @@ jobs:
       - name: Deploy services
         run: >-
           ALLOWED_ORIGINS="https://catalogue.saeon.dvn,http://curation-tools.saeon.int"
-          API_CONTAINER_PORT_MAPPING=5000
+          API_EXPORT_PORT_PUBLIC=5000
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
+          API_INTERNAL_ADDRESS="https://api.catalogue.saeon.dvn:5002"
           APP_KEY="${{ secrets.APP_KEY }}"
           CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.dvn
           CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
-          CLIENTS_INTERNAL_CONTAINER_PORT_MAPPING=3002
+          CLIENTS_EXPORT_PORT_INTERNAL=3002
           CLIENTS_PUBLIC_ADDRESS="https://catalogue.saeon.dvn"
-          CLIENTS_PUBLIC_CONTAINER_PORT_MAPPING=5001
+          CLIENTS_EXPORT_PORT_PUBLIC=5001
           CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"
           CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.dvn
           DEPLOYMENT_ENV="development"
