@@ -19,14 +19,16 @@ const sections = [
   {
     primaryText: 'Downloads',
     secondaryText: 'Data downloads reports',
-    Icon: DownloadsIcon,
+    // eslint-disable-next-line
+    Icon: ({ active }) => <DownloadsIcon />,
     requiredPermission: 'site-analytics:view',
     Section: Downloads,
   },
   {
     primaryText: 'Users',
     secondaryText: 'User sessions',
-    Icon: UsersIcon,
+    // eslint-disable-next-line
+    Icon: ({ active }) => <UsersIcon />,
     requiredPermission: 'site-analytics:view',
     Section: Users,
   },
@@ -82,7 +84,7 @@ export default () => {
                       key={'loaded'}
                     >
                       <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                        <Section active={activeIndex === i} />
+                        <Section />
                       </span>
                     </Fade>
                   </Suspense>

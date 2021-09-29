@@ -5,7 +5,6 @@ export default ({
   data,
   categoryFieldName,
   seriesFieldName,
-  filter = () => true,
   title,
   yScale = 'value',
   tooltip = {},
@@ -21,19 +20,18 @@ export default ({
   }
 
   data.forEach(datum => {
-    const _categoryFieldName = datum[categoryFieldName]
-    const _seriesFieldName = datum[seriesFieldName]
+    const _categoryFieldName = datum[categoryFieldName] || 'UNKNOWN'
+    const _seriesFieldName = datum[seriesFieldName] || 'UNKNOWN'
     const count = datum.count
-
-    if (!filter(datum)) {
-      return null
-    }
 
     if (!xAxis.data.includes(_categoryFieldName)) {
       xAxis.data.push(_categoryFieldName)
     }
 
-    if (!series[_seriesFieldName]) {
+    if (series[_seriesFieldName]) {
+      series[_seriesFieldName].count[_categoryFieldName] =
+        count + (series[_seriesFieldName].count[_categoryFieldName] || 0)
+    } else {
       series[_seriesFieldName] = {
         name: _seriesFieldName,
         type,
@@ -42,13 +40,10 @@ export default ({
           focus: 'series',
         },
         count: {
-          [_categoryFieldName]: count,
+          [_categoryFieldName]: count || 0,
         },
       }
     }
-
-    series[_seriesFieldName].count[_categoryFieldName] =
-      (series[_seriesFieldName].count[_categoryFieldName] || 0) + count
   })
 
   const _series = Object.entries(series).map(([, series]) => series)

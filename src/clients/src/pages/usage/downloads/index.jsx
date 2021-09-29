@@ -37,12 +37,7 @@ export default () => {
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
-              <BarChart
-                yScale="log"
-                filter={datum => Boolean(datum.referrer)}
-                categoryFieldName="referrer"
-                data={referrerCount}
-              />
+              <BarChart yScale="log" categoryFieldName="referrer" data={referrerCount} />
             </Suspense>
           </CardContent>
         </Collapse>
