@@ -28,18 +28,18 @@ export default () => {
         </Card>
       </Grid>
 
-      {/* COLLECTION */}
+      {/* LISTS */}
       <Grid item xs={12}>
         <Collapse
           cardStyle={{ backgroundColor: theme.palette.common.white }}
           defaultExpanded
-          title="Downloads by referrer, stacked by date (excluding unknown referrers)"
+          title="Downloads by referrer (excluding unknown referrers)"
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart
+                yScale="log"
                 filter={datum => Boolean(datum.referrer)}
-                seriesFieldName="date"
                 categoryFieldName="referrer"
                 data={referrerCount}
               />
@@ -51,14 +51,14 @@ export default () => {
       {/* LOCATION */}
       <Grid item xs={12}>
         <Collapse
-          title="Downloads by location (total - stacked by IP)"
+          title="Downloads by location"
           cardStyle={{ backgroundColor: theme.palette.common.white }}
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart
+                yScale="log"
                 tooltip={{ show: false }}
-                seriesFieldName="clientIpAddress"
                 categoryFieldName="clientIpLocation"
                 data={ipLocationCount}
               />
@@ -70,17 +70,12 @@ export default () => {
       {/* DATE */}
       <Grid item xs={12}>
         <Collapse
-          title="Downloads by date (stacked by referrer)"
+          title="Downloads by date"
           cardStyle={{ backgroundColor: theme.palette.common.white }}
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
-              <BarChart
-                type="line"
-                seriesFieldName="referrer"
-                categoryFieldName="date"
-                data={downloadsByDate}
-              />
+              <BarChart type="bar" categoryFieldName="date" data={downloadsByDate} />
             </Suspense>
           </CardContent>
         </Collapse>
@@ -94,12 +89,7 @@ export default () => {
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
-              <BarChart
-                yScale="log"
-                seriesFieldName="referrer"
-                categoryFieldName="device"
-                data={deviceCount}
-              />
+              <BarChart yScale="log" categoryFieldName="device" data={deviceCount} />
             </Suspense>
           </CardContent>
         </Collapse>

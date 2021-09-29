@@ -15,12 +15,10 @@ export default ({ children }) => {
 
         referrerCount: downloadsReport(sort: $sortByCount) {
           referrer
-          date(bucket: $bucket)
           count
         }
 
         downloadsByDate: downloadsReport(sort: $sortByDate) {
-          referrer
           date(bucket: $bucket)
           count
         }
@@ -30,8 +28,7 @@ export default ({ children }) => {
           count
         }
 
-        ipLocationCount: downloadsReport {
-          clientIpAddress
+        ipLocationCount: downloadsReport(sort: $sortByCount) {
           clientIpLocation
           count
         }
