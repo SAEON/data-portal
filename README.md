@@ -7,7 +7,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
  
 - Docker
 - MongoDB
-- Elasticsearch & Kibana
+- Elasticsearch & Kibana (external)
 - Postgres + PostGIS
 - GDAL (Docker image)
 - GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
@@ -115,7 +115,7 @@ Mostly configuration params have sensible defaults, only the API needs to be exp
 docker network create --driver bridge catalogue
 
 # Start a MongoDB server
-docker run --net=catalogue --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:5.0.2
+docker run --net=catalogue --name mongo --memory 1.5g --cpus 2 --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:5.0.2
 
 # Start a PostGIS server (from the /src/postgis directory)
 docker build -t postgis .
@@ -126,10 +126,10 @@ docker run --name postgis -v /var/lib/catalogue-api:/var/lib/catalogue-api --net
 docker run --net=catalogue --name pgadmin -p 5001:80 -e PGADMIN_DEFAULT_EMAIL=<your email address> -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
 
 # Start an Elasticsearch server (you can connect to Elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
-docker run --net=catalogue --name elasticsearch --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+docker run --net=catalogue --name elasticsearch --memory 1.5g --cpus 1.5 --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.14.1
 
 # Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)
-docker run --net=catalogue --name kibana --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
+docker run --net=catalogue --name kibana --memory 512m --cpus 1 --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
 
 # Start the Node.js proxy server
 npm run proxy
