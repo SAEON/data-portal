@@ -9,6 +9,7 @@ export default ({
   title,
   yScale = 'value',
   tooltip = {},
+  type = 'bar',
 }) => {
   const series = {}
   const xAxis = {
@@ -35,7 +36,7 @@ export default ({
     if (!series[_seriesFieldName]) {
       series[_seriesFieldName] = {
         name: _seriesFieldName,
-        type: 'bar',
+        type,
         stack: 'total',
         emphasis: {
           focus: 'series',

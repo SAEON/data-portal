@@ -33,7 +33,7 @@ export default () => {
         <Collapse
           cardStyle={{ backgroundColor: theme.palette.common.white }}
           defaultExpanded
-          title="Downloads referred by curated lists (excluding unknown referrers)"
+          title="Downloads by referrer, stacked by date (excluding unknown referrers)"
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
@@ -70,12 +70,13 @@ export default () => {
       {/* DATE */}
       <Grid item xs={12}>
         <Collapse
-          title="Downloads by date (total)"
+          title="Downloads by date (stacked by referrer)"
           cardStyle={{ backgroundColor: theme.palette.common.white }}
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart
+                type="line"
                 seriesFieldName="referrer"
                 categoryFieldName="date"
                 data={downloadsByDate}
