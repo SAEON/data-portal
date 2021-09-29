@@ -1,6 +1,13 @@
-import convertFieldToSelector from './convert-field-to-selector.js'
+import convertFieldToSelector from './_convert-field-to-selector.js'
 
-export default selectionSet => {
+const _sortDirection = {
+  ASC: 1,
+  DESC: -1,
+}
+
+export default (selectionSet, { dimension: sortBy, direction }) => {
+  const sortDirection = _sortDirection[direction]
+
   // eslint-disable-next-line
   const { count, ...dimensions } = Object.fromEntries(
     selectionSet.map(({ name: { value: fieldName }, args }) => [
@@ -31,6 +38,6 @@ export default selectionSet => {
         newRoot: '$_id',
       },
     },
-    { $sort: { count: -1 } },
+    { $sort: { [sortBy]: sortDirection } },
   ].filter(_ => _)
 }

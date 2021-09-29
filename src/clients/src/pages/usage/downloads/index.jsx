@@ -12,7 +12,7 @@ const BarChart = lazy(() => import('./charts/bar-chart'))
 
 export default () => {
   const theme = useTheme()
-  const { downloadCount, referrerCount, deviceCount, ipLocationCount } =
+  const { downloadsCount, referrerCount, deviceCount, downloadsByDate, ipLocationCount } =
     useContext(downloadsContext)
 
   return (
@@ -22,7 +22,7 @@ export default () => {
         <Card variant="outlined">
           <CardContent style={{ padding: theme.spacing(2) }}>
             <Typography style={{ display: 'block', textAlign: 'center' }} variant="overline">
-              Downloads: {downloadCount.count}
+              Downloads: {downloadsCount.count}
             </Typography>
           </CardContent>
         </Card>
@@ -33,7 +33,7 @@ export default () => {
         <Collapse
           cardStyle={{ backgroundColor: theme.palette.common.white }}
           defaultExpanded
-          title="Downloads by collection (total)"
+          title="Downloads referred by curated lists (excluding unknown referrers)"
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
@@ -75,7 +75,11 @@ export default () => {
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
-              <BarChart seriesFieldName="referrer" categoryFieldName="date" data={referrerCount} />
+              <BarChart
+                seriesFieldName="referrer"
+                categoryFieldName="date"
+                data={downloadsByDate}
+              />
             </Suspense>
           </CardContent>
         </Collapse>

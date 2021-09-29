@@ -55,6 +55,28 @@ enum DateBucket {
   year
 }
 
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum DownloadsReportDimensions {
+  doi
+  clientSession
+  clientIpAddress
+  clientIpLocation
+  clientUserAgent
+  clientPathname
+  referrer
+  date
+  count
+}
+
+input SortConfig {
+  dimension: DownloadsReportDimensions
+  direction: SortDirection
+}
+
 type DownloadSummary {
   """
   DOI of metadata record (or SAEON id if no DOI)
@@ -131,7 +153,7 @@ type Query {
   Retrieve dashboards by id
   """
   dashboards(ids: [ID!]!): [Dashboard!]
-  downloadsReport: [DownloadSummary]!
+  downloadsReport(sort: SortConfig): [DownloadSummary]!
   roles: [Role]!
   permissions: [Permission]!
   users: [User]!

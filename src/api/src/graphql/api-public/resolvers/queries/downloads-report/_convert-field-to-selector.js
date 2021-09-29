@@ -20,9 +20,7 @@ export default {
   clientUserAgent: () => '$clientInfo.userAgent',
   clientPathname: () => '$info.pathname',
   date: args => {
-    const {
-      value: { value: bucket },
-    } = args[0]
+    const { value: { value: bucket } = {} } = args[0] || {}
     return { $dateToString: { format: DATE_FORMATS[bucket || 'month'], date: '$createdAt' } }
   },
 }

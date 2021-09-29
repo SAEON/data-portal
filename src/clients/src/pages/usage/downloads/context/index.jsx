@@ -8,18 +8,24 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query ($bucket: DateBucket) {
-        downloadCount: downloadsReport {
+      query ($bucket: DateBucket, $sortByDate: SortConfig, $sortByCount: SortConfig) {
+        downloadsCount: downloadsReport {
           count
         }
 
-        referrerCount: downloadsReport {
+        referrerCount: downloadsReport(sort: $sortByCount) {
           referrer
           date(bucket: $bucket)
           count
         }
 
-        deviceCount: downloadsReport {
+        downloadsByDate: downloadsReport(sort: $sortByDate) {
+          referrer
+          date(bucket: $bucket)
+          count
+        }
+
+        deviceCount: downloadsReport(sort: $sortByCount) {
           clientUserAgent
           count
         }
@@ -34,6 +40,14 @@ export default ({ children }) => {
     {
       variables: {
         bucket: 'day',
+        sortByCount: {
+          dimension: 'count',
+          direction: 'DESC',
+        },
+        sortByDate: {
+          dimension: 'date',
+          direction: 'DESC',
+        },
       },
       fetchPolicy: 'no-cache',
     }
@@ -48,7 +62,8 @@ export default ({ children }) => {
   }
 
   const {
-    downloadCount: [downloadCount],
+    downloadsCount: [downloadsCount],
+    downloadsByDate,
     referrerCount,
     deviceCount,
     ipLocationCount,
@@ -57,7 +72,8 @@ export default ({ children }) => {
   return (
     <context.Provider
       value={{
-        downloadCount,
+        downloadsCount,
+        downloadsByDate,
         referrerCount,
         ipLocationCount,
         deviceCount: Object.entries(
