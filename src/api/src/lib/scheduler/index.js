@@ -4,19 +4,14 @@ import { performance } from 'perf_hooks'
 function compose(cb) {
   return async function () {
     const now = performance.now()
-    console.info('Starting job', this.name)
+    console.info(this.name, 'starting')
     try {
       await cb.call(this)
     } catch (error) {
       console.error('Error running scheduled task', error, this)
     }
     const then = performance.now()
-    console.info(
-      'Job complete',
-      this.name,
-      'Run time:',
-      `${((then - now) / 1000).toFixed(2)} seconds`
-    )
+    console.info(this.name, 'completed', 'Run time:', `${((then - now) / 1000).toFixed(2)} seconds`)
   }
 }
 
