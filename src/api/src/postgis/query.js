@@ -8,7 +8,7 @@ import {
   POSTGIS_PASSWORD_PUBLIC,
   POSTGIS_PORT,
   NODE_ENV,
-} from '../config.js'
+} from '../config/index.js'
 import createPool from './pool.js'
 import _createClient from './client.js'
 import QueryStream from 'pg-query-stream'

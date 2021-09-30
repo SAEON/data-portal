@@ -1,4 +1,4 @@
-import * as config from '../config.js'
+import * as config from '../config/index.js'
 
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 

@@ -1,5 +1,5 @@
 import { stringify as createWkt_4326 } from 'wkt'
-import { GIS_MAX_RESOLUTION_DECIMALS as GIS_DECIMALS } from '../../../../../../config.js'
+import { GIS_MAX_RESOLUTION_DECIMALS as GIS_DECIMALS } from '../../../../../../config/index.js'
 
 /**
  * Polygons are counterclockwise. This is specifically

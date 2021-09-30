@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { PASSPORT_SSO_SESSION_ID } from '../config.js'
+import { PASSPORT_SSO_SESSION_ID } from '../config/index.js'
 
 export default async (ctx, next) => {
   const protocol = ctx.protocol

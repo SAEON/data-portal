@@ -1,4 +1,4 @@
-import { POSTGIS_DB, POSTGIS_USERNAME_PUBLIC, POSTGIS_PASSWORD_PUBLIC } from '../config.js'
+import { POSTGIS_DB, POSTGIS_USERNAME_PUBLIC, POSTGIS_PASSWORD_PUBLIC } from '../config/index.js'
 import query from './query.js'
 
 await query({

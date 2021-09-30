@@ -1,7 +1,7 @@
 import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/index.js'
 import postgisQuery, { publicQuery, createClient } from '../postgis/query.js'
 import { query as elasticQuery } from '../elasticsearch/index.js'
-import { APP_KEY } from '../config.js'
+import { APP_KEY } from '../config/index.js'
 import { publicSchema, internalSchema } from '../graphql/index.js'
 import userModel from '../user-model/index.js'
 import { encrypt, decrypt } from '../lib/crypto.js'

@@ -1,4 +1,4 @@
-import { HOSTNAME } from '../../../../../config.js'
+import { HOSTNAME } from '../../../../../config/index.js'
 
 export default {
   id: async ({ _id }) => _id,

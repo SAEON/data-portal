@@ -1,6 +1,6 @@
 import { execute } from 'graphql'
 import { ObjectId } from 'mongodb'
-import { ODP_ADDRESS_CATALOGUE_ENDPOINT } from '../../config.js'
+import { ODP_API_CATALOGUE_ENDPOINT } from '../../config/index.js'
 import authenticateWithOdp from '../../lib/authenticate-with-odp.js'
 import fetch from 'node-fetch'
 import { gql } from 'apollo-server-koa'
@@ -71,7 +71,7 @@ export default async ctx => {
     const { token_type, access_token } = await authenticateWithOdp()
 
     // Stream the ODP response to the client
-    ctx.body = await fetch(`${ODP_ADDRESS_CATALOGUE_ENDPOINT}/?limit=10000`, {
+    ctx.body = await fetch(`${ODP_API_CATALOGUE_ENDPOINT}/?limit=10000`, {
       method: 'POST',
       headers: {
         accept: 'application/json',

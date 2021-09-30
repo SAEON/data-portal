@@ -116,7 +116,24 @@ type List {
   type: ListType
 }
 
+type Metadata {
+  id: ID!
+  doi: ID
+  sid: ID
+  institution_key: String
+  collection_key: String
+  schema_key: String
+  metadata: JSON
+  validated: Boolean
+  errors: JSON
+  state: String
+}
+
 type Query {
+  """
+  Fetch metadata from the ODP on behalf of the current user
+  """
+  metadata(offset: Int, limit: Int): [Metadata!]!
   """
   Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
   """

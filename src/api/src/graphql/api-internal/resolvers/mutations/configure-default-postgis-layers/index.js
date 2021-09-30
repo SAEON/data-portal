@@ -1,5 +1,5 @@
 import ogr2ogr from '../../../../../lib/ogr2ogr.js'
-import { POSTGIS_PASSWORD, POSTGIS_USERNAME } from '../../../../../config.js'
+import { POSTGIS_PASSWORD, POSTGIS_USERNAME } from '../../../../../config/index.js'
 import defaultLayers from '../../../../../lib/default-postgis-layers.js'
 
 export default async () => {

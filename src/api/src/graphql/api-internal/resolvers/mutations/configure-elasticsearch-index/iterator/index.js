@@ -1,9 +1,9 @@
 import fetch from 'node-fetch'
 import {
-  ODP_ADDRESS_CATALOGUE_ENDPOINT,
+  ODP_API_CATALOGUE_ENDPOINT,
   ODP_INTEGRATION_BATCH_SIZE,
   ODP_DEBUG_IDS,
-} from '../../../../../../config.js'
+} from '../../../../../../config/index.js'
 import parseDates from './_parse-dates.js'
 import parseSpatial from './_parse-spatial.js'
 import parseImmutableResource from './_parse-immutable-resource.js'
@@ -19,7 +19,7 @@ if (DEBUG_IDS?.length) {
 
 const iterate = async ({ offset = 0, token }) => {
   const odpResponse = await fetch(
-    `${ODP_ADDRESS_CATALOGUE_ENDPOINT}?limit=${ODP_INTEGRATION_BATCH_SIZE}&offset=${offset}`,
+    `${ODP_API_CATALOGUE_ENDPOINT}?limit=${ODP_INTEGRATION_BATCH_SIZE}&offset=${offset}`,
     {
       method: 'GET',
       headers: {
@@ -107,7 +107,7 @@ const iterate = async ({ offset = 0, token }) => {
 export const testConnection = () =>
   authenticateWithOdp()
     .then(({ token_type, access_token }) =>
-      fetch(`${ODP_ADDRESS_CATALOGUE_ENDPOINT}?limit=1`, {
+      fetch(`${ODP_API_CATALOGUE_ENDPOINT}?limit=1`, {
         method: 'GET',
         headers: {
           accept: 'application/json',

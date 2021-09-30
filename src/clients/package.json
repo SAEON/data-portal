@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../packages/snap-menus/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/logger/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/ol-react/dist/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --open --config webpack/index.js",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../packages/snap-menus/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/logger/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/ol-react/dist/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "ncu": "ncu -x ol",
     "ncu -u": "ncu -u -x ol"

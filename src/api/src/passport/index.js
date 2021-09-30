@@ -3,13 +3,14 @@ import { collections } from '../mongo/index.js'
 import base64url from 'base64url'
 import {
   HOSTNAME,
+  ODP_AUTH,
   ODP_SSO_CLIENT_SECRET,
   ODP_SSO_CLIENT_ID,
   ODP_SSO_CLIENT_SCOPES,
   ODP_SSO_CLIENT_REDIRECT,
-  ODP_LOGOUT_REDIRECT_ADDRESS,
-  ODP_WELL_KNOWN_ADDRESS,
-} from '../config.js'
+  ODP_AUTH_ODP_LOGOUT_REDIRECT,
+  ODP_AUTH_WELL_KNOWN,
+} from '../config/index.js'
 import { Issuer, Strategy } from 'openid-client'
 
 export default () => {
@@ -34,12 +35,12 @@ export default () => {
    * This tutorial was helpful in getting openid-client
    * and passport to work together
    */
-  Issuer.discover(ODP_WELL_KNOWN_ADDRESS).then(hydra => {
+  Issuer.discover(ODP_AUTH_WELL_KNOWN).then(hydra => {
     const client = new hydra.Client({
       client_id: ODP_SSO_CLIENT_ID,
       client_secret: ODP_SSO_CLIENT_SECRET,
       redirect_uris: [ODP_SSO_CLIENT_REDIRECT],
-      post_logout_redirect_uris: [ODP_LOGOUT_REDIRECT_ADDRESS],
+      post_logout_redirect_uris: [ODP_AUTH_ODP_LOGOUT_REDIRECT],
       token_endpoint_auth_method: 'client_secret_post',
       response_types: ['code'],
     })
@@ -47,7 +48,6 @@ export default () => {
     passport.use(
       'oidc',
       new Strategy({ client }, async (tokenSet, userInfo, cb) => {
-        const { id_token } = tokenSet
         const { email, sub: saeonId, name, picture } = userInfo
         const { Users, Roles } = await collections
         const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
@@ -66,9 +66,10 @@ export default () => {
                 roles: [isSaeon ? saeonRoleId : userRoleId],
               },
               $set: {
+                authAddress: ODP_AUTH,
                 saeonId,
                 name,
-                id_token,
+                tokenSet,
               },
               $addToSet: {
                 links: {

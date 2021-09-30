@@ -1,5 +1,5 @@
 import fetchContent, { formatJson } from './_fetch-content.js'
-import { TEMP_DIRECTORY } from '../../../../config.js'
+import { TEMP_DIRECTORY } from '../../../../config/index.js'
 
 /**
  * NOTE

@@ -1,4 +1,4 @@
-import { POSTGIS_USERNAME_PUBLIC } from '../../../../../config.js'
+import { POSTGIS_USERNAME_PUBLIC } from '../../../../../config/index.js'
 
 /**
  * Marking an object as public involves

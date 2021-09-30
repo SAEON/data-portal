@@ -7,7 +7,7 @@ import {
   POSTGIS_IMAGE_NAME,
   DATA_DIRECTORY,
   DOCKER_DATA_VOLUME,
-} from '../config.js'
+} from '../config/index.js'
 
 export default async ({ tableName, username, password, filePath, schema }) => {
   const raster2pgsql = spawn('docker', [

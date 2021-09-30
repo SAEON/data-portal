@@ -6,7 +6,7 @@ import {
   TEMP_DIRECTORY,
   DOCKER_TMP_VOLUME,
   GDAL_DOCKER_IMAGE,
-} from '../config.js'
+} from '../config/index.js'
 
 export default ({
   tableName,

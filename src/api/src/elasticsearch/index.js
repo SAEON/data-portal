@@ -1,4 +1,4 @@
-import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_INDEX as index } from '../config.js'
+import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_INDEX as index } from '../config/index.js'
 import { Client as ElasticClient } from '@elastic/elasticsearch'
 
 export const client = new ElasticClient({ node: ELASTICSEARCH_ADDRESS })

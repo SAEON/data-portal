@@ -14,6 +14,7 @@ import users from '../queries/users.js'
 import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
 import downloadsReport from '../queries/downloads-report/index.js'
+import metadata from '../../../api-public/resolvers/queries/metadata.js'
 
 const getUserOwner = async ([, args, ctx]) => ctx.userInfo.id === args.id
 
@@ -33,4 +34,5 @@ export default {
     authorize(PERMISSIONS['users:view'], await getUserOwner(args))(user)(...args),
   users: authorize(PERMISSIONS['users:view'])(users),
   permissions: authorize(PERMISSIONS['permissions:view'])(permissions),
+  metadata: authorize(PERMISSIONS['as-odp-user:curator'])(metadata),
 }

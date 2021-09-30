@@ -1,6 +1,6 @@
 import hash from 'object-hash'
 import packageJson from '../../../../../package.json'
-import { PASSPORT_SSO_SESSION_ID } from '../../../../config.js'
+import { PASSPORT_SSO_SESSION_ID } from '../../../../config/index.js'
 
 export default async (_, args, ctx, info) => {
   const referrer = args?.referrer || undefined

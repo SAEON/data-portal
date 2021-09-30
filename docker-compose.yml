@@ -72,6 +72,7 @@ services:
       context: src/api
       dockerfile: Dockerfile
       args:
+        ODP_AUTH_SCOPE: $ODP_AUTH_SCOPE
         LOG_QUERY_DETAILS: $LOG_QUERY_DETAILS
         GDAL_DOCKER_IMAGE: $GDAL_DOCKER_IMAGE
         POSTGIS_CONTAINER_NAME: $POSTGIS_CONTAINER_NAME

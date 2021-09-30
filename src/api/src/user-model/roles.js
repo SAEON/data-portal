@@ -24,6 +24,7 @@ export const curator = {
   description: 'Data curators',
   permissions: deduplicate([
     ...saeon.permissions,
+    permissions['as-odp-user:curator'],
     permissions['es-index:update'],
     permissions['/curator-tools'],
   ]),

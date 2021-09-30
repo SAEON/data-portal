@@ -1,4 +1,4 @@
-import { LOG_QUERY_DETAILS } from '../config.js'
+import { LOG_QUERY_DETAILS } from '../config/index.js'
 
 export default (query, name = 'Mongo query') => {
   if (LOG_QUERY_DETAILS) {

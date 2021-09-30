@@ -7,7 +7,7 @@ import {
   NODE_ENV,
   DEFAULT_ADMIN_EMAIL_ADDRESSES,
   DEFAULT_SYSADMIN_EMAIL_ADDRESSES,
-} from '../config.js'
+} from '../config/index.js'
 import _collections from './collections/index.js'
 import _Logger from './_logger.js'
 import insertUsers from './_insert-users.js'

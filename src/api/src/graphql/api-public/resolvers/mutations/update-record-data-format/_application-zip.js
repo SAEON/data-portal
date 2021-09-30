@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { join, basename, sep, extname } from 'path'
 import { createWriteStream, mkdtemp, readdir } from 'fs'
-import { TEMP_DIRECTORY } from '../../../../../config.js'
+import { TEMP_DIRECTORY } from '../../../../../config/index.js'
 import unzipper from 'unzipper'
 import rimraf from 'rimraf'
 import processShapefile from './_shapefile.js'

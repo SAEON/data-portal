@@ -1,5 +1,9 @@
 import fetch from 'node-fetch'
-import { ELASTICSEARCH_INDEX, ELASTICSEARCH_ADDRESS, ODP_FILTER } from '../../../../../config.js'
+import {
+  ELASTICSEARCH_INDEX,
+  ELASTICSEARCH_ADDRESS,
+  ODP_FILTER,
+} from '../../../../../config/index.js'
 import {
   makeIterator as makeOdpIterator,
   testConnection as testOdpConnection,

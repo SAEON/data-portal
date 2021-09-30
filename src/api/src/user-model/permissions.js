@@ -59,4 +59,8 @@ export default Object.freeze({
     name: 'es-index:update',
     description: 'Update indexed metadata',
   },
+  'as-odp-user:curator': {
+    name: 'as-odp-user:curator',
+    description: 'Make requests to 3rd party API using external authorization credentials',
+  },
 })

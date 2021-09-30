@@ -1,5 +1,10 @@
 import { spawn } from 'child_process'
-import { POSTGIS_DB, POSTGIS_PORT, POSTGIS_HOST, POSTGIS_CONTAINER_NAME } from '../../config.js'
+import {
+  POSTGIS_DB,
+  POSTGIS_PORT,
+  POSTGIS_HOST,
+  POSTGIS_CONTAINER_NAME,
+} from '../../config/index.js'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import { ObjectId } from 'mongodb'
 import { createReadStream } from 'fs'

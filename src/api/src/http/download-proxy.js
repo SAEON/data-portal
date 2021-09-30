@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import { URL } from 'url'
-import { CURATOR_CONTACT } from '../config.js'
+import { CURATOR_CONTACT } from '../config/index.js'
 
 const HOSTNAME_WHITELIST = ['media.dirisa.org', 'dap.saeon.ac.za']
 

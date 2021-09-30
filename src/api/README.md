@@ -29,7 +29,7 @@ npm start
 - http://localhost:3000/proxy (Address for proxying)
 
 # Environment configuration
-Default configuration values can be found in [src/config.js](src/config.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly. At a minimum, to use the service for the first time you will need to include the following configuration
+Default configuration values can be found in [src/config/index.js](src/config/index.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly. At a minimum, to use the service for the first time you will need to include the following configuration
 
 ```sh
 # src/api/.env

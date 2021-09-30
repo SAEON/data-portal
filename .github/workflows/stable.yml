@@ -29,6 +29,8 @@ jobs:
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
           API_INTERNAL_ADDRESS="https://api.catalogue.saeon.ac.za:5002"
           APP_KEY="${{ secrets.APP_KEY }}"
+          ODP_SSO_CLIENT_SCOPES="openid SAEON.DataPortal"
+          ODP_AUTH_SCOPE=ODP.Catalogue
           CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
           CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
           CLIENTS_EXPORT_PORT_INTERNAL=3002
