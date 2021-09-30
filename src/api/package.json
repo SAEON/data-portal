@@ -8,8 +8,8 @@
     "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --trace-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,mjs,cjs}\"",
-    "ncu": "ncu -x sift",
-    "ncu -u": "ncu -u -x sift"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "keywords": [
     "@saeon/api"
@@ -69,7 +69,7 @@
     "pg-cursor": "^2.7.1",
     "pg-query-stream": "^4.2.1",
     "rimraf": "^3.0.2",
-    "sift": "^13.5.4",
+    "sift": "^15.0.0",
     "unzipper": "^0.10.11",
     "wkt": "^0.1.1"
   },
