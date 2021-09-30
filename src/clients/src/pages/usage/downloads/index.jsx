@@ -33,7 +33,7 @@ export default () => {
         <Collapse
           cardStyle={{ backgroundColor: theme.palette.common.white }}
           defaultExpanded
-          title="Downloads by referrer (excluding unknown referrers)"
+          title="Downloads by referrer"
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
