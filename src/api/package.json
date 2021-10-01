@@ -8,8 +8,8 @@
     "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --trace-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,mjs,cjs}\"",
-    "ncu": "ncu",
-    "ncu -u": "ncu -u"
+    "ncu": "ncu -x es7.14",
+    "ncu -u": "ncu -u -x es7.14"
   },
   "keywords": [
     "@saeon/api"
@@ -32,7 +32,6 @@
     "prettier": "^2.4.1"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.15.0",
     "@graphql-tools/schema": "^8.2.0",
     "@koa/router": "^10.1.1",
     "@saeon/logger": "^6.2.14",
@@ -48,6 +47,7 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.24.0",
     "dotenv": "^10.0.0",
+    "es7.14": "npm:@elastic/elasticsearch@^7.14.1",
     "form-data": "^4.0.0",
     "graphql": "^15.6.0",
     "graphql-type-json": "^0.3.2",

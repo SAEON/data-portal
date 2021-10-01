@@ -33,6 +33,8 @@ import {
   API_BIND_PORT_INTERNAL,
   APP_KEY,
   SERVER_TASKS,
+  ENABLE_METADATA,
+  METADATA_INTEGRATION_SCHEDULE,
 } from './config/index.js'
 import { Task } from './lib/task-manager/index.js'
 import loadMetadataRecords from './integrations/metadata/index.js'
@@ -42,9 +44,17 @@ import hoursToMilliseconds from './lib/hours-to-ms.js'
  * Metadata integration
  * Pull metadata into Elasticsearch
  */
-SERVER_TASKS.addTask(
-  new Task({ schedule: '*/5 * * * * *', id: 'Metadata integration' }, loadMetadataRecords)
-)
+if (ENABLE_METADATA) {
+  console.info('Metadata enabled!')
+  SERVER_TASKS.addTask(
+    new Task(
+      { schedule: METADATA_INTEGRATION_SCHEDULE, id: 'Metadata integration' },
+      loadMetadataRecords
+    )
+  )
+} else {
+  console.info('Metadata disabled')
+}
 
 // Configure passport authentication
 const { login, authenticate } = configureAuth()

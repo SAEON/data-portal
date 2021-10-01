@@ -24,6 +24,7 @@ jobs:
 
       - name: Deploy services
         run: >-
+          ENABLE_METADATA=true
           ALLOWED_ORIGINS="https://catalogue.saeon.dvn,http://curation-tools.saeon.int"
           API_EXPORT_PORT_PUBLIC=5000
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"

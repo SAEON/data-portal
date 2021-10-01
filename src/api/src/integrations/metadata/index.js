@@ -26,7 +26,12 @@ export default async function () {
       while (!odpIterator.done) {
         const { data } = odpIterator
         summary[institution] += data.length
-        await processRecords(data)
+        const res = await processRecords(data)
+        console.info(
+          `Processed ${data.length} records into metadata index (${institution}).`,
+          `Response code`,
+          res.statusCode
+        )
         odpIterator = await odpIterator.next()
       }
     }
