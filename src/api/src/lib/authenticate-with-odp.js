@@ -2,18 +2,38 @@ import fetch from 'node-fetch'
 import btoa from 'btoa'
 import FormData from 'form-data'
 import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_AUTH_SCOPE } from '../config/index.js'
+import { addSeconds, differenceInSeconds } from 'date-fns'
 
 const TOKEN = btoa(`${ODP_CLIENT_ID}:${ODP_CLIENT_SECRET}`)
+
+var access_token_
+var expires_at
+var expires_in_
+var scope_
+var token_type_
 
 /**
  * This authenticates the Node.js API with the ODP.
  * It does NOT authenticate users with the ODP
  */
-export default async () => {
+export default async ({ useCachedToken = true } = {}) => {
   try {
     const form = new FormData()
     form.append('grant_type', 'client_credentials')
     form.append('scope', ODP_AUTH_SCOPE)
+
+    /**
+     * See if a valid access token
+     * is already cached
+     */
+    if (useCachedToken && differenceInSeconds(expires_at, new Date()) > 3600) {
+      return {
+        access_token: access_token_,
+        expires_in: expires_in_,
+        scope: scope_,
+        token_type: token_type_,
+      }
+    }
 
     const { access_token, expires_in, scope, token_type } = await fetch(
       `${ODP_AUTH}/oauth2/token`,
@@ -25,6 +45,12 @@ export default async () => {
         body: form,
       }
     ).then(res => res.json())
+
+    expires_at = addSeconds(new Date(), expires_in)
+    access_token_ = access_token
+    expires_in_ = expires_in
+    scope_ = scope
+    token_type_ = token_type
 
     return {
       access_token,

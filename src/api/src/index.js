@@ -28,8 +28,13 @@ import metadataRecordsRoute from './http/metadata-records/index.js'
 import apolloServers from './graphql/index.js'
 import configureAuth from './passport/index.js'
 import './postgis/setup.js'
-import { API_BIND_PORT_PUBLIC, API_BIND_PORT_INTERNAL, APP_KEY } from './config/index.js'
-import Scheduler from './lib/scheduler/index.js'
+import {
+  API_BIND_PORT_PUBLIC,
+  API_BIND_PORT_INTERNAL,
+  APP_KEY,
+  SERVER_TASKS,
+} from './config/index.js'
+import { Task } from './lib/task-manager/index.js'
 import loadMetadataRecords from './integrations/metadata/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
 
@@ -37,7 +42,9 @@ import hoursToMilliseconds from './lib/hours-to-ms.js'
  * Metadata integration
  * Pull metadata into Elasticsearch
  */
-new Scheduler({ schedule: '*/1 * * * *', name: 'Metadata integration' }, loadMetadataRecords)
+SERVER_TASKS.addTask(
+  new Task({ schedule: '*/5 * * * * *', id: 'Metadata integration' }, loadMetadataRecords)
+)
 
 // Configure passport authentication
 const { login, authenticate } = configureAuth()

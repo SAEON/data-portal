@@ -1,5 +1,5 @@
-import placeholder from '../queries/placeholder.js'
+import serverTasks from '../queries/server-tasks.js'
 
 export default {
-  placeholder,
+  serverTasks,
 }

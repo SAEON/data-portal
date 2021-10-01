@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import {
-  ELASTICSEARCH_INDEX,
+  ELASTICSEARCH_CATALOGUE_INDEX,
   ELASTICSEARCH_ADDRESS,
   ODP_FILTER,
 } from '../../../../../config/index.js'
@@ -49,8 +49,8 @@ export default async () => {
      * For now, just delete and recreate the index on app start
      * Updating documents doesn't seem to update the mapping
      */
-    const elasticsearchTemplateResponse = await fetch(
-      `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_INDEX}`,
+    const elasticsearchDeleteIndexResponse = await fetch(
+      `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`,
       {
         method: 'DELETE',
         headers: {
@@ -58,23 +58,26 @@ export default async () => {
         },
       }
     )
-    const odpJson = await elasticsearchTemplateResponse.json()
-    console.info(`${ELASTICSEARCH_INDEX} deleted on refresh`, odpJson)
+    const odpJson = await elasticsearchDeleteIndexResponse.json()
+    console.info(`${ELASTICSEARCH_CATALOGUE_INDEX} deleted on refresh`, odpJson)
 
     /**
      * Fetch from the source, and push to the destination in batches
      */
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
-      const esResponse = await fetch(`${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_INDEX}/_bulk`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-ndjson',
-        },
-        body: (await filter(iterator.data))
-          .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
-          .join(''),
-      })
+      const esResponse = await fetch(
+        `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}/_bulk`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-ndjson',
+          },
+          body: (await filter(iterator.data))
+            .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
+            .join(''),
+        }
+      )
 
       // Process ODP response into Elasticsearch
       try {
@@ -98,7 +101,7 @@ export default async () => {
         console.info(
           `Processed ${
             esResponseJson.items?.length || 0
-          } docs into the ${ELASTICSEARCH_INDEX} index`
+          } docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
         )
 
         esResponseJson.items?.forEach(({ index }) => {

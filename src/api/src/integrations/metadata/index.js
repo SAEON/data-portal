@@ -1,23 +1,40 @@
-import fetch from 'node-fetch'
-import { ODP_API, ODP_INTEGRATION_BATCH_SIZE as limit } from '../../config/index.js'
-import authenticateWithOdp from '../../lib/authenticate-with-odp.js'
+import makeOdpIterator from './iterator/index.js'
+import processRecords from './process-records/index.js'
+import institutions from './institutions.js'
+
+let lock = false
 
 export default async function () {
-  const { token_type, access_token } = await authenticateWithOdp()
-  const Authorization = [token_type, access_token].join(' ')
+  // Only ever run one instance of this integration
+  if (lock) {
+    console.info('Metadata integration already running')
+    return
+  }
 
-  const res = await fetch(
-    `${ODP_API}/chief-directorate-oceans-and-coastal-research/metadata?offset=${0}&limit=${limit}`,
-    {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization,
-      },
+  lock = true
+  const summary = {}
+
+  try {
+    /**
+     * Loop through static list of institutions
+     * For each institution, process all metadata
+     * into Elasticsearch
+     */
+    for (const institution of institutions) {
+      summary[institution] = 0
+      let odpIterator = await makeOdpIterator({ institution })
+      while (!odpIterator.done) {
+        const { data } = odpIterator
+        summary[institution] += data.length
+        await processRecords(data)
+        odpIterator = await odpIterator.next()
+      }
     }
-  )
-
-  const json = await res.json()
-
-  console.log('hi', json)
+    console.info('Metadata integration summary', summary)
+  } catch (error) {
+    console.error('Error running Metadata integration', error)
+    throw error
+  } finally {
+    lock = false
+  }
 }

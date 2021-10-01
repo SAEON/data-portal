@@ -1,5 +1,5 @@
 import { stringify as createWkt_4326 } from 'wkt'
-import { GIS_MAX_RESOLUTION_DECIMALS as GIS_DECIMALS } from '../../../../../../config/index.js'
+import { GIS_MAX_RESOLUTION_DECIMALS as GIS_DECIMALS } from '../../config/index.js'
 
 /**
  * Polygons are counterclockwise. This is specifically
@@ -76,6 +76,12 @@ export default (id, spatial) => {
       return shp
     })
   } catch (error) {
-    throw new Error(`Unable to parse spatial information: ${error.message}`)
+    throw new Error(
+      `Unable to parse spatial information for record ${id}, spatial: ${JSON.stringify(
+        spatial,
+        null,
+        2
+      )}: ${error.message}`
+    )
   }
 }

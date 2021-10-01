@@ -4,9 +4,9 @@ import {
   ODP_INTEGRATION_BATCH_SIZE,
   ODP_DEBUG_IDS,
 } from '../../../../../../config/index.js'
-import parseDates from './_parse-dates.js'
-import parseSpatial from './_parse-spatial.js'
-import parseImmutableResource from './_parse-immutable-resource.js'
+import parseDates from '../../../../../../lib/process-metadata/parse-dates.js'
+import parseSpatial from '../../../../../../lib/process-metadata/parse-spatial.js'
+import parseImmutableResource from '../../../../../../lib/process-metadata/parse-immutable-resource.js'
 import authenticateWithOdp from '../../../../../../lib/authenticate-with-odp.js'
 
 const DEBUG_IDS = ODP_DEBUG_IDS.split(',')
@@ -105,7 +105,7 @@ const iterate = async ({ offset = 0, token }) => {
 }
 
 export const testConnection = () =>
-  authenticateWithOdp()
+  authenticateWithOdp({ useCachedToken: false })
     .then(({ token_type, access_token }) =>
       fetch(`${ODP_API_CATALOGUE_ENDPOINT}?limit=1`, {
         method: 'GET',

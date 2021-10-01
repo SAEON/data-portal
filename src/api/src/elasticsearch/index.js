@@ -1,5 +1,6 @@
-import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_INDEX as index } from '../config/index.js'
+import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_CATALOGUE_INDEX as index } from '../config/index.js'
 import { Client as ElasticClient } from '@elastic/elasticsearch'
+import setupTemplates from './setup-templates/index.js'
 
 export const client = new ElasticClient({ node: ELASTICSEARCH_ADDRESS })
 
@@ -28,3 +29,10 @@ export const query = async dsl => {
     throw new Error(`Elasticsearch query failed with DSL body ${JSON.stringify(dsl)}. ${error}`)
   }
 }
+
+setupTemplates(client)
+  .then(res => console.info('Elasticsearch templates configured', res))
+  .catch(error => {
+    console.error('Unable to setup Elasticsearch templates', error)
+    process.exit(1)
+  })

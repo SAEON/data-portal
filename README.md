@@ -129,7 +129,7 @@ docker run --net=catalogue --name pgadmin -p 5001:80 -e PGADMIN_DEFAULT_EMAIL=<y
 docker run --net=catalogue --name elasticsearch --memory 1.5g --cpus 1.5 --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.14.1
 
 # Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)
-docker run --net=catalogue --name kibana --memory 512m --cpus 1 --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
+docker run --net=catalogue --name kibana --memory 256m --cpus 1 --restart always -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
 
 # Start the Node.js proxy server
 npm run proxy
@@ -165,11 +165,6 @@ Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can inte
 # Configure default PostGIS tables
 mutation {
   configureDefaultPostGISLayers
-}
-
-# Create an appropriate Elasticsearch index template. This mutation should only be run on initial app startup
-mutation {
-  configureElasticsearchTemplate
 }
  
 # Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate

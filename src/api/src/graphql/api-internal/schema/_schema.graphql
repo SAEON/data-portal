@@ -2,11 +2,10 @@ scalar JSON
 scalar Void
 
 type Query {
-  placeholder: Void
+  serverTasks: JSON!
 }
 
 type Mutation {
-  configureElasticsearchTemplate: JSON!
   configureElasticsearchIndex: JSON!
   configureDefaultPostGISLayers: JSON!
 }

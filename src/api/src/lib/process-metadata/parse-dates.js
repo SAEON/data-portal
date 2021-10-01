@@ -26,7 +26,8 @@ const _parse = (id, dt) => {
 export default (id, dates) => {
   try {
     return dates.map(({ date, dateType }) => {
-      const dateStrings = date.split('/')
+      const delimiter = date.includes('/') ? '/' : ' '
+      const dateStrings = date.split(delimiter)
       const from = dateStrings[0]
       const to = dateStrings[1] || dateStrings[0]
 
