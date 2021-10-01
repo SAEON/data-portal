@@ -63,9 +63,9 @@ export default async (_, args, ctx) => {
     dsl.search_after = [cursor.score || 0, cursor.id]
   }
 
-  const { body: data } = await elastic.query(
-    buildDsl({ dsl, ids, dois, text, terms, extent, identifiers })
-  )
+  const { body: data } = await elastic.query({
+    body: buildDsl({ dsl, ids, dois, text, terms, extent, identifiers }),
+  })
 
   if (data.error) {
     return new GraphQLError(`${JSON.stringify(data.error, null, 2)}`)

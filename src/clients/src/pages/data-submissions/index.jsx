@@ -3,9 +3,38 @@ import Card from '@material-ui/core/Card'
 import Header from './header'
 import useTheme from '@material-ui/core/styles/useTheme'
 import DataGrid, { TextEditor } from 'react-data-grid'
+import { gql, useQuery } from '@apollo/client'
+import Loading from '../../components/loading'
 
 export default () => {
   const theme = useTheme()
+
+  const { error, loading, data } = useQuery(
+    gql`
+      query {
+        indexedMetadata {
+          id
+          doi
+          sid
+          institution
+          collection
+          schema
+          validated
+          errors
+          state
+          metadata
+        }
+      }
+    `
+  )
+
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    throw error
+  }
 
   return (
     <>
@@ -23,6 +52,9 @@ export default () => {
               { id: 1, title: 'Demo' },
             ]}
           />
+        </Card>
+        <Card>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
         </Card>
       </Container>
     </>

@@ -1,11 +1,14 @@
 import { update } from '../../../../../elasticsearch/index.js'
 
 export default async id => {
-  const result = await update(id, {
-    doc: {
-      immutableResource: {
-        _archive: true,
-        _fileFormat: 'SHAPEFILE',
+  const result = await update({
+    id,
+    body: {
+      doc: {
+        immutableResource: {
+          _archive: true,
+          _fileFormat: 'SHAPEFILE',
+        },
       },
     },
   })

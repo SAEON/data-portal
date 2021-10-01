@@ -1,6 +1,8 @@
+import { ELASTICSEARCH_METADATA_INDEX } from '../../config/index.js'
 import makeOdpIterator from './iterator/index.js'
 import processRecords from './process-records/index.js'
 import institutions from './institutions.js'
+import { client } from '../../elasticsearch/index.js'
 
 let lock = false
 
@@ -35,6 +37,14 @@ export default async function () {
         odpIterator = await odpIterator.next()
       }
     }
+
+    // Flush the index
+    await client.indices.flush({
+      index: ELASTICSEARCH_METADATA_INDEX,
+      wait_if_ongoing: false,
+    })
+
+    // Done!
     console.info('Metadata integration summary', summary)
   } catch (error) {
     console.error('Error running Metadata integration', error)

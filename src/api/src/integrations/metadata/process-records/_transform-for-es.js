@@ -9,7 +9,11 @@ export default data =>
       schema_key: schema,
       metadata,
       published,
+      ...otherFields // TODO
     }) => {
+      // eslint-disable-next-line
+      const { originalMetadata, ...otherMetadataFields } = metadata
+
       return {
         id,
         doi,
@@ -18,7 +22,8 @@ export default data =>
         schema,
         published,
         sid,
-        ...metadata,
+        ...otherMetadataFields,
+        ...otherFields,
       }
     }
   )

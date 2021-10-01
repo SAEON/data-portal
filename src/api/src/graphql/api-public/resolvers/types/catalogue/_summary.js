@@ -175,9 +175,9 @@ export default async (_, args, ctx) => {
     }
   }
 
-  const { body: result } = await elastic.query(
-    buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
-  )
+  const { body: result } = await elastic.query({
+    body: buildDsl({ dsl, ids, dois, text, terms, identifiers, extent }),
+  })
 
   return Object.entries(result.aggregations).map(([name, result]) => {
     const summaryResult = {
