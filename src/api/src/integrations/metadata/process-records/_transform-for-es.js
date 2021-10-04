@@ -9,7 +9,7 @@ export default data =>
       schema_key: schema,
       metadata,
       published,
-      ...otherFields // TODO
+      ...otherFields
     }) => {
       // eslint-disable-next-line
       const { originalMetadata, ...otherMetadataFields } = metadata
