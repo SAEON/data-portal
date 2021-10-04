@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -30,7 +30,7 @@ export default ({
   buttonProps,
 }) => {
   const [open, setOpen] = useState(false)
-
+  const form = useRef({})
   const { resourceDescription, resourceDownload } = immutableResource || {}
   const downloadURL =
     new URL(resourceDownload?.downloadURL || PLACEHOLDER_URI).protocol === 'http:'
@@ -81,13 +81,18 @@ export default ({
       </Tooltip>
 
       <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
-        <QuickForm emailAddress="" organization="" allowContact={false}>
+        <QuickForm
+          effects={[fields => (form.current = { ...fields })]}
+          emailAddress=""
+          organization=""
+          allowContact={false}
+        >
           {(update, { emailAddress, organization, allowContact }) => {
             return (
               <>
                 <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
                 <DialogContent>
-                  <Typography variant="body2">
+                  <Typography gutterBottom variant="body2">
                     These data are made available with the express understanding that any such use
                     will properly acknowledge the originator(s) and publisher and cite the
                     associated Digital Object Identifiers (DOIs). Anyone wishing to use these data
@@ -134,19 +139,20 @@ export default ({
                     </FormControl>
                   </FormGroup>
                 </DialogContent>
-                <DialogActions>
-                  <ConfirmDownload
-                    id={id}
-                    doi={doi}
-                    setOpen={setOpen}
-                    downloadURL={downloadURL}
-                    resourceDescription={resourceDescription}
-                  />
-                </DialogActions>
               </>
             )
           }}
         </QuickForm>
+        <DialogActions>
+          <ConfirmDownload
+            id={id}
+            doi={doi}
+            setOpen={setOpen}
+            downloadURL={downloadURL}
+            resourceDescription={resourceDescription}
+            form={form}
+          />
+        </DialogActions>
       </Dialog>
     </>
   )
