@@ -1,16 +1,31 @@
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
-import Transition from '../../components/page-transition'
 import HomeIcon from 'mdi-react/HomeIcon'
 import DataSubmissionsIcon from 'mdi-react/DatabaseArrowUpIcon'
 import Auth from '../../components/auth'
+import Fade from '@material-ui/core/Fade'
+import Loading from '../../components/loading'
 
 const HomePage = lazy(() => import('../../pages/home-curation-tools'))
 const UsersPage = lazy(() => import('../../pages/users'))
 const LoginPage = lazy(() => import('../../pages/login'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const DataSubmissionsPage = lazy(() => import('../../pages/data-submissions'))
+
+const Transition = ({ children, tKey }) => {
+  window.scrollTo(0, 0)
+
+  return (
+    <Fade key={tKey} in={true}>
+      <div
+        style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column' }}
+      >
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </div>
+    </Fade>
+  )
+}
 
 const getPath = (contentBase, p) => `${contentBase}${p}`
 

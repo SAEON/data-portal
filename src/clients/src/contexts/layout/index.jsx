@@ -22,7 +22,7 @@ export default ({ children }) => {
   )
 }
 
-export const SizeContent = ({ children, style = {} }) => {
+export const SizeContent = ({ children, height = undefined, style = {} }) => {
   const { headerRef, setContentRef } = useContext(context)
 
   if (!headerRef) {
@@ -31,9 +31,13 @@ export const SizeContent = ({ children, style = {} }) => {
 
   return (
     <div
+      id="size-content"
       ref={setContentRef}
       style={{
         position: 'relative',
+        ...(height
+          ? { height: `calc(100% - ${headerRef.offsetHeight || 0}px)` }
+          : { minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)` }),
         minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)`,
         ...style,
       }}

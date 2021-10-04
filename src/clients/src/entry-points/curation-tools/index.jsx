@@ -3,9 +3,8 @@ import { lazy, Suspense } from 'react'
 import { render } from 'react-dom'
 import Loading from '../../components/loading'
 import RouteSwitcher from '../../index/route-switcher'
-import { SizeContent } from '../../contexts/layout'
-import Footer from '../../components/footer'
 import Header from '../../components/header'
+import { SizeContent } from '../../contexts/layout'
 import configureRoutes from './routes'
 import { SUBDOMAIN_APP_ENTRIES } from '../../config'
 
@@ -24,10 +23,11 @@ render(
   <Suspense fallback={<Loading />}>
     <App {...config}>
       <Header {...config} title="SAEON Curation Tools" routes={routes} />
-      <SizeContent>
-        <RouteSwitcher routes={routes} />
+      <SizeContent height={true}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <RouteSwitcher routes={routes} />
+        </div>
       </SizeContent>
-      <Footer routes={routes} />
     </App>
   </Suspense>,
   document.getElementById('root')

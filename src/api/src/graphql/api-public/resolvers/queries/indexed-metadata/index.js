@@ -4,7 +4,7 @@ export default async (self, args, ctx) => {
   const { elastic } = ctx
   const res = await elastic.query({
     index: ELASTICSEARCH_METADATA_INDEX,
-    body: { query: { match_all: {} } },
+    body: { size: 100, query: { match_all: {} } },
   })
   return res.body.hits.hits.map(({ _source }) => {
     const { id, doi, sid, institution, collection, schema, validated, errors, state, ...metadata } =
