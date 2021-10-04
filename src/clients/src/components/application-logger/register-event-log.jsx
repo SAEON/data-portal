@@ -5,7 +5,6 @@ export default ({ children, event, handle, target }) => {
 
   useEffect(() => {
     el.addEventListener(event, handle)
-    console.log(el)
 
     return () => {
       el.removeEventListener(event, handle)
