@@ -1,12 +1,9 @@
-import Container from '@material-ui/core/Container'
 import Header from './header'
-import useTheme from '@material-ui/core/styles/useTheme'
 import DataGrid, { TextEditor } from 'react-data-grid'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 
 export default () => {
-  const theme = useTheme()
 
   const { error, loading, data } = useQuery(
     gql`

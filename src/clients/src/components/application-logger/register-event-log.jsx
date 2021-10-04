@@ -1,13 +1,16 @@
-import { useEffect, useRef, forwardRef } from 'react'
+import { useEffect } from 'react'
 
-export default forwardRef(({ children, event, handle }, ref) => {
-  const boundary = useRef(ref || document.getElementById('root'))
+export default ({ children, event, handle, target }) => {
+  const el = target || window
 
   useEffect(() => {
-    const current = boundary.current
-    current.addEventListener(event, handle)
-    return () => current.removeEventListener(event, handle)
-  }, [event, handle])
+    el.addEventListener(event, handle)
+    console.log(el)
+
+    return () => {
+      el.removeEventListener(event, handle)
+    }
+  }, [el, event, handle])
 
   return children
-})
+}
