@@ -115,7 +115,7 @@ Mostly configuration params have sensible defaults, only the API needs to be exp
 docker network create --driver bridge catalogue
 
 # Start a MongoDB server
-docker run --net=catalogue --name mongo --memory 1.5g --cpus 2 --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:5.0.2
+docker run --net=catalogue --name mongo --memory 1.5g --cpus 2 --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:5.0.3
 
 # Start a PostGIS server (from the /src/postgis directory)
 docker build -t postgis .
@@ -256,7 +256,7 @@ docker run \
   --net=catalogue_default \
   -v /home/$USER:/mongo-bak \
   --rm \
-  mongo:5.0.2 \
+  mongo:5.0.3 \
   sh -c \
   "mongodump \
     --uri=mongodb://mongo:27017 \
@@ -276,7 +276,7 @@ docker run \
   --net=catalogue_default \
   -v /home/$USER:/mongo-bak \
   --rm \
-  mongo:5.0.2 \
+  mongo:5.0.3 \
   sh -c \
   "mongorestore \
     --uri=mongodb://mongo:27017 \
