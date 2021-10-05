@@ -8,7 +8,6 @@ const _sortDirection = {
 export default (selectionSet, { dimension: sortBy, direction }) => {
   const sortDirection = _sortDirection[direction]
 
-  // eslint-disable-next-line
   const { count, ...dimensions } = Object.fromEntries(
     selectionSet.map(({ name: { value: fieldName }, args }) => [
       fieldName,

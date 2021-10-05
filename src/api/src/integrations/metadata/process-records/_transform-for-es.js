@@ -11,7 +11,6 @@ export default data =>
       published,
       ...otherFields
     }) => {
-      // eslint-disable-next-line
       const { originalMetadata, ...otherMetadataFields } = metadata
 
       return {

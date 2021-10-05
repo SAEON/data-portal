@@ -4,7 +4,6 @@ import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 
 export default () => {
-
   const { error, loading, data } = useQuery(
     gql`
       query {
