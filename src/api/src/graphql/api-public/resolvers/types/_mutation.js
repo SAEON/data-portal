@@ -18,6 +18,7 @@ import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
 import updateRecordDataFormat from '../mutations/update-record-data-format/index.js'
 import databook from '../queries/databook.js'
+import submitDataDownloadForm from '../mutations/submit-data-download-form/index.js'
 
 export default {
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
@@ -38,4 +39,5 @@ export default {
   deleteChart,
   createFilter,
   deleteFilter,
+  submitDataDownloadForm,
 }

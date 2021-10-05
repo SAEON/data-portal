@@ -5,12 +5,21 @@ import { LATEST_COMMIT } from '../../config'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { context as globalContext } from '../../contexts/global'
 import Link from '@material-ui/core/Link'
+import { gql, useMutation } from '@apollo/client'
 
 export default ({ id, doi, setOpen, downloadURL, resourceDescription, form }) => {
   const [ref, setRef] = useState(null)
   const { global } = useContext(globalContext)
   const { referrer } = global
   const theme = useTheme()
+
+  const [submitDataDownloadForm] = useMutation(
+    gql`
+      mutation ($input: DataDownloadFormSubmission!) {
+        submitDataDownloadForm(input: $input)
+      }
+    `
+  )
 
   return (
     <RegisterEventLog
@@ -26,18 +35,38 @@ export default ({ id, doi, setOpen, downloadURL, resourceDescription, form }) =>
           commitHash: LATEST_COMMIT,
           createdAt: new Date(),
           info: {
-            form: Object.fromEntries(
-              Object.entries(form.current).map(([field, value]) => [
-                field,
-                value === '' ? null : value,
-              ])
-            ),
             pathname: window.location.pathname,
             uri: downloadURL,
             odpId: id,
             doi,
           },
         })
+
+        const form = {
+          recordId: doi || id,
+          ...Object.fromEntries(
+            Object.entries(form.current).map(([field, value]) => [
+              field,
+              value === '' ? null : value,
+            ])
+          ),
+        }
+        if (form.emailAddress || form.organization) {
+          submitDataDownloadForm({
+            variables: {
+              input: {
+                recordId: doi || id,
+                ...Object.fromEntries(
+                  Object.entries(form.current).map(([field, value]) => [
+                    field,
+                    value === '' ? null : value,
+                  ])
+                ),
+              },
+            },
+          })
+        }
+
         setOpen(false)
       }}
     >

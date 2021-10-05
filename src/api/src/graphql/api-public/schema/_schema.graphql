@@ -181,8 +181,19 @@ type Query {
   user(id: ID!): User
 }
 
+input DataDownloadFormSubmission {
+  """
+  DOI (or ID if no DOI) of the metadataRecord related to the downloaded dataset
+  """
+  recordId: ID!
+  emailAddress: String
+  organization: String
+  allowContact: Boolean
+}
+
 type Mutation {
   updateRecordDataFormat(id: ID!, immutableResource: JSON!): Void
+  submitDataDownloadForm(input: DataDownloadFormSubmission!): Void
   logBrowserEvents(input: [BrowserEventInput]!): Void
   """
   Save a web-browser's search context for retrieving as a databook
