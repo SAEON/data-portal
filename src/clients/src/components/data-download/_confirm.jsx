@@ -42,7 +42,7 @@ export default ({ id, doi, setOpen, downloadURL, resourceDescription, form }) =>
           },
         })
 
-        const form = {
+        const _form = {
           recordId: doi || id,
           ...Object.fromEntries(
             Object.entries(form.current).map(([field, value]) => [
@@ -51,18 +51,10 @@ export default ({ id, doi, setOpen, downloadURL, resourceDescription, form }) =>
             ])
           ),
         }
-        if (form.emailAddress || form.organization) {
+        if (_form.emailAddress || _form.organization) {
           submitDataDownloadForm({
             variables: {
-              input: {
-                recordId: doi || id,
-                ...Object.fromEntries(
-                  Object.entries(form.current).map(([field, value]) => [
-                    field,
-                    value === '' ? null : value,
-                  ])
-                ),
-              },
+              input: {..._form}
             },
           })
         }
