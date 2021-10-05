@@ -26,7 +26,7 @@ export default ({ children }) => {
         y,
       },
     }),
-    []
+    [innerHeight, innerWidth, referrer]
   )
 
   return (
