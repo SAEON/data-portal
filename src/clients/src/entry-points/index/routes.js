@@ -11,7 +11,6 @@ import getUriState from '../../lib/fns/get-uri-state'
 import HomeIcon from 'mdi-react/HomeIcon'
 import UsageIcon from 'mdi-react/ChartBoxIcon'
 import CollectionsIcon from 'mdi-react/PackageVariantIcon'
-import { Redirect } from 'react-router-dom'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))

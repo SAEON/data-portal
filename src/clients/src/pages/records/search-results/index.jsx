@@ -126,7 +126,7 @@ export default ({ disableSidebar }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return <Loading withHeight />
   }
 
   if (error) {

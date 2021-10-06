@@ -35,7 +35,7 @@ export default ({ id }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return <Loading withHeight />
   }
 
   if (error) {

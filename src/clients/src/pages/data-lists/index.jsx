@@ -15,12 +15,12 @@ export default () => {
   const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
-    return <Loading />
+    return <Loading withHeight />
   }
 
   if (!hasPermission('/data-lists')) {
     return (
-      <div style={{ marginTop: theme.spacing(2) }}>
+      <div style={{ marginTop: theme.spacing(2), height: 1000 }}>
         <AccessDenied requiredPermission="/data-lists" />
       </div>
     )

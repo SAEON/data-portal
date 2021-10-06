@@ -110,9 +110,8 @@ export default ({
                     care in referencing these datasets, the content of both metadata and data is
                     under control of the third-party provider.
                   </Typography>
-                  <Typography style={{ marginTop: theme.spacing(1) }} gutterBottom variant="body2">
-                    Please (optionally) fill in the form below to help us to provide feedback and/or
-                    help us improve our data offerings service
+                  <Typography style={{ marginTop: theme.spacing(2) }} gutterBottom variant="body2">
+                    Please (optionally) fill in the form below to help us improve our service.
                   </Typography>
                   <FormGroup>
                     <TextField
@@ -135,8 +134,8 @@ export default ({
                       value={organization}
                       onChange={({ target: { value: organization } }) => update({ organization })}
                       margin="normal"
-                      helperText={organization === '' ? '(Optional)' : 'Organization'}
-                      placeholder="Organization"
+                      helperText={organization === '' ? '(Optional)' : 'Organisation'}
+                      placeholder="Organisation"
                       fullWidth
                       variant="standard"
                     />

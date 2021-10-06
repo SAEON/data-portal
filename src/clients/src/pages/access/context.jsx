@@ -41,7 +41,7 @@ export default ({ children }) => {
   if (loading) {
     return (
       <Fade in={Boolean(loading)} key="loading-in">
-        <Loading />
+        <Loading withHeight />
       </Fade>
     )
   }

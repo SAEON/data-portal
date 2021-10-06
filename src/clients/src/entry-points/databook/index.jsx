@@ -17,7 +17,7 @@ render(
   <Suspense fallback={<Loading />}>
     <App {...config}>
       <Banner title="SAEON Databook" />
-      <SizeContent style={{ height: 0 }}>
+      <SizeContent height>
         <RouteSwitcher routes={routes} />
       </SizeContent>
     </App>

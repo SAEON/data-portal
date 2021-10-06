@@ -12,7 +12,7 @@ export default ({ title }) => {
       {/* SAEON LOGO */}
       <Hidden mdDown>
         <a
-          style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
+          style={{ flexBasis: 0, flexGrow: 1 }}
           target="_blank"
           rel="noreferrer"
           href="http://www.saeon.ac.za/"
@@ -45,7 +45,7 @@ export default ({ title }) => {
       {/* SARVA LOGO */}
       <Hidden mdDown>
         <a
-          style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
+          style={{ flexBasis: 0, flexGrow: 1 }}
           target="_blank"
           rel="noreferrer"
           href="http://sarva.saeon.ac.za/"

@@ -29,16 +29,17 @@ export const SizeContent = ({ children, height = undefined, style = {} }) => {
     return null
   }
 
+  const css = height
+    ? { height: `calc(100% - ${headerRef.offsetHeight || 0}px)` }
+    : { minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)` }
+
   return (
     <div
       id="size-content"
       ref={setContentRef}
       style={{
         position: 'relative',
-        ...(height
-          ? { height: `calc(100% - ${headerRef.offsetHeight || 0}px)` }
-          : { minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)` }),
-        minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)`,
+        ...css,
         ...style,
       }}
     >

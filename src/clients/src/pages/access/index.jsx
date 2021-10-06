@@ -47,7 +47,7 @@ export default () => {
   const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
-    return <Loading />
+    return <Loading withHeight />
   }
 
   if (!hasPermission('/access')) {
@@ -62,7 +62,7 @@ export default () => {
     <UserRolesProvider>
       <Header />
       <div style={{ marginTop: theme.spacing(2) }} />
-      <Container style={{ minHeight: 1000 }}>
+      <Container className="debug" style={{ minHeight: 1000 }}>
         <ContentNav
           navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
         >

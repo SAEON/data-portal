@@ -1,9 +1,11 @@
+import { useRef } from 'react'
 import Header from './header'
 import DataGrid, { TextEditor } from 'react-data-grid'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 
 export default () => {
+  const ref = useRef(document.getElementById('size-content'))
   const { error, loading, data } = useQuery(
     gql`
       query {
@@ -32,11 +34,12 @@ export default () => {
   }
 
   return (
-    <>
-      <Header />
-      <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+    <div style={{ position: 'relative', height: ref.current.offsetHeight }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Header />
+
         <DataGrid
-          style={{ height: '100%' }}
+          style={{ flexGrow: 1 }}
           columns={[
             { key: 'id', name: 'ID' },
             { key: 'doi', name: 'DOI' },
@@ -76,6 +79,6 @@ export default () => {
           )}
         />
       </div>
-    </>
+    </div>
   )
 }

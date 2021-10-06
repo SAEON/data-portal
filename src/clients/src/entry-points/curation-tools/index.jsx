@@ -23,10 +23,8 @@ render(
   <Suspense fallback={<Loading />}>
     <App {...config}>
       <Header {...config} title="SAEON Curation Tools" routes={routes} />
-      <SizeContent height={true}>
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <RouteSwitcher routes={routes} />
-        </div>
+      <SizeContent>
+        <RouteSwitcher routes={routes} />
       </SizeContent>
     </App>
   </Suspense>,

@@ -51,7 +51,7 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return <Loading withHeight />
   }
 
   if (error) {

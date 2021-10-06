@@ -40,12 +40,12 @@ export default () => {
   const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
-    return <Loading />
+    return <Loading withHeight />
   }
 
   if (!hasPermission('/usage')) {
     return (
-      <div style={{ marginTop: theme.spacing(2) }}>
+      <div style={{ minHeight: 1000, marginTop: theme.spacing(2) }}>
         <AccessDenied requiredPermission="/usage" />
       </div>
     )
