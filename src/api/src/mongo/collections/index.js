@@ -9,7 +9,7 @@ import Permissions from './_permissions.js'
 import Users from './_users.js'
 import Logs from './_logs.js'
 import Lists from './_lists.js'
-import dataDownloadFormSubmissions from './_data-download-form-submissions.js'
+import DataDownloadFormSubmissions from './_data-download-form-submissions.js'
 
 export default {
   Roles,
@@ -17,7 +17,7 @@ export default {
   Users,
   Logs,
   Lists,
-  dataDownloadFormSubmissions,
+  DataDownloadFormSubmissions,
   Atlases: { name: 'atlases' },
   Databooks: { name: 'databooks' },
   Dashboards: { name: 'dashboards' },

@@ -119,9 +119,9 @@ docker run --net=catalogue --name mongo --memory 1.5g --cpus 2 --restart always 
 
 # Start a PostGIS server (from the /src/postgis directory)
 docker build -t postgis .
-docker run --name postgis -v /var/lib/catalogue-api:/var/lib/catalogue-api --net=catalogue -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d postgis
+docker run --name postgis --memory 1g --cpus 4  -v /var/lib/catalogue-api:/var/lib/catalogue-api --net=catalogue -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d postgis
 
-# Optionally start the pgAdmin IDE (on localhost:5001)
+# Optionally start the pgAdmin IDE (on localhost:5001). I prefer DBeaver
 # NOTE the postgis container host that you want to connect to is just "postgis", since you are using the Docker network
 docker run --net=catalogue --name pgadmin -p 5001:80 -e PGADMIN_DEFAULT_EMAIL=<your email address> -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
 

@@ -4,7 +4,7 @@ export default {
     $jsonSchema: {
       bsonType: 'object',
       description: 'Form submission document',
-      required: ['type', 'logId'],
+      required: ['recordId'],
       properties: {
         recordId: {
           bsonType: 'string',

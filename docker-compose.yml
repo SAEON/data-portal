@@ -72,6 +72,7 @@ services:
       context: src/api
       dockerfile: Dockerfile
       args:
+        EMAIL_REGEX: $EMAIL_REGEX
         ALLOWED_ORIGINS: $ALLOWED_ORIGINS
         API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
         APP_KEY: $APP_KEY
@@ -131,6 +132,7 @@ services:
       context: src/clients
       dockerfile: Dockerfile
       args:
+        EMAIL_REGEX: $EMAIL_REGEX
         CURATION_TOOLS_NGINX_SERVER_NAME: $CURATION_TOOLS_NGINX_SERVER_NAME
         CATALOGUE_NGINX_SERVER_NAME: $CATALOGUE_NGINX_SERVER_NAME
         SUBDOMAIN_APP_ENTRIES: $SUBDOMAIN_APP_ENTRIES

@@ -31,6 +31,7 @@ module.exports = {
     'react/prop-types': 0,
     'no-prototype-builtins': 0,
     'react/jsx-uses-react': 'off',
+    "no-control-regex": 0,
     'react/react-in-jsx-scope': 'off',
     'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
   },

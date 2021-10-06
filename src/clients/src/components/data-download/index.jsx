@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import Typography from '@material-ui/core/Typography'
 import DownloadIcon from 'mdi-react/DownloadIcon'
-import { API_PUBLIC_ADDRESS } from '../../config'
+import { API_PUBLIC_ADDRESS, EMAIL_REGEX } from '../../config'
 import ConfirmDownload from './_confirm'
 import QuickForm from '@saeon/quick-form'
 import TextField from '@material-ui/core/TextField'
@@ -16,6 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const PLACEHOLDER_URI = 'http://nothing.com'
 
@@ -29,6 +30,7 @@ export default ({
   tooltipPlacement,
   buttonProps,
 }) => {
+  const theme = useTheme()
   const [open, setOpen] = useState(false)
   const form = useRef({})
   const { resourceDescription, resourceDownload } = immutableResource || {}
@@ -85,9 +87,13 @@ export default ({
           effects={[fields => (form.current = { ...fields })]}
           emailAddress=""
           organization=""
+          comments=""
           allowContact={false}
         >
-          {(update, { emailAddress, organization, allowContact }) => {
+          {(update, { emailAddress, organization, allowContact, comments }) => {
+            const isValidEmailAddress = EMAIL_REGEX.test(emailAddress)
+            const formIsValid = emailAddress === '' ? true : isValidEmailAddress
+
             return (
               <>
                 <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
@@ -104,55 +110,81 @@ export default ({
                     care in referencing these datasets, the content of both metadata and data is
                     under control of the third-party provider.
                   </Typography>
+                  <Typography style={{ marginTop: theme.spacing(1) }} gutterBottom variant="body2">
+                    Please (optionally) fill in the form below to help us to provide feedback and/or
+                    help us improve our data offerings service
+                  </Typography>
                   <FormGroup>
                     <TextField
                       value={emailAddress}
                       onChange={({ target: { value: emailAddress } }) => update({ emailAddress })}
                       margin="normal"
-                      helperText="What is your email address?"
-                      placeholder="Email Address (optional)"
+                      helperText={
+                        emailAddress === ''
+                          ? '(Optional)'
+                          : isValidEmailAddress
+                          ? 'Thank you!'
+                          : 'Email address must be valid'
+                      }
+                      placeholder="Email Address"
                       fullWidth
+                      error={emailAddress !== '' && !isValidEmailAddress}
                       variant="standard"
                     />
                     <TextField
                       value={organization}
                       onChange={({ target: { value: organization } }) => update({ organization })}
                       margin="normal"
-                      helperText="What organization do you work for?"
-                      placeholder="Organization (optional)"
+                      helperText={organization === '' ? '(Optional)' : 'Organization'}
+                      placeholder="Organization"
                       fullWidth
                       variant="standard"
+                    />
+                    <TextField
+                      value={comments}
+                      onChange={({ target: { value: comments } }) => update({ comments })}
+                      margin="normal"
+                      placeholder="General comments"
+                      multiline
+                      minRows={4}
+                      fullWidth
+                      variant="outlined"
                     />
                     <FormControl fullWidth margin="dense">
                       <FormControlLabel
                         control={
                           <Checkbox
-                            disabled={!emailAddress}
+                            disabled={!emailAddress || !isValidEmailAddress}
                             checked={allowContact}
                             onChange={({ target: { checked: allowContact } }) =>
                               update({ allowContact })
                             }
                           />
                         }
-                        label="May we follow up with you to assess the quality of our service?"
+                        label={
+                          allowContact
+                            ? `Wonderful! We'll be in touch`
+                            : 'May we follow up with you?'
+                        }
                       />
                     </FormControl>
                   </FormGroup>
                 </DialogContent>
+                <DialogActions>
+                  <ConfirmDownload
+                    id={id}
+                    doi={doi}
+                    disabled={!formIsValid}
+                    setOpen={setOpen}
+                    downloadURL={downloadURL}
+                    resourceDescription={resourceDescription}
+                    form={form}
+                  />
+                </DialogActions>
               </>
             )
           }}
         </QuickForm>
-        <DialogActions>
-          <ConfirmDownload
-            id={id}
-            doi={doi}
-            setOpen={setOpen}
-            downloadURL={downloadURL}
-            resourceDescription={resourceDescription}
-            form={form}
-          />
-        </DialogActions>
       </Dialog>
     </>
   )

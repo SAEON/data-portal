@@ -1,5 +1,6 @@
 scalar DateTime
 scalar JSON
+scalar Email
 scalar Void
 scalar WKT_4326
 scalar FunctionString
@@ -186,8 +187,9 @@ input DataDownloadFormSubmission {
   DOI (or ID if no DOI) of the metadataRecord related to the downloaded dataset
   """
   recordId: ID!
-  emailAddress: String
+  emailAddress: Email
   organization: String
+  comments: String
   allowContact: Boolean
 }
 

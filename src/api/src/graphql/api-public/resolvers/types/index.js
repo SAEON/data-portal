@@ -1,4 +1,5 @@
 export { default as JSON } from '../../../common-types/json.js'
+export { default as Email } from '../../../common-types/email.js'
 export { default as DateTime } from '../../../common-types/datetime.js'
 export { default as Void } from '../../../common-types/void.js'
 export { default as WKT_4326 } from '../../../common-types/wkt-4326.js'
