@@ -130,15 +130,30 @@ type Metadata {
   state: String
 }
 
+input MetadataInput {
+  sid: ID!
+  collection_key: String!
+  schema_key: String!
+  metadata: JSON
+}
+
 type Query {
   """
   Fetch metadata from the ODP on behalf of user
   """
   metadata(offset: Int, limit: Int): [Metadata!]!
   """
-
+  Search metadata from the ODP (indexed via Elasticsearch)
   """
   indexedMetadata: [Metadata!]!
+  """
+  Fetch a list of Institusions as defined in the ODP
+  """
+  institutions: [String!]!
+  """
+  Fetch a list of collections for a particular institution ad defined in the ODP
+  """
+  collections(institution: String!): JSON!
   """
   Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
   """
@@ -194,6 +209,7 @@ input DataDownloadFormSubmission {
 }
 
 type Mutation {
+  createMetadata(input: [MetadataInput!]!): [Metadata!]!
   updateRecordDataFormat(id: ID!, immutableResource: JSON!): Void
   submitDataDownloadForm(input: DataDownloadFormSubmission!): Void
   logBrowserEvents(input: [BrowserEventInput]!): Void

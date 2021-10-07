@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { context as submissionsContext } from '../context'
+import { context as metadataContext } from '../context'
 import DataGrid, { TextEditor, SelectColumn } from 'react-data-grid'
 import JsonIcon from 'mdi-react/CodeJsonIcon'
 import MetadataEditor from '../components/metadata-editor'
@@ -9,10 +9,14 @@ const HeaderRenderer = ({ column }) => {
 }
 
 export default () => {
-  const { data, selectedRows, setSelectedRows } = useContext(submissionsContext)
+  const { indexedMetadata, selectedRows, setSelectedRows } = useContext(metadataContext)
   const [rows, setRows] = useState(
-    data.map(
-      ({ id, doi, sid, institution, collection, schema, validated, errors, state, metadata }) => ({
+    indexedMetadata.map(
+      (
+        { id, doi, sid, institution, collection, schema, validated, errors, state, metadata },
+        i
+      ) => ({
+        i,
         id,
         doi,
         sid,
@@ -59,6 +63,17 @@ export default () => {
       onPaste={handlePaste}
       columns={[
         SelectColumn,
+        {
+          key: 'i',
+          name: 'i',
+          width: 10,
+          headerRenderer: HeaderRenderer,
+          frozen: true,
+          formatter: ({ row: { i } }) => (
+            <div style={{ width: '100%', textAlign: 'center' }}>{i}</div>
+          ),
+          cellClass: 'read-only-data-cell',
+        },
         {
           key: 'doi',
           resizable: true,

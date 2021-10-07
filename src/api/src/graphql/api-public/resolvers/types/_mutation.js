@@ -19,6 +19,7 @@ import authorize from '../../../../user-model/authorize.js'
 import updateRecordDataFormat from '../mutations/update-record-data-format/index.js'
 import databook from '../queries/databook.js'
 import submitDataDownloadForm from '../mutations/submit-data-download-form/index.js'
+import createMetadata from '../mutations/create-metadata/index.js'
 
 export default {
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
@@ -26,6 +27,7 @@ export default {
   deleteList: authorize(PERMISSIONS['list:delete'])(deleteList),
   assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
   updateRecordDataFormat: authorize(PERMISSIONS['es-index:update'])(updateRecordDataFormat),
+  createMetadata: authorize(PERMISSIONS['as-odp-user:curator'])(createMetadata),
   databook, // TODO - should be per resource owner, but that breaks sharing
   logBrowserEvents,
   saveList,

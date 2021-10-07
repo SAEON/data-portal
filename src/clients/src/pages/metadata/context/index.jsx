@@ -21,6 +21,8 @@ export default ({ children }) => {
           state
           metadata
         }
+
+        institutions
       }
     `
   )
@@ -34,7 +36,14 @@ export default ({ children }) => {
   }
 
   return (
-    <context.Provider value={{ data: data.indexedMetadata, selectedRows, setSelectedRows }}>
+    <context.Provider
+      value={{
+        indexedMetadata: data.indexedMetadata,
+        institutions: data.institutions,
+        selectedRows,
+        setSelectedRows,
+      }}
+    >
       {children}
     </context.Provider>
   )
