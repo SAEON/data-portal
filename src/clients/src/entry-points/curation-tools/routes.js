@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
-import DataSubmissionsIcon from 'mdi-react/DatabaseArrowUpIcon'
+import DataSubmissionsIcon from 'mdi-react/DatabaseIcon'
 import Auth from '../../components/auth'
 import Fade from '@material-ui/core/Fade'
 import Loading from '../../components/loading'
@@ -11,7 +11,7 @@ const HomePage = lazy(() => import('../../pages/home-curation-tools'))
 const UsersPage = lazy(() => import('../../pages/users'))
 const LoginPage = lazy(() => import('../../pages/login'))
 const AccessPage = lazy(() => import('../../pages/access'))
-const DataSubmissionsPage = lazy(() => import('../../pages/data-submissions'))
+const MetadataPage = lazy(() => import('../../pages/metadata'))
 
 const Transition = ({ children, tKey }) => {
   window.scrollTo(0, 0)
@@ -32,19 +32,6 @@ const getPath = (contentBase, p) => `${contentBase}${p}`
 export default ({ contentBase = '' }) => {
   return [
     {
-      label: 'Data submissions',
-      to: getPath(contentBase, '/data-submissions'),
-      exact: true,
-      Icon: DataSubmissionsIcon,
-      render: () => (
-        <Auth requiredPermission="/curator-tools">
-          <Transition>
-            <DataSubmissionsPage />
-          </Transition>
-        </Auth>
-      ),
-    },
-    {
       label: 'Home',
       to: getPath(contentBase, '/'),
       exact: true,
@@ -53,6 +40,19 @@ export default ({ contentBase = '' }) => {
         <Auth requiredPermission="/curator-tools">
           <Transition>
             <HomePage />
+          </Transition>
+        </Auth>
+      ),
+    },
+    {
+      label: 'Metadata',
+      to: getPath(contentBase, '/metadata'),
+      exact: true,
+      Icon: DataSubmissionsIcon,
+      render: () => (
+        <Auth requiredPermission="/curator-tools">
+          <Transition>
+            <MetadataPage />
           </Transition>
         </Auth>
       ),

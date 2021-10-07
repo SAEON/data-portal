@@ -23,6 +23,7 @@ export default () => {
         errors: JSON.stringify(errors),
         state,
         metadata,
+        title: metadata.titles?.[0].title || '',
         edit: '',
       })
     )
@@ -91,7 +92,14 @@ export default () => {
           ),
           headerRenderer: HeaderRenderer,
         },
-
+        {
+          key: 'title',
+          resizable: true,
+          name: 'Title',
+          width: 350,
+          editor: TextEditor,
+          headerRenderer: HeaderRenderer,
+        },
         {
           key: 'institution',
           resizable: true,
