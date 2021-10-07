@@ -35,62 +35,67 @@ export default () => {
    * This tutorial was helpful in getting openid-client
    * and passport to work together
    */
-  Issuer.discover(ODP_AUTH_WELL_KNOWN).then(hydra => {
-    const client = new hydra.Client({
-      client_id: ODP_SSO_CLIENT_ID,
-      client_secret: ODP_SSO_CLIENT_SECRET,
-      redirect_uris: [ODP_SSO_CLIENT_REDIRECT],
-      post_logout_redirect_uris: [ODP_AUTH_ODP_LOGOUT_REDIRECT],
-      token_endpoint_auth_method: 'client_secret_post',
-      response_types: ['code'],
-    })
+  Issuer.discover(ODP_AUTH_WELL_KNOWN)
+    .then(hydra => {
+      const client = new hydra.Client({
+        client_id: ODP_SSO_CLIENT_ID,
+        client_secret: ODP_SSO_CLIENT_SECRET,
+        redirect_uris: [ODP_SSO_CLIENT_REDIRECT],
+        post_logout_redirect_uris: [ODP_AUTH_ODP_LOGOUT_REDIRECT],
+        token_endpoint_auth_method: 'client_secret_post',
+        response_types: ['code'],
+      })
 
-    passport.use(
-      'oidc',
-      new Strategy({ client }, async (tokenSet, userInfo, cb) => {
-        const { email, sub: saeonId, name, picture } = userInfo
-        const { Users, Roles } = await collections
-        const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
-        const userRoleId = (await Roles.find({ name: 'user' }).toArray())[0]._id
-        const emailAddress = email.toLowerCase()
-        const isSaeon = emailAddress.match(/@saeon\.nrf\.ac\.za$/)
+      passport.use(
+        'oidc',
+        new Strategy({ client }, async (tokenSet, userInfo, cb) => {
+          const { email, sub: saeonId, name, picture } = userInfo
+          const { Users, Roles } = await collections
+          const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
+          const userRoleId = (await Roles.find({ name: 'user' }).toArray())[0]._id
+          const emailAddress = email.toLowerCase()
+          const isSaeon = emailAddress.match(/@saeon\.nrf\.ac\.za$/)
 
-        try {
-          const userQuery = await Users.findOneAndUpdate(
-            {
-              emailAddress,
-            },
-            {
-              $setOnInsert: {
+          try {
+            const userQuery = await Users.findOneAndUpdate(
+              {
                 emailAddress,
-                roles: [isSaeon ? saeonRoleId : userRoleId],
               },
-              $set: {
-                authAddress: ODP_AUTH,
-                saeonId,
-                name,
-                tokenSet,
-              },
-              $addToSet: {
-                links: {
-                  picture,
+              {
+                $setOnInsert: {
+                  emailAddress,
+                  roles: [isSaeon ? saeonRoleId : userRoleId],
+                },
+                $set: {
+                  authAddress: ODP_AUTH,
+                  saeonId,
+                  name,
+                  tokenSet,
+                },
+                $addToSet: {
+                  links: {
+                    picture,
+                  },
                 },
               },
-            },
-            {
-              upsert: true,
-              returnDocument: 'after',
-            }
-          )
-          const user = userQuery.value
-          cb(null, { id: user._id, emailAddress: user.emailAddress, name: user.name })
-        } catch (error) {
-          console.error('Error authenticating', error.message)
-          cb(error, null)
-        }
-      })
-    )
-  })
+              {
+                upsert: true,
+                returnDocument: 'after',
+              }
+            )
+            const user = userQuery.value
+            cb(null, { id: user._id, emailAddress: user.emailAddress, name: user.name })
+          } catch (error) {
+            console.error('Error authenticating', error.message)
+            cb(error, null)
+          }
+        })
+      )
+    })
+    .catch(error => {
+      console.error('ERROR', 'Unable to setup authentication. Is the ODP accessible?', error)
+      throw new Error(error.message)
+    })
 
   passport.serializeUser((user, cb) => cb(null, user))
   passport.deserializeUser((user, cb) => cb(null, user))
