@@ -18,7 +18,7 @@ export default ({ titles, id }) => {
         <Typography
           tabIndex="0"
           component={Link}
-          onClick={() => history.push(`${contentBase}records/${id}`)}
+          onClick={() => history.push(`${contentBase}/records/${id}`.replace('//', '/'))}
           className={clsx(classes.title)}
           variant="h2"
         >
