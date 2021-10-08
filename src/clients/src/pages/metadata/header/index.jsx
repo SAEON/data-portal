@@ -1,6 +1,6 @@
 import Toolbar from '../../../components/toolbar-header'
 import Delete from './_delete-records'
-import NewRecords from './new-records'
+import NewRecords from '../components/new-records-dialog'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {

@@ -150,6 +150,10 @@ type Query {
   """
   institutions: [String!]!
   """
+  Fetch a list of possible schemas as defined in the ODP
+  """
+  schemas: [String!]!
+  """
   Fetch a list of collections for a particular institution ad defined in the ODP
   """
   collections(institution: String!): JSON!

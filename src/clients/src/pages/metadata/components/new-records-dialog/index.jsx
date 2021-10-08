@@ -1,4 +1,4 @@
-import Dialog from '../../components/dialog'
+import Dialog from '../dialog'
 import Toggle from './_toggle'
 import Title from './_title'
 import Content from './content'

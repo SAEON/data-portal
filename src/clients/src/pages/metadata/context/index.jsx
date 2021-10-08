@@ -23,6 +23,8 @@ export default ({ children }) => {
         }
 
         institutions
+
+        schemas
       }
     `
   )
@@ -35,11 +37,14 @@ export default ({ children }) => {
     throw error
   }
 
+  const { indexedMetadata, institutions, schemas } = data
+
   return (
     <context.Provider
       value={{
-        indexedMetadata: data.indexedMetadata,
-        institutions: data.institutions,
+        indexedMetadata,
+        institutions,
+        schemas,
         selectedRows,
         setSelectedRows,
       }}

@@ -18,6 +18,7 @@ import metadata from '../../../api-public/resolvers/queries/metadata.js'
 import indexedMetadata from '../queries/indexed-metadata/index.js'
 import institutions from '../queries/institutions/index.js'
 import collections from '../queries/collections/index.js'
+import schemas from '../queries/schemas/index.js'
 
 const getUserOwner = async ([, args, ctx]) => ctx.userInfo.id === args.id
 
@@ -41,4 +42,5 @@ export default {
   indexedMetadata: authorize(PERMISSIONS['as-odp-user:curator'])(indexedMetadata),
   institutions: authorize(PERMISSIONS['as-odp-user:curator'])(institutions),
   collections: authorize(PERMISSIONS['as-odp-user:curator'])(collections),
+  schemas: authorize(PERMISSIONS['as-odp-user:curator'])(schemas),
 }
