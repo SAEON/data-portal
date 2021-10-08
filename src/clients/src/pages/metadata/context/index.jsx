@@ -28,7 +28,7 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return <Loading style={{ top: 8 }} />
+    return <Loading />
   }
 
   if (error) {

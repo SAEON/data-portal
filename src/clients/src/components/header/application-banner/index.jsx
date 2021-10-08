@@ -6,17 +6,18 @@ export const IMAGE_HEIGHT = 48
 
 export const Toolbar = Toolbar_
 
+const aProps = {
+  style: { flexBasis: 0, flexGrow: 1, margin: 8, display: 'flex' },
+  target: '_blank',
+  rel: 'noreferrer',
+}
+
 export default ({ title }) => {
   return (
     <Toolbar_>
       {/* SAEON LOGO */}
       <Hidden mdDown>
-        <a
-          style={{ flexBasis: 0, flexGrow: 1 }}
-          target="_blank"
-          rel="noreferrer"
-          href="http://www.saeon.ac.za/"
-        >
+        <a {...aProps} href="http://www.saeon.ac.za/">
           <img
             style={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
             src="/saeon-logo.png"
@@ -44,12 +45,7 @@ export default ({ title }) => {
 
       {/* SARVA LOGO */}
       <Hidden mdDown>
-        <a
-          style={{ flexBasis: 0, flexGrow: 1 }}
-          target="_blank"
-          rel="noreferrer"
-          href="http://sarva.saeon.ac.za/"
-        >
+        <a {...aProps} href="http://sarva.saeon.ac.za/">
           <img
             style={{
               maxHeight: IMAGE_HEIGHT,
