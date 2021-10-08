@@ -64,24 +64,22 @@ const AppHeaderOnly = forwardRef(
  * should be configurable for this
  * component
  */
-const BannerOnly = forwardRef(({ title, contentRef }, ref) => {
+const BannerOnly = forwardRef(({ title }, ref) => {
   return (
     <div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
-          <HideOnScroll contentRef={contentRef}>
-            <ApplicationBanner title={title} />
-          </HideOnScroll>
+          <ApplicationBanner title={title} />
+
           <Divider />
         </AppBar>
       </ElevationOnScroll>
 
       {/* PUSH CONTENT DOWN */}
-      <HideOnScroll contentRef={contentRef}>
-        <ApplicationBanner_>
-          <div style={{ minHeight: IMAGE_HEIGHT }} />
-        </ApplicationBanner_>
-      </HideOnScroll>
+
+      <ApplicationBanner_>
+        <div style={{ minHeight: IMAGE_HEIGHT }} />
+      </ApplicationBanner_>
     </div>
   )
 })
@@ -100,8 +98,8 @@ export default ({ contentBase, title, routes }) => {
 }
 
 export const Banner = ({ title }) => {
-  const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <BannerOnly title={title} contentRef={contentRef} ref={setHeaderRef} />
+  const { setHeaderRef } = useContext(layoutContext)
+  return <BannerOnly title={title} ref={setHeaderRef} />
 }
 
 export const ApplicationHeader = ({ contentBase, routes, ...props }) => {
