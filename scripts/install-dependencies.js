@@ -27,3 +27,9 @@ apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
  */
 const TOOLS_PATH = normalize(join(__dirname, '../src/tools'))
 apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install })
+
+
+/**
+ * Rebuild all packages
+ */
+import './build-all-packages.js'
