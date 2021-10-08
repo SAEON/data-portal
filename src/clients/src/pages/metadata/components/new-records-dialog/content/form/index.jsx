@@ -88,10 +88,29 @@ export default () => {
               update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
               schemaVersion={metadata.schemaVersion}
             />
-            <DefaultCreators />
-            <DefaultContributors />
-            <DefaultLicense />
-            <DefaultResourceType />
+            <DefaultLicense
+              rightsList={metadata.rightsList}
+              options={['Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)']}
+              update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
+            />
+            <DefaultResourceType
+              resourceTypeGeneral={metadata.types?.resourceTypeGeneral || ''}
+              update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
+            />
+
+            {/* CREATORS */}
+            <DefaultCreators
+              update={creators =>
+                update({ metadata: Object.assign({ ...formRef.current.metadata }, creators) })
+              }
+            />
+
+            {/* CONTRIBUTORS */}
+            <DefaultContributors
+              update={contributors =>
+                update({ metadata: Object.assign({ ...formRef.current.metadata }, contributors) })
+              }
+            />
           </FormGroup>
         )
       }}
