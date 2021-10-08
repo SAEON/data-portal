@@ -36,7 +36,7 @@ export default ({ subjects }) => {
                     },
                     true
                   )
-                  history.push(`${contentBase}records`)
+                  history.push(`${contentBase}/records`.replace('//', '/'))
                 }}
                 label={subject.subject.toUpperCase()}
               />
