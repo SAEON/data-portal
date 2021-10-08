@@ -131,10 +131,9 @@ type Metadata {
 }
 
 input MetadataInput {
-  sid: ID!
   collection_key: String!
   schema_key: String!
-  metadata: JSON
+  metadata: JSON!
 }
 
 type Query {
@@ -209,7 +208,7 @@ input DataDownloadFormSubmission {
 }
 
 type Mutation {
-  createMetadata(input: [MetadataInput!]!): [Metadata!]!
+  createMetadata(institution: String!, numberOfRecords: Int, input: MetadataInput!): [Metadata!]!
   updateRecordDataFormat(id: ID!, immutableResource: JSON!): Void
   submitDataDownloadForm(input: DataDownloadFormSubmission!): Void
   logBrowserEvents(input: [BrowserEventInput]!): Void

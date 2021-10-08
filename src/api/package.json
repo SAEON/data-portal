@@ -71,6 +71,7 @@
     "rimraf": "^3.0.2",
     "sift": "^15.0.0",
     "unzipper": "^0.10.11",
+    "uuid": "^8.3.2",
     "wkt": "^0.1.1"
   },
   "author": "zach@saeon.ac.za, steven@saeon.ac.za",
