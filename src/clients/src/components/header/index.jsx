@@ -9,8 +9,13 @@ import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
 import Divider from '@material-ui/core/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
+import useTheme from '@material-ui/core/styles/useTheme'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
+  const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
+
   return (
     <div ref={ref}>
       <ElevationOnScroll>
@@ -27,7 +32,7 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
       {/* PUSH CONTENT DOWN */}
       <HideOnScroll contentRef={contentRef}>
         <ApplicationBanner_>
-          <div style={{ minHeight: IMAGE_HEIGHT, margin: 9 }} />
+          <div style={Object.assign({ margin: 9 }, mdDown ? {} : { minHeight: IMAGE_HEIGHT })} />
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />
