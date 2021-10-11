@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { context as newMetadataFormContext } from '../_context'
+import { context as newMetadataFormContext } from '../context'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import { gql, useMutation } from '@apollo/client'
@@ -29,6 +29,7 @@ export default () => {
     <DialogActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button
         onClick={() => {
+          console.log('form data', formRef.current)
           const form = formRef.current
           createMetadata({
             variables: {
