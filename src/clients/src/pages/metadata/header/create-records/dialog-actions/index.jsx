@@ -1,11 +1,10 @@
 import { useContext } from 'react'
-import { context as createMetadataContext } from '../context'
+import { context as dialogContext } from '../context'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import { gql, useMutation } from '@apollo/client'
 
-export default ({ setOpen }) => {
-  const { formRef } = useContext(createMetadataContext)
+const Actions = ({ setOpen, form }) => {
   const [createMetadata, { error, loading }] = useMutation(
     gql`
       mutation ($institution: String!, $numberOfRecords: Int, $input: MetadataInput!) {
@@ -35,7 +34,6 @@ export default ({ setOpen }) => {
           },
         })
       },
-      onCompleted: () => setOpen(false),
     }
   )
 
@@ -48,8 +46,7 @@ export default ({ setOpen }) => {
       <Button
         disabled={loading}
         onClick={() => {
-          const form = formRef.current
-          console.log(form)
+          console.log('form', form)
           createMetadata({
             variables: {
               institution: form.institution.value,
@@ -60,6 +57,8 @@ export default ({ setOpen }) => {
                 metadata: form.metadata,
               },
             },
+          }).then(() => {
+            setOpen(false)
           })
         }}
         size="small"
@@ -69,4 +68,9 @@ export default ({ setOpen }) => {
       </Button>
     </DialogActions>
   )
+}
+
+export default ({ setOpen }) => {
+  const { form } = useContext(dialogContext)
+  return <Actions form={form} setOpen={setOpen} />
 }

@@ -11,36 +11,39 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
   const { token_type, access_token } = user.tokenSet
 
   const result = await Promise.all(
-    new Array(numberOfRecords).fill(
-      new Promise((resolve, reject) =>
-        fetch(`${ODP_API}/${institution}/metadata/`, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            accept: 'application/json',
-            authorization: [token_type, access_token].join(' '),
-          },
-          body: JSON.stringify({
-            sid: UUIDv4(),
-            ...input,
-          }),
-        })
-          .then(res => res.json())
-          .then(json => {
-            if (json.detail) {
-              throw new Error(`ERROR creating metadata records: ${json.detail}`)
-            } else {
-              return resolve(json)
-            }
+    [...Array(numberOfRecords)].map(
+      () =>
+        new Promise((resolve, reject) =>
+          fetch(`${ODP_API}/${institution}/metadata/`, {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              accept: 'application/json',
+              authorization: [token_type, access_token].join(' '),
+            },
+            body: JSON.stringify({
+              sid: UUIDv4(),
+              ...input,
+            }),
           })
-          .catch(error => reject(error))
-      )
+            .then(res => res.json())
+            .then(json => {
+              if (json.detail) {
+                throw new Error(`ERROR creating metadata records: ${json.detail}`)
+              } else {
+                return resolve(json)
+              }
+            })
+            .catch(error => reject(error))
+        )
     )
   )
 
-  const esResponse = await processRecordsIntoElasticsearch(result)
+  const esResponse = await processRecordsIntoElasticsearch(result, null, 2)
+  const ids = esResponse.body.items.map(({ index: { _id } }) => _id)
+  const { query } = ctx.elastic
 
-  console.log('hi', JSON.stringify(esResponse.body))
+  // TODO - get the ids back
 
   return result
 }

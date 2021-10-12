@@ -1,7 +1,5 @@
-import { useContext, useMemo } from 'react'
-import QuickForm from '@saeon/quick-form'
-import { context as newMetadataFormContext } from '../../context'
-import { context as metadataContext } from '../../../../context'
+import { useContext, useCallback } from 'react'
+import { context as dialogContext } from '../../context'
 import FormGroup from '@material-ui/core/FormGroup'
 import Collection from './_collection'
 import NumberOfRecords from './_number-of-records'
@@ -12,6 +10,7 @@ import DefaultSchemaVersion from './_default-schema-version'
 import DefaultLicense from './_default-license'
 import DefaultResourceType from './_default-resource-type'
 import ObjectField from './components/obj-field'
+import debounce from '../../../../../../lib/fns/debounce'
 
 export const fieldProps = {
   fullWidth: true,
@@ -19,152 +18,136 @@ export const fieldProps = {
   variant: 'outlined',
 }
 
-const schemaVersions = {
-  'saeon-datacite-4-3': ['http://datacite.org/schema/kernel-4'],
-  'iso19115-saeon-profile': [''],
-}
-
 export default () => {
-  const { institutions, schemas } = useContext(metadataContext)
-  const { formRef } = useContext(newMetadataFormContext)
+  const {
+    form,
+    setForm,
+    schemaVersions,
+    institutionOptions,
+    schemaOptions,
+    loadingCollections,
+    licenseOptions,
+  } = useContext(dialogContext)
 
-  const schemaOptions = useMemo(
-    () => schemas.map(name => ({ label: name, value: name })),
-    [schemas]
+  const update = useCallback(obj => setForm({ ...form, ...obj }), [form, setForm])
+
+  const updateCreators = useCallback(
+    creators => setForm({ ...form, metadata: { ...form.metadata, ...creators } }),
+    [form, setForm]
   )
 
-  const institutionOptions = useMemo(
-    () => institutions.map(name => ({ label: name, value: name })),
-    [institutions]
+  const updateContributors = useCallback(
+    contributors => setForm({ ...form, metadata: { ...form.metadata, ...contributors } }),
+    [form, setForm]
   )
+
   return (
-    <QuickForm
-      effects={[
-        form => {
-          formRef.current = form
-        },
-      ]}
-      numRecords={1}
-      schema={schemaOptions[0]}
-      institution={institutionOptions[0]}
-      collection={{}}
-      metadata={{}}
-    >
-      {(update, { numRecords, schema, institution, collection, metadata }) => {
-        return (
-          <FormGroup>
-            <NumberOfRecords update={update} numRecords={numRecords} />
-            <Schema
-              update={obj =>
-                update({
-                  schema: obj,
-                  metadata: Object.assign({ ...metadata }, { schemaVersion: '' }),
-                })
-              }
-              value={schema.value || ''}
-              options={schemaOptions}
-            />
-            <Institution
-              update={update}
-              institution={institution}
-              institutionOptions={institutionOptions}
-            />
-            <Collection
-              formRef={formRef}
-              institution={institution.value}
-              update={update}
-              collection={collection}
-            />
+    <FormGroup>
+      <NumberOfRecords update={update} numRecords={form.numRecords} />
+      <Schema
+        update={debounce(obj =>
+          update({
+            schema: obj,
+            metadata: Object.assign({ ...form.metadata }, { schemaVersion: '' }),
+          })
+        )}
+        value={form.schema?.value || ''}
+        options={schemaOptions}
+      />
+      <Institution
+        update={debounce(update)}
+        institution={form.institution}
+        institutionOptions={institutionOptions}
+      />
+      <Collection
+        update={debounce(update)}
+        loading={loadingCollections}
+        collectionOptions={form.collectionOptions}
+        collection={form.collection}
+      />
 
-            {/* DEFAULT VALUES */}
-            <DefaultLanguage
-              language={metadata.language}
-              update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
-            />
-            <DefaultSchemaVersion
-              options={schemaVersions[schema?.value] || ['']}
-              value={metadata.schemaVersion || ''}
-              update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
-              schemaVersion={metadata.schemaVersion}
-            />
-            <DefaultLicense
-              rightsList={metadata.rightsList}
-              options={['Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)']}
-              update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
-            />
-            <DefaultResourceType
-              resourceTypeGeneral={metadata.types?.resourceTypeGeneral || ''}
-              update={obj => update({ metadata: Object.assign({ ...metadata }, obj) })}
-            />
+      {/* DEFAULT VALUES */}
+      <DefaultLanguage
+        language={form.metadata?.language || ''}
+        update={debounce(obj => update({ metadata: Object.assign({ ...form.metadata }, obj) }))}
+      />
+      <DefaultSchemaVersion
+        options={schemaVersions[form.schema?.value] || ['']}
+        value={form.metadata.schemaVersion || ''}
+        update={debounce(obj => update({ metadata: Object.assign({ ...form.metadata }, obj) }))}
+        schemaVersion={form.metadata.schemaVersion}
+      />
+      <DefaultLicense
+        rightsList={form.metadata.rightsList}
+        options={licenseOptions}
+        update={debounce(obj => update({ metadata: Object.assign({ ...form.metadata }, obj) }))}
+      />
+      <DefaultResourceType
+        resourceTypeGeneral={form.metadata.types?.resourceTypeGeneral || ''}
+        update={debounce(obj => update({ metadata: Object.assign({ ...form.metadata }, obj) }))}
+      />
 
-            {/* CREATORS */}
-            <ObjectField
-              root="creators"
-              update={creators =>
-                update({ metadata: Object.assign({ ...formRef.current.metadata }, creators) })
-              }
-              fields={[
-                {
-                  defaultValue: '',
-                  name: 'name',
-                  type: 'text',
-                  helperText: 'Provide (full) name',
-                  label: 'Name',
-                },
-                {
-                  defaultValue: [{ affiliation: '' }],
-                  name: 'affiliation',
-                  type: 'arrayOfObjects',
-                  objectFields: {
-                    defaultValue: { affiliation: '' },
-                    name: 'affiliation',
-                    type: 'text',
-                    label: 'Affiliation',
-                    helperText: 'Creator affiliation',
-                  },
-                },
-              ]}
-            />
+      {/* CREATORS */}
+      <ObjectField
+        root="creators"
+        update={updateCreators}
+        fields={[
+          {
+            defaultValue: '',
+            name: 'name',
+            type: 'text',
+            helperText: 'Provide (full) name',
+            label: 'Name',
+          },
+          {
+            defaultValue: [{ affiliation: '' }],
+            name: 'affiliation',
+            type: 'arrayOfObjects',
+            objectFields: {
+              defaultValue: { affiliation: '' },
+              name: 'affiliation',
+              type: 'text',
+              label: 'Affiliation',
+              helperText: 'Creator affiliation',
+            },
+          },
+        ]}
+      />
 
-            {/* CONTRIBUTORS */}
-            <ObjectField
-              root="contributors"
-              update={contributors =>
-                update({ metadata: Object.assign({ ...formRef.current.metadata }, contributors) })
-              }
-              fields={[
-                {
-                  defaultValue: '',
-                  name: 'name',
-                  type: 'text',
-                  helperText: 'Provide (full) name',
-                  label: 'Name',
-                },
-                {
-                  defaultValue: '',
-                  name: 'contributorType',
-                  type: 'select',
-                  helperText: 'Contribution type?',
-                  label: 'Contributor type',
-                  options: ['projectManager', 'HostingInstitution'],
-                },
-                {
-                  defaultValue: [{ affiliation: '' }],
-                  name: 'affiliation',
-                  type: 'arrayOfObjects',
-                  objectFields: {
-                    defaultValue: { affiliation: '' },
-                    name: 'affiliation',
-                    type: 'text',
-                    label: 'Affiliation',
-                    helperText: 'Contributor affiliation',
-                  },
-                },
-              ]}
-            />
-          </FormGroup>
-        )
-      }}
-    </QuickForm>
+      {/* CONTRIBUTORS */}
+      <ObjectField
+        root="contributors"
+        update={updateContributors}
+        fields={[
+          {
+            defaultValue: '',
+            name: 'name',
+            type: 'text',
+            helperText: 'Provide (full) name',
+            label: 'Name',
+          },
+          {
+            defaultValue: '',
+            name: 'contributorType',
+            type: 'select',
+            helperText: 'Contribution type?',
+            label: 'Contributor type',
+            options: ['projectManager', 'HostingInstitution'],
+          },
+          {
+            defaultValue: [{ affiliation: '' }],
+            name: 'affiliation',
+            type: 'arrayOfObjects',
+            objectFields: {
+              defaultValue: { affiliation: '' },
+              name: 'affiliation',
+              type: 'text',
+              label: 'Affiliation',
+              helperText: 'Contributor affiliation',
+            },
+          },
+        ]}
+      />
+    </FormGroup>
   )
 }

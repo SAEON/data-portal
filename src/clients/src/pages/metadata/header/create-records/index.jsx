@@ -1,4 +1,5 @@
-import Dialog from '../../../../components/dialog'
+import { useState } from 'react'
+import Dialog from '@material-ui/core/Dialog'
 import Toggle from './dialog-toggle'
 import Title from './dialog-title'
 import Content from './dialog-content'
@@ -6,9 +7,19 @@ import Actions from './dialog-actions'
 import Provider from './context'
 
 export default () => {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Provider>
-      <Dialog Toggle={Toggle} Title={Title} Content={Content} Actions={Actions} />
-    </Provider>
+    <>
+      <Toggle open={open} setOpen={setOpen} />
+
+      <Dialog scroll="paper" onClose={() => setOpen(false)} fullWidth open={open}>
+        <Provider>
+          <Title />
+          <Content />
+          <Actions open={open} setOpen={setOpen} />
+        </Provider>
+      </Dialog>
+    </>
   )
 }

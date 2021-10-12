@@ -9,6 +9,7 @@ export default data =>
       schema_key: schema,
       metadata,
       published,
+      errors = {},
       ...otherFields
     }) => {
       const { originalMetadata, ...otherMetadataFields } = metadata
@@ -21,6 +22,7 @@ export default data =>
         schema,
         published,
         sid,
+        errors: JSON.stringify(errors),
         ...otherMetadataFields,
         ...otherFields,
       }
