@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import fetch from 'node-fetch'
 import { ODP_API } from '../../../../../config/index.js'
 import { v4 as UUIDv4 } from 'uuid'
+import processRecordsIntoElasticsearch from '../../../../../integrations/metadata/process-records/index.js'
 
 export default async (self, { input, numberOfRecords = 1, institution }, ctx) => {
   const { id: currentUserId } = ctx.user.info(ctx)
@@ -9,7 +10,7 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
   const user = (await findUsers({ _id: ObjectId(currentUserId) }))[0]
   const { token_type, access_token } = user.tokenSet
 
-  return await Promise.all(
+  const result = await Promise.all(
     new Array(numberOfRecords).fill(
       new Promise((resolve, reject) =>
         fetch(`${ODP_API}/${institution}/metadata/`, {
@@ -36,4 +37,10 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
       )
     )
   )
+
+  const esResponse = await processRecordsIntoElasticsearch(result)
+
+  console.log('hi', JSON.stringify(esResponse.body))
+
+  return result
 }

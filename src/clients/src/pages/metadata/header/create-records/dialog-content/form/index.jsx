@@ -99,11 +99,11 @@ export default () => {
 
             {/* CREATORS */}
             <ObjectField
-              namespace="creators"
+              root="creators"
               update={creators =>
                 update({ metadata: Object.assign({ ...formRef.current.metadata }, creators) })
               }
-              formFields={[
+              fields={[
                 {
                   defaultValue: '',
                   name: 'name',
@@ -114,25 +114,25 @@ export default () => {
                 {
                   defaultValue: [{ affiliation: '' }],
                   name: 'affiliation',
-                  formFields: [
-                    {
-                      name: 'affiliation',
-                      type: 'text',
-                      label: 'Affiliation',
-                      helperText: 'Creator affiliation',
-                    },
-                  ],
+                  type: 'arrayOfObjects',
+                  objectFields: {
+                    defaultValue: { affiliation: '' },
+                    name: 'affiliation',
+                    type: 'text',
+                    label: 'Affiliation',
+                    helperText: 'Creator affiliation',
+                  },
                 },
               ]}
             />
 
             {/* CONTRIBUTORS */}
             <ObjectField
-              namespace="contributors"
+              root="contributors"
               update={contributors =>
                 update({ metadata: Object.assign({ ...formRef.current.metadata }, contributors) })
               }
-              formFields={[
+              fields={[
                 {
                   defaultValue: '',
                   name: 'name',
@@ -151,14 +151,14 @@ export default () => {
                 {
                   defaultValue: [{ affiliation: '' }],
                   name: 'affiliation',
-                  formFields: [
-                    {
-                      name: 'affiliation',
-                      type: 'text',
-                      label: 'Affiliation',
-                      helperText: 'Contributor affiliation',
-                    },
-                  ],
+                  type: 'arrayOfObjects',
+                  objectFields: {
+                    defaultValue: { affiliation: '' },
+                    name: 'affiliation',
+                    type: 'text',
+                    label: 'Affiliation',
+                    helperText: 'Contributor affiliation',
+                  },
                 },
               ]}
             />

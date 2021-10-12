@@ -1,10 +1,17 @@
 import { ELASTICSEARCH_METADATA_INDEX } from '../../../../../config/index.js'
 
-export default async (self, args, ctx) => {
+export default async (self, { id = undefined }, ctx) => {
+  const dsl = { size: 100 }
+  if (id) {
+    dsl.query = { term: { 'id.raw': id } }
+  } else {
+    dsl.query = { match_all: {} }
+  }
+
   const { elastic } = ctx
   const res = await elastic.query({
     index: ELASTICSEARCH_METADATA_INDEX,
-    body: { size: 100, query: { match_all: {} } },
+    body: dsl,
   })
   return res.body.hits.hits.map(({ _source }) => {
     const { id, doi, sid, institution, collection, schema, validated, errors, state, ...metadata } =

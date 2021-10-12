@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import { context as newMetadataFormContext } from '../context'
+import { context as createMetadataContext } from '../context'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import { gql, useMutation } from '@apollo/client'
 
-export default () => {
-  const { formRef } = useContext(newMetadataFormContext)
+export default ({ setOpen }) => {
+  const { formRef } = useContext(createMetadataContext)
   const [createMetadata, { error, loading }] = useMutation(
     gql`
       mutation ($institution: String!, $numberOfRecords: Int, $input: MetadataInput!) {
@@ -15,22 +15,41 @@ export default () => {
           input: $input
         ) {
           id
+          doi
+          sid
+          institution
+          collection
+          schema
+          validated
+          errors
+          state
+          title
         }
       }
     `,
     {
-      update: (cache, data) => {
-        console.log('data', data)
+      update: (cache, { data: { createMetadata: newRecords } }) => {
+        cache.modify({
+          fields: {
+            indexedMetadata: (existing = []) => [...newRecords, ...existing],
+          },
+        })
       },
+      onCompleted: () => setOpen(false),
     }
   )
+
+  if (error) {
+    throw error
+  }
 
   return (
     <DialogActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button
+        disabled={loading}
         onClick={() => {
-          console.log('form data', formRef.current)
           const form = formRef.current
+          console.log(form)
           createMetadata({
             variables: {
               institution: form.institution.value,
@@ -46,7 +65,7 @@ export default () => {
         size="small"
         variant="text"
       >
-        Create records
+        {loading ? 'Loading ...' : 'Create records'}
       </Button>
     </DialogActions>
   )

@@ -1,37 +1,15 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { context as metadataContext } from '../context'
 import DataGrid, { TextEditor, SelectColumn } from 'react-data-grid'
 import JsonIcon from 'mdi-react/CodeJsonIcon'
-import MetadataEditor from '../components/metadata-editor'
+import MetadataEditor from './metadata-editor'
 
 const HeaderRenderer = ({ column }) => {
   return <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
 }
 
 export default () => {
-  const { indexedMetadata, selectedRows, setSelectedRows } = useContext(metadataContext)
-  const [rows, setRows] = useState(
-    indexedMetadata.map(
-      (
-        { id, doi, sid, institution, collection, schema, validated, errors, state, metadata },
-        i
-      ) => ({
-        i,
-        id,
-        doi,
-        sid,
-        institution,
-        collection,
-        schema,
-        validated: '' + validated,
-        errors: JSON.stringify(errors),
-        state,
-        metadata,
-        title: metadata.titles?.[0].title || '',
-        edit: '',
-      })
-    )
-  )
+  const { selectedRows, setSelectedRows, setRows, rows } = useContext(metadataContext)
 
   function handleFill({ columnKey, sourceRow, targetRow }) {
     return { ...targetRow, [columnKey]: sourceRow[columnKey] }

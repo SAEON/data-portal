@@ -1,10 +1,11 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import Loading from '../../../components/loading'
 import { gql, useQuery } from '@apollo/client'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const [rows, setRows] = useState([])
   const [selectedRows, setSelectedRows] = useState(() => new Set())
   const { error, loading, data } = useQuery(
     gql`
@@ -19,7 +20,7 @@ export default ({ children }) => {
           validated
           errors
           state
-          metadata
+          title
         }
 
         institutions
@@ -29,6 +30,33 @@ export default ({ children }) => {
     `
   )
 
+  useEffect(() => {
+    if (data?.indexedMetadata) {
+      setRows(
+        data?.indexedMetadata.map(
+          (
+            { id, doi, sid, institution, collection, schema, validated, errors, state, title },
+            i
+          ) => ({
+            i: i + 1,
+            id,
+            doi,
+            sid,
+            institution,
+            collection,
+            schema,
+            validated: '' + validated,
+            errors: JSON.stringify(errors),
+            state,
+            metadata: undefined,
+            title,
+            edit: '',
+          })
+        )
+      )
+    }
+  }, [data])
+
   if (loading) {
     return <Loading />
   }
@@ -37,16 +65,15 @@ export default ({ children }) => {
     throw error
   }
 
-  const { indexedMetadata, institutions, schemas } = data
-
   return (
     <context.Provider
       value={{
-        indexedMetadata,
-        institutions,
-        schemas,
+        institutions: data.institutions,
+        schemas: data.schemas,
         selectedRows,
         setSelectedRows,
+        rows,
+        setRows,
       }}
     >
       {children}

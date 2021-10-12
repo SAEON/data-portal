@@ -128,6 +128,7 @@ type Metadata {
   validated: Boolean
   errors: JSON
   state: String
+  title: String
 }
 
 input MetadataInput {
@@ -144,7 +145,7 @@ type Query {
   """
   Search metadata from the ODP (indexed via Elasticsearch)
   """
-  indexedMetadata: [Metadata!]!
+  indexedMetadata(id: ID): [Metadata!]!
   """
   Fetch a list of Institusions as defined in the ODP
   """

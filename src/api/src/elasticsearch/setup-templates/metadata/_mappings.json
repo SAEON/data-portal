@@ -1,21 +1,5 @@
 {
   "properties": {
-    "creators": {
-      "type": "nested",
-      "include_in_parent": true,
-      "properties": {
-        "name": {
-          "type": "text",
-          "fields": {
-            "raw": {
-              "ignore_above": 256,
-              "type": "keyword",
-              "normalizer": "keyword_trimmed_lower"
-            }
-          }
-        }
-      }
-    },
     "linkedResources": {
       "type": "nested",
       "include_in_parent": true,
@@ -85,15 +69,6 @@
       }
     },
     {
-      "publicationYear": {
-        "mapping": {
-          "type": "long"
-        },
-        "match_mapping_type": "string",
-        "match": "publicationYear"
-      }
-    },
-    {
       "strings": {
         "mapping": {
           "analyzer": "saeon_text_fields",
@@ -107,7 +82,7 @@
           }
         },
         "match_mapping_type": "string",
-        "unmatch": "publicationYear|subjects"
+        "unmatch": "subjects"
       }
     }
   ]

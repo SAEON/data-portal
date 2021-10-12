@@ -1,5 +1,8 @@
 {
   "index": {
+    "mapping": {
+      "ignore_malformed": true
+    },
     "analysis": {
       "normalizer": {
         "keyword_trimmed_lower": {
