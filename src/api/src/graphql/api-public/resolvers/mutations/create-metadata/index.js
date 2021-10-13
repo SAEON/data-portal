@@ -1,8 +1,9 @@
 import { ObjectId } from 'mongodb'
 import fetch from 'node-fetch'
-import { ODP_API } from '../../../../../config/index.js'
+import { ODP_API, ELASTICSEARCH_METADATA_INDEX } from '../../../../../config/index.js'
 import { v4 as UUIDv4 } from 'uuid'
 import processRecordsIntoElasticsearch from '../../../../../integrations/metadata/process-records/index.js'
+import mapToMetadata from '../../../../../lib/process-metadata/map-to-metadata.js'
 
 export default async (self, { input, numberOfRecords = 1, institution }, ctx) => {
   const { id: currentUserId } = ctx.user.info(ctx)
@@ -41,9 +42,17 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
 
   const esResponse = await processRecordsIntoElasticsearch(result, null, 2)
   const ids = esResponse.body.items.map(({ index: { _id } }) => _id)
-  const { query } = ctx.elastic
 
-  // TODO - get the ids back
-
-  return result
+  return mapToMetadata(
+    await ctx.elastic.query({
+      index: ELASTICSEARCH_METADATA_INDEX,
+      body: {
+        query: {
+          ids: {
+            values: ids,
+          },
+        },
+      },
+    })
+  )
 }
