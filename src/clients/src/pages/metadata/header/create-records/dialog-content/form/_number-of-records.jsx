@@ -1,6 +1,8 @@
 import TextField from '@material-ui/core/TextField'
 import { fieldProps } from './index'
 
+const MAX = 20
+
 export default ({ numRecords, update }) => (
   <TextField
     {...fieldProps}
@@ -10,10 +12,13 @@ export default ({ numRecords, update }) => (
     InputProps={{
       inputProps: {
         min: 1,
-        max: 100,
+        max: MAX,
       },
     }}
-    onChange={({ target: { value } }) => update({ numRecords: parseInt(value, 10) })}
+    onChange={({ target: { value } }) => {
+      value = value || 1
+      update({ numRecords: Math.min(parseInt(value, 10), MAX) })
+    }}
     type="number"
   />
 )

@@ -16,10 +16,7 @@ export default ({ children, row, onRowChange, column: { key } }) => {
       }
     `,
     {
-      onCompleted: data => {
-        console.log('hi', row.id, data.indexedMetadata)
-        onRowChange({ ...row, metadata: data.indexedMetadata[0].metadata })
-      },
+      onCompleted: data => onRowChange({ ...row, metadata: data.indexedMetadata[0].metadata }),
       variables: {
         id: row.id,
       },

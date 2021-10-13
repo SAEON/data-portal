@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { context as metadataContext } from '../../context'
-import { gql, useLazyQuery } from '@apollo/client'
+import { gql, useLazyQuery, useMutation } from '@apollo/client'
 
 export const context = createContext()
 
@@ -19,6 +19,39 @@ const Provider = ({
     collection: {},
     metadata: {},
   })
+
+  const [createMetadata, { error: createMetadataError, loading: createMetadataLoading }] =
+    useMutation(
+      gql`
+        mutation ($institution: String!, $numberOfRecords: Int, $input: MetadataInput!) {
+          createMetadata(
+            institution: $institution
+            numberOfRecords: $numberOfRecords
+            input: $input
+          ) {
+            id
+            doi
+            sid
+            institution
+            collection
+            schema
+            validated
+            errors
+            state
+            title
+          }
+        }
+      `,
+      {
+        update: (cache, { data: { createMetadata: newRecords } }) => {
+          cache.modify({
+            fields: {
+              indexedMetadata: (existing = []) => [...newRecords, ...existing],
+            },
+          })
+        },
+      }
+    )
 
   const [getCollections, { error, loading: loadingCollections }] = useLazyQuery(
     gql`
@@ -61,6 +94,9 @@ const Provider = ({
         schemaOptions,
         licenseOptions,
         institutionOptions,
+        createMetadata,
+        createMetadataError,
+        createMetadataLoading,
       }}
     >
       {children}

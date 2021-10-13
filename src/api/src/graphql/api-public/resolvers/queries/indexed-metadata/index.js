@@ -3,6 +3,7 @@ import mapToMetadata from '../../../../../lib/process-metadata/map-to-metadata.j
 
 export default async (self, { id = undefined }, ctx) => {
   const dsl = { size: 100 }
+
   if (id) {
     dsl.query = { term: { 'id.raw': id } }
   } else {

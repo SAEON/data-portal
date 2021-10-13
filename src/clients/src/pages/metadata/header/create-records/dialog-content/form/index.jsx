@@ -1,5 +1,4 @@
-import { useContext, useCallback } from 'react'
-import { context as dialogContext } from '../../context'
+import { useCallback } from 'react'
 import FormGroup from '@material-ui/core/FormGroup'
 import Collection from './_collection'
 import NumberOfRecords from './_number-of-records'
@@ -18,17 +17,15 @@ export const fieldProps = {
   variant: 'outlined',
 }
 
-export default () => {
-  const {
-    form,
-    setForm,
-    schemaVersions,
-    institutionOptions,
-    schemaOptions,
-    loadingCollections,
-    licenseOptions,
-  } = useContext(dialogContext)
-
+export default ({
+  form,
+  setForm,
+  schemaVersions,
+  institutionOptions,
+  schemaOptions,
+  loadingCollections,
+  licenseOptions,
+}) => {
   const update = useCallback(obj => setForm({ ...form, ...obj }), [form, setForm])
 
   const updateCreators = useCallback(
@@ -38,6 +35,11 @@ export default () => {
 
   const updateContributors = useCallback(
     contributors => setForm({ ...form, metadata: { ...form.metadata, ...contributors } }),
+    [form, setForm]
+  )
+
+  const updateTitles = useCallback(
+    titles => setForm({ ...form, metadata: { ...form.metadata, ...titles } }),
     [form, setForm]
   )
 
@@ -108,7 +110,7 @@ export default () => {
               name: 'affiliation',
               type: 'text',
               label: 'Affiliation',
-              helperText: 'Creator affiliation',
+              helperText: ({ i }) => `Affiliation ${i + 1}`,
             },
           },
         ]}
@@ -143,8 +145,23 @@ export default () => {
               name: 'affiliation',
               type: 'text',
               label: 'Affiliation',
-              helperText: 'Contributor affiliation',
+              helperText: ({ i }) => `Affiliation ${i + 1}`,
             },
+          },
+        ]}
+      />
+
+      {/* TITLES */}
+      <ObjectField
+        root="titles"
+        update={updateTitles}
+        fields={[
+          {
+            defaultValue: '',
+            name: 'title',
+            type: 'text',
+            helperText: ({ i }) => `title ${i + 1}`,
+            label: 'Title',
           },
         ]}
       />

@@ -13,7 +13,17 @@ export default () => {
     <>
       <Toggle open={open} setOpen={setOpen} />
 
-      <Dialog scroll="paper" onClose={() => setOpen(false)} fullWidth open={open}>
+      <Dialog
+        scroll="paper"
+        onClose={(e, reason) => {
+          if (reason) {
+            return
+          }
+          setOpen(false)
+        }}
+        fullWidth
+        open={open}
+      >
         <Provider>
           <Title />
           <Content />

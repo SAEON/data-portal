@@ -11,6 +11,17 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
   const user = (await findUsers({ _id: ObjectId(currentUserId) }))[0]
   const { token_type, access_token } = user.tokenSet
 
+  /**
+   * Set timeout to 20 minutes
+   * (in case user is creating many records)
+   */
+  ctx.request.socket.setTimeout(20 * 60 * 1000)
+
+  /**
+   * The ODP allows for creating records
+   * one at a time. Each new record is its
+   * own API request
+   */
   const result = await Promise.all(
     [...Array(numberOfRecords)].map(
       () =>
@@ -27,7 +38,15 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
               ...input,
             }),
           })
-            .then(res => res.json())
+            .then(res => res.text())
+            .then(txt => {
+              try {
+                return JSON.parse(txt)
+              } catch (error) {
+                console.error('Unable to parse ODP response', txt, error)
+                throw error
+              }
+            })
             .then(json => {
               if (json.detail) {
                 throw new Error(`ERROR creating metadata records: ${json.detail}`)
@@ -40,16 +59,21 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
     )
   )
 
-  const esResponse = await processRecordsIntoElasticsearch(result, null, 2)
-  const ids = esResponse.body.items.map(({ index: { _id } }) => _id)
-
+  /**
+   * Process the ODP results into
+   * the Elasticsearch index, then
+   * return the recently added docs
+   */
   return mapToMetadata(
     await ctx.elastic.query({
       index: ELASTICSEARCH_METADATA_INDEX,
       body: {
+        size: 20,
         query: {
           ids: {
-            values: ids,
+            values: (
+              await processRecordsIntoElasticsearch(result, null, 2)
+            ).body.items.map(({ index: { _id } }) => _id),
           },
         },
       },

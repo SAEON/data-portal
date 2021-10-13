@@ -64,7 +64,11 @@ export default memo(({ update, root, fields }) => {
                               <TextField
                                 key={field.name}
                                 label={field.label}
-                                helperText={field.helperText}
+                                helperText={
+                                  typeof field.helperText === 'function'
+                                    ? field.helperText({ i })
+                                    : field.helperText
+                                }
                                 value={fieldValue[field.name]}
                                 onChange={update_}
                               />
@@ -78,7 +82,11 @@ export default memo(({ update, root, fields }) => {
                                 key={field.name}
                                 value={fieldValue[field.name]}
                                 label={field.label}
-                                helperText={field.helperText}
+                                helperText={
+                                  typeof field.helperText === 'function'
+                                    ? field.helperText({ i })
+                                    : field.helperText
+                                }
                                 options={field.options}
                                 onChange={update_}
                               />
@@ -98,8 +106,12 @@ export default memo(({ update, root, fields }) => {
                                   <Fade key={`${root}-${field_.name}-${j}`} in={true}>
                                     <span>
                                       <TextField
-                                        helperText={field_.helperText}
-                                        label={`${field_.label} ${j + 1}`}
+                                        helperText={
+                                          typeof field_.helperText === 'function'
+                                            ? field_.helperText({ i: j })
+                                            : field_.helperText
+                                        }
+                                        label={field_.label}
                                         value={object[field_.name]}
                                         onChange={({ target: { value } }) => {
                                           update({
