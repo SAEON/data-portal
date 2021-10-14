@@ -131,12 +131,6 @@ type Metadata {
   title: String
 }
 
-input MetadataInput {
-  collection_key: String!
-  schema_key: String!
-  metadata: JSON!
-}
-
 type Query {
   """
   Fetch metadata from the ODP on behalf of user
@@ -147,7 +141,7 @@ type Query {
   """
   indexedMetadata(id: ID): [Metadata!]!
   """
-  Fetch a list of Institusions as defined in the ODP
+  Fetch a list of Institutions as defined in the ODP
   """
   institutions: [String!]!
   """
@@ -212,8 +206,23 @@ input DataDownloadFormSubmission {
   allowContact: Boolean
 }
 
+input MetadataInput {
+  collection_key: String!
+  schema_key: String!
+  metadata: JSON!
+}
+
+input UpdateMetadataInput {
+  id: ID!
+  sid: ID!
+  doi: ID
+  institution_key: String!
+  metadataInput: MetadataInput
+}
+
 type Mutation {
   createMetadata(institution: String!, numberOfRecords: Int, input: MetadataInput!): [Metadata!]!
+  updateMetadata(input: [UpdateMetadataInput!]!): [Metadata!]!
   updateRecordDataFormat(id: ID!, immutableResource: JSON!): Void
   submitDataDownloadForm(input: DataDownloadFormSubmission!): Void
   logBrowserEvents(input: [BrowserEventInput]!): Void

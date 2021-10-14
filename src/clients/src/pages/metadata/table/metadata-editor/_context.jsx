@@ -16,7 +16,12 @@ export default ({ children, row, onRowChange, column: { key } }) => {
       }
     `,
     {
-      onCompleted: data => onRowChange({ ...row, metadata: data.indexedMetadata[0].metadata }),
+      onCompleted: data => {
+        onRowChange({
+          ...row,
+          metadata: { ...data.indexedMetadata[0].metadata, ...(row.metadata || {}) },
+        })
+      },
       variables: {
         id: row.id,
       },
@@ -29,9 +34,7 @@ export default ({ children, row, onRowChange, column: { key } }) => {
   )
 
   useEffect(() => {
-    if (!row.metadata) {
-      loadMetadata()
-    }
+    loadMetadata()
   }, [loadMetadata, row?.metadata])
 
   if (loading) {

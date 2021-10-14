@@ -7,6 +7,7 @@ export const context = createContext()
 export default ({ children }) => {
   const [rows, setRows] = useState([])
   const [selectedRows, setSelectedRows] = useState(() => new Set())
+  const [changes, setChanges] = useState({})
   const { error, loading, data } = useQuery(
     gql`
       query {
@@ -37,25 +38,29 @@ export default ({ children }) => {
           (
             { id, doi, sid, institution, collection, schema, validated, errors, state, title },
             i
-          ) => ({
-            i: i + 1,
-            id,
-            doi,
-            sid,
-            institution,
-            collection,
-            schema,
-            validated: '' + validated,
-            errors: JSON.stringify(errors),
-            state,
-            metadata: undefined,
-            title,
-            edit: '',
-          })
+          ) => {
+            return (
+              changes[id] || {
+                i: i + 1,
+                id,
+                doi,
+                sid,
+                institution,
+                collection,
+                schema,
+                validated: '' + validated,
+                errors: JSON.stringify(errors),
+                state,
+                metadata: undefined,
+                title,
+                edit: '',
+              }
+            )
+          }
         )
       )
     }
-  }, [data])
+  }, [changes, data])
 
   if (loading) {
     return <Loading />
@@ -74,6 +79,8 @@ export default ({ children }) => {
         setSelectedRows,
         rows,
         setRows,
+        changes,
+        setChanges,
       }}
     >
       {children}

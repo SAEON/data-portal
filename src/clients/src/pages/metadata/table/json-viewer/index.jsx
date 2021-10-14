@@ -1,21 +1,18 @@
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
-import Header from './header'
-import Provider from './_context'
-import JsonEditor from './_json-editor'
-import Form from './_form'
-import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
+import useTheme from '@material-ui/core/styles/useTheme'
+import Button from '@material-ui/core/Button'
 
-export default ({ row, onRowChange, column, onClose }) => (
-  <Provider row={row} onRowChange={onRowChange} column={column}>
+export default ({ row, column: { key }, onClose }) => {
+  const theme = useTheme()
+
+  return (
     <Dialog maxWidth="xl" onClose={onClose} open={true}>
-      <DialogTitle>Edit JSON</DialogTitle>
+      <DialogTitle>View JSON</DialogTitle>
       <DialogContent style={{ width: 800, height: 800 }}>
-        <Header />
-        <Form />
-        <JsonEditor />
+        <pre style={theme.pre}>{JSON.stringify(JSON.parse(JSON.parse(row[key])), null, 2)}</pre>
       </DialogContent>
       <DialogActions>
         <Button variant="text" disableElevation size="small" onClick={onClose}>
@@ -23,5 +20,5 @@ export default ({ row, onRowChange, column, onClose }) => (
         </Button>
       </DialogActions>
     </Dialog>
-  </Provider>
-)
+  )
+}

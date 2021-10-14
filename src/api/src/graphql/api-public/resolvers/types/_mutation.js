@@ -20,6 +20,7 @@ import updateRecordDataFormat from '../mutations/update-record-data-format/index
 import databook from '../queries/databook.js'
 import submitDataDownloadForm from '../mutations/submit-data-download-form/index.js'
 import createMetadata from '../mutations/create-metadata/index.js'
+import updateMetadata from '../mutations/update-metadata/index.js'
 
 export default {
   createDatabook: authorize(PERMISSIONS['databook:create'])(createDatabook),
@@ -28,6 +29,7 @@ export default {
   assignRolesToUser: authorize(PERMISSIONS['users:assign-roles'])(assignRolesToUser),
   updateRecordDataFormat: authorize(PERMISSIONS['es-index:update'])(updateRecordDataFormat),
   createMetadata: authorize(PERMISSIONS['as-odp-user:curator'])(createMetadata),
+  updateMetadata: authorize(PERMISSIONS['as-odp-user:curator'])(updateMetadata),
   databook, // TODO - should be per resource owner, but that breaks sharing
   logBrowserEvents,
   saveList,

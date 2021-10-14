@@ -3,13 +3,19 @@ import { context as metadataContext } from '../context'
 import DataGrid, { TextEditor, SelectColumn } from 'react-data-grid'
 import JsonIcon from 'mdi-react/CodeJsonIcon'
 import MetadataEditor from './metadata-editor'
+import JsonViewer from './json-viewer'
+import RowRenderer from './row'
+import onRowsChange from './_on-rows-change'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const HeaderRenderer = ({ column }) => {
   return <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
 }
 
 export default () => {
-  const { selectedRows, setSelectedRows, setRows, rows } = useContext(metadataContext)
+  const theme = useTheme()
+  const { selectedRows, setSelectedRows, setRows, rows, changes, setChanges } =
+    useContext(metadataContext)
 
   function handleFill({ columnKey, sourceRow, targetRow }) {
     return { ...targetRow, [columnKey]: sourceRow[columnKey] }
@@ -34,10 +40,17 @@ export default () => {
     <DataGrid
       onFill={handleFill}
       style={{ flexGrow: 1 }}
+      rowRenderer={RowRenderer}
+      enableVirtualization={true}
       onSelectedRowsChange={setSelectedRows}
       selectedRows={selectedRows}
       rowKeyGetter={row => row.id}
-      onRowsChange={setRows}
+      onRowsChange={(...args) => {
+        onRowsChange((rows, row) => {
+          setRows(rows)
+          setChanges({ ...changes, [row.id]: row })
+        }, ...args)
+      }}
       onPaste={handlePaste}
       columns={[
         SelectColumn,
@@ -133,7 +146,26 @@ export default () => {
           resizable: true,
           name: 'Errors',
           headerRenderer: HeaderRenderer,
-          cellClass: 'read-only-data-cell',
+          editor: JsonViewer,
+          editorOptions: {
+            renderFormatter: true,
+          },
+          formatter: props => {
+            const hasError = props.row.errors !== '"{}"'
+            return (
+              <div
+                style={{
+                  width: '100%',
+                  alignItems: 'center',
+                  height: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <JsonIcon style={hasError ? { color: theme.palette.error.main } : {}} size={18} />
+              </div>
+            )
+          },
         },
         {
           key: 'state',
