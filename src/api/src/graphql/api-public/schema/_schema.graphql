@@ -214,7 +214,7 @@ input MetadataInput {
 
 input UpdateMetadataInput {
   id: ID!
-  sid: ID!
+  sid: ID
   doi: ID
   institution_key: String!
   metadataInput: MetadataInput

@@ -23,7 +23,6 @@ export default (setRows, rows, change) => {
       if (i === j) {
         changedRow = {
           ...row,
-          _changed: true,
           metadata: {
             ...metadata,
             titles: [
@@ -43,7 +42,6 @@ export default (setRows, rows, change) => {
       if (i === j) {
         changedRow = {
           ...row,
-          _changed: true,
           title: row.metadata.titles?.[0].title || 'Untitled',
         }
         return changedRow

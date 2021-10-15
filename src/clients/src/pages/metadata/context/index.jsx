@@ -11,6 +11,19 @@ export const context = createContext()
  * (2) Every time the Apollo cache is updated
  * this component should re-render, providing
  * and updated 'indexedMetadata' object
+ *
+ * (3) The exception to this is the metadata
+ * field. The table performance suffers if
+ * metadata is loaded eagerly. As such, when
+ * 'metadata' is changed, you have to call
+ * setRows explicitly. Also, fetching all
+ * metadata is an expensive network request
+ * for the initial load (since the table is
+ * virtualized and has many rows)
+ *
+ * (4) In practice, most of the edits are to
+ * the metadata field, so you need to manually
+ * call "setRows" for most table updates
  */
 
 export default ({ children }) => {
@@ -72,23 +85,9 @@ const RowHandler = ({ children, indexedMetadata, institutions, schemas }) => {
 
   const [rows, setRows] = useState(
     indexedMetadata.map(
-      (
-        {
-          id,
-          doi,
-          sid,
-          institution,
-          collection,
-          schema,
-          metadata = {},
-          validated,
-          errors,
-          state,
-          title,
-        },
-        i
-      ) => {
-        const { metadata: changedMetadata = {}, ...otherChanges } = changes[id] || {}
+      ({ id, doi, sid, institution, collection, schema, validated, errors, state, title }, i) => {
+        const { metadata = {}, ...otherChanges } = changes[id] || {}
+
         return {
           i: i + 1,
           id,
@@ -100,7 +99,7 @@ const RowHandler = ({ children, indexedMetadata, institutions, schemas }) => {
           validated: '' + validated,
           errors,
           state,
-          metadata: { ...metadata, ...changedMetadata },
+          metadata,
           title,
           edit: '',
           ...otherChanges,

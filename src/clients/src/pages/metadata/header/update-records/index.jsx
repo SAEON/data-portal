@@ -10,22 +10,22 @@ export default () => {
   const { selectedRows, changes, setChanges } = useContext(metadataContext)
   const [open, setOpen] = useState(false)
 
-  const changedSelectedRows = useMemo(() => {
+  const selectedChanges = useMemo(() => {
     return [...selectedRows].map(id => changes[id]).filter(_ => _)
   }, [changes, selectedRows])
 
   return (
     <>
-      <Tooltip title={`Save ${changedSelectedRows.length} changed metadata records`}>
+      <Tooltip title={`Save ${selectedChanges.length} changed metadata records`}>
         <span>
           <Button
-            disabled={changedSelectedRows.length < 1}
+            disabled={selectedChanges.length < 1}
             onClick={() => setOpen(true)}
             startIcon={<UpdateIcon size={18} />}
             size="small"
             variant="text"
           >
-            {`Update record${changedSelectedRows.length > 1 ? 's' : ''}`}
+            {`Update record${selectedChanges.length > 1 ? 's' : ''}`}
           </Button>
         </span>
       </Tooltip>
@@ -43,7 +43,7 @@ export default () => {
           setOpen={setOpen}
           setChanges={setChanges}
           changes={changes}
-          changedSelectedRows={changedSelectedRows}
+          selectedChanges={selectedChanges}
         />
       </Dialog>
     </>

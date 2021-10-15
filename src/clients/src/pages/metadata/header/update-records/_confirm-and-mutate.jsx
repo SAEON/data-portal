@@ -9,7 +9,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 
-export default ({ setOpen, setChanges, changes, changedSelectedRows }) => {
+export default ({ setOpen, setChanges, mergedChanges }) => {
   const theme = useTheme()
 
   const [updateMetadata, { loading, error }] = useMutation(
@@ -32,11 +32,11 @@ export default ({ setOpen, setChanges, changes, changedSelectedRows }) => {
     `,
     {
       onCompleted: ({ updateMetadata: updatedRecords }) => {
+        setOpen(false)
         setChanges({
-          ...changes,
+          ...mergedChanges,
           ...Object.fromEntries(updatedRecords.map(({ id }) => [id, null])),
         })
-        setOpen(false)
       },
     }
   )
@@ -47,7 +47,7 @@ export default ({ setOpen, setChanges, changes, changedSelectedRows }) => {
 
   return (
     <>
-      <DialogTitle>Update {changedSelectedRows.length} metadata records</DialogTitle>
+      <DialogTitle>Update {mergedChanges.length} metadata records</DialogTitle>
       <DialogContent dividers={true}>
         <Collapse in={loading} key="show-loading">
           <span>
@@ -91,29 +91,25 @@ export default ({ setOpen, setChanges, changes, changedSelectedRows }) => {
           disabled={loading}
           size="small"
           variant="text"
-          onClick={() => {
-            const input = changedSelectedRows.map(
-              ({ id, doi, sid, collection, institution, schema }) => {
-                return {
-                  id,
-                  doi,
-                  sid,
-                  institution_key: institution,
-                  metadataInput: {
-                    collection_key: collection,
-                    schema_key: schema,
-                    metadata: changes[id]?.metadata,
-                  },
-                }
-              }
-            )
-
+          onClick={() =>
             updateMetadata({
               variables: {
-                input,
+                input: mergedChanges.map(
+                  ({ id, doi, sid, collection, institution, schema, metadata }) => ({
+                    id,
+                    doi,
+                    sid,
+                    institution_key: institution,
+                    metadataInput: {
+                      collection_key: collection,
+                      schema_key: schema,
+                      metadata,
+                    },
+                  })
+                ),
               },
             })
-          }}
+          }
         >
           Update
         </Button>

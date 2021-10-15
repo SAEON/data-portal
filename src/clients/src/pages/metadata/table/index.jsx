@@ -40,7 +40,7 @@ export default () => {
     <DataGrid
       onFill={handleFill}
       style={{ flexGrow: 1 }}
-      rowRenderer={RowRenderer}
+      rowRenderer={props => <RowRenderer changed={Boolean(changes[props.row.id])} {...props} />}
       enableVirtualization={true}
       onSelectedRowsChange={setSelectedRows}
       selectedRows={selectedRows}

@@ -7,8 +7,48 @@ import JsonEditor from './_json-editor'
 import Form from './_form'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
+import { gql, useQuery } from '@apollo/client'
+import Loading from '../../../../components/loading'
 
 export default ({ row, onRowChange, column, onClose }) => {
+  const { error, loading } = useQuery(
+    gql`
+      query ($ids: [ID!]) {
+        indexedMetadata(ids: $ids) {
+          id
+          metadata
+        }
+      }
+    `,
+    {
+      /**
+       * Load the metadata for this row.
+       * Rows must be reset explicitly with
+       * new metadata field since initial
+       * query for metadata doesn't cache
+       * this field
+       */
+      onCompleted: data => {
+        onRowChange({
+          ...row,
+          metadata: { ...data.indexedMetadata[0].metadata, ...(row.metadata || {}) },
+        })
+      },
+      fetchPolicy: 'cache-first',
+      variables: {
+        ids: [row.id],
+      },
+    }
+  )
+
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    throw error
+  }
+
   return (
     <Provider row={row} onRowChange={onRowChange} column={column}>
       <Dialog maxWidth="xl" onClose={onClose} open={true}>
