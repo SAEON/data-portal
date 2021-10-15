@@ -34,7 +34,7 @@
   "dependencies": {
     "@graphql-tools/schema": "^8.2.0",
     "@koa/router": "^10.1.1",
-    "@saeon/logger": "^6.2.14",
+    "@saeon/logger": "^6.2.15",
     "apollo-server-core": "^3.4.0",
     "apollo-server-koa": "3.4",
     "archiver": "^5.3.0",
