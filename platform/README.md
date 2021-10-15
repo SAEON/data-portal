@@ -21,22 +21,28 @@ The best description of Ansible I have found was at [snel.com](https://www.snel.
 
 > Ansible is an open source automation software written in Python. It runs on UNIX-like systems and can provision and configure both UNIX-like and Windows systems. Unlike other automation software, Ansible does not require an agent to run on a target system. It leverages on the SSH connection and python interpreter to perform the given tasks on the target system. Ansible can be installed on a cloud server to manage other cloud servers from a central location, or it can also be configured to use on a personal system to manage cloud or on-premises systems.
 
-In this case it is assumed that Ansible is installed on your own PC as the __controller server__, and it will be used to connect to virtual machines running Linux - the __hosts__. As mentioned above, these servers (the hosts) do NOT need to have Ansible installed, but they do need Python 2 installed (Python 3 works, with additional configuration, and is probably worth a TODO in the future). Your PC will act as an ansible controller, and the virtual machines are ansible nodes.
+In this case it is assumed that Ansible is installed on your own PC as the __controller server__, and it will be used to connect to virtual machines running Linux - the __hosts__. As mentioned above, these servers (the hosts) do NOT need to have Ansible installed, but they do need Python 2 installed (Python 3 works, with additional configuration, and is probably worth a TODO in the future). Your PC/laptop will act as an ansible controller, and the virtual machines are ansible nodes.
 
 Essentially the ansible controller has the ability to run shell commands on hosts. This allows you to specify, for example, several thousand virtual servers and run exactly the same shell commands on each, concurrently. Many cloud VPS providers such as Digital Ocean, Hetzner, Linode, etc. provide an API for creating and destroying virtual servers, which is why this is useful.
 
-You can run shell commands on hosts using the Ansible CLI (installed on your local computer), or you can provide Ansible a configuration file that tells it what commands to run on the server. Extending this, you can specify general _tasks_ for Ansible to complete on hosts that can be as simple as a single command, or more complex. These configuration files are called [___Playbooks___](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html).Playbook syntax is sufficiently complicated enough that it can be considered an orchestration language in it's own right (according to Ansible). A scenario that a Playbook is useful as opposed to simple shell scripts is, for example, editing a configuration file. This can be done via a simple command:
+You can run shell commands on hosts using the Ansible CLI (installed on your local computer), or you can provide Ansible a configuration file that tells it what commands to run on the server. Extending this, you can specify general _tasks_ for Ansible to complete on hosts that can be as simple as a single command, or more complex. These configuration files are called [___Playbooks___](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html). Playbook syntax is sufficiently complicated enough that it can be considered an orchestration language in it's own right (according to Ansible).
+
+Ansible allows for specifying [idempotent](https://en.wikipedia.org/wiki/Idempotence) server configuration tasks. This is very helpful - take, for example, editing a Linux configuration file (such as `/etc/sudoers`). This can be done via a simple shell command:
 
 ```sh
 sudo echo ... >> some_config_file
 ```
 
-Such a command is NOT [idempotent](https://en.wikipedia.org/wiki/Idempotence), and probably should be (especially when editing `/etc/sudoers`). Ansible Playbooks provides idempotency without users having to write messy shell scripts that involve manipulating configuration file contents as strings. In the case of editing `/etc/sudoers`, it's also possible to protect against mistakes by validating changes prior to saving (without Ansible you would need to implement this logic yourself).
+Such a command is NOT idempotent - you can only run this command once. Running such a command multiple times can break server configuration. Ansible Playbooks provides idempotency without users having to write messy shell scripts that involve manipulating configuration file contents as strings. In the case of editing `/etc/sudoers`, it's also possible to protect against mistakes by validating changes prior to saving (without Ansible you would need to implement this logic yourself).
 
-If you can't / don't want to install Ansible on your computer then you can refer to the [__playbook__](ansible/playbooks/centos-7.yml) and just run the commands manually (run the commands with `sudo` access). Reading the playbook file it should be easy to figure out what commands are required to run. But... challenge yourself! Ansible is a fun and worthwhile tool.
+Of course it's also possible that an Ansible playbook is just a series of shell commands, and so the fact that you are configuring a server via Ansible does NOT in and of itself guarantee idempotency. Always read scripts before executing them on a server!!
 
-# Setup your virtual server(s)
-Configure your virtual servers so that passwordless login is possible from your computer (i.e. the Ansible __controller__). This means setting up SSH login on the virtual servers (__hosts__). Once this is done you should be able to login to your virtual servers via SSH.
+If you can't / don't want to install Ansible on your computer then you can still refer to the [__playbook__](ansible/playbooks/centos-7.yml) and just run the commands manually (run the commands with `sudo` access). Reading the playbook file it should be easy to figure out what commands are required to run. But... challenge yourself! Ansible is a fun and worthwhile tool.
+
+# Setup your virtual server(s) for passwordless login
+The Ansible playbook in this repository assumes a user with passwordless login is setup.
+
+Configure your virtual servers so that passwordless login is possible from your computer (i.e. the Ansible __controller__). This means setting up SSH login on the virtual servers (__hosts__). Once this is done you should be able to login to your virtual servers via SSH (without entering a password).
 
 ```sh
 ssh <name>@<ip> # Assuming the standard SSH port of 22

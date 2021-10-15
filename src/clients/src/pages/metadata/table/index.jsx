@@ -151,7 +151,7 @@ export default () => {
             renderFormatter: true,
           },
           formatter: props => {
-            const hasError = props.row.errors !== '"{}"'
+            const hasError = props.row.errors !== '{}'
             return (
               <div
                 style={{

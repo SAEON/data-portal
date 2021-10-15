@@ -12,7 +12,7 @@ export default ({ row, column: { key }, onClose }) => {
     <Dialog maxWidth="xl" onClose={onClose} open={true}>
       <DialogTitle>View JSON</DialogTitle>
       <DialogContent style={{ width: 800, height: 800 }}>
-        <pre style={theme.pre}>{JSON.stringify(JSON.parse(JSON.parse(row[key])), null, 2)}</pre>
+        <pre style={theme.pre}>{JSON.stringify(JSON.parse(row[key]), null, 2)}</pre>
       </DialogContent>
       <DialogActions>
         <Button variant="text" disableElevation size="small" onClick={onClose}>

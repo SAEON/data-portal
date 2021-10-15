@@ -139,7 +139,7 @@ type Query {
   """
   Search metadata from the ODP (indexed via Elasticsearch)
   """
-  indexedMetadata(id: ID): [Metadata!]!
+  indexedMetadata(ids: [ID!]): [Metadata!]!
   """
   Fetch a list of Institutions as defined in the ODP
   """

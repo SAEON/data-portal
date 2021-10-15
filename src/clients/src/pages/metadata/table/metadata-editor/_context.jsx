@@ -8,8 +8,8 @@ export default ({ children, row, onRowChange, column: { key } }) => {
   const [view, setView] = useState('form')
   const [loadMetadata, { error, loading }] = useLazyQuery(
     gql`
-      query ($id: ID) {
-        indexedMetadata(id: $id) {
+      query ($ids: [ID!]) {
+        indexedMetadata(ids: $ids) {
           id
           metadata
         }
@@ -22,8 +22,9 @@ export default ({ children, row, onRowChange, column: { key } }) => {
           metadata: { ...data.indexedMetadata[0].metadata, ...(row.metadata || {}) },
         })
       },
+      fetchPolicy: 'cache-and-network',
       variables: {
-        id: row.id,
+        ids: [row.id],
       },
     }
   )
@@ -34,7 +35,9 @@ export default ({ children, row, onRowChange, column: { key } }) => {
   )
 
   useEffect(() => {
-    loadMetadata()
+    if (!row?.metadata) {
+      loadMetadata()
+    }
   }, [loadMetadata, row?.metadata])
 
   if (loading) {
