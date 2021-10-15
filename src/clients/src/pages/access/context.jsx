@@ -1,6 +1,5 @@
 import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import Fade from '@material-ui/core/Fade'
 import Loading from '../../components/loading'
 
 export const context = createContext()
@@ -39,11 +38,7 @@ export default ({ children }) => {
   `)
 
   if (loading) {
-    return (
-      <Fade in={Boolean(loading)} key="loading-in">
-        <Loading withHeight />
-      </Fade>
-    )
+    return <Loading withHeight />
   }
 
   if (error) {

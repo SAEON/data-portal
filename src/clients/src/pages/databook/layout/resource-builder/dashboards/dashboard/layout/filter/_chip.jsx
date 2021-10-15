@@ -1,11 +1,11 @@
 import { useContext } from 'react'
 import { useMutation, gql } from '@apollo/client'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import { context as databookContext } from '../../../../../../contexts/databook-provider'
 import LoadingButton from '../../../../../../components/loading-dialogue-button'
-import Chip from '@material-ui/core/Chip'
-import Fade from '@material-ui/core/Fade'
-import Typography from '@material-ui/core/Typography'
+import Chip from '@mui/material/Chip'
+import Fade from '@mui/material/Fade'
+import Typography from '@mui/material/Typography'
 
 export default ({ id: filterId, name, dashboardId }) => {
   const theme = useTheme()

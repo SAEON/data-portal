@@ -1,5 +1,5 @@
-import IconButton from '@material-ui/core/IconButton'
-import PageForwardIcon from '@material-ui/icons/NavigateNext'
+import IconButton from '@mui/material/IconButton'
+import PageForwardIcon from '@mui/icons-material/NavigateNext'
 
 export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
   return (
@@ -18,8 +18,8 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
         })
       }}
       style={{ marginRight: 5 }}
-    >
+      size="large">
       <PageForwardIcon />
     </IconButton>
-  )
+  );
 }

@@ -1,10 +1,10 @@
 import { useContext, useMemo, useState } from 'react'
 import UpdateIcon from 'mdi-react/ContentSaveAllIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { context as metadataContext } from '../../context'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import MergeMetadata from './_merge-metadata'
-import Dialog from '@material-ui/core/Dialog'
+import Dialog from '@mui/material/Dialog'
 
 export default () => {
   const { selectedRows, changes, setChanges } = useContext(metadataContext)

@@ -1,9 +1,9 @@
 import Row from '../_row'
-import Typography from '@material-ui/core/Typography'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles';
 import DownloadButton from '../../../components/data-download'
 import SimpleLink from '../../../components/link'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 
 export default _source => {
   const theme = useTheme()
@@ -15,7 +15,7 @@ export default _source => {
       <Typography variant="body2" component="h2">
         {resourceDescription || '(Missing resource description and/or download URI)'}
       </Typography>
-      <Hidden xsDown>
+      <Hidden smDown>
         <span style={{ position: 'absolute', top: `calc(50% - 30px)`, right: theme.spacing(2) }}>
           <DownloadButton size={36} {..._source} />
         </span>
@@ -39,5 +39,5 @@ export default _source => {
         })}
       </div>
     </Row>
-  )
+  );
 }

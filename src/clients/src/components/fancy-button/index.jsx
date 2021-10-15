@@ -1,7 +1,7 @@
 import useStyles from './style'
-import ButtonBase from '@material-ui/core/ButtonBase'
+import ButtonBase from '@mui/material/ButtonBase'
 import { Link } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import clsx from 'clsx'
 
 export default ({ title, disabled = false, href = undefined, to = '/records', style = {} }) => {

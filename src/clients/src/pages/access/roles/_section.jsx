@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import Collapse from '../../../components/collapse'
 import Loading from '../../../components/loading'
-import CardContent from '@material-ui/core/CardContent'
+import CardContent from '@mui/material/CardContent'
 
 const Table = lazy(() => import('./_table'))
 

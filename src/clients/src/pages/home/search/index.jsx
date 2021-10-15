@@ -1,11 +1,10 @@
 import useSummary from './_summary'
 import Search from '../../../components/search'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Container from '@material-ui/core/Container'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
-import Toolbar from '@material-ui/core/Toolbar'
+import { useTheme, alpha } from '@mui/material/styles';
+import Container from '@mui/material/Container'
+import Toolbar from '@mui/material/Toolbar'
 import FancyButton from '../../../components/fancy-button'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 export default () => {
   const theme = useTheme()

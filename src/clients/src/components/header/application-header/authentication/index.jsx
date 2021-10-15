@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import useTheme from '@material-ui/core/styles/useTheme'
+import CircularProgress from '@mui/material/CircularProgress'
+import { useTheme } from '@mui/material/styles';
 import { context as authContext } from '../../../../contexts/authentication'
 import Login from './_login'
 import UserMenu from './user-menu'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 
 export default () => {
   const { pathname } = useLocation()

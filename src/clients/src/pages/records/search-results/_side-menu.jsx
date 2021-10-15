@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import Drawer from '@material-ui/core/SwipeableDrawer'
-import Grid from '@material-ui/core/Grid'
+import Drawer from '@mui/material/SwipeableDrawer'
+import Grid from '@mui/material/Grid'
 import CloseIcon from 'mdi-react/CloseIcon'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import Filters from './filters'
 
 export default ({ showSidebar, data, setShowSidebar }) => {
@@ -23,7 +23,7 @@ export default ({ showSidebar, data, setShowSidebar }) => {
             style={{ marginLeft: 'auto', display: 'flex' }}
             aria-label="Toggle search filters"
             onClick={() => setShowSidebar(false)}
-          >
+            size="large">
             <CloseIcon />
           </IconButton>
 
@@ -31,5 +31,5 @@ export default ({ showSidebar, data, setShowSidebar }) => {
         </Grid>
       </Drawer>
     </div>
-  )
+  );
 }

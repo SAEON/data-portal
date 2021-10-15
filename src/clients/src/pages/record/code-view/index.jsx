@@ -1,5 +1,5 @@
 import Row from '../_row'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
 export default ({ json }) => {
   return (

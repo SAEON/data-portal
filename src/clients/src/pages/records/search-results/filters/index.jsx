@@ -1,6 +1,6 @@
-import Grid from '@material-ui/core/Grid'
-import Fade from '@material-ui/core/Fade'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Grid from '@mui/material/Grid'
+import Fade from '@mui/material/Fade'
+import { useTheme } from '@mui/material/styles';
 import TagFilter from './tag-filter'
 import ExtentFilter from './extent-filter'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'

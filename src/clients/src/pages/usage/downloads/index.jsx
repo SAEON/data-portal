@@ -1,11 +1,11 @@
 import { useContext, lazy, Suspense } from 'react'
 import { context as downloadsContext } from './context'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import CardContent from '@material-ui/core/CardContent'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import CardContent from '@mui/material/CardContent'
 import Loading from '../../../components/loading'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Typography from '@material-ui/core/Typography'
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography'
 import Collapse from '../../../components/collapse'
 
 const BarChart = lazy(() => import('./charts/bar-chart'))

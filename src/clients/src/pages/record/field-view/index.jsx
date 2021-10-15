@@ -1,4 +1,4 @@
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import Titles from './_titles'
 import Creators from './_creators'
 import GeoLocations from './_geo-locations'

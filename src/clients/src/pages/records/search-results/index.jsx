@@ -3,15 +3,15 @@ import { useQuery } from '@apollo/client'
 import Header from './header'
 import Records from './records'
 import { context as globalContext } from '../../../contexts/global'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import Loading from '../../../components/loading'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
-import Container from '@material-ui/core/Container'
-import Hidden from '@material-ui/core/Hidden'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Container from '@mui/material/Container'
+import Hidden from '@mui/material/Hidden'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles';
 
 const MobileSideMenu = lazy(() => import('./_side-menu'))
 const Filters = lazy(() => import('./filters'))
@@ -24,8 +24,8 @@ const DEFAULT_CURSORS = {
 
 export default ({ disableSidebar }) => {
   const theme = useTheme()
-  const xsDown = useMediaQuery(theme => theme.breakpoints.down('xs'))
-  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const xsDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
   const [showSidebar, setShowSidebar] = useState(!disableSidebar && !xsDown)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
@@ -155,7 +155,7 @@ export default ({ disableSidebar }) => {
         loading={loading}
         catalogue={data?.catalogue}
       >
-        <Hidden smDown>
+        <Hidden mdDown>
           <div style={{ marginTop: theme.spacing(2) }} />
         </Hidden>
         <Container disableGutters={smDown} style={{ minHeight: 1000 }}>
@@ -187,7 +187,7 @@ export default ({ disableSidebar }) => {
               </Hidden>
 
               {/* LARGER SCREENS */}
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Grid container spacing={2}>
                   {showSidebar && !disableSidebar && (
                     <Grid item md={4}>
@@ -212,5 +212,5 @@ export default ({ disableSidebar }) => {
         </Container>
       </Header>
     </main>
-  )
+  );
 }

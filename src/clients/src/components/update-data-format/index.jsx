@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
 import CancelIcon from 'mdi-react/CancelIcon'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import Mutation from './mutation'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
 export default ({ Button: B, id, immutableResource }) => {
   const [open, setOpen] = useState(false)

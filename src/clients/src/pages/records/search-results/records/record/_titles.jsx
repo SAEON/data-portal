@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { context as configContext } from '../../../../../config'
 import { useHistory } from 'react-router-dom'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 import clsx from 'clsx'
 import useStyles from './style'
 

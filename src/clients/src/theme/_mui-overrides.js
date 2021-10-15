@@ -21,13 +21,6 @@ export default theme => ({
       },
     },
   },
-  MuiLinearProgress: {
-    barColorPrimary: {},
-    barColorSecondary: {},
-    root: {
-      height: theme.spacing(0.5),
-    },
-  },
   MuiButton: {
     root: {
       '&$disabled': {},

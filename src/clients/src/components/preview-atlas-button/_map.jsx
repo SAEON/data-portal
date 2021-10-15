@@ -7,7 +7,7 @@ import { OlReact } from '@saeon/ol-react'
 import Loading from '../../components/loading'
 import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'
-import DialogContent from '@material-ui/core/DialogContent'
+import DialogContent from '@mui/material/DialogContent'
 import useStyles from './style'
 import clsx from 'clsx'
 

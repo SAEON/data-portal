@@ -1,10 +1,10 @@
 import { forwardRef } from 'react'
-import Link from '@material-ui/core/Link'
+import Link from '@mui/material/Link'
 import { API_PUBLIC_ADDRESS } from '../../../../../config'
 import LogoutIcon from 'mdi-react/LogoutVariantIcon'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 
 export default forwardRef((props, ref) => {
   return (

@@ -1,9 +1,8 @@
 import { useState, useContext, lazy, Suspense } from 'react'
-import Collapse from '@material-ui/core/Collapse'
+import Collapse from '@mui/material/Collapse'
 import { context as globalContext } from '../../../../../contexts/global'
 import FilterHeader from './_header'
 import Loading from '../../../../../components/loading'
-import useTheme from '@material-ui/core/styles/useTheme'
 
 const FilterContent = lazy(() => import('./content'))
 
@@ -12,7 +11,6 @@ export default ({ results, id, title, field, boost, style = {} }) => {
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
   const [collapsed, setCollapsed] = useState(!activeFilters.length)
-  const theme = useTheme()
 
   return (
     <div style={{ position: 'relative' }}>
@@ -25,7 +23,7 @@ export default ({ results, id, title, field, boost, style = {} }) => {
       >
         <Suspense
           fallback={
-            <div style={{ height: theme.overrides.MuiLinearProgress.root.height }}>
+            <div>
               <Loading />
             </div>
           }

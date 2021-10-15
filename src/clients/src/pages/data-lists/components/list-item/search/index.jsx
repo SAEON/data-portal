@@ -1,6 +1,6 @@
 import { useContext, useRef, memo, useCallback } from 'react'
 import { context as listContext } from '../_context'
-import CardContent from '@material-ui/core/CardContent'
+import CardContent from '@mui/material/CardContent'
 import Collapse from '../../../../../components/collapse'
 import QuickForm from '@saeon/quick-form'
 import debounce from '../../../../../lib/fns/debounce'

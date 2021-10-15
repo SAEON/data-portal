@@ -1,5 +1,5 @@
-import { DataGrid } from '@material-ui/data-grid'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { DataGrid } from '@mui/x-data-grid'
+import { useTheme } from '@mui/material/styles'
 
 export default ({ permissions }) => {
   const theme = useTheme()

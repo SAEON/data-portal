@@ -1,5 +1,5 @@
-import Card from '@material-ui/core/Card'
-import Fade from '@material-ui/core/Fade'
+import Card from '@mui/material/Card'
+import Fade from '@mui/material/Fade'
 import Header from './header'
 import Authors from './_authors'
 import Descriptions from './_descriptions'

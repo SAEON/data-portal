@@ -1,14 +1,14 @@
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 import clsx from 'clsx'
 import useStyles from './style'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 
 export default ({ doi }) => {
   const classes = useStyles()
 
   return (
-    <Hidden xsDown>
+    <Hidden smDown>
       {doi ? (
         <Typography
           aria-label="Link to Datacite DOI address"
@@ -30,5 +30,5 @@ export default ({ doi }) => {
         </Typography>
       )}
     </Hidden>
-  )
+  );
 }

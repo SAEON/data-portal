@@ -1,8 +1,8 @@
 import Delete from './delete'
 import Save from './save'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import { useTheme } from '@mui/material/styles';
 
 export default props => {
   const theme = useTheme()

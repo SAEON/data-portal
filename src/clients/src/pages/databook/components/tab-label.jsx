@@ -1,10 +1,10 @@
 import { memo } from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import clsx from 'clsx'
 import useStyles from '../style'
-import Avatar from '@material-ui/core/Avatar'
-import useTheme from '@material-ui/core/styles/useTheme'
-import { deepOrange } from '@material-ui/core/colors'
+import Avatar from '@mui/material/Avatar'
+import { useTheme } from '@mui/material/styles';
+import { deepOrange } from '@mui/material/colors'
 
 export default memo(({ title, color, children }) => {
   const theme = useTheme()

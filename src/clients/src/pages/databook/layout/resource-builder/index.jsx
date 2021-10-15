@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import Dashboards from './dashboards'
 import Charts from './charts'
 import Filters from './filters'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import useLocalStorage from '../../../../hooks/use-localstorage'
 import { context as databookContext } from '../../contexts/databook-provider'
 

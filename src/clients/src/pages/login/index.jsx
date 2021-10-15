@@ -1,5 +1,5 @@
 import getUriState from '../../lib/fns/get-uri-state'
-import Container from '@material-ui/core/Container'
+import Container from '@mui/material/Container'
 import { API_PUBLIC_ADDRESS } from '../../config'
 import FancyButton from '../../components/fancy-button'
 import SkipLink from '../../components/skip-link'

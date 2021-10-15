@@ -1,9 +1,9 @@
 import { Component } from 'react'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import Link from '@material-ui/core/Link'
+import DialogContentText from '@mui/material/DialogContentText'
+import Link from '@mui/material/Link'
 import MessageDialogue from '../../components/message-dialogue'
 import { TECHNICAL_CONTACT } from '../../config'
-import withStyles from '@material-ui/core/styles/withStyles'
+import withStyles from '@mui/styles/withStyles';
 import style from './style'
 import clsx from 'clsx'
 

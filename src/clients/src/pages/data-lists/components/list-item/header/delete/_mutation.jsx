@@ -1,6 +1,6 @@
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { gql, useMutation } from '@apollo/client'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 
 export default ({ id, toggle }) => {

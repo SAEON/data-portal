@@ -7,9 +7,9 @@ import ContentNav from '../../components/content-nav'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import DownloadsIcon from 'mdi-react/DownloadMultipleIcon'
 import AccessDenied from '../../components/access-denied'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Fade from '@material-ui/core/Fade'
-import Container from '@material-ui/core/Container'
+import { useTheme } from '@mui/material/styles'
+import Fade from '@mui/material/Fade'
+import Container from '@mui/material/Container'
 import Header from './header'
 
 const Downloads = lazy(() => import('./downloads'))

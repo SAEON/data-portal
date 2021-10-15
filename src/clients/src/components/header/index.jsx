@@ -1,20 +1,20 @@
 import { useContext, forwardRef } from 'react'
 import { context as layoutContext } from '../../contexts/layout'
-import AppBar from '@material-ui/core/AppBar'
+import AppBar from '@mui/material/AppBar'
 import ApplicationBanner, {
   IMAGE_HEIGHT,
   Toolbar as ApplicationBanner_,
 } from './application-banner'
 import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
+  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
 
   return (
     <div ref={ref}>

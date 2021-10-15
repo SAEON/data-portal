@@ -1,5 +1,5 @@
-import Typography from '@material-ui/core/Typography'
-import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@mui/material/Typography'
+import Toolbar from '@mui/material/Toolbar'
 import Delete from './_delete'
 import Filter from './_filter'
 import useStyles from './style'

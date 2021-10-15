@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { context as listContext } from '../../_context'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { gql, useMutation } from '@apollo/client'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 import SaveIcon from 'mdi-react/ContentSaveIcon'
 
 export default ({ toggle }) => {

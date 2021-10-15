@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import FormGroup from '@material-ui/core/FormGroup'
+import FormGroup from '@mui/material/FormGroup'
 import Collection from './_collection'
 import NumberOfRecords from './_number-of-records'
 import Schema from './_schema'

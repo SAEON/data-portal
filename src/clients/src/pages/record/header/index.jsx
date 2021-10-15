@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Hidden from '@material-ui/core/Hidden'
+import Grid from '@mui/material/Grid'
+import Hidden from '@mui/material/Hidden'
 import DataDownloadButton from '../../../components/data-download'
 import { context as authorizationContext } from '../../../contexts/authorization'
 import PreviewAtlasButton from '../../../components/preview-atlas-button'
@@ -9,11 +9,11 @@ import CitationButton from '../../../components/citation-dialogue'
 import CodeViewButton from './_code-view-button'
 import Title from './_title'
 import FancyHeader from '../../../components/toolbar-header'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import UpdateDataFormat from '../../../components/update-data-format'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import UpdateIcon from 'mdi-react/DatabaseEditIcon'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 
 export default ({ codeView, toggleCodeView, _source }) => {
   const { isAuthenticated, hasPermission } = useContext(authorizationContext)
@@ -35,7 +35,7 @@ export default ({ codeView, toggleCodeView, _source }) => {
             {..._source}
             Button={({ open, setOpen }) => (
               <Tooltip placement="top" title="Update this record to include format information">
-                <IconButton style={{ cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+                <IconButton style={{ cursor: 'pointer' }} onClick={() => setOpen(!open)} size="large">
                   <UpdateIcon size={22} />
                 </IconButton>
               </Tooltip>
@@ -43,7 +43,7 @@ export default ({ codeView, toggleCodeView, _source }) => {
           />
         )}
 
-        <Hidden xsDown>
+        <Hidden smDown>
           <CreateDatabookButton {..._source} buttonSize="medium" />
           {isAuthenticated && (
             <CodeViewButton codeView={codeView} toggleCodeView={toggleCodeView} />
@@ -51,10 +51,10 @@ export default ({ codeView, toggleCodeView, _source }) => {
           <CitationButton {..._source} buttonSize="medium" />
         </Hidden>
 
-        <Hidden xsDown>
+        <Hidden smDown>
           <DataDownloadButton buttonProps={{ color: 'primary' }} {..._source} />
         </Hidden>
       </Grid>
     </FancyHeader>
-  )
+  );
 }

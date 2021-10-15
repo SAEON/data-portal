@@ -1,11 +1,11 @@
-import Card from '@material-ui/core/Card'
-import Avatar from '@material-ui/core/Avatar'
+import Card from '@mui/material/Card'
+import Avatar from '@mui/material/Avatar'
 import Icon from 'mdi-react/CancelIcon'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
 
 export default ({ requiredPermission = 'NA' }) => {
   const theme = useTheme()

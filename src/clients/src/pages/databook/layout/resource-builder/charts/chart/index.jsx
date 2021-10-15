@@ -1,12 +1,12 @@
 import { lazy, Suspense } from 'react'
-import Typography from '@material-ui/core/Typography'
-import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@mui/material/Typography'
+import Toolbar from '@mui/material/Toolbar'
 import Delete from './_delete'
 import Share from './_share'
 import Edit from './_edit'
 import useStyles from './style'
 import clsx from 'clsx'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 
 const EChart = lazy(() => import('../../../../../../components/chart-controller'))
 

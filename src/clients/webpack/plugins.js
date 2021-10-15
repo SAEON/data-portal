@@ -56,5 +56,5 @@ module.exports = (ROOT, output) => {
     // mode === 'production' ? new GenerateSW({}) : null,
     // new BundleAnalyzerPlugin(),
     ...loadEntryPoints(ROOT, output),
-  ].filter(_ => _)
+  ].filter(_ => _);
 }

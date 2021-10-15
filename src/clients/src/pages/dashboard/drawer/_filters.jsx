@@ -3,7 +3,7 @@ import { context as dashboardContext } from '../context'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 import DropdownSelect from '../../../components/dropdown-select'
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@mui/icons-material/Search'
 
 export default () => {
   const { selectedFilters, setSelectedFilters, filterIds } = useContext(dashboardContext)

@@ -1,11 +1,10 @@
-import createMuiTheme from '@material-ui/core/styles/createTheme'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { adaptV4Theme, createTheme, alpha } from '@mui/material/styles';
 import overrides from './_mui-overrides'
 import muiDefaults from './_mui'
 
-const defaultTheme = createMuiTheme()
+const defaultTheme = createTheme()
 
-export default createMuiTheme({
+export default createTheme(adaptV4Theme({
   ...muiDefaults,
   props: {
     MuiUseMediaQuery: {
@@ -34,4 +33,4 @@ export default createMuiTheme({
   },
   backgroundColor: alpha(defaultTheme.palette.common.white, 0.9),
   boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
-})
+}))

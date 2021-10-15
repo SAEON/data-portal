@@ -1,5 +1,5 @@
-import Tooltip from '@material-ui/core/Tooltip'
-import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
 import CodeIcon from 'mdi-react/CodeIcon'
 
 export default ({ codeView, toggleCodeView }) => {
@@ -12,9 +12,9 @@ export default ({ codeView, toggleCodeView }) => {
           e.stopPropagation()
           toggleCodeView()
         }}
-      >
+        size="large">
         <CodeIcon size={22} />
       </IconButton>
     </Tooltip>
-  )
+  );
 }

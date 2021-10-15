@@ -1,11 +1,11 @@
 import Autocomplete from '../../../components/autocomplete'
 import DropdownSelect from '../../../components/dropdown-select'
-import TextField from '@material-ui/core/TextField'
-import IconButton from '@material-ui/core/IconButton'
-import Divider from '@material-ui/core/Divider'
-import Grid from '@material-ui/core/Grid'
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
-import DeleteIcon from '@material-ui/icons/Delete'
+import TextField from '@mui/material/TextField'
+import IconButton from '@mui/material/IconButton'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default {
   type: 'LINE', // NOTE - this value must also be defined on the ChartType enum in the API
@@ -108,6 +108,7 @@ export default {
                         valueCopy.splice(i, 1)
                         setValue(valueCopy)
                       }}
+                      size="large"
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -124,6 +125,7 @@ export default {
                   if (value === undefined) setValue([{ name: undefined, value: undefined }])
                   else setValue([...value, { name: undefined, value: undefined }])
                 }}
+                size="large"
               >
                 <AddCircleOutlineOutlinedIcon />
               </IconButton>

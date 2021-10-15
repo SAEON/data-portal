@@ -1,11 +1,11 @@
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
-import Link from '@material-ui/core/Link'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Grid from '@material-ui/core/Grid'
+import { useTheme } from '@mui/material/styles';
+import Grid from '@mui/material/Grid'
 import Contact from './_contact'
 
 export default ({ routes }) => {

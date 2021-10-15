@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 import CreateChart from './create-chart'
 import Label from '../../../../components/tab-label'
 import { context as chartsContext } from '../../../../contexts/charts-provider'

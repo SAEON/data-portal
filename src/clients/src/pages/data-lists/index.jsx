@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import Container from '@material-ui/core/Container'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Container from '@mui/material/Container'
+import { useTheme } from '@mui/material/styles'
 import ListsProvider from './context'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'

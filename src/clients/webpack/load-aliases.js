@@ -22,8 +22,8 @@ module.exports = (ROOT, mode) => ({
   '@apollo/client': path.resolve(ROOT, './node_modules/@apollo/client'),
 
   // Material UI
-  '@material-ui/core': path.resolve(ROOT, './node_modules/@material-ui/core'),
-  '@material-ui/icons': path.resolve(ROOT, './node_modules/@material-ui/icons'),
+  '@mui/material': path.resolve(ROOT, './node_modules/@mui/material'),
+  '@mui/icons-material': path.resolve(ROOT, './node_modules/@mui/icons-material'),
 
   // React
   react: path.resolve(ROOT, './node_modules/react'),

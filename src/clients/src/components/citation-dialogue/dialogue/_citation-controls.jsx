@@ -1,14 +1,14 @@
 import { useQuery } from '@apollo/client'
 import { gql } from '@apollo/client'
-import DialogActions from '@material-ui/core/DialogActions'
-import AssignmentIcon from '@material-ui/icons/Assignment'
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import DialogActions from '@mui/material/DialogActions'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 import LanguageSelector from './_language-selector'
 import StyleSelector from './_style-selector'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 
 export default ({
   doi,

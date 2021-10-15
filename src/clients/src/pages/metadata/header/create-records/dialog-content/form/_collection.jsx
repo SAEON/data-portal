@@ -1,6 +1,6 @@
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 import { fieldProps } from './index'
-import MenuItem from '@material-ui/core/MenuItem'
+import MenuItem from '@mui/material/MenuItem'
 
 export default ({ update, collection, collectionOptions, loading }) => {
   if (loading) {

@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
-import MuiLink from '@material-ui/core/Link'
+import MuiLink from '@mui/material/Link'
 import EditIcon from 'mdi-react/EditIcon'
 import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
 

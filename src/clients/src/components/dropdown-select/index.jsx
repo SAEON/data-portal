@@ -1,10 +1,10 @@
-import IconButton from '@material-ui/core/IconButton'
-import Grid from '@material-ui/core/Grid'
+import IconButton from '@mui/material/IconButton'
+import Grid from '@mui/material/Grid'
 import CloseIcon from 'mdi-react/CloseIcon'
 import AutoComplete from '../autocomplete'
 import useStyles from './style.js'
 import clsx from 'clsx'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 /**
  * TO-DO:
  * Ellipsis overflow needs work

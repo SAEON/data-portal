@@ -1,6 +1,6 @@
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import Toolbar_ from './toolbar'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 
 export const IMAGE_HEIGHT = 48
 
@@ -16,7 +16,7 @@ export default ({ title }) => {
   return (
     <Toolbar_>
       {/* SAEON LOGO */}
-      <Hidden mdDown>
+      <Hidden lgDown>
         <a {...aProps} href="http://www.saeon.ac.za/">
           <img
             style={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
@@ -44,7 +44,7 @@ export default ({ title }) => {
       </header>
 
       {/* SARVA LOGO */}
-      <Hidden mdDown>
+      <Hidden lgDown>
         <a {...aProps} href="http://sarva.saeon.ac.za/">
           <img
             style={{
@@ -59,5 +59,5 @@ export default ({ title }) => {
         </a>
       </Hidden>
     </Toolbar_>
-  )
+  );
 }

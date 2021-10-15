@@ -1,8 +1,8 @@
 import { createContext } from 'react'
 import CheckStatus from './_check-status'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { TECHNICAL_CONTACT } from '../../../../config'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import clsx from 'clsx'
 import useStyles from '../../style'
 

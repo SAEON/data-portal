@@ -1,14 +1,14 @@
 import { useMemo } from 'react'
 import Record from './record'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles';
 
 export default ({ results }) => {
   const theme = useTheme()
-  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   const style = useMemo(
     () => ({

@@ -4,7 +4,7 @@ import { context as databookContext } from '../../../contexts/databook-provider'
 import { context as dashboardsContext } from '../../../contexts/dashboards-provider'
 import HeaderControls from './header-controls'
 import Dashboard from './dashboard'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import useLocalStorage from '../../../../../hooks/use-localstorage'
 
 export default forwardRef((props, ref) => {

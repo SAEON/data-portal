@@ -1,5 +1,5 @@
 import { cloneElement } from 'react'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
 
 export default ({ children }) => {
   const trigger = useScrollTrigger({

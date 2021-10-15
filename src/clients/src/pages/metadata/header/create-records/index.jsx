@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Dialog from '@material-ui/core/Dialog'
+import Dialog from '@mui/material/Dialog'
 import Toggle from './dialog-toggle'
 import Title from './dialog-title'
 import Content from './dialog-content'

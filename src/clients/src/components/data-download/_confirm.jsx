@@ -2,10 +2,10 @@ import { useContext, useState, memo } from 'react'
 import RegisterEventLog from '../../components/application-logger/register-event-log'
 import packageJson from '../../../package.json'
 import { LATEST_COMMIT } from '../../config'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import { context as globalContext } from '../../contexts/global'
 import { gql, useMutation } from '@apollo/client'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
 export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form, disabled }) => {
   const [ref, setRef] = useState(null)

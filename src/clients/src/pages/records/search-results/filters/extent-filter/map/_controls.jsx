@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
-import IconButton from '@material-ui/core/IconButton'
-import Card from '@material-ui/core/Card'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import Card from '@mui/material/Card'
 import CropIcon from 'mdi-react/EditIcon'
 import CloseIcon from 'mdi-react/CloseIcon'
 import VectorLayer from 'ol/layer/Vector'
@@ -10,7 +10,7 @@ import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
 import { context as globalContext } from '../../../../../../contexts/global'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 
 const wkt = new WKT()
 

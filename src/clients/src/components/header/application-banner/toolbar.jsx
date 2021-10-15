@@ -1,4 +1,4 @@
-import Toolbar from '@material-ui/core/Toolbar'
+import Toolbar from '@mui/material/Toolbar'
 
 export default props => {
   const { style, ...otherProps } = props

@@ -1,10 +1,10 @@
 import { useContext } from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
-import Checkbox from '@material-ui/core/Checkbox'
-import Grid from '@material-ui/core/Grid'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import Checkbox from '@mui/material/Checkbox'
+import Grid from '@mui/material/Grid'
 import { context as globalContext } from '../../../../../../contexts/global'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 
 export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filterId }) => {
   const { global, setGlobal } = useContext(globalContext)

@@ -1,5 +1,5 @@
-import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
+import Card from '@mui/material/Card'
+import Typography from '@mui/material/Typography'
 
 export default () => {
   return (

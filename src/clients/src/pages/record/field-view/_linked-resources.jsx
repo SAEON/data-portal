@@ -1,5 +1,5 @@
 import Row from '../_row'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import SimpleLink from '../../../components/link'
 
 export default ({ linkedResources }) => (

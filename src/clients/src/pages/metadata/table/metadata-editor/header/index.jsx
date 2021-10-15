@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
 import CodeIcon from 'mdi-react/CodeJsonIcon'
 import FormIcon from 'mdi-react/FormTextboxIcon'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import { context as editorContext } from '../context'
 
 export default () => {

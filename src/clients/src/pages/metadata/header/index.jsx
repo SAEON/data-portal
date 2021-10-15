@@ -2,8 +2,8 @@ import Toolbar from '../../../components/toolbar-header'
 import DeleteRecords from './delete-records'
 import CreateRecords from './create-records'
 import UpdateRecords from './update-records'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Divider from '@material-ui/core/Divider'
+import { useTheme } from '@mui/material/styles';
+import Divider from '@mui/material/Divider'
 
 export default () => {
   const theme = useTheme()

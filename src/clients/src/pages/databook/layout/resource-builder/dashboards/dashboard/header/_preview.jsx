@@ -1,9 +1,9 @@
 import ShareIcon from 'mdi-react/FileEyeOutlineIcon'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../../config'
 import MessageDialogue from '../../../../../../../components/message-dialogue'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button'
 
 /**
  * TODO

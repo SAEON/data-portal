@@ -1,7 +1,7 @@
 import Chart from './chart'
 import Filter from './filter'
-import Toolbar from '@material-ui/core/Toolbar'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Toolbar from '@mui/material/Toolbar'
+import { useTheme } from '@mui/material/styles';
 import useStyles from '../style'
 import clsx from 'clsx'
 

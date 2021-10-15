@@ -1,5 +1,5 @@
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
 import clsx from 'clsx'
 import useStyles from '../style'
 import UnknownFormat from './_unknown-format.jsx'

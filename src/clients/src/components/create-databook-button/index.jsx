@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import Fade from '@material-ui/core/Fade'
-import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import Fade from '@mui/material/Fade'
+import Tooltip from '@mui/material/Tooltip'
 import LoadingCircular from '../../components/loading-circular'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import { TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'

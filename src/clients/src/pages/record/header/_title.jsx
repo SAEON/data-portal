@@ -1,4 +1,4 @@
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 export default ({ doi }) => (
   <Typography variant="overline" component="h1">

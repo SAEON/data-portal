@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import { context as dialogContext } from '../context'
-import DialogContent from '@material-ui/core/DialogContent'
-import Collapse from '@material-ui/core/Collapse'
-import Fade from '@material-ui/core/Fade'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import useTheme from '@material-ui/core/styles/useTheme'
+import DialogContent from '@mui/material/DialogContent'
+import Collapse from '@mui/material/Collapse'
+import Fade from '@mui/material/Fade'
+import CircularProgress from '@mui/material/CircularProgress'
+import { useTheme } from '@mui/material/styles';
 import Form from './form'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 const Content = ({
   form,

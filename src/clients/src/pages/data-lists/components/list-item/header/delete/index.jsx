@@ -1,7 +1,7 @@
 import Mutation from './_mutation'
 import MessageDialogue from '../.././../../../../components/message-dialogue'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
 export default props => {
   return (

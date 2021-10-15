@@ -1,15 +1,15 @@
 import { useState, useContext, lazy, Suspense } from 'react'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Collapse from '@material-ui/core/Collapse'
-import Fade from '@material-ui/core/Fade'
-import Card from '@material-ui/core/Card'
-import useTheme from '@material-ui/core/styles/useTheme'
-import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Collapse from '@mui/material/Collapse'
+import Fade from '@mui/material/Fade'
+import Card from '@mui/material/Card'
+import { useTheme } from '@mui/material/styles'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { context as globalContext } from '../../../../../contexts/global'
 import Loading from '../../../../../components/loading'
 
@@ -65,7 +65,7 @@ export default ({ title }) => {
       <Collapse style={{ width: '100%' }} key="result-list-collapse" unmountOnExit in={!collapsed}>
         <Suspense
           fallback={
-            <div style={{ height: theme.overrides.MuiLinearProgress.root.height }}>
+            <div>
               <Loading />
             </div>
           }

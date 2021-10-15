@@ -1,7 +1,7 @@
 import SkipLink from '../../components/skip-link'
 import Search from './search'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@mui/material/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import clsx from 'clsx'
 
 const useStyles = makeStyles(theme => ({

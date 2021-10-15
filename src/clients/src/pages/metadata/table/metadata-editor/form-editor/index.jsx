@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { context as editorContext } from '../context'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import ObjectField from '../../../components/obj-form-field'
-import FormGroup from '@material-ui/core/FormGroup'
+import FormGroup from '@mui/material/FormGroup'
 
 export default () => {
   const { view, json } = useContext(editorContext)

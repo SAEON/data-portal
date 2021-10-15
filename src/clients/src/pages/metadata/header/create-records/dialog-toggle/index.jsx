@@ -1,6 +1,6 @@
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import AddIcon from 'mdi-react/AddBoxIcon'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 
 export default ({ open, setOpen }) => (
   <Tooltip title="Create new metadata">

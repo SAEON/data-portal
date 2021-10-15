@@ -1,5 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@mui/material/styles';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   root: {
@@ -51,6 +52,6 @@ export default makeStyles(theme => ({
     color: alpha(theme.palette.common.white, 1),
     border: `1px solid ${alpha(theme.palette.common.white, 0)}`,
     transition: theme.transitions.create(['border', 'color']),
-    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+    padding: `calc(${theme.spacing(2)} ${theme.spacing(4)} ${theme.spacing(1)} + 6px)`,
   },
 }))

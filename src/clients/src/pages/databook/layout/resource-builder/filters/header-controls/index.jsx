@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 import CreateFilter from './create-filter'
 import Label from '../../../../components/tab-label'
 import { context as filterContext } from '../../../../contexts/filters-provider'

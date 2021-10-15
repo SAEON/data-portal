@@ -1,13 +1,13 @@
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
 import { gql, useMutation } from '@apollo/client'
-import Typography from '@material-ui/core/Typography'
-import Collapse from '@material-ui/core/Collapse'
-import Fade from '@material-ui/core/Fade'
-import useTheme from '@material-ui/core/styles/useTheme'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Button from '@material-ui/core/Button'
+import Typography from '@mui/material/Typography'
+import Collapse from '@mui/material/Collapse'
+import Fade from '@mui/material/Fade'
+import { useTheme } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress'
+import Button from '@mui/material/Button'
 
 export default ({ setOpen, setChanges, mergedChanges }) => {
   const theme = useTheme()

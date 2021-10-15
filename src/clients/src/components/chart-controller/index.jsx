@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import Loading from '../loading'
 import { gql } from '@apollo/client'
 import chartDefinitions from '../charts'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 
 export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
   const { error, loading, data } = useQuery(

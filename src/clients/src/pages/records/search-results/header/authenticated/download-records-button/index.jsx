@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
-import Fade from '@material-ui/core/Fade'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import Fade from '@mui/material/Fade'
+import CircularProgress from '@mui/material/CircularProgress'
 import DownloadIcon from 'mdi-react/DownloadCircleIcon'
 import { context as globalContext } from '../../../../../../contexts/global'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
@@ -75,7 +75,7 @@ export default ({ catalogue }) => {
               })
             }
             disabled={!applicableRecordsCount}
-          >
+            size="large">
             <StyledBadge
               color={applicableRecordsCount ? 'primary' : 'default'}
               badgeContent={applicableRecordsCount}
@@ -88,5 +88,5 @@ export default ({ catalogue }) => {
         </span>
       </Tooltip>
     </Fade>
-  )
+  );
 }

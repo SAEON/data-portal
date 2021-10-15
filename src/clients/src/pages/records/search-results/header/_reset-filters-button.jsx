@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import ResetIcon from 'mdi-react/RefreshIcon'
 import { context as globalContext } from '../../../../contexts/global'
 
@@ -19,10 +19,10 @@ export default () => {
               text: '',
             })
           }
-        >
+          size="large">
           <ResetIcon />
         </IconButton>
       </span>
     </Tooltip>
-  )
+  );
 }

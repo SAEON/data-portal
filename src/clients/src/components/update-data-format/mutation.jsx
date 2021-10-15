@@ -1,5 +1,5 @@
 import AcceptIcon from 'mdi-react/TickIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { gql, useMutation } from '@apollo/client'
 
 export default ({ id, immutableResource, setOpen }) => {

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { context as dialogContext } from '../context'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
+import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button'
 
 const Actions = ({ setOpen, form, createMetadata, createMetadataError, createMetadataLoading }) => {
   if (createMetadataError) {

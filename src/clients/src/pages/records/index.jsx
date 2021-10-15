@@ -2,11 +2,10 @@ import { useMemo } from 'react'
 import Results from './search-results'
 import Search from '../../components/search'
 import SkipLink from '../../components/skip-link'
-import Container from '@material-ui/core/Container'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
-import Toolbar from '@material-ui/core/Toolbar'
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Container from '@mui/material/Container'
+import { alpha, useTheme } from '@mui/material/styles'
+import Toolbar from '@mui/material/Toolbar'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 /**
  * disableSidebar will hide the 'show filters' button on a mobile
@@ -17,7 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
  */
 export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
   const theme = useTheme()
-  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   const style = useMemo(
     () => ({

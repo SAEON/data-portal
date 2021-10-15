@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 import Autocomplete from '../../../components/autocomplete'
 import DropdownSelect from '../../../components/dropdown-select'
-import TextField from '@material-ui/core/TextField'
-import IconButton from '@material-ui/core/IconButton'
-import Divider from '@material-ui/core/Divider'
-import Grid from '@material-ui/core/Grid'
-import FormControl from '@material-ui/core/FormControl'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined'
-import DeleteIcon from '@material-ui/icons/Delete'
+import TextField from '@mui/material/TextField'
+import IconButton from '@mui/material/IconButton'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import FormControl from '@mui/material/FormControl'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default {
   type: 'BAR', // NOTE - this value must also be defined on the ChartType enum in the API
@@ -144,6 +144,7 @@ export default {
                         valueCopy.splice(i, 1)
                         setValue(valueCopy)
                       }}
+                      size="large"
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -160,6 +161,7 @@ export default {
                   if (value === undefined) setValue([{ name: undefined, value: undefined }])
                   else setValue([...value, { name: undefined, value: undefined }])
                 }}
+                size="large"
               >
                 <AddCircleOutlineOutlinedIcon />
               </IconButton>

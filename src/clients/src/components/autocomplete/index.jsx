@@ -1,10 +1,10 @@
-import TextField from '@material-ui/core/TextField'
-import Checkbox from '@material-ui/core/Checkbox'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import TextField from '@mui/material/TextField'
+import Checkbox from '@mui/material/Checkbox'
+import Autocomplete from '@mui/material/Autocomplete'
 import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
-import CheckboxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
-import CheckboxIcon from '@material-ui/icons/CheckBox'
+import CheckboxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import CheckboxIcon from '@mui/icons-material/CheckBox'
 
 export default ({
   id,
@@ -28,7 +28,7 @@ export default ({
         const optionIndex = ev.target.dataset.optionIndex
         setOption(newVal, optionIndex)
       }}
-      getOptionSelected={getOptionSelected}
+      isOptionEqualToValue={getOptionSelected}
       // Internal
       fullWidth
       ListboxComponent={ListboxComponent}
@@ -76,5 +76,5 @@ export default ({
           : undefined
       }
     />
-  )
+  );
 }

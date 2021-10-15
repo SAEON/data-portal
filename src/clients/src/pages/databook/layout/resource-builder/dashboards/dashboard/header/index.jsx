@@ -5,11 +5,11 @@ import AddFilter from './add-filter'
 import Preview from './_preview'
 import Save from './save'
 import Edit from './edit'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 import useStyles from '../style'
 import clsx from 'clsx'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex, gridState }) => {
   const theme = useTheme()

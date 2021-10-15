@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 import { context as databookContext } from '../../../../contexts/databook-provider'
 import { gql, useMutation } from '@apollo/client'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import PlusIcon from 'mdi-react/PlusIcon'
-import Fade from '@material-ui/core/Fade'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Fade from '@mui/material/Fade'
+import { useTheme } from '@mui/material/styles';
 
 export default ({ setActiveTabIndex }) => {
   const theme = useTheme()

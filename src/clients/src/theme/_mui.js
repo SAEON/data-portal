@@ -17,7 +17,7 @@ export default {
     },
   },
   palette: {
-    type: 'light',
+    mode: 'light',
     contrastThreshold: 3,
     primary: {
       // light calculated from main

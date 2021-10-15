@@ -1,5 +1,5 @@
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import ApolloProvider from '../components/apollo'
 import GlobalProvider from '../contexts/global'
 import ClientInfoProvider from '../contexts/client-info'
@@ -22,37 +22,39 @@ export default ({ children, ...config }) => {
   return (
     <DynamicConfigProvider contentBase={config.contentBase || '/'}>
       <Router>
-        <CssBaseline>
+        <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <ErrorBoundary>
-              <DetectDevice>
-                <NativeExtensions>
-                  <ApolloProvider>
-                    <ClientInfoProvider>
-                      <CookieConsent>
-                        <AuthenticationProvider>
-                          <AuthorizationProvider>
-                            <GlobalProvider>
-                              <BackgroundImageProvider {...config}>
-                                <ApplicationLogger>
-                                  <SnackbarProvider>
-                                    <DefaultApplicationNotices>
-                                      <LayoutProvider>{children}</LayoutProvider>
-                                    </DefaultApplicationNotices>
-                                  </SnackbarProvider>
-                                </ApplicationLogger>
-                              </BackgroundImageProvider>
-                            </GlobalProvider>
-                          </AuthorizationProvider>
-                        </AuthenticationProvider>
-                      </CookieConsent>
-                    </ClientInfoProvider>
-                  </ApolloProvider>
-                </NativeExtensions>
-              </DetectDevice>
-            </ErrorBoundary>
+            <CssBaseline>
+              <ErrorBoundary>
+                <DetectDevice>
+                  <NativeExtensions>
+                    <ApolloProvider>
+                      <ClientInfoProvider>
+                        <CookieConsent>
+                          <AuthenticationProvider>
+                            <AuthorizationProvider>
+                              <GlobalProvider>
+                                <BackgroundImageProvider {...config}>
+                                  <ApplicationLogger>
+                                    <SnackbarProvider>
+                                      <DefaultApplicationNotices>
+                                        <LayoutProvider>{children}</LayoutProvider>
+                                      </DefaultApplicationNotices>
+                                    </SnackbarProvider>
+                                  </ApplicationLogger>
+                                </BackgroundImageProvider>
+                              </GlobalProvider>
+                            </AuthorizationProvider>
+                          </AuthenticationProvider>
+                        </CookieConsent>
+                      </ClientInfoProvider>
+                    </ApolloProvider>
+                  </NativeExtensions>
+                </DetectDevice>
+              </ErrorBoundary>
+            </CssBaseline>
           </ThemeProvider>
-        </CssBaseline>
+        </StyledEngineProvider>
       </Router>
     </DynamicConfigProvider>
   )

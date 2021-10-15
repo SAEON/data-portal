@@ -1,9 +1,9 @@
 import Toolbar_ from './toolbar'
 import Authentication from './authentication'
 import NavigationMenu from './navigation-menu'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Hidden from '@material-ui/core/Hidden'
-import Divider from '@material-ui/core/Divider'
+import { useTheme } from '@mui/material/styles';
+import Hidden from '@mui/material/Hidden'
+import Divider from '@mui/material/Divider'
 import Breadcrumbs from './breadcrumbs'
 
 export const Toolbar = Toolbar_
@@ -16,7 +16,7 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
       {/* NAVIGATION MENU */}
       <div style={{ marginLeft: theme.spacing(1) }} />
       <NavigationMenu routes={routes} />
-      <Hidden xsDown>
+      <Hidden smDown>
         <Divider
           flexItem
           orientation="vertical"
@@ -24,7 +24,7 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
         />
       </Hidden>
 
-      <Hidden smDown>
+      <Hidden mdDown>
         {!disableBreadcrumbs && <Breadcrumbs contentBase={contentBase} routes={routes} />}
       </Hidden>
 
@@ -32,5 +32,5 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
 
       <Authentication />
     </Toolbar_>
-  )
+  );
 }

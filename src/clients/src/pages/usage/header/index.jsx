@@ -1,7 +1,7 @@
 import Header from '../../../components/toolbar-header'
 import Download from './_download'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Divider from '@material-ui/core/Divider'
+import { useTheme } from '@mui/material/styles';
+import Divider from '@mui/material/Divider'
 
 export default () => {
   const theme = useTheme()

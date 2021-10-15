@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Dialogue from './dialogue'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
-import CitationIcon from '@material-ui/icons/FormatQuote'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import CitationIcon from '@mui/icons-material/FormatQuote'
 import { nanoid } from 'nanoid'
 
 export default ({ doi, buttonSize = 'small' }) => {

@@ -1,4 +1,4 @@
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import QuickForm from '@saeon/quick-form'
 import debounce from '../../lib/fns/debounce'
 

@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
-import IconButton from '@material-ui/core/IconButton'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Fade from '@material-ui/core/Fade'
-import MapIcon from '@material-ui/icons/Explore'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import CircularProgress from '@mui/material/CircularProgress'
+import Fade from '@mui/material/Fade'
+import MapIcon from '@mui/icons-material/Explore'
 import { gql, useMutation } from '@apollo/client'
 import { context as globalContext } from '../../../../../../contexts/global'
 import StyledBadge from '../../components/styled-badge'
@@ -76,7 +76,7 @@ export default ({ cache, catalogue }) => {
                 },
               })
             }
-          >
+            size="large">
             <StyledBadge
               color={available ? 'primary' : 'default'}
               badgeContent={
@@ -93,5 +93,5 @@ export default ({ cache, catalogue }) => {
         </span>
       </Tooltip>
     </Fade>
-  )
+  );
 }

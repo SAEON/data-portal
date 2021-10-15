@@ -1,8 +1,8 @@
-import Toolbar from '@material-ui/core/Toolbar'
+import Toolbar from '@mui/material/Toolbar'
 import useStyles from '../style'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import clsx from 'clsx'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import RemoveChart from './_remove-chart'
 
 export default ({ id, title, dashboardId }) => {

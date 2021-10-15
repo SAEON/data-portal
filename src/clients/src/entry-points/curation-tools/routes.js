@@ -4,7 +4,7 @@ import LoginIcon from 'mdi-react/LoginIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
 import DataSubmissionsIcon from 'mdi-react/DatabaseIcon'
 import Auth from '../../components/auth'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import Loading from '../../components/loading'
 
 const HomePage = lazy(() => import('../../pages/home-curation-tools'))

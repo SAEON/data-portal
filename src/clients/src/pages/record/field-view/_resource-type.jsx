@@ -1,6 +1,6 @@
 import Row from '../_row'
-import Grid from '@material-ui/core/Grid'
-import Chip from '@material-ui/core/Chip'
+import Grid from '@mui/material/Grid'
+import Chip from '@mui/material/Chip'
 
 export default ({ immutableResource }) => {
   const { _archive = undefined, _fileFormat = undefined } = immutableResource || {}

@@ -7,7 +7,7 @@ import OlReactProvider from '../../contexts/ol-react'
 import { CATALOGUE_CLIENT_MAX_ATLAS_LAYERS } from '../../config'
 import StateProvider from './state'
 import Map from './map'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 
 export default forwardRef(({ search, referrer }, snapMenusContainer) => {
   const theme = useTheme()

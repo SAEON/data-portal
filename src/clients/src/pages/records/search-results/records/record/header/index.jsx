@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
-import Divider from '@material-ui/core/Divider'
-import Toolbar from '@material-ui/core/Toolbar'
+import Divider from '@mui/material/Divider'
+import Toolbar from '@mui/material/Toolbar'
 import clsx from 'clsx'
 import useStyles from './style'
 import Title from './_title'
@@ -8,7 +8,7 @@ import PreviewAtlasButton from '../../../../../../components/preview-atlas-butto
 import CitationButton from '../../../../../../components/citation-dialogue'
 import LoadingCircular from '../../../../../../components/loading-circular'
 import ToggleItemButton from './_toggle-item-button'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 
 const DataDownloadButton = lazy(() => import('../../../../../../components/data-download'))
 const CreateDatabookButton = lazy(() =>
@@ -34,7 +34,7 @@ export default ({
       <Title {..._source} />
 
       {/* DATABOOK */}
-      <Hidden xsDown>
+      <Hidden smDown>
         {showDatabook && (
           <Suspense fallback={<LoadingCircular />}>
             <CreateDatabookButton {..._source} />
@@ -49,7 +49,7 @@ export default ({
       <CitationButton style={!showSelect && !showDownload ? { marginRight: 8 } : {}} {..._source} />
 
       {/* DOWNLOAD */}
-      <Hidden xsDown>
+      <Hidden smDown>
         {showDownload && (
           <Suspense fallback={<LoadingCircular />}>
             <DataDownloadButton
@@ -69,5 +69,5 @@ export default ({
         </>
       )}
     </Toolbar>
-  )
+  );
 }

@@ -18,7 +18,8 @@
     }
   },
   "peerDependencies": {
-    "@material-ui/core": ">=4",
+    "@mui/material": ">=4",
+    "@mui/styles": ">=4",
     "clsx": "*",
     "mdi-react": "^7.5.0",
     "react": "*",

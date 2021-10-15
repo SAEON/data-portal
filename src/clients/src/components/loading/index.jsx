@@ -1,4 +1,4 @@
-import LinearProgress from '@material-ui/core/LinearProgress'
+import LinearProgress from '@mui/material/LinearProgress'
 
 export default ({ style = {}, withHeight = false }) => {
   if (withHeight) {

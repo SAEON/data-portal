@@ -4,15 +4,15 @@ import Loading from '../../components/loading'
 import FieldView from './field-view'
 import Header from './header'
 import CodeView from './code-view'
-import Container from '@material-ui/core/Container'
-import Fade from '@material-ui/core/Fade'
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import Hidden from '@material-ui/core/Hidden'
+import Container from '@mui/material/Container'
+import Fade from '@mui/material/Fade'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import Hidden from '@mui/material/Hidden'
 
 export default ({ id }) => {
   const [codeView, updateCodeView] = useState(false)
-  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(
@@ -57,7 +57,7 @@ export default ({ id }) => {
         toggleCodeView={() => updateCodeView(!codeView)}
         _source={{ ...data?.catalogue?.records?.nodes?.[0]?.metadata?._source }}
       />
-      <Hidden smDown>
+      <Hidden mdDown>
         <div style={{ marginTop: theme.spacing(1) }} />
       </Hidden>
       <Container disableGutters={smDown}>

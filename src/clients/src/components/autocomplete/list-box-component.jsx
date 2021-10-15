@@ -8,8 +8,8 @@ import {
   useRef,
   useEffect,
 } from 'react'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import ListSubheader from '@material-ui/core/ListSubheader'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import ListSubheader from '@mui/material/ListSubheader'
 import { VariableSizeList } from 'react-window'
 
 const LISTBOX_PADDING = 8

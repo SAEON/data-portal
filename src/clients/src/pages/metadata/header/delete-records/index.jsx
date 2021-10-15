@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { context as submissionsContext } from '../../context'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 
 export default () => {
   const { selectedRows } = useContext(submissionsContext)

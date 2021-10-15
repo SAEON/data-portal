@@ -6,7 +6,7 @@ import MetadataEditor from './metadata-editor'
 import JsonViewer from './json-viewer'
 import RowRenderer from './row'
 import onRowsChange from './_on-rows-change'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 
 const HeaderRenderer = ({ column }) => {
   return <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>

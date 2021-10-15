@@ -1,6 +1,6 @@
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import Fade from '@material-ui/core/Fade'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Fade from '@mui/material/Fade'
 
 export default props => {
   const { children, value, index, ...other } = props

@@ -4,7 +4,7 @@ import { context as databookContext } from '../../../contexts/databook-provider'
 import { context as chartsContext } from '../../../contexts/charts-provider'
 import HeaderControls from './header-controls'
 import Chart from './chart'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import useLocalStorage from '../../../../../hooks/use-localstorage'
 
 export default forwardRef((props, ref) => {

@@ -1,10 +1,11 @@
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@mui/material/styles'
+
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   input: {
     color: theme.palette.common.white,
-    padding: `${theme.spacing(4)}px 0`,
+    padding: `${theme.spacing(4)} 0`,
     caretColor: theme.palette.common.white,
   },
   recordsSearchBox: {

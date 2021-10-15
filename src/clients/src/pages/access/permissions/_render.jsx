@@ -1,8 +1,8 @@
 import { memo } from 'react'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
-import { DataGrid } from '@material-ui/data-grid'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import { useTheme } from '@mui/material/styles'
+import { DataGrid } from '@mui/x-data-grid'
 
 export default memo(({ permissions }) => {
   const theme = useTheme()

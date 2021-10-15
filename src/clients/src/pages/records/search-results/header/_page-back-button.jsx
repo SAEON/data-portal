@@ -1,5 +1,5 @@
-import IconButton from '@material-ui/core/IconButton'
-import PageBackIcon from '@material-ui/icons/NavigateBefore'
+import IconButton from '@mui/material/IconButton'
+import PageBackIcon from '@mui/icons-material/NavigateBefore'
 
 export default ({ setCursors, loading, cursors, catalogue }) => {
   return (
@@ -13,8 +13,8 @@ export default ({ setCursors, loading, cursors, catalogue }) => {
           currentPage: cursors?.currentPage - 1,
         })
       }}
-    >
+      size="large">
       <PageBackIcon />
     </IconButton>
-  )
+  );
 }

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Fade from '@material-ui/core/Fade'
-import TextField from '@material-ui/core/TextField'
+import Button from '@mui/material/Button'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import { useTheme } from '@mui/material/styles';
+import Fade from '@mui/material/Fade'
+import TextField from '@mui/material/TextField'
 import { gql, useMutation } from '@apollo/client'
 import LoadingDialogueButton from '../../../../../../components/loading-dialogue-button'
 

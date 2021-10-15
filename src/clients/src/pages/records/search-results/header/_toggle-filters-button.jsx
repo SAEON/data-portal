@@ -1,5 +1,5 @@
-import IconButton from '@material-ui/core/IconButton'
-import FilterIcon from '@material-ui/icons/FilterList'
+import IconButton from '@mui/material/IconButton'
+import FilterIcon from '@mui/icons-material/FilterList'
 
 export default ({ setShowSidebar, showSidebar }) => {
   return (
@@ -11,8 +11,8 @@ export default ({ setShowSidebar, showSidebar }) => {
       style={{ marginLeft: 5 }}
       onClick={() => setShowSidebar(!showSidebar)}
       color={showSidebar ? 'primary' : 'inherit'}
-    >
+      size="large">
       <FilterIcon />
     </IconButton>
-  )
+  );
 }
