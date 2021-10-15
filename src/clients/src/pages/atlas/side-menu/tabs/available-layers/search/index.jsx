@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import CloseIcon from 'mdi-react/CloseIcon'
 import SearchIcon from 'mdi-react/SearchIcon'
 import MessageDialogue from '../../../../../../components/message-dialogue'

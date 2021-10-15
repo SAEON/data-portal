@@ -59,5 +59,5 @@ export default ({ title }) => {
         </a>
       </Hidden>
     </Toolbar_>
-  );
+  )
 }

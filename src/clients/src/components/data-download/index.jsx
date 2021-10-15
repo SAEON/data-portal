@@ -16,7 +16,7 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 const PLACEHOLDER_URI = 'http://nothing.com'
 
@@ -43,146 +43,148 @@ export default ({
     return null
   }
 
-  return <>
-    <Tooltip
-      placement={tooltipPlacement || 'bottom'}
-      title={
-        `${resourceDescription || 'Unknown resource'} (${downloadURL?.replace(/.*\./, '')})` ||
-        'Unknown download'
-      }
-    >
-      <span>
-        {children ? (
-          <Button
-            aria-label="Download data"
-            aria-controls="usage-terms-confirmation-dialogue"
-            aria-haspopup="true"
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-            {...buttonProps}
-            startIcon={<DownloadIcon />}
-          >
-            {children}
-          </Button>
-        ) : (
-          <IconButton
-            aria-label="Download data"
-            aria-controls="usage-terms-confirmation-dialogue"
-            aria-haspopup="true"
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-            disabled={downloadURL === PLACEHOLDER_URI}
-            size={IconButtonSize}
-            {...buttonProps}
-          >
-            <DownloadIcon size={size} />
-          </IconButton>
-        )}
-      </span>
-    </Tooltip>
-
-    <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
-      <QuickForm
-        effects={[fields => (form.current = { ...fields })]}
-        emailAddress=""
-        organization=""
-        comments=""
-        allowContact={false}
+  return (
+    <>
+      <Tooltip
+        placement={tooltipPlacement || 'bottom'}
+        title={
+          `${resourceDescription || 'Unknown resource'} (${downloadURL?.replace(/.*\./, '')})` ||
+          'Unknown download'
+        }
       >
-        {(update, { emailAddress, organization, allowContact, comments }) => {
-          const isValidEmailAddress = EMAIL_REGEX.test(emailAddress)
-          const formIsValid = emailAddress === '' ? true : isValidEmailAddress
+        <span>
+          {children ? (
+            <Button
+              aria-label="Download data"
+              aria-controls="usage-terms-confirmation-dialogue"
+              aria-haspopup="true"
+              aria-expanded={open}
+              onClick={() => setOpen(!open)}
+              {...buttonProps}
+              startIcon={<DownloadIcon />}
+            >
+              {children}
+            </Button>
+          ) : (
+            <IconButton
+              aria-label="Download data"
+              aria-controls="usage-terms-confirmation-dialogue"
+              aria-haspopup="true"
+              aria-expanded={open}
+              onClick={() => setOpen(!open)}
+              disabled={downloadURL === PLACEHOLDER_URI}
+              size={IconButtonSize}
+              {...buttonProps}
+            >
+              <DownloadIcon size={size} />
+            </IconButton>
+          )}
+        </span>
+      </Tooltip>
 
-          return (
-            <>
-              <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
-              <DialogContent>
-                <Typography gutterBottom variant="body2">
-                  These data are made available with the express understanding that any such use
-                  will properly acknowledge the originator(s) and publisher and cite the
-                  associated Digital Object Identifiers (DOIs). Anyone wishing to use these data
-                  should properly cite and attribute the data providers listed as authors in the
-                  metadata provided with each dataset. It is expected that all the conditions of
-                  the data license will be strictly honoured. Use of any material herein should be
-                  properly cited using the dataset&apos;s DOIs. SAEON cannot be held responsible
-                  for the quality of data provided by third parties, and while we take reasonable
-                  care in referencing these datasets, the content of both metadata and data is
-                  under control of the third-party provider.
-                </Typography>
-                <Typography style={{ marginTop: theme.spacing(2) }} gutterBottom variant="body2">
-                  Please (optionally) fill in the form below to help us improve our service.
-                </Typography>
-                <FormGroup>
-                  <TextField
-                    value={emailAddress}
-                    onChange={({ target: { value: emailAddress } }) => update({ emailAddress })}
-                    margin="normal"
-                    helperText={
-                      emailAddress === ''
-                        ? '(Optional)'
-                        : isValidEmailAddress
-                        ? 'Thank you!'
-                        : 'Email address must be valid'
-                    }
-                    placeholder="Email Address"
-                    fullWidth
-                    error={emailAddress !== '' && !isValidEmailAddress}
-                    variant="standard"
-                  />
-                  <TextField
-                    value={organization}
-                    onChange={({ target: { value: organization } }) => update({ organization })}
-                    margin="normal"
-                    helperText={organization === '' ? '(Optional)' : 'Organisation'}
-                    placeholder="Organisation"
-                    fullWidth
-                    variant="standard"
-                  />
-                  <TextField
-                    value={comments}
-                    onChange={({ target: { value: comments } }) => update({ comments })}
-                    margin="normal"
-                    placeholder="General comments"
-                    multiline
-                    minRows={4}
-                    fullWidth
-                    variant="outlined"
-                  />
-                  <FormControl fullWidth margin="dense">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          disabled={!emailAddress || !isValidEmailAddress}
-                          checked={allowContact}
-                          onChange={({ target: { checked: allowContact } }) =>
-                            update({ allowContact })
-                          }
-                        />
+      <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
+        <QuickForm
+          effects={[fields => (form.current = { ...fields })]}
+          emailAddress=""
+          organization=""
+          comments=""
+          allowContact={false}
+        >
+          {(update, { emailAddress, organization, allowContact, comments }) => {
+            const isValidEmailAddress = EMAIL_REGEX.test(emailAddress)
+            const formIsValid = emailAddress === '' ? true : isValidEmailAddress
+
+            return (
+              <>
+                <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
+                <DialogContent>
+                  <Typography gutterBottom variant="body2">
+                    These data are made available with the express understanding that any such use
+                    will properly acknowledge the originator(s) and publisher and cite the
+                    associated Digital Object Identifiers (DOIs). Anyone wishing to use these data
+                    should properly cite and attribute the data providers listed as authors in the
+                    metadata provided with each dataset. It is expected that all the conditions of
+                    the data license will be strictly honoured. Use of any material herein should be
+                    properly cited using the dataset&apos;s DOIs. SAEON cannot be held responsible
+                    for the quality of data provided by third parties, and while we take reasonable
+                    care in referencing these datasets, the content of both metadata and data is
+                    under control of the third-party provider.
+                  </Typography>
+                  <Typography style={{ marginTop: theme.spacing(2) }} gutterBottom variant="body2">
+                    Please (optionally) fill in the form below to help us improve our service.
+                  </Typography>
+                  <FormGroup>
+                    <TextField
+                      value={emailAddress}
+                      onChange={({ target: { value: emailAddress } }) => update({ emailAddress })}
+                      margin="normal"
+                      helperText={
+                        emailAddress === ''
+                          ? '(Optional)'
+                          : isValidEmailAddress
+                          ? 'Thank you!'
+                          : 'Email address must be valid'
                       }
-                      label={
-                        allowContact
-                          ? `Wonderful! We'll be in touch`
-                          : 'May we follow up with you?'
-                      }
+                      placeholder="Email Address"
+                      fullWidth
+                      error={emailAddress !== '' && !isValidEmailAddress}
+                      variant="standard"
                     />
-                  </FormControl>
-                </FormGroup>
-              </DialogContent>
-              <DialogActions>
-                <ConfirmDownload
-                  id={id}
-                  doi={doi}
-                  disabled={!formIsValid}
-                  setOpen={setOpen}
-                  downloadURL={downloadURL}
-                  resourceDescription={resourceDescription}
-                  form={form}
-                />
-              </DialogActions>
-            </>
-          )
-        }}
-      </QuickForm>
-    </Dialog>
-  </>;
+                    <TextField
+                      value={organization}
+                      onChange={({ target: { value: organization } }) => update({ organization })}
+                      margin="normal"
+                      helperText={organization === '' ? '(Optional)' : 'Organisation'}
+                      placeholder="Organisation"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <TextField
+                      value={comments}
+                      onChange={({ target: { value: comments } }) => update({ comments })}
+                      margin="normal"
+                      placeholder="General comments"
+                      multiline
+                      minRows={4}
+                      fullWidth
+                      variant="outlined"
+                    />
+                    <FormControl fullWidth margin="dense">
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            disabled={!emailAddress || !isValidEmailAddress}
+                            checked={allowContact}
+                            onChange={({ target: { checked: allowContact } }) =>
+                              update({ allowContact })
+                            }
+                          />
+                        }
+                        label={
+                          allowContact
+                            ? `Wonderful! We'll be in touch`
+                            : 'May we follow up with you?'
+                        }
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </DialogContent>
+                <DialogActions>
+                  <ConfirmDownload
+                    id={id}
+                    doi={doi}
+                    disabled={!formIsValid}
+                    setOpen={setOpen}
+                    downloadURL={downloadURL}
+                    resourceDescription={resourceDescription}
+                    form={form}
+                  />
+                </DialogActions>
+              </>
+            )
+          }}
+        </QuickForm>
+      </Dialog>
+    </>
+  )
 }

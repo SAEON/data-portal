@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => {
   console.log('theme.palette', theme.palette)

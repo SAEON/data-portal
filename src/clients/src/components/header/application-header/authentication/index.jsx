@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { context as authContext } from '../../../../contexts/authentication'
 import Login from './_login'
 import UserMenu from './user-menu'

@@ -32,5 +32,5 @@ export default props => {
         <Logout />
       </Menu>
     </div>
-  );
+  )
 }

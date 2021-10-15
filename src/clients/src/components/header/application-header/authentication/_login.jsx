@@ -15,10 +15,11 @@ export default props => {
           component={Link}
           to={`${`${contentBase}/login`.replace('//', '/')}?redirect=${window.location.href}`}
           {...props}
-          size="large">
+          size="large"
+        >
           <LoginIcon />
         </IconButton>
       </span>
     </Tooltip>
-  );
+  )
 }

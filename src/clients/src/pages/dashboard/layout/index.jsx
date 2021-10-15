@@ -4,7 +4,7 @@ import 'gridstack/dist/gridstack.min.css'
 import 'gridstack/dist/h5/gridstack-dd-native'
 import Chart from './chart'
 import useStyles from '../style'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import clsx from 'clsx'
 

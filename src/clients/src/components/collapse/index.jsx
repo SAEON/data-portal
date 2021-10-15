@@ -5,7 +5,7 @@ import CardHeader from '@mui/material/CardHeader'
 import IconButton from '@mui/material/IconButton'
 import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({
   children,
@@ -43,5 +43,5 @@ export default ({
         {typeof children === 'function' ? children(collapsed) : children}
       </Collapse>
     </Card>
-  );
+  )
 }

@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import Contact from './_contact'
 

@@ -6,7 +6,7 @@ import Tooltip from '@mui/material/Tooltip'
 import clsx from 'clsx'
 import ButtonBase from '@mui/material/ButtonBase'
 import useStyles from './style'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default memo(

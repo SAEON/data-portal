@@ -1,7 +1,7 @@
 import Toolbar_ from './toolbar'
 import Authentication from './authentication'
 import NavigationMenu from './navigation-menu'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Hidden from '@mui/material/Hidden'
 import Divider from '@mui/material/Divider'
 import Breadcrumbs from './breadcrumbs'
@@ -32,5 +32,5 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
 
       <Authentication />
     </Toolbar_>
-  );
+  )
 }

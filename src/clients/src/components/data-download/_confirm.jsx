@@ -2,7 +2,7 @@ import { useContext, useState, memo } from 'react'
 import RegisterEventLog from '../../components/application-logger/register-event-log'
 import packageJson from '../../../package.json'
 import { LATEST_COMMIT } from '../../config'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { context as globalContext } from '../../contexts/global'
 import { gql, useMutation } from '@apollo/client'
 import Button from '@mui/material/Button'

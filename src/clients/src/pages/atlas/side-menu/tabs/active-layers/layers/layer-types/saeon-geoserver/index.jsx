@@ -9,7 +9,7 @@ import Collapse from '@mui/material/Collapse'
 import CardContent from '@mui/material/CardContent'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import DragIndicator from '@mui/icons-material/DragIndicator'
 import CloseIcon from '@mui/icons-material/Close'
 import ZoomInIcon from '@mui/icons-material/ZoomIn'

@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton'
 import Fade from '@mui/material/Fade'
 import Tooltip from '@mui/material/Tooltip'
 import LoadingCircular from '../../components/loading-circular'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { TECHNICAL_CONTACT, CATALOGUE_SUPPORTED_DATABOOK_FORMATS } from '../../config'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import packageJson from '../../../package.json'

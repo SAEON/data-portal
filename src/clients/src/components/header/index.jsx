@@ -9,7 +9,7 @@ import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
 import Divider from '@mui/material/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
