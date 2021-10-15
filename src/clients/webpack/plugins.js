@@ -17,7 +17,7 @@ let {
   LATEST_COMMIT = '',
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
   SUBDOMAIN_APP_ENTRIES = '',
-  EMAIL_REGEX = ''
+  EMAIL_REGEX = '',
 } = process.env
 
 module.exports = (ROOT, output) => {

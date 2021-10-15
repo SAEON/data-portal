@@ -22,7 +22,7 @@ module.exports = {
   plugins: ['@babel'],
   rules: {
     'no-prototype-builtins': 0,
-    "no-control-regex": 0,
+    'no-control-regex': 0,
     'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
   },
 }

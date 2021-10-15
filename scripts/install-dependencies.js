@@ -14,7 +14,7 @@ exec(`npm --prefix ${REPOSITORY_PATH} ${NPM_SCRIPTS.install}`)
  * Install package dependencies
  */
 const PACKAGES_PATH = normalize(join(__dirname, '../src/packages'))
-apply({ PATH: PACKAGES_PATH, script: NPM_SCRIPTS.install })
+apply({ PATH: PACKAGES_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
 
 /**
  * Install service dependencies
@@ -27,7 +27,6 @@ apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
  */
 const TOOLS_PATH = normalize(join(__dirname, '../src/tools'))
 apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install })
-
 
 /**
  * Rebuild all packages
