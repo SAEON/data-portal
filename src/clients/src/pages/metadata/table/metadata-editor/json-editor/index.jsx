@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react'
-import { context as editorContext } from './_context'
+import { context as editorContext } from '../context'
 import Fade from '@material-ui/core/Fade'
 import QuickForm from '@saeon/quick-form'
 import AceEditor from 'react-ace'
@@ -7,7 +7,7 @@ import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-min-noconflict/mode-json'
 import 'ace-builds/src-min-noconflict/theme-vibrant_ink'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
-import debounce from '../../../../lib/fns/debounce'
+import debounce from '../../../../../lib/fns/debounce'
 
 export default () => {
   const { view, json, updateMetadata } = useContext(editorContext)

@@ -8,7 +8,7 @@ import DefaultLanguage from './_default-language'
 import DefaultSchemaVersion from './_default-schema-version'
 import DefaultLicense from './_default-license'
 import DefaultResourceType from './_default-resource-type'
-import ObjectField from './components/obj-field'
+import ObjectField from '../../../../components/obj-form-field'
 import debounce from '../../../../../../lib/fns/debounce'
 
 export const fieldProps = {

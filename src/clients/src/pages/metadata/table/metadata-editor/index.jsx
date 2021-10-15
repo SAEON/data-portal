@@ -2,9 +2,9 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import Header from './header'
-import Provider from './_context'
-import JsonEditor from './_json-editor'
-import Form from './_form'
+import Provider from './context'
+import JsonEditor from './json-editor'
+import Form from './form-editor'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import { gql, useQuery } from '@apollo/client'
@@ -28,12 +28,11 @@ export default ({ row, onRowChange, column, onClose }) => {
        * query for metadata doesn't cache
        * this field
        */
-      onCompleted: data => {
+      onCompleted: data =>
         onRowChange({
           ...row,
           metadata: { ...data.indexedMetadata[0].metadata, ...(row.metadata || {}) },
-        })
-      },
+        }),
       fetchPolicy: 'cache-first',
       variables: {
         ids: [row.id],

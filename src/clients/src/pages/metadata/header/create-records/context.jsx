@@ -10,6 +10,8 @@ const Provider = ({
   schemaOptions,
   schemaVersions,
   licenseOptions,
+  rows,
+  setRows,
 }) => {
   const [form, setForm] = useState({
     numRecords: 1,
@@ -43,6 +45,8 @@ const Provider = ({
         }
       `,
       {
+        onCompleted: ({ createMetadata: newRecords }) =>
+          setRows([...newRecords.map((record, i) => ({ i: rows.length + i, ...record })), ...rows]),
         update: (cache, { data: { createMetadata: newRecords } }) => {
           cache.modify({
             fields: {
@@ -105,7 +109,7 @@ const Provider = ({
 }
 
 export default ({ children }) => {
-  const { institutions, schemas } = useContext(metadataContext)
+  const { institutions, schemas, rows, setRows } = useContext(metadataContext)
 
   const schemaOptions = useMemo(
     () => schemas.map(name => ({ label: name, value: name })),
@@ -126,6 +130,8 @@ export default ({ children }) => {
         'saeon-datacite-4-3': ['http://datacite.org/schema/kernel-4'],
         'iso19115-saeon-profile': [''],
       }}
+      rows={rows}
+      setRows={setRows}
     >
       {children}
     </Provider>

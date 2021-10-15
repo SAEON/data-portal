@@ -11,7 +11,7 @@ import Card from '@material-ui/core/Card'
 import AddIcon from 'mdi-react/AddCircleIcon'
 import SelectField from './_select-field'
 import TextField from './_text-field'
-import debounce from '../../../../../../../../lib/fns/debounce'
+import debounce from '../../../../lib/fns/debounce'
 
 export default memo(({ update, root, fields }) => {
   const theme = useTheme()

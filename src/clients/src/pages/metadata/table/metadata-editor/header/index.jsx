@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import CodeIcon from 'mdi-react/CodeJsonIcon'
 import FormIcon from 'mdi-react/FormTextboxIcon'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { context as editorContext } from '../_context'
+import { context as editorContext } from '../context'
 
 export default () => {
   const { view, setView } = useContext(editorContext)

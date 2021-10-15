@@ -56,7 +56,7 @@ export default () => {
         SelectColumn,
         {
           key: 'i',
-          name: 'i',
+          name: 'RW #',
           width: 10,
           headerRenderer: HeaderRenderer,
           frozen: true,
