@@ -11,8 +11,9 @@ export default ({ setShowSidebar, showSidebar }) => {
       style={{ marginLeft: 5 }}
       onClick={() => setShowSidebar(!showSidebar)}
       color={showSidebar ? 'primary' : 'inherit'}
-      size="large">
+      size="large"
+    >
       <FilterIcon />
     </IconButton>
-  );
+  )
 }

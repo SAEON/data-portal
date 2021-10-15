@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import AutoComplete from '../../../../../../components/dropdown-select'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ filter }) => {
   const theme = useTheme()

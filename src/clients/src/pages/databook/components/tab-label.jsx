@@ -3,7 +3,7 @@ import Tooltip from '@mui/material/Tooltip'
 import clsx from 'clsx'
 import useStyles from '../style'
 import Avatar from '@mui/material/Avatar'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { deepOrange } from '@mui/material/colors'
 
 export default memo(({ title, color, children }) => {

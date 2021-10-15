@@ -1,5 +1,5 @@
 import { useRef, useEffect, memo } from 'react'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import RemoveIcon from 'mdi-react/RemoveCircleIcon'

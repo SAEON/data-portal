@@ -1,6 +1,6 @@
 import Row from '../_row'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import DownloadButton from '../../../components/data-download'
 import SimpleLink from '../../../components/link'
 import Hidden from '@mui/material/Hidden'
@@ -39,5 +39,5 @@ export default _source => {
         })}
       </div>
     </Row>
-  );
+  )
 }

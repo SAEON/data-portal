@@ -13,8 +13,9 @@ export default ({ setCursors, loading, cursors, catalogue }) => {
           currentPage: cursors?.currentPage - 1,
         })
       }}
-      size="large">
+      size="large"
+    >
       <PageBackIcon />
     </IconButton>
-  );
+  )
 }

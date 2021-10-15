@@ -1,7 +1,7 @@
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import PlusIcon from 'mdi-react/PlusIcon'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ onClick }) => {
   const theme = useTheme()

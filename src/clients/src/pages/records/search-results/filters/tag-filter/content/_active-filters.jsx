@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 /**
  * Show the selected filters in alphabetical order

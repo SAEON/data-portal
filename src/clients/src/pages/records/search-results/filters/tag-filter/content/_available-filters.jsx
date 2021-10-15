@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filterId }) => {
   const { global, setGlobal } = useContext(globalContext)

@@ -1,6 +1,6 @@
 import Header from '../../../components/toolbar-header'
 import Download from './_download'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
 
 export default () => {

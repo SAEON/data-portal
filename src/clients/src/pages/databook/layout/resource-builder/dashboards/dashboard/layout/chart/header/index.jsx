@@ -1,6 +1,6 @@
 import Toolbar from '@mui/material/Toolbar'
 import useStyles from '../style'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import clsx from 'clsx'
 import Typography from '@mui/material/Typography'
 import RemoveChart from './_remove-chart'

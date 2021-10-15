@@ -1,7 +1,7 @@
 import Header from '../../../components/toolbar-header'
 import NewList from './new-list'
 import DownloadDetails from './_download'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
 
 export default () => {

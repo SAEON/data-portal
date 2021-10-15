@@ -2,7 +2,7 @@ import { createContext } from 'react'
 import CheckStatus from './_check-status'
 import Typography from '@mui/material/Typography'
 import { TECHNICAL_CONTACT } from '../../../../config'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import clsx from 'clsx'
 import useStyles from '../../style'
 

@@ -3,7 +3,7 @@ import Tooltip from '@mui/material/Tooltip'
 import PlayIcon from 'mdi-react/PlayArrowIcon'
 import clsx from 'clsx'
 import useStyles from '../../../style'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ onClick }) => {
   const theme = useTheme()

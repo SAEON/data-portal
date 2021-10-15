@@ -23,7 +23,8 @@ export default ({ showSidebar, data, setShowSidebar }) => {
             style={{ marginLeft: 'auto', display: 'flex' }}
             aria-label="Toggle search filters"
             onClick={() => setShowSidebar(false)}
-            size="large">
+            size="large"
+          >
             <CloseIcon />
           </IconButton>
 
@@ -31,5 +32,5 @@ export default ({ showSidebar, data, setShowSidebar }) => {
         </Grid>
       </Drawer>
     </div>
-  );
+  )
 }

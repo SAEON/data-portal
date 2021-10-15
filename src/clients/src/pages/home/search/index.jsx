@@ -1,6 +1,6 @@
 import useSummary from './_summary'
 import Search from '../../../components/search'
-import { useTheme, alpha } from '@mui/material/styles';
+import { useTheme, alpha } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 import FancyButton from '../../../components/fancy-button'

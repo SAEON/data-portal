@@ -7,7 +7,7 @@ import DashboardsIcon from 'mdi-react/ViewDashboardIcon'
 import ChartsIcon from 'mdi-react/ChartBoxOutlineIcon'
 import FilterIcon from 'mdi-react/FilterVariantIcon'
 import clsx from 'clsx'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default forwardRef(({ active, setActive }, ref) => {
   const theme = useTheme()

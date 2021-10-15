@@ -5,7 +5,7 @@ import { gql, useMutation } from '@apollo/client'
 import Typography from '@mui/material/Typography'
 import Collapse from '@mui/material/Collapse'
 import Fade from '@mui/material/Fade'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import CircularProgress from '@mui/material/CircularProgress'
 import Button from '@mui/material/Button'
 

@@ -5,7 +5,7 @@ import { gql, useMutation } from '@apollo/client'
 import IconButton from '@mui/material/IconButton'
 import PlusIcon from 'mdi-react/PlusIcon'
 import Fade from '@mui/material/Fade'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ setActiveTabIndex }) => {
   const theme = useTheme()

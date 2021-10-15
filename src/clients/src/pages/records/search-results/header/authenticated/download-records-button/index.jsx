@@ -75,7 +75,8 @@ export default ({ catalogue }) => {
               })
             }
             disabled={!applicableRecordsCount}
-            size="large">
+            size="large"
+          >
             <StyledBadge
               color={applicableRecordsCount ? 'primary' : 'default'}
               badgeContent={applicableRecordsCount}
@@ -88,5 +89,5 @@ export default ({ catalogue }) => {
         </span>
       </Tooltip>
     </Fade>
-  );
+  )
 }

@@ -4,7 +4,7 @@ import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardContent from '@mui/material/CardContent'
 import Loading from '../../../components/loading'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Collapse from '../../../components/collapse'
 

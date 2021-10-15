@@ -11,7 +11,7 @@ import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
 import Container from '@mui/material/Container'
 import Hidden from '@mui/material/Hidden'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 const MobileSideMenu = lazy(() => import('./_side-menu'))
 const Filters = lazy(() => import('./filters'))
@@ -212,5 +212,5 @@ export default ({ disableSidebar }) => {
         </Container>
       </Header>
     </main>
-  );
+  )
 }

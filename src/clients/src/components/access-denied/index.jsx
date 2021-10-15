@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar'
 import Icon from 'mdi-react/CancelIcon'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 

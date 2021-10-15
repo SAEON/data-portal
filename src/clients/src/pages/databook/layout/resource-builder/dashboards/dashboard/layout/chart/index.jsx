@@ -1,7 +1,7 @@
 import Loading from '../../../../../../../../components/loading'
 import { gql, useQuery } from '@apollo/client'
 import ChartIcon from 'mdi-react/ChartBoxOutlineIcon'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import useStyles from './style'
 import clsx from 'clsx'
 import Header from './header'

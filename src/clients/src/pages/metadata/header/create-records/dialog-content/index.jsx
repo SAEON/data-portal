@@ -4,7 +4,7 @@ import DialogContent from '@mui/material/DialogContent'
 import Collapse from '@mui/material/Collapse'
 import Fade from '@mui/material/Fade'
 import CircularProgress from '@mui/material/CircularProgress'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Form from './form'
 import Typography from '@mui/material/Typography'
 

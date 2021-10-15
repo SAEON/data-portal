@@ -2,7 +2,7 @@ import { useContext, useMemo, useState, useEffect } from 'react'
 import { context as ListsContext } from '../context'
 import ContentNav from '../../../components/content-nav'
 import Fade from '@mui/material/Fade'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import NoItems from '../components/no-items'
 import ListItem from '../components/list-item'
 import InactiveIcon from 'mdi-react/FolderIcon'

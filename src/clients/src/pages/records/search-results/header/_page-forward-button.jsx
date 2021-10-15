@@ -18,8 +18,9 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
         })
       }}
       style={{ marginRight: 5 }}
-      size="large">
+      size="large"
+    >
       <PageForwardIcon />
     </IconButton>
-  );
+  )
 }

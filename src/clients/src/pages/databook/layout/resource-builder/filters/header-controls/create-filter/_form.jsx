@@ -10,7 +10,7 @@ import Button from '@mui/material/Button'
 import { useMutation, gql } from '@apollo/client'
 import { context as dataContext } from '../../../../../contexts/data-provider'
 import { context as databookContext } from '../../../../../contexts/databook-provider'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import DialogueButtonLoading from '../../../../../components/loading-dialogue-button'
 
 export default ({ setActiveTabIndex, setOpen }) => {

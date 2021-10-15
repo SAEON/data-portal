@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import useStyles from '../style'
 import clsx from 'clsx'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ dashboard, activeTabIndex, setActiveTabIndex, gridState }) => {
   const theme = useTheme()

@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import useStyles from './style'
 import ContextMenu from './_context-menu'
 import RenameOperator from './_rename-operator'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { context as databookContext } from '../../contexts/databook-provider'
 
 export default ({ tableName, fields, tableSchema }) => {

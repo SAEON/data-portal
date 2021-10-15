@@ -6,7 +6,7 @@ import Share from './_share'
 import Edit from './_edit'
 import useStyles from './style'
 import clsx from 'clsx'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 const EChart = lazy(() => import('../../../../../../components/chart-controller'))
 

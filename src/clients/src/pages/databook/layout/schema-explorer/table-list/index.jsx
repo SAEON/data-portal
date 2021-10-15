@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import DialogContent from '@mui/material/DialogContent'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import InfoIcon from 'mdi-react/InformationVariantIcon'
 import Tooltip from '@mui/material/Tooltip'
 import CloseIcon from 'mdi-react/CloseIcon'

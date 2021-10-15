@@ -76,7 +76,8 @@ export default ({ cache, catalogue }) => {
                 },
               })
             }
-            size="large">
+            size="large"
+          >
             <StyledBadge
               color={available ? 'primary' : 'default'}
               badgeContent={
@@ -93,5 +94,5 @@ export default ({ cache, catalogue }) => {
         </span>
       </Tooltip>
     </Fade>
-  );
+  )
 }

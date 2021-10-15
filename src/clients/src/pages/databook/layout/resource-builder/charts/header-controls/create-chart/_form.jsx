@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
 import { useMutation, gql } from '@apollo/client'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import chartDefinitions from '../../../../../../../components/charts'
 import Autocomplete from '../../../../../../../components/autocomplete'

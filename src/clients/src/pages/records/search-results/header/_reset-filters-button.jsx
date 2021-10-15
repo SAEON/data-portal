@@ -19,10 +19,11 @@ export default () => {
               text: '',
             })
           }
-          size="large">
+          size="large"
+        >
           <ResetIcon />
         </IconButton>
       </span>
     </Tooltip>
-  );
+  )
 }

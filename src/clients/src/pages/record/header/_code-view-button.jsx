@@ -12,9 +12,10 @@ export default ({ codeView, toggleCodeView }) => {
           e.stopPropagation()
           toggleCodeView()
         }}
-        size="large">
+        size="large"
+      >
         <CodeIcon size={22} />
       </IconButton>
     </Tooltip>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 // eslint-disable-next-line no-unused-vars
 export default makeStyles(theme => {

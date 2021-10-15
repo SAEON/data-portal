@@ -1,5 +1,5 @@
 import { Suspense, lazy, useContext } from 'react'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
 import CreateListButton from './create-list-button'
@@ -32,74 +32,76 @@ export default ({
   const theme = useTheme()
   const sidebarEnabled = !disableSidebar
 
-  return <>
-    <ToolbarHeader>
-      {/* MOBILE FILTER TOGGLE */}
-      {sidebarEnabled && (
-        <Hidden mdUp>
-          <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
-        </Hidden>
-      )}
+  return (
+    <>
+      <ToolbarHeader>
+        {/* MOBILE FILTER TOGGLE */}
+        {sidebarEnabled && (
+          <Hidden mdUp>
+            <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+          </Hidden>
+        )}
 
-      {/* SEARCH RESULT COUNT */}
-      <Hidden smDown>
-        <Suspense fallback={<LoadingCircular />}>
-          <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
-        </Suspense>
-      </Hidden>
-
-      <span style={{ marginLeft: 'auto' }} />
-
-      {/* ATLAS and DATABOOK */}
-      {isAuthenticated && (
+        {/* SEARCH RESULT COUNT */}
         <Hidden smDown>
           <Suspense fallback={<LoadingCircular />}>
-            <AuthenticatedOnly catalogue={catalogue} />
+            <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
           </Suspense>
         </Hidden>
-      )}
 
-      {/* CREATE LIST */}
-      <CreateListButton catalogue={catalogue} />
+        <span style={{ marginLeft: 'auto' }} />
 
-      {/* RESET SELECTION */}
-      <ToggleSelectionButton catalogue={catalogue} />
+        {/* ATLAS and DATABOOK */}
+        {isAuthenticated && (
+          <Hidden smDown>
+            <Suspense fallback={<LoadingCircular />}>
+              <AuthenticatedOnly catalogue={catalogue} />
+            </Suspense>
+          </Hidden>
+        )}
 
-      {/* RESET FILTERS */}
-      {/* <ResetFiltersButton /> */}
+        {/* CREATE LIST */}
+        <CreateListButton catalogue={catalogue} />
 
-      {/* PAGINATION CONFIG */}
+        {/* RESET SELECTION */}
+        <ToggleSelectionButton catalogue={catalogue} />
 
-      <Hidden smDown>
-        <Suspense fallback={<LoadingCircular />}>
-          <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
-        </Suspense>
-      </Hidden>
+        {/* RESET FILTERS */}
+        {/* <ResetFiltersButton /> */}
 
-      {/* PAGE BACK */}
-      <PageBackButton
-        setCursors={setCursors}
-        loading={loading}
-        cursors={cursors}
-        catalogue={catalogue}
-      />
+        {/* PAGINATION CONFIG */}
 
-      {/* CURRENT PAGE */}
-      <Hidden smDown>
-        <Suspense fallback={<LoadingCircular />}>
-          <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
-        </Suspense>
-      </Hidden>
+        <Hidden smDown>
+          <Suspense fallback={<LoadingCircular />}>
+            <ConfigurePaginationButton pageSize={pageSize} setPageSize={setPageSize} />
+          </Suspense>
+        </Hidden>
 
-      {/* PAGE FORWARD */}
-      <PageForwardButton
-        setCursors={setCursors}
-        loading={loading}
-        cursors={cursors}
-        pageSize={pageSize}
-        catalogue={catalogue}
-      />
-    </ToolbarHeader>
-    {children}
-  </>;
+        {/* PAGE BACK */}
+        <PageBackButton
+          setCursors={setCursors}
+          loading={loading}
+          cursors={cursors}
+          catalogue={catalogue}
+        />
+
+        {/* CURRENT PAGE */}
+        <Hidden smDown>
+          <Suspense fallback={<LoadingCircular />}>
+            <CurrentPageInfo catalogue={catalogue} pageSize={pageSize} cursors={cursors} />
+          </Suspense>
+        </Hidden>
+
+        {/* PAGE FORWARD */}
+        <PageForwardButton
+          setCursors={setCursors}
+          loading={loading}
+          cursors={cursors}
+          pageSize={pageSize}
+          catalogue={catalogue}
+        />
+      </ToolbarHeader>
+      {children}
+    </>
+  )
 }

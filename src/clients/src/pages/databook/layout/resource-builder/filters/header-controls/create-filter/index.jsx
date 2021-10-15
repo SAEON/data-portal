@@ -3,7 +3,7 @@ import PlusIcon from 'mdi-react/PlusIcon'
 import IconButton from '@mui/material/IconButton'
 import Dialog from '@mui/material/Dialog'
 import Tooltip from '@mui/material/Tooltip'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { context as dataContext } from '../../../../../contexts/data-provider'
 import Form from './_form'
 

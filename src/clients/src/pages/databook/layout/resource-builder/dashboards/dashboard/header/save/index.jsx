@@ -2,7 +2,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Fade from '@mui/material/Fade'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import SaveIcon from 'mdi-react/ContentSaveOutlineIcon'
 import { useMutation, gql } from '@apollo/client'
 

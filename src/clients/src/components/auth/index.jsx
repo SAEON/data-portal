@@ -3,7 +3,7 @@ import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
 import AccessDenied from '../../components/access-denied'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ requiredPermission, children }) => {
   const theme = useTheme()

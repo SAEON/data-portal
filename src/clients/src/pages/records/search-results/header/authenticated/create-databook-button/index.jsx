@@ -3,7 +3,7 @@ import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import Fade from '@mui/material/Fade'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import DatabookIcon from 'mdi-react/NotebookPlusIcon'
 import { gql, useMutation } from '@apollo/client'
 import { CATALOGUE_CLIENT_MAX_DATABOOK_TABLES, TECHNICAL_CONTACT } from '../../../../../../config'
@@ -96,7 +96,8 @@ export default ({ catalogue, cache }) => {
                     `Your login is not authorized to use this feature. Please request access (${TECHNICAL_CONTACT})`
                   )
           }
-          size="large">
+          size="large"
+        >
           <StyledBadge
             color={available ? 'primary' : 'default'}
             badgeContent={
@@ -112,5 +113,5 @@ export default ({ catalogue, cache }) => {
         </IconButton>
       </span>
     </Tooltip>
-  );
+  )
 }

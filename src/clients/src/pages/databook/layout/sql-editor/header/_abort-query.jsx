@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip'
 import StopIcon from 'mdi-react/StopIcon'
 import clsx from 'clsx'
 import useStyles from '../../../style'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { context as dataContext } from '../../../contexts/data-provider'
 
 export default ({ onClick }) => {

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useMutation, gql } from '@apollo/client'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import { context as databookContext } from '../../../../../../contexts/databook-provider'
 import LoadingButton from '../../../../../../components/loading-dialogue-button'
 import Chip from '@mui/material/Chip'
