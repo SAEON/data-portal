@@ -8,6 +8,7 @@ export default ({ children }) => {
   })
 
   return cloneElement(children, {
+    variant: trigger ? 'elevation' : 'outlined',
     elevation: trigger ? 4 : 0,
   })
 }

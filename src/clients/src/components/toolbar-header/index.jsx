@@ -15,7 +15,7 @@ const AnimateVariant = ({ children }) =>
 
 export default ({ children, style, ...props }) => {
   return (
-    <AppBar color="inherit" variant="outlined" position="sticky" {...props}>
+    <AppBar color="inherit" variant="outlined" elevation={0} position="sticky" {...props}>
       <AnimateVariant>
         <Toolbar
           disableGutters

@@ -8,7 +8,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
 export default ({ title, style, collapsed, setCollapsed }) => {
   return (
-    <AppBar style={style} position="relative" color="inherit" variant="outlined">
+    <AppBar style={style} position="relative" color="inherit" variant="outlined" elevation={0}>
       <Toolbar variant="regular">
         <Typography
           onClick={() => setCollapsed(!collapsed)}

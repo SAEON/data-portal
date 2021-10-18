@@ -25,6 +25,7 @@ export default ({ title }) => {
       <AppBar
         position="relative"
         variant="outlined"
+        elevation={0}
         color="inherit"
         style={{
           borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
