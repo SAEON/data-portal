@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
 
@@ -5,11 +6,18 @@ const headerRenderer = ({ column }) => (
   <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
 )
 
-export default ({ users, roles }) => {
+export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
+  const [rows, setRows] = useState([...users])
+
   return (
     <DataGrid
       style={{ height: '100%' }}
       enableVirtualization={true}
+      onSelectedRowsChange={setSelectedUsers}
+      selectedRows={selectedUsers}
+      rowKeyGetter={row => row.id}
+      onRowsChange={setRows}
+      rows={rows}
       columns={[
         SelectColumn,
         {
@@ -46,7 +54,6 @@ export default ({ users, roles }) => {
               .join(', '),
         },
       ]}
-      rows={users}
     />
   )
 }

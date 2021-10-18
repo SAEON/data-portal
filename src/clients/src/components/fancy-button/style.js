@@ -52,6 +52,6 @@ export default makeStyles(theme => ({
     color: alpha(theme.palette.common.white, 1),
     border: `1px solid ${alpha(theme.palette.common.white, 0)}`,
     transition: theme.transitions.create(['border', 'color']),
-    padding: `calc(${theme.spacing(2)} ${theme.spacing(4)} ${theme.spacing(1)} + 6px)`,
+    padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
   },
 }))

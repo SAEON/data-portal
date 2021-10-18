@@ -3,7 +3,7 @@ import { context as userRolesContext } from '../context'
 import Table from './_table'
 
 export default ({ active }) => {
-  const { users, roles } = useContext(userRolesContext)
+  const { users, selectedUsers, setSelectedUsers, roles } = useContext(userRolesContext)
 
   if (!active) {
     return null
@@ -11,7 +11,12 @@ export default ({ active }) => {
 
   return (
     <div style={{ width: '100%', height: 1000, position: 'relative' }}>
-      <Table roles={roles} users={users} />
+      <Table
+        selectedUsers={selectedUsers}
+        setSelectedUsers={setSelectedUsers}
+        roles={roles}
+        users={users}
+      />
     </div>
   )
 }

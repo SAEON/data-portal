@@ -1,10 +1,11 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const [selectedUsers, setSelectedUsers] = useState(() => new Set())
   const { loading, error, data } = useQuery(gql`
     query {
       users {
@@ -47,5 +48,9 @@ export default ({ children }) => {
 
   const { users, roles, permissions } = data
 
-  return <context.Provider value={{ users, roles, permissions }}>{children}</context.Provider>
+  return (
+    <context.Provider value={{ users, selectedUsers, setSelectedUsers, roles, permissions }}>
+      {children}
+    </context.Provider>
+  )
 }
