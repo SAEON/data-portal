@@ -1,38 +1,27 @@
-import { DataGrid } from '@mui/x-data-grid'
-import { useTheme } from '@mui/material/styles'
+import DataGrid from 'react-data-grid'
+
+const headerRenderer = ({ column }) => (
+  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+)
 
 export default ({ permissions }) => {
-  const theme = useTheme()
   return (
-    <div style={{ height: 400 }}>
-      <DataGrid
-        pageSize={25}
-        rowHeight={theme.spacing(5)}
-        columns={[
-          {
-            field: 'id',
-            sortable: false,
-            filterable: false,
-            headerName: 'ID',
-            width: 50,
-            disableColumnMenu: true,
-          },
-          { field: 'name', headerName: 'Name', width: 200 },
-          {
-            field: 'description',
-            headerName: 'Description',
-            flex: 1,
-            sortable: false,
-            filterable: false,
-            disableColumnMenu: true,
-          },
-        ]}
-        rows={permissions.map(({ id, name, description }) => ({
-          id,
-          name,
-          description,
-        }))}
-      />
-    </div>
+    <DataGrid
+      enableVirtualization={true}
+      columns={[
+        { key: 'name', name: 'Name', width: 200, resizable: true, headerRenderer },
+        {
+          key: 'description',
+          name: 'Description',
+          resizable: true,
+          headerRenderer,
+        },
+      ]}
+      rows={permissions.map(({ id, name, description }) => ({
+        id,
+        name,
+        description,
+      }))}
+    />
   )
 }

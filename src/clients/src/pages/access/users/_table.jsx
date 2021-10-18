@@ -1,110 +1,52 @@
-import { useContext } from 'react'
-import { context as userRoleContext } from '../context'
-import { gql, useMutation } from '@apollo/client'
-import { DataGrid } from '@mui/x-data-grid'
-import { useTheme } from '@mui/material/styles'
-import Multiselect from '../../../components/multiselect'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import clsx from 'clsx'
-import useStyles from './style'
+import DataGrid, { SelectColumn } from 'react-data-grid'
+import RolesEditor from './_roles-editor'
 
-export default ({ users }) => {
-  const { roles } = useContext(userRoleContext)
-  const theme = useTheme()
-  const classes = useStyles()
+const headerRenderer = ({ column }) => (
+  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+)
 
-  const [assignRolesToUser, { error, loading }] = useMutation(
-    gql`
-      mutation assignRolesToUser($userId: ID!, $roleIds: [ID!]!) {
-        assignRolesToUser(userId: $userId, roleIds: $roleIds) {
-          id
-          roles {
-            id
-          }
-        }
-      }
-    `
-  )
-
-  if (error) {
-    throw error
-  }
-
+export default ({ users, roles }) => {
   return (
-    <>
-      <Card
-        style={{ width: '100%', backgroundColor: theme.backgroundColor, border: 'none' }}
-        variant="outlined"
-      >
-        <CardContent style={{ padding: 0 }}>
-          <div style={{ height: 1000 }}>
-            <DataGrid
-              pageSize={25}
-              rowHeight={theme.spacing(5)}
-              rows={users.map(({ id, emailAddress, name, roles }) => {
-                return {
-                  id,
-                  emailAddress,
-                  name,
-
-                  roles,
-                }
-              })}
-              columns={[
-                {
-                  field: 'id',
-                  sortable: false,
-                  filterable: false,
-                  disableColumnMenu: true,
-                  headerName: 'ID',
-                  width: 50,
-                },
-                { field: 'emailAddress', headerName: 'Email Address', flex: 0.5 },
-                { field: 'name', headerName: 'Name', flex: 0.5 },
-                {
-                  field: 'roles',
-                  headerName: 'Roles',
-                  sortable: false,
-                  filterable: false,
-                  flex: 0.8,
-                  disableColumnMenu: true,
-                  cellClassName: () => clsx(classes.cell),
-                  renderCell: ({ value, row: { id: userId } }) => {
-                    return (
-                      <Multiselect
-                        loading={loading}
-                        chipProps={{
-                          variant: 'outlined',
-                          color: label => (label.includes('admin') ? 'secondary' : 'primary'),
-                          style: { textTransform: 'uppercase', position: 'relative', top: -2 },
-                        }}
-                        id={`multiselect-${userId}`}
-                        options={roles
-                          .filter(({ name }) => name !== 'sysadmin')
-                          .map(({ name }) => name)}
-                        value={value.map(({ name }) => name)}
-                        setValue={roleNames => {
-                          assignRolesToUser({
-                            variables: {
-                              userId,
-                              roleIds:
-                                roleNames.map(
-                                  _name => roles.find(({ name }) => name === _name).id
-                                ) || [],
-                            },
-                          })
-                        }}
-                      />
-                    )
-                  },
-                },
-              ]}
-              checkboxSelection
-            />
-          </div>
-        </CardContent>
-      </Card>
-    </>
+    <DataGrid
+      style={{ height: '100%' }}
+      enableVirtualization={true}
+      columns={[
+        SelectColumn,
+        {
+          key: 'emailAddress',
+          name: 'Email address',
+          resizable: true,
+          width: 200,
+          headerRenderer,
+        },
+        {
+          key: 'name',
+          name: 'Name',
+          resizable: true,
+          width: 250,
+          headerRenderer,
+        },
+        {
+          key: 'roles',
+          name: 'Roles',
+          resizable: true,
+          headerRenderer,
+          editorOptions: {
+            renderFormatter: true,
+          },
+          editor: props => <RolesEditor roles={roles} {...props} />,
+          formatter: ({ row: { roles } }) =>
+            [...roles]
+              .sort(({ name: a }, { name: b }) => {
+                if (a > b) return 1
+                if (a < b) return -1
+                return 0
+              })
+              .map(({ name }) => name.toUpperCase())
+              .join(', '),
+        },
+      ]}
+      rows={users}
+    />
   )
 }

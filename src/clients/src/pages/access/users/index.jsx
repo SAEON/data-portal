@@ -1,19 +1,17 @@
-import { useContext, lazy, Suspense } from 'react'
+import { useContext } from 'react'
 import { context as userRolesContext } from '../context'
-import Loading from '../../../components/loading'
-
-const Render = lazy(() => import('./_render'))
+import Table from './_table'
 
 export default ({ active }) => {
-  const { users } = useContext(userRolesContext)
+  const { users, roles } = useContext(userRolesContext)
 
   if (!active) {
     return null
   }
 
   return (
-    <Suspense fallback={<Loading />}>
-      <Render users={users} />
-    </Suspense>
+    <div style={{ width: '100%', height: 1000, position: 'relative' }}>
+      <Table roles={roles} users={users} />
+    </div>
   )
 }

@@ -8,9 +8,9 @@ import RowRenderer from './row'
 import onRowsChange from './_on-rows-change'
 import { useTheme } from '@mui/material/styles'
 
-const HeaderRenderer = ({ column }) => {
-  return <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
-}
+const headerRenderer = ({ column }) => (
+  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+)
 
 export default () => {
   const theme = useTheme()
@@ -58,7 +58,7 @@ export default () => {
           key: 'i',
           name: 'RW #',
           width: 10,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           frozen: true,
           formatter: ({ row: { i } }) => (
             <div style={{ width: '100%', textAlign: 'center' }}>{i}</div>
@@ -69,7 +69,7 @@ export default () => {
           key: 'doi',
           resizable: true,
           name: 'DOI',
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           frozen: true,
           width: 250,
           cellClass: 'read-only-data-cell',
@@ -96,7 +96,7 @@ export default () => {
               <JsonIcon size={18} />
             </div>
           ),
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
         },
         {
           key: 'title',
@@ -104,7 +104,7 @@ export default () => {
           name: 'Title',
           width: 350,
           editor: TextEditor,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
         },
         {
           key: 'institution',
@@ -112,7 +112,7 @@ export default () => {
           name: 'Institution',
           width: 300,
           editor: TextEditor,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           cellClass: 'read-only-data-cell',
         },
         {
@@ -121,7 +121,7 @@ export default () => {
           name: 'Collection',
           width: 300,
           editor: TextEditor,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           cellClass: 'read-only-data-cell',
         },
         {
@@ -129,7 +129,7 @@ export default () => {
           width: 150,
           resizable: true,
           name: 'Schema',
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           cellClass: 'read-only-data-cell',
         },
         {
@@ -138,14 +138,14 @@ export default () => {
           resizable: true,
           name: 'Validated',
           editor: TextEditor,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           cellClass: 'read-only-data-cell',
         },
         {
           key: 'errors',
           resizable: true,
           name: 'Errors',
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           editor: JsonViewer,
           editorOptions: {
             renderFormatter: true,
@@ -172,7 +172,7 @@ export default () => {
           resizable: true,
           name: 'State',
           width: 200,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           cellClass: 'read-only-data-cell',
         },
         {
@@ -180,14 +180,14 @@ export default () => {
           resizable: true,
           name: 'ID',
           width: 200,
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           cellClass: 'read-only-data-cell',
         },
         {
           key: 'sid',
           resizable: true,
           name: 'SID',
-          headerRenderer: HeaderRenderer,
+          headerRenderer,
           width: 200,
           cellClass: 'read-only-data-cell',
         },
