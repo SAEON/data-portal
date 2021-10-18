@@ -30,5 +30,6 @@ apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install })
 
 /**
  * Rebuild all packages
+ * TODO - this should be run after other scripts
  */
-import './build-all-packages.js'
+// import './build-all-packages.js'
