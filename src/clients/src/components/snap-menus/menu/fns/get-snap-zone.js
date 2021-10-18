@@ -1,4 +1,4 @@
-import offset from '../../lib/offset.js'
+import offset from '../../lib/offset'
 
 const SNAP_ZONE_X = 25
 const SNAP_ZONE_Y = 25

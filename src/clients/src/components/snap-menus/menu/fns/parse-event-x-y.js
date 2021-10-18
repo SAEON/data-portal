@@ -1,5 +1,3 @@
-import packageJson from '../../../package.json'
-
 export default ev => {
   let x, y
 
@@ -23,7 +21,7 @@ export default ev => {
       y = touch.clientY
     } else {
       throw new Error(
-        `${packageJson.name} v${packageJson.version} ERROR: Unrecognized event type. It's likely that not all possible touch/mouse events across different device types are parseed incorrectly`
+        `ERROR: Unrecognized event type in SnapMenu component. It's likely that not all possible touch/mouse events across different device types are parsed incorrectly`
       )
     }
   }

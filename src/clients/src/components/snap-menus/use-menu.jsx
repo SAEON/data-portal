@@ -1,6 +1,6 @@
 import { useRef, useContext } from 'react'
-import SnapMenu from './menu/index.jsx'
-import context from './context.js'
+import Menu from './menu'
+import { context } from './context'
 
 /**
  * Module level cache of refs
@@ -43,7 +43,7 @@ export default ({ id }) => {
   } = useContext(context)
 
   return props => (
-    <SnapMenu
+    <Menu
       // From Provider
       PORTAL={PORTAL}
       PORTAL_MARGIN_TOP={PORTAL_MARGIN_TOP}

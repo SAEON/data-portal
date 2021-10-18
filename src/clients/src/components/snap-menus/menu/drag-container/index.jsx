@@ -1,10 +1,10 @@
 import Draggable from 'react-draggable'
-import debounce from '../../lib/debounce.js'
-import getSnapZone from '../fns/get-snap-zone.js'
-import parseEventXY from '../fns/parse-event-x-y.js'
-import offset from '../../lib/offset.js'
-import getDimensions from '../fns/get-dimensions.js'
-import getPosition from '../fns/get-position.js'
+import debounce from '../../../../lib/fns/debounce'
+import getSnapZone from '../fns/get-snap-zone'
+import parseEventXY from '../fns/parse-event-x-y'
+import offset from '../../lib/offset'
+import getDimensions from '../fns/get-dimensions'
+import getPosition from '../fns/get-position'
 
 var allowInteractions = true
 var timer

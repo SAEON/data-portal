@@ -1,11 +1,11 @@
 import CloseIcon from 'mdi-react/CloseIcon'
 import MinimizeIcon from 'mdi-react/WindowMinimizeIcon'
 import MaximizeIcon from 'mdi-react/WindowMaximizeIcon'
-import CardContent from '@material-ui/core/CardContent'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
+import CardContent from '@mui/material/CardContent'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
 import clsx from 'clsx'
 
 export default ({ draggable, state, title, onMinify, disableMinify, onClose }) => {

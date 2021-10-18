@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import MenuContext from './context'
+import { useEffect, useState, createContext } from 'react'
+
+export const context = createContext()
 
 export default ({
   children,
@@ -48,7 +49,7 @@ export default ({
   }
 
   return (
-    <MenuContext.Provider
+    <context.Provider
       value={{
         PORTAL: portalNode,
         PORTAL_MARGIN_TOP: MARGIN_TOP,
@@ -58,6 +59,6 @@ export default ({
       }}
     >
       {children}
-    </MenuContext.Provider>
+    </context.Provider>
   )
 }
