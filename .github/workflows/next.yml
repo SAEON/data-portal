@@ -25,7 +25,7 @@ jobs:
       - name: Deploy services
         run: >-
           ENABLE_METADATA=true
-          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,http://curation-tools.saeon.int"
+          ALLOWED_ORIGINS="https://catalogue.saeon.dvn,http://curation.saeon.dvn"
           API_EXPORT_PORT_PUBLIC=5000
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.dvn"
           API_INTERNAL_ADDRESS="https://api.catalogue.saeon.dvn:5002"
@@ -38,7 +38,6 @@ jobs:
           CLIENTS_PUBLIC_ADDRESS="https://catalogue.saeon.dvn"
           CLIENTS_EXPORT_PORT_PUBLIC=5001
           CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"
-          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.dvn
           DEPLOYMENT_ENV="development"
           ELASTICSEARCH_ADDRESS=http://next.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.dvn"

@@ -24,7 +24,7 @@ jobs:
 
       - name: Deploy services
         run: >-
-          ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,http://curation-tools.saeon.int"
+          ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,http://curation.saeon.int"
           API_EXPORT_PORT_PUBLIC=5000
           API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
           API_INTERNAL_ADDRESS="https://api.catalogue.saeon.ac.za:5002"
@@ -36,8 +36,7 @@ jobs:
           CLIENTS_EXPORT_PORT_INTERNAL=3002
           CLIENTS_PUBLIC_ADDRESS="https://catalogue.saeon.ac.za"
           CLIENTS_EXPORT_PORT_PUBLIC=5001
-          CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"        
-          CURATION_TOOLS_NGINX_SERVER_NAME=curation-tools.saeon.ac.za
+          CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"
           DEPLOYMENT_ENV="production"
           ELASTICSEARCH_ADDRESS=http://7.14.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.ac.za"
@@ -53,7 +52,7 @@ jobs:
           POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
           POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
           POSTGIS_USERNAME_PUBLIC="${{ secrets.POSTGIS_USERNAME_PUBLIC }}"
-          POSTGIS_PASSWORD_PUBLIC="${{ secrets.POSTGIS_PASSWORD_PUBLIC }}"          
+          POSTGIS_PASSWORD_PUBLIC="${{ secrets.POSTGIS_PASSWORD_PUBLIC }}"
           PROXY_ADDRESS="https://proxy.saeon.ac.za"
           SUBDOMAIN_APP_ENTRIES="curation-tools"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
