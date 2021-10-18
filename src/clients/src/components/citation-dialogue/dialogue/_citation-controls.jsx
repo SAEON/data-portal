@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { gql } from '@apollo/client'
 import DialogActions from '@mui/material/DialogActions'
-import AssignmentIcon from '@mui/icons-material/Assignment'
+import AssignmentIcon from 'mdi-react/ContentCopyIcon'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
