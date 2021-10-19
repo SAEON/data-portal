@@ -98,7 +98,7 @@ publicApp
         httpOnly: true,
         signed: true,
         rolling: true,
-        renew: false,
+        renew: true,
         secure: isHttp ? false : true,
         sameSite: isHttp ? 'lax' : 'none',
       },
