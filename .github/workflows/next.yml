@@ -42,8 +42,10 @@ jobs:
           ELASTICSEARCH_ADDRESS=http://next.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.dvn"
           LATEST_COMMIT=$(git rev-parse HEAD)
-          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
-          MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
+          MONGO_DB=catalogue_dev
+          MONGO_DB_ADDRESS=mongodb://mongo.saeon.int:27117
+          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_DEV_PASSWORD }}"
+          MONGO_DB_USERNAME="${{ secrets.MONGO_DB_DEV_USERNAME }}"
           NODE_ENV=production
           NODE_TLS_REJECT_UNAUTHORIZED=0
           ODP_ADDRESS="https://odp.saeon.dvn"

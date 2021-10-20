@@ -5,8 +5,6 @@ networks:
     name: $DOCKER_NETWORK
 
 volumes:
-  mongo:
-    driver: local
   postgis:
     driver: local
   data:
@@ -15,21 +13,6 @@ volumes:
     driver: local
 
 services:
-  mongo:
-    container_name: mongo
-    restart: always
-    image: $MONGO_IMAGE
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_DB_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_DB_PASSWORD
-    volumes:
-      - mongo:/data/db/
-    ports:
-      - 27017:27017
-    networks:
-      - $DOCKER_NETWORK
-    command: --wiredTigerCacheSizeGB=2 --dbpath /data/db
-
   postgis:
     image: $POSTGIS_IMAGE_NAME
     container_name: $POSTGIS_CONTAINER_NAME
@@ -90,6 +73,7 @@ services:
         LATEST_COMMIT: $LATEST_COMMIT
         LOG_QUERY_DETAILS: $LOG_QUERY_DETAILS
         METADATA_INTEGRATION_SCHEDULE: $METADATA_INTEGRATION_SCHEDULE
+        MONGO_DB: $MONGO_DB
         MONGO_DB_ADDRESS: $MONGO_DB_ADDRESS
         MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
         MONGO_DB_USERNAME: $MONGO_DB_USERNAME
@@ -120,7 +104,6 @@ services:
       - tmp:/tmp/catalogue-api
       - data:/var/lib/catalogue-api
     depends_on:
-      - mongo
       - postgis
     networks:
       - $DOCKER_NETWORK
