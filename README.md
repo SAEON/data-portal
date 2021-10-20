@@ -36,7 +36,6 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
-  - [MongoDB database management](#mongodb-database-management)
 - [Documentation](#documentation)
   - [API](#api)
   - [Proxy](#proxy)
@@ -198,7 +197,6 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 
 Check that the services started successfully: `docker container ls`. There should be running instances of the following services:
 
-- MongoDB
 - PostGIS
 - API
 - Proxy
@@ -207,7 +205,7 @@ Check that the services started successfully: `docker container ls`. There shoul
 Then [configure the API for first use](#api-configuration).
 
 ## Containerized deployment
-Services can be deployed as individual containers. This is useful for deploying to a an environment with orchestrated container management (such as Kubernetes) and where 3rd party services are managed independently of this deployment (i.e. when connecting to existing MongoDB / PostGIS / Elasticsearch servers). Refer to [individual service documentation](#documentation) for containerizing individual services. Also look at the [docker-compose](docker-compose.yml) configuration to see how Docker images of individual services are built
+Refer to the [docker-compose](docker-compose.yml) configuration to see how Docker images of individual services are built
 
 ## Continuous deployment
 
@@ -245,48 +243,6 @@ A continuous deployment workflow is supported for a CentOS 7.6 deployment server
 - http://catalogue.saeon.int:8002 (for proxy logs)
 - postgis://catalogue.saeon.int:5442
 - mongodb://catalogue.saeon.int:27017
-
-## MongoDB database management
-These commands should work for taking and restoring backups on localhost (i.e. the `docker-compose` deployment with no overriding configuration). Adjust appropriately for MongoDB authentication credentials in the deployed environment.
-
-```sh
-# Create a zipped backup archive 
-cd ~
-docker run \
-  --net=catalogue_default \
-  -v /home/$USER:/mongo-bak \
-  --rm \
-  mongo:5.0.3 \
-  sh -c \
-  "mongodump \
-    --uri=mongodb://mongo:27017 \
-    -u=admin \
-    -p=password \
-    --authenticationDatabase=admin \
-    -d=catalogue \
-    --archive \
-    --gzip \
-    > \
-    /mongo-bak/mongo-backup.archive"
-
-# Restore the zipped backup archive to a database
-cd ~
-docker run \
-  -i \
-  --net=catalogue_default \
-  -v /home/$USER:/mongo-bak \
-  --rm \
-  mongo:5.0.3 \
-  sh -c \
-  "mongorestore \
-    --uri=mongodb://mongo:27017 \
-    -u=admin \
-    -p=password \
-    --authenticationDatabase=admin \
-    --gzip \
-    --archive=/mongo-bak/mongo-backup.archive \
-    --nsInclude=catalogue.*"
-```
 
 # Documentation
 

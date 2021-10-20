@@ -7,7 +7,7 @@ Configuring servers comes down to running a number of shell commands. Together, 
 **Table of Contents** 
 
 - [Overview](#overview)
-- [Setup your virtual server(s)](#setup-your-virtual-servers)
+- [Setup your virtual server(s) for passwordless login](#setup-your-virtual-servers-for-passwordless-login)
 - [Setup Ansible](#setup-ansible)
 - [Setup your Ansible inventory](#setup-your-ansible-inventory)
 - [Use Ansible!](#use-ansible)
