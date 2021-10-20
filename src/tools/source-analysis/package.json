@@ -27,7 +27,7 @@
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5",
     "node-fetch": "^3.0.0",
-    "nodemon": "^2.0.13",
+    "nodemon": "^2.0.14",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {

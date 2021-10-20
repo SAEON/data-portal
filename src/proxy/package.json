@@ -33,7 +33,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13",
+    "nodemon": "^2.0.14",
     "npm-check-updates": "^11.8.5",
     "prettier": "^2.4.1"
   }

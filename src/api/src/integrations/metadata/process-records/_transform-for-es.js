@@ -7,7 +7,7 @@ export default data =>
       institution_key: institution,
       collection_key: collection,
       schema_key: schema,
-      metadata,
+      metadata = {},
       published,
       errors = {},
       ...otherFields

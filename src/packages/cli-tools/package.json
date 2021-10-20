@@ -41,10 +41,10 @@
     "ora": "^6.0.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.0.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.5",
-    "nodemon": "^2.0.13",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "nodemon": "^2.0.14",
     "onchange": "^7.1.0",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",

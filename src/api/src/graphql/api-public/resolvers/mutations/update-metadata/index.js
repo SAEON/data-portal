@@ -16,7 +16,7 @@ export default async (self, { input }, ctx) => {
    */
   ctx.request.socket.setTimeout(20 * 60 * 1000)
 
-  const result = await Promise.all(
+  const result = await Promise.allSettled(
     input.map(input => {
       const { id, sid, doi, institution_key, metadataInput } = input
       const { collection_key, schema_key, metadata } = metadataInput
@@ -39,7 +39,6 @@ export default async (self, { input }, ctx) => {
         })
           .then(res => res.text())
           .then(txt => {
-            console.log(txt)
             try {
               return JSON.parse(txt)
             } catch (error) {
@@ -59,24 +58,30 @@ export default async (self, { input }, ctx) => {
     })
   )
 
+  console.log('ODP Result', result)
+
   /**
    * Process the ODP results into
    * the Elasticsearch index, then
    * return the recently added docs
    */
-  return mapToMetadata(
-    await ctx.elastic.query({
-      index: ELASTICSEARCH_METADATA_INDEX,
-      body: {
-        size: 20,
-        query: {
-          ids: {
-            values: (
-              await processRecordsIntoElasticsearch(result, null, 2)
-            ).body.items.map(({ index: { _id } }) => _id),
-          },
+  const esInsertions = await processRecordsIntoElasticsearch(
+    result.map(({ value = {} }) => value),
+    null,
+    2
+  )
+
+  const esUpdates = await ctx.elastic.query({
+    index: ELASTICSEARCH_METADATA_INDEX,
+    body: {
+      size: 20,
+      query: {
+        ids: {
+          values: esInsertions.body.items.map(({ index: { _id } }) => _id),
         },
       },
-    })
-  )
+    },
+  })
+
+  return mapToMetadata(esUpdates)
 }
