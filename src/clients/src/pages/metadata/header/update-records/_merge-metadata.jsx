@@ -43,5 +43,5 @@ export default memo(({ changes, selectedChanges, ...props }) => {
     return { id, ...restOfRecord, ...otherChanges, metadata: { ...metadata, ...metadataChanges } }
   })
 
-  return <ConfirmAndMutate mergedChanges={mergedChanges} {...props} />
+  return <ConfirmAndMutate changes={changes} mergedChanges={mergedChanges} {...props} />
 })

@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import CircularProgress from '@mui/material/CircularProgress'
 import Button from '@mui/material/Button'
 
-export default ({ setOpen, setChanges, mergedChanges }) => {
+export default ({ setOpen, setChanges, changes, mergedChanges }) => {
   const theme = useTheme()
 
   const [updateMetadata, { loading, error }] = useMutation(
@@ -34,7 +34,7 @@ export default ({ setOpen, setChanges, mergedChanges }) => {
       onCompleted: ({ updateMetadata: updatedRecords }) => {
         setOpen(false)
         setChanges({
-          ...mergedChanges,
+          ...changes,
           ...Object.fromEntries(updatedRecords.map(({ id }) => [id, null])),
         })
       },

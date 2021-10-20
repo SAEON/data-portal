@@ -45,8 +45,9 @@ const Provider = ({
         }
       `,
       {
-        onCompleted: ({ createMetadata: newRecords }) =>
-          setRows([...newRecords.map((record, i) => ({ i: rows.length + i, ...record })), ...rows]),
+        onCompleted: ({ createMetadata: newRecords }) => {
+          setRows([...newRecords.map((record, i) => ({ i: rows.length + i, ...record })), ...rows])
+        },
         update: (cache, { data: { createMetadata: newRecords } }) => {
           cache.modify({
             fields: {
