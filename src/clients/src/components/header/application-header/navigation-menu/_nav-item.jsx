@@ -10,13 +10,13 @@ export default forwardRef(({ onClick, label, to, Icon, exact = false, href }, re
       {({ match }) => {
         return (
           <MenuItem
-            innerRef={ref}
+            ref={ref}
             component={href ? 'a' : Link}
             active={match}
             rel={href && 'noopener noreferrer'}
             target={href && '_blank'}
             onClick={onClick}
-            to={to}
+            to={to || ''}
             href={href}
           >
             <ListItemIcon>{<Icon color={match ? 'primary' : 'inherit'} />}</ListItemIcon>

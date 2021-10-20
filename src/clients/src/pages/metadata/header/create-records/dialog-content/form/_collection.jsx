@@ -13,14 +13,11 @@ export default ({ update, collection, collectionOptions, loading }) => {
     <TextField
       {...fieldProps}
       select
-      value={
-        (collectionOptions.find(({ value }) => value === collection?.value) || collectionOptions[0])
-          ?.value || ''
-      }
+      value={collection?.value || ''}
       helperText={'Which collection is this record for?'}
       label="Select collection"
       onChange={({ target: { value: label } }) =>
-        update({ collection: collectionOptions.find(option => option.label === label) })
+        update({ collection: collectionOptions.find(option => option.value === label) })
       }
     >
       {collectionOptions.map(option => (

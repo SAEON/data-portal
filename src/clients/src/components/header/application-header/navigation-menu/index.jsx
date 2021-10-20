@@ -35,7 +35,7 @@ export default ({ routes }) => {
             }
             return requiredPermission ? hasPermission(requiredPermission) : true
           })
-          .map(({ label, Icon, to }) => {
+          .map(({ label, Icon, to, href }) => {
             if (!Icon) {
               throw new Error('Cannot draw menu item without an Icon')
             }
@@ -43,6 +43,7 @@ export default ({ routes }) => {
             return (
               <NavItem
                 onClick={() => setAnchorEl(null)}
+                href={href}
                 key={label}
                 Icon={Icon}
                 label={label}
