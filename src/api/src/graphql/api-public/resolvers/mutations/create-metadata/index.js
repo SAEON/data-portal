@@ -65,7 +65,6 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
    * return the recently added docs
    */
   const esIntegration = await processRecordsIntoElasticsearch(result)
-
   const newEsRecords = await ctx.elastic.query({
     index: ELASTICSEARCH_METADATA_INDEX,
     body: {
@@ -77,6 +76,5 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
       },
     },
   })
-
   return mapToMetadata(newEsRecords)
 }
