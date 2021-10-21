@@ -11,13 +11,15 @@ import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../../components/loading'
 
 export default ({ row, onRowChange, column, onClose }) => {
-  const { error, loading } = useQuery(
+  const { error, loading, data } = useQuery(
     gql`
-      query ($ids: [ID!]) {
+      query ($ids: [ID!], $schema: String!) {
         indexedMetadata(ids: $ids) {
           id
           metadata
         }
+
+        schemaJson(schema: $schema)
       }
     `,
     {
@@ -26,7 +28,9 @@ export default ({ row, onRowChange, column, onClose }) => {
        * Rows must be reset explicitly with
        * new metadata field since initial
        * query for metadata doesn't cache
-       * this field
+       * indexedMetadata.metadata (since it's
+       * not loaded in the initial query - don't
+       * know why Apollo does this)
        */
       onCompleted: data =>
         onRowChange({
@@ -36,6 +40,7 @@ export default ({ row, onRowChange, column, onClose }) => {
       fetchPolicy: 'cache-first',
       variables: {
         ids: [row.id],
+        schema: row.schema,
       },
     }
   )
@@ -49,10 +54,10 @@ export default ({ row, onRowChange, column, onClose }) => {
   }
 
   return (
-    <Provider row={row} onRowChange={onRowChange} column={column}>
-      <Dialog maxWidth="xl" onClose={onClose} open={true}>
+    <Provider schemaJson={data.schemaJson} row={row} onRowChange={onRowChange} column={column}>
+      <Dialog scroll="paper" maxWidth="xl" onClose={onClose} open={true}>
         <DialogTitle>Edit JSON</DialogTitle>
-        <DialogContent style={{ width: 800, height: 800 }}>
+        <DialogContent dividers style={{ width: 800, height: 800 }}>
           <Header />
           <Form />
           <JsonEditor />

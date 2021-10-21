@@ -7,14 +7,14 @@ import { useTheme } from '@mui/material/styles'
 import { context as editorContext } from '../context'
 
 export default () => {
-  const { view, setView } = useContext(editorContext)
+  const { activeEditor, setActiveEditor } = useContext(editorContext)
   const theme = useTheme()
 
   return (
     <Toolbar disableGutters variant="dense" style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button
-        disabled={view === 'form'}
-        onClick={() => setView('form')}
+        disabled={activeEditor === 'form'}
+        onClick={() => setActiveEditor('form')}
         style={{ marginRight: theme.spacing(1) }}
         size="small"
         disableElevation
@@ -24,8 +24,8 @@ export default () => {
         Form editor
       </Button>
       <Button
-        disabled={view === 'json'}
-        onClick={() => setView('json')}
+        disabled={activeEditor === 'json'}
+        onClick={() => setActiveEditor('json')}
         size="small"
         disableElevation
         variant="outlined"

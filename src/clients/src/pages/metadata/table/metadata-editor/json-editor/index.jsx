@@ -10,10 +10,10 @@ import 'ace-builds/src-min-noconflict/ext-language_tools'
 import debounce from '../../../../../lib/fns/debounce'
 
 export default () => {
-  const { view, json, updateMetadata } = useContext(editorContext)
+  const { activeEditor, json, updateMetadata } = useContext(editorContext)
   const ref = useRef(null)
 
-  const isIn = view === 'json'
+  const isIn = activeEditor === 'json'
 
   return (
     <Fade unmountOnExit in={isIn} key="json-editor">

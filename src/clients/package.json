@@ -43,6 +43,7 @@
     "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.4",
     "@mui/styles": "^5.0.1",
+    "@rjsf/core": "^3.2.0",
     "@saeon/logger": "^6.2.15",
     "@saeon/ol-react": "^10.2.10",
     "@saeon/quick-form": "3.2.7",

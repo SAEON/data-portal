@@ -257,6 +257,7 @@
       "pattern": "^10\\.\\d{4,}(\\.\\d+)*/[-._;()/:a-zA-Z0-9]+$"
     },
     "creators": {
+      "description": "TODO - waiting update datacite properties.creators.description",
       "type": "array",
       "items": {
         "type": "object",
@@ -265,8 +266,14 @@
           "nameType": { "$ref": "#/definitions/nameType" },
           "givenName": { "type": "string" },
           "familyName": { "type": "string" },
-          "nameIdentifiers": { "$ref": "#/definitions/nameIdentifiers" },
-          "affiliation": { "$ref": "#/definitions/affiliation" },
+          "nameIdentifiers": {
+            "description": "TODO - waiting update datacite properties.creators.items.properties.nameIdentifiers.description",
+            "$ref": "#/definitions/nameIdentifiers"
+          },
+          "affiliation": {
+            "description": "TODO - waiting update datacite properties.creators.items.properties.affiliation.description",
+            "$ref": "#/definitions/affiliation"
+          },
           "lang": { "type": "string" }
         },
         "additionalProperties": false,
@@ -276,6 +283,7 @@
       "uniqueItems": true
     },
     "titles": {
+      "description": "TODO - waiting update datacite properties.titles.description",
       "type": "array",
       "items": {
         "type": "object",
