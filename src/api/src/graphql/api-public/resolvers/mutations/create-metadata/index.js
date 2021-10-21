@@ -59,15 +59,12 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
     )
   )
 
-  console.log('ODP createMetadata result', result)
-
   /**
    * Process the ODP results into
    * the Elasticsearch index, then
    * return the recently added docs
    */
   const esIntegration = await processRecordsIntoElasticsearch(result)
-  console.log('ES metadata result', JSON.stringify(esIntegration.body, null, 2))
 
   const newEsRecords = await ctx.elastic.query({
     index: ELASTICSEARCH_METADATA_INDEX,
@@ -80,8 +77,6 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
       },
     },
   })
-
-  console.log('New ES records', JSON.stringify(newEsRecords.body, null, 2))
 
   return mapToMetadata(newEsRecords)
 }
