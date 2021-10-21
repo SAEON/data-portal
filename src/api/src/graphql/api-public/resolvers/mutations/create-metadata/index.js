@@ -66,8 +66,8 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
    * the Elasticsearch index, then
    * return the recently added docs
    */
-  const insertToES = await processRecordsIntoElasticsearch(result, null, 2)
-  console.log('ES metadata result', insertToES)
+  const esIntegration = await processRecordsIntoElasticsearch(result)
+  console.log('ES metadata result', JSON.stringify(esIntegration.body, null, 2))
 
   const newEsRecords = await ctx.elastic.query({
     index: ELASTICSEARCH_METADATA_INDEX,
@@ -75,13 +75,13 @@ export default async (self, { input, numberOfRecords = 1, institution }, ctx) =>
       size: 20,
       query: {
         ids: {
-          values: insertToES.body.items.map(({ index: { _id } }) => _id),
+          values: esIntegration.body.items.map(({ index: { _id } }) => _id),
         },
       },
     },
   })
 
-  console.log('New ES records', newEsRecords)
+  console.log('New ES records', JSON.stringify(newEsRecords.body, null, 2))
 
   return mapToMetadata(newEsRecords)
 }

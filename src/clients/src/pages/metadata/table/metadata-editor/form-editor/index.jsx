@@ -12,6 +12,14 @@ export default () => {
   return (
     <Fade unmountOnExit in={isIn} key="form-editor">
       <span style={{ display: isIn ? 'inherit' : 'none' }}>
+        TODO - this form will look a little like the &apos;create record&apos; form
+      </span>
+    </Fade>
+  )
+
+  return (
+    <Fade unmountOnExit in={isIn} key="form-editor">
+      <span style={{ display: isIn ? 'inherit' : 'none' }}>
         <FormGroup>
           {/* TITLES */}
           <ObjectField
