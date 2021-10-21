@@ -19,8 +19,9 @@ import indexedMetadata from '../queries/indexed-metadata/index.js'
 import institutions from '../queries/institutions/index.js'
 import collections from '../queries/collections/index.js'
 import schemas from '../queries/schemas/index.js'
+import schemaJson from '../queries/schema-json/index.js'
 
-const getUserOwner = async ([, args, ctx]) => ctx.userInfo.id === args.id
+const getUserDocumentOwner = async (self, args, ctx) => ctx.userInfo.id === args.id
 
 export default {
   catalogue,
@@ -35,7 +36,7 @@ export default {
   downloadsReport: authorize(PERMISSIONS['site-analytics:view'])(downloadsReport),
   roles: authorize(PERMISSIONS['roles:view'])(roles),
   user: async (...args) =>
-    authorize(PERMISSIONS['users:view'], await getUserOwner(args))(user)(...args),
+    authorize(PERMISSIONS['users:view'], await getUserDocumentOwner(...args))(user)(...args),
   users: authorize(PERMISSIONS['users:view'])(users),
   permissions: authorize(PERMISSIONS['permissions:view'])(permissions),
   metadata: authorize(PERMISSIONS['as-odp-user:curator'])(metadata),
@@ -43,4 +44,5 @@ export default {
   institutions: authorize(PERMISSIONS['as-odp-user:curator'])(institutions),
   collections: authorize(PERMISSIONS['as-odp-user:curator'])(collections),
   schemas: authorize(PERMISSIONS['as-odp-user:curator'])(schemas),
+  schemaJson: authorize(PERMISSIONS['as-odp-user:curator'])(schemaJson),
 }
