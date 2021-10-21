@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: catalogue.saeon.ac.za
     steps:
-      - uses: actions/checkout@v2
+      - uses: SAEON/checkout@v2
         with:
           ref: stable
 
