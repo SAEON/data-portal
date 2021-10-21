@@ -24,7 +24,9 @@ export default ({ row: user, onClose, roles }) => {
       }
     `,
     {
-      onCompleted: () => onClose(),
+      onCompleted: () => {
+        onClose()
+      },
     }
   )
 

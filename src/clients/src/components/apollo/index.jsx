@@ -15,6 +15,13 @@ export default ({ children }) => (
                 },
               },
             },
+            User: {
+              fields: {
+                roles: {
+                  merge: (existing, incoming) => incoming,
+                },
+              },
+            },
             Databook: {
               fields: {
                 dashboards: {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
 
@@ -6,8 +6,16 @@ const headerRenderer = ({ column }) => (
   <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
 )
 
+const sortUsersByEmail = users =>
+  [...users].sort(({ emailAddress: a }, { emailAddress: b }) => {
+    if (a > b) return 1
+    if (a < b) return -1
+    return 0
+  })
+
 export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
-  const [rows, setRows] = useState([...users])
+  const [rows, setRows] = useState(sortUsersByEmail(users))
+  useEffect(() => setRows(sortUsersByEmail(users)), [users])
 
   return (
     <DataGrid
@@ -42,7 +50,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
           editorOptions: {
             renderFormatter: true,
           },
-          editor: props => <RolesEditor roles={roles} {...props} />,
+          editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
           formatter: ({ row: { roles } }) =>
             [...roles]
               .sort(({ name: a }, { name: b }) => {
