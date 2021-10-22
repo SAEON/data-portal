@@ -14,8 +14,8 @@
     "build": "rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../packages/snap-menus/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/logger/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/ol-react/dist/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
-    "ncu": "ncu -x ol",
-    "ncu -u": "ncu -u -x ol"
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"
   },
   "repository": {
     "type": "git",
@@ -71,7 +71,7 @@
     "node-sass": "^6.0.1",
     "notistack": "^2.0.2",
     "object-hash": "^2.2.0",
-    "ol": "6.6",
+    "ol": "6.9",
     "react": "^17.0.2",
     "react-ace": "^9.5.0",
     "react-beautiful-dnd": "^13.1.0",
