@@ -1,9 +1,12 @@
 import { useContext, memo } from 'react'
 import { context as editorContext } from '../context'
 import Fade from '@mui/material/Fade'
+import useTheme from '@mui/material/styles/useTheme'
 import { withTheme } from '@rjsf/core'
 import Theme from '../../../../../theme/react-jsonschema-form'
-import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Hidden from '@mui/material/Hidden'
+import Typography from '@mui/material/Typography'
 
 const RjsfForm = withTheme(Theme)
 
@@ -20,16 +23,38 @@ const Form = memo(
 )
 
 export default () => {
-  const { activeEditor, metadata, updateMetadata, schemaJson } = useContext(editorContext)
+  const theme = useTheme()
+  const { activeEditor, metadata, updateMetadata, schemaJson, errors } = useContext(editorContext)
 
   const isIn = activeEditor === 'form'
 
   return (
     <Fade unmountOnExit in={isIn} key="rjsf-form">
       <span style={{ display: isIn ? 'inherit' : 'none' }}>
-        <Container maxWidth="md">
-          <Form metadata={metadata} updateMetadata={updateMetadata} schemaJson={schemaJson} />
-        </Container>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={8}>
+            <Form metadata={metadata} updateMetadata={updateMetadata} schemaJson={schemaJson} />
+          </Grid>
+          <Hidden smDown>
+            <Grid item md={4}>
+              <Typography
+                variant="overline"
+                style={{ display: 'block', textAlign: 'center', marginBottom: theme.spacing(2) }}
+              >
+                Validation errors (last save)
+              </Typography>
+              <pre
+                style={{
+                  ...theme.pre,
+                  height: '100%',
+                  fontSize: 'smaller',
+                }}
+              >
+                {JSON.stringify(JSON.parse(errors), null, 2)}
+              </pre>
+            </Grid>
+          </Hidden>
+        </Grid>
       </span>
     </Fade>
   )

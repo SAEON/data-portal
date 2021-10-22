@@ -7,7 +7,7 @@ import MergeMetadata from './_merge-metadata'
 import Dialog from '@mui/material/Dialog'
 
 export default () => {
-  const { selectedRows, changes, setChanges } = useContext(metadataContext)
+  const { selectedRows, changes, setChanges, rows, setRows } = useContext(metadataContext)
   const [open, setOpen] = useState(false)
 
   const selectedChanges = useMemo(() => {
@@ -44,6 +44,8 @@ export default () => {
           setChanges={setChanges}
           changes={changes}
           selectedChanges={selectedChanges}
+          rows={rows}
+          setRows={setRows}
         />
       </Dialog>
     </>
