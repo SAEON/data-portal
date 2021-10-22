@@ -1,5 +1,5 @@
 import ReactEcharts from 'echarts-for-react'
-import theme from '../../../../lib/echarts-theme'
+import theme from '../../../../theme/echarts'
 
 /**TO DO:
  * Shift chart rightward to avoid labels being cut off

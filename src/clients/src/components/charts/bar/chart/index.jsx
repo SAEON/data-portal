@@ -1,5 +1,5 @@
 import ReactEcharts from 'echarts-for-react'
-import theme from '../../../../lib/echarts-theme'
+import theme from '../../../../theme/echarts'
 
 export default ({ config, data, title, description }) => {
   const namesField = config['series-names']

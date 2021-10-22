@@ -1,5 +1,5 @@
 import ReactECharts from 'echarts-for-react'
-import echartsTheme from '../../../../lib/echarts-theme.js'
+import echartsTheme from '../../../../theme/echarts'
 
 export default ({
   data,

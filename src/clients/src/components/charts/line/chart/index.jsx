@@ -1,5 +1,5 @@
 import ReactEcharts from 'echarts-for-react'
-import theme from '../../../../lib/echarts-theme'
+import theme from '../../../../theme/echarts'
 
 /*
 select "NAME", ogc_fid
