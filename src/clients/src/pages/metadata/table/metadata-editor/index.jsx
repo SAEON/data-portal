@@ -1,5 +1,4 @@
 import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import Header from './header'
 import Provider from './context'
@@ -55,10 +54,9 @@ export default ({ row, onRowChange, column, onClose }) => {
 
   return (
     <Provider schemaJson={data.schemaJson} row={row} onRowChange={onRowChange} column={column}>
-      <Dialog scroll="paper" maxWidth="xl" onClose={onClose} open={true}>
-        <DialogTitle>Edit JSON</DialogTitle>
-        <DialogContent dividers style={{ width: 800, height: 800 }}>
-          <Header />
+      <Dialog fullWidth scroll="paper" maxWidth="xl" onClose={onClose} open={true}>
+        <Header />
+        <DialogContent dividers style={{ height: 800 }}>
           <Form />
           <JsonEditor />
         </DialogContent>

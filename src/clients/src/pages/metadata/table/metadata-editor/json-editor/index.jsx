@@ -10,31 +10,29 @@ import 'ace-builds/src-min-noconflict/ext-language_tools'
 import debounce from '../../../../../lib/fns/debounce'
 
 export default () => {
-  const { activeEditor, json, updateMetadata } = useContext(editorContext)
+  const { activeEditor, metadata, updateMetadata } = useContext(editorContext)
   const ref = useRef(null)
 
   const isIn = activeEditor === 'json'
 
   return (
     <Fade unmountOnExit in={isIn} key="json-editor">
-      <span style={{ display: isIn ? 'inherit' : 'none' }}>
-        <div style={{ height: 700, width: '100%' }}>
-          <QuickForm json={JSON.stringify(json, null, 2)}>
-            {(update, { json }) => {
+      <span style={{ display: isIn ? 'inherit' : 'none', width: '100%', height: '100%' }}>
+        <div style={{ height: '100%', width: '100%' }}>
+          <QuickForm metadata={JSON.stringify(metadata, null, 2)}>
+            {(update, { metadata }) => {
               return (
                 <AceEditor
                   ref={e => (ref.current = e)}
                   height="100%"
                   width="100%"
                   name={`ace-editor}`}
-                  value={json}
+                  value={metadata}
                   onValidate={debounce(annotations => {
                     const error = annotations.find(({ type }) => type === 'error')
-                    if (!error) {
-                      updateMetadata(json)
-                    }
+                    if (!error) updateMetadata(metadata)
                   })}
-                  onChange={debounce(json => update({ json }))}
+                  onChange={debounce(metadata => update({ metadata }))}
                   editorProps={{ $blockScrolling: false, $blockSelectEnabled: true }}
                   mode="json"
                   theme="vibrant_ink"

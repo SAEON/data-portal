@@ -72,6 +72,7 @@ const SelectWidget = ({
       id={id}
       label={label || schema.title}
       select
+      fullWidth
       value={typeof value === 'undefined' ? emptyValue : value}
       required={required}
       disabled={disabled || readonly}
