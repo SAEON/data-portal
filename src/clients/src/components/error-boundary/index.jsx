@@ -37,8 +37,7 @@ class ErrorBoundary extends Component {
         text={
           <>
             <DialogContentText variant="body2" gutterBottom>
-              Please try refreshing this page in a few minutes. If the error persists, or if
-              assistance is required, please contact{' '}
+              If this error persists, or if assistance is required, please contact{' '}
               {
                 <Link variant="body1" href={`mailto:${TECHNICAL_CONTACT}`}>
                   {TECHNICAL_CONTACT}
