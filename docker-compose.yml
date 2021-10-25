@@ -14,12 +14,9 @@ volumes:
 
 services:
   postgis:
-    image: $POSTGIS_IMAGE_NAME
+    image: "ghcr.io/saeon/postgis:13"
     container_name: $POSTGIS_CONTAINER_NAME
     restart: always
-    build:
-      context: src/postgis
-      dockerfile: Dockerfile
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_DB: $POSTGIS_DB
