@@ -30,7 +30,7 @@ export default async (ctx, ...permissions) => {
   const roleIds = (await findRoles({ permissions: { $in: permissionIds } })).map(({ _id }) => _id)
 
   /**
-   * Then see if there is a user with these roles, and the userid
+   * Then see if there is a user with these roles, and the userId
    */
   const user = (await findUsers({ _id: ObjectId(userId), roles: { $in: roleIds } }))[0]
 
