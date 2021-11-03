@@ -1,13 +1,9 @@
 name: deploy@next
 
-
-
 on:
   push:
     branches:
       - deployment-refactor
-
-
 
 env:
   REGISTRY: ghcr.io
@@ -16,15 +12,13 @@ env:
   CLIENTS_IMAGE_NAME: saeon/sdp-clients
   BRANCH_REF: deployment-refactor
 
-
-
 jobs:
   build-api:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
-      - name: Check out source code (shared) 
+      - name: Check out source code (shared)
         uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
@@ -56,14 +50,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-
-
   build-proxy:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
-      - name: Check out source code (shared) 
+      - name: Check out source code (shared)
         uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
@@ -91,14 +83,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-
-
   build-clients:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
-      - name: Check out source code (shared) 
+      - name: Check out source code (shared)
         uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
@@ -130,13 +120,11 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-
-
   deploy:
     needs: [build-api, build-proxy]
     runs-on: github-runner.saeon.int
     steps:
-      - name: Check out source code (shared) 
+      - name: Check out source code (shared)
         uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
@@ -148,8 +136,8 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
-          source: "deploy/next/"
-          target: "sdp-next"
+          source: 'deploy/next/'
+          target: 'sdp-next'
 
       - name: (SSH) Deploy stack
         uses: appleboy/ssh-action@master
@@ -173,12 +161,3 @@ jobs:
             echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env
             echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env            
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next
-
-
-
-
-
-
-
-
-

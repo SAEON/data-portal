@@ -77,7 +77,7 @@ services:
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
-      METADATA_INTEGRATION_SCHEDULE: "*/30 * * * *"
+      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
@@ -85,11 +85,11 @@ services:
       NODE_ENV: production
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       ODP_ADDRESS: https://odp.saeon.dvn
-      ODP_AUTH_SCOPE: "ODP.Catalogue ODP.Metadata"
+      ODP_AUTH_SCOPE: 'ODP.Catalogue ODP.Metadata'
       ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
       ODP_FILTER_PATH: odp-filter.js
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
-      ODP_SSO_CLIENT_SCOPES: "openid ODP.Metadata SAEON.DataPortal"
+      ODP_SSO_CLIENT_SCOPES: 'openid ODP.Metadata SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
       POSTGIS_CONTAINER_NAME: catalogue_next_postgis
       POSTGIS_DB: databooks
@@ -126,7 +126,7 @@ services:
       PROXY_ADDRESS: https://proxy.saeon.dvn
       API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
       CLIENTS_PUBLIC_ADDRESS: https://catalogue.saeon.dvn
-      CLIENTS_DEFAULT_NOTICES: "Welcome to the SAEON Catalogue!,info"
+      CLIENTS_DEFAULT_NOTICES: 'Welcome to the SAEON Catalogue!,info'
       CLIENTS_SEARCH_FILTER_CONFIG_PATH: client-filters.json
       CURATOR_CONTACT: $CURATOR_CONTACT
       TECHNICAL_CONTACT: $TECHNICAL_CONTACT
@@ -155,12 +155,12 @@ services:
       API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
       API_INTERNAL_ADDRESS: http://api.catalogue.saeon.dvn:5002
       CLIENTS_PUBLIC_ADDRESS: https://catalogue.saeon.dvn
-      CLIENTS_DEFAULT_NOTICES: "Welcome to the SAEON Catalogue!,info"
+      CLIENTS_DEFAULT_NOTICES: 'Welcome to the SAEON Catalogue!,info'
       CLIENTS_SEARCH_FILTER_CONFIG_PATH: client-filters.json
       CURATOR_CONTACT: $CURATOR_CONTACT
       TECHNICAL_CONTACT: $TECHNICAL_CONTACT
       DEPLOYMENT_ENV: development
-      LEGAL_CONTACT: $LEGAL_CONTACT    
+      LEGAL_CONTACT: $LEGAL_CONTACT
     ports:
       - 5001:80
     volumes:
