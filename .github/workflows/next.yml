@@ -19,7 +19,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared) 
-        uses: SAEON/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -54,7 +54,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared) 
-        uses: SAEON/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -89,7 +89,7 @@ jobs:
   #     image: ${{ steps.meta.outputs.tags }}
   #   steps:
   #     - name: Check out source code (shared) 
-  #       uses: SAEON/checkout@v2
+  #       uses: actions/checkout@v2
   #       with:
   #         ref: ${{ env.BRANCH_REF }}
 
@@ -122,28 +122,29 @@ jobs:
     runs-on: github-runner.saeon.int
     steps:
       - name: Check out source code (shared) 
-        uses: SAEON/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
 
       - name: (SCP) Copy stack configuration to app server
-        uses: SAEON/scp-action@master
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
-          source: "deploy/next/docker-compose.yml"
+          source: "deploy/next/"
           target: "sdp-next"
 
       - name: (SSH) Deploy stack
-        uses: SAEON/ssh-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
           script: |
+            ls /home/runner/sdp-next/deploy/next
             echo "API_IMAGE=${{ needs.build-api.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             # echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env

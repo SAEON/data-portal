@@ -8,6 +8,7 @@
     "anyproxy",
     "apologise",
     "appbar",
+    "appleboy",
     "asciifolding",
     "autodrain",
     "bodyparser",
@@ -136,6 +137,7 @@
     "usermod",
     "varchar",
     "vsicurl",
+    "vsizip",
     "workbox",
     "xpack"
   ]
