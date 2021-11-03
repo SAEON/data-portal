@@ -82,7 +82,7 @@ services:
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
       MONGO_DB: catalogue_next
-      NODE_ENV: production
+      NODE_ENV: development
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       ODP_ADDRESS: https://odp.saeon.dvn
       ODP_AUTH_SCOPE: 'ODP.Catalogue ODP.Metadata'
