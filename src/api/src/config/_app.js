@@ -12,7 +12,6 @@ export const DEFAULT_ADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_ADMIN_EMAIL_ADD
 export const DEFAULT_SYSADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES || ''
 export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'leo@saeon.ac.za'
 export const GDAL_DOCKER_IMAGE = process.env.GDAL_DOCKER_IMAGE || 'osgeo/gdal:latest'
-export const LATEST_COMMIT = process.env.LATEST_COMMIT || ''
 export const API_BIND_PROTOCOL = 'http'
 export const API_BIND_HOSTNAME = process.env.API_BIND_HOSTNAME || 'localhost'
 export const API_BIND_PORT_PUBLIC = process.env.API_BIND_PORT_PUBLIC || 3000

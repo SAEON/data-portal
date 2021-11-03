@@ -23,6 +23,10 @@ jobs:
         with:
           ref: ${{ env.BRANCH_REF }}
 
+      - name: Configure ODP integration filter
+        run: |
+          cp deploy/next/config/odp-filter.js src/api/odp-filter.js
+
       - name: Log in to the Container registry
         uses: docker/login-action@v1
         with:
@@ -92,6 +96,10 @@ jobs:
   #       uses: actions/checkout@v2
   #       with:
   #         ref: ${{ env.BRANCH_REF }}
+
+      # - name: Configure client UI filters
+      #   run: |
+      #     cp deploy/next/config/client-filters.json src/clients/client-filters.json
 
   #     - name: Log in to the Container registry
   #       if: github.event_name != 'pull_request'
@@ -167,7 +175,6 @@ jobs:
   #     - name: Deploy services
   #       run: >-
   #         APP_KEY="${{ secrets.APP_KEY }}"
-  #         LATEST_COMMIT=$(git rev-parse HEAD)
   #         MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_DEV_PASSWORD }}"
   #         MONGO_DB_USERNAME="${{ secrets.MONGO_DB_DEV_USERNAME }}"
   #         ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET_NEXT }}"

@@ -1,6 +1,5 @@
 import { useContext, useCallback } from 'react'
 import RegisterEventLog from './register-event-log'
-import { LATEST_COMMIT } from '../../config'
 import packageJson from '../../../package.json'
 import debounce from '../../lib/fns/debounce'
 import useWindowSize from '../../hooks/use-window-size'
@@ -16,7 +15,6 @@ export default ({ children }) => {
       clientVersion: packageJson.version,
       type,
       referrer,
-      commitHash: LATEST_COMMIT,
       createdAt: new Date(),
       info: {
         pathname: window.location.pathname,

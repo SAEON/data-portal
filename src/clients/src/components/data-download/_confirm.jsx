@@ -1,7 +1,6 @@
 import { useContext, useState, memo } from 'react'
 import RegisterEventLog from '../../components/application-logger/register-event-log'
 import packageJson from '../../../package.json'
-import { LATEST_COMMIT } from '../../config'
 import { useTheme } from '@mui/material/styles'
 import { context as globalContext } from '../../contexts/global'
 import { gql, useMutation } from '@apollo/client'
@@ -33,7 +32,6 @@ export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form,
               clientVersion: packageJson.version,
               type: 'download',
               referrer,
-              commitHash: LATEST_COMMIT,
               createdAt: new Date(),
               info: {
                 pathname: window.location.pathname,

@@ -14,7 +14,6 @@ require('dotenv').config()
 let {
   NODE_ENV: mode,
   DEPLOYMENT_ENV = 'local',
-  LATEST_COMMIT = '',
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
   SUBDOMAIN_APP_ENTRIES = '',
 } = process.env
@@ -28,7 +27,6 @@ module.exports = (ROOT, output) => {
     new Dotenv(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(mode),
-      'process.env.LATEST_COMMIT': JSON.stringify(LATEST_COMMIT),
       'process.env.DEPLOYMENT_ENV': JSON.stringify(DEPLOYMENT_ENV),
       'process.env.CATALOGUE_CLIENT_BACKGROUNDS': JSON.stringify(
         fs

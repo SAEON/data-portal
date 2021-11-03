@@ -1,7 +1,5 @@
 import { createContext } from 'react'
 
-export const LATEST_COMMIT = process.env.LATEST_COMMIT || ''
-
 export const CATALOGUE_CLIENT_BACKGROUNDS = process.env.CATALOGUE_CLIENT_BACKGROUNDS || ''
 
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'development'

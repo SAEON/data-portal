@@ -40,7 +40,6 @@ jobs:
           DEPLOYMENT_ENV="production"
           ELASTICSEARCH_ADDRESS=http://7.14.elasticsearch.saeon.int
           HOSTNAME="https://catalogue.saeon.ac.za"
-          LATEST_COMMIT=$(git rev-parse HEAD)
           MONGO_DB=catalogue
           MONGO_DB_ADDRESS=mongodb://mongo.saeon.int:27217
           MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
