@@ -1,8 +1,10 @@
 version: '3.8'
 
 networks:
-  catalogue_next:
-    name: catalogue_next
+  sdp_next:
+    name: sdp_next
+    driver: overlay
+    attachable: true    
 
 volumes:
   postgis:
@@ -33,7 +35,7 @@ services:
       - postgis:/var/lib/postgresql/data/pgdata
       - data:/var/lib/catalogue-api
     networks:
-      - catalogue_next
+      - sdp_next
 
   proxy:
     image: $PROXY_IMAGE
@@ -50,7 +52,7 @@ services:
       - 8001:8001
       - 8002:8002
     networks:
-      - catalogue_next
+      - sdp_next
 
   api:
     image: $API_IMAGE
@@ -70,7 +72,7 @@ services:
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
       DEPLOYMENT_ENV: development
       DOCKER_DATA_VOLUME: catalogue_data
-      DOCKER_NETWORK: catalogue_next
+      DOCKER_NETWORK: sdp_next
       DOCKER_TMP_VOLUME: catalogue_tmp
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
       ENABLE_METADATA: 'true'
@@ -81,7 +83,7 @@ services:
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
-      MONGO_DB: catalogue_next
+      MONGO_DB: sdp_next
       NODE_ENV: development
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       ODP_ADDRESS: https://odp.saeon.dvn
@@ -91,7 +93,7 @@ services:
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
       ODP_SSO_CLIENT_SCOPES: 'openid ODP.Metadata SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
-      POSTGIS_CONTAINER_NAME: catalogue_next_postgis
+      POSTGIS_CONTAINER_NAME: sdp_next_postgis
       POSTGIS_DB: databooks
       POSTGIS_HOST: postgis
       POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
@@ -109,7 +111,7 @@ services:
       - tmp:/tmp/catalogue-api
       - data:/var/lib/catalogue-api
     networks:
-      - catalogue_next
+      - sdp_next
 
   clients_internal:
     image: $CLIENTS_IMAGE
@@ -125,7 +127,7 @@ services:
     volumes:
       - /etc/nginx/docker/clients-internal.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - catalogue_next
+      - sdp_next
 
   clients_public:
     image: $CLIENTS_IMAGE
@@ -141,4 +143,4 @@ services:
     volumes:
       - /etc/nginx/docker/clients-public.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - catalogue_next
+      - sdp_next
