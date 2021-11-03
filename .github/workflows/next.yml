@@ -1,9 +1,13 @@
 name: deploy@next
 
+
+
 on:
   push:
     branches:
       - deployment-refactor
+
+
 
 env:
   REGISTRY: ghcr.io
@@ -11,6 +15,8 @@ env:
   PROXY_IMAGE_NAME: saeon/sdp-proxy
   CLIENTS_IMAGE_NAME: saeon/sdp-clients
   BRANCH_REF: deployment-refactor
+
+
 
 jobs:
   build-api:
@@ -87,42 +93,43 @@ jobs:
 
 
 
-  # build-clients:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     image: ${{ steps.meta.outputs.tags }}
-  #   steps:
-  #     - name: Check out source code (shared) 
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ env.BRANCH_REF }}
+  build-clients:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
+    steps:
+      - name: Check out source code (shared) 
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
 
-      # - name: Configure client UI filters
-      #   run: |
-      #     cp deploy/next/config/client-filters.json src/clients/client-filters.json
+      - name: Configure client UI filters
+        run: |
+          cp deploy/next/config/client-filters.json src/clients/client-filters.json
 
-  #     - name: Log in to the Container registry
-  #       if: github.event_name != 'pull_request'
-  #       uses: docker/login-action@v1
-  #       with:
-  #         registry: ${{ env.REGISTRY }}
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Container registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  #     - name: Extract metadata (tags, labels) for Docker
-  #       id: meta
-  #       uses: docker/metadata-action@v3
-  #       with:
-  #         images: ${{ env.REGISTRY }}/${{ env.CLIENTS_IMAGE_NAME }}
-  #         tags: |
-  #           type=sha
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.CLIENTS_IMAGE_NAME }}
+          tags: |
+            type=sha
 
-  #     - name: Build and push clients
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: src/clients
-  #         tags: ${{ steps.meta.outputs.tags }}
-  #         labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push clients
+        uses: docker/build-push-action@v2
+        with:
+          context: src/clients
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
 
 
   deploy:
@@ -152,10 +159,19 @@ jobs:
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
           script: |
-            echo "API_IMAGE=${{ needs.build-api.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "API_IMAGE=${{ needs.build-api.outputs.image }}" > /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            # echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_DEV_PASSWORD }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_DEV_USERNAME }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_NEXT }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env            
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next
 
 
@@ -165,22 +181,4 @@ jobs:
 
 
 
-  # deploy:
 
-  #     - name: Configure services
-  #       run: |
-  #         cp deployment-configs/next/odp-filter.js src/api/odp-filter.js
-  #         cp deployment-configs/next/client-filters.json src/clients/client-filters.json
-
-  #     - name: Deploy services
-  #       run: >-
-  #         APP_KEY="${{ secrets.APP_KEY }}"
-  #         MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_DEV_PASSWORD }}"
-  #         MONGO_DB_USERNAME="${{ secrets.MONGO_DB_DEV_USERNAME }}"
-  #         ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET_NEXT }}"
-  #         ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}"
-  #         POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-  #         POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
-  #         POSTGIS_USERNAME_PUBLIC="${{ secrets.POSTGIS_USERNAME_PUBLIC }}"
-  #         POSTGIS_PASSWORD_PUBLIC="${{ secrets.POSTGIS_PASSWORD_PUBLIC }}"
-  #         /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
