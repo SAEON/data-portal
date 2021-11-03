@@ -4,7 +4,7 @@
 # Builds static files
 # from client src
 ###
-FROM node:16.10 as build
+FROM node:16.13 as build
 
 ARG API_PUBLIC_ADDRESS
 ARG API_INTERNAL_ADDRESS
