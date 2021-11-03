@@ -33,7 +33,7 @@ export const ODP_CLIENT_SECRET = process.env.ODP_CLIENT_SECRET || ''
 export const ODP_AUTH_SCOPE = process.env.ODP_AUTH_SCOPE || 'ODP.Catalogue ODP.Metadata'
 export const ODP_FILTER_PATH = process.env.ODP_FILTER_PATH
   ? join(__apiRootDirectory, process.env.ODP_FILTER_PATH)
-  : join(__dirname, '../../../../deployment-configs/next/odp-filter.js')
+  : join(__dirname, '../../../../deploy/next/config/odp-filter.js')
 export const ODP_FILTER = import(ODP_FILTER_PATH).then(({ default: fn }) => fn)
 export const ODP_DEBUG_IDS = process.env.ODP_DEBUG_IDS || ''
 export const ODP_INTEGRATION_BATCH_SIZE = process.env.ODP_INTEGRATION_BATCH_SIZE || 100

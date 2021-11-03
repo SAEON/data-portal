@@ -159,5 +159,5 @@ jobs:
             echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-next/deploy/docker-compose.env
             echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-next/deploy/docker-compose.env
             echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env            
+            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next

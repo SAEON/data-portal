@@ -77,4 +77,4 @@ etc
 ```
 
 # Filter configuration
-The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](../../../deployment-configs/README.md) is included in the source. Update deployment configurations by editing the relevant files
+The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](../../../deploy/README.md) is included in the source. Update deployment configurations by editing the relevant files

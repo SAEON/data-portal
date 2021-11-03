@@ -21,7 +21,7 @@ let {
 module.exports = (ROOT, output) => {
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = CLIENTS_SEARCH_FILTER_CONFIG_PATH
     ? path.join(ROOT, CLIENTS_SEARCH_FILTER_CONFIG_PATH)
-    : path.join(ROOT, '../../deployment-configs/next/client-filters.json')
+    : path.join(ROOT, '../../deploy/next/config/client-filters.json')
 
   return [
     new Dotenv(),
