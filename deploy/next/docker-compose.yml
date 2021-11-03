@@ -120,18 +120,6 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    environment:
-      CATALOGUE_NGINX_SERVER_NAME: catalogue.saeon.dvn
-      SUBDOMAIN_APP_ENTRIES: curation-tools
-      PROXY_ADDRESS: https://proxy.saeon.dvn
-      API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
-      CLIENTS_PUBLIC_ADDRESS: https://catalogue.saeon.dvn
-      CLIENTS_DEFAULT_NOTICES: 'Welcome to the SAEON Catalogue!,info'
-      CLIENTS_SEARCH_FILTER_CONFIG_PATH: client-filters.json
-      CURATOR_CONTACT: $CURATOR_CONTACT
-      TECHNICAL_CONTACT: $TECHNICAL_CONTACT
-      DEPLOYMENT_ENV: development
-      LEGAL_CONTACT: $LEGAL_CONTACT
     ports:
       - 3002:80
     volumes:
@@ -148,19 +136,6 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    environment:
-      CATALOGUE_NGINX_SERVER_NAME: catalogue.saeon.dvn
-      SUBDOMAIN_APP_ENTRIES: curation-tools
-      PROXY_ADDRESS: https://proxy.saeon.dvn
-      API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
-      API_INTERNAL_ADDRESS: http://api.catalogue.saeon.dvn:5002
-      CLIENTS_PUBLIC_ADDRESS: https://catalogue.saeon.dvn
-      CLIENTS_DEFAULT_NOTICES: 'Welcome to the SAEON Catalogue!,info'
-      CLIENTS_SEARCH_FILTER_CONFIG_PATH: client-filters.json
-      CURATOR_CONTACT: $CURATOR_CONTACT
-      TECHNICAL_CONTACT: $TECHNICAL_CONTACT
-      DEPLOYMENT_ENV: development
-      LEGAL_CONTACT: $LEGAL_CONTACT
     ports:
       - 5001:80
     volumes:
