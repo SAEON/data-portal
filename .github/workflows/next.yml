@@ -47,37 +47,37 @@ jobs:
 
 
 
-  build-proxy:
-    runs-on: ubuntu-latest
-    outputs:
-      image: ${{ steps.meta.outputs.tags }}
-    steps:
-      - name: Check out source code (shared) 
-        uses: SAEON/checkout@v2
-        with:
-          ref: ${{ env.BRANCH_REF }}
+  # build-proxy:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     image: ${{ steps.meta.outputs.tags }}
+  #   steps:
+  #     - name: Check out source code (shared) 
+  #       uses: SAEON/checkout@v2
+  #       with:
+  #         ref: ${{ env.BRANCH_REF }}
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Log in to the Container registry
+  #       uses: docker/login-action@v1
+  #       with:
+  #         registry: ${{ env.REGISTRY }}
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.PROXY_IMAGE_NAME }}
-          tags: |
-            type=sha
+  #     - name: Extract metadata (tags, labels) for Docker
+  #       id: meta
+  #       uses: docker/metadata-action@v3
+  #       with:
+  #         images: ${{ env.REGISTRY }}/${{ env.PROXY_IMAGE_NAME }}
+  #         tags: |
+  #           type=sha
 
-      - name: Build and push API
-        uses: docker/build-push-action@v2
-        with:
-          context: src/proxy
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}         
+  #     - name: Build and push API
+  #       uses: docker/build-push-action@v2
+  #       with:
+  #         context: src/proxy
+  #         tags: ${{ steps.meta.outputs.tags }}
+  #         labels: ${{ steps.meta.outputs.labels }}
 
 
 
@@ -114,7 +114,18 @@ jobs:
   #         tags: ${{ steps.meta.outputs.tags }}
   #         labels: ${{ steps.meta.outputs.labels }}
 
-  # deploy:
+  deploy:
+    needs: [build-api, build-proxy]
+    runs-on: github-runner.saeon.int
+    steps:
+      - name: Check out source code (shared) 
+        uses: SAEON/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: TODO
+        run: |
+          echo wip
 
 
 
