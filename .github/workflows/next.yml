@@ -121,7 +121,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
-    needs: [build-api, build-proxy]
+    needs: [build-api, build-proxy, build-clients]
     runs-on: github-runner.saeon.int
     steps:
       - name: Check out source code (shared)
