@@ -73,7 +73,7 @@ services:
       DOCKER_NETWORK: catalogue_next
       DOCKER_TMP_VOLUME: catalogue_tmp
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
-      ENABLE_METADATA: true
+      ENABLE_METADATA: 'true'
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.dvn
       LATEST_COMMIT: $LATEST_COMMIT

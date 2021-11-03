@@ -144,7 +144,6 @@ jobs:
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
           script: |
-            ls /home/runner/sdp-next/deploy/next
             echo "API_IMAGE=${{ needs.build-api.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             # echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
