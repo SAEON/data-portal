@@ -3,14 +3,14 @@ name: deploy@next
 on:
   push:
     branches:
-      - deployment-refactor
+      - next
 
 env:
   REGISTRY: ghcr.io
   API_IMAGE_NAME: saeon/sdp-api
   PROXY_IMAGE_NAME: saeon/sdp-proxy
   CLIENTS_IMAGE_NAME: saeon/sdp-clients
-  BRANCH_REF: deployment-refactor
+  BRANCH_REF: next
 
 jobs:
   build-api:
