@@ -7,9 +7,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  API_IMAGE_NAME: saeon/catalogue_api
-  PROXY_IMAGE_NAME: saeon/catalogue_proxy
-  CLIENTS_IMAGE_NAME: saeon/catalogue_clients
+  API_IMAGE_NAME: saeon/sdp-api
+  PROXY_IMAGE_NAME: saeon/sdp-proxy
+  CLIENTS_IMAGE_NAME: saeon/sdp-clients
   BRANCH_REF: deployment-refactor
 
 jobs:
@@ -116,6 +116,7 @@ jobs:
   #         tags: ${{ steps.meta.outputs.tags }}
   #         labels: ${{ steps.meta.outputs.labels }}
 
+
   deploy:
     needs: [build-api, build-proxy]
     runs-on: github-runner.saeon.int
@@ -125,9 +126,29 @@ jobs:
         with:
           ref: ${{ env.BRANCH_REF }}
 
-      - name: TODO
-        run: |
-          echo wip
+      - name: (SCP) Copy stack configuration to app server
+        uses: SAEON/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          source: "deploy/next/docker-compose.yml"
+          target: "sdp-next"
+
+      - name: (SSH) Deploy stack
+        uses: SAEON/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          script: |
+            echo "API_IMAGE=${{ needs.build-api.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            # echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next
 
 
 
@@ -137,11 +158,6 @@ jobs:
 
 
   # deploy:
-  #   runs-on: catalogue.saeon.dvn
-  #   steps:
-  #     - uses: SAEON/checkout@v2
-  #       with:
-  #         ref: next
 
   #     - name: Configure services
   #       run: |

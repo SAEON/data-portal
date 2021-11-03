@@ -1,4 +1,5 @@
 import '@saeon/logger'
+import './lib/log-config.js'
 import anyproxy from 'anyproxy'
 import options from './options.js'
 
@@ -16,5 +17,3 @@ proxy.on('error', e => {
 })
 
 proxy.start()
-
-// proxy.close() // Not sure why I would want to call this?

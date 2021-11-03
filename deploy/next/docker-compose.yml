@@ -36,6 +36,7 @@ services:
       - catalogue_next
 
   proxy:
+    image: $PROXY_IMAGE
     deploy:
       replicas: 1
       restart_policy:
@@ -43,12 +44,8 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    build:
-      context: src/proxy
-      dockerfile: Dockerfile
-      args:
-        LATEST_COMMIT: $LATEST_COMMIT
-        ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
+    environment:
+      ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
     ports:
       - 8001:8001
       - 8002:8002
@@ -56,6 +53,7 @@ services:
       - catalogue_next
 
   api:
+    image: $API_IMAGE
     deploy:
       replicas: 1
       restart_policy:
