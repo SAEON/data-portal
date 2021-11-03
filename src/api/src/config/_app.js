@@ -30,7 +30,6 @@ export const METADATA_INTEGRATION_SCHEDULE =
 export const GIS_MAX_RESOLUTION_DECIMALS = 5 // About 1.1M accuracy. higher values result in Elasticsearch parsing errors
 export const SERVER_TASKS = TaskManager()
 export const EMAIL_REGEX = new RegExp(
-  process.env.EMAIL_REGEX ||
     `^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`
 )
 

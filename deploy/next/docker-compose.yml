@@ -1,8 +1,8 @@
 version: '3.8'
 
 networks:
-  catalogue_default:
-    name: $DOCKER_NETWORK
+  catalogue_next:
+    name: catalogue_next
 
 volumes:
   postgis:
@@ -14,88 +14,102 @@ volumes:
 
 services:
   postgis:
-    image: "ghcr.io/saeon/postgis:13"
-    container_name: $POSTGIS_CONTAINER_NAME
-    restart: always
+    image: ghcr.io/saeon/postgis:13
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_DB: $POSTGIS_DB
+      POSTGRES_DB: databooks
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
       POSTGRES_USER: $POSTGIS_USERNAME
     ports:
-      - $POSTGIS_CONTAINER_HOST_PORT:$POSTGIS_PORT
+      - 5442:5432
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
       - data:/var/lib/catalogue-api
     networks:
-      - $DOCKER_NETWORK
+      - catalogue_next
 
   proxy:
-    container_name: proxy
-    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     build:
       context: src/proxy
       dockerfile: Dockerfile
       args:
         LATEST_COMMIT: $LATEST_COMMIT
-        ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
+        ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
     ports:
       - 8001:8001
       - 8002:8002
     networks:
-      - $DOCKER_NETWORK
+      - catalogue_next
 
   api:
-    container_name: api
-    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     build:
       context: src/api
       dockerfile: Dockerfile
       args:
-        EMAIL_REGEX: $EMAIL_REGEX
-        ALLOWED_ORIGINS: $ALLOWED_ORIGINS
-        API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
+        ALLOWED_ORIGINS: https://catalogue.saeon.dvn
+        API_PUBLIC_ADDRESS: https:api.catalogue.saeon.dvn
         APP_KEY: $APP_KEY
-        CURATOR_CONTACT: $CURATOR_CONTACT
-        DEFAULT_ADMIN_EMAIL_ADDRESSES: $DEFAULT_ADMIN_EMAIL_ADDRESSES
-        DEFAULT_SYSADMIN_EMAIL_ADDRESSES: $DEFAULT_SYSADMIN_EMAIL_ADDRESSES
+        CURATOR_CONTACT: pl.chiloane@saeon.nrf.ac.za
+        DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za,bn.mcalister@saeon.nrf.ac.za
+        DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
         DEPLOYMENT_ENV: $DEPLOYMENT_ENV
-        DOCKER_DATA_VOLUME: $DOCKER_DATA_VOLUME
-        DOCKER_NETWORK: $DOCKER_NETWORK
-        DOCKER_TMP_VOLUME: $DOCKER_TMP_VOLUME
+        DOCKER_DATA_VOLUME: catalogue_data
+        DOCKER_NETWORK: catalogue_next
+        DOCKER_TMP_VOLUME: catalogue_tmp
         ELASTICSEARCH_ADDRESS: $ELASTICSEARCH_ADDRESS
-        ENABLE_METADATA: $ENABLE_METADATA
-        GDAL_DOCKER_IMAGE: $GDAL_DOCKER_IMAGE
+        ENABLE_METADATA: true
+        GDAL_DOCKER_IMAGE: osgeo/gdal:latest
         HOSTNAME: $HOSTNAME
         LATEST_COMMIT: $LATEST_COMMIT
-        LOG_QUERY_DETAILS: $LOG_QUERY_DETAILS
-        METADATA_INTEGRATION_SCHEDULE: $METADATA_INTEGRATION_SCHEDULE
-        MONGO_DB: $MONGO_DB
+        LOG_QUERY_DETAILS: false
+        METADATA_INTEGRATION_SCHEDULE: "*/30 * * * *"
         MONGO_DB_ADDRESS: $MONGO_DB_ADDRESS
         MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
         MONGO_DB_USERNAME: $MONGO_DB_USERNAME
+        MONGO_DB: catalogue_next
         NODE_ENV: $NODE_ENV
         NODE_TLS_REJECT_UNAUTHORIZED: $NODE_TLS_REJECT_UNAUTHORIZED
         ODP_ADDRESS: $ODP_ADDRESS
-        ODP_AUTH_SCOPE: $ODP_AUTH_SCOPE
+        ODP_AUTH_SCOPE: ODP.Catalogue
         ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
         ODP_FILTER_PATH: $ODP_FILTER_PATH
         ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
         ODP_SSO_CLIENT_SCOPES: $ODP_SSO_CLIENT_SCOPES
         ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
-        POSTGIS_CONTAINER_NAME: $POSTGIS_CONTAINER_NAME
+        POSTGIS_CONTAINER_NAME: catalogue_next_postgis
         POSTGIS_DB: $POSTGIS_DB
-        POSTGIS_HOST: $POSTGIS_HOST
-        POSTGIS_IMAGE_NAME: $POSTGIS_IMAGE_NAME
+        POSTGIS_HOST: postgis
+        POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
         POSTGIS_PASSWORD_PUBLIC: $POSTGIS_PASSWORD_PUBLIC
         POSTGIS_PASSWORD: $POSTGIS_PASSWORD
-        POSTGIS_PORT: $POSTGIS_PORT
+        POSTGIS_PORT: 5432
         POSTGIS_USERNAME_PUBLIC: $POSTGIS_USERNAME_PUBLIC
         POSTGIS_USERNAME: $POSTGIS_USERNAME
-        TECHNICAL_CONTACT: $TECHNICAL_CONTACT
+        TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
     ports:
-      - $API_EXPORT_PORT_PUBLIC:3000
-      - $API_EXPORT_PORT_INTERNAL:4000
+      - 3000:3000
+      - 5002:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - tmp:/tmp/catalogue-api
@@ -103,21 +117,25 @@ services:
     depends_on:
       - postgis
     networks:
-      - $DOCKER_NETWORK
+      - catalogue_next
 
   clients_internal:
-    container_name: clients_internal
-    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     build:
       context: src/clients
       dockerfile: Dockerfile
       args:
-        EMAIL_REGEX: $EMAIL_REGEX
         CATALOGUE_NGINX_SERVER_NAME: $CATALOGUE_NGINX_SERVER_NAME
         SUBDOMAIN_APP_ENTRIES: $SUBDOMAIN_APP_ENTRIES
         PROXY_ADDRESS: $PROXY_ADDRESS
-        API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
-        CLIENTS_PUBLIC_ADDRESS: $CLIENTS_PUBLIC_ADDRESS
+        API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
+        CLIENTS_PUBLIC_ADDRESS: TODO
         CLIENTS_DEFAULT_NOTICES: $CLIENTS_DEFAULT_NOTICES
         CLIENTS_SEARCH_FILTER_CONFIG_PATH: $CLIENTS_SEARCH_FILTER_CONFIG_PATH
         CURATOR_CONTACT: $CURATOR_CONTACT
@@ -126,18 +144,23 @@ services:
         LATEST_COMMIT: $LATEST_COMMIT
         LEGAL_CONTACT: $LEGAL_CONTACT
     ports:
-      - $CLIENTS_EXPORT_PORT_INTERNAL:80
+      - 3002:80
     volumes:
       - /etc/nginx/docker/clients-internal.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - api
       - proxy
     networks:
-      - $DOCKER_NETWORK
+      - catalogue_next
 
   clients_public:
-    container_name: clients_public
-    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     build:
       context: src/clients
       dockerfile: Dockerfile
@@ -145,9 +168,9 @@ services:
         CATALOGUE_NGINX_SERVER_NAME: $CATALOGUE_NGINX_SERVER_NAME
         SUBDOMAIN_APP_ENTRIES: $SUBDOMAIN_APP_ENTRIES
         PROXY_ADDRESS: $PROXY_ADDRESS
-        API_PUBLIC_ADDRESS: $API_PUBLIC_ADDRESS
-        API_INTERNAL_ADDRESS: $API_INTERNAL_ADDRESS
-        CLIENTS_PUBLIC_ADDRESS: $CLIENTS_PUBLIC_ADDRESS
+        API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
+        API_INTERNAL_ADDRESS: http://api.catalogue.saeon.dvn:5002
+        CLIENTS_PUBLIC_ADDRESS: https://catalogue.saeon.dvn
         CLIENTS_DEFAULT_NOTICES: $CLIENTS_DEFAULT_NOTICES
         CLIENTS_SEARCH_FILTER_CONFIG_PATH: $CLIENTS_SEARCH_FILTER_CONFIG_PATH
         CURATOR_CONTACT: $CURATOR_CONTACT
@@ -156,11 +179,11 @@ services:
         LATEST_COMMIT: $LATEST_COMMIT
         LEGAL_CONTACT: $LEGAL_CONTACT
     ports:
-      - $CLIENTS_EXPORT_PORT_PUBLIC:80
+      - 3001:80
     volumes:
       - /etc/nginx/docker/clients-public.conf:/etc/nginx/conf.d/default.conf      
     depends_on:
       - api
       - proxy
     networks:
-      - $DOCKER_NETWORK
+      - catalogue_next
