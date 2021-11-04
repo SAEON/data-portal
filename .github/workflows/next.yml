@@ -164,13 +164,13 @@ jobs:
             echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_DEV_PASSWORD }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_DEV_USERNAME }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_NEXT }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env
-            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/docker-compose.env
+            echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_DEV_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_DEV_USERNAME }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_NEXT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next
