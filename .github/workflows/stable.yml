@@ -2,58 +2,179 @@ name: deploy@stable
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - stable
+
+# on:
+#   push:
+#     branches:
+#       - next      
+
+env:
+  REGISTRY: ghcr.io
+  API_IMAGE_NAME: saeon/sdp-api
+  PROXY_IMAGE_NAME: saeon/sdp-proxy
+  CLIENTS_IMAGE_NAME: saeon/sdp-clients
+  BRANCH_REF: stable
 
 jobs:
-  deploy:
-    runs-on: catalogue.saeon.ac.za
+  build-api:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out source code (shared)
+        uses: actions/checkout@v2
         with:
-          ref: stable
+          ref: ${{ env.BRANCH_REF }}
 
-      - name: Configure services
+      - name: Configure ODP integration filter
         run: |
-          cp deployment-configs/stable/odp-filter.js src/api/odp-filter.js
-          cp deployment-configs/stable/client-filters.json src/clients/client-filters.json
+          cp deploy/stable/config/odp-filter.js src/api/odp-filter.js
 
-      - name: Copy Docker Nginx configs
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}
+          tags: |
+            type=sha
+
+      - name: Build and push API
+        uses: docker/build-push-action@v2
+        with:
+          context: src/api
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build-proxy:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
+    steps:
+      - name: Check out source code (shared)
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.PROXY_IMAGE_NAME }}
+          tags: |
+            type=sha
+
+      - name: Build and push API
+        uses: docker/build-push-action@v2
+        with:
+          context: src/proxy
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build-clients:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
+    steps:
+      - name: Check out source code (shared)
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: Configure client UI filters
         run: |
-          sudo /opt/cp-docker-nginx-configs.sh
+          cp deploy/stable/config/client-filters.json src/clients/client-filters.json
 
-      - name: Deploy services
-        run: >-
-          ALLOWED_ORIGINS="https://atlas.saeon.ac.za,https://catalogue.saeon.ac.za,http://curation.saeon.int"
-          API_EXPORT_PORT_PUBLIC=5000
-          API_PUBLIC_ADDRESS="https://api.catalogue.saeon.ac.za"
-          API_INTERNAL_ADDRESS="https://api.catalogue.saeon.ac.za:5002"
-          APP_KEY="${{ secrets.APP_KEY }}"
-          ODP_SSO_CLIENT_SCOPES="openid SAEON.DataPortal"
-          ODP_AUTH_SCOPE=ODP.Catalogue
-          CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
-          CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue! Please note this software is still in beta,info"
-          CLIENTS_EXPORT_PORT_INTERNAL=3002
-          CLIENTS_PUBLIC_ADDRESS="https://catalogue.saeon.ac.za"
-          CLIENTS_EXPORT_PORT_PUBLIC=5001
-          CLIENTS_SEARCH_FILTER_CONFIG_PATH="client-filters.json"
-          DEPLOYMENT_ENV="production"
-          ELASTICSEARCH_ADDRESS=http://7.14.elasticsearch.saeon.int
-          HOSTNAME="https://catalogue.saeon.ac.za"
-          MONGO_DB=catalogue
-          MONGO_DB_ADDRESS=mongodb://mongo.saeon.int:27217
-          MONGO_DB_PASSWORD="${{ secrets.MONGO_DB_PASSWORD }}"
-          MONGO_DB_USERNAME="${{ secrets.MONGO_DB_USERNAME }}"
-          NODE_ENV=production
-          NODE_TLS_REJECT_UNAUTHORIZED=1
-          ODP_ADDRESS="https://odp.saeon.ac.za"
-          ODP_CLIENT_SECRET="${{ secrets.ODP_CLIENT_SECRET }}"
-          ODP_FILTER_PATH="odp-filter.js"
-          ODP_SSO_CLIENT_SECRET="${{ secrets.ODP_SSO_CLIENT_SECRET}}"
-          POSTGIS_PASSWORD="${{ secrets.POSTGIS_PASSWORD }}"
-          POSTGIS_USERNAME="${{ secrets.POSTGIS_USERNAME }}"
-          POSTGIS_USERNAME_PUBLIC="${{ secrets.POSTGIS_USERNAME_PUBLIC }}"
-          POSTGIS_PASSWORD_PUBLIC="${{ secrets.POSTGIS_PASSWORD_PUBLIC }}"
-          PROXY_ADDRESS="https://proxy.saeon.ac.za"
-          SUBDOMAIN_APP_ENTRIES="curation-tools"
-          /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
+      - name: Log in to the Container registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.CLIENTS_IMAGE_NAME }}
+          tags: |
+            type=sha
+
+      - name: Build and push clients
+        uses: docker/build-push-action@v2
+        with:
+          context: src/clients
+          build-args: |
+            API_PUBLIC_ADDRESS=https://api.catalogue.saeon.ac.za
+            CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
+            CLIENTS_DEFAULT_NOTICES='Welcome to the SAEON Catalogue!,info'
+            CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.ac.za
+            CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
+            CURATOR_CONTACT=pl.chiloane@saeon.nrf.ac.za
+            DEPLOYMENT_ENV=production
+            PROXY_ADDRESS=https://proxy.saeon.ac.za
+            SUBDOMAIN_APP_ENTRIES=curation-tools
+            TECHNICAL_CONTACT=zd.smith@saeon.nrf.ac.za
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: [build-api, build-proxy, build-clients]
+    runs-on: github-runner.saeon.int
+    steps:
+      - name: Check out source code (shared)
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: (SCP) Copy stack configuration to app server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          source: 'deploy/stable/docker-compose.yml'
+          target: 'sdp-stable'
+
+      - name: (SSH) Deploy stack
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          script: |
+            echo "API_IMAGE=${{ needs.build-api.outputs.image }}" > /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_stable }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_stable}}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            sudo /opt/deploy-docker-stack.sh /home/runner/sdp-stable/deploy/stable/docker-compose.yml /home/runner/sdp-stable/deploy/stable/docker-compose.env sdp_stable

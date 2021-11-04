@@ -1,1 +1,146 @@
-# TODO
+version: '3.8'
+
+networks:
+  sdp_stable:
+    name: sdp_stable
+    driver: overlay
+    attachable: true    
+
+volumes:
+  postgis:
+    driver: local
+  data:
+    driver: local
+  tmp:
+    driver: local
+
+services:
+  postgis:
+    image: ghcr.io/saeon/postgis:13
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: databooks
+      POSTGRES_PASSWORD: $POSTGIS_PASSWORD
+      POSTGRES_USER: $POSTGIS_USERNAME
+    ports:
+      - 7010:5432
+    volumes:
+      - postgis:/var/lib/postgresql/data/pgdata
+      - data:/var/lib/catalogue-api
+    networks:
+      - sdp_stable
+
+  proxy:
+    image: $PROXY_IMAGE
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
+    ports:
+      - 7011:8001
+      - 7012:8002
+    networks:
+      - sdp_stable
+
+  api:
+    image: $API_IMAGE
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      ALLOWED_ORIGINS: https://catalogue.saeon.ac.za,https://curation.saeon.int
+      API_PUBLIC_ADDRESS: https://api.catalogue.saeon.ac.za
+      APP_KEY: $APP_KEY
+      CURATOR_CONTACT: pl.chiloane@saeon.nrf.ac.za
+      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za,bn.mcalister@saeon.nrf.ac.za
+      DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
+      DEPLOYMENT_ENV: production
+      DOCKER_DATA_VOLUME: catalogue_data
+      DOCKER_NETWORK: sdp_stable
+      DOCKER_TMP_VOLUME: catalogue_tmp
+      ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
+      ENABLE_METADATA: 'true'
+      GDAL_DOCKER_IMAGE: osgeo/gdal:latest
+      HOSTNAME: https://catalogue.saeon.ac.za
+      LOG_QUERY_DETAILS: 'false'
+      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
+      MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27217
+      MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
+      MONGO_DB_USERNAME: $MONGO_DB_USERNAME
+      MONGO_DB: sdp_stable
+      NODE_ENV: production
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      ODP_ADDRESS: https://odp.saeon.ac.za
+      ODP_AUTH_SCOPE: 'ODP.Catalogue ODP.Metadata'
+      ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
+      ODP_FILTER_PATH: odp-filter.js
+      ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
+      ODP_SSO_CLIENT_SCOPES: 'openid ODP.Metadata SAEON.DataPortal'
+      ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
+      POSTGIS_CONTAINER_NAME: sdp_stable_postgis
+      POSTGIS_DB: databooks
+      POSTGIS_HOST: postgis
+      POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
+      POSTGIS_PASSWORD_PUBLIC: $POSTGIS_PASSWORD_PUBLIC
+      POSTGIS_PASSWORD: $POSTGIS_PASSWORD
+      POSTGIS_PORT: 5432
+      POSTGIS_USERNAME_PUBLIC: $POSTGIS_USERNAME_PUBLIC
+      POSTGIS_USERNAME: $POSTGIS_USERNAME
+      TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
+    ports:
+      - 7013:3000
+      - 7014:4000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - tmp:/tmp/catalogue-api
+      - data:/var/lib/catalogue-api
+    networks:
+      - sdp_stable
+
+  clients_internal:
+    image: $CLIENTS_IMAGE
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - 7015:80
+    volumes:
+      - /etc/nginx/docker/clients-internal.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - sdp_stable
+
+  clients_public:
+    image: $CLIENTS_IMAGE
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - 7016:80
+    volumes:
+      - /etc/nginx/docker/clients-public.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - sdp_stable
