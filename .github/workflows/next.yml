@@ -149,7 +149,7 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
-          source: 'deploy/next/'
+          source: 'deploy/next/docker-compose.yml'
           target: 'sdp-next'
 
       - name: (SSH) Deploy stack
