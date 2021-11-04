@@ -1,9 +1,9 @@
-name: deployment@stable
+name: deploy@stable
 
 on:
   push:
-    branches:
-      - stable
+    tags:
+      - '*'
 
 jobs:
   deploy:
