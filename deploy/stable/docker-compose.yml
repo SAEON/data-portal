@@ -30,7 +30,7 @@ services:
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
       POSTGRES_USER: $POSTGIS_USERNAME
     ports:
-      - 7010:5432
+      - 6010:5432
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
       - data:/var/lib/catalogue-api
@@ -49,8 +49,8 @@ services:
     environment:
       ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
     ports:
-      - 7011:8001
-      - 7012:8002
+      - 7001:8001
+      - 6012:8002
     networks:
       - sdp_stable
 
@@ -104,8 +104,8 @@ services:
       POSTGIS_USERNAME: $POSTGIS_USERNAME
       TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
     ports:
-      - 7013:3000
-      - 7014:4000
+      - 7002:3000
+      - 6014:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - tmp:/tmp/catalogue-api
@@ -123,7 +123,7 @@ services:
         max_attempts: 3
         window: 120s
     ports:
-      - 7015:80
+      - 6015:80
     volumes:
       - /etc/nginx/docker/clients-internal.conf:/etc/nginx/conf.d/default.conf
     networks:
@@ -139,7 +139,7 @@ services:
         max_attempts: 3
         window: 120s
     ports:
-      - 7016:80
+      - 7003:80
     volumes:
       - /etc/nginx/docker/clients-public.conf:/etc/nginx/conf.d/default.conf
     networks:
