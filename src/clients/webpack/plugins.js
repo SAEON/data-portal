@@ -4,10 +4,8 @@ const CopyPlugin = require('copy-webpack-plugin')
 const fs = require('fs')
 const packageJson = require('../package.json')
 const path = require('path')
-// eslint-disable-next-line
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-// eslint-disable-next-line
-const { GenerateSW } = require('workbox-webpack-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const { GenerateSW } = require('workbox-webpack-plugin')
 const loadEntryPoints = require('./load-entry-points.js')
 require('dotenv').config()
 

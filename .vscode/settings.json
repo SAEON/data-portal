@@ -12,6 +12,7 @@
     "asciifolding",
     "autodrain",
     "bodyparser",
+    "bonjour",
     "bson",
     "btree",
     "builtins",
