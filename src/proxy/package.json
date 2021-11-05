@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/SAEON/catalogue/tree/master/src/@saeon/proxy#readme",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.16.0",
     "@saeon/logger": "^6.2.15",
     "anyproxy": "^4.1.3",
     "date-fns": "^2.25.0",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.14",
-    "npm-check-updates": "^11.8.5",
+    "npm-check-updates": "^12.0.0",
     "prettier": "^2.4.1"
   }
 }

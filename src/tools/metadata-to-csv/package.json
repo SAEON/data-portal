@@ -18,6 +18,6 @@
     "prettier": "^2.4.1"
   },
   "devDependencies": {
-    "npm-check-updates": "^11.8.5"
+    "npm-check-updates": "^12.0.0"
   }
 }

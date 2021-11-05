@@ -26,7 +26,7 @@ apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
  * Install tool dependencies
  */
 const TOOLS_PATH = normalize(join(__dirname, '../src/tools'))
-apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install })
+apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
 
 /**
  * Rebuild all packages
