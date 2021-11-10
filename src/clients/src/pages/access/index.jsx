@@ -8,10 +8,10 @@ import RolesIcon from 'mdi-react/AccountLockIcon'
 import PermissionsIcon from 'mdi-react/AxisLockIcon'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
-import { useTheme } from '@mui/material/styles'
 import Fade from '@mui/material/Fade'
 import Container from '@mui/material/Container'
 import Header from './header'
+import useTheme from '@mui/material/styles/useTheme'
 
 const Users = lazy(() => import('./users'))
 const Roles = lazy(() => import('./roles'))
@@ -76,7 +76,7 @@ export default () => {
                 <Fade
                   timeout={theme.transitions.duration.regular}
                   in={activeIndex === i}
-                  key={'loaded'}
+                  key={`loaded-${i}`}
                 >
                   <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
                     <Render active={activeIndex === i} />

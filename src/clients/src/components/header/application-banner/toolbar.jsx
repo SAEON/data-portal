@@ -5,6 +5,7 @@ export default props => {
 
   return (
     <Toolbar
+      disableGutters
       style={Object.assign(
         {
           display: 'flex',

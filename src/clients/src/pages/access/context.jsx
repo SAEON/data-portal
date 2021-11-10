@@ -6,6 +6,7 @@ export const context = createContext()
 
 export default ({ children }) => {
   const [selectedUsers, setSelectedUsers] = useState(() => new Set())
+  
   const { loading, error, data } = useQuery(gql`
     query {
       users {
