@@ -5,15 +5,17 @@
 
 A suite of services that provide a platform for searching and exploring SAEON-curated datasets. The tech stack is as listed below. This document shows how to setup a development environment for contributions, and also explains how to build and deploy the services.
  
+ ## The stack
 - Docker
-- MongoDB
-- Elasticsearch & Kibana (external)
 - Postgres + PostGIS
 - GDAL (Docker image)
 - GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
 - Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
 - Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
+## 3rd party service requirements
+- MongoDB
+- Elasticsearch & Kibana (external)
 # README Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
