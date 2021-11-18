@@ -6,7 +6,7 @@ const deduplicate = arr => _deduplicate(arr, (p1, p2) => p1.name === p2.name)
 export const user = {
   name: 'user',
   description: 'Default login role',
-  permissions: deduplicate([permissions['atlas:create'], permissions['databook:create'],]),
+  permissions: deduplicate([permissions['atlas:create']]),
 }
 
 export const saeon = {
@@ -14,6 +14,7 @@ export const saeon = {
   description: 'Default login roles for @saeon.ac.za email addresses',
   permissions: deduplicate([
     ...user.permissions,
+    permissions['databook:create'],
     permissions['/usage'],
     permissions['site-analytics:view'],
   ]),
