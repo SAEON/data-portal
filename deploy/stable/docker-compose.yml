@@ -18,7 +18,7 @@ services:
   postgis:
     image: ghcr.io/saeon/postgis:13
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: any
         delay: 5s
@@ -40,7 +40,7 @@ services:
   proxy:
     image: $PROXY_IMAGE
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: any
         delay: 5s
@@ -57,7 +57,7 @@ services:
   api:
     image: $API_IMAGE
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: any
         delay: 5s
@@ -75,7 +75,7 @@ services:
       DOCKER_NETWORK: sdp_stable
       DOCKER_TMP_VOLUME: catalogue_tmp
       ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
-      ENABLE_METADATA: 'true'
+      ENABLE_METADATA: 'false'
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.ac.za
       LOG_QUERY_DETAILS: 'false'
@@ -132,7 +132,7 @@ services:
   clients_public:
     image: $CLIENTS_IMAGE
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: any
         delay: 5s
