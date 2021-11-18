@@ -166,8 +166,8 @@ jobs:
             echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
-            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_stable }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
-            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_stable}}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET}}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
