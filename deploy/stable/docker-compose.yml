@@ -18,7 +18,7 @@ services:
   postgis:
     image: ghcr.io/saeon/postgis:13
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: any
         delay: 5s
@@ -71,9 +71,9 @@ services:
       DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za,bn.mcalister@saeon.nrf.ac.za
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
       DEPLOYMENT_ENV: production
-      DOCKER_DATA_VOLUME: catalogue_data
+      DOCKER_DATA_VOLUME: sdp_stable_data
       DOCKER_NETWORK: sdp_stable
-      DOCKER_TMP_VOLUME: catalogue_tmp
+      DOCKER_TMP_VOLUME: sdp_stable_tmp
       ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
       ENABLE_METADATA: 'false'
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
@@ -93,7 +93,7 @@ services:
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
       ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
-      POSTGIS_CONTAINER_NAME: sdp_stable_postgis
+      POSTGIS_CONTAINER_NAME: postgis
       POSTGIS_DB: databooks
       POSTGIS_HOST: postgis
       POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
