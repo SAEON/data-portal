@@ -87,11 +87,11 @@ services:
       NODE_ENV: production
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       ODP_ADDRESS: https://odp.saeon.ac.za
-      ODP_AUTH_SCOPE: 'ODP.Catalogue ODP.Metadata'
+      ODP_AUTH_SCOPE: 'ODP.Catalogue'
       ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
       ODP_FILTER_PATH: odp-filter.js
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
-      ODP_SSO_CLIENT_SCOPES: 'openid ODP.Metadata SAEON.DataPortal'
+      ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
       POSTGIS_CONTAINER_NAME: sdp_stable_postgis
       POSTGIS_DB: databooks
