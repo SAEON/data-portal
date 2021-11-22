@@ -296,6 +296,5 @@ input BrowserEventInput {
   createdAt: DateTime!
   info: JSON!
   clientVersion: String!
-  commitHash: String!
   referrer: String
 }
