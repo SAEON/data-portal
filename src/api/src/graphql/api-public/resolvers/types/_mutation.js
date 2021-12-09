@@ -1,4 +1,4 @@
-import logBrowserEvents from '../mutations/log-browser-events.js'
+import logBrowserEvents from '../mutations/log-browser-events/index.js'
 import createDatabook from '../mutations/create-databook/index.js'
 import createAtlas from '../mutations/create-atlas.js'
 import saveList from '../mutations/save-list/index.js'
