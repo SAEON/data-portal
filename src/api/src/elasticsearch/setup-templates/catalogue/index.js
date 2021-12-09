@@ -1,5 +1,5 @@
-import mappings from './_mappings.json'
-import settings from './_settings.json'
+import mappings from './_mappings.json' assert { type: 'json' }
+import settings from './_settings.json' assert { type: 'json' }
 import { ELASTICSEARCH_CATALOGUE_TEMPLATE } from '../../../config/index.js'
 
 export default async client => [
