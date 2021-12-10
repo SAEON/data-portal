@@ -14,15 +14,19 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 ## 3rd party service requirements
+- Docker
 - MongoDB
 - Elasticsearch & Kibana (external)
+
+## Gotchas
+- The Node.js API must have access to the Docker CLI to run GDAL commands. Since the API is deployed as a Docker container, this means that the host's Docker engine and CLI should be mounted into the API Docker container (refer to [docker-compose.yml](deployments/stable/docker-compose.yml))
+
 # README Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Overview](#overview)
-  - [Scenarios](#scenarios)
     - [User/client scenarios](#userclient-scenarios)
     - [Databook scenarios](#databook-scenarios)
 - [Quick start](#quick-start)
@@ -32,9 +36,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
     - [Endpoints](#endpoints)
 - [API configuration](#api-configuration)
 - [Deployment and installation](#deployment-and-installation)
-  - [Docker-compose (quick deployment)](#docker-compose-quick-deployment)
-  - [Containerized deployment](#containerized-deployment)
-  - [Continuous deployment](#continuous-deployment)
+  - [Docker Stack](#docker-stack)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
@@ -56,10 +58,6 @@ In summary, this software facilitates:
 - Previewing WMS maps when metadata records support this
 - Exploring shapefile datasets linked to by the metadata records
 
-## Scenarios
-The platform is centred around a Node.js API for interacting with supporting services such as Elasticsearch, PostGIS, etc. Three browser-clients are available to facilitate exploring and utilizing the platform (The GraphQL playground instances are provided by the Apollo GraphQL Node.js library). GraphQL playground is a useful tool for figuring out how to interact with the platform programmatically. The internal API is provided as a means for programmatically configuring the platform (i.e. updating the Elasticsearch index settings, and indexing new data). From a user perspective, the available websites are represented by the following diagram:
-
-![User perspective of available web clients](/diagrams/dist/user-view.png)
 
 ### User/client scenarios
 The platform is primarily driven by user interactions with the React.js UI application. This sequence diagram shows all the user/client scenarios for the basic search / preview / download functionality:
@@ -78,12 +76,12 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Desktop
-2. Node.js **node:14.16.1** (Versions lower than **node:14.13** will not work)
+2. Node.js **node:17.2** or higher
 
 ```sh
 # Make sure that Node.js ^node:14.16.1 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
 sudo apt-get install -y nodejs
 ```
@@ -175,52 +173,9 @@ mutation {
 ``` 
 
 # Deployment and installation
-The platform is currently deployed using docker-compose - the resultant deployment topology is shown in the diagram.
 
-![Topology of deployed platform](/diagrams/dist/deployment-view.png)
-
-## Docker-compose (quick deployment)
-
-From the root of the source code directory run the following shell command to start the services using default configuration:
-
-```sh
-docker-compose --env-file docker-compose.env up -d --force-recreate --build
-```
-
-(NOTE - the command doesn't work with default configurations yet. This is a TODO)
-
-Override default configuration by specifying environment variables (refer to [docker-compose.env](docker-compose.env) for the list of configuration options that can be overridden):
-
-```sh
-ENV_VAR_1=x \
-ENV_VAR_2=x \
-docker-compose --env-file docker-compose.env up -d --force-recreate --build
-```
-
-Check that the services started successfully: `docker container ls`. There should be running instances of the following services:
-
-- PostGIS
-- API
-- Proxy
-- Client
-
-Then [configure the API for first use](#api-configuration).
-
-## Containerized deployment
-Refer to the [docker-compose](docker-compose.yml) configuration to see how Docker images of individual services are built
-
-## Continuous deployment
-
-A continuous deployment workflow is supported for a CentOS 7.6 deployment server
-
-1. Fork the repository, and clone the new fork to your local machine
-2. Follow the [instructions](/platform/README.md) to install and configure Ansible on your local machine
-3. Setup a CentOS 7 server with a user and SSH login without a password
-4. Run the command: `npm run configure-centos-7-server` from the root of the repository
-5. Configure [SSL](platform/README.md#ssl) appropriately
-6. Setup a Github self-hosted actions runner on the CentOS server (this is from the settings in your forked repository)
-7. Adjust the GitHub Actions files (`.github/worklfows/*.yml`) appropriately
-8. Push from local to your forked repository to trigger a deployment
+## Docker Stack
+TODO
 
 ## SAEON Data Portal endpoints
 
