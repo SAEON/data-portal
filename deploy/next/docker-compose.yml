@@ -132,7 +132,7 @@ services:
       - sdp_next
 
   clients_internal:
-    image: $CLIENTS_IMAGE
+    image: $INTERNAL_CLIENTS_IMAGE
     deploy:
       placement:
         max_replicas_per_node: 2
@@ -148,13 +148,11 @@ services:
         delay: 30s
     ports:
       - 6005:80
-    volumes:
-      - /opt/docker-nginx-configs/internal-clients/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - sdp_next
 
   clients_public:
-    image: $CLIENTS_IMAGE
+    image: $PUBLIC_CLIENTS_IMAGE
     deploy:
       placement:
         max_replicas_per_node: 2
@@ -170,7 +168,5 @@ services:
         delay: 30s
     ports:
       - 6006:80
-    volumes:
-      - /opt/docker-nginx-configs/public-clients/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - sdp_next

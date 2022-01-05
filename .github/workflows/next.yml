@@ -9,7 +9,8 @@ env:
   REGISTRY: ghcr.io
   API_IMAGE_NAME: saeon/sdp-api
   PROXY_IMAGE_NAME: saeon/sdp-proxy
-  CLIENTS_IMAGE_NAME: saeon/sdp-clients
+  INTERNAL_CLIENTS_IMAGE_NAME: saeon/sdp-clients-int
+  PUBLIC_CLIENTS_IMAGE_NAME: saeon/sdp-clients-pub
   BRANCH_REF: next
 
 jobs:
@@ -83,7 +84,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  build-clients:
+  build-internal-clients:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.meta.outputs.tags }}
@@ -93,7 +94,7 @@ jobs:
         with:
           ref: ${{ env.BRANCH_REF }}
 
-      - name: Configure client UI filters
+      - name: Configure internal client UI filters
         run: |
           cp deploy/next/config/client-filters.json src/clients/client-filters.json
 
@@ -109,11 +110,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.CLIENTS_IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.INTERNAL_CLIENTS_IMAGE_NAME }}
           tags: |
             type=sha
 
-      - name: Build and push clients
+      - name: Build and push internal clients
         uses: docker/build-push-action@v2
         with:
           context: src/clients
@@ -128,12 +129,63 @@ jobs:
             PROXY_ADDRESS=https://proxy.saeon.dvn
             SUBDOMAIN_APP_ENTRIES=curation-tools
             TECHNICAL_CONTACT=zd.smith@saeon.nrf.ac.za
+            NGINX_SERVER_BLOCK=nginx/clients-internal.conf
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build-public-clients:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
+    steps:
+      - name: Check out source code (shared)
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: Configure public client UI filters
+        run: |
+          cp deploy/next/config/client-filters.json src/clients/client-filters.json
+
+      - name: Log in to the Container registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.PUBLIC_CLIENTS_IMAGE_NAME }}
+          tags: |
+            type=sha
+
+      - name: Build and push public clients
+        uses: docker/build-push-action@v2
+        with:
+          context: src/clients
+          build-args: |
+            API_PUBLIC_ADDRESS=https://api.catalogue.saeon.dvn
+            CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.dvn
+            CLIENTS_DEFAULT_NOTICES='Welcome to the SAEON Catalogue!,info'
+            CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.dvn
+            CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
+            CURATOR_CONTACT=pl.chiloane@saeon.nrf.ac.za
+            DEPLOYMENT_ENV=development
+            PROXY_ADDRESS=https://proxy.saeon.dvn
+            SUBDOMAIN_APP_ENTRIES=curation-tools
+            TECHNICAL_CONTACT=zd.smith@saeon.nrf.ac.za
+            NGINX_SERVER_BLOCK=nginx/clients-public.conf
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
-    needs: [build-api, build-proxy, build-clients]
+    needs: [build-api, build-proxy, build-internal-clients, build-public-clients]
     runs-on: github-runner.saeon.int
     steps:
       - name: Check out source code (shared)
@@ -161,7 +213,8 @@ jobs:
           script: |
             echo "API_IMAGE=${{ needs.build-api.outputs.image }}" > /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "PROXY_IMAGE=${{ needs.build-proxy.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "CLIENTS_IMAGE=${{ needs.build-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "INTERNAL_CLIENTS_IMAGE=${{ needs.build-internal-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "PUBLIC_CLIENTS_IMAGE=${{ needs.build-public-clients.outputs.image }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_DEV_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env

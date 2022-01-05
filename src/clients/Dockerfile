@@ -39,9 +39,12 @@ RUN npm run build
 # built static files
 ###
 FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
 
+ARG NGINX_SERVER_BLOCK
+
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-# A server block needs to be mounted at runtime
+RUN echo ${NGINX_SERVER_BLOCK}
+COPY ${NGINX_SERVER_BLOCK} /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
