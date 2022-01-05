@@ -15,6 +15,8 @@ import homeRoute from '../http/home.js'
 import pgDumpRoute from '../http/pg-dump/index.js'
 import loginSuccessRoute from '../http/login-success.js'
 import metadataRecordsRoute from '../http/metadata-records/index.js'
+import oauthAuthenticationCallbackRoute from '../http/oauth-authentication-callback.js'
+import loginRoute from '../http/login.js'
 import Koa from 'koa'
 import KoaRouter from '@koa/router'
 import koaCompress from 'koa-compress'
@@ -22,11 +24,8 @@ import koaBody from 'koa-bodyparser'
 import zlib from 'zlib'
 import createRequestContext from '../middleware/create-request-context.js'
 import hoursToMilliseconds from '../lib/hours-to-ms.js'
-import configureAuth from '../passport/index.js'
+import '../passport/index.js'
 import { APP_KEY } from '../config/index.js'
-
-// Configure passport authentication
-const { login, authenticate } = configureAuth()
 
 export default () => {
   const publicApp = new Koa()
@@ -76,8 +75,8 @@ export default () => {
         .get('/pg-dump/:schema', pgDumpRoute)
         .get('/download-proxy', downloadProxyRoute)
         .get('/metadata-records', metadataRecordsRoute)
-        .get('/authenticate/redirect', authenticate, loginSuccessRoute) // passport
-        .get('/login', login) // passport
+        .get('/authenticate/redirect', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport
+        .get('/login', loginRoute) // passport
         .get('/authenticate', authenticateRoute)
         .get('/logout', logoutRoute)
         .routes()
