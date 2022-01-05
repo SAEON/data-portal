@@ -1,6 +1,6 @@
 {
   "name": "@saeon/cli-tools",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Build CLI applications declaratively",
   "main": "dist/cjs/index.js",
   "type": "module",
