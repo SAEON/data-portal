@@ -39,19 +39,19 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-proposal-class-properties": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.16.4",
-    "@babel/preset-env": "^7.16.4",
-    "@babel/preset-react": "^7.16.0",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.6",
-    "npm-check-updates": "^12.0.3",
-    "ol": "^6.9.0",
+    "@rollup/plugin-node-resolve": "^13.1.2",
+    "npm-check-updates": "^12.1.0",
+    "ol": "^6.10.0",
     "react": "*",
     "rimraf": "^3.0.2",
-    "rollup": "^2.61.0"
+    "rollup": "^2.63.0"
   }
 }
