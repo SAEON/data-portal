@@ -18,12 +18,18 @@ services:
   postgis:
     image: ghcr.io/saeon/postgis:13
     deploy:
+      placement:
+        max_replicas_per_node: 2
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        delay: 30s
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_DB: databooks
@@ -40,12 +46,18 @@ services:
   proxy:
     image: $PROXY_IMAGE
     deploy:
+      placement:
+        max_replicas_per_node: 2
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        delay: 30s
     environment:
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
     ports:
@@ -57,12 +69,18 @@ services:
   api:
     image: $API_IMAGE
     deploy:
+      placement:
+        max_replicas_per_node: 2
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        delay: 30s
     environment:
       ALLOWED_ORIGINS: https://catalogue.saeon.dvn,https://curation.saeon.dvn
       API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
@@ -116,12 +134,18 @@ services:
   clients_internal:
     image: $CLIENTS_IMAGE
     deploy:
+      placement:
+        max_replicas_per_node: 2
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        delay: 30s
     ports:
       - 6005:80
     volumes:
@@ -132,12 +156,18 @@ services:
   clients_public:
     image: $CLIENTS_IMAGE
     deploy:
+      placement:
+        max_replicas_per_node: 2
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        delay: 30s
     ports:
       - 6006:80
     volumes:
