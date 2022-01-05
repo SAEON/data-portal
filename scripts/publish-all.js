@@ -26,7 +26,7 @@ apply({
   ignore: [],
 })
 
-// Quick pause, allow npm registry to reflext
+// Quick pause, allow npm registry to reflect
 console.log('Give NPM registry a chance to reflect updates')
 await new Promise(res => setTimeout(res, TIMEOUT))
 
