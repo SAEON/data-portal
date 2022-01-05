@@ -44,7 +44,6 @@ ARG NGINX_SERVER_BLOCK
 
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-RUN echo ${NGINX_SERVER_BLOCK}
 COPY ${NGINX_SERVER_BLOCK} /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
