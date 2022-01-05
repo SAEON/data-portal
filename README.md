@@ -161,7 +161,7 @@ The API is configured via HTTP using GraphQL mutations. Run the following mutati
 Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can interact with the API (or whatever port you have configured for deployment)
 
 ```graphql
-# Configure default PostGIS tables
+# Configure default PostGIS tables (TODO - remove)
 mutation {
   configureDefaultPostGISLayers
 }
