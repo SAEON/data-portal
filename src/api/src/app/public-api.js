@@ -80,8 +80,8 @@ const staticSpaMiddleware = async (ctx, next) => {
         publicApp
       )(ctx, next)
     })
-    .use(blacklistRoutes(restrictCors, '/query')) // Strict CORS for all routes except /query
-    .use(whitelistRoutes(openCors, '/query')) // Open CORS policy for /query
+    .use(blacklistRoutes(restrictCors, '/http/query')) // Strict CORS for all routes except /query
+    .use(whitelistRoutes(openCors, '/http/query')) // Open CORS policy for /query
     .use(clientSession)
     .use(koaPassport.initialize())
     .use(koaPassport.session())
@@ -102,8 +102,9 @@ const staticSpaMiddleware = async (ctx, next) => {
         .get('/http/logout', logoutRoute)
         .routes()
     )
+    .use(fourOFour)
     .use(mount('/', reactClient))
-    .use(blacklistRoutes(staticSpaMiddleware, '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
+    .use(blacklistRoutes(staticSpaMiddleware,  '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
 
   return publicApp
 }
