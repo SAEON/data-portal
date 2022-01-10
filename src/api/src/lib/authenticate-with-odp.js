@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import btoa from 'btoa'
 import FormData from 'form-data'
-import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_AUTH_SCOPE } from '../config/index.js'
+import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_AUTH_SCOPES } from '../config/index.js'
 import { addSeconds, differenceInSeconds } from 'date-fns'
 
 const TOKEN = btoa(`${ODP_CLIENT_ID}:${ODP_CLIENT_SECRET}`)
@@ -20,7 +20,7 @@ export default async ({ useCachedToken = true } = {}) => {
   try {
     const form = new FormData()
     form.append('grant_type', 'client_credentials')
-    form.append('scope', ODP_AUTH_SCOPE)
+    form.append('scope', ODP_AUTH_SCOPES)
 
     /**
      * See if a valid access token

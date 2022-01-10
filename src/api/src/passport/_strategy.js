@@ -5,7 +5,7 @@ import {
   ODP_SSO_CLIENT_SECRET,
   ODP_SSO_CLIENT_ID,
   ODP_SSO_CLIENT_REDIRECT,
-  ODP_AUTH_ODP_LOGOUT_REDIRECT,
+  ODP_AUTH_LOGOUT_REDIRECT,
 } from '../config/index.js'
 
 export default hydra =>
@@ -15,7 +15,7 @@ export default hydra =>
         client_id: ODP_SSO_CLIENT_ID,
         client_secret: ODP_SSO_CLIENT_SECRET,
         redirect_uris: [ODP_SSO_CLIENT_REDIRECT],
-        post_logout_redirect_uris: [ODP_AUTH_ODP_LOGOUT_REDIRECT],
+        post_logout_redirect_uris: [ODP_AUTH_LOGOUT_REDIRECT],
         token_endpoint_auth_method: 'client_secret_post',
         response_types: ['code'],
       }),
