@@ -79,7 +79,7 @@ export default () => {
       {/* DEVICE */}
       <Grid item xs={12}>
         <Collapse
-          title="Downloads by device (total)"
+          title="Downloads by device"
           cardStyle={{ backgroundColor: theme.palette.common.white }}
         >
           <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
