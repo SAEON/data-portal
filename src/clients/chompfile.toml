@@ -1,0 +1,20 @@
+version = 0.1
+
+[[task]]
+  name = "build"
+  serial = true
+  deps = ["babel", "jspm"]
+
+[[task]]
+  name = "babel"
+  target = "../api/__clients/entry-points/#/index.js"
+  deps = ["src/entry-points/#/index.jsx"]
+  template = "babel"
+  [task.args]
+    configFile = "./babel.config.cjs"
+
+[[task]]
+  name = "jspm"
+  target = "../api/__clients/entry_points/#/index.html"
+  deps = ["src/entry-points/#/index.html"]
+  template = "jspm:generate"
