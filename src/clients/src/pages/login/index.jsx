@@ -1,6 +1,6 @@
 import getUriState from '../../lib/fns/get-uri-state'
 import Container from '@mui/material/Container'
-import { API_PUBLIC_ADDRESS } from '../../config'
+import { PUBLIC_HTTP_ADDRESS } from '../../config'
 import FancyButton from '../../components/fancy-button'
 import SkipLink from '../../components/skip-link'
 
@@ -15,7 +15,7 @@ export default () => {
           <FancyButton
             style={{ width: 250, height: 250 }}
             title="Log in"
-            href={`${API_PUBLIC_ADDRESS}/login?redirect=${redirect}`}
+            href={`${PUBLIC_HTTP_ADDRESS}/login?redirect=${redirect}`}
           />
         </Container>
       </main>

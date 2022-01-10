@@ -1,13 +1,13 @@
 import { createContext } from 'react'
 import WithFetch from './with-fetch'
 import Loading from '../../components/loading'
-import { API_PUBLIC_ADDRESS } from '../../config'
+import { PUBLIC_HTTP_ADDRESS } from '../../config'
 
 export const context = createContext()
 
 export default ({ children }) => {
   return (
-    <WithFetch uri={`${API_PUBLIC_ADDRESS}/client-info`}>
+    <WithFetch uri={`${PUBLIC_HTTP_ADDRESS}/client-info`}>
       {({ error, loading, data }) => {
         if (loading) {
           return <Loading />

@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react'
-import { API_PUBLIC_ADDRESS, context as configContext } from '../../config'
+import { PUBLIC_HTTP_ADDRESS, context as configContext } from '../../config'
 
 export const context = createContext()
 
@@ -24,7 +24,7 @@ export default ({ children }) => {
     ;(async () => {
       setAuthenticating(true)
       try {
-        const response = await fetch(`${API_PUBLIC_ADDRESS}/authenticate`, {
+        const response = await fetch(`${PUBLIC_HTTP_ADDRESS}/authenticate`, {
           credentials: 'include',
           mode: 'cors',
           signal: abortController.signal,

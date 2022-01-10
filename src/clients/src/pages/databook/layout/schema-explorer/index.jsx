@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { context as schemaContext } from '../../contexts/schema-provider'
 import StorageIcon from 'mdi-react/StorageIcon'
 import ExpandIcon from 'mdi-react/ChevronRightIcon'
-import { API_PUBLIC_ADDRESS } from '../../../../config'
+import { PUBLIC_HTTP_ADDRESS } from '../../../../config'
 import ContextMenu from './_context-menu'
 import useStyles from './style'
 import clsx from 'clsx'
@@ -28,7 +28,7 @@ export default () => {
                 {
                   value: 'Export DB',
                   onClick: () => {
-                    window.open(`${API_PUBLIC_ADDRESS}/pg-dump/${schemaId}`)
+                    window.open(`${PUBLIC_HTTP_ADDRESS}/pg-dump/${schemaId}`)
                   },
                   disabled: false,
                 },

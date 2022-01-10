@@ -18,11 +18,13 @@ export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
 
 export const API_PUBLIC_ADDRESS = process.env.API_PUBLIC_ADDRESS || 'http://localhost:3000'
 
+export const PUBLIC_HTTP_ADDRESS = `${API_PUBLIC_ADDRESS}/http`
+
 export const PROXY_ADDRESS = process.env.PROXY_ADDRESS || 'http://localhost:8001'
 
 export const PUBLIC_GQL_ADDRESS = `${API_PUBLIC_ADDRESS}/graphql`
 
-const url = new URL(API_PUBLIC_ADDRESS)
+const url = new URL(PUBLIC_GQL_ADDRESS)
 export const API_GQL_SUBSCRIPTIONS_ADDRESS = `${url.protocol === 'http:' ? 'ws:' : 'wss:'}//${
   url.hostname
 }${url.port ? `:${url.port}` : ''}/graphql`

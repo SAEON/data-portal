@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Typography from '@mui/material/Typography'
 import DownloadIcon from 'mdi-react/DownloadIcon'
-import { API_PUBLIC_ADDRESS, EMAIL_REGEX } from '../../config'
+import { PUBLIC_HTTP_ADDRESS, EMAIL_REGEX } from '../../config'
 import ConfirmDownload from './_confirm'
 import QuickForm from '@saeon/quick-form'
 import TextField from '@mui/material/TextField'
@@ -36,7 +36,7 @@ export default ({
   const { resourceDescription, resourceDownload } = immutableResource || {}
   const downloadURL =
     new URL(resourceDownload?.downloadURL || PLACEHOLDER_URI).protocol === 'http:'
-      ? `${API_PUBLIC_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
+      ? `${PUBLIC_HTTP_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
       : resourceDownload?.downloadURL
 
   if (!resourceDownload?.downloadURL) {
