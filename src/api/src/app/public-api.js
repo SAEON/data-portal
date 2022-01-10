@@ -36,19 +36,19 @@ const __dirname = getCurrentDirectory(import.meta)
 
 export default () => {
   // Configure static files server
-const SPA_PATH = path.join(__dirname, '../../__clients')
-const reactClient = new Koa()
-reactClient.use(serve(SPA_PATH))
+  const SPA_PATH = path.join(__dirname, '../../__clients')
+  const reactClient = new Koa()
+  reactClient.use(serve(SPA_PATH))
 
-const staticSpaMiddleware = async (ctx, next) => {
-  try {
-    return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next)
-  } catch (error) {
-    console.error('Error setting up static SPA middleware', error)
+  const staticSpaMiddleware = async (ctx, next) => {
+    try {
+      return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next)
+    } catch (error) {
+      console.error('Error setting up static SPA middleware', error)
+    }
   }
-}
 
-// Configure public API
+  // Configure public API
   const publicApp = new Koa()
   publicApp.keys = [APP_KEY]
   publicApp.proxy = true
@@ -104,7 +104,7 @@ const staticSpaMiddleware = async (ctx, next) => {
     )
     .use(fourOFour)
     .use(mount('/', reactClient))
-    .use(blacklistRoutes(staticSpaMiddleware,  '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
+    .use(blacklistRoutes(staticSpaMiddleware, '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
 
   return publicApp
 }
