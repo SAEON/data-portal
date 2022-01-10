@@ -46,5 +46,5 @@ export const ODP_SSO_CLIENT_SECRET = process.env.ODP_SSO_CLIENT_SECRET || ''
 export const ODP_SSO_CLIENT_SCOPES =
   process.env.ODP_SSO_CLIENT_SCOPES || 'openid ODP.Metadata SAEON.DataPortal'
 export const ODP_SSO_CLIENT_REDIRECT =
-  process.env.ODP_SSO_CLIENT_REDIRECT || `${API_PUBLIC_ADDRESS}/authenticate/redirect`
+  process.env.ODP_SSO_CLIENT_REDIRECT || `${API_PUBLIC_ADDRESS}/http/authenticate/redirect`
 export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'client.sess'
