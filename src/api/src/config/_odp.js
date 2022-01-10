@@ -23,7 +23,7 @@ export const ODP_API_CATALOGUE_ENDPOINT = `${ODP_API}/catalogue`
  */
 export const ODP_AUTH = `${ODP_ADDRESS}/auth`
 export const ODP_AUTH_WELL_KNOWN = `${ODP_AUTH}/.well-known/openid-configuration`
-export const ODP_AUTH_LOGOUT_REDIRECT = `${ODP_AUTH}/oauth2/sessions/logout`
+export const ODP_AUTH_LOGOUT_REDIRECT = `${ODP_AUTH}/http/oauth2/sessions/logout`
 
 /**
  * ODP catalogue integration
