@@ -6,18 +6,33 @@ import SearchIcon from 'mdi-react/SearchIcon'
 import QuickForm from '@saeon/quick-form'
 import { context as globalContext } from '../../contexts/global'
 import debounce from '../../lib/fns/debounce'
-import useStyles from './style'
-import clsx from 'clsx'
 import { useTheme } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material/styles'
+
+const Root = styled('div')(({ theme }) => ({
+  transition: theme.transitions.create('background-color'),
+  backgroundColor: alpha(theme.palette.common.white, 0.1),
+  '& .MuiInput-underline:before': {
+    borderBottom: 'none',
+  },
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.2),
+  },
+  '& .MuiInput-underline:hover:before': {
+    border: 'none',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: alpha(theme.palette.common.white, 0.5),
+  },
+}))
 
 export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
   const history = useHistory()
   const { global, setGlobal } = useContext(globalContext)
-  const classes = useStyles()
   const theme = useTheme()
 
   return (
-    <div className={clsx(classes.recordsSearchBox)} style={style}>
+    <Root style={style}>
       <QuickForm
         effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
         text={global.text || ''}
@@ -45,7 +60,11 @@ export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
                 inputProps: {
                   'aria-label': 'Enter search text and press enter',
                 },
-                className: clsx(classes.input),
+                sx: {
+                  color: theme.palette.common.white,
+                  padding: `${theme.spacing(4)} 0`,
+                  caretColor: theme.palette.common.white,
+                },
               }}
               value={text}
               placeholder="Search SAEON data"
@@ -64,6 +83,6 @@ export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
         }}
       </QuickForm>
       {children}
-    </div>
+    </Root>
   )
 }

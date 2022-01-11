@@ -3,21 +3,29 @@ import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
 import FlatPage from '../../components/flat-page'
-import useStyles from './style'
-import clsx from 'clsx'
 import { PACKAGE_DESCRIPTION } from '../../config'
 
 export default () => {
-  const classes = useStyles()
-
   return (
     <>
       <FlatPage>
-        <Card className={clsx(classes.card)} variant="outlined">
+        <Card
+          sx={theme => ({
+            backgroundColor: theme.backgroundColor,
+            marginTop: theme.spacing(4),
+            marginBottom: theme.spacing(4),
+          })}
+          variant="outlined"
+        >
           <CardHeader style={{ textAlign: 'center' }} title="About" />
 
           <CardContent>
-            <Typography className={clsx(classes.body)} variant="body2">
+            <Typography
+              sx={{
+                marginBottom: theme => theme.spacing(2),
+              }}
+              variant="body2"
+            >
               {PACKAGE_DESCRIPTION}
             </Typography>
           </CardContent>

@@ -1,12 +1,8 @@
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-import clsx from 'clsx'
-import useStyles from './style'
 import Hidden from '@mui/material/Hidden'
 
 export default ({ doi }) => {
-  const classes = useStyles()
-
   return (
     <Hidden smDown>
       {doi ? (
@@ -15,7 +11,14 @@ export default ({ doi }) => {
           component={Link}
           variant="overline"
           href={`https://doi.org/${doi}`}
-          className={clsx(classes.title)}
+          sx={{
+            marginRight: 'auto',
+            marginLeft: theme => theme.spacing(2),
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '0.6rem',
+          }}
           style={{
             cursor: 'pointer',
           }}
@@ -25,7 +28,17 @@ export default ({ doi }) => {
           {`https://doi.org/${doi}`}
         </Typography>
       ) : (
-        <Typography className={clsx(classes.title)} variant="overline">
+        <Typography
+          sx={{
+            marginRight: 'auto',
+            marginLeft: 16,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '0.6rem',
+          }}
+          variant="overline"
+        >
           No DOI
         </Typography>
       )}

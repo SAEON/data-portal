@@ -1,46 +1,42 @@
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-import FlatPage from '../../components/flat-page'
-import useStyles from './style'
-import clsx from 'clsx'
+import FlatPage, { H, P } from '../../components/flat-page'
 
 export default () => {
-  const classes = useStyles()
-
   return (
     <>
       <FlatPage>
-        <Card className={clsx(classes.card)} variant="outlined">
+        <Card
+          sx={theme => ({
+            backgroundColor: theme.backgroundColor,
+            marginTop: theme.spacing(4),
+            marginBottom: theme.spacing(4),
+          })}
+          variant="outlined"
+        >
           <CardHeader style={{ textAlign: 'center' }} title="Privacy Policy" />
 
           <CardContent>
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Our commitment to privacy
-            </Typography>
+            <H>Our commitment to privacy</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Your privacy is important to us. To better protect your privacy we provide this notice
               explaining our online information practices. If you have additional questions or
               require more information about our Privacy Policy, do not hesitate to contact us.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
-              We do not share information that we collect with outside parties.
-            </Typography>
+            <P>We do not share information that we collect with outside parties.</P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Finally, we never use or share the personally identifiable information provided to us
               online in ways unrelated to the ones described.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Log Files
-            </Typography>
+            <H>Log Files</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               SAEON Data Portal follows a standard procedure of using log files. These files log
               visitors when they visit websites. All websites do this. The information collected by
               log files include internet protocol (IP) addresses, browser type, Internet Service
@@ -49,114 +45,98 @@ export default () => {
               personally identifiable. The purpose of the information is for analysing trends,
               administering the site, tracking users&apos; movement on the website, and gathering
               demographic information.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Cookies and Web Beacons
-            </Typography>
+            <H>Cookies and Web Beacons</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Like any other website, SAEON Data Portal uses &apos;cookies&apos;. These cookies are
               used to store information including visitors&apos; preferences, and the pages on the
               website that the visitor accessed or visited. The information is used to optimize the
               users&apos; experience by customizing our web page content based on visitors&apos;
               browser type and/or other information.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               For more general information on cookies, please read the &quot;What Are Cookies&quot;
               article on{' '}
               <Link href="https://www.cookieconsent.com/what-are-cookies/">
                 Cookie Consent website
               </Link>
               .
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Personal information we collect
-            </Typography>
+            <H>Personal information we collect</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Personal information is collected insofar as it is necessary to identify and
               authenticate users, only when users authenticate with the ODP. Such information is
               limited to profile information from services that this software uses for
               authentication purposes (Google, Twitter, etc.) and email addresses used for
               identification (and no other) purposes.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Third Party Privacy Policies
-            </Typography>
+            <H>Third Party Privacy Policies</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               SAEON Data Portal&apos;s Privacy Policy does not apply to other advertisers or
               websites. Thus, we are advising you to consult the respective Privacy Policies of
               these third-party websites or ad servers for more detailed information. It may include
               their practices and instructions about how to opt-out of certain options.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               You can choose to disable cookies through your individual browser options. To know
               more detailed information about cookie management with specific web browsers, it can
               be found at the browsers&apos; respective websites. Note that disabling cookies will
               prevent the SAEON Data Portal from functioning fully.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Children&apos;s Information
-            </Typography>
+            <H>Children&apos;s Information</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Another part of our priority is adding protection for children while using the
               internet. We encourage parents and guardians to observe, participate in, and/or
               monitor and guide their online activity.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               SAEON Data Portal does not knowingly collect any Personal Identifiable Information
               from children under the age of 13. If you think that your child provided this kind of
               information on our website, we strongly encourage you to contact us immediately and we
               will do our best efforts to promptly remove such information from our records.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Our commitment to data security
-            </Typography>
+            <H>Our commitment to data security</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               To prevent unauthorised access, maintain data accuracy, and ensure the correct use of
               information, we have put in place appropriate physical, electronic, and managerial
               procedures to safeguard and secure the information we collect online.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Online Privacy Policy Only
-            </Typography>
+            <H>Online Privacy Policy Only</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               This Privacy Policy applies only to our online activities and is valid for visitors to
               our website with regards to the information that they shared and/or collect in SAEON
               Data Portal. This policy is not applicable to any information collected offline or via
               channels other than this website.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              Consent
-            </Typography>
+            <H>Consent</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               By using our website, you hereby consent to our Privacy Policy and agree to its Terms
               and Conditions.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              How to contact us
-            </Typography>
+            <H>How to contact us</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Should you have other questions or concerns about these privacy policies, please call
               us on +27 (12) 534 3504 or send us an email at enquiries@saeon.ac.za.
-            </Typography>
+            </P>
           </CardContent>
         </Card>
       </FlatPage>

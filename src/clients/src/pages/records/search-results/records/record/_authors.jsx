@@ -1,14 +1,24 @@
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import clsx from 'clsx'
-import useStyles from './style'
+import useTheme from '@mui/material/styles/useTheme'
 
 export default ({ creators }) => {
-  const classes = useStyles()
+  const theme = useTheme()
 
   return (
-    <CardContent className={clsx(classes.authorContent)}>
-      <Typography className={clsx(classes.author)} variant="overline">
+    <CardContent
+      sx={{
+        paddingTop: theme.spacing(1),
+      }}
+    >
+      <Typography
+        sx={{
+          lineHeight: 1.5,
+          display: 'block',
+          textAlign: 'center',
+        }}
+        variant="overline"
+      >
         {creators?.map(({ name }) => name).join(', ') || 'Creator info missing'}
       </Typography>
     </CardContent>

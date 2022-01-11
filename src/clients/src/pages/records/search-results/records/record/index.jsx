@@ -4,17 +4,28 @@ import Header from './header'
 import Authors from './_authors'
 import Descriptions from './_descriptions'
 import Titles from './_titles'
-import clsx from 'clsx'
-import useStyles from './style'
 import FileFormat from './file-format'
+import useTheme from '@mui/material/styles/useTheme'
 
 export default _source => {
-  const classes = useStyles()
+  const theme = useTheme()
 
   return (
     <Fade in={true} timeout={(Math.floor(Math.random() * 1.5) + 0.1) * 1000} key={_source.id}>
       <span>
-        <Card className={clsx(classes.card)} variant="outlined">
+        <Card
+          sx={{
+            backgroundColor: theme.backgroundColor,
+            transitionTimingFunction: theme.transitions.easing.easeInOut,
+            transitionProperty: 'all',
+            transitionDuration: theme.transitions.duration.standard,
+            '&:hover': {
+              backgroundColor: theme.palette.common.white,
+              boxShadow: theme.boxShadow,
+            },
+          }}
+          variant="outlined"
+        >
           <Header {..._source} />
           <Titles {..._source} />
           <Authors {..._source} />
