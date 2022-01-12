@@ -4,6 +4,7 @@ import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
 import FlatPage from '../../components/flat-page'
 import { PACKAGE_DESCRIPTION } from '../../config'
+import { alpha } from '@mui/material/styles'
 
 export default () => {
   return (
@@ -11,7 +12,7 @@ export default () => {
       <FlatPage>
         <Card
           sx={theme => ({
-            backgroundColor: theme.backgroundColor,
+            backgroundColor: alpha(theme.palette.common.white, 0.9),
             marginTop: theme.spacing(4),
             marginBottom: theme.spacing(4),
           })}

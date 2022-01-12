@@ -9,7 +9,7 @@ import Layout from './layout'
 import FiltersDrawer from './drawer/index'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, alpha } from '@mui/material/styles'
 
 const POLLING_INTERVAL = 500
 
@@ -59,7 +59,10 @@ export default ({ id }) => {
         <Box my={2}>
           <Card
             variant="outlined"
-            style={{ backgroundColor: theme.backgroundColor, margin: theme.spacing(1) }}
+            style={{
+              backgroundColor: alpha(theme.palette.common.white, 0.9),
+              margin: theme.spacing(1),
+            }}
           >
             <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
               <Typography style={{ margin: 'auto', textAlign: 'center' }} variant="h5">
@@ -84,7 +87,7 @@ export default ({ id }) => {
           <Card
             variant="outlined"
             style={{
-              backgroundColor: theme.backgroundColor,
+              backgroundColor: alpha(theme.palette.common.white, 0.9),
               margin: theme.spacing(1),
               padding: theme.spacing(1),
             }}

@@ -1,9 +1,10 @@
 import makeStyles from '@mui/styles/makeStyles'
+import { alpha } from '@mui/material/styles'
 
 export default makeStyles(theme => {
   return {
     layout: {
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: alpha(theme.palette.common.white, 0.9),
       margin: theme.spacing(1),
       padding: '16px',
     },

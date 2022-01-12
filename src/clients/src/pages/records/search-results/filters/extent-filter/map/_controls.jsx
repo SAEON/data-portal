@@ -10,7 +10,7 @@ import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, alpha } from '@mui/material/styles'
 
 const wkt = new WKT()
 
@@ -97,7 +97,7 @@ export default ({ proxy }) => {
         zIndex: 1,
         margin: '10px 10px 0 0',
         padding: theme.spacing(1),
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: alpha(theme.palette.common.white, 0.9),
       }}
     >
       <Tooltip title={'Filter by bounding box'}>

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import Fade from '@mui/material/Fade'
 import CircularProgress from '@mui/material/CircularProgress'
 import { context as globalContext } from '../../../../../../contexts/global'
-import Link from '../../../../../../components/link'
+import Link from '@mui/material/Link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
@@ -60,7 +60,7 @@ export default ({ tabIndex, search = undefined }) => {
     <Fade in={Boolean(data || isAtlasPage)} key="data">
       <div>
         <TabPanel value={tabIndex} index={0}>
-          <Link uri={uri} />
+          <Link href={uri}>{uri}</Link>
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
           {`<iframe width="100%" height="100%" src="${uri}" frameborder="0" allowfullscreen></iframe>`}

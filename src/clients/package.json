@@ -29,21 +29,25 @@
   "author": "zach@saeon.ac.za,steven@saeon.ac.za",
   "license": "MIT",
   "dependencies": {
+<<<<<<< HEAD
     "@apollo/client": "^3.5.6",
     "@babel/cli": "^7.16.7",
+=======
+    "@apollo/client": "^3.5.7",
+>>>>>>> next
     "@babel/core": "^7.16.7",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-optional-chaining": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.16.7",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.5",
-    "@mui/lab": "^5.0.0-alpha.63",
-    "@mui/material": "^5.2.7",
+    "@mui/lab": "^5.0.0-alpha.64",
+    "@mui/material": "^5.2.8",
     "@mui/styles": "^5.2.3",
     "@rjsf/core": "^3.2.1",
     "@saeon/logger": "^6.2.16",
@@ -59,17 +63,17 @@
     "cross-fetch": "^3.1.4",
     "css-loader": "^6.5.1",
     "date-fns": "^2.28.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^11.0.0",
     "dotenv-webpack": "^7.0.3",
     "echarts": "^5.2.2",
     "echarts-for-react": "^3.0.2",
     "file-loader": "^6.2.0",
     "graphql": "^16.2.0",
-    "gridstack": "^4.4.1",
+    "gridstack": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mdi-react": "^8.2.0",
     "minisearch": "^3.2.0",
-    "nanoid": "^3.1.30",
+    "nanoid": "^3.1.32",
     "node-sass": "^7.0.1",
     "notistack": "^2.0.3",
     "object-hash": "^2.2.0",
@@ -97,7 +101,7 @@
     "ua-parser-js": "^1.0.2",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
-    "webpack": "^5.65.0",
+    "webpack": "^5.66.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
     "workbox-webpack-plugin": "^6.4.2"
@@ -112,6 +116,6 @@
     "npm-check-updates": "^12.1.0",
     "onchange": "^7.1.0",
     "prettier": "^2.5.1",
-    "webpack-dev-server": "^4.7.2"
+    "webpack-dev-server": "^4.7.3"
   }
 }

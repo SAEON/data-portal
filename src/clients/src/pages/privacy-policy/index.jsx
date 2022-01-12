@@ -3,6 +3,7 @@ import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Link from '@mui/material/Link'
 import FlatPage, { H, P } from '../../components/flat-page'
+import { alpha } from '@mui/material/styles'
 
 export default () => {
   return (
@@ -10,7 +11,7 @@ export default () => {
       <FlatPage>
         <Card
           sx={theme => ({
-            backgroundColor: theme.backgroundColor,
+            backgroundColor: alpha(theme.palette.common.white, 0.9),
             marginTop: theme.spacing(4),
             marginBottom: theme.spacing(4),
           })}

@@ -1,38 +1,40 @@
-import { adaptV4Theme, createTheme, alpha } from '@mui/material/styles'
-import overrides from './_mui-overrides'
-import muiDefaults from './_mui'
+import { createTheme } from '@mui/material/styles'
 
-const defaultTheme = createTheme()
+const theme = createTheme()
 
-export default createTheme(
-  adaptV4Theme({
-    ...muiDefaults,
-    props: {
-      MuiUseMediaQuery: {
+export default createTheme(theme, {
+  shape: {
+    borderRadius: 2,
+  },
+  palette: {
+    mode: 'light',
+    contrastThreshold: 3,
+    primary: {
+      main: '#051d40',
+    },
+    secondary: {
+      main: '#002791',
+    },
+  },
+  components: {
+    MuiUseMediaQuery: {
+      defaultProps: {
         noSsr: true,
       },
     },
-    overrides: overrides(defaultTheme),
-    link: {
-      color: defaultTheme.palette.primary,
-      display: 'inline-block',
-      textDecoration: 'none',
-      transition: `color ${defaultTheme.transitions.duration.standard}`,
-      cursor: 'pointer',
+  },
+  typography: {
+    h1: {
+      fontSize: '2.5rem',
     },
-    linkActive: {
-      color: defaultTheme.palette.text.primary,
-      textDecoration: 'underline',
+    h2: {
+      fontSize: '2rem',
     },
-    pre: {
-      backgroundColor: defaultTheme.palette.grey[100],
-      borderRadius: defaultTheme.shape.borderRadius,
-      border: `1px solid ${defaultTheme.palette.grey[200]}`,
-      whiteSpace: 'pre-wrap',
-      wordBreak: 'break-all',
-      padding: defaultTheme.spacing(1),
+    h5: {
+      fontSize: '1.2rem',
     },
-    backgroundColor: alpha(defaultTheme.palette.common.white, 0.9),
-    boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
-  })
-)
+    h6: {
+      fontSize: '1rem',
+    },
+  },
+})

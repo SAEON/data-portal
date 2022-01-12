@@ -5,7 +5,7 @@ import Authors from './_authors'
 import Descriptions from './_descriptions'
 import Titles from './_titles'
 import FileFormat from './file-format'
-import useTheme from '@mui/material/styles/useTheme'
+import { useTheme, alpha } from '@mui/material/styles'
 
 export default _source => {
   const theme = useTheme()
@@ -15,13 +15,13 @@ export default _source => {
       <span>
         <Card
           sx={{
-            backgroundColor: theme.backgroundColor,
+            backgroundColor: alpha(theme.palette.common.white, 0.9),
             transitionTimingFunction: theme.transitions.easing.easeInOut,
             transitionProperty: 'all',
             transitionDuration: theme.transitions.duration.standard,
             '&:hover': {
               backgroundColor: theme.palette.common.white,
-              boxShadow: theme.boxShadow,
+              boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
             },
           }}
           variant="outlined"

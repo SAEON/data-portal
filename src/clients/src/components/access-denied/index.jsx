@@ -6,13 +6,14 @@ import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import { alpha } from '@mui/material/styles'
 
 export default ({ requiredPermission = 'NA' }) => {
   const theme = useTheme()
 
   return (
     <Container>
-      <Card variant="outlined" style={{ backgroundColor: theme.backgroundColor }}>
+      <Card variant="outlined" style={{ backgroundColor: alpha(theme.palette.common.white, 0.9) }}>
         <CardHeader
           avatar={
             <Avatar
