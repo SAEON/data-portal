@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
 import { useTheme } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
 
 export default ({
   children,
@@ -22,7 +23,11 @@ export default ({
   return (
     <Card
       variant="outlined"
-      style={{ width: '100%', backgroundColor: theme.backgroundColor, ...cardStyle }}
+      style={{
+        width: '100%',
+        backgroundColor: alpha(theme.palette.common.white, 0.9),
+        ...cardStyle,
+      }}
     >
       <CardHeader
         subheader={subheader || ''}

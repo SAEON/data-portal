@@ -59,11 +59,10 @@ export default ({ routes }) => {
             </Grid>
           </Container>
         </Toolbar>
-
-        {/* COPYRIGHT */}
-        <Toolbar
-          style={{ backgroundColor: theme.palette.primary.dark, minHeight: theme.spacing(1) }}
-        >
+      </AppBar>
+      {/* COPYRIGHT */}
+      <AppBar style={{ backgroundColor: theme.palette.primary.dark }} position="relative">
+        <Toolbar style={{ minHeight: theme.spacing(1) }}>
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="overline" variantMapping={{ overline: 'p' }}>
               © SAEON 2020 - {new Date().getFullYear()}

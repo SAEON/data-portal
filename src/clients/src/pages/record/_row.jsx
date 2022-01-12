@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, alpha } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default ({ title, children, ...props }) => {
@@ -27,7 +27,7 @@ export default ({ title, children, ...props }) => {
     >
       <Card
         style={{
-          backgroundColor: theme.backgroundColor,
+          backgroundColor: alpha(theme.palette.common.white, 0.9),
         }}
         variant="outlined"
       >

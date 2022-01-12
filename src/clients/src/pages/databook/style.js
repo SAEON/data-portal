@@ -8,7 +8,16 @@ export default makeStyles(theme => ({
     left: 0,
     right: 0,
   },
-  pre: Object.fromEntries(Object.entries(theme.pre).filter(([key]) => key !== 'backgroundColor')),
+  pre: Object.fromEntries(
+    Object.entries({
+      backgroundColor: theme.palette.grey[100],
+      borderRadius: theme.shape.borderRadius,
+      border: `1px solid ${theme.palette.grey[200]}`,
+      whiteSpace: 'pre-wrap',
+      wordBreak: 'break-all',
+      padding: theme.spacing(1),
+    }).filter(([key]) => key !== 'backgroundColor')
+  ),
 
   toolbar: {
     borderBottom: `1px solid ${theme.palette.grey[400]}`,

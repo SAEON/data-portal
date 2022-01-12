@@ -3,10 +3,10 @@ import { GridStack } from 'gridstack'
 import 'gridstack/dist/gridstack.min.css'
 import 'gridstack/dist/h5/gridstack-dd-native'
 import Chart from './chart'
-import useStyles from '../style'
 import { useTheme } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import clsx from 'clsx'
+import { alpha } from '@mui/material/styles'
 
 const components = {
   CHART: Chart,
@@ -14,7 +14,6 @@ const components = {
 
 export default ({ items }) => {
   const theme = useTheme()
-  const classes = useStyles()
   const gridRef = useRef()
   const gridStackRef = useRef()
   const refs = useRef({})
@@ -95,7 +94,11 @@ export default ({ items }) => {
             <div className={clsx('grid-stack-item-content')}>
               <Card
                 variant="outlined"
-                style={{ height: '100%', width: '100%', backgroundColor: theme.backgroundColor }}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  backgroundColor: alpha(theme.palette.common.white, 0.9),
+                }}
               >
                 <Component id={id} />
               </Card>

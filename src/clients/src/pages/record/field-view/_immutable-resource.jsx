@@ -2,7 +2,7 @@ import Row from '../_row'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import DownloadButton from '../../../components/data-download'
-import SimpleLink from '../../../components/link'
+import Link from '@mui/material/Link'
 import Hidden from '@mui/material/Hidden'
 
 export default _source => {
@@ -31,9 +31,15 @@ export default _source => {
           return (
             <div key={rl.rightsURI}>
               <Typography variant="body2">{rl.rights}</Typography>
-              <SimpleLink key={rl.rightsURI} uri={rl.rightsURI}>
-                <Typography variant="body2">{rl.rightsURI}</Typography>
-              </SimpleLink>
+              <Typography
+                target="_blank"
+                rel="noopener noreferrer"
+                href={rl.rightsURI}
+                component={Link}
+                variant="body2"
+              >
+                {rl.rightsURI}
+              </Typography>
             </div>
           )
         })}

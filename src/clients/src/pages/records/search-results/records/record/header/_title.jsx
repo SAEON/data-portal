@@ -2,6 +2,15 @@ import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import Hidden from '@mui/material/Hidden'
 
+const sx = {
+  marginRight: 'auto',
+  marginLeft: theme => theme.spacing(2),
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: '0.6rem',
+}
+
 export default ({ doi }) => {
   return (
     <Hidden smDown>
@@ -11,14 +20,7 @@ export default ({ doi }) => {
           component={Link}
           variant="overline"
           href={`https://doi.org/${doi}`}
-          sx={{
-            marginRight: 'auto',
-            marginLeft: theme => theme.spacing(2),
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '0.6rem',
-          }}
+          sx={sx}
           style={{
             cursor: 'pointer',
           }}
@@ -28,17 +30,7 @@ export default ({ doi }) => {
           {`https://doi.org/${doi}`}
         </Typography>
       ) : (
-        <Typography
-          sx={{
-            marginRight: 'auto',
-            marginLeft: 16,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '0.6rem',
-          }}
-          variant="overline"
-        >
+        <Typography sx={sx} variant="overline">
           No DOI
         </Typography>
       )}

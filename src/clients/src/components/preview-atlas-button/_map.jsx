@@ -8,8 +8,7 @@ import Loading from '../../components/loading'
 import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'
 import DialogContent from '@mui/material/DialogContent'
-import useStyles from './style'
-import clsx from 'clsx'
+import { styled } from '@mui/material/styles'
 
 const wkt = new WKT()
 
@@ -17,8 +16,16 @@ const SPATIALDATA_PROXY = `${PROXY_ADDRESS}/saeon-spatialdata`
 
 const EXTENT_PADDING = 3
 
+const StyledPre = styled('pre')(({ theme }) => ({
+  backgroundColor: theme.palette.grey[100],
+  borderRadius: theme.shape.borderRadius,
+  border: `1px solid ${theme.palette.grey[200]}`,
+  whiteSpace: 'pre-wrap',
+  wordBreak: 'break-all',
+  padding: theme.spacing(1),
+}))
+
 export default ({ geoLocations, linkedResource, id, title }) => {
-  const classes = useStyles()
   const { resourceURL = '' } = linkedResource
   const [uriInspection, setUriInspection] = useState({ error: undefined, loading: true })
   const { pathname, hostname, port, query } = parse(resourceURL, true)
@@ -57,13 +64,13 @@ export default ({ geoLocations, linkedResource, id, title }) => {
   if (uriInspection.error) {
     return (
       <DialogContent>
-        <pre className={clsx(classes.errorBlock)}>
+        <StyledPre>
           {`Cannot load map - WMS resource is not responding. If the URL is to a valid WMS server, then it is currently down. Otherwise the URL is missing, incorrect, or intended for manual inspection (see below)\n\n${JSON.stringify(
             linkedResource,
             null,
             2
           )}`}
-        </pre>
+        </StyledPre>
       </DialogContent>
     )
   }

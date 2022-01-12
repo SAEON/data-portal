@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import { nanoid } from 'nanoid'
 import Header from './header'
 import Editor from './editor'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, alpha } from '@mui/material/styles'
 import { gql, useMutation } from '@apollo/client'
 
 export default () => {
@@ -57,7 +57,10 @@ export default () => {
   }, [activeTabIndex, editors])
 
   return (
-    <div className={clsx(classes.layout)} style={{ backgroundColor: theme.backgroundColor }}>
+    <div
+      className={clsx(classes.layout)}
+      style={{ backgroundColor: alpha(theme.palette.common.white, 0.9) }}
+    >
       {/* TOOLBAR (Tab headers) */}
       <Header
         editors={editors}

@@ -1,25 +1,21 @@
-import makeStyles from '@mui/styles/makeStyles'
 import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
+import MuiIcon from '@mui/material/Icon'
 import MuiLink from '@mui/material/Link'
-import EditIcon from 'mdi-react/EditIcon'
-import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
 
-const useStyles = makeStyles(theme => ({
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight: theme.spacing(0.5),
-    width: 18,
-    height: 18,
-  },
-}))
+const sxIcon = {
+  marginRight: theme => theme.spacing(0.5),
+  width: 18,
+  height: 18,
+}
+
+const sxLink = {
+  display: 'flex',
+  alignItems: 'center',
+}
 
 export default ({ contentBase = '/', routes }) => {
-  const classes = useStyles()
   const { pathname } = useLocation() // Trigger re-render on location changes
   const normalizedPathname = pathname.replace(contentBase, '/')
 
@@ -42,15 +38,6 @@ export default ({ contentBase = '/', routes }) => {
         tree.slice(0, -1).map(({ label, Icon, BreadcrumbsIcon, breadcrumbsLabel, to }) => {
           Icon = BreadcrumbsIcon || Icon
           label = breadcrumbsLabel || label
-          if (label === 'New') {
-            Icon = SubmissionIcon
-            return (
-              <Typography key={label} color="inherit" className={classes.link}>
-                {Icon && <Icon size={18} className={classes.icon} />}
-                {label}
-              </Typography>
-            )
-          }
 
           return (
             <MuiLink
@@ -64,9 +51,9 @@ export default ({ contentBase = '/', routes }) => {
                   .map(({ to, label }) => to || label)
                   .join('/')
               }
-              className={classes.link}
+              sx={sxLink}
             >
-              {Icon && <Icon size={18} className={classes.icon} />}
+              {Icon && <MuiIcon sx={sxIcon} size={18} component={Icon} />}
               {label}
             </MuiLink>
           )
@@ -76,13 +63,9 @@ export default ({ contentBase = '/', routes }) => {
         Icon = BreadcrumbsIcon || Icon
         label = breadcrumbsLabel || label
 
-        if (label === 'Edit') {
-          Icon = EditIcon
-        }
-
         return (
-          <Typography key={label} color="textPrimary" className={classes.link}>
-            {Icon && <Icon size={18} className={classes.icon} />}
+          <Typography key={label} color="textPrimary" sx={sxLink}>
+            {Icon && <MuiIcon sx={sxIcon} size={18} component={Icon} />}
             {label}
           </Typography>
         )
