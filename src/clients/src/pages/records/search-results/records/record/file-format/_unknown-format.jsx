@@ -3,17 +3,14 @@ import { context as authorizationContext } from '../../../../../../contexts/auth
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-import useStyles from '../style'
-import clsx from 'clsx'
 import UpdateDataFormat from '../../../../../../components/update-data-format'
 
 export default ({ id, immutableResource }) => {
   const { hasPermission } = useContext(authorizationContext)
-  const classes = useStyles()
 
   if (!hasPermission('es-index:update')) {
     return (
-      <Typography className={clsx(classes.fileFormatText)} variant="overline">
+      <Typography sx={{ fontSize: '0.6rem' }} variant="overline">
         Unknown data format
       </Typography>
     )
@@ -28,7 +25,7 @@ export default ({ id, immutableResource }) => {
           <Link
             style={{ cursor: 'pointer' }}
             onClick={() => setOpen(!open)}
-            className={clsx(classes.fileFormatText)}
+            sx={{ fontSize: '0.6rem' }}
             component={Typography}
             variant="overline"
           >

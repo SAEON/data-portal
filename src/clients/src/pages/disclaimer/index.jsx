@@ -1,21 +1,23 @@
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
-import FlatPage from '../../components/flat-page'
-import useStyles from './style'
-import clsx from 'clsx'
+import FlatPage, { P } from '../../components/flat-page'
 
 export default () => {
-  const classes = useStyles()
-
   return (
     <>
       <FlatPage>
-        <Card className={clsx(classes.card)} variant="outlined">
+        <Card
+          sx={theme => ({
+            backgroundColor: theme.backgroundColor,
+            marginTop: theme.spacing(4),
+            marginBottom: theme.spacing(4),
+          })}
+          variant="outlined"
+        >
           <CardHeader style={{ textAlign: 'center' }} title="Disclaimer" />
           <CardContent>
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               While every reasonable effort is made to maintain current and accurate information on
               this site, the South African Environment Observation Network (SAEON) accepts no
               responsibility for any error or omission on these pages or any site to which the site
@@ -23,30 +25,30 @@ export default () => {
               content on the site or the information delivered or not delivered or as a result of
               the downloading of computer files or the usage of computer programs available on the
               site.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               Where appropriate, external links have been provided for the user’s convenience. SAEON
               is not responsible for the content or reliability of linked websites and does not
               necessarily endorse the views expressed in them. Listing shall not be taken as
               endorsement of any kind. SAEON cannot guarantee that these links will work all of the
               time and has no control over the availability of the linked sites or pages.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               SAEON provides metadata descriptions and links to its own data and that of others in
               the community of practice, in the belief that this will be useful and in support of
               Open Access to scientific publications and data. We cannot be held responsible for the
               quality of data provided by third parties, and while we take reasonable care in
               referencing these datasets, the content of both metadata and data is under control of
               the third-party provider.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               The SAEON Open Data Platform and its contents are provided on an “as is” and “as
               available” basis and have not been compiled or supplied to meet the User’s individual
               requirements.
-            </Typography>
+            </P>
           </CardContent>
         </Card>
       </FlatPage>

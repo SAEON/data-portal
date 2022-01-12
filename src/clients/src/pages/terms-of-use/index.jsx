@@ -1,67 +1,61 @@
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
-import FlatPage from '../../components/flat-page'
-import useStyles from './style'
-import clsx from 'clsx'
+import FlatPage, { H, P } from '../../components/flat-page'
 
 export default () => {
-  const classes = useStyles()
-
   return (
     <>
       <FlatPage>
-        <Card className={clsx(classes.card)} variant="outlined">
+        <Card
+          sx={theme => ({
+            backgroundColor: theme.backgroundColor,
+            marginTop: theme.spacing(4),
+            marginBottom: theme.spacing(4),
+          })}
+          variant="outlined"
+        >
           <CardHeader style={{ textAlign: 'center' }} title="Terms of Use" />
 
           <CardContent>
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               By accessing data from the South African Environmental Observation Network (SAEON)
               Open Data Platform (ODP) repository and its components, you affirm your acceptance of
               the following terms and conditions:
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              (1)
-            </Typography>
+            <H>(1)</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               You have read, understood, and agreed to the disclaimer. Data are included under this
               disclaimer.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              (2)
-            </Typography>
+            <H>(2)</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               These data are made available with the express understanding that any such use will
               properly acknowledge the originator(s) and publisher and cite the associated Digital
               Object Identifiers. Anyone wishing to use these data should properly cite and
               attribute the data providers listed as authors in the metadata provided with each
               dataset. It is expected that all the conditions of the data license will be strictly
-              honoured. Use of any material herein should be properly cited using the dataset’s
+              honoured. Use of any material herein should be properly cited using the dataset&apos;s
               persistent identifiers such as DOIs.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              (3)
-            </Typography>
+            <H>(3)</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               You acknowledge that you have read, understood, and agreed to the SAEON Data Policy.
-            </Typography>
+            </P>
 
-            <Typography className={clsx(classes.h2)} variant="h6">
-              (4)
-            </Typography>
+            <H>(4)</H>
 
-            <Typography className={clsx(classes.body)} variant="body2">
+            <P>
               You acknowledge that SAEON does not guarantee that the data will be available to you
               without interruption or error. Furthermore, SAEON may modify or remove datasets and
               data service access methods at will.
-            </Typography>
+            </P>
           </CardContent>
         </Card>
       </FlatPage>

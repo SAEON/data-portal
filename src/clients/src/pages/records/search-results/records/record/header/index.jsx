@@ -1,8 +1,6 @@
 import { lazy, Suspense } from 'react'
 import Divider from '@mui/material/Divider'
 import Toolbar from '@mui/material/Toolbar'
-import clsx from 'clsx'
-import useStyles from './style'
 import Title from './_title'
 import PreviewAtlasButton from '../../../../../../components/preview-atlas-button'
 import CitationButton from '../../../../../../components/citation-dialogue'
@@ -22,15 +20,8 @@ export default ({
   showSelect = true,
   ..._source
 }) => {
-  const classes = useStyles()
-
   return (
-    <Toolbar
-      className={clsx(classes.toolbar)}
-      disableGutters
-      variant="dense"
-      style={{ display: 'flex', justifyContent: 'flex-end' }}
-    >
+    <Toolbar disableGutters variant="dense" style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Title {..._source} />
 
       {/* DATABOOK */}

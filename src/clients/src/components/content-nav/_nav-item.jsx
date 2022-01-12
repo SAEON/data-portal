@@ -3,11 +3,10 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Tooltip from '@mui/material/Tooltip'
-import clsx from 'clsx'
 import ButtonBase from '@mui/material/ButtonBase'
-import useStyles from './style'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { alpha } from '@mui/material/styles'
 
 export default memo(
   ({
@@ -27,7 +26,6 @@ export default memo(
     const xsAndDown = useMediaQuery(theme.breakpoints.down('sm'))
     const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
     const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
-    const classes = useStyles()
 
     if (Component) {
       return <Component style={style} />
@@ -48,10 +46,21 @@ export default memo(
         placement="right"
       >
         <ButtonBase
+          sx={{
+            transition: theme.transitions.create(['all']),
+            [theme.breakpoints.up('lg')]: {
+              minHeight: theme.spacing(10),
+            },
+            ...(i === activeIndex
+              ? {
+                  backgroundColor: alpha(theme.palette.primary.main, 0.3),
+                  [theme.breakpoints.up('lg')]: {
+                    minHeight: theme.spacing(16),
+                  },
+                }
+              : {}),
+          }}
           disabled={disabled}
-          className={clsx(classes.buttonBase, {
-            [classes.active]: i === activeIndex,
-          })}
           onClick={() => setActiveIndex(i)}
           style={{ width: '100%' }}
         >
