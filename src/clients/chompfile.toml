@@ -7,14 +7,43 @@ version = 0.1
 
 [[task]]
   name = "babel"
-  target = "../api/__clients/entry-points/#/index.js"
-  deps = ["src/entry-points/#/index.jsx"]
+  serial = false
+  deps = ["babel-js", "babel-jsx", "babel-ts", "babel-tsx"]
+
+[[task]]
+  name = "babel"
+  target = "_build/#.js"
+  deps = ["src/#.js"]
   template = "babel"
-  [task.args]
-    configFile = "./babel.config.cjs"
+  [task.template-options]
+    configFile = "babel.config.cjs"
+
+[[task]]
+  name = "babel-jsx"
+  target = "_build/#.js"
+  deps = ["src/#.jsx"]
+  template = "babel"
+  [task.template-options]
+    configFile = "babel.config.cjs"
+
+[[task]]
+  name = "babel-ts"
+  target = "_build/#.js"
+  deps = ["src/#.ts"]
+  template = "babel"
+  [task.template-options]
+    configFile = "babel.config.cjs"
+
+[[task]]
+  name = "babel-tsx"
+  target = "_build/#.js"
+  deps = ["src/#.tsx"]
+  template = "babel"
+  [task.template-options]
+    configFile = "babel.config.cjs"
 
 [[task]]
   name = "jspm"
-  target = "../api/__clients/entry-points/#/index.html"
-  deps = ["src/entry-points/#/index-jspm.html"]
+  target = "_build/entry-points/index/index.html"
+  deps = ["src/entry-points/index/index-jspm.html"]
   template = "jspm"
