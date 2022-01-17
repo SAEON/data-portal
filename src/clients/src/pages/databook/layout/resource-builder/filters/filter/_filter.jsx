@@ -33,7 +33,7 @@ export default ({ filter }) => {
             setSelectedValues(newValues)
           }}
           label={name}
-          style={{ positin: 'relative', top: -16 }}
+          style={{ position: 'relative', top: -16 }}
         />
       </div>
     </div>

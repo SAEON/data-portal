@@ -49,7 +49,7 @@ export default ({ gridState, id: dashboardId, layout }) => {
                   },
                 })
               }
-              size="small"
+              size="large"
             >
               <SaveIcon
                 style={{ color: isSaved ? theme.palette.success.main : theme.palette.warning.main }}

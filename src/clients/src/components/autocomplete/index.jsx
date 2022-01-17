@@ -1,10 +1,7 @@
 import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox'
 import Autocomplete from '@mui/material/Autocomplete'
 import QuickForm from '@saeon/quick-form'
 import ListboxComponent from './list-box-component'
-import CheckboxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
-import CheckboxIcon from '@mui/icons-material/CheckBox'
 
 export default ({
   id,
@@ -17,6 +14,7 @@ export default ({
   renderTags = undefined,
   ...props
 }) => {
+  console.log('option', options)
   return (
     <Autocomplete
       aria-label="Select option"
@@ -57,24 +55,6 @@ export default ({
       disableCloseOnSelect={multiple}
       renderTags={renderTags}
       limitTags={limitTags && multiple ? 3 : undefined}
-      renderOption={
-        multiple
-          ? (option, { selected }) => {
-              return (
-                <>
-                  <Checkbox
-                    icon={<CheckboxOutlineBlankIcon fontSize="small" />}
-                    checkedIcon={<CheckboxIcon fontSize="small" />}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                    color="primary"
-                  />
-                  {option}
-                </>
-              )
-            }
-          : undefined
-      }
     />
   )
 }
