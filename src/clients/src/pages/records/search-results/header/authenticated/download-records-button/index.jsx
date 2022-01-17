@@ -42,7 +42,9 @@ export default ({ catalogue }) => {
   if (loading) {
     return (
       <Fade key="loading" in={loading}>
-        <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+        <span>
+          <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+        </span>
       </Fade>
     )
   }
@@ -53,41 +55,43 @@ export default ({ catalogue }) => {
 
   return (
     <Fade key="not-loading" in={!loading}>
-      <Tooltip
-        title={
-          applicableRecordsCount
-            ? `Download ${selectedIds?.length || resultCount} metadata records`
-            : 'No records selected'
-        }
-      >
-        <span>
-          <IconButton
-            onClick={() =>
-              saveList({
-                variables: {
-                  createdBy: `${packageJson.name} v${packageJson.version}`,
-                  search: selectedIds.length
-                    ? { ids: selectedIds }
-                    : Object.fromEntries(
-                        Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
-                      ),
-                },
-              })
-            }
-            disabled={!applicableRecordsCount}
-            size="large"
-          >
-            <StyledBadge
-              color={applicableRecordsCount ? 'primary' : 'default'}
-              badgeContent={applicableRecordsCount}
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              invisible={false}
+      <span>
+        <Tooltip
+          title={
+            applicableRecordsCount
+              ? `Download ${selectedIds?.length || resultCount} metadata records`
+              : 'No records selected'
+          }
+        >
+          <span>
+            <IconButton
+              onClick={() =>
+                saveList({
+                  variables: {
+                    createdBy: `${packageJson.name} v${packageJson.version}`,
+                    search: selectedIds.length
+                      ? { ids: selectedIds }
+                      : Object.fromEntries(
+                          Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
+                        ),
+                  },
+                })
+              }
+              disabled={!applicableRecordsCount}
+              size="large"
             >
-              <DownloadIcon />
-            </StyledBadge>
-          </IconButton>
-        </span>
-      </Tooltip>
+              <StyledBadge
+                color={applicableRecordsCount ? 'primary' : 'default'}
+                badgeContent={applicableRecordsCount}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                invisible={false}
+              >
+                <DownloadIcon />
+              </StyledBadge>
+            </IconButton>
+          </span>
+        </Tooltip>
+      </span>
     </Fade>
   )
 }

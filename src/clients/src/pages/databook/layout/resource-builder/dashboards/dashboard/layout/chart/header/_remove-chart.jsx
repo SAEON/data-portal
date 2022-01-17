@@ -68,16 +68,18 @@ export default ({ chartId, dashboardId }) => {
     <>
       <LoadingButton loading={loading} />
       <Fade key="button-in" in={!loading}>
-        <Tooltip title="Remove chart from this dashboard">
-          <IconButton
-            onClick={() => removeChart({ variables: { chartId, dashboardId } })}
-            color="inherit"
-            size="small"
-            style={{ marginLeft: 'auto' }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        <span>
+          <Tooltip title="Remove chart from this dashboard">
+            <IconButton
+              onClick={() => removeChart({ variables: { chartId, dashboardId } })}
+              color="inherit"
+              size="small"
+              style={{ marginLeft: 'auto' }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </span>
       </Fade>
     </>
   )

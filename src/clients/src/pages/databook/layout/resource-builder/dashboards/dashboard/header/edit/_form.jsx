@@ -79,25 +79,27 @@ export default ({
       <DialogActions>
         <LoadingDialogueButton loading={loading} />
         <Fade in={!loading} key={'show-button'}>
-          <Button
-            size="small"
-            color="primary"
-            disableElevation
-            variant="contained"
-            onClick={() => {
-              updateDashboard({
-                variables: {
-                  id,
-                  title,
-                  subtitle,
-                  description,
-                },
-              })
-              closeDialogue()
-            }}
-          >
-            Save Changes
-          </Button>
+          <span>
+            <Button
+              size="small"
+              color="primary"
+              disableElevation
+              variant="contained"
+              onClick={() => {
+                updateDashboard({
+                  variables: {
+                    id,
+                    title,
+                    subtitle,
+                    description,
+                  },
+                })
+                closeDialogue()
+              }}
+            >
+              Save Changes
+            </Button>
+          </span>
         </Fade>
       </DialogActions>
     </>

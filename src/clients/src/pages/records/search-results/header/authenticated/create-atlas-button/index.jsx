@@ -39,7 +39,9 @@ export default ({ cache, catalogue }) => {
   if (loading) {
     return (
       <Fade key="loading" in={loading}>
-        <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+        <span>
+          <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+        </span>
       </Fade>
     )
   }
@@ -52,47 +54,49 @@ export default ({ cache, catalogue }) => {
 
   return (
     <Fade key="not-loading" in={!loading}>
-      <Tooltip
-        title={getTooltip(
-          selectAll,
-          validCount,
-          selectedIds,
-          cache,
-          CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
-          'Atlas'
-        )}
-      >
-        <span>
-          <IconButton
-            disabled={!available}
-            onClick={() =>
-              createAtlas({
-                variables: {
-                  createdBy: `${packageJson.name} v${packageJson.version}`,
-                  search: createSearchObject(
-                    global,
-                    selectedIds.length && selectedIds.filter(id => cache[id])
-                  ),
-                },
-              })
-            }
-            size="large"
-          >
-            <StyledBadge
-              color={available ? 'primary' : 'default'}
-              badgeContent={
-                available || selectAll
-                  ? selectedIds?.filter(id => cache[id]).length || validCount || 0
-                  : 0
+      <span>
+        <Tooltip
+          title={getTooltip(
+            selectAll,
+            validCount,
+            selectedIds,
+            cache,
+            CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
+            'Atlas'
+          )}
+        >
+          <span>
+            <IconButton
+              disabled={!available}
+              onClick={() =>
+                createAtlas({
+                  variables: {
+                    createdBy: `${packageJson.name} v${packageJson.version}`,
+                    search: createSearchObject(
+                      global,
+                      selectedIds.length && selectedIds.filter(id => cache[id])
+                    ),
+                  },
+                })
               }
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              invisible={false}
+              size="large"
             >
-              <MapIcon />
-            </StyledBadge>
-          </IconButton>
-        </span>
-      </Tooltip>
+              <StyledBadge
+                color={available ? 'primary' : 'default'}
+                badgeContent={
+                  available || selectAll
+                    ? selectedIds?.filter(id => cache[id]).length || validCount || 0
+                    : 0
+                }
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                invisible={false}
+              >
+                <MapIcon />
+              </StyledBadge>
+            </IconButton>
+          </span>
+        </Tooltip>
+      </span>
     </Fade>
   )
 }
