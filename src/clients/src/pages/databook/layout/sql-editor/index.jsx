@@ -2,21 +2,26 @@ import { useContext, useRef, useEffect } from 'react'
 import useLocalStorage from '../../../../hooks/use-localstorage'
 import { context as dataContext } from '../../contexts/data-provider'
 import { context as databookContext } from '../../contexts/databook-provider'
-import useStyles from '../../style'
-import clsx from 'clsx'
 import { nanoid } from 'nanoid'
 import Header from './header'
 import Editor from './editor'
-import { useTheme, alpha } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material/styles'
 import { gql, useMutation } from '@apollo/client'
+
+const Div = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: alpha(theme.palette.common.white, 0.9),
+}))
 
 export default () => {
   const { id: databookId, editors: _editors } = useContext(databookContext)
   const { exeSqlQuery, cancelSqlQuery } = useContext(dataContext)
   const defaultSql = ''
-  const classes = useStyles()
   const activeEditorRef = useRef()
-  const theme = useTheme()
 
   const [updateDatabook, { error }] = useMutation(
     gql`
@@ -57,10 +62,7 @@ export default () => {
   }, [activeTabIndex, editors])
 
   return (
-    <div
-      className={clsx(classes.layout)}
-      style={{ backgroundColor: alpha(theme.palette.common.white, 0.9) }}
-    >
+    <Div>
       {/* TOOLBAR (Tab headers) */}
       <Header
         editors={editors}
@@ -114,6 +116,6 @@ export default () => {
           />
         )
       })}
-    </div>
+    </Div>
   )
 }

@@ -14,8 +14,6 @@ import ReactEcharts from 'echarts-for-react'
 import AceEditor from 'react-ace'
 import Beautify from 'ace-builds/src-noconflict/ext-beautify'
 import SplitPane from 'react-split-pane'
-import clsx from 'clsx'
-import useStyles from './style'
 import Alert from '@mui/material/Alert'
 import { context as dataContext } from '../../../../contexts/data-provider'
 import { useApolloClient, gql } from '@apollo/client'
@@ -112,7 +110,6 @@ export default ({ id: chartId }) => {
   let aceRef = createRef()
   let echartRef = createRef()
   const client = useApolloClient()
-  const classes = useStyles()
   const { data } = useContext(dataContext)
   const handleClickOpen = () => {
     setOpen(true)
@@ -150,12 +147,20 @@ export default ({ id: chartId }) => {
         onClose={handleClose}
         PaperComponent={PaperComponent}
       >
-        <DialogTitle className={clsx(classes.dialogTitle)} id="draggable-dialog-title">
+        <DialogTitle
+          sx={theme => ({
+            cursor: 'move',
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            textAlign: 'center',
+          })}
+          id="draggable-dialog-title"
+        >
           Custom Chart Creator
         </DialogTitle>
         <DialogContent
-          className={clsx(classes.dialogContent)}
-          style={{
+          sx={{
+            padding: '0px',
             height: dialogContentHeight,
           }}
         >
@@ -169,7 +174,13 @@ export default ({ id: chartId }) => {
             <div id="split-left" style={{ height: dialogContentHeight }}>
               <Tooltip title="render chart" placement="bottom">
                 <IconButton
-                  className={clsx(classes.playButton)}
+                  sx={{
+                    position: 'absolute',
+                    zIndex: 5,
+                    right: '5px',
+                    top: '5px',
+                    color: 'orange',
+                  }}
                   onClick={() => {
                     let newFunctionContent = editorText
                     let newUserFunction
@@ -241,8 +252,15 @@ export default ({ id: chartId }) => {
             </div>
           </SplitPane>
         </DialogContent>
-        <div id="dialog-actions" className={clsx(classes.dialogActions)}>
-          <Button onClick={handleClose} className={clsx(classes.cancelButton)}>
+        <div
+          id="dialog-actions"
+          style={{
+            position: 'absolute',
+            right: '0px',
+            bottom: '10px',
+          }}
+        >
+          <Button onClick={handleClose} sx={{ color: theme => theme.palette.grey['A700'] }}>
             Cancel
           </Button>
           <Button

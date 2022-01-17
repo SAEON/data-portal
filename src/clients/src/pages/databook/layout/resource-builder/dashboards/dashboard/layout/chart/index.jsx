@@ -1,13 +1,17 @@
 import Loading from '../../../../../../../../components/loading'
 import { gql, useQuery } from '@apollo/client'
 import ChartIcon from 'mdi-react/ChartBoxOutlineIcon'
-import { useTheme } from '@mui/material/styles'
-import useStyles from './style'
-import clsx from 'clsx'
+import { useTheme, styled, alpha } from '@mui/material/styles'
 import Header from './header'
 
+const Div = styled('div')(({ theme }) => ({
+  height: '100%',
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
+  position: 'relative',
+  overflow: 'hidden',
+}))
+
 export default ({ id, dashboardId }) => {
-  const classes = useStyles()
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(
@@ -37,11 +41,11 @@ export default ({ id, dashboardId }) => {
   const chart = data.charts[0]
 
   return (
-    <div className={clsx(classes.layout)}>
+    <Div>
       <Header {...chart} dashboardId={dashboardId} />
       <div style={{ height: 'calc(100% - 32px)', overflow: 'hidden', padding: theme.spacing(2) }}>
         <ChartIcon size="100%" />
       </div>
-    </div>
+    </Div>
   )
 }

@@ -2,17 +2,23 @@ import Typography from '@mui/material/Typography'
 import Toolbar from '@mui/material/Toolbar'
 import Delete from './_delete'
 import Filter from './_filter'
-import useStyles from './style'
-import clsx from 'clsx'
 
 export default ({ filter, activeTabIndex, setActiveTabIndex }) => {
-  const classes = useStyles()
   const { id, name } = filter
 
   return (
     <>
       {/* Header */}
-      <Toolbar disableGutters className={clsx(classes.toolbar)} variant={'dense'}>
+      <Toolbar
+        disableGutters
+        sx={theme => ({
+          backgroundColor: theme.palette.grey[100],
+          borderBottom: `1px solid ${theme.palette.grey[200]}`,
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
+        })}
+        variant={'dense'}
+      >
         <div style={{ display: 'flex', width: '100%' }}>
           <Typography
             style={{
