@@ -34,9 +34,6 @@ export default makeStyles(theme => ({
   playButton: {
     marginRight: theme.spacing(1),
   },
-  saveButton: {
-    marginLeft: 'auto',
-  },
   msgBox: {
     padding: theme.spacing(1),
     fontFamily: 'monospace',

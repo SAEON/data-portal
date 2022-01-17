@@ -246,7 +246,9 @@ export default ({ id: chartId }) => {
             Cancel
           </Button>
           <Button
-            className={clsx(classes.saveButton)}
+            sx={{
+              marginLeft: 'auto',
+            }}
             onClick={async () => {
               await client.mutate({
                 mutation: gql`

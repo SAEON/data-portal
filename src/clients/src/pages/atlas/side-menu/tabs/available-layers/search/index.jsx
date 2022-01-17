@@ -17,8 +17,6 @@ import Minisearch from 'minisearch'
 import QuickForm from '@saeon/quick-form'
 import debounce from '../../../../../../lib/fns/debounce'
 import { MapContext } from '../../../../../../contexts/ol-react'
-import useStyles from './style'
-import clsx from 'clsx'
 import { createLayer, LayerTypes } from '../../../../../../lib/ol'
 import SaeonGeoServerLegend from '../../active-layers/layers/layer-types/saeon-geoserver/legend'
 
@@ -35,7 +33,6 @@ var cachedSearch
 
 export default () => {
   const theme = useTheme()
-  const classes = useStyles()
   const [textSearch, setTextSearch] = useState(cachedSearch || '')
   const { layers } = useContext(AtlasContext)
   const { proxy } = useContext(MapContext)
@@ -95,8 +92,12 @@ export default () => {
       </Box>
 
       <Box
-        className={clsx(classes.sortList)}
-        style={{
+        sx={{
+          borderTop: theme => `1px solid ${theme.palette.grey[200]}`,
+          borderBottom: theme => `1px solid ${theme.palette.grey[200]}`,
+          marginTop: 16,
+          paddingTop: 16,
+          paddingBottom: 16,
           height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${SEARCH_BOX_MARGIN}px)`,
         }}
         m={1}
@@ -122,7 +123,7 @@ export default () => {
                 itemSize={ITEM_SIZE + 2 * ITEM_Y_PADDING}
               >
                 {({ index, style }) => {
-                  const [id, score] = searchResults[index]
+                  const [id] = searchResults[index]
                   const {
                     DOI = 'UNKNOWN DOI',
                     title,
@@ -144,10 +145,19 @@ export default () => {
                       }}
                     >
                       <Card
-                        className={clsx({
-                          [classes['record-card']]: true,
-                          [classes.isSelected]: Boolean(proxy.getLayerById(layerId)),
-                        })}
+                        sx={{
+                          height: '100%',
+                          width: '100%',
+                          cursor: 'pointer',
+                          '&:hover': {
+                            backgroundColor: theme.palette.grey[100],
+                          },
+                          ...(proxy.getLayerById(layerId)
+                            ? {
+                                backgroundColor: theme => theme.palette.grey[100],
+                              }
+                            : {}),
+                        }}
                         variant="elevation"
                         onClick={() =>
                           proxy.getLayerById(layerId)
@@ -218,12 +228,6 @@ export default () => {
                         {/* Title */}
                         <Box m={1}>
                           <Typography variant="caption">{description?.truncate(95)}</Typography>
-                          <Typography
-                            style={{ position: 'absolute', right: 12, bottom: 0 }}
-                            variant="overline"
-                          >
-                            Sort score: {score?.toFixed(2) || 'NA'}
-                          </Typography>
                         </Box>
                       </Card>
                     </div>

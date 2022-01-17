@@ -1,8 +1,6 @@
 import Toolbar from '@mui/material/Toolbar'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import clsx from 'clsx'
-import useStyles from '../../../style'
 import AddEditor from './_add-editor'
 import ExecuteQuery from './_execute-query'
 import AbortQuery from './_abort-query'
@@ -19,9 +17,17 @@ export default ({
   cancelQueryFn,
   saveSqlFn,
 }) => {
-  const classes = useStyles()
   return (
-    <Toolbar disableGutters variant="dense" className={clsx(classes.toolbar)}>
+    <Toolbar
+      disableGutters
+      variant="dense"
+      sx={{
+        borderBottom: theme => `1px solid ${theme.palette.grey[400]}`,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        boxSizing: 'content-box',
+      }}
+    >
       {/* EDITORS */}
       <Tabs
         indicatorColor="primary"
