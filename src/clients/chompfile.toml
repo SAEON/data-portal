@@ -11,7 +11,7 @@ version = 0.1
   deps = ["babel-js", "babel-jsx", "babel-ts", "babel-tsx"]
 
 [[task]]
-  name = "babel"
+  name = "babel-js"
   target = "_build/#.js"
   deps = ["src/#.js"]
   template = "babel"
