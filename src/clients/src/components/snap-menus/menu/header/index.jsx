@@ -11,7 +11,7 @@ import clsx from 'clsx'
 export default ({ draggable, state, title, onMinify, disableMinify, onClose }) => {
   return (
     <CardContent style={{ padding: 0 }}>
-      <AppBar position="relative" variant="outlined">
+      <AppBar elevation={0} position="relative" variant="outlined">
         <Toolbar
           style={{ cursor: draggable ? 'grab' : 'default', minHeight: '25px' }}
           disableGutters

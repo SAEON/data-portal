@@ -1,16 +1,21 @@
 import Toolbar from '@mui/material/Toolbar'
-import useStyles from '../style'
 import { useTheme } from '@mui/material/styles'
-import clsx from 'clsx'
 import Typography from '@mui/material/Typography'
 import RemoveChart from './_remove-chart'
 
 export default ({ id, title, dashboardId }) => {
   const theme = useTheme()
-  const classes = useStyles()
 
   return (
-    <Toolbar disableGutters variant="dense" className={clsx(classes.toolbar)}>
+    <Toolbar
+      disableGutters
+      variant="dense"
+      sx={theme => ({
+        backgroundColor: theme.palette.primary.light,
+        minHeight: 32,
+        color: theme.palette.primary.contrastText,
+      })}
+    >
       <div style={{ display: 'flex', width: '100%' }}>
         <Typography
           style={{

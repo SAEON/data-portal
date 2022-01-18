@@ -1,6 +1,6 @@
 {
   "name": "@saeon/quick-form",
-  "version": "3.2.8",
+  "version": "3.2.9",
   "description": "Quickly add localised state to your component tree",
   "main": "dist/cjs/index.js",
   "type": "module",
@@ -46,14 +46,13 @@
     "@babel/preset-env": "^7.16.8",
     "@babel/preset-react": "^7.16.7",
     "@rollup/plugin-json": "^4.1.0",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "npm-check-updates": "^12.1.0",
     "prettier": "^2.5.1",
     "react": "*",
     "rimraf": "^3.0.2",
-    "rollup": "^2.63.0"
-  },
-  "dependencies": {}
+    "rollup": "^2.64.0"
+  }
 }

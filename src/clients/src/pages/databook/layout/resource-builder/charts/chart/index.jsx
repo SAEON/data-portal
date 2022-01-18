@@ -4,20 +4,28 @@ import Toolbar from '@mui/material/Toolbar'
 import Delete from './_delete'
 import Share from './_share'
 import Edit from './_edit'
-import useStyles from './style'
-import clsx from 'clsx'
-import { useTheme } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
+
+const Span = styled('span')()
 
 const EChart = lazy(() => import('../../../../../../components/chart-controller'))
 
 export default ({ chart, activeTabIndex, setActiveTabIndex }) => {
-  const classes = useStyles()
   const { id, title } = chart
   const theme = useTheme()
 
   return (
     <>
-      <Toolbar disableGutters className={clsx(classes.toolbar)} variant={'dense'}>
+      <Toolbar
+        disableGutters
+        sx={theme => ({
+          backgroundColor: theme.palette.grey[100],
+          borderBottom: `1px solid ${theme.palette.grey[200]}`,
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
+        })}
+        variant={'dense'}
+      >
         <div style={{ display: 'flex', width: '100%' }}>
           <Typography
             style={{
@@ -33,9 +41,9 @@ export default ({ chart, activeTabIndex, setActiveTabIndex }) => {
 
         <div style={{ marginLeft: 'auto', display: 'flex' }}>
           <Edit id={id} />
-          <span style={{ marginRight: theme.spacing(1) }} />
+          <Span sx={{ marginRight: theme => theme.spacing(1) }} />
           <Share id={id} />
-          <span style={{ marginRight: theme.spacing(1) }} />
+          <Span sx={{ marginRight: theme => theme.spacing(1) }} />
           <Delete id={id} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
         </div>
       </Toolbar>

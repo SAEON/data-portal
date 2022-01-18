@@ -91,23 +91,25 @@ export default ({ closeDialogueFn, dashboardId, filters }) => {
       <DialogActions>
         <LoadingDialogueButton loading={loading} />
         <Fade in={!loading} key={'show-button'}>
-          <Button
-            disabled={!selectedFilter}
-            size="small"
-            color="primary"
-            disableElevation
-            variant="contained"
-            onClick={() =>
-              addFilter({
-                variables: {
-                  filterId: selectedFilter.id,
-                  dashboardId,
-                },
-              })
-            }
-          >
-            Add Filter
-          </Button>
+          <span>
+            <Button
+              disabled={!selectedFilter}
+              size="small"
+              color="primary"
+              disableElevation
+              variant="contained"
+              onClick={() =>
+                addFilter({
+                  variables: {
+                    filterId: selectedFilter.id,
+                    dashboardId,
+                  },
+                })
+              }
+            >
+              Add Filter
+            </Button>
+          </span>
         </Fade>
       </DialogActions>
     </>

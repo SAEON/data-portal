@@ -1,14 +1,18 @@
 import React from 'react'
-import clsx from 'clsx'
 import IconButton from '@mui/material/IconButton'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import FilterIcon from 'mdi-react/FilterOutlineIcon'
 import Filters from './_filters'
-import useStyles from '../style'
 import CloseIcon from 'mdi-react/CloseIcon'
+import { styled } from '@mui/material/styles'
+
+const Drawer = styled('div')(({ theme }) => ({
+  width: 400,
+  margin: '10px',
+  '& .close-button': { color: theme.palette.info.dark },
+}))
 
 export default () => {
-  const classes = useStyles()
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -39,9 +43,9 @@ export default () => {
           </IconButton>
         </div>
 
-        <div className={clsx(classes.drawer)} role="presentation">
+        <Drawer role="presentation">
           <Filters />
-        </div>
+        </Drawer>
       </SwipeableDrawer>
     </>
   )

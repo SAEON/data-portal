@@ -19,8 +19,12 @@ export default ({ catalogue }) => {
           badgeContent={applicableRecordsCount}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           invisible={false}
-          top={10}
-          right={4}
+          sx={{
+            '& .MuiBadge-badge': {
+              top: 10,
+              right: 4,
+            },
+          }}
         >
           <Checkbox
             inputProps={{

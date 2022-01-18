@@ -37,7 +37,7 @@
   "devDependencies": {
     "arg": "^5.0.1",
     "doctoc": "^2.1.0",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "husky": "^7.0.4",
     "npm-check-updates": "^12.1.0",
     "prettier": "^2.5.1",

@@ -2,14 +2,12 @@ import { useState, useContext } from 'react'
 import DialogContent from '@mui/material/DialogContent'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, styled } from '@mui/material/styles'
 import InfoIcon from 'mdi-react/InformationVariantIcon'
 import Tooltip from '@mui/material/Tooltip'
 import CloseIcon from 'mdi-react/CloseIcon'
 import TableIcon from 'mdi-react/TableIcon'
-import clsx from 'clsx'
 import FieldList from '../_field-list'
-import useStyles from '../style'
 import ContextMenu from '../_context-menu'
 import RenameOperator from '../_rename-operator'
 import { context as databookContext } from '../../../contexts/databook-provider'
@@ -17,13 +15,32 @@ import MessageDialogue from '../../../../../components/message-dialogue'
 import Record from '../../../../record'
 import MarkPublic from './_mark-public'
 
+const Span = styled('span')(() => ({
+  listStyleType: 'none',
+  '&:hover': {
+    background: '#efefef',
+  },
+}))
+
+const Input = styled('input')(({ theme }) => ({
+  background: 'none',
+  border: 'none',
+  outline: 'none',
+  fontFamily: 'monospace',
+  fontSize: 'small',
+  padding: '5px',
+  marginRight: '-5px',
+  '&:focus': {
+    outline: `1px solid ${theme.palette.grey[200]}`,
+  },
+}))
+
 const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, description }) => {
   const theme = useTheme()
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(tableName)
   const [hovered, setHovered] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  const classes = useStyles()
   const { id: databookId } = useContext(databookContext)
   const inputId = `${databookId}-${tableName}`
   const handleFocus = () => {
@@ -33,10 +50,9 @@ const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, descript
   const isSharedTable = tableSchema === 'public'
 
   return (
-    <li key={tableName} className={clsx(classes.liReset)}>
-      <span
+    <li key={tableName} style={{ listStyleType: 'none' }}>
+      <Span
         style={{ display: 'flex' }}
-        className={clsx(classes.hover)}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -97,7 +113,7 @@ const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, descript
                       renameEntityLazy()
                     }
                     return (
-                      <input
+                      <Input
                         style={{
                           width: '100%',
                           textOverflow: 'ellipsis',
@@ -107,9 +123,6 @@ const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, descript
                         autoComplete="off"
                         readOnly={!editActive}
                         value={editActive ? text : `${isPublic ? '(public) ' : ''}${text}`}
-                        className={clsx(classes.inputField, {
-                          [classes.inputFieldActive]: editActive,
-                        })}
                         onFocus={e => {
                           if (editActive) e.currentTarget.select()
                         }}
@@ -137,9 +150,7 @@ const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, descript
           </span>
         </ContextMenu>
         {/* View Metadata (i) button */}
-        <span
-          // style={{ display: 'flex', inlineSize: 'auto', position: 'absolute' }}
-          className={clsx(classes.hover)}
+        <Span
           style={{
             marginLeft: 'auto',
             marginRight: 0,
@@ -192,12 +203,16 @@ const Table = ({ tableName, fields, tableSchema, isPublic, odpRecordId, descript
               <Record id={odpRecordId} />
             )}
           </MessageDialogue>
-        </span>
-      </span>
+        </Span>
+      </Span>
 
       <ul
-        className={clsx(classes.ulReset)}
-        style={{ marginLeft: '5px', display: expanded ? undefined : 'none' }}
+        style={{
+          marginLeft: '5px',
+          display: expanded ? undefined : 'none',
+          margin: 'unset',
+          paddingLeft: 15,
+        }}
       >
         <FieldList tableName={tableName} fields={fields} tableSchema={tableSchema} />
       </ul>

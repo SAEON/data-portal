@@ -3,15 +3,64 @@ import { createPortal } from 'react-dom'
 import { useState, useEffect, forwardRef } from 'react'
 import Card from '@mui/material/Card'
 import Fade from '@mui/material/Fade'
-import useStyles from './style'
 import getDimensions from './fns/get-dimensions'
 import getPosition from './fns/get-position'
-import clsx from 'clsx'
 import DragContainer from './drag-container/index.jsx'
 import ResizeContainer from './resize-container/index.jsx'
 import EventBoundary from './event-boundary.jsx'
 import MenuHeader from './header/index.jsx'
 import MenuContent from './content/index.jsx'
+import { styled } from '@mui/material/styles'
+
+const snapZones = {
+  TopLeft: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    left: 0,
+  }),
+  TopRight: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    right: 0,
+  }),
+  BottomLeft: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
+    left: 0,
+  }),
+  BottomRight: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
+    right: 0,
+  }),
+  Left: ({ PORTAL, GHOST_GUTTER_X }) => ({
+    height: PORTAL.offsetHeight,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    left: 0,
+  }),
+  Right: ({ PORTAL, GHOST_GUTTER_X }) => ({
+    height: PORTAL.offsetHeight,
+    width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
+    right: 0,
+  }),
+  Top: ({ PORTAL }) => ({
+    height: PORTAL.offsetHeight,
+    width: PORTAL.offsetWidth,
+    left: 0,
+    right: 0,
+  }),
+  Bottom: ({ PORTAL, GHOST_GUTTER_Y }) => ({
+    height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
+    width: PORTAL.offsetWidth,
+    top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
+    left: 0,
+    right: 0,
+  }),
+}
+
+const Div = styled('div')({})
 
 const MENU_HEADER_HEIGHT = 25
 
@@ -48,7 +97,6 @@ export default forwardRef(
   ) => {
     const GHOST_GUTTER_X = (PORTAL_MARGIN_RIGHT + PORTAL_MARGIN_LEFT) / 4
     const GHOST_GUTTER_Y = (PORTAL_MARGIN_TOP + PORTAL_MARGIN_BOTTOM) / 4
-    const classes = useStyles({ PORTAL, MENU_HEADER_HEIGHT, GHOST_GUTTER_X, GHOST_GUTTER_Y })
 
     /**
      * zIndex is set to the ref, and used to parse height
@@ -106,20 +154,23 @@ export default forwardRef(
       <EventBoundary>
         <div style={{ display: open ? 'block' : 'none' }}>
           {/* Snap ghost */}
-          <div
-            style={{
+          <Div
+            sx={{
               zIndex,
               position: 'relative',
               display: snapZone ? 'block' : 'none',
             }}
           >
-            <div
-              className={clsx({
-                [classes.ghost]: true,
-                [classes[snapZone]]: true,
-              })}
+            <Div
+              sx={{
+                position: 'absolute',
+                boxShadow: '0px 0px 7px 3px rgba(140,140,140,1)',
+                backgroundColor: 'black',
+                opacity: '20%',
+                ...snapZones[snapZone]?.({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }),
+              }}
             />
-          </div>
+          </Div>
 
           {/* Menu */}
           <Fade key="menu-fade" in={open}>
@@ -163,7 +214,7 @@ export default forwardRef(
                           disableMinify={disableMinify}
                           onClose={onClose}
                         />
-                        <MenuContent state={state} classes={classes}>
+                        <MenuContent state={state} MENU_HEADER_HEIGHT={MENU_HEADER_HEIGHT}>
                           {children}
                         </MenuContent>
                       </div>

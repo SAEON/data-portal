@@ -37,26 +37,28 @@ export default ({ gridState, id: dashboardId, layout }) => {
 
   return (
     <Fade in={!loading} key={'show-button'}>
-      <Tooltip title="Save dashboard layout" placement="left-start">
-        <span>
-          <IconButton
-            onClick={() =>
-              saveLayout({
-                variables: {
-                  id: dashboardId,
-                  layout: gridState,
-                },
-              })
-            }
-            size="small"
-          >
-            <SaveIcon
-              style={{ color: isSaved ? theme.palette.success.main : theme.palette.warning.main }}
-              size={20}
-            />
-          </IconButton>
-        </span>
-      </Tooltip>
+      <span>
+        <Tooltip title="Save dashboard layout" placement="left-start">
+          <span>
+            <IconButton
+              onClick={() =>
+                saveLayout({
+                  variables: {
+                    id: dashboardId,
+                    layout: gridState,
+                  },
+                })
+              }
+              size="large"
+            >
+              <SaveIcon
+                style={{ color: isSaved ? theme.palette.success.main : theme.palette.warning.main }}
+                size={20}
+              />
+            </IconButton>
+          </span>
+        </Tooltip>
+      </span>
     </Fade>
   )
 }

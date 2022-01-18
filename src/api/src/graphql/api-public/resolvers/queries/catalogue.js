@@ -1,5 +1,5 @@
 import hash from 'object-hash'
-import packageJson from '../../../../../package.json' assert { type: 'json' }
+import { packageJson } from '../../../../config/index.js'
 import { PASSPORT_SSO_SESSION_ID } from '../../../../config/index.js'
 
 export default async (_, args, ctx, info) => {

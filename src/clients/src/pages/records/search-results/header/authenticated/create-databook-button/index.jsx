@@ -45,7 +45,9 @@ export default ({ catalogue, cache }) => {
   if (loading) {
     return (
       <Fade key="loading" in={loading}>
-        <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+        <span>
+          <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+        </span>
       </Fade>
     )
   }

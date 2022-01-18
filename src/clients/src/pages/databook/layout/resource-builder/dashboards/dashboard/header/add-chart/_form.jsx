@@ -86,23 +86,25 @@ export default ({ closeDialogueFn, dashboardId, charts }) => {
       <DialogActions>
         <LoadingDialogueButton loading={loading} />
         <Fade in={!loading} key={'show-button'}>
-          <Button
-            disabled={!selectedChart}
-            size="small"
-            color="primary"
-            disableElevation
-            variant="contained"
-            onClick={() =>
-              addChart({
-                variables: {
-                  chartId: selectedChart.id,
-                  dashboardId,
-                },
-              })
-            }
-          >
-            Add Chart
-          </Button>
+          <span>
+            <Button
+              disabled={!selectedChart}
+              size="small"
+              color="primary"
+              disableElevation
+              variant="contained"
+              onClick={() =>
+                addChart({
+                  variables: {
+                    chartId: selectedChart.id,
+                    dashboardId,
+                  },
+                })
+              }
+            >
+              Add Chart
+            </Button>
+          </span>
         </Fade>
       </DialogActions>
     </>

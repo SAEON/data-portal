@@ -1,3 +1,5 @@
+// export * as packageJson from '../../package.json' assert { type: 'json' }
+export * as packageJson from '../../package.json'
 export * from './_deployment.js'
 export * from './_app.js'
 export * from './_mongo.js'

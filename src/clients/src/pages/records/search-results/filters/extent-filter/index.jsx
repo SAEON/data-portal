@@ -52,11 +52,15 @@ export default ({ title }) => {
             >
               {collapsed ? (
                 <Fade key={1} timeout={750} in={collapsed}>
-                  <ExpandMoreIcon />
+                  <span>
+                    <ExpandMoreIcon />
+                  </span>
                 </Fade>
               ) : (
                 <Fade key={2} timeout={750} in={!collapsed}>
-                  <ExpandLessIcon />
+                  <span>
+                    <ExpandLessIcon />
+                  </span>
                 </Fade>
               )}
             </IconButton>

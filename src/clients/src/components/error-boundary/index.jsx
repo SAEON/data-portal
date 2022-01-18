@@ -3,11 +3,18 @@ import DialogContentText from '@mui/material/DialogContentText'
 import Link from '@mui/material/Link'
 import MessageDialogue from '../../components/message-dialogue'
 import { TECHNICAL_CONTACT } from '../../config'
-import withStyles from '@mui/styles/withStyles'
-import style from './style'
-import clsx from 'clsx'
+import { styled } from '@mui/material/styles'
 
-class ErrorBoundary extends Component {
+const Pre = styled('pre')(({ theme }) => ({
+  backgroundColor: theme.palette.grey[100],
+  borderRadius: theme.shape.borderRadius,
+  border: `1px solid ${theme.palette.grey[200]}`,
+  whiteSpace: 'pre-wrap',
+  padding: theme.spacing(1),
+  wordBreak: 'break-word',
+}))
+
+export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
     this.state = { error: undefined }
@@ -19,7 +26,7 @@ class ErrorBoundary extends Component {
 
   render() {
     const { props, state } = this
-    const { children, classes } = props
+    const { children } = props
     const { error } = state
 
     // NO APP ERROR
@@ -47,9 +54,9 @@ class ErrorBoundary extends Component {
             </DialogContentText>
             <DialogContentText
               component={({ children }) => (
-                <pre className={clsx(classes.errorMessage)}>
+                <Pre>
                   <code>{children}</code>
-                </pre>
+                </Pre>
               )}
               gutterBottom
               style={{ marginBottom: 16 }}
@@ -62,5 +69,3 @@ class ErrorBoundary extends Component {
     )
   }
 }
-
-export default withStyles(style, { withTheme: true })(ErrorBoundary)

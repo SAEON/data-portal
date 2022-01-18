@@ -1,11 +1,29 @@
 import { useState, useContext } from 'react'
 import Typography from '@mui/material/Typography'
-import clsx from 'clsx'
-import useStyles from './style'
 import ContextMenu from './_context-menu'
 import RenameOperator from './_rename-operator'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, styled } from '@mui/material/styles'
 import { context as databookContext } from '../../contexts/databook-provider'
+
+const Li = styled('li')(() => ({
+  listStyleType: 'none',
+  '&:hover': {
+    background: '#efefef',
+  },
+}))
+
+const Input = styled('input')(({ theme }) => ({
+  background: 'none',
+  border: 'none',
+  outline: 'none',
+  fontFamily: 'monospace',
+  fontSize: 'small',
+  padding: '5px',
+  marginRight: '-5px',
+  '&:focus': {
+    outline: `1px solid ${theme.palette.grey[200]}`,
+  },
+}))
 
 export default ({ tableName, fields, tableSchema }) => {
   return [...fields]
@@ -29,7 +47,6 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
   const inputMinSize = 22
   const [editActive, setEditActive] = useState(false)
   const [text, setText] = useState(column_name)
-  const classes = useStyles()
   const { id: databookId } = useContext(databookContext)
   const handleFocus = () => {
     document.getElementById(id).focus()
@@ -38,7 +55,7 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
   const isSharedTable = tableSchema === 'public'
 
   return (
-    <li className={clsx(classes.hover)}>
+    <Li>
       <div style={{ display: 'flex', inlineSize: 'max-content' }}>
         <ContextMenu
           uniqueIdentifier={`${tableName}-${column_name}`}
@@ -73,18 +90,15 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
                 }
               }
               return (
-                <input
+                <Input
                   id={id}
                   style={{
                     color: isSharedTable ? theme.palette.grey[500] : 'inherit',
                   }}
-                  size={text.length < inputMinSize ? inputMinSize : text.length + 1} //giving a minimum size to smooth out list of secondaryText's
+                  size={text.length < inputMinSize ? inputMinSize : text.length + 1}
                   autoComplete="off"
                   readOnly={!editActive}
                   value={text}
-                  className={clsx(classes.inputField, {
-                    [classes.inputFieldActive]: editActive,
-                  })}
                   onFocus={e => {
                     if (editActive) e.currentTarget.select() //STEVEN TODO: bug editActive always seen as false
                   }}
@@ -108,8 +122,19 @@ const Field = ({ id, tableName, column_name, data_type, tableSchema }) => {
             }}
           </RenameOperator>
         </ContextMenu>
-        <Typography className={clsx(classes.secondaryText)}>{data_type}</Typography>
+        <Typography
+          sx={{
+            color: theme => theme.palette.grey[300],
+            paddingLeft: '5px',
+            fontFamily: 'monospace',
+            fontSize: 'small',
+            float: 'right',
+            alignSelf: 'center',
+          }}
+        >
+          {data_type}
+        </Typography>
       </div>
-    </li>
+    </Li>
   )
 }

@@ -32,6 +32,7 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
     {
       onCompleted: data => {
         if (data) {
+          setGlobal({ selectedIds: [id] })
           window.open(`/databooks/${data.createDatabook}`, '_blank')
         } else {
           throw new Error('createDatabook mutation failed')
@@ -43,7 +44,9 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
   if (loading) {
     return (
       <Fade in={true}>
-        <LoadingCircular />
+        <span>
+          <LoadingCircular />
+        </span>
       </Fade>
     )
   }
@@ -75,7 +78,6 @@ export default ({ id, immutableResource, buttonSize = 'small' }) => {
             _hasPermission
               ? e => {
                   e.stopPropagation()
-                  setGlobal({ selectedIds: [id] })
                   createDatabook({
                     variables: {
                       createdBy: `${packageJson.name} v${packageJson.version}`,
