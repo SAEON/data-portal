@@ -1,5 +1,3 @@
-import { packageJson } from '../config/index.js'
-
 export default async (ctx, next) => {
   try {
     await next()
@@ -9,6 +7,6 @@ export default async (ctx, next) => {
     }
   } catch (err) {
     ctx.status = err.status || 500
-    ctx.body = `${packageJson.name}, v${packageJson.version}\n\n404\n\nWelcome to the SAEON Data Portal API. There is no resource at this path - did you copy the client build to __clients directory in the API folder before starting the application?`
+    ctx.body = `404\n\nWelcome to the SAEON Data Portal API. There is no resource at this path`
   }
 }
