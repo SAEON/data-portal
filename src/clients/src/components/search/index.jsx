@@ -26,13 +26,13 @@ const Root = styled('div')(({ theme }) => ({
   },
 }))
 
-export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
+export default ({ children, autofocus = true, onFocus, onBlur }) => {
   const history = useHistory()
   const { global, setGlobal } = useContext(globalContext)
   const theme = useTheme()
 
   return (
-    <Root style={style}>
+    <Root>
       <QuickForm
         effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
         text={global.text || ''}

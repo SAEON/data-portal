@@ -2,6 +2,7 @@ import { styled, alpha } from '@mui/material/styles'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
+import { Div } from '../../html-tags'
 
 const Button = styled(ButtonBase)(({ theme }) => ({
   display: 'flex',
@@ -67,36 +68,45 @@ const Mark = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }))
 
-export default styled(
-  ({ title, disabled = false, href = undefined, to = '/records', style = {} }) => {
-    return (
-      <div style={Object.assign({ width: '100%', height: '100%' }, style)}>
-        <Button
-          component={href ? undefined : Link}
-          href={href}
-          to={href ? undefined : to}
-          disabled={disabled}
-          focusRipple
-        >
-          <Backdrop className="MuiFancyButtonBackdrop-root" />
-          <Image>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              sx={{
-                position: 'relative',
-                p: 4,
-                pt: 2,
-                pb: theme => `calc(${theme.spacing(1)} + 6px)`,
-              }}
-            >
-              {title}
-              <Mark className="MuiFancyButtonMarked-root" />
-            </Typography>
-          </Image>
-        </Button>
-      </div>
-    )
-  }
-)({})
+const FancyButton = ({
+  title,
+  disabled = false,
+  href = undefined,
+  onClick = undefined,
+  to = '/records',
+  ...props
+}) => {
+  return (
+    <Div sx={{ width: '100%', height: '100%' }} {...props}>
+      <Button
+        component={onClick || href ? undefined : Link}
+        href={href}
+        onClick={onClick}
+        to={onClick ? undefined : href ? undefined : to}
+        disabled={disabled}
+        focusRipple
+        className="MuiFancyButton-root"
+      >
+        <Backdrop className="MuiFancyButtonBackdrop-root" />
+        <Image>
+          <Typography
+            component="span"
+            variant="subtitle1"
+            color="inherit"
+            sx={{
+              position: 'relative',
+              p: 4,
+              pt: 2,
+              pb: theme => `calc(${theme.spacing(1)} + 6px)`,
+            }}
+          >
+            {title}
+            <Mark className="MuiFancyButtonMarked-root" />
+          </Typography>
+        </Image>
+      </Button>
+    </Div>
+  )
+}
+
+export default styled(FancyButton)({})
