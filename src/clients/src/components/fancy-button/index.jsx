@@ -67,34 +67,36 @@ const Mark = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }))
 
-export default ({ title, disabled = false, href = undefined, to = '/records', style = {} }) => {
-  return (
-    <div style={Object.assign({ width: '100%', height: '100%' }, style)}>
-      <Button
-        component={href ? undefined : Link}
-        href={href}
-        to={href ? undefined : to}
-        disabled={disabled}
-        focusRipple
-      >
-        <Backdrop className="MuiFancyButtonBackdrop-root" />
-        <Image>
-          <Typography
-            component="span"
-            variant="subtitle1"
-            color="inherit"
-            sx={{
-              position: 'relative',
-              p: 4,
-              pt: 2,
-              pb: theme => `calc(${theme.spacing(1)} + 6px)`,
-            }}
-          >
-            {title}
-            <Mark className="MuiFancyButtonMarked-root" />
-          </Typography>
-        </Image>
-      </Button>
-    </div>
-  )
-}
+export default styled(
+  ({ title, disabled = false, href = undefined, to = '/records', style = {} }) => {
+    return (
+      <div style={Object.assign({ width: '100%', height: '100%' }, style)}>
+        <Button
+          component={href ? undefined : Link}
+          href={href}
+          to={href ? undefined : to}
+          disabled={disabled}
+          focusRipple
+        >
+          <Backdrop className="MuiFancyButtonBackdrop-root" />
+          <Image>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              color="inherit"
+              sx={{
+                position: 'relative',
+                p: 4,
+                pt: 2,
+                pb: theme => `calc(${theme.spacing(1)} + 6px)`,
+              }}
+            >
+              {title}
+              <Mark className="MuiFancyButtonMarked-root" />
+            </Typography>
+          </Image>
+        </Button>
+      </div>
+    )
+  }
+)({})
