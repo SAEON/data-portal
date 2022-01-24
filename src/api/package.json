@@ -23,12 +23,12 @@
   },
   "homepage": "https://github.com/SAEON/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
-    "@babel/core": "^7.16.10",
+    "@babel/core": "^7.16.12",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/eslint-plugin": "^7.16.5",
     "eslint": "^8.7.0",
     "nodemon": "^2.0.15",
-    "npm-check-updates": "^12.2.0",
+    "npm-check-updates": "^12.2.1",
     "prettier": "^2.5.1"
   },
   "dependencies": {
