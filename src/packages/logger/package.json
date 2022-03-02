@@ -53,6 +53,5 @@
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.69.0"
-  },
-  "dependencies": {}
+  }
 }
