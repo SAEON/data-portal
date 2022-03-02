@@ -1,6 +1,6 @@
 {
   "name": "@saeon/ol-react",
-  "version": "10.2.13",
+  "version": "10.2.14",
   "description": "React wrapper for the open-source OpenLayers JavaScript library, envisioned as a generally useful, opinionated means of interacting with OpenLayers within a React.js application",
   "main": "dist/cjs/index.js",
   "type": "module",
@@ -54,7 +54,5 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.69.0"
   },
-  "dependencies": {
- 
-  }
+  "dependencies": {}
 }
