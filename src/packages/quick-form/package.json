@@ -1,6 +1,6 @@
 {
   "name": "@saeon/quick-form",
-  "version": "3.2.10",
+  "version": "3.2.11",
   "description": "Quickly add localised state to your component tree",
   "main": "dist/cjs/index.js",
   "type": "module",
@@ -55,7 +55,5 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.69.0"
   },
-  "dependencies": {
-  
-  }
+  "dependencies": {}
 }
