@@ -40,19 +40,19 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.16.12",
-    "@babel/eslint-parser": "^7.16.5",
+    "@babel/core": "^7.17.5",
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/eslint-plugin": "^7.16.5",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@rollup/plugin-json": "^4.1.0",
-    "eslint": "^8.7.0",
-    "eslint-plugin-react": "^7.28.0",
+    "eslint": "^8.10.0",
+    "eslint-plugin-react": "^7.29.2",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "npm-check-updates": "^12.2.1",
+    "npm-check-updates": "^12.5.0",
     "prettier": "^2.5.1",
     "react": "*",
     "rimraf": "^3.0.2",
-    "rollup": "^2.66.0"
+    "rollup": "^2.69.0"
   }
 }
