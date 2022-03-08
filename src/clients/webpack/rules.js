@@ -1,6 +1,6 @@
 module.exports = mode => [
   {
-    test: /\.(js|jsx|ts|tsx)$/,
+    test: /\.(js|jsx|ts|tsx|cjs|mjs)$/,
     exclude: mode === 'production' ? /@babel(?:\/|\\{1,2})runtime|core-js/ : /node_modules/,
     use: {
       loader: 'babel-loader',
