@@ -8,12 +8,14 @@ import Hidden from '@mui/material/Hidden'
 export default _source => {
   const theme = useTheme()
   const { immutableResource, rightsList } = _source
-  const { resourceDescription } = immutableResource
+  const { resourceDescription, resourceDownload } = immutableResource
 
   return (
     <Row title={'Download'} style={{ position: 'relative' }}>
       <Typography variant="body2" component="h2">
-        {resourceDescription || '(Missing resource description and/or download URI)'}
+        {resourceDescription ||
+          resourceDownload?.downloadURL ||
+          '(Missing resource description and/or download URI)'}
       </Typography>
       <Hidden smDown>
         <span style={{ position: 'absolute', top: `calc(50% - 30px)`, right: theme.spacing(2) }}>

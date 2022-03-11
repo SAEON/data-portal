@@ -48,7 +48,7 @@ export default ({
       <Tooltip
         placement={tooltipPlacement || 'bottom'}
         title={
-          `${resourceDescription || 'Unknown resource'} (${downloadURL?.replace(/.*\./, '')})` ||
+          `${resourceDescription || 'Download'} (${downloadURL?.replace(/.*\./, '')})` ||
           'Unknown download'
         }
       >

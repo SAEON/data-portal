@@ -65,7 +65,7 @@ export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form,
             size="small"
             variant="text"
             disabled={disabled}
-            download={resourceDescription || 'Unknown resource'}
+            download={resourceDescription || downloadURL || 'Unknown resource'}
             style={{ display: 'block', float: 'right', margin: theme.spacing(2) }}
             href={downloadURL}
             aria-label="Agree to terms and download resource"
