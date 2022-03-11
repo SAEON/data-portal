@@ -23,16 +23,28 @@ export default async ctx => {
 
   if (HOSTNAME_WHITELIST.includes(hostname)) {
     const res = await fetch(uri)
-    ctx.set('Content-type', res.headers.get('last-modified'))
-    ctx.set('Content-type', res.headers.get('content-length'))
-    ctx.set('Content-type', res.headers.get('content-type'))
-    ctx.set('content-disposition', res.headers.get('content-disposition'))
+    ctx.set('Last-modified', res.headers.get('last-modified'))
+    ctx.set('Content-length', res.headers.get('Content-length'))
+    ctx.set('Content-type', res.headers.get('Content-type'))
+
+    /**
+     * If the content type suggests that the destination is
+     * an HTML document, then redirect users there. Otherwise
+     * Stream the destination content back to the user as a
+     * download.
+     */
+    if (res.headers.get('Content-type').includes('text/html')) {
+      ctx.redirect(uri)
+    } else {
+      ctx.set('Content-disposition', res.headers.get('Content-disposition'))
+    }
+
     ctx.body = res.body
   } else {
-    ctx.set('Content-type', 'text/html')
+    ctx.set('Content-type', 'text/html;charset=UTF-8')
     ctx.body = htmlTemplate
-      .replace('$hostname', hostname)
-      .replace('$uri', uri)
-      .replace('$CURATOR_CONTACT', CURATOR_CONTACT.replace('@', ' [ at ] '))
+      .replace(/\$hostname/g, hostname)
+      .replace(/\$uri/g, uri)
+      .replace(/\$CURATOR_CONTACT/g, CURATOR_CONTACT.replace('@', ' [ at ] '))
   }
 }
