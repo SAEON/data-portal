@@ -14,10 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "googleapis": "^95.0.0",
+    "googleapis": "^96.0.0",
     "prettier": "^2.5.1"
   },
   "devDependencies": {
-    "npm-check-updates": "^12.5.0"
+    "npm-check-updates": "^12.5.2"
   }
 }

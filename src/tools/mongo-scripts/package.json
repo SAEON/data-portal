@@ -14,11 +14,11 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "mongodb": "^4.4.0",
-    "node-fetch": "^3.2.1"
+    "mongodb": "^4.4.1",
+    "node-fetch": "^3.2.2"
   },
   "devDependencies": {
-    "npm-check-updates": "^12.5.0",
+    "npm-check-updates": "^12.5.2",
     "prettier": "^2.5.1"
   }
 }
