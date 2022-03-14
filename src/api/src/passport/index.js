@@ -10,7 +10,17 @@ if (!ODP_SSO_CLIENT_ID || !ODP_SSO_CLIENT_SECRET) {
   process.exit(1)
 }
 
-Issuer.discover(ODP_AUTH_WELL_KNOWN)
-  .then(oauthProvider => passport.use('oidc', makeStrategy(oauthProvider)))
-  .then(() => console.info('Authentication configured successfully'))
-  .catch(error => console.error('Unable to configure oauth2 oidc strategy', error))
+const RETRY_IN = 30 // seconds
+
+;(async function configurePassport() {
+  try {
+    const issuer = await Issuer.discover(ODP_AUTH_WELL_KNOWN)
+    passport.use('oidc', makeStrategy(issuer))
+    console.info('Authentication configured successfully')
+  } catch (error) {
+    console.error('Unable to configure oauth2 oidc strategy', error)
+    console.info(`Trying again to configure authentication in ${RETRY_IN} seconds`)
+    await new Promise(res => setTimeout(res, RETRY_IN * 1000))
+    configurePassport()
+  }
+})()

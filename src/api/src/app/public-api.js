@@ -28,9 +28,9 @@ import zlib from 'zlib'
 import path from 'path'
 import createRequestContext from '../middleware/create-request-context.js'
 import hoursToMilliseconds from '../lib/hours-to-ms.js'
-import '../passport/index.js'
 import { APP_KEY } from '../config/index.js'
 import getCurrentDirectory from '../lib/get-current-directory.js'
+import '../passport/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
