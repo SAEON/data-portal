@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.17.6",
-    "@saeon/logger": "^6.2.19",
+    "@saeon/logger": "^6.2.20",
     "csv-stringify": "^6.0.5",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",

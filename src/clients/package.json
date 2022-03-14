@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../packages/snap-menus/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/logger/dist/**/*.@(js|jsx|ts|tsx)\" \"../packages/ol-react/dist/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../packages/logger/dist/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "ncu": "ncu -x react-router,react-router-dom",
     "ncu -u": "ncu -u -x react-router,react-router-dom"
@@ -41,7 +41,7 @@
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.5.0",
     "@rjsf/core": "^4.1.0",
-    "@saeon/logger": "^6.2.19",
+    "@saeon/logger": "^6.2.20",
     "@svgr/webpack": "^6.2.1",
     "abortcontroller-polyfill": "^1.7.3",
     "ace-builds": "^1.4.14",

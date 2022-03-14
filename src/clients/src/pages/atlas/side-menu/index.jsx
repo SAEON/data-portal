@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-import { useMenu } from '../../../components/snap-menus'
+import { useMenu } from '../../../packages/snap-menus'
 import Tabs from './tabs'
 
 export const SideMenuContext = createContext()
