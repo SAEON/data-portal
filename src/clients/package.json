@@ -40,7 +40,7 @@
     "@mui/icons-material": "^5.5.0",
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.5.0",
-    "@rjsf/core": "^4.0.1",
+    "@rjsf/core": "^4.1.0",
     "@saeon/logger": "^6.2.19",
     "@saeon/ol-react": "^10.2.15",
     "@saeon/quick-form": "3.2.12",
@@ -100,10 +100,10 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/eslint-plugin": "^7.16.5",
-    "eslint": "^8.10.0",
-    "eslint-plugin-react": "^7.29.3",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "npm-check-updates": "^12.5.2",
+    "npm-check-updates": "^12.5.3",
     "onchange": "^7.1.0",
     "prettier": "^2.5.1",
     "webpack-dev-server": "^4.7.4"

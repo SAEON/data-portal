@@ -26,11 +26,11 @@
     "dotenv": "^16.0.0",
     "graphql": "^16.3.0",
     "graphql-tag": "^2.12.6",
-    "node-fetch": "^3.2.2",
+    "node-fetch": "^3.2.3",
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "npm-check-updates": "^12.5.2"
+    "npm-check-updates": "^12.5.3"
   }
 }
