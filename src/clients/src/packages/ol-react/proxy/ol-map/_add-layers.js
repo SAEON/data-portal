@@ -1,6 +1,5 @@
 import descriptor from '../../lib/proxy-descriptor.js'
 import LayerGroup from 'ol/layer/Group'
-import packageJson from '../../../package.json'
 
 export default (map, rerender) => {
   return {
@@ -15,9 +14,7 @@ export default (map, rerender) => {
             .includes(layer.get('id'))
         ) {
           throw new Error(
-            `${packageJson.name} v${
-              packageJson.version
-            } ERROR: Cannot add layer with ID ${layer.get(
+            `ERROR: Cannot add layer with ID ${layer.get(
               'id'
             )} to the atlas since a layer with that ID already exists`
           )
