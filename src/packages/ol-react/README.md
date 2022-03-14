@@ -1,2 +1,0 @@
-# @saeon/ol-react
-TODO

@@ -1,7 +1,7 @@
 import { useContext, useRef } from 'react'
 import { context as editorContext } from '../context'
 import Fade from '@mui/material/Fade'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../../../../packages/quick-form'
 import AceEditor from 'react-ace'
 import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-min-noconflict/mode-json'

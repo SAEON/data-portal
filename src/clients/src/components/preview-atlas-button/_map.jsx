@@ -3,7 +3,7 @@ import Polygon from 'ol/geom/Polygon'
 import Point from 'ol/geom/Point'
 import WKT from 'ol/format/WKT'
 import { parse } from 'url' // TODO deprecated
-import { OlReact } from '@saeon/ol-react'
+import { OlReact } from '../../packages/ol-react'
 import Loading from '../../components/loading'
 import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'

@@ -1,4 +1,4 @@
-import { OlReact, MapProxy } from '@saeon/ol-react'
+import { OlReact, MapProxy } from '../../../../../../packages/ol-react'
 import { terrestrisBaseMap } from '../../../../../../lib/ol'
 import Controls from './_controls'
 

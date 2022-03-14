@@ -3,7 +3,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import TextField from '@mui/material/TextField'
-import Q from '@saeon/quick-form'
+import Q from '../../../../../packages/quick-form'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../config'
 import Collapse from '../../../../../components/collapse'
 

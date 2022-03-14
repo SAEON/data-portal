@@ -10,7 +10,7 @@ import CardContent from '@mui/material/CardContent'
 import IconButton from '@mui/material/IconButton'
 import DragIndicator from '@mui/icons-material/DragIndicator'
 import InfoIcon from '@mui/icons-material/Info'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../../../../../../../packages/quick-form'
 import Slider from '../../../../../../../../components/slider'
 import { ToggleVisibility, DeleteLayer, ExpandLayer } from '../../../../../../components'
 

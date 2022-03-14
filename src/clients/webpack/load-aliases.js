@@ -29,28 +29,12 @@ module.exports = (ROOT, mode) => ({
   react: path.resolve(ROOT, './node_modules/react'),
   'react-dom': path.resolve(ROOT, './node_modules/react-dom'),
 
-  // @saeon/quick-form
-  '@saeon/quick-form': path.resolve(
-    ROOT,
-    mode === 'production'
-      ? './node_modules/@saeon/quick-form/dist/esm'
-      : '../packages/quick-form/dist/esm'
-  ),
-
   // @saeon/snap-menus
   '@saeon/snap-menus': path.resolve(
     ROOT,
     mode === 'production'
       ? './node_modules/@saeon/snap-menus/dist/esm'
       : '../packages/snap-menus/src'
-  ),
-
-  // @saeon/ol-react
-  '@saeon/ol-react': path.resolve(
-    ROOT,
-    mode === 'production'
-      ? './node_modules/@saeon/ol-react/dist/esm'
-      : '../packages/ol-react/dist/esm'
   ),
 
   // @saeon/logger

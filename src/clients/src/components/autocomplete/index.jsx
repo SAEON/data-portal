@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../packages/quick-form'
 import ListboxComponent from './list-box-component'
 
 export default ({

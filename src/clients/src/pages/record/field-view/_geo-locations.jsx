@@ -4,7 +4,7 @@ import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 import Point from 'ol/geom/Point'
 import { terrestrisBaseMap } from '../../../lib/ol'
-import { OlReact } from '@saeon/ol-react'
+import { OlReact } from '../../../packages/ol-react'
 import WKT from 'ol/format/WKT'
 import Row from '../_row'
 

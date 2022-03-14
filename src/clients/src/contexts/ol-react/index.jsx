@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { OlReact, MapProxy } from '@saeon/ol-react'
+import { OlReact, MapProxy } from '../../packages/ol-react'
 import { terrestrisBaseMap } from '../../lib/ol'
 
 export const MapContext = createContext()
