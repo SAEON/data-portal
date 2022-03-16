@@ -118,6 +118,7 @@ ARG METADATA_INTEGRATION_SCHEDULE
 ENV METADATA_INTEGRATION_SCHEDULE=$METADATA_INTEGRATION_SCHEDULE
 
 WORKDIR /app
+# TODO - this looks like it should be updated
 COPY --from=docker:19.03 /usr/local/bin/docker /usr/local/bin/
 COPY . .
 RUN npm ci --force --only=production
