@@ -23,3 +23,5 @@ export const CATALOGUE_PROXY_WEB_INTERFACE_PORT = 8002
 export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || 'http://localhost:9200'
 
 export const TERRESTRIS_ADDRESS = 'https://ows.terrestris.de'
+
+export const ALLOWED_ES_INDICES = ['saeon-odp-catalogue-search']

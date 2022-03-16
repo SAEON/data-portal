@@ -4,7 +4,7 @@ networks:
   sdp_next:
     name: sdp_next
     driver: overlay
-    attachable: true    
+    attachable: true
 
 volumes:
   postgis:

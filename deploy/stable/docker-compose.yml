@@ -4,7 +4,7 @@ networks:
   sdp_stable:
     name: sdp_stable
     driver: overlay
-    attachable: true    
+    attachable: true
 
 volumes:
   postgis:
