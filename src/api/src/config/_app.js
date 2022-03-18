@@ -20,8 +20,8 @@ export const API_BIND_ADDRESS_PUBLIC = `${API_BIND_PROTOCOL}://${API_BIND_HOSTNA
 export const API_BIND_ADDRESS_INTERNAL = `${API_BIND_PROTOCOL}://${API_BIND_HOSTNAME}:${API_BIND_PORT_INTERNAL}`
 export const API_PUBLIC_ADDRESS = process.env.API_PUBLIC_ADDRESS || 'http://localhost:3000' // Required in API for authentication
 export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || 'http://localhost:3001'
-export const TEMP_DIRECTORY = '/tmp/catalogue-api'
-export const DATA_DIRECTORY = '/var/lib/catalogue-api'
+export const TEMP_DIRECTORY = '/tmp/sdp-data'
+export const DATA_DIRECTORY = '/var/lib/sdp-data'
 export const LOG_QUERY_DETAILS = (process.env.LOG_QUERY_DETAILS || 'false').toBoolean()
 export const ENABLE_METADATA = (process.env.ENABLE_METADATA || 'false').toBoolean()
 export const METADATA_INTEGRATION_SCHEDULE =
@@ -39,6 +39,6 @@ export const EMAIL_REGEX = new RegExp(
   await ensureDirectory(TEMP_DIRECTORY)
   await ensureDirectory(DATA_DIRECTORY)
 })().catch(error => {
-  console.error('Cannot create required directory', error.message)
+  console.error('Cannot create required directory', error)
   process.exit(1)
 })

@@ -65,21 +65,17 @@ The platform is primarily driven by user interactions with the React.js UI appli
 ![Search sequence scenario](/diagrams/dist/client-scenarios.png)
 
 
-### Databook scenarios
-TODO
-
-
 # Quick start
 
 Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (Mongo, Elasticsearch, PostGIS, GDAL) are run via Docker containers
 
 ## System requirements
 
-1. Docker Desktop
-2. Node.js **node:17.3** or higher
+1. Docker Engine
+2. Node.js **node:17.7.2**
 
 ```sh
-# Make sure that Node.js ^node:14.16.1 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js v17.7.2 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
@@ -111,24 +107,23 @@ Mostly configuration params have sensible defaults, only the API needs to be exp
 
 ```sh
 # Create a Docker network (required on local since GDAL is run Dockerized)
-docker network create --driver bridge catalogue
+docker network create --driver bridge sdp_local_dev
 
 # Start a MongoDB server
-docker run --net=catalogue --name mongo --memory 1.5g --cpus 2 --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:5.0.3
+docker run --net=sdp_local_dev --name mongo --memory 1.5g --cpus 2 --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -v /home/$USER/mongo:/data/db -d -p 27017:27017 mongo:5.0.6
 
-# Start a PostGIS server (from the /src/postgis directory)
-docker build -t postgis .
-docker run --name postgis --memory 1g --cpus 4  -v /var/lib/catalogue-api:/var/lib/catalogue-api --net=catalogue -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=databooks -d postgis
+# Start a PostGIS server
+docker run --name postgis --memory 1g --cpus 4  -v /home/$USER/pg_mnt:/var/lib/pg_mnt --net=sdp_local_dev -p 5432:5432 --restart always -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=sdp_local_dev -d ghcr.io/saeon/postgis:14
 
 # Optionally start the pgAdmin IDE (on localhost:5001). I prefer DBeaver
-# NOTE the postgis container host that you want to connect to is just "postgis", since you are using the Docker network
-docker run --net=catalogue --name pgadmin -p 5001:80 -e PGADMIN_DEFAULT_EMAIL=<your email address> -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
+# NOTE the postgis host that you want to connect to is just "postgis", since you are using the Docker network
+docker run --net=sdp_local_dev --name pgadmin -p 5001:80 -e PGADMIN_DEFAULT_EMAIL=<your email address> -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
 
 # Start an Elasticsearch server (you can connect to Elasticsearch.saeon.dvn instead if you want. Refer to the API service documentation)
-docker run --net=catalogue --name elasticsearch --memory 1.5g --cpus 1.5 --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+docker run --net=sdp_local_dev --name elasticsearch --memory 1.5g --cpus 1.5 --restart always -e xpack.license.self_generated.type=basic -e xpack.security.enabled=false -e discovery.type=single-node -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:7.14.1
 
 # Start a Kibana service (this is helpful if you are working on Elasticsearch configuration, but isn't required)
-docker run --net=catalogue --name kibana --memory 256m --cpus 2 -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
+docker run --net=sdp_local_dev --name kibana --memory 256m --cpus 2 -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
 
 # Start the Node.js proxy server
 npm run proxy

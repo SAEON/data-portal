@@ -17,8 +17,6 @@ const HomePage = lazy(() => import('../../pages/home'))
 const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
 const UsersPage = lazy(() => import('../../pages/users'))
-const DashboardPage = lazy(() => import('../../pages/dashboard'))
-const ChartPage = lazy(() => import('../../pages/chart'))
 const LoginPage = lazy(() => import('../../pages/login'))
 const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
@@ -165,28 +163,6 @@ export default [
     render: () => (
       <Transition>
         <LoginPage />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Dashboard',
-    to: '/dashboards/:id',
-    excludeFromNav: true,
-    exact: true,
-    render: props => (
-      <Transition tKey={'dashboard'}>
-        <DashboardPage id={props.match.params.id} {...props} />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Chart',
-    to: '/charts/:id',
-    exact: true,
-    excludeFromNav: true,
-    render: props => (
-      <Transition tKey={'chart'}>
-        <ChartPage id={props.match.params.id} {...props} />
       </Transition>
     ),
   },

@@ -20,13 +20,13 @@ apply({ PATH: PACKAGES_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
  * Install service dependencies
  */
 const SERVICES_PATH = normalize(join(__dirname, '../src'))
-apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
+apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.install, args: [] })
 
 /**
  * Install tool dependencies
  */
 const TOOLS_PATH = normalize(join(__dirname, '../src/tools'))
-apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install, args: ['--force'] })
+apply({ PATH: TOOLS_PATH, script: NPM_SCRIPTS.install, args: [] })
 
 /**
  * Rebuild all packages

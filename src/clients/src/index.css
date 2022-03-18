@@ -1,0 +1,67 @@
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #dadada;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #999999;
+  border-radius: 4px;
+}
+
+input[type='range'] {
+  display: block;
+  -webkit-appearance: none;
+  background-color: #dee1e5;
+  height: 2px;
+  border-radius: 5px;
+  margin: 0 auto;
+  outline: 0;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #051d40;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+​ input[type='range']::-webkit-slider-thumb:hover {
+  background-color: white;
+  border: 1px solid #051d40;
+}
+input[type='range']::-webkit-slider-thumb:active {
+  transform: scale(1.5);
+}
+
+.rdg-cell-copied {
+  background-color: rgba(64, 143, 37, 0.4);
+}
+
+.read-only-data-cell {
+  color: rgb(165, 165, 165);
+}
+
+.changed-metadata {
+  background: rgba(206, 103, 13, 0.092);
+}
+
+.debug {
+  box-sizing: border-box;
+  border: 5px solid red !important;
+}

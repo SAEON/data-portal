@@ -10,8 +10,6 @@ import { Redirect } from 'react-router-dom'
 
 const RecordPage = lazy(() => import('../../pages/record'))
 const RecordsPage = lazy(() => import('../../pages/records'))
-const DashboardPage = lazy(() => import('../../pages/dashboard'))
-const ChartPage = lazy(() => import('../../pages/chart'))
 const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const AboutPage = lazy(() => import('../../pages/about'))
@@ -118,28 +116,6 @@ export default ({ contentBase }) => {
         return <Redirect to={`${pathname.replace('/render', '')}${search}`} />
       },
       excludeFromNav: true,
-    },
-    {
-      label: 'Dashboard',
-      to: getPath(contentBase, '/dashboards/:id'),
-      excludeFromNav: true,
-      exact: true,
-      render: props => (
-        <Transition tKey={'dashboard'}>
-          <DashboardPage id={props.match.params.id} {...props} />
-        </Transition>
-      ),
-    },
-    {
-      label: 'Chart',
-      to: getPath(contentBase, '/charts/:id'),
-      exact: true,
-      excludeFromNav: true,
-      render: props => (
-        <Transition tKey={'chart'}>
-          <ChartPage id={props.match.params.id} {...props} />
-        </Transition>
-      ),
     },
   ]
 }

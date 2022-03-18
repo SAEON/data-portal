@@ -39,7 +39,7 @@ services:
       - 6000:5432
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
-      - data:/var/lib/catalogue-api
+      - data:/var/lib/sdp-data
     networks:
       - sdp_next
 
@@ -126,8 +126,8 @@ services:
       - 6004:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - tmp:/tmp/catalogue-api
-      - data:/var/lib/catalogue-api
+      - tmp:/tmp/sdp-data
+      - data:/var/lib/sdp-data
     networks:
       - sdp_next
 
