@@ -7,5 +7,4 @@ type Query {
 
 type Mutation {
   configureElasticsearchIndex: JSON!
-  configureDefaultPostGISLayers: JSON!
 }

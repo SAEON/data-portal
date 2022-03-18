@@ -14,7 +14,6 @@ export const saeon = {
   description: 'Default login roles for @saeon.ac.za email addresses',
   permissions: deduplicate([
     ...user.permissions,
-    permissions['databook:create'],
     permissions['/usage'],
     permissions['site-analytics:view'],
   ]),
@@ -26,7 +25,6 @@ export const curator = {
   permissions: deduplicate([
     ...saeon.permissions,
     permissions['as-odp-user:curator'],
-    permissions['es-index:update'],
     permissions['/curator-tools'],
   ]),
 }

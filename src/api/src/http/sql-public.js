@@ -1,7 +1,7 @@
 import JSONStream from 'JSONStream'
 
 export default async ctx => {
-  const { databookId: schema } = ctx.params
+  const { schema } = ctx.params
   const { sql } = ctx.request.body
   const { publicQuery } = ctx.postgis
 

@@ -105,7 +105,7 @@ export default ({
               {/* LAYER CONTROLS */}
               <CardContent style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {/* Layer info */}
-                {/* TODO repeated code (in databook as well) */}
+                {/* TODO repeated code */}
                 <MessageDialogue
                   onClick
                   title={onClose => (

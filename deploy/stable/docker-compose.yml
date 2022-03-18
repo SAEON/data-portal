@@ -32,7 +32,7 @@ services:
         delay: 30s
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_DB: databooks
+      POSTGRES_DB: sdp_stable
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
       POSTGRES_USER: $POSTGIS_USERNAME
     ports:
@@ -112,7 +112,7 @@ services:
       ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
       POSTGIS_CONTAINER_NAME: postgis
-      POSTGIS_DB: databooks
+      POSTGIS_DB: sdp_stable
       POSTGIS_HOST: postgis
       POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
       POSTGIS_PASSWORD_PUBLIC: $POSTGIS_PASSWORD_PUBLIC

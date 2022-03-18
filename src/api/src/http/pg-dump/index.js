@@ -6,7 +6,6 @@ import {
   POSTGIS_CONTAINER_NAME,
 } from '../../config/index.js'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
-import { ObjectId } from 'mongodb'
 import { createReadStream } from 'fs'
 import { basename, join } from 'path'
 import CombinedStream from 'combined-stream'
@@ -16,11 +15,9 @@ const __dirname = getCurrentDirectory(import.meta)
 
 export default async ctx => {
   const { schema } = ctx.params
-  const databookId = schema
-  const { findDatabooks } = ctx.mongo.dataFinders
-  const { query } = ctx.postgis
-  const databook = (await findDatabooks({ _id: ObjectId(databookId) }))[0]
-  const { username, password: encryptedPassword } = databook.authentication
+  const { username, password: encryptedPassword } = {
+    TODO: 'These used to be in databook.authentication',
+  }
   const password = ctx.crypto.decrypt(encryptedPassword)
 
   // Get a list of NetCDF files that need to be streamed along with the .backup
@@ -36,7 +33,7 @@ export default async ctx => {
   ctx.set('Content-type', 'application/octet-stream')
   ctx.set(
     'Content-disposition',
-    `attachment; filename=saeon-databook.${new Date().toISOString().replace(/:/g, '-')}.zip`
+    `attachment; filename=pg-dump.${new Date().toISOString().replace(/:/g, '-')}.zip`
   )
 
   // Archive the output
@@ -65,7 +62,7 @@ export default async ctx => {
     '--no-owner',
   ])
     .on('close', code => {
-      console.info(databookId, 'SQL export complete. Code: ', code)
+      console.info('SQL export complete. Code: ', code)
       archive.finalize()
     })
     .on('error', error => console.error(new Error(error.message)))

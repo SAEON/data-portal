@@ -9,29 +9,11 @@ import ToggleItemButton from './_toggle-item-button'
 import Hidden from '@mui/material/Hidden'
 
 const DataDownloadButton = lazy(() => import('../../../../../../components/data-download'))
-const CreateDatabookButton = lazy(() =>
-  import('../../../../../../components/create-databook-button')
-)
 
-export default ({
-  showDatabook = true,
-  showDownload = false,
-  showPreview = true,
-  showSelect = true,
-  ..._source
-}) => {
+export default ({ showDownload = false, showPreview = true, showSelect = true, ..._source }) => {
   return (
     <Toolbar disableGutters variant="dense" style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Title {..._source} />
-
-      {/* DATABOOK */}
-      <Hidden smDown>
-        {showDatabook && (
-          <Suspense fallback={<LoadingCircular />}>
-            <CreateDatabookButton {..._source} />
-          </Suspense>
-        )}
-      </Hidden>
 
       {/* ATLAS PREVIEW */}
       {showPreview && <PreviewAtlasButton {..._source} />}

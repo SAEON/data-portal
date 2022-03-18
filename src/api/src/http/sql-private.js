@@ -1,12 +1,10 @@
-import { ObjectId } from 'mongodb'
 import QueryStream from 'pg-query-stream'
 import JSONStream from 'JSONStream'
 
 export default async ctx => {
-  const { findDatabooks } = ctx.mongo.dataFinders
-  const { databookId, sql } = ctx.request.body
-  const databook = (await findDatabooks({ _id: ObjectId(databookId) }))[0]
-  const { username, password: encryptedPassword } = databook.authentication
+  const { username, password: encryptedPassword } = {
+    TODO: 'This used to be in the databook mongo doc',
+  }
   const password = ctx.crypto.decrypt(encryptedPassword)
   const { createClient } = ctx.postgis
 

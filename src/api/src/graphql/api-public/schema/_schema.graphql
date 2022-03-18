@@ -158,22 +158,6 @@ type Query {
   """
   catalogue(referrer: String): Catalogue!
   """
-  Return a Dashboard entity
-  """
-  dashboard(id: ID!): Dashboard
-  """
-  Find a chart
-  """
-  charts(ids: [ID!]!): [Chart!]
-  """
-  Find a filter
-  """
-  filters(ids: [ID!]!): [Filter!]
-  """
-  Retrieve a web-browser's previously saved databook
-  """
-  databook(id: ID!): Databook
-  """
   Retrieve search context (i.e. a dynamic list)
   """
   list(id: ID!): List
@@ -185,10 +169,6 @@ type Query {
   Retrieve a web-browser's previously saved atlas TODO - should be on query
   """
   atlas(id: ID!): JSON
-  """
-  Retrieve dashboards by id
-  """
-  dashboards(ids: [ID!]!): [Dashboard!]
   downloadsReport(sort: SortConfig): [DownloadSummary]!
   roles: [Role]!
   permissions: [Permission]!
@@ -228,10 +208,6 @@ type Mutation {
   submitDataDownloadForm(input: DataDownloadFormSubmission!): Void
   logBrowserEvents(input: [BrowserEventInput]!): Void
   """
-  Save a web-browser's search context for retrieving as a databook
-  """
-  createDatabook(search: JSON!, createdBy: String!): ID!
-  """
   Save a web-browser's search context for retrieving as an atlas
   """
   createAtlas(search: JSON!, createdBy: String!): ID!
@@ -250,44 +226,6 @@ type Mutation {
     title: String
     description: String
   ): List!
-  """
-  Retrieve a web-browser's previously saved databook
-  """
-  databook(id: ID!): Databook
-  createDashboard(title: String, subtitle: String, description: String, databookId: ID!): Dashboard!
-  updateDashboard(
-    id: ID!
-    layout: JSON
-    title: String
-    subtitle: String
-    description: String
-    filters: [ID!]
-  ): Dashboard!
-  updateDatabook(id: ID!, editors: JSON): Databook!
-  """
-  Return a Dashboard entity
-  """
-  dashboard(id: ID!): Dashboard
-  deleteDashboard(id: ID!): Boolean!
-  createChart(
-    title: String
-    description: String
-    databookId: ID!
-    data: JSON!
-    type: ChartType!
-    config: JSON!
-    sql: String!
-  ): Chart!
-  editChart(id: ID!, title: String, description: String, setOption: FunctionString): Chart!
-  deleteChart(id: ID!): Boolean!
-  createFilter(
-    name: String
-    databookId: ID!
-    columnFiltered: String
-    values: [String]
-    sql: String
-  ): Filter!
-  deleteFilter(id: ID!): Boolean!
   assignRolesToUser(userId: ID!, roleIds: [ID!]!): User!
 }
 

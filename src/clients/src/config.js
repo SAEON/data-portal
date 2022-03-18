@@ -14,7 +14,6 @@ export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'pl.chiloane@saeon
 export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'zd.smith@saeon.nrf.ac.za'
 
 export const CATALOGUE_CLIENT_MAX_ATLAS_LAYERS = 1000
-export const CATALOGUE_CLIENT_MAX_DATABOOK_TABLES = 50
 
 export const API_PUBLIC_ADDRESS = process.env.API_PUBLIC_ADDRESS || 'http://localhost:3000'
 
@@ -34,9 +33,6 @@ export const CLIENTS_PUBLIC_ADDRESS = process.env.CLIENTS_PUBLIC_ADDRESS || 'htt
 export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
 
 export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()
-
-export const CATALOGUE_SUPPORTED_DATABOOK_FORMATS = process.env
-  .CATALOGUE_SUPPORTED_DATABOOK_FORMATS || ['SHAPEFILE', 'NETCDF', 'ASC']
 
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
 

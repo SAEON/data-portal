@@ -22,26 +22,6 @@ export default ({ children }) => (
                 },
               },
             },
-            Databook: {
-              fields: {
-                dashboards: {
-                  merge: mergeListByIds,
-                },
-                charts: {
-                  merge: mergeListByIds,
-                },
-                filters: {
-                  merge: mergeListByIds,
-                },
-              },
-            },
-            Dashboard: {
-              fields: {
-                charts: {
-                  merge: mergeListByIds,
-                },
-              },
-            },
           },
         }),
         link: new HttpLink({
