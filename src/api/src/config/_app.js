@@ -23,7 +23,6 @@ export const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || 'http://localhost:
 export const TEMP_DIRECTORY = '/tmp/sdp-data'
 export const DATA_DIRECTORY = '/var/lib/sdp-data'
 export const LOG_QUERY_DETAILS = (process.env.LOG_QUERY_DETAILS || 'false').toBoolean()
-export const ENABLE_METADATA = (process.env.ENABLE_METADATA || 'false').toBoolean()
 export const METADATA_INTEGRATION_SCHEDULE =
   process.env.METADATA_INTEGRATION_SCHEDULE || '0 0 * * * *'
 export const GIS_MAX_RESOLUTION_DECIMALS = 5 // About 1.1M accuracy. higher values result in Elasticsearch parsing errors

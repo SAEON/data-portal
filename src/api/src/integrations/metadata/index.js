@@ -4,16 +4,9 @@ import processRecords from './process-records/index.js'
 import institutions from './institutions.js'
 import { client } from '../../elasticsearch/index.js'
 
-let lock = false
-
 export default async function () {
-  // Only ever run one instance of this integration
-  if (lock) {
-    console.info('Metadata integration already running')
-    return
-  }
+  console.log('running scheduled job. this will be the ODP integration')
 
-  lock = true
   const summary = {}
 
   try {

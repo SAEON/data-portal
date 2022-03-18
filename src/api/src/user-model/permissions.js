@@ -1,8 +1,4 @@
 export default Object.freeze({
-  '/curator-tools': {
-    name: '/curator-tools',
-    description: 'View the curator tools app',
-  },
   '/access': {
     name: '/access',
     description: 'View the /access route on client apps',
@@ -50,9 +46,5 @@ export default Object.freeze({
   'permissions:view': {
     name: 'permissions:view',
     description: 'View all permission details',
-  },
-  'as-odp-user:curator': {
-    name: 'as-odp-user:curator',
-    description: 'Make requests to 3rd party API using external authorization credentials',
   },
 })

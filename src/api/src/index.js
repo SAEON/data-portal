@@ -8,7 +8,6 @@ import {
   API_BIND_PORT_PUBLIC,
   API_BIND_PORT_INTERNAL,
   SERVER_TASKS,
-  ENABLE_METADATA,
   METADATA_INTEGRATION_SCHEDULE,
 } from './config/index.js'
 import { Task } from './lib/task-manager/index.js'
@@ -23,17 +22,13 @@ const internalApp = configureInternalHttpApi()
  * Metadata integration
  * Pull metadata into Elasticsearch
  */
-if (ENABLE_METADATA) {
-  console.info('Metadata enabled!')
-  SERVER_TASKS.addTask(
-    new Task(
-      { schedule: METADATA_INTEGRATION_SCHEDULE, id: 'Metadata integration' },
-      loadMetadataRecords
-    )
+
+SERVER_TASKS.addTask(
+  new Task(
+    { schedule: METADATA_INTEGRATION_SCHEDULE, id: 'SAEON ODP Metadata integration' },
+    loadMetadataRecords
   )
-} else {
-  console.info('Metadata disabled')
-}
+)
 
 // Configure HTTP servers
 const publicHttpServer = createServer(publicApp.callback())

@@ -82,22 +82,21 @@ services:
         condition: any
         delay: 30s
     environment:
-      ALLOWED_ORIGINS: https://catalogue.saeon.ac.za,https://curation.saeon.int
+      ALLOWED_ORIGINS: https://catalogue.saeon.ac.za,https://ocims.saeon.int
       API_PUBLIC_ADDRESS: https://api.catalogue.saeon.ac.za
       APP_KEY: $APP_KEY
       CURATOR_CONTACT: pl.chiloane@saeon.nrf.ac.za
-      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za,bn.mcalister@saeon.nrf.ac.za
+      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
+      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
       DEPLOYMENT_ENV: production
       DOCKER_DATA_VOLUME: sdp_stable_data
       DOCKER_NETWORK: sdp_stable
       DOCKER_TMP_VOLUME: sdp_stable_tmp
       ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
-      ENABLE_METADATA: 'false'
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.ac.za
       LOG_QUERY_DETAILS: 'false'
-      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27217
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME

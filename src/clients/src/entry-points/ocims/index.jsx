@@ -10,11 +10,11 @@ import { SUBDOMAIN_APP_ENTRIES } from '../../config'
 
 const App = lazy(() => import('../../index/application'))
 
-const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('curation-tools')
+const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('ocims')
 
 const config = {
   backgroundImage: true,
-  contentBase: isSubdomainEntry ? undefined : '/curation-tools',
+  contentBase: isSubdomainEntry ? undefined : '/ocims',
 }
 
 const routes = configureRoutes(config)
@@ -22,7 +22,7 @@ const routes = configureRoutes(config)
 render(
   <Suspense fallback={<Loading />}>
     <App {...config}>
-      <Header {...config} title="SAEON Curation Tools" routes={routes} />
+      <Header {...config} title="OCIMS visualizations" routes={routes} />
       <SizeContent>
         <RouteSwitcher routes={routes} />
       </SizeContent>

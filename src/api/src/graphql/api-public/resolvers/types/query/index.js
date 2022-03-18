@@ -9,12 +9,6 @@ import users from '../../queries/users.js'
 import PERMISSIONS from '../../../../../user-model/permissions.js'
 import authorize from '../../../../../user-model/authorize.js'
 import downloadsReport from '../../queries/downloads-report/index.js'
-import metadata from '../../../../api-public/resolvers/queries/metadata.js'
-import indexedMetadata from '../../queries/indexed-metadata/index.js'
-import institutions from '../../queries/institutions/index.js'
-import collections from '../../queries/collections/index.js'
-import schemas from '../../queries/schemas/index.js'
-import schemaJson from '../../queries/schema-json/index.js'
 
 const getUserDocumentOwner = async (self, args, ctx) => ctx.userInfo.id === args.id
 
@@ -29,10 +23,4 @@ export default {
     authorize(PERMISSIONS['users:view'], await getUserDocumentOwner(...args))(user)(...args),
   users: authorize(PERMISSIONS['users:view'])(users),
   permissions: authorize(PERMISSIONS['permissions:view'])(permissions),
-  metadata: authorize(PERMISSIONS['as-odp-user:curator'])(metadata),
-  indexedMetadata: authorize(PERMISSIONS['as-odp-user:curator'])(indexedMetadata),
-  institutions: authorize(PERMISSIONS['as-odp-user:curator'])(institutions),
-  collections: authorize(PERMISSIONS['as-odp-user:curator'])(collections),
-  schemas: authorize(PERMISSIONS['as-odp-user:curator'])(schemas),
-  schemaJson: authorize(PERMISSIONS['as-odp-user:curator'])(schemaJson),
 }
