@@ -4,7 +4,7 @@
 # Builds static files
 # from client src
 ###
-FROM node:17.7.2 as build
+FROM node:17.7.1 as build
 
 ARG API_PUBLIC_ADDRESS
 ARG CLIENTS_DEFAULT_NOTICES
