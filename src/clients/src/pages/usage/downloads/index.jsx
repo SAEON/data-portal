@@ -22,7 +22,7 @@ export default () => {
         <Card variant="outlined">
           <CardContent style={{ padding: theme.spacing(2) }}>
             <Typography style={{ display: 'block', textAlign: 'center' }} variant="overline">
-              Downloads: {downloadsCount.count}
+              Downloads: {downloadsCount?.count}
             </Typography>
           </CardContent>
         </Card>
