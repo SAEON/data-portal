@@ -15,7 +15,7 @@ import mount from 'koa-mount'
 import {
   API_BIND_PORT,
   SERVER_TASKS,
-  METADATA_INTEGRATION_SCHEDULE,
+  SAEON_ODP_INTEGRATION_SCHEDULE,
   APP_KEY,
 } from './config/index.js'
 import { Task } from './lib/task-manager/index.js'
@@ -39,7 +39,7 @@ import pgDumpRoute from './http/pg-dump/index.js'
 import loginSuccessRoute from './http/login-success.js'
 import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callback.js'
 import loginRoute from './http/login.js'
-import loadMetadataRecords from './integrations/metadata/index.js'
+import saeonOdpIntegration from './integrations/saeon-odp/index.js'
 import gqlServer from './graphql/index.js'
 import './postgis/setup.js'
 import './passport/index.js'
@@ -53,8 +53,8 @@ const __dirname = getCurrentDirectory(import.meta)
 
 SERVER_TASKS.addTask(
   new Task(
-    { schedule: METADATA_INTEGRATION_SCHEDULE, id: 'SAEON ODP Metadata integration' },
-    loadMetadataRecords
+    { schedule: SAEON_ODP_INTEGRATION_SCHEDULE, id: 'SAEON ODP Metadata integration' },
+    saeonOdpIntegration
   )
 )
 

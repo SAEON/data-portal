@@ -9,6 +9,7 @@ import {
   testConnection as testOdpConnection,
 } from './iterator/index.js'
 import { performance } from 'perf_hooks'
+import { client } from '../../elasticsearch/index.js'
 
 const filter = async items => {
   const fn = await ODP_FILTER
@@ -19,7 +20,18 @@ const filter = async items => {
   }
 }
 
-export default async () => {
+let lock = false
+
+export default async function () {
+  console.log('going')
+  if (lock) {
+    throw new Error(
+      'This integration is already running. Please wait for it to finish and try again'
+    )
+  }
+
+  lock = true
+
   const t0 = performance.now()
 
   const result = {
@@ -28,28 +40,12 @@ export default async () => {
     errors: false,
   }
 
-  /**
-   * First test that the ODP is accessible,
-   * If not, abort the integration.
-   */
   try {
+    // Test that the ODP is up
     await testOdpConnection()
-  } catch (error) {
-    const msg = 'Unable to integrate with the ODP - are you on the VPN?'
-    console.error(msg, error)
-    return {
-      runtime: `${Math.round((performance.now() - t0) / 1000, 2)} seconds`,
-      ...result,
-      msg,
-    }
-  }
 
-  try {
-    /**
-     * For now, just delete and recreate the index on app start
-     * Updating documents doesn't seem to update the mapping
-     */
-    const elasticsearchDeleteIndexResponse = await fetch(
+    // Delete the index
+    const deleteResponse = await fetch(
       `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`,
       {
         method: 'DELETE',
@@ -58,12 +54,9 @@ export default async () => {
         },
       }
     )
-    const odpJson = await elasticsearchDeleteIndexResponse.json()
-    console.info(`${ELASTICSEARCH_CATALOGUE_INDEX} deleted on refresh`, odpJson)
+    console.log('Existing index deleted')
 
-    /**
-     * Fetch from the source, and push to the destination in batches
-     */
+    // Insert new records from the ODP
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
       const esResponse = await fetch(
@@ -122,15 +115,20 @@ export default async () => {
 
       iterator = await iterator.next()
     }
-  } catch (error) {
-    result.errors = error.message
-    console.error(error)
-    console.error('ERROR', result)
-    process.exit(1)
-  }
 
-  const t1 = performance.now()
-  const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
-  console.info('Index integration complete', runtime)
-  return { runtime, ...result }
+    // Flush the index
+    await client.indices.flush({
+      index: ELASTICSEARCH_CATALOGUE_INDEX,
+      wait_if_ongoing: false,
+    })
+
+    // Done!
+    const t1 = performance.now()
+    const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
+    console.info('Index integration complete', runtime, result)
+  } catch (error) {
+    throw error
+  } finally {
+    lock = false
+  }
 }

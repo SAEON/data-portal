@@ -96,7 +96,7 @@ services:
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
-      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
+      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 4 * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME

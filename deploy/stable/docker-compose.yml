@@ -88,7 +88,7 @@ services:
       CURATOR_CONTACT: pl.chiloane@saeon.nrf.ac.za
       DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
-      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
+      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 4 * * *'
       DEPLOYMENT_ENV: production
       DOCKER_DATA_VOLUME: sdp_stable_data
       DOCKER_NETWORK: sdp_stable
