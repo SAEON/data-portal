@@ -122,7 +122,6 @@ services:
       TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
     ports:
       - 7002:3000
-      - 6014:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - tmp:/tmp/sdp-data

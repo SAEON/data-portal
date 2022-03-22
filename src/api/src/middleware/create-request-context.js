@@ -2,7 +2,7 @@ import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/ind
 import postgisQuery, { publicQuery, createClient } from '../postgis/query.js'
 import { query as elasticQuery } from '../elasticsearch/index.js'
 import { APP_KEY } from '../config/index.js'
-import { publicSchema, internalSchema } from '../graphql/index.js'
+import gqlServer, { schema as gqlSchema } from '../graphql/index.js'
 import userModel from '../user-model/index.js'
 import { encrypt, decrypt } from '../lib/crypto.js'
 
@@ -29,8 +29,8 @@ export default app => async (ctx, next) => {
   }
 
   app.context.gql = {
-    publicSchema,
-    internalSchema,
+    schema: gqlSchema,
+    server: gqlServer,
   }
 
   app.context.user = userModel
