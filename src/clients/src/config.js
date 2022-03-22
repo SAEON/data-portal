@@ -15,13 +15,13 @@ export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'zd.smith@saeo
 
 export const CATALOGUE_CLIENT_MAX_ATLAS_LAYERS = 1000
 
-export const API_PUBLIC_ADDRESS = process.env.API_PUBLIC_ADDRESS || 'http://localhost:3000'
+export const API_ADDRESS = process.env.API_ADDRESS || 'http://localhost:3000'
 
-export const PUBLIC_HTTP_ADDRESS = `${API_PUBLIC_ADDRESS}/http`
+export const PUBLIC_HTTP_ADDRESS = `${API_ADDRESS}/http`
 
 export const PROXY_ADDRESS = process.env.PROXY_ADDRESS || 'http://localhost:8001'
 
-export const PUBLIC_GQL_ADDRESS = `${API_PUBLIC_ADDRESS}/graphql`
+export const PUBLIC_GQL_ADDRESS = `${API_ADDRESS}/graphql`
 
 const url = new URL(PUBLIC_GQL_ADDRESS)
 export const API_GQL_SUBSCRIPTIONS_ADDRESS = `${url.protocol === 'http:' ? 'ws:' : 'wss:'}//${

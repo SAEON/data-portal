@@ -13,7 +13,7 @@ import koaSession from 'koa-session'
 import koaPassport from 'koa-passport'
 import mount from 'koa-mount'
 import {
-  API_BIND_PORT_PUBLIC,
+  API_BIND_PORT,
   SERVER_TASKS,
   METADATA_INTEGRATION_SCHEDULE,
   APP_KEY,
@@ -135,7 +135,7 @@ const httpServer = createServer(api.callback())
 gqlServer.start().then(() => gqlServer.applyMiddleware({ app: api, cors: false }))
 
 // Start public HTTP server
-httpServer.listen(API_BIND_PORT_PUBLIC, () => {
+httpServer.listen(API_BIND_PORT, () => {
   console.log(`@saeon/catalogue API server ready`)
   console.log(`@saeon/catalogue GraphQL server ready`)
 })

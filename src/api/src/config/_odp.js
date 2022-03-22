@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { API_PUBLIC_ADDRESS } from './_app.js'
+import { API_ADDRESS } from './_app.js'
 import getCurrentDirectory from '../lib/get-current-directory.js'
 import { config } from 'dotenv'
 config()
@@ -45,5 +45,5 @@ export const ODP_SSO_CLIENT_ID = process.env.ODP_SSO_CLIENT_ID || 'SAEON.DataPor
 export const ODP_SSO_CLIENT_SECRET = process.env.ODP_SSO_CLIENT_SECRET || ''
 export const ODP_SSO_CLIENT_SCOPES = process.env.ODP_SSO_CLIENT_SCOPES || 'openid SAEON.DataPortal'
 export const ODP_SSO_CLIENT_REDIRECT =
-  process.env.ODP_SSO_CLIENT_REDIRECT || `${API_PUBLIC_ADDRESS}/http/authenticate/redirect`
+  process.env.ODP_SSO_CLIENT_REDIRECT || `${API_ADDRESS}/http/authenticate/redirect`
 export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'client.sess'
