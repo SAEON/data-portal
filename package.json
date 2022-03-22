@@ -29,9 +29,7 @@
     "build-all-packages": "TC=utc node scripts/build-all-packages.js",
     "publish-all-packages:patch": "TC=utc node scripts/publish-all.js -s patch",
     "publish-all-packages:minor": "TC=utc node scripts/publish-all.js -s minor",
-    "publish-all-packages:major": "TC=utc node scripts/publish-all.js -s major",
-    "************ DEPLOYMENT **********": "",
-    "configure-centos-7-server": "ansible-playbook platform/ansible/playbooks/centos-7.yml -i platform/ansible/inventories/centos-7"
+    "publish-all-packages:major": "TC=utc node scripts/publish-all.js -s major"
   },
   "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
