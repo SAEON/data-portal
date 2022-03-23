@@ -4,7 +4,7 @@ networks:
   sdp_next:
     name: sdp_next
     driver: overlay
-    attachable: true    
+    attachable: true
 
 volumes:
   postgis:
@@ -19,7 +19,7 @@ services:
     image: ghcr.io/saeon/postgis:13
     deploy:
       placement:
-        max_replicas_per_node: 2
+        max_replicas_per_node: 1
       replicas: 1
       rollback_config:
         parallelism: 0
@@ -32,14 +32,14 @@ services:
         delay: 30s
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_DB: databooks
+      POSTGRES_DB: sdp_next
       POSTGRES_PASSWORD: $POSTGIS_PASSWORD
       POSTGRES_USER: $POSTGIS_USERNAME
     ports:
       - 6000:5432
     volumes:
       - postgis:/var/lib/postgresql/data/pgdata
-      - data:/var/lib/catalogue-api
+      - data:/var/lib/sdp-data
     networks:
       - sdp_next
 
@@ -82,22 +82,21 @@ services:
         condition: any
         delay: 30s
     environment:
-      ALLOWED_ORIGINS: https://catalogue.saeon.dvn,https://curation.saeon.dvn
-      API_PUBLIC_ADDRESS: https://api.catalogue.saeon.dvn
+      ALLOWED_ORIGINS: https://catalogue.saeon.dvn,https://ocims.saeon.dvn
+      API_ADDRESS: https://api.catalogue.saeon.dvn
       APP_KEY: $APP_KEY
       CURATOR_CONTACT: pl.chiloane@saeon.nrf.ac.za
-      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za,bn.mcalister@saeon.nrf.ac.za
+      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
       DEPLOYMENT_ENV: production
       DOCKER_DATA_VOLUME: sdp_next_data
       DOCKER_NETWORK: sdp_next
       DOCKER_TMP_VOLUME: sdp_next_tmp
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
-      ENABLE_METADATA: 'true'
       GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
-      METADATA_INTEGRATION_SCHEDULE: '*/30 * * * *'
+      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 4 * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
@@ -105,14 +104,14 @@ services:
       NODE_ENV: production
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       ODP_ADDRESS: https://odp.saeon.dvn
-      ODP_AUTH_SCOPES: 'ODP.Catalogue ODP.Metadata'
+      ODP_AUTH_SCOPES: 'ODP.Catalogue'
       ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
       ODP_FILTER_PATH: odp-filter.js
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
-      ODP_SSO_CLIENT_SCOPES: 'openid ODP.Metadata SAEON.DataPortal'
+      ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
       POSTGIS_CONTAINER_NAME: postgis
-      POSTGIS_DB: databooks
+      POSTGIS_DB: sdp_next
       POSTGIS_HOST: postgis
       POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
       POSTGIS_PASSWORD_PUBLIC: $POSTGIS_PASSWORD_PUBLIC
@@ -123,11 +122,10 @@ services:
       TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
     ports:
       - 6003:3000
-      - 6004:4000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - tmp:/tmp/catalogue-api
-      - data:/var/lib/catalogue-api
+      - tmp:/tmp/sdp-data
+      - data:/var/lib/sdp-data
     networks:
       - sdp_next
 

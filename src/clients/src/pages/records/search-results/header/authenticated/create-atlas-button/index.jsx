@@ -46,7 +46,7 @@ export default ({ cache, catalogue }) => {
     )
   }
 
-  // Get count of all selected records that are valid for databooks
+  // Get count of all selected records that are valid for atlas
   const validCount = getValidCount(selectedIds, selectAll, catalogue, cache)
 
   // Check whether the atlas function is available for current context

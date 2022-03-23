@@ -19,8 +19,4 @@ export default {
   Lists,
   DataDownloadFormSubmissions,
   Atlases: { name: 'atlases' },
-  Databooks: { name: 'databooks' },
-  Dashboards: { name: 'dashboards' },
-  Charts: { name: 'charts' },
-  Filters: { name: 'filters' },
 }

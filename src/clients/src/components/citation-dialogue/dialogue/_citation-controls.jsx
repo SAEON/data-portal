@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import LanguageSelector from './_language-selector'
 import StyleSelector from './_style-selector'
-import { useTheme } from '@mui/material/styles'
+import { Div, Pre } from '../../html-tags'
 
 export default ({
   doi,
@@ -17,8 +17,6 @@ export default ({
   DEFAULT_CITATION_LANG,
   DEFAULT_CITATION_STYLE,
 }) => {
-  const theme = useTheme()
-
   const { error, loading, data } = useQuery(
     gql`
       query ($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
@@ -50,7 +48,7 @@ export default ({
 
   return (
     <>
-      <div style={{ marginTop: theme.spacing(3) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(3) }} />
 
       <LanguageSelector
         setCitationParams={setCitationParams}
@@ -58,7 +56,7 @@ export default ({
         defaultLanguage={DEFAULT_CITATION_LANG}
       />
 
-      <div style={{ marginTop: theme.spacing(3) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(3) }} />
 
       <StyleSelector
         setCitationParams={setCitationParams}
@@ -66,15 +64,15 @@ export default ({
         defaultStyle={DEFAULT_CITATION_STYLE}
       />
 
-      <div style={{ marginTop: theme.spacing(6) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(6) }} />
 
-      <pre style={theme.pre}>{data.catalogue.records.nodes[0].citation}</pre>
+      <Pre>{data.catalogue.records.nodes[0].citation}</Pre>
 
-      <div style={{ marginTop: theme.spacing(3) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(3) }} />
 
-      <DialogActions style={{ paddingLeft: 0, paddingRight: 0 }}>
+      <DialogActions sx={{ paddingLeft: 0, paddingRight: 0 }}>
         {/* DISCLAIMER */}
-        <Typography variant="caption" style={{ marginRight: 'auto' }}>
+        <Typography variant="caption" sx={{ marginRight: 'auto' }}>
           <Link target="_blank" rel="noopener noreferrer" href="https://citation.crosscite.org/">
             crosscite.org
           </Link>{' '}

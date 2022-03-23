@@ -1,8 +1,4 @@
 export default Object.freeze({
-  '/curator-tools': {
-    name: '/curator-tools',
-    description: 'View the curator tools app',
-  },
   '/access': {
     name: '/access',
     description: 'View the /access route on client apps',
@@ -31,10 +27,6 @@ export default Object.freeze({
     name: 'site-analytics:view',
     description: 'View catalogue deployment analytics',
   },
-  'databook:create': {
-    name: 'databook:create',
-    description: 'Create databook from vector-based spatial datasets',
-  },
   'atlas:create': {
     name: 'atlas:create',
     description: 'Create an atlas to view SAEON GeoServer maps',
@@ -54,13 +46,5 @@ export default Object.freeze({
   'permissions:view': {
     name: 'permissions:view',
     description: 'View all permission details',
-  },
-  'es-index:update': {
-    name: 'es-index:update',
-    description: 'Update indexed metadata',
-  },
-  'as-odp-user:curator': {
-    name: 'as-odp-user:curator',
-    description: 'Make requests to 3rd party API using external authorization credentials',
   },
 })

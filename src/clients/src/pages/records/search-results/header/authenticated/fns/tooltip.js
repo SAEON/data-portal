@@ -1,6 +1,5 @@
 /**
  * Get a tooltip string for the Atlas
- * and Databook buttons
  */
 
 export default (selectAll, validCount, selectedIds, cache, max, name) => {

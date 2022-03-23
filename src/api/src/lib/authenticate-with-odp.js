@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import btoa from 'btoa'
-import FormData from 'form-data'
+import { FormData } from 'formdata-node'
 import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_AUTH_SCOPES } from '../config/index.js'
 import { addSeconds, differenceInSeconds } from 'date-fns'
 
@@ -18,10 +18,6 @@ var token_type_
  */
 export default async ({ useCachedToken = true } = {}) => {
   try {
-    const form = new FormData()
-    form.append('grant_type', 'client_credentials')
-    form.append('scope', ODP_AUTH_SCOPES)
-
     /**
      * See if a valid access token
      * is already cached
@@ -35,6 +31,10 @@ export default async ({ useCachedToken = true } = {}) => {
       }
     }
 
+    const form = new FormData()
+    form.append('grant_type', 'client_credentials')
+    form.append('scope', ODP_AUTH_SCOPES)
+
     const { access_token, expires_in, scope, token_type } = await fetch(
       `${ODP_AUTH}/oauth2/token`,
       {
@@ -44,7 +44,12 @@ export default async ({ useCachedToken = true } = {}) => {
         },
         body: form,
       }
-    ).then(res => res.json())
+    ).then(res => {
+      if (res.status !== 200) {
+        throw new Error(res.statusText)
+      }
+      return res.json()
+    })
 
     expires_at = addSeconds(new Date(), expires_in)
     access_token_ = access_token

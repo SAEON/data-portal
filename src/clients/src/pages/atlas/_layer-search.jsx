@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Provider as MenuProvider } from '../../components/snap-menus'
+import { Provider as MenuProvider } from '../../packages/snap-menus'
 import SideMenu from './side-menu'
 import Loading from '../../components/loading'
 import { useQuery, gql } from '@apollo/client'

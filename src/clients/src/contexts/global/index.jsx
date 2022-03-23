@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../packages/quick-form'
 import getUriState from '../../lib/fns/get-uri-state'
 import FromSavedSearch from './from-saved-search'
 

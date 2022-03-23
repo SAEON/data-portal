@@ -4,7 +4,7 @@ import Search from './search'
 import Details from './details'
 import Share from './share'
 import ListItemContextProvider from './_context'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../../../packages/quick-form'
 
 export default props => {
   const { search, createdBy, title, description, type } = props

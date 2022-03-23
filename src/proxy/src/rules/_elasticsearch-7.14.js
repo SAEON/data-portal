@@ -1,6 +1,6 @@
 import { URL } from 'url'
 import { normalize } from 'path'
-import { ELASTICSEARCH_ADDRESS } from '../config.js'
+import { ELASTICSEARCH_ADDRESS, ALLOWED_ES_INDICES } from '../config.js'
 
 const {
   protocol,
@@ -11,8 +11,12 @@ const {
 } = new URL(ELASTICSEARCH_ADDRESS)
 
 export default (requestDetail, { pathname: originPathname, search }) => {
-  const index = originPathname.match(/(?<=\/elasticsearch\/7.14\/)(.*)$/)[0].replace('/_search', '')
   requestDetail.protocol = protocol
+
+  const index = originPathname.match(/(?<=\/elasticsearch\/7.14\/)(.*)$/)[0].replace('/_search', '')
+  if (!ALLOWED_ES_INDICES.includes(index)) {
+    throw new Error(`The index "${index}" is not configured as publicly searchable`)
+  }
 
   return {
     headers: Object.assign(requestDetail.requestOptions.headers, { host }),

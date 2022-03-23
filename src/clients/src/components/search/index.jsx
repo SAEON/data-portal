@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from 'mdi-react/SearchIcon'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../packages/quick-form'
 import { context as globalContext } from '../../contexts/global'
 import debounce from '../../lib/fns/debounce'
 import { useTheme } from '@mui/material/styles'
@@ -26,13 +26,13 @@ const Root = styled('div')(({ theme }) => ({
   },
 }))
 
-export default ({ children, style, autofocus = true, onFocus, onBlur }) => {
+export default ({ children, autofocus = true, onFocus, onBlur }) => {
   const history = useHistory()
   const { global, setGlobal } = useContext(globalContext)
   const theme = useTheme()
 
   return (
-    <Root style={style}>
+    <Root>
       <QuickForm
         effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
         text={global.text || ''}

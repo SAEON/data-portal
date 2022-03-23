@@ -10,7 +10,7 @@ config()
  * the Docker network
  */
 export const POSTGIS_HOST_DEV = process.env.POSTGIS_HOST_DEV || 'localhost'
-export const POSTGIS_DB = process.env.POSTGIS_DB || 'databooks'
+export const POSTGIS_DB = process.env.POSTGIS_DB || 'sdp_local_dev'
 export const POSTGIS_HOST = process.env.POSTGIS_HOST || 'postgis'
 export const POSTGIS_PORT = process.env.POSTGIS_PORT || 5432
 export const POSTGIS_USERNAME = process.env.POSTGIS_USERNAME || 'admin'

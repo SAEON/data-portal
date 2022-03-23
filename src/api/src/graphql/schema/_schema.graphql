@@ -1,0 +1,181 @@
+scalar DateTime
+scalar JSON
+scalar Email
+scalar Void
+scalar WKT_4326
+scalar FunctionString
+
+type PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor: JSON
+  endCursor: JSON
+}
+
+# Interfaces
+
+interface Node {
+  id: ID!
+}
+
+interface Connection {
+  """
+  A list of edges
+  """
+  edges: [Edge!]!
+  """
+  A list of nodes
+  """
+  nodes: [Node!]
+  """
+  Information to aid in pagination
+  """
+  pageInfo: PageInfo!
+  """
+  Count of total results
+  """
+  totalCount: Int!
+}
+
+interface Edge {
+  cursor: String!
+  node: Node!
+}
+
+#  Types
+enum DateBucket {
+  minute
+  hour
+  day
+  month
+  year
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum DownloadsReportDimensions {
+  doi
+  clientSession
+  clientIpAddress
+  clientIpLocation
+  clientUserAgent
+  clientPathname
+  referrer
+  date
+  count
+}
+
+input SortConfig {
+  dimension: DownloadsReportDimensions
+  direction: SortDirection
+}
+
+type DownloadSummary {
+  """
+  DOI of metadata record (or SAEON id if no DOI)
+  """
+  doi: ID!
+  clientSession: String
+  clientIpAddress: String
+  """
+  Resolve an IP Address to location using https://ip-api.com/
+  """
+  clientIpLocation: String
+  clientUserAgent: String
+  clientPathname: String
+  referrer: String
+  """
+  Download date, rounded down to the hour
+  """
+  date(bucket: DateBucket): DateTime!
+  count: Int!
+}
+
+enum ListType {
+  curated
+  public
+}
+
+type List {
+  id: ID!
+  search: JSON!
+  title: String
+  description: String
+  referrer: String
+  url: String
+  createdBy: String
+  disableSidebar: Boolean
+  showSearchBar: Boolean
+  type: ListType
+}
+
+type Query {
+  """
+  Return the Catalogue entity with optional input for indicating source where the catalogue software was linked from
+  """
+  catalogue(referrer: String): Catalogue!
+  """
+  Retrieve search context (i.e. a dynamic list)
+  """
+  list(id: ID!): List
+  """
+  Retrieve many search contexts (i.e. many dynamic lists)
+  """
+  lists: [List!]!
+  """
+  Retrieve a web-browser's previously saved atlas TODO - should be on query
+  """
+  atlas(id: ID!): JSON
+  downloadsReport(sort: SortConfig): [DownloadSummary]!
+  roles: [Role]!
+  permissions: [Permission]!
+  users: [User]!
+  user(id: ID!): User
+}
+
+input DataDownloadFormSubmission {
+  """
+  DOI (or ID if no DOI) of the metadataRecord related to the downloaded dataset
+  """
+  recordId: ID!
+  emailAddress: Email
+  organization: String
+  comments: String
+  allowContact: Boolean
+}
+
+type Mutation {
+  submitDataDownloadForm(input: DataDownloadFormSubmission!): Void
+  logBrowserEvents(input: [BrowserEventInput]!): Void
+  """
+  Save a web-browser's search context for retrieving as an atlas
+  """
+  createAtlas(search: JSON!, createdBy: String!): ID!
+  """
+  Delete a saved list (only curated lists can be deleted)
+  """
+  deleteList(id: ID!): Boolean!
+  """
+  Save a search context (i.e. a dynamic list)
+  """
+  saveList(
+    id: ID
+    search: JSON!
+    createdBy: String!
+    type: ListType
+    title: String
+    description: String
+  ): List!
+  assignRolesToUser(userId: ID!, roleIds: [ID!]!): User!
+}
+
+input BrowserEventInput {
+  type: String!
+  createdAt: DateTime!
+  info: JSON!
+  clientVersion: String!
+  referrer: String
+}

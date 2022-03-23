@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ZoomInIcon from '@mui/icons-material/ZoomIn'
 import KeyIcon from '@mui/icons-material/VpnKey'
 import ViewDataIcon from '@mui/icons-material/BarChart'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../../../../../../../packages/quick-form'
 import MessageDialogue from '../../../../../../../../components/message-dialogue'
 import Slider from '../../../../../../../../components/slider'
 import DataDownloadButton from '../../../../../../../../components/data-download'
@@ -105,7 +105,7 @@ export default ({
               {/* LAYER CONTROLS */}
               <CardContent style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {/* Layer info */}
-                {/* TODO repeated code (in databook as well) */}
+                {/* TODO repeated code */}
                 <MessageDialogue
                   onClick
                   title={onClose => (

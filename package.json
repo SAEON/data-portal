@@ -9,6 +9,7 @@
     "clients": "npm --prefix src/clients start",
     "proxy": "npm --prefix src/proxy start",
     "************ REPOSITORY TOOLING **********": "",
+    "ls": "node -e \"console.log(require('.' + require('path').sep + 'package.json').scripts || {})\"",
     "prepare": "husky install",
     "doc": "doctoc README.md && doctoc platform/README.md && doctoc diagrams/README.md && doctoc src/packages/README.md && doctoc src/tools/README.md && doctoc src/clients/README.md && doctoc src/api/README.md && doctoc src/proxy/README.md && doctoc platform/README.md && doctoc src/clients/tests/README.md && npm run --prefix diagrams build",
     "prettier:changed": "pretty-quick",
@@ -28,19 +29,17 @@
     "build-all-packages": "TC=utc node scripts/build-all-packages.js",
     "publish-all-packages:patch": "TC=utc node scripts/publish-all.js -s patch",
     "publish-all-packages:minor": "TC=utc node scripts/publish-all.js -s minor",
-    "publish-all-packages:major": "TC=utc node scripts/publish-all.js -s major",
-    "************ DEPLOYMENT **********": "",
-    "configure-centos-7-server": "ansible-playbook platform/ansible/playbooks/centos-7.yml -i platform/ansible/inventories/centos-7"
+    "publish-all-packages:major": "TC=utc node scripts/publish-all.js -s major"
   },
   "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "devDependencies": {
     "arg": "^5.0.1",
     "doctoc": "^2.1.0",
-    "eslint": "^8.7.0",
+    "eslint": "^8.11.0",
     "husky": "^7.0.4",
-    "npm-check-updates": "^12.1.0",
-    "prettier": "^2.5.1",
+    "npm-check-updates": "^12.5.4",
+    "prettier": "^2.6.0",
     "pretty-quick": "^3.1.3"
   },
   "repository": {

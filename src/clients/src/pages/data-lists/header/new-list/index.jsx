@@ -5,7 +5,7 @@ import MessageDialogue from '../../../../components/message-dialogue'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import TextField from '@mui/material/TextField'
-import Q from '@saeon/quick-form'
+import Q from '../../../../packages/quick-form'
 import SaveList from './_save-list'
 
 export default () => {

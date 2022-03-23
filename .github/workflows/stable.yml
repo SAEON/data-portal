@@ -2,8 +2,8 @@ name: deploy@stable
 
 on:
   push:
-    branches:
-      - stable
+    tags:
+      - '*'
 
 env:
   REGISTRY: ghcr.io
@@ -119,7 +119,7 @@ jobs:
         with:
           context: src/clients
           build-args: |
-            API_PUBLIC_ADDRESS=https://api.catalogue.saeon.ac.za
+            API_ADDRESS=https://api.catalogue.saeon.ac.za
             CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
             CLIENTS_DEFAULT_NOTICES='Welcome to the SAEON Catalogue!,info'
             CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.ac.za
@@ -127,7 +127,7 @@ jobs:
             CURATOR_CONTACT=pl.chiloane@saeon.nrf.ac.za
             DEPLOYMENT_ENV=production
             PROXY_ADDRESS=https://proxy.saeon.ac.za
-            SUBDOMAIN_APP_ENTRIES=curation-tools
+            SUBDOMAIN_APP_ENTRIES=ocims
             TECHNICAL_CONTACT=zd.smith@saeon.nrf.ac.za
             NGINX_SERVER_BLOCK=nginx/clients-internal.conf
           push: true
@@ -169,7 +169,7 @@ jobs:
         with:
           context: src/clients
           build-args: |
-            API_PUBLIC_ADDRESS=https://api.catalogue.saeon.ac.za
+            API_ADDRESS=https://api.catalogue.saeon.ac.za
             CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
             CLIENTS_DEFAULT_NOTICES='Welcome to the SAEON Catalogue!,info'
             CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.ac.za
@@ -177,7 +177,7 @@ jobs:
             CURATOR_CONTACT=pl.chiloane@saeon.nrf.ac.za
             DEPLOYMENT_ENV=production
             PROXY_ADDRESS=https://proxy.saeon.ac.za
-            SUBDOMAIN_APP_ENTRIES=curation-tools
+            SUBDOMAIN_APP_ENTRIES=ocims
             TECHNICAL_CONTACT=zd.smith@saeon.nrf.ac.za
             NGINX_SERVER_BLOCK=nginx/clients-public.conf
           push: true
