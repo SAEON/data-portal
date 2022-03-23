@@ -1,6 +1,14 @@
 version = 0.1
 
 [[task]]
+name = 'cli:init'
+run = '''
+  export PATH=$PATH:$(pwd)
+  chmod +x bin/index.js
+  chmod +x sdp
+'''
+
+[[task]]
 name = 'install:lockfile'
 run = 'npm ci --force --only=production'
 

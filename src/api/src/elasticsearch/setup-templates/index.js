@@ -1,7 +1,3 @@
-import configureCatalogueTemplate from './catalogue/index.js'
-import configureMetadataTemplate from './metadata/index.js'
+import configureSaeonOdpIndex from './saeon-odp/index.js'
 
-export default async client => [
-  await configureCatalogueTemplate(client),
-  await configureMetadataTemplate(client),
-]
+export default async client => [await configureSaeonOdpIndex(client)]

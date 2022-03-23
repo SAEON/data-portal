@@ -1,4 +1,4 @@
-import { buildCli, describe } from '../../../packages/cli-tools/src/index.js'
+import { buildCli, describe } from '../../packages/cli-tools/src/index.js'
 import require from './lib/require.js'
 
 const importFrom = require(import.meta)

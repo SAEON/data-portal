@@ -1,0 +1,1 @@
+node --no-warnings --experimental-json-modules bin/index.js $@

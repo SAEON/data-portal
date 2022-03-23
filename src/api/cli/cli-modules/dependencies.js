@@ -1,4 +1,4 @@
-import { withFlags, describe } from '../../../../packages/cli-tools/src/index.js'
+import { withFlags, describe } from '../../../packages/cli-tools/src/index.js'
 
 const dependencies = async ({ checkUpdates, update }) => {
   await new Promise(res => setTimeout(res, 1000))
