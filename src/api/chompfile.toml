@@ -1,6 +1,10 @@
 version = 0.1
 
 [[task]]
+name = 'install:lockfile'
+run = 'npm ci --force --only=production'
+
+[[task]]
 name = 'lint'
 run = 'eslint -c .eslintrc.cjs "src/**/*.{js,mjs,cjs}"'
 
@@ -25,4 +29,4 @@ run = """
 [[task]]
 name = 'start:prod'
 env = { NODE_ENV = 'production', TZ = 'utc' }
-run = 'TZ=utc node --no-warnings --experimental-json-modules src'
+run = 'node --no-warnings --experimental-json-modules src'

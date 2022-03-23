@@ -1,6 +1,10 @@
 version = 0.1
 
 [[task]]
+name = 'install:lockfile'
+run = 'npm ci --force --only=production'
+
+[[task]]
 name = 'ncu'
 run = 'ncu'
 

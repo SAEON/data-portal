@@ -29,8 +29,9 @@ RUN echo "SUBDOMAIN_APP_ENTRIES=$SUBDOMAIN_APP_ENTRIES" >> .env
 RUN echo "TECHNICAL_CONTACT=$TECHNICAL_CONTACT" >> .env
 
 COPY . .
-RUN npm ci --force --only=production
-RUN npm run build
+RUN npm install -g chomp
+RUN chomp install:lockfile
+RUN chomp build
 
 
 

@@ -5,7 +5,7 @@ name = 'build'
 run = 'rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js'
 
 [[task]]
-name = 'build:lockfile'
+name = 'install:lockfile'
 run = 'npm ci --force --only=production'
 
 [[task]]

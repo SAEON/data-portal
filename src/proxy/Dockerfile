@@ -5,7 +5,8 @@ ENV ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS
 
 WORKDIR /app
 COPY . .
-RUN npm ci --force --only=production
+RUN npm install -g chomp
+RUN chomp install:lockfile
 EXPOSE 8001 8002
 
-CMD ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS npm run start:prod
+CMD ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS chomp start:prod

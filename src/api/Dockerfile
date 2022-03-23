@@ -115,11 +115,11 @@ ARG SAEON_ODP_INTEGRATION_SCHEDULE
 ENV SAEON_ODP_INTEGRATION_SCHEDULE=$SAEON_ODP_INTEGRATION_SCHEDULE
 
 WORKDIR /app
-# TODO - this looks like it should be updated
-COPY --from=docker:19.03 /usr/local/bin/docker /usr/local/bin/
+COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/
 COPY . .
-RUN npm ci --force --only=production
-EXPOSE 3000 4000
+RUN npm install -g chomp
+RUN chomp install:lockfile
+EXPOSE 3000
 
 CMD \
   SAEON_ODP_INTEGRATION_SCHEDULE=$SAEON_ODP_INTEGRATION_SCHEDULE \
@@ -159,4 +159,4 @@ CMD \
   POSTGIS_PORT=$POSTGIS_PORT \
   POSTGIS_USERNAME=$POSTGIS_USERNAME \
   NODE_TLS_REJECT_UNAUTHORIZED=$NODE_TLS_REJECT_UNAUTHORIZED \
-  npm run start:prod
+  chomp start:prod
