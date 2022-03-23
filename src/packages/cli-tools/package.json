@@ -19,12 +19,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/single-sign-on/single-sign-on.git"
+    "url": "git+https://github.com/saeon/data-portal.git"
   },
   "bugs": {
-    "url": "https://github.com/single-sign-on/single-sign-on/issues"
+    "url": "https://github.com/saeon/data-portal/issues"
   },
-  "homepage": "https://github.com/single-sign-on/single-sign-on/tree/next/src/@saeon/cli-tools",
+  "homepage": "https://github.com/saeon/data-portal/tree/next/src/@saeon/cli-tools",
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "dependencies": {

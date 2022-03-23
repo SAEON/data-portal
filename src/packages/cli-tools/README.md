@@ -1,13 +1,13 @@
-# @single-sign-on/cli-tools
+# @saeon/cli-tools
 
 ```sh
-npm i @single-sign-on/cli-tools
+npm i @saeon/cli-tools
 ```
  
 # Usage
 
 ```js
-import { buildCli, describe, withFlags } from '@single-sign-on/cli-tools'
+import { buildCli, describe, withFlags } from '@saeon/cli-tools'
 
 /**
  * Specify a function that takes a single object
