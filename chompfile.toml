@@ -3,15 +3,15 @@ version = 0.1
 # START SCRIPTS
 
 [[task]]
-name = 'api'
+name = 'start:api'
 run = 'chomp start -c src/api/chompfile.toml'
 
 [[task]]
-name = 'clients'
+name = 'start:clients'
 run = 'chomp start -c src/clients/chompfile.toml'
 
 [[task]]
-name = 'proxy'
+name = 'start:proxy'
 run = 'chomp start -c src/proxy/chompfile.toml'
 
 # REPOSITORY TOOLING
