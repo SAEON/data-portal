@@ -4,8 +4,9 @@
 # SAEON Catalogue software
 
 A suite of services that provide a platform for searching and exploring SAEON-curated datasets. The tech stack is as listed below. This document shows how to setup a development environment for contributions, and also explains how to build and deploy the services.
- 
- ## The stack
+
+## The stack
+
 - Docker
 - Postgres + PostGIS
 - GDAL (Docker image)
@@ -14,11 +15,13 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 - Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 ## 3rd party service requirements
+
 - Docker
 - MongoDB
 - Elasticsearch & Kibana (external)
 
 ## Gotchas
+
 - The Node.js API must have access to the Docker CLI to run GDAL commands. Since the API is deployed as a Docker container, this means that the host's Docker engine and CLI should be mounted into the API Docker container (refer to [docker-compose.yml](deployments/stable/docker-compose.yml))
 
 # README Contents
@@ -28,7 +31,6 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 
 - [Overview](#overview)
     - [User/client scenarios](#userclient-scenarios)
-    - [Databook scenarios](#databook-scenarios)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
@@ -52,18 +54,18 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Overview
+
 In summary, this software facilitates:
 
 - Searching metadata records
 - Previewing WMS maps when metadata records support this
 - Exploring shapefile datasets linked to by the metadata records
 
-
 ### User/client scenarios
+
 The platform is primarily driven by user interactions with the React.js UI application. This sequence diagram shows all the user/client scenarios for the basic search / preview / download functionality:
 
 ![Search sequence scenario](/diagrams/dist/client-scenarios.png)
-
 
 # Quick start
 
@@ -98,7 +100,7 @@ npm run install-dependencies
 # Build local packages
 npm run build-all-packages
 ```
- 
+
 ## Local development
 
 The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
@@ -151,6 +153,7 @@ Then [configure the API for first use](#api-configuration)
 - mongodb://localhost:27017
 
 # API configuration
+
 The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API. **NOTE: There are actually TWO GraphQL APIs - one is for internal use and should NOT be exposed outside a private network. Use the internal HTTP service to configure the API**.
 
 Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can interact with the API (or whatever port you have configured for deployment)
@@ -160,16 +163,17 @@ Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can inte
 mutation {
   configureDefaultPostGISLayers
 }
- 
+
 # Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
 mutation {
   configureElasticsearchIndex
 }
-``` 
+```
 
 # Deployment and installation
 
 ## Docker Stack
+
 TODO
 
 ## SAEON Data Portal endpoints
@@ -225,4 +229,3 @@ TODO
 ## Repository tools
 
 [src/tools/README.md](src/tools/)
-

@@ -1,0 +1,24 @@
+version = 0.1
+
+[[task]]
+name = 'ncu'
+run = 'ncu'
+
+[[task]]
+name = 'ncu:u'
+run = 'ncu -u'
+
+[[task]]
+name = 'start'
+env = { NODE_ENV = 'development', TZ = 'utc' }
+run = """
+  nodemon \
+    --watch ./src \
+    --exec 'prettier --write \"src/**/*.@(js|json)\" \
+  && node --trace-warnings --experimental-json-modules src'
+"""
+
+[[task]]
+name = 'start:prod'
+env = { NODE_ENV = 'production', TZ = 'utc' }
+run = 'node --no-warnings --experimental-json-modules src'

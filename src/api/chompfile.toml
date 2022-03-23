@@ -1,0 +1,28 @@
+version = 0.1
+
+[[task]]
+name = 'lint'
+run = 'eslint -c .eslintrc.cjs "src/**/*.{js,mjs,cjs}"'
+
+[[task]]
+name = 'ncu'
+run = 'ncu -x es7.14,graphql'
+
+[[task]]
+name = 'ncu:u'
+run = 'ncu -u -x es7.14,graphql'
+
+[[task]]
+name = 'start'
+env = { NODE_ENV = 'development', TZ = 'utc', NODE_TLS_REJECT_UNAUTHORIZED='0' }
+run = """
+  nodemon --ext js,graphql,json \
+    --watch ./src \
+    --exec 'prettier --write "src/**/*.@(js|json|graphql)" \
+  && node --trace-warnings --experimental-json-modules src'
+"""
+
+[[task]]
+name = 'start:prod'
+env = { NODE_ENV = 'production', TZ = 'utc' }
+run = 'TZ=utc node --no-warnings --experimental-json-modules src'

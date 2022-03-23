@@ -1,49 +1,34 @@
 version = 0.1
 
 [[task]]
-  name = "build"
-  serial = true
-  deps = ["babel", "jspm"]
+name = 'build'
+run = 'rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js'
 
 [[task]]
-  name = "babel"
-  serial = false
-  deps = ["babel-js", "babel-jsx", "babel-ts", "babel-tsx"]
+name = 'build:lockfile'
+run = 'npm ci --force --only=production'
 
 [[task]]
-  name = "babel-js"
-  target = "_build/#.js"
-  deps = ["src/#.js"]
-  template = "babel"
-  [task.template-options]
-    configFile = "babel.config.cjs"
+name = 'lint'
+run = 'eslint -c .eslintrc.cjs "src/**/*.{js,jsx}"'
 
 [[task]]
-  name = "babel-jsx"
-  target = "_build/#.js"
-  deps = ["src/#.jsx"]
-  template = "babel"
-  [task.template-options]
-    configFile = "babel.config.cjs"
+name = 'ncu'
+run = 'ncu -x react-router,react-router-dom'
 
 [[task]]
-  name = "babel-ts"
-  target = "_build/#.js"
-  deps = ["src/#.ts"]
-  template = "babel"
-  [task.template-options]
-    configFile = "babel.config.cjs"
+name = 'ncu -u'
+run = 'ncu -u -x react-router,react-router-dom'
 
 [[task]]
-  name = "babel-tsx"
-  target = "_build/#.js"
-  deps = ["src/#.tsx"]
-  template = "babel"
-  [task.template-options]
-    configFile = "babel.config.cjs"
+name = 'start'
+env = { NODE_ENV="development" }
+run = """
+  rimraf ./dist \
+  && onchange \
+    "src/**/*.@(js|jsx|ts|tsx|css|scss)" \
+    "../packages/logger/dist/**/*.@(js|jsx|ts|tsx)" \
+    -- prettier --write {{changed}} \
+    & webpack serve --port 3001 --config webpack/index.js
+  """
 
-[[task]]
-  name = "jspm"
-  target = "_build/entry-points/index/index.html"
-  deps = ["src/entry-points/index/index-jspm.html"]
-  template = "jspm"

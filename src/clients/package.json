@@ -10,14 +10,6 @@
     "SAEON",
     "ULWAZI"
   ],
-  "scripts": {
-    "build": "rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js",
-    "_build": "chomp",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" \"../packages/logger/dist/**/*.@(js|jsx|ts|tsx)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",
-    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
-    "ncu": "ncu -x react-router,react-router-dom",
-    "ncu -u": "ncu -u -x react-router,react-router-dom"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SAEON/catalogue.git"

@@ -4,13 +4,6 @@
   "description": "Node.js/Express.js server supporting the @saeon/clients applications",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc NODE_TLS_REJECT_UNAUTHORIZED=0 node --trace-warnings --experimental-json-modules src'",
-    "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
-    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,mjs,cjs}\"",
-    "ncu": "ncu -x es7.14,graphql",
-    "ncu -u": "ncu -u -x es7.14,graphql"
-  },
   "keywords": [
     "@saeon/api"
   ],

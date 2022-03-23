@@ -1,0 +1,124 @@
+version = 0.1
+
+# START SCRIPTS
+
+[[task]]
+name = 'api'
+run = 'chomp start -c src/api/chompfile.toml'
+
+[[task]]
+name = 'clients'
+run = 'chomp start -c src/clients/chompfile.toml'
+
+[[task]]
+name = 'proxy'
+run = 'chomp start -c src/proxy/chompfile.toml'
+
+# REPOSITORY TOOLING
+
+[[task]]
+name = 'doc'
+deps = ['doctoc']
+run = 'chomp -c diagrams/chompfile.toml build'
+
+[[task]]
+name = 'doctoc'
+run = '''
+  doctoc README.md
+  doctoc diagrams/README.md
+  doctoc src/clients/README.md
+  doctoc src/api/README.md
+  doctoc src/proxy/README.md
+  doctoc src/clients/tests/README.md
+'''
+
+[[task]]
+name = 'git:configure'
+run = 'git config --local include.path ../.gitconfig'
+
+[[task]]
+name = 'git:add-all'
+run = 'git add .'
+
+[[task]]
+name = 'prepare'
+run = 'husky install'
+
+[[task]]
+name = 'prettier'
+run = 'prettier --write "./**/*.@(js|jsx|json|mjs|cjs|graphql|yml)"'
+
+[[task]]
+name = 'prettier:changed'
+run = 'pretty-quick'
+
+[[task]]
+name = 'lint'
+deps = [
+  'lint:api',
+  'lint:client',
+  'lint:proxy'
+]
+
+[[task]]
+name = 'lint:api'
+run = 'chomp lint -c src/api/chompfile.toml'
+
+[[task]]
+name = 'lint:client'
+run = 'chomp lint -c src/clients/chompfile.toml'
+
+[[task]]
+name = 'lint:proxy'
+run = 'chomp lint -c src/proxy/chompfile.toml'
+
+# DEPENDENCY MANAGEMNT
+
+[[task]]
+name = 'check-dependency-updates'
+env = { TC='utc' }
+run = 'node scripts/manage-dependencies.js'
+
+[[task]]
+name = 'clean-installed-files'
+run = 'find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete'
+
+[[task]]
+name = 'update-dependencies'
+env = { TC='utc' }
+run = 'node scripts/manage-dependencies.js -u && node scripts/install-dependencies.js'
+
+[[task]]
+name = 'install-dependencies'
+env = { TC='utc' }
+run = 'node scripts/install-dependencies.js'
+
+[[task]]
+name = 'ncu'
+run = 'ncu'
+
+[[task]]
+name = 'ncu:u'
+run = 'ncu -u'
+
+# PACKAGES
+
+[[task]]
+name = 'build-all-packages'
+env = { TC='utc' }
+run = 'node scripts/build-all-packages.js'
+
+[[task]]
+name = 'publish-all-packages:major'
+env = { TC='utc' }
+run = 'node scripts/publish-all.js -s major'
+
+[[task]]
+name = 'publish-all-packages:minor'
+env = { TC='utc' }
+run = 'node scripts/publish-all.js -s minor'
+
+[[task]]
+name = 'publish-all-packages:patch'
+env = { TC='utc' }
+run = 'node scripts/publish-all.js -s patch'
