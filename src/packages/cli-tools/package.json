@@ -14,15 +14,6 @@
     }
   },
   "peerDependencies": {},
-  "scripts": {
-    "build": "rm -rf dist && rollup --config rollup.config.js",
-    "publish:patch": "npm run build && TC=utc node ../../../scripts/publish.js -p @saeon/cli-tools -s patch",
-    "publish:minor": "npm run build && TC=utc node ../../../scripts/publish.js -p @saeon/cli-tools -s minor",
-    "publish:major": "npm run build && TC=utc node ../../../scripts/publish.js -p @saeon/cli-tools -s major",
-    "prettier:watch": "onchange \"src/**/*.@(js|jsx|css|scss)\" -- prettier --write {{changed}}",
-    "ncu": "ncu",
-    "ncu -u": "ncu -u"
-  },
   "keywords": [
     "@saeon/cli-tools"
   ],
