@@ -36,7 +36,6 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
     - [Endpoints](#endpoints)
-- [API configuration](#api-configuration)
 - [Deployment and installation](#deployment-and-installation)
   - [Docker Stack](#docker-stack)
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
@@ -92,13 +91,13 @@ git clone git@github.com:SAEON/catalogue.git catalogue
 cd catalogue
 
 # Update repository git configuration
-npm run configure-git
+chomp configure-git
 
 # Install package dependencies (this might take several minutes on the first run)
-npm run install-dependencies
+chomp install-dependencies
 
 # Build local packages
-npm run build-all-packages
+chomp build-all-packages
 ```
 
 ## Local development
@@ -128,13 +127,13 @@ docker run --net=sdp_local_dev --name elasticsearch --memory 1.5g --cpus 1.5 --r
 docker run --net=sdp_local_dev --name kibana --memory 256m --cpus 2 -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 -d -p 5601:5601 docker.elastic.co/kibana/kibana:7.14.1
 
 # Start the Node.js proxy server
-npm run proxy
+chomp start:proxy
 
 # Start the Node.js API server
-npm run api
+chomp start:api
 
 # Start the React.js clients
-npm run clients
+chomp start:clients
 ```
 
 Then [configure the API for first use](#api-configuration)
@@ -143,32 +142,13 @@ Then [configure the API for first use](#api-configuration)
 
 - http://localhost:3001
 - http://localhost:3000
-- http://localhost:3000/graphql (public API)
-- http://localhost:4000/graphql (internal API)
+- http://localhost:3000/graphql
 - http://localhost:8001 (proxy)
 - http://localhost:8002 (proxy logs)
 - http://localhost:9200
 - http://localhost:5601
 - postgis://localhost:5432
 - mongodb://localhost:27017
-
-# API configuration
-
-The API is configured via HTTP using GraphQL mutations. Run the following mutations to configure a running instance of the API. **NOTE: There are actually TWO GraphQL APIs - one is for internal use and should NOT be exposed outside a private network. Use the internal HTTP service to configure the API**.
-
-Navigate to GraphQL Playground (`<api-address>:4000/graphql`) where you can interact with the API (or whatever port you have configured for deployment)
-
-```graphql
-# Configure default PostGIS tables (TODO - remove)
-mutation {
-  configureDefaultPostGISLayers
-}
-
-# Integrate ODP data into the Elasticsearch index. This mutation can be run whenever there are new documents to integrate
-mutation {
-  configureElasticsearchIndex
-}
-```
 
 # Deployment and installation
 
@@ -182,8 +162,7 @@ TODO
 
 - https://catalogue.saeon.dvn
 - https://api.catalogue.saeon.dvn
-- https://api.catalogue.saeon.dvn/graphql (public API)
-- http://api.catalogue.saeon.dvn:5002/graphql (internal API)
+- https://api.catalogue.saeon.dvn/graphql
 - https://proxy.saeon.dvn
 - http://catalogue.saeon.dvn:8002 (for proxy logs)
 - postgis://catalogue.saeon.dvn:5442
@@ -193,8 +172,7 @@ TODO
 
 - https://catalogue.saeon.ac.za
 - https://api.catalogue.saeon.ac.za
-- https://api.catalogue.saeon.ac.za/graphql (public API)
-- http://api.catalogue.saeon.int:5002/graphql (internal API)
+- https://api.catalogue.saeon.ac.za/graphql
 - https://proxy.saeon.ac.za
 - http://catalogue.saeon.int:8002 (for proxy logs)
 - postgis://catalogue.saeon.int:5442
