@@ -18,14 +18,12 @@ services:
   postgis:
     image: ghcr.io/saeon/postgis:13
     deploy:
-      placement:
-        max_replicas_per_node: 1
       replicas: 1
       rollback_config:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
