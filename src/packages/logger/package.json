@@ -35,7 +35,7 @@
     "url": "https://github.com/SAEON/catalogue/issues"
   },
   "homepage": "https://github.com/SAEON/catalogue/tree/next/src/packages/logger",
-  "author": "zach@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "devDependencies": {
     "@apollo/client": "^3.5.10",

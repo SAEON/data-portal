@@ -7,7 +7,7 @@
     "build": "npm run client-scenarios",
     "client-scenarios": "sudo chmod -R 777 dist/ && docker run --rm -it -v $(pwd):/opt/mermaid minlag/mermaid-cli:latest -C /opt/mermaid/style.css -c /opt/mermaid/config.json -i /opt/mermaid/src/client-scenarios.mmd -o /opt/mermaid/dist/client-scenarios.png"
   },
-  "author": "zach@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "dependencies": {}
 }

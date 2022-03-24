@@ -10,7 +10,7 @@
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
-  "author": "zach@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "dependencies": {
     "csv-stringify": "^6.0.5",

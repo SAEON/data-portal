@@ -16,7 +16,7 @@
     "url": "https://github.com/SAEON/catalogue/issues"
   },
   "homepage": "https://github.com/SAEON/catalogue/tree/master/src/reporting",
-  "author": "zach@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.17.6",

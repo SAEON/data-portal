@@ -85,7 +85,7 @@ services:
       ALLOWED_ORIGINS: https://catalogue.saeon.ac.za,https://ocims.saeon.int
       API_ADDRESS: https://api.catalogue.saeon.ac.za
       APP_KEY: $APP_KEY
-      CURATOR_CONTACT: pl.chiloane@saeon.nrf.ac.za
+      CURATOR_CONTACT: curation@saeon.nrf.ac.za
       DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
       SAEON_ODP_INTEGRATION_SCHEDULE: '* * 4 * * *'
@@ -119,7 +119,7 @@ services:
       POSTGIS_PORT: 5432
       POSTGIS_USERNAME_PUBLIC: $POSTGIS_USERNAME_PUBLIC
       POSTGIS_USERNAME: $POSTGIS_USERNAME
-      TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
+      TECHNICAL_CONTACT: development@saeon.nrf.ac.za
       TZ: utc
     ports:
       - 7002:3000

@@ -9,9 +9,9 @@ export const CLIENTS_DEFAULT_NOTICES = process.env.CLIENTS_DEFAULT_NOTICES || ''
 export const CATALOGUE_SOURCE_CODE_URI =
   process.env.CATALOGUE_SOURCE_CODE_URI || 'https://github.com/SAEON/catalogue'
 
-export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'pl.chiloane@saeon.nrf.ac.za'
+export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'curation@saeon.nrf.ac.za'
 
-export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'zd.smith@saeon.nrf.ac.za'
+export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'development@saeon.nrf.ac.za'
 
 export const CATALOGUE_CLIENT_MAX_ATLAS_LAYERS = 1000
 
