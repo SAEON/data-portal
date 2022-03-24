@@ -1,12 +1,21 @@
 FROM node:17.7.1
 
+ARG TZ
+ENV TZ=$TZ
+
+ARG NODE_ENV
+ENV NODE_ENV=$NODE_ENV
+
 ARG ELASTICSEARCH_ADDRESS=http://localhost:9200
 ENV ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS
 
 WORKDIR /app
 COPY . .
-RUN npm install -g chomp
-RUN chomp install:lockfile
+RUN npm ci --only=production
 EXPOSE 8001 8002
 
-CMD ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS chomp start:prod
+CMD \
+  ELASTICSEARCH_ADDRESS=$ELASTICSEARCH_ADDRESS \
+  TZ=$TZ \
+  NODE_ENV=$NODE_ENV \
+  node --no-warnings --experimental-json-modules src

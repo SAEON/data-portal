@@ -114,11 +114,13 @@ ENV HOSTNAME=$HOSTNAME
 ARG SAEON_ODP_INTEGRATION_SCHEDULE
 ENV SAEON_ODP_INTEGRATION_SCHEDULE=$SAEON_ODP_INTEGRATION_SCHEDULE
 
+ARG TZ
+ENV TZ=$TZ
+
 WORKDIR /app
 COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/
 COPY . .
-RUN npm install -g chomp
-RUN chomp install:lockfile
+RUN npm ci --only=production
 EXPOSE 3000
 
 CMD \
@@ -159,4 +161,5 @@ CMD \
   POSTGIS_PORT=$POSTGIS_PORT \
   POSTGIS_USERNAME=$POSTGIS_USERNAME \
   NODE_TLS_REJECT_UNAUTHORIZED=$NODE_TLS_REJECT_UNAUTHORIZED \
-  chomp start:prod
+  TZ=$TZ \
+  node --no-warnings --experimental-json-modules src

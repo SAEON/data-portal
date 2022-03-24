@@ -60,6 +60,8 @@ services:
         delay: 30s
     environment:
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
+      TZ: utc
+      NODE_ENV: production
     ports:
       - 6001:8001
       - 6002:8002
@@ -120,6 +122,7 @@ services:
       POSTGIS_USERNAME_PUBLIC: $POSTGIS_USERNAME_PUBLIC
       POSTGIS_USERNAME: $POSTGIS_USERNAME
       TECHNICAL_CONTACT: zd.smith@saeon.nrf.ac.za
+      TZ: utc
     ports:
       - 6003:3000
     volumes:

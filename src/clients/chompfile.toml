@@ -5,10 +5,6 @@ name = 'build'
 run = 'rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js'
 
 [[task]]
-name = 'install:lockfile'
-run = 'npm ci --force --only=production'
-
-[[task]]
 name = 'lint'
 run = 'eslint -c .eslintrc.cjs "src/**/*.{js,jsx}"'
 

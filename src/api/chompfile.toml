@@ -9,10 +9,6 @@ run = '''
 '''
 
 [[task]]
-name = 'install:lockfile'
-run = 'npm ci --force --only=production'
-
-[[task]]
 name = 'lint'
 run = 'eslint -c .eslintrc.cjs "src/**/*.{js,mjs,cjs}"'
 
@@ -33,8 +29,3 @@ run = """
     --exec 'prettier --write "src/**/*.@(js|json|graphql)" \
   && node --trace-warnings --experimental-json-modules src'
 """
-
-[[task]]
-name = 'start:prod'
-env = { NODE_ENV = 'production', TZ = 'utc' }
-run = 'node --no-warnings --experimental-json-modules src'
