@@ -1,5 +1,5 @@
 import arg from 'arg'
-import { exec } from './tools.js'
+import { exec } from './exe.js'
 
 const ARGS = arg({
   '--semver': String,

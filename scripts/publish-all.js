@@ -1,10 +1,8 @@
 import arg from 'arg'
 import { normalize, join } from 'path'
-import { getDirname, apply, exec, print } from './tools.js'
+import { getDirname, apply } from './exe.js'
 
 const __dirname = getDirname(import.meta.url)
-
-const TIMEOUT = 30000
 
 const ARGS = arg({
   '--semver': String,
