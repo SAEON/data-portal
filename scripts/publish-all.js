@@ -25,12 +25,3 @@ apply({
   script: `publish:${SEMVER}`,
   ignore: [],
 })
-
-// Quick pause, allow npm registry to reflect
-console.log('Give NPM registry a chance to reflect updates')
-await new Promise(res => setTimeout(res, TIMEOUT))
-
-// Update all packages with new versions
-const REPOSITORY_PATH = normalize(join(__dirname, '../'))
-print('Updating repository dependencies after package publish')
-exec(`npm --prefix ${REPOSITORY_PATH} run update-dependencies`)

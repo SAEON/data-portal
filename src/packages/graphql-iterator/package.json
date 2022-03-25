@@ -13,14 +13,6 @@
   "peerDependencies": {
     "node-fetch": ">=3"
   },
-  "scripts": {
-    "build": "rimraf ./dist && rollup --config rollup.config.js",
-    "publish:patch": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/graphql-iterator -s patch",
-    "publish:minor": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/graphql-iterator -s minor",
-    "publish:major": "npm run build && TC=utc node ../../../scripts/publish.js -p  @saeon/graphql-iterator -s major",
-    "ncu": "ncu",
-    "ncu -u": "ncu -u"
-  },
   "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "dependencies": {

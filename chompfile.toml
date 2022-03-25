@@ -1,5 +1,13 @@
 version = 0.1
 
+[[task]]
+name = 'ncu'
+run = 'ncu'
+
+[[task]]
+name = 'ncu:u'
+run = 'ncu -u'
+
 # START SCRIPTS
 
 [[task]]
@@ -69,50 +77,61 @@ run = 'chomp lint -c src/proxy/chompfile.toml'
 # DEPENDENCY MANAGEMNT
 
 [[task]]
-name = 'check-dependency-updates'
-env = { TC='utc' }
-run = 'node scripts/manage-dependencies.js'
-
-[[task]]
-name = 'clean-installed-files'
+name = 'clean-deps'
 run = 'find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete'
 
 [[task]]
-name = 'update-dependencies'
-env = { TC='utc' }
-run = 'node scripts/manage-dependencies.js -u && node scripts/install-dependencies.js'
+name = 'ncu:all'
+run = '''
+  chomp ncu
+'''
 
 [[task]]
-name = 'install-dependencies'
-env = { TC='utc' }
-run = 'node scripts/install-dependencies.js'
+name = 'ncu-u:all'
+run = '''
+  chomp ncu:u
+  chomp ncu:u -c src/api/chompfile.toml
+  chomp ncu:u -c src/clients/chompfile.toml
+  chomp ncu:u -c src/proxy/chompfile.toml
+  chomp ncu:u -c src/packages/cli-tools/chompfile.toml
+  chomp ncu:u -c src/packages/graphql-iterator/chompfile.toml
+  chomp ncu:u -c src/packages/logger/chompfile.toml
+'''
 
 [[task]]
-name = 'ncu'
-run = 'ncu'
+name = 'deps:install'
+run = '''
+  npm install
+  npm --prefix src/api install
+  npm --prefix src/clients install
+  npm --prefix src/proxy install
+  npm --prefix src/packages/cli-tools install
+  npm --prefix src/packages/graphql-iterator install
+  npm --prefix src/packages/logger install
+'''
 
 [[task]]
-name = 'ncu:u'
-run = 'ncu -u'
+name = 'deps:update'
+deps = ['ncu-u:all', 'deps:install']
 
 # PACKAGES
 
 [[task]]
-name = 'build-all-packages'
+name = 'pkgs:build'
 env = { TC='utc' }
 run = 'node scripts/build-all-packages.js'
 
 [[task]]
-name = 'publish-all-packages:major'
+name = 'pkgs:publish:major'
 env = { TC='utc' }
 run = 'node scripts/publish-all.js -s major'
 
 [[task]]
-name = 'publish-all-packages:minor'
+name = 'pkgs:publish:minor'
 env = { TC='utc' }
 run = 'node scripts/publish-all.js -s minor'
 
 [[task]]
-name = 'publish-all-packages:patch'
+name = 'pkgs:publish:patch'
 env = { TC='utc' }
 run = 'node scripts/publish-all.js -s patch'
