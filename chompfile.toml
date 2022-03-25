@@ -127,14 +127,17 @@ run = '''
 [[task]]
 name = 'pkgs:publish:major'
 env = { TC='utc' }
+deps = ['pkgs:build']
 run = 'node scripts/publish-all.js -s major'
 
 [[task]]
 name = 'pkgs:publish:minor'
 env = { TC='utc' }
+deps = ['pkgs:build']
 run = 'node scripts/publish-all.js -s minor'
 
 [[task]]
 name = 'pkgs:publish:patch'
 env = { TC='utc' }
+deps = ['pkgs:build']
 run = 'node scripts/publish-all.js -s patch'
