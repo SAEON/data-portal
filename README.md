@@ -41,14 +41,10 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
     - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
     - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
-- [Documentation](#documentation)
+- [More documentation](#more-documentation)
   - [API](#api)
   - [Proxy](#proxy)
   - [Clients](#clients)
-  - [Server configuration](#server-configuration)
-  - [NPM packages](#npm-packages)
-  - [Updating Diagrams](#updating-diagrams)
-  - [Repository tools](#repository-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -57,8 +53,8 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 In summary, this software facilitates:
 
 - Searching metadata records
-- Previewing WMS maps when metadata records support this
-- Exploring shapefile datasets linked to by the metadata records
+- Previewing WMS maps of datasets when metadata records support this
+- Downloading resources linked to by the metadata records
 
 ### User/client scenarios
 
@@ -73,15 +69,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Engine
-2. Node.js **node:17.7.1**
-
-```sh
-# Make sure that Node.js v17.7.2 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-# Assuming an Ubuntu Linux environment
-curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
-sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
-sudo apt-get install -y nodejs
-```
+2. Node.js **node:17.8.0**
 
 ## Install source code and dependencies
 
@@ -89,6 +77,9 @@ sudo apt-get install -y nodejs
 # Download the source code
 git clone git@github.com:SAEON/catalogue.git catalogue
 cd catalogue
+
+# Install the chomp CLI
+npm install -g chomp
 
 # Update repository git configuration
 chomp configure-git
@@ -101,9 +92,6 @@ chomp build-all-packages
 ```
 
 ## Local development
-
-The catalogue software comprises three services, and is dependent on additional 3rd party services. These services all need to be started (order is important). **_The first time you start the catalogue services you need to be on the SAEON VPN_** - Elasticsearch is configured automatically and populated with data made available via the the SAEON Open Data Platform (ODP). After the first start you don't need to be connected to the VPN when developing on your local machine.
-
 Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
 
 ```sh
@@ -178,7 +166,7 @@ TODO
 - postgis://catalogue.saeon.int:5442
 - mongodb://catalogue.saeon.int:27017
 
-# Documentation
+# More documentation
 
 ## API
 
@@ -191,19 +179,3 @@ TODO
 ## Clients
 
 [src/clients/README.md](src/clients/)
-
-## Server configuration
-
-[platform/README.md](platform/)
-
-## NPM packages
-
-[src/packages/README.md](src/packages/)
-
-## Updating Diagrams
-
-[diagrams/README.md](diagrams/)
-
-## Repository tools
-
-[src/tools/README.md](src/tools/)

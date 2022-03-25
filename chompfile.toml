@@ -18,14 +18,8 @@ run = 'chomp start -c src/proxy/chompfile.toml'
 
 [[task]]
 name = 'doc'
-deps = ['doctoc']
-run = 'chomp -c diagrams/chompfile.toml build'
-
-[[task]]
-name = 'doctoc'
 run = '''
   doctoc README.md
-  doctoc diagrams/README.md
   doctoc src/clients/README.md
   doctoc src/api/README.md
   doctoc src/proxy/README.md
