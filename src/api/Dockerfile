@@ -118,9 +118,22 @@ ARG TZ
 ENV TZ=$TZ
 
 WORKDIR /app
+
+# Allow access to host's Docker engine
 COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/
+
+# Copy code
 COPY . .
+
+# Install deps
 RUN npm ci --only=production
+
+# Setup the CLI
+ENV PATH="/app/src/api/cli:$PATH"
+RUN chmod +x /app/src/api/cli/bin/index.js
+RUN chmod +x /app/src/api/cli/sdp
+
+# Expose HTTP interface
 EXPOSE 3000
 
 CMD \

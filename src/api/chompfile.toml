@@ -4,7 +4,7 @@ version = 0.1
 name = 'cli:init'
 run = '''
   export PATH=$PATH:$(pwd)
-  chmod +x bin/index.js
+  chmod +x cli/bin/index.js
   chmod +x sdp
 '''
 
