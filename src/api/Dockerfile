@@ -130,6 +130,9 @@ RUN npm ci --only=production
 
 # Setup the CLI
 ENV PATH="/app/src/api/cli:$PATH"
+RUN pwd
+RUN ls
+RUN ls /app
 RUN chmod +x /app/src/api/cli/bin/index.js
 RUN chmod +x /app/src/api/cli/sdp
 
