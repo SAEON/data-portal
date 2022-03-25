@@ -129,9 +129,9 @@ COPY . .
 RUN npm ci --only=production
 
 # Setup the CLI
-ENV PATH="/app/src/api/cli:$PATH"
-RUN chmod +x src/api/cli/bin/index.js
-RUN chmod +x src/api/cli/sdp
+ENV PATH="cli:$PATH"
+RUN chmod +x cli/bin/index.js
+RUN chmod +x cli/sdp
 
 # Expose HTTP interface
 EXPOSE 3000
