@@ -7,10 +7,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  API_IMAGE_NAME: saeon/sdp-api
-  PROXY_IMAGE_NAME: saeon/sdp-proxy
-  INTERNAL_CLIENTS_IMAGE_NAME: saeon/sdp-clients-int
-  PUBLIC_CLIENTS_IMAGE_NAME: saeon/sdp-clients-pub
+  API_IMAGE_NAME: saeon/sdp-dev-api
+  PROXY_IMAGE_NAME: saeon/sdp-dev-proxy
+  INTERNAL_CLIENTS_IMAGE_NAME: saeon/sdp-dev-clients-int
+  PUBLIC_CLIENTS_IMAGE_NAME: saeon/sdp-dev-clients-pub
   BRANCH_REF: next
 
 jobs:
