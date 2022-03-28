@@ -35,7 +35,6 @@ import sqlPublic from './http/sql-public.js'
 import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import homeRoute from './http/home.js'
-import pgDumpRoute from './http/pg-dump/index.js'
 import loginSuccessRoute from './http/login-success.js'
 import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callback.js'
 import loginRoute from './http/login.js'
@@ -115,7 +114,6 @@ api
       .get('/http/client-info', clientInfoRoute)
       .post('/http/sql/:schema', sqlPublic)
       .post('/http/sql', sqlPrivate)
-      .get('/http/pg-dump/:schema', pgDumpRoute)
       .get('/http/download-proxy', downloadProxyRoute)
       .get('/http/authenticate/redirect', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport
       .get('/http/login', loginRoute) // passport
