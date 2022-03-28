@@ -23,9 +23,9 @@ export default async function parseInput(config, args) {
 
   // If CLI argument is an operation
   if (typeof config[command] === 'function') {
-    startSpinner()
+    // startSpinner()
     const result = await config[command](parseArgs(config[command].flags)(args.slice(1)))
-    stopSpinner()
+    // stopSpinner()
     return result
   }
 

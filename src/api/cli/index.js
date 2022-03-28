@@ -8,7 +8,7 @@ export default args =>
   buildCli(
     describe(
       {
-        tasks: importFrom('./modules/tasks/index.js')
+        integrations: importFrom('./modules/integrations/index.js'),
       },
       {
         title: 'sdp',

@@ -3,9 +3,9 @@ version = 0.1
 [[task]]
 name = 'cli:init'
 run = '''
-  export PATH=$PATH:$(pwd)
+  export PATH=$PATH:$(pwd)/cli
   chmod +x cli/bin/index.js
-  chmod +x sdp
+  chmod +x cli/sdp
 '''
 
 [[task]]
@@ -29,3 +29,7 @@ run = """
     --exec 'prettier --write "src/**/*.@(js|json|graphql)" \
   && node --trace-warnings --experimental-json-modules src'
 """
+
+[[task]]
+name = 'prettier'
+run = 'prettier --write "./**/*.@(js|jsx|json|mjs|cjs|graphql|yml)"'

@@ -19,6 +19,5 @@ export const start = ({ text, prefixText } = {}) => {
 }
 
 export const stop = () => {
-  console.log()
   _spinner.stop()
 }

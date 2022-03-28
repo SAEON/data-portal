@@ -23,7 +23,6 @@ const filter = async items => {
 let lock = false
 
 export default async function () {
-  console.log('going')
   if (lock) {
     throw new Error(
       'This integration is already running. Please wait for it to finish and try again'
@@ -45,7 +44,7 @@ export default async function () {
     await testOdpConnection()
 
     // Delete the index
-    const deleteResponse = await fetch(
+    await fetch(
       `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`,
       {
         method: 'DELETE',
@@ -54,7 +53,7 @@ export default async function () {
         },
       }
     )
-    console.log('Existing index deleted')
+    console.info('Existing index deleted')
 
     // Insert new records from the ODP
     let iterator = await makeOdpIterator()
