@@ -1,10 +1,10 @@
 import '../src/lib/native-extensions.js'
-import { buildCli, describe } from '../../packages/cli-tools/src/index.js'
+import { buildCli, describe } from '@saeon/cli-tools'
 import require from './lib/require.js'
 
 const importFrom = require(import.meta)
 
-export default args =>
+const cli = args =>
   buildCli(
     describe(
       {
@@ -17,3 +17,5 @@ export default args =>
     ),
     args
   )
+
+cli(process.argv.slice(2))

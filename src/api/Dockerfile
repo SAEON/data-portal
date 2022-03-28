@@ -128,10 +128,10 @@ COPY . .
 # Install deps
 RUN npm ci --only=production
 
-# Setup the CLI
-ENV PATH="cli:$PATH"
-RUN chmod +x cli/bin/index.js
-RUN chmod +x cli/sdp
+# Setup the CLI and API executables
+ENV PATH="bin:$PATH"
+RUN chmod +x bin/sdp
+RUN chmod +x bin/api
 
 # Expose HTTP interface
 EXPOSE 3000
@@ -175,4 +175,4 @@ CMD \
   POSTGIS_USERNAME=$POSTGIS_USERNAME \
   NODE_TLS_REJECT_UNAUTHORIZED=$NODE_TLS_REJECT_UNAUTHORIZED \
   TZ=$TZ \
-  node --no-warnings --experimental-json-modules src
+  api

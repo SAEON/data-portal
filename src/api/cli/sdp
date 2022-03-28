@@ -1,3 +1,0 @@
-#!/bin/bash
-
-node --no-warnings --experimental-json-modules cli/bin/index.js $@

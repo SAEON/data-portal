@@ -44,15 +44,12 @@ export default async function () {
     await testOdpConnection()
 
     // Delete the index
-    await fetch(
-      `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    await fetch(`${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     console.info('Existing index deleted')
 
     // Insert new records from the ODP

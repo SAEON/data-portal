@@ -1,11 +1,10 @@
 version = 0.1
 
 [[task]]
-name = 'cli:init'
+name = 'init:cli'
 run = '''
-  export PATH=$PATH:$(pwd)/cli
-  chmod +x cli/bin/index.js
-  chmod +x cli/sdp
+  chmod +x env.sh
+  source env.sh
 '''
 
 [[task]]

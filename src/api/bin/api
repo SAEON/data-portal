@@ -1,0 +1,3 @@
+#!/bin/bash
+
+node --no-warnings --experimental-json-modules src/index.js
