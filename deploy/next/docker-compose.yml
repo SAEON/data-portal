@@ -44,8 +44,6 @@ services:
   proxy:
     image: $PROXY_IMAGE
     deploy:
-      placement:
-        max_replicas_per_node: 2
       replicas: 1
       rollback_config:
         parallelism: 0
@@ -67,10 +65,8 @@ services:
       - sdp_next
 
   api:
-    image: ghcr.io/saeon/sdp-dev-api:latest
+    image: $API_IMAGE
     deploy:
-      placement:
-        max_replicas_per_node: 2
       replicas: 1
       rollback_config:
         parallelism: 0

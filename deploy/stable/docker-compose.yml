@@ -44,8 +44,6 @@ services:
   proxy:
     image: $PROXY_IMAGE
     deploy:
-      placement:
-        max_replicas_per_node: 2
       replicas: 1
       rollback_config:
         parallelism: 0
@@ -69,8 +67,6 @@ services:
   api:
     image: $API_IMAGE
     deploy:
-      placement:
-        max_replicas_per_node: 2
       replicas: 1
       rollback_config:
         parallelism: 0
