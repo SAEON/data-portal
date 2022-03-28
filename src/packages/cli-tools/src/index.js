@@ -18,7 +18,10 @@ export const buildCli = (cli, args) =>
   import('./lib/parse-input.js')
     .then(({ default: parse }) => parse(cli, args))
     .then(result => {
-      console.log(result)
+      if (result) {
+        console.info(result)
+      }
+      
       process.exit(0)
     })
     .catch(error => {

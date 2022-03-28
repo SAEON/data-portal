@@ -6,7 +6,7 @@ export default async function parseInput(config, args) {
 
   // If CLI argument is invalid
   if (!config[command]) {
-    console.log(await buildHelpOutput(`Unknown command "${command || ''}"`, config))
+    console.info(await buildHelpOutput(`Unknown command "${command || ''}"`, config))
     process.exit(1)
   }
 
@@ -20,9 +20,11 @@ export default async function parseInput(config, args) {
     return await parseInput(config[command], args.slice(1))
   }
 
-  // If CLI argument is an operation, execute it. Don't return result
+  // If CLI argument is an operation
   if (typeof config[command] === 'function') {
-    await config[command](parseArgs(config[command].flags)(args.slice(1)))
+    const result = await config[command](parseArgs(config[command].flags)(args.slice(1)))
+    console.info('Complete!')
+    return result
   }
 
   // If CLI configuration is not valid
