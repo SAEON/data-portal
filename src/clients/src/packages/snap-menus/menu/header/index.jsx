@@ -16,7 +16,7 @@ export default ({ draggable, state, title, onMinify, disableMinify, onClose }) =
           style={{ cursor: draggable ? 'grab' : 'default', minHeight: '25px' }}
           disableGutters
           className={clsx({
-            'drag-handle': draggable ? true : false,
+            'drag-handle': draggable ? true : false
           })}
         >
           {/* TITLE */}
@@ -41,7 +41,7 @@ export default ({ draggable, state, title, onMinify, disableMinify, onClose }) =
                 (Object.assign({
                   order: 2,
                   marginLeft: 'auto',
-                  padding: 2,
+                  padding: 2
                 }),
                 disableMinify ? { display: 'none' } : {})
               }
@@ -62,7 +62,7 @@ export default ({ draggable, state, title, onMinify, disableMinify, onClose }) =
                 {
                   order: 2,
                   marginLeft: 'auto',
-                  padding: 2,
+                  padding: 2
                 },
                 onClose ? {} : { display: 'none' }
               )}

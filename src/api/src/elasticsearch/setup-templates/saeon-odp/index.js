@@ -11,8 +11,8 @@ export default async client => [
       index_patterns: [`${ELASTICSEARCH_CATALOGUE_TEMPLATE}-*`],
       template: {
         settings,
-        mappings,
-      },
-    },
-  }),
+        mappings
+      }
+    }
+  })
 ]

@@ -4,8 +4,8 @@ const Div = styled('div')({
   '& > div': {
     height: '100%',
     overflowY: 'auto',
-    overflowX: 'hidden',
-  },
+    overflowX: 'hidden'
+  }
 })
 
 const Div2 = styled('div')({})
@@ -14,7 +14,7 @@ export default ({ children, state, MENU_HEADER_HEIGHT }) => {
   return (
     <Div
       sx={{
-        height: `calc(100% - ${MENU_HEADER_HEIGHT}px)`,
+        height: `calc(100% - ${MENU_HEADER_HEIGHT}px)`
       }}
     >
       <Div2
@@ -30,7 +30,7 @@ export default ({ children, state, MENU_HEADER_HEIGHT }) => {
                   linear-gradient(to top, #adadad 4px, transparent 4px) 0 100%,
                   linear-gradient(to top, #adadad 4px, transparent 4px) 100% 100%`,
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: '20px 20px',
+                backgroundSize: '20px 20px'
               }
             : {}
         }
@@ -38,7 +38,7 @@ export default ({ children, state, MENU_HEADER_HEIGHT }) => {
         {typeof children === 'function'
           ? children({
               height: state.dimensions.height - 31,
-              width: state.dimensions.width,
+              width: state.dimensions.width
             })
           : children}
       </Div2>

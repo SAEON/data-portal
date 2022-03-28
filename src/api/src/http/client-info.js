@@ -4,6 +4,6 @@ export default async ctx => {
 
   ctx.body = {
     ipAddress,
-    userAgent,
+    userAgent
   }
 }

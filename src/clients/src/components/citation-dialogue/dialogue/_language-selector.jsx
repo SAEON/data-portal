@@ -31,7 +31,7 @@ export default ({ setCitationParams, citationParams, defaultLanguage }) => {
             { ...citationParams },
             {
               copied: false,
-              language: value?.replace(/-/g, '_') || defaultLanguage,
+              language: value?.replace(/-/g, '_') || defaultLanguage
             }
           )
         )

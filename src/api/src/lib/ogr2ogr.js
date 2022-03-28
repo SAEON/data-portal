@@ -5,7 +5,7 @@ import {
   POSTGIS_HOST,
   TEMP_DIRECTORY,
   DOCKER_TMP_VOLUME,
-  GDAL_DOCKER_IMAGE,
+  GDAL_DOCKER_IMAGE
 } from '../config/index.js'
 
 export default ({
@@ -15,7 +15,7 @@ export default ({
   pathToShapefile,
   schema,
   translate = false,
-  s_srs = 'EPSG:4326',
+  s_srs = 'EPSG:4326'
 }) => {
   const ogr2ogrProcess = spawn('docker', [
     'run',
@@ -43,7 +43,7 @@ export default ({
     '-nln',
     tableName,
     `PG:host=${POSTGIS_HOST} port=5432 user=${username} password=${password} dbname=${POSTGIS_DB} active_schema=${schema}`,
-    pathToShapefile,
+    pathToShapefile
   ])
 
   return new Promise((resolve, reject) => {

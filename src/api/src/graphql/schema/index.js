@@ -7,7 +7,7 @@ import resolvers from '../resolvers/index.js'
 
 const _import = p =>
   readFileSync(join(getCurrentDirectory(import.meta), p), {
-    encoding: 'utf-8',
+    encoding: 'utf-8'
   })
 
 const typeDefs = `
@@ -19,7 +19,7 @@ const typeDefs = `
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
-  inheritResolversFromInterfaces: true,
+  inheritResolversFromInterfaces: true
 })
 
 export default schema

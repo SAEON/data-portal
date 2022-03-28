@@ -12,7 +12,7 @@ export default ({
   text, // Text to search
   terms, // Terms to search
   extent, // A GIS extent to limit by
-  identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
+  identifiers = [] // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
 }) => {
   if (terms?.length || text) {
     dsl.min_score = min_score
@@ -27,9 +27,9 @@ export default ({
     dsl.query.bool.filter = [
       {
         bool: {
-          should: [idsQuery(identifiers), doisQuery(identifiers)],
-        },
-      },
+          should: [idsQuery(identifiers), doisQuery(identifiers)]
+        }
+      }
     ]
   }
 

@@ -8,11 +8,11 @@ const cli = args =>
   buildCli(
     describe(
       {
-        integrations: importFrom('./modules/integrations/index.js'),
+        integrations: importFrom('./modules/integrations/index.js')
       },
       {
         title: 'sdp',
-        description: 'SAEON Data Portal repository management',
+        description: 'SAEON Data Portal repository management'
       }
     ),
     args

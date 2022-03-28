@@ -30,7 +30,7 @@ export default ({ id }) => {
     `,
     {
       variables: { identifiers: [id], size: 1 },
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-first'
     }
   )
 

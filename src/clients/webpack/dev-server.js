@@ -21,13 +21,13 @@ module.exports = (ROOT, output) => {
     open: ['http://localhost:3001'],
     allowedHosts: ['*'],
     static: {
-      directory: path.join(ROOT, output),
+      directory: path.join(ROOT, output)
     },
     historyApiFallback: {
       verbose: true,
       disableDotRule: false,
-      rewrites,
+      rewrites
     },
-    compress: true,
+    compress: true
   }
 }

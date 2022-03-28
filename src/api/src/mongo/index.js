@@ -6,7 +6,7 @@ import {
   MONGO_DB_PASSWORD,
   NODE_ENV,
   DEFAULT_ADMIN_EMAIL_ADDRESSES,
-  DEFAULT_SYSADMIN_EMAIL_ADDRESSES,
+  DEFAULT_SYSADMIN_EMAIL_ADDRESSES
 } from '../config/index.js'
 import _collections from './collections/index.js'
 import _Logger from './_logger.js'
@@ -17,11 +17,11 @@ import makeDataFinders from './_data-finders.js'
 export const db = new MongoClient(MONGO_DB_ADDRESS, {
   auth: {
     username: MONGO_DB_USERNAME,
-    password: MONGO_DB_PASSWORD,
+    password: MONGO_DB_PASSWORD
   },
   authMechanism: 'SCRAM-SHA-256',
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
   .connect()
   .then(client => client.db(DB))

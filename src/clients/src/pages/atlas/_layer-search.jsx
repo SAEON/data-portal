@@ -16,12 +16,12 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
     dois = undefined,
     extent = undefined,
     terms = undefined,
-    text = undefined,
+    text = undefined
   } = search
 
   const { error, loading, data } = useQuery(
     gql`
-      query (
+      query(
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
@@ -62,8 +62,8 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
         terms,
         text,
         size: CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
-        referrer,
-      },
+        referrer
+      }
     }
   )
 

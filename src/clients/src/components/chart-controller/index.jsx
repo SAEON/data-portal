@@ -8,7 +8,7 @@ import Fade from '@mui/material/Fade'
 export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query ($chartIds: [ID!]!, $filterIds: [ID!]!) {
+      query($chartIds: [ID!]!, $filterIds: [ID!]!) {
         charts(ids: $chartIds) {
           id
           title
@@ -28,7 +28,7 @@ export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
       }
     `,
     {
-      variables: { chartIds: [id], filterIds },
+      variables: { chartIds: [id], filterIds }
     }
   )
 
@@ -53,14 +53,14 @@ export default ({ id, style = {}, filterIds = [], selectedFilters }) => {
 
     filteredData = filteredData.filter(row => {
       return selectedValues.length === 0 || //if filter isn't used
-        !row[columnFiltered] || //if column being filtered isn't in of data
+      !row[columnFiltered] || //if column being filtered isn't in of data
         selectedValues.includes(String(row[columnFiltered])) //if this data cell was explicitely selected by user
         ? true
         : false
     })
   }
   let filteredChartDoc = Object.assign({}, chartDoc, {
-    data: filteredData,
+    data: filteredData
   })
 
   return (

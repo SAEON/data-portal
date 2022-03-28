@@ -32,7 +32,7 @@ export default ({ contentBase = '' }) => {
             <RecordsPage {...getUriState()} />
           </Transition>
         )
-      },
+      }
     },
     {
       label: 'Home',
@@ -43,7 +43,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <HomePage />
         </Transition>
-      ),
+      )
     },
     {
       label: 'Record',
@@ -55,7 +55,7 @@ export default ({ contentBase = '' }) => {
         <Transition tKey="record">
           <RecordPage id={props.match.params.id} {...props} />
         </Transition>
-      ),
+      )
     },
 
     {
@@ -68,7 +68,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <AboutPage />
         </Transition>
-      ),
+      )
     },
     {
       label: 'Privacy policy',
@@ -81,7 +81,7 @@ export default ({ contentBase = '' }) => {
       ),
       to: getPath(contentBase, '/privacy-policy'),
       excludeFromNav: true,
-      includeInFooter: true,
+      includeInFooter: true
     },
     {
       label: 'Terms of service',
@@ -94,7 +94,7 @@ export default ({ contentBase = '' }) => {
         </Transition>
       ),
       excludeFromNav: true,
-      includeInFooter: true,
+      includeInFooter: true
     },
     {
       label: 'Terms of use',
@@ -107,7 +107,7 @@ export default ({ contentBase = '' }) => {
       ),
       to: getPath(contentBase, '/terms-of-use'),
       excludeFromNav: true,
-      includeInFooter: true,
+      includeInFooter: true
     },
     {
       label: 'Disclaimer',
@@ -120,7 +120,7 @@ export default ({ contentBase = '' }) => {
         </Transition>
       ),
       excludeFromNav: true,
-      includeInFooter: true,
-    },
+      includeInFooter: true
+    }
   ]
 }

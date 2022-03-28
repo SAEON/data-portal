@@ -15,7 +15,7 @@ const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('list')
 
 const config = {
   backgroundImage: true,
-  contentBase: isSubdomainEntry ? undefined : '/list',
+  contentBase: isSubdomainEntry ? undefined : '/list'
 }
 
 const routes = configureRoutes(config)

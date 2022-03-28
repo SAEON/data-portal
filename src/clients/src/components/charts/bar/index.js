@@ -61,7 +61,7 @@ export default {
             </FormGroup>
           </FormControl>
         )
-      },
+      }
     },
     {
       id: 'series-names',
@@ -75,7 +75,7 @@ export default {
             setOption={setValue}
           />
         )
-      },
+      }
     },
     {
       id: 'series-values',
@@ -91,7 +91,7 @@ export default {
             />
           </>
         )
-      },
+      }
     },
     {
       id: 'series-marklines',
@@ -168,8 +168,8 @@ export default {
             </Grid>
           </>
         )
-      },
-    },
+      }
+    }
   ],
 
   /**
@@ -177,5 +177,5 @@ export default {
    * parameter that is determined by the
    * config field above
    */
-  getComponent: () => import('./chart'),
+  getComponent: () => import('./chart')
 }

@@ -14,7 +14,7 @@ const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('ocims')
 
 const config = {
   backgroundImage: true,
-  contentBase: isSubdomainEntry ? undefined : '/ocims',
+  contentBase: isSubdomainEntry ? undefined : '/ocims'
 }
 
 const routes = configureRoutes(config)

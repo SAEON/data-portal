@@ -10,5 +10,5 @@ export const Pre = styled('pre')(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[200]}`,
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-all',
-  padding: theme.spacing(1),
+  padding: theme.spacing(1)
 }))

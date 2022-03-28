@@ -29,7 +29,7 @@ export default ({
   title = undefined,
   titleProps = {},
   tooltipProps,
-  handleClose = () => {},
+  handleClose = () => {}
 }) => {
   const [open, setOpen] = useState(defaultOpen)
 
@@ -44,7 +44,9 @@ export default ({
   return (
     <span onClick={e => e.stopPropagation()}>
       {/* TOGGLE BUTTON */}
-      {hideIcon ? undefined : (
+      {hideIcon ? (
+        undefined
+      ) : (
         <Tooltip placement="right-end" {...tooltipProps}>
           <span>
             <ToggleButton
@@ -83,7 +85,9 @@ export default ({
           <DialogTitle {...titleProps}>
             {typeof title === 'function' ? title(() => setOpen(false)) : title}
           </DialogTitle>
-        ) : undefined}
+        ) : (
+          undefined
+        )}
 
         {/**
          * CONTENT

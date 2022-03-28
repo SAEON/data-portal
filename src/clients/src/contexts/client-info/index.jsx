@@ -24,7 +24,7 @@ This error usually occurs because we are updating our catalogue software. Please
         return (
           <context.Provider
             value={{
-              ...data,
+              ...data
             }}
           >
             {children}

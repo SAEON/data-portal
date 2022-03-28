@@ -14,7 +14,7 @@ export default () => {
           sx={theme => ({
             backgroundColor: alpha(theme.palette.common.white, 0.9),
             marginTop: theme.spacing(4),
-            marginBottom: theme.spacing(4),
+            marginBottom: theme.spacing(4)
           })}
           variant="outlined"
         >

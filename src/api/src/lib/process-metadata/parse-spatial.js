@@ -11,12 +11,16 @@ export default (id, spatial) => {
     return spatial.map(({ geoLocationBox, geoLocationPoint }) => {
       const shp = {
         geoLocationBox: undefined,
-        geoLocationPoint: undefined,
+        geoLocationPoint: undefined
       }
 
       if (geoLocationBox) {
-        const { westBoundLongitude, northBoundLatitude, eastBoundLongitude, southBoundLatitude } =
-          geoLocationBox
+        const {
+          westBoundLongitude,
+          northBoundLatitude,
+          eastBoundLongitude,
+          southBoundLatitude
+        } = geoLocationBox
 
         /**
          * Sometimes points are defined in the box field
@@ -45,8 +49,8 @@ export default (id, spatial) => {
             type: 'Point',
             coordinates: [
               westBoundLongitude.toFixed(GIS_DECIMALS),
-              northBoundLatitude.toFixed(GIS_DECIMALS),
-            ],
+              northBoundLatitude.toFixed(GIS_DECIMALS)
+            ]
           })
         } else {
           shp.geoLocationBox = createWkt_4326({
@@ -57,9 +61,9 @@ export default (id, spatial) => {
                 [westBoundLongitude, southBoundLatitude],
                 [eastBoundLongitude, southBoundLatitude],
                 [eastBoundLongitude, northBoundLatitude],
-                [westBoundLongitude, northBoundLatitude],
-              ],
-            ],
+                [westBoundLongitude, northBoundLatitude]
+              ]
+            ]
           })
         }
       }
@@ -69,7 +73,7 @@ export default (id, spatial) => {
 
         shp.geoLocationPoint = createWkt_4326({
           type: 'Point',
-          coordinates: [pointLongitude, pointLatitude],
+          coordinates: [pointLongitude, pointLatitude]
         })
       }
 

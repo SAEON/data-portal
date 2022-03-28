@@ -9,8 +9,6 @@ export default (requestDetail, { pathname: originPathname, search }) => {
     headers: Object.assign(requestDetail.requestOptions.headers, { host }),
     hostname,
     port,
-    path: normalize(
-      `${destinationPathname}${originPathname.replace(/\/ahocevar\//, '/')}${search}`
-    ),
+    path: normalize(`${destinationPathname}${originPathname.replace(/\/ahocevar\//, '/')}${search}`)
   }
 }

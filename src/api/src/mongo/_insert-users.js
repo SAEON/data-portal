@@ -8,13 +8,13 @@ export default async (db, emailAddresses, roleName) => {
     emailAddresses.map(emailAddress =>
       db.collection(collections.Users.name).findOneAndUpdate(
         {
-          emailAddress,
+          emailAddress
         },
         {
           $setOnInsert: { emailAddress },
           $addToSet: {
-            roles: roleId,
-          },
+            roles: roleId
+          }
         },
         { upsert: true }
       )

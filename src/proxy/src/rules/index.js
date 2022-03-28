@@ -45,8 +45,8 @@ const beforeSendRequest = async requestDetail => {
       response: {
         statusCode: 404,
         header: { 'Content-Type': 'application/json' },
-        body: `{"ERROR": "Unable to proxy request to ${requestDetail.url}". ${error}}`,
-      },
+        body: `{"ERROR": "Unable to proxy request to ${requestDetail.url}". ${error}}`
+      }
     }
   }
 }
@@ -57,5 +57,5 @@ const beforeSendResponse = async (requestDetail, responseDetail) => {
 
 export default {
   beforeSendRequest,
-  beforeSendResponse,
+  beforeSendResponse
 }

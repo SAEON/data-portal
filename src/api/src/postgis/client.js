@@ -7,5 +7,5 @@ export default ({ host, user, database, password, port }) =>
     user,
     database,
     password,
-    port,
+    port
   })

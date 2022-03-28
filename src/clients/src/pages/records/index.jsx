@@ -21,7 +21,7 @@ export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
   const style = useMemo(
     () => ({
       padding: theme.spacing(smDown ? 0 : 2),
-      backgroundColor: alpha(theme.palette.common.black, 0.4),
+      backgroundColor: alpha(theme.palette.common.black, 0.4)
     }),
     [smDown, theme]
   )

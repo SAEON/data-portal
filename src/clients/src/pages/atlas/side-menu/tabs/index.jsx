@@ -11,7 +11,7 @@ import AvailableLayers from './available-layers'
 
 const a11yProps = index => ({
   id: `full-width-tab-${index}`,
-  'aria-controls': `full-width-tabpanel-${index}`,
+  'aria-controls': `full-width-tabpanel-${index}`
 })
 
 const TabPanel = ({ children, value, index }) => (

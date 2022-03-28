@@ -13,7 +13,7 @@ let {
   NODE_ENV: mode,
   DEPLOYMENT_ENV = 'local',
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
-  SUBDOMAIN_APP_ENTRIES = '',
+  SUBDOMAIN_APP_ENTRIES = ''
 } = process.env
 
 module.exports = (ROOT, output) => {
@@ -37,18 +37,18 @@ module.exports = (ROOT, output) => {
         fs.readFileSync(CLIENTS_SEARCH_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
       ),
       'process.env.PACKAGE_DESCRIPTION': JSON.stringify(packageJson.description),
-      'process.env.PACKAGE_KEYWORDS': JSON.stringify(packageJson.keywords),
+      'process.env.PACKAGE_KEYWORDS': JSON.stringify(packageJson.keywords)
     }),
     new CopyPlugin({
       patterns: [
         {
           from: path.resolve(ROOT, './public'),
-          to: path.resolve(ROOT, './dist'),
-        },
-      ],
+          to: path.resolve(ROOT, './dist')
+        }
+      ]
     }),
     // mode === 'production' ? new GenerateSW({}) : null,
     // new BundleAnalyzerPlugin(),
-    ...loadEntryPoints(ROOT, output),
+    ...loadEntryPoints(ROOT, output)
   ].filter(_ => _)
 }

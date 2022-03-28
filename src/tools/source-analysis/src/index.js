@@ -10,7 +10,7 @@ import {
   REPOSITORY_BRANCH,
   REPOSITORY_NAME,
   REPOSITORY_OWNER,
-  SINCE as _SINCE,
+  SINCE as _SINCE
 } from './config.js'
 
 /**
@@ -30,17 +30,17 @@ let iterator = await gqlIterator({
   query,
   gqlEndpoint: GQL_ENDPOINT,
   httpHeaders: {
-    Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`,
+    Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`
   },
   variables: {
     owner: REPOSITORY_OWNER,
     name: REPOSITORY_NAME,
     since: SINCE,
     after: undefined,
-    qualifiedName: REPOSITORY_BRANCH,
+    qualifiedName: REPOSITORY_BRANCH
   },
   pageInfoPath: 'repository.ref.target.history.pageInfo',
-  dataPath: 'repository.ref.target.history.edges',
+  dataPath: 'repository.ref.target.history.edges'
 })()
 
 /**
@@ -55,8 +55,8 @@ while (!iterator.done) {
     },
     mapProperties: row =>
       Object.assign(row, {
-        'issue#': [...new Set(row.message.match(/#\d*/g))].join(','),
-      }),
+        'issue#': [...new Set(row.message.match(/#\d*/g))].join(',')
+      })
   })
   setIncludeHeaderRow(false)
   iterator = await iterator.next()

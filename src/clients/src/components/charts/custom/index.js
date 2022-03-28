@@ -35,8 +35,8 @@ export default {
             />
           </>
         )
-      },
-    },
+      }
+    }
   ],
 
   /**
@@ -44,5 +44,5 @@ export default {
    * parameter that is determined by the
    * config field above
    */
-  getComponent: () => import('./chart'),
+  getComponent: () => import('./chart')
 }

@@ -24,6 +24,6 @@ export default describe(
   }),
   {
     title: 'sdp :: integrations :: odp',
-    description: 'SDP integrations CLI',
+    description: 'SDP integrations CLI'
   }
 )

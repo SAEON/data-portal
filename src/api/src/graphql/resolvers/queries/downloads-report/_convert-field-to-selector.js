@@ -3,7 +3,7 @@ const DATE_FORMATS = {
   hour: '%Y-%m-%d %H',
   day: '%Y-%m-%d',
   month: '%Y-%m',
-  year: '%Y',
+  year: '%Y'
 }
 
 /**
@@ -22,5 +22,5 @@ export default {
   date: args => {
     const { value: { value: bucket } = {} } = args[0] || {}
     return { $dateToString: { format: DATE_FORMATS[bucket || 'month'], date: '$createdAt' } }
-  },
+  }
 }

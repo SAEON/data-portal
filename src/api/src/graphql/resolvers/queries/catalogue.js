@@ -11,28 +11,28 @@ export default async (_, args, ctx, info) => {
   const query = {
     operation: JSON.stringify(operation),
     fragments: JSON.stringify(fragments),
-    variableValues: JSON.stringify(variableValues),
+    variableValues: JSON.stringify(variableValues)
   }
 
   const log = {
     clientSession,
     clientInfo: {
       ipAddress: ctx.request.headers['X-Real-IP'] || ctx.request.ip,
-      userAgent: ctx.request.headers['user-agent'],
+      userAgent: ctx.request.headers['user-agent']
     },
     info: {
       queryHash: hash(query),
-      ...query,
+      ...query
     },
     referrer,
     createdAt: new Date(),
     apiVersion: packageJson.version,
-    type: 'query',
+    type: 'query'
   }
 
   logToMongo(log)
 
   return {
-    id: hash(JSON.stringify(log)),
+    id: hash(JSON.stringify(log))
   }
 }

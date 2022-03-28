@@ -10,7 +10,7 @@ export default ({ setCursors, loading, cursors, catalogue }) => {
         setCursors({
           start: catalogue?.records?.pageInfo?.startCursor,
           end: undefined,
-          currentPage: cursors?.currentPage - 1,
+          currentPage: cursors?.currentPage - 1
         })
       }}
       size="large"

@@ -33,7 +33,7 @@ const GraphQLEmail = new GraphQLScalarType({
     }
 
     return ast.value
-  },
+  }
 })
 
 export default GraphQLEmail

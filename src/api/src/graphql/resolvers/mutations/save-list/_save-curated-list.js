@@ -11,23 +11,23 @@ export default async (self, args, ctx) => {
 
   const result = await Lists.findOneAndUpdate(
     {
-      _id: id ? ObjectId(id) : _id,
+      _id: id ? ObjectId(id) : _id
     },
     {
       $setOnInsert: {
         _id,
-        createdAt: new Date(),
+        createdAt: new Date()
       },
       $set: {
         modifiedAt: new Date(),
         search,
         createdBy,
-        ...otherFields,
-      },
+        ...otherFields
+      }
     },
     {
       upsert: true,
-      returnDocument: 'after',
+      returnDocument: 'after'
     }
   )
 

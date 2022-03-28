@@ -9,7 +9,7 @@ export const Toolbar = Toolbar_
 const aProps = {
   style: { flexBasis: 0, flexGrow: 1, margin: 8, display: 'flex' },
   target: '_blank',
-  rel: 'noreferrer',
+  rel: 'noreferrer'
 }
 
 export default ({ title }) => {
@@ -35,7 +35,7 @@ export default ({ title }) => {
           textAlign: 'center',
           minHeight: IMAGE_HEIGHT,
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
@@ -51,7 +51,7 @@ export default ({ title }) => {
               maxHeight: IMAGE_HEIGHT,
               width: 'auto',
               display: 'block',
-              marginLeft: 'auto',
+              marginLeft: 'auto'
             }}
             src="/sarva-logo-cropped.png"
             alt="SARVA logo"

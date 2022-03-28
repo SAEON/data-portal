@@ -13,13 +13,13 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, search, params }) =
       tooltipProps={
         tooltipProps || {
           title: 'Create a link for sharing or embedding this page',
-          placement: 'left',
+          placement: 'left'
         }
       }
       title={undefined}
       iconProps={
         iconProps || {
-          color: 'inherit',
+          color: 'inherit'
         }
       }
       icon={icon || <ShareIcon />}

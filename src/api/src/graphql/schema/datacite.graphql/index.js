@@ -22,7 +22,7 @@ const USEFUL_STYLES = formatJson([
   'vancouver',
   'chicago-fullnote-bibliography',
   'ieee',
-  'bibtex',
+  'bibtex'
 ]).split('\n')
 
 const dataciteCitationStyles = `
@@ -30,7 +30,7 @@ const dataciteCitationStyles = `
     ${(
       await fetchContent({
         cachePath: `${TEMP_DIRECTORY}/datacite-citation-styles.json`,
-        contentUri: 'https://citation.crosscite.org/styles/',
+        contentUri: 'https://citation.crosscite.org/styles/'
       })
     )
       .split('\n')
@@ -43,7 +43,7 @@ const dataciteCitationLocales = `
   enum CitationLocale {
     ${await fetchContent({
       cachePath: `${TEMP_DIRECTORY}/datacite-citation-locales.json`,
-      contentUri: 'https://citation.crosscite.org/locales/',
+      contentUri: 'https://citation.crosscite.org/locales/'
     })}
   }`
 

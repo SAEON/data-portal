@@ -40,9 +40,9 @@ export default async db => {
         $set: { ...other },
         $addToSet: {
           permissions: {
-            $each: permissionDocIds,
-          },
-        },
+            $each: permissionDocIds
+          }
+        }
       },
       { upsert: true }
     )

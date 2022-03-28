@@ -29,8 +29,8 @@ const StyledA = styled('a')(({ theme }) => ({
   color: theme.palette.common.white,
   transition: theme.transitions.create('opacity'),
   ':hover': {
-    opacity: '0.5',
-  },
+    opacity: '0.5'
+  }
 }))
 
 const StyledSpan = styled('span')(({ theme }) => ({
@@ -54,7 +54,7 @@ const StyledSpan = styled('span')(({ theme }) => ({
     backgroundColor: theme.palette.common.white,
     borderRadius: '100%',
     animation: `${animation} 2s infinite`,
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   },
   ':after': {
     position: 'absolute',
@@ -67,8 +67,8 @@ const StyledSpan = styled('span')(({ theme }) => ({
     borderLeft: `1px solid ${theme.palette.common.white}`,
     borderBottom: `1px solid ${theme.palette.common.white}`,
     transform: 'rotate(-45deg)',
-    boxSizing: 'border-box',
-  },
+    boxSizing: 'border-box'
+  }
 }))
 
 const Button = ({ ...props }) => {

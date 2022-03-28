@@ -29,7 +29,7 @@ export default async ctx => {
         ctx.body.write(`ERROR ${error.message}`)
         stream.destroy()
         stream.emit('end', error)
-      },
+      }
     })
 
     /**

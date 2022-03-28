@@ -10,10 +10,10 @@ export default async function iterate({ dataPath, pageInfoPath, executor, query,
         pageInfoPath,
         executor,
         query,
-        after: objectValueFromPathString(`${pageInfoPath}.endCursor`, data),
+        after: objectValueFromPathString(`${pageInfoPath}.endCursor`, data)
       })
     },
     data: objectValueFromPathString(dataPath, data),
-    done: !objectValueFromPathString(dataPath, data).length,
+    done: !objectValueFromPathString(dataPath, data).length
   }
 }

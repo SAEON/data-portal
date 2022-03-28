@@ -19,7 +19,7 @@ export default ({ cache, catalogue }) => {
 
   const [createAtlas, { error, loading }] = useMutation(
     gql`
-      mutation ($search: JSON!, $createdBy: String!) {
+      mutation($search: JSON!, $createdBy: String!) {
         createAtlas(search: $search, createdBy: $createdBy)
       }
     `,
@@ -28,7 +28,7 @@ export default ({ cache, catalogue }) => {
         if (data) {
           window.open(`/atlas/${data.createAtlas}`, '_blank')
         }
-      },
+      }
     }
   )
 
@@ -75,8 +75,8 @@ export default ({ cache, catalogue }) => {
                     search: createSearchObject(
                       global,
                       selectedIds.length && selectedIds.filter(id => cache[id])
-                    ),
-                  },
+                    )
+                  }
                 })
               }
               size="large"

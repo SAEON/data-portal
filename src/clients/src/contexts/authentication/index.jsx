@@ -27,7 +27,7 @@ export default ({ children }) => {
         const response = await fetch(`${PUBLIC_HTTP_ADDRESS}/authenticate`, {
           credentials: 'include',
           mode: 'cors',
-          signal: abortController.signal,
+          signal: abortController.signal
         })
         const userInfo = await response.json()
         setUser(userInfo)
@@ -47,7 +47,7 @@ export default ({ children }) => {
       value={{
         user,
         authenticating,
-        authenticate,
+        authenticate
       }}
     >
       {children}

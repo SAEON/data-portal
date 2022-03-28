@@ -9,7 +9,7 @@ const STYLE_TO_HUMAN = {
   ieee: 'IEEE',
   modern_language_association: 'MLA',
   vancouver: 'Vancouver',
-  ris: 'RIS',
+  ris: 'RIS'
 }
 
 const HUMAN_TO_STYLE = Object.fromEntries(
@@ -45,7 +45,7 @@ export default ({ setCitationParams, citationParams, defaultStyle }) => {
             { ...citationParams },
             {
               copied: false,
-              style: HUMAN_TO_STYLE[value] || defaultStyle,
+              style: HUMAN_TO_STYLE[value] || defaultStyle
             }
           )
         )

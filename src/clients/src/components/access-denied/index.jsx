@@ -20,7 +20,7 @@ export default ({ requiredPermission = 'NA' }) => {
               style={{
                 width: theme.spacing(4),
                 height: theme.spacing(4),
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: theme.palette.primary.main
               }}
             >
               <Icon size={24} />

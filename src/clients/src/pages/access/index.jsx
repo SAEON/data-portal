@@ -23,22 +23,22 @@ const _sections = [
     secondaryText: 'Manage application users',
     Icon: () => <UsersIcon />,
     requiredPermission: 'users:view',
-    Render: Users,
+    Render: Users
   },
   {
     primaryText: 'Roles',
     secondaryText: 'Manage application roles',
     Icon: () => <RolesIcon />,
     requiredPermission: 'roles:view',
-    Render: Roles,
+    Render: Roles
   },
   {
     primaryText: 'Permissions',
     secondaryText: 'Manage application permissions',
     Icon: () => <PermissionsIcon />,
     requiredPermission: 'permissions:view',
-    Render: Permissions,
-  },
+    Render: Permissions
+  }
 ]
 
 export default () => {

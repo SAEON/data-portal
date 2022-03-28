@@ -5,7 +5,7 @@ import { IMAGE_HEIGHT } from '../application-banner'
 export default ({ children, contentRef }) => {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 0,
+    threshold: 0
   })
 
   const availableHeight = Math.min(window.innerHeight - contentRef?.offsetHeight || 0, IMAGE_HEIGHT)

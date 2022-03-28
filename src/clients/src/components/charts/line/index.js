@@ -39,7 +39,7 @@ export default {
             setOption={setValue}
           />
         )
-      },
+      }
     },
     {
       id: 'series-values',
@@ -55,7 +55,7 @@ export default {
             />
           </>
         )
-      },
+      }
     },
     {
       id: 'series-marklines',
@@ -132,8 +132,8 @@ export default {
             </Grid>
           </>
         )
-      },
-    },
+      }
+    }
     // {
     //   id: 'series-markline-1',
     //   description: 'Name and quantify first line marking',
@@ -203,5 +203,5 @@ export default {
    * parameter that is determined by the
    * config field above
    */
-  getComponent: () => import('./chart'),
+  getComponent: () => import('./chart')
 }

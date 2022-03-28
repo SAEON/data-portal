@@ -7,7 +7,7 @@ export default async (self, args, ctx) => {
 
   const result = await Atlases.findOneAndUpdate(
     {
-      hashedSearch: hash(search),
+      hashedSearch: hash(search)
     },
     {
       $setOnInsert: {
@@ -15,15 +15,15 @@ export default async (self, args, ctx) => {
         hashedSearch: hash(search),
         search,
         createdAt: new Date(),
-        createdBy,
+        createdBy
       },
       $set: {
-        modifiedAt: new Date(),
-      },
+        modifiedAt: new Date()
+      }
     },
     {
       upsert: true,
-      returnDocument: 'after',
+      returnDocument: 'after'
     }
   )
 

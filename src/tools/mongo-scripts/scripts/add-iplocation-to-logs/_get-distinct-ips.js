@@ -5,7 +5,7 @@ export default async () => {
   const logs = db.collection('logs')
   const ipAddresses = await logs.distinct('clientInfo.ipAddress', {
     'clientInfo.ipLocation': { $exists: false },
-    'clientInfo.ipAddress': { $ne: 'unknown' },
+    'clientInfo.ipAddress': { $ne: 'unknown' }
   })
   console.log(`Found ${ipAddresses.length} unprocessed IP addresses`)
   return ipAddresses

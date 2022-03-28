@@ -6,7 +6,7 @@ import {
   POSTGIS_PORT,
   POSTGIS_IMAGE_NAME,
   DATA_DIRECTORY,
-  DOCKER_DATA_VOLUME,
+  DOCKER_DATA_VOLUME
 } from '../config/index.js'
 
 export default async ({ tableName, username, password, filePath, schema }) => {
@@ -27,7 +27,7 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     '128x128', // https://gis.stackexchange.com/a/281936/82513
     filePath,
     `${schema}.${tableName}`,
-    '-c',
+    '-c'
   ])
 
   const psql = spawn('docker', [
@@ -47,7 +47,7 @@ export default async ({ tableName, username, password, filePath, schema }) => {
     POSTGIS_PORT,
     '--no-password',
     '--username',
-    username,
+    username
   ])
 
   return new Promise((resolve, reject) => {

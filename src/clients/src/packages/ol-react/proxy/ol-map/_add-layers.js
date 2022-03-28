@@ -21,18 +21,22 @@ export default (map, rerender) => {
         } else {
           map.setLayerGroup(
             new LayerGroup({
-              layers: [layer, ...map.getLayerGroup().getLayers().getArray()].map(
-                (layer, i, arr) => {
-                  layer.setZIndex(arr.length - i)
-                  return layer
-                }
-              ),
+              layers: [
+                layer,
+                ...map
+                  .getLayerGroup()
+                  .getLayers()
+                  .getArray()
+              ].map((layer, i, arr) => {
+                layer.setZIndex(arr.length - i)
+                return layer
+              })
             })
           )
         }
       }
 
       rerender(r => r + 1)
-    },
+    }
   }
 }

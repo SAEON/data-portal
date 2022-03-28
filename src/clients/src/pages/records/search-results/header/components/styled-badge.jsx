@@ -6,6 +6,6 @@ export default styled(Badge)({
     top: 3,
     right: -3,
     opacity: 0.8,
-    fontSize: '0.6rem',
-  },
+    fontSize: '0.6rem'
+  }
 })

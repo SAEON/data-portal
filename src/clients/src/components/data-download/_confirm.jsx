@@ -14,7 +14,7 @@ export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form,
 
   const [submitDataDownloadForm] = useMutation(
     gql`
-      mutation ($input: DataDownloadFormSubmission!) {
+      mutation($input: DataDownloadFormSubmission!) {
         submitDataDownloadForm(input: $input)
       }
     `
@@ -37,8 +37,8 @@ export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form,
                 pathname: window.location.pathname,
                 uri: downloadURL,
                 odpId: id,
-                doi,
-              },
+                doi
+              }
             })
 
             const _form = {
@@ -46,15 +46,15 @@ export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form,
               ...Object.fromEntries(
                 Object.entries(form.current).map(([field, value]) => [
                   field,
-                  value === '' ? null : value,
+                  value === '' ? null : value
                 ])
-              ),
+              )
             }
             if (_form.emailAddress || _form.organization) {
               submitDataDownloadForm({
                 variables: {
-                  input: { ..._form },
-                },
+                  input: { ..._form }
+                }
               })
             }
 

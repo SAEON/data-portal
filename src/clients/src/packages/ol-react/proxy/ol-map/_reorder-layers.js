@@ -13,10 +13,10 @@ export default (map, rerender) => {
           layers: layers.map((layer, i, arr) => {
             layer.setZIndex(arr.length - i)
             return layer
-          }),
+          })
         })
       )
       rerender(r => r + 1)
-    },
+    }
   }
 }

@@ -4,7 +4,7 @@ export default ({ uri, children }) => {
   const [state, setState] = useState({
     error: undefined,
     loading: true,
-    data: undefined,
+    data: undefined
   })
 
   useEffect(() => {
@@ -15,14 +15,14 @@ export default ({ uri, children }) => {
         const response = await fetch(uri, {
           method: 'GET',
           mode: 'cors',
-          signal: abortController.signal,
+          signal: abortController.signal
         })
 
         if (response.status !== 200) {
           setState({
             error: new Error('Unexpected response asking for client info'),
             loading: false,
-            data: undefined,
+            data: undefined
           })
         } else {
           const data = await response.json()

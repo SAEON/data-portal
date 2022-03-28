@@ -29,7 +29,7 @@ export default ({ title }) => {
         color="inherit"
         style={{
           borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-          zIndex: 1,
+          zIndex: 1
         }}
       >
         <Toolbar variant="regular">

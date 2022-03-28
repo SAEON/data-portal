@@ -16,7 +16,7 @@ export default () => {
             setGlobal({
               extent: undefined,
               terms: [],
-              text: '',
+              text: ''
             })
           }
           size="large"

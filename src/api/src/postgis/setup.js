@@ -17,7 +17,7 @@ await query({
       create extension if not exists cube;
       create extension if not exists intarray;
       create extension if not exists pg_trgm;
-      create extension if not exists pgcrypto;`,
+      create extension if not exists pgcrypto;`
 })
 
 /**
@@ -26,11 +26,11 @@ await query({
  */
 
 await query({
-  text: `alter database ${POSTGIS_DB} set postgis.enable_outdb_rasters = true;`,
+  text: `alter database ${POSTGIS_DB} set postgis.enable_outdb_rasters = true;`
 })
 
 await query({
-  text: `alter database ${POSTGIS_DB} set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`,
+  text: `alter database ${POSTGIS_DB} set postgis.gdal_enabled_drivers = 'ENABLE_ALL';`
 })
 
 /**
@@ -49,14 +49,14 @@ await query({
      THEN CREATE ROLE "${POSTGIS_USERNAME_PUBLIC}" LOGIN PASSWORD '${POSTGIS_PASSWORD_PUBLIC}';
      END IF;
   END
-  $do$;`,
+  $do$;`
 }).then(() => console.info('Public database server role configured'))
 
 /**
  * Grant public user connect to the DB
  */
 await query({
-  text: `grant connect on database "${POSTGIS_DB}" to "${POSTGIS_USERNAME_PUBLIC}"`,
+  text: `grant connect on database "${POSTGIS_DB}" to "${POSTGIS_USERNAME_PUBLIC}"`
 }).then(() => console.info('Public user granted connect to database'))
 
 console.info('PostGIS extensions configured')

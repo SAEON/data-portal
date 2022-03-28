@@ -32,7 +32,7 @@ export default ({ children, backgroundImage = true }) => {
             right: 0,
             backgroundSize: 'cover',
             backgroundImage: getBackgroundImagePath(),
-            zIndex: -1,
+            zIndex: -1
           }}
         />
       )}

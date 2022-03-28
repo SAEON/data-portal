@@ -3,7 +3,7 @@ import {
   POSTGIS_DB,
   POSTGIS_PORT,
   POSTGIS_HOST,
-  POSTGIS_CONTAINER_NAME,
+  POSTGIS_CONTAINER_NAME
 } from '../../config/index.js'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import { createReadStream } from 'fs'
@@ -16,14 +16,14 @@ const __dirname = getCurrentDirectory(import.meta)
 export default async ctx => {
   const { schema } = ctx.params
   const { username, password: encryptedPassword } = {
-    TODO: 'These used to be in databook.authentication',
+    TODO: 'These used to be in databook.authentication'
   }
   const password = ctx.crypto.decrypt(encryptedPassword)
 
   // Get a list of NetCDF files that need to be streamed along with the .backup
   const externalFiles = (
     await query({
-      text: `select * from "${schema}".odp_map`,
+      text: `select * from "${schema}".odp_map`
     })
   ).rows
     .map(({ file_location }) => file_location)
@@ -38,7 +38,7 @@ export default async ctx => {
 
   // Archive the output
   const archive = archiver('zip', {
-    zlib: { level: 2 },
+    zlib: { level: 2 }
   })
 
   // Start the pg_dump process in a separate thread
@@ -59,7 +59,7 @@ export default async ctx => {
     '--create',
     '--clean',
     '--no-privileges',
-    '--no-owner',
+    '--no-owner'
   ])
     .on('close', code => {
       console.info('SQL export complete. Code: ', code)

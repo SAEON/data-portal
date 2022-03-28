@@ -7,6 +7,6 @@ export default map => {
       map
         .getLayers() // TODO - I think this should be proxy.getLayers
         .getArray()
-        .filter(layer => id === layer.get('id'))[0],
+        .filter(layer => id === layer.get('id'))[0]
   }
 }

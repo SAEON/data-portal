@@ -28,7 +28,7 @@ export default ({
   size = 22,
   IconButtonSize = 'medium',
   tooltipPlacement,
-  buttonProps,
+  buttonProps
 }) => {
   const theme = useTheme()
   const [open, setOpen] = useState(false)

@@ -37,7 +37,7 @@ export default (id, dates) => {
       return {
         gte: gte.toISOString(),
         lte: to === from ? lastDayOfYear(lte).toISOString() : lte.toISOString(),
-        dateType,
+        dateType
       }
     })
   } catch (error) {

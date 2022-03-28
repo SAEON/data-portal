@@ -7,7 +7,7 @@ import {
   POSTGIS_PASSWORD,
   POSTGIS_PASSWORD_PUBLIC,
   POSTGIS_PORT,
-  NODE_ENV,
+  NODE_ENV
 } from '../config/index.js'
 import createPool from './pool.js'
 import _createClient from './client.js'
@@ -41,7 +41,7 @@ export const publicQuery = ({ text = '', values = [], onEnd, onError, search_pat
     publicPool.connect().then(client => {
       client.query(`set search_path="${search_path}";`).then(() => {
         const query = new QueryStream(text, values, {
-          batchSize: 100,
+          batchSize: 100
         })
         const stream = client.query(query)
         stream.on('end', onEnd)
@@ -58,7 +58,7 @@ export const createClient = cred =>
     user: cred.user || POSTGIS_USERNAME,
     password: cred.password || POSTGIS_PASSWORD,
     database: cred.database || POSTGIS_DB,
-    port: cred.port || POSTGIS_PORT,
+    port: cred.port || POSTGIS_PORT
   })
 
 export default async ({ text, values, name, client = undefined }) =>
@@ -69,7 +69,7 @@ export default async ({ text, values, name, client = undefined }) =>
           user: client.user || POSTGIS_USERNAME,
           password: client.password || POSTGIS_PASSWORD,
           database: client.database || POSTGIS_DB,
-          port: client.port || POSTGIS_PORT,
+          port: client.port || POSTGIS_PORT
         })
         try {
           _client.connect()

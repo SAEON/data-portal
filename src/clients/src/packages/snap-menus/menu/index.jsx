@@ -16,48 +16,48 @@ const snapZones = {
   TopLeft: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
     height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
     width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
-    left: 0,
+    left: 0
   }),
   TopRight: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
     height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
     width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
-    right: 0,
+    right: 0
   }),
   BottomLeft: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
     height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
     width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
     top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
-    left: 0,
+    left: 0
   }),
   BottomRight: ({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }) => ({
     height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
     width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
     top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
-    right: 0,
+    right: 0
   }),
   Left: ({ PORTAL, GHOST_GUTTER_X }) => ({
     height: PORTAL.offsetHeight,
     width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
-    left: 0,
+    left: 0
   }),
   Right: ({ PORTAL, GHOST_GUTTER_X }) => ({
     height: PORTAL.offsetHeight,
     width: PORTAL.offsetWidth / 2 - GHOST_GUTTER_X,
-    right: 0,
+    right: 0
   }),
   Top: ({ PORTAL }) => ({
     height: PORTAL.offsetHeight,
     width: PORTAL.offsetWidth,
     left: 0,
-    right: 0,
+    right: 0
   }),
   Bottom: ({ PORTAL, GHOST_GUTTER_Y }) => ({
     height: PORTAL.offsetHeight / 2 - GHOST_GUTTER_Y,
     width: PORTAL.offsetWidth,
     top: PORTAL.offsetHeight / 2 + GHOST_GUTTER_Y,
     left: 0,
-    right: 0,
-  }),
+    right: 0
+  })
 }
 
 const Div = styled('div')({})
@@ -91,7 +91,7 @@ export default forwardRef(
       onClose = undefined,
       opacity = 0.8,
       style = {},
-      disableMinify = false,
+      disableMinify = false
     },
     ref
   ) => {
@@ -121,7 +121,7 @@ export default forwardRef(
         ? getDimensions(defaultSnap, PORTAL, GHOST_GUTTER_X)
         : { width: defaultWidth, height: defaultHeight },
       position: getPosition(defaultSnap, PORTAL, GHOST_GUTTER_X),
-      previousDimensions: { width: defaultWidth, height: defaultHeight },
+      previousDimensions: { width: defaultWidth, height: defaultHeight }
     })
 
     useEffect(() => {
@@ -142,9 +142,9 @@ export default forwardRef(
             dimensions: state.minimized
               ? {
                   width: state.maximizedWidth || defaultWidth,
-                  height: state.maximizedHeight || defaultHeight,
+                  height: state.maximizedHeight || defaultHeight
                 }
-              : { width: MENU_HEADER_HEIGHT + (onClose ? 25 : 0), height: MENU_HEADER_HEIGHT },
+              : { width: MENU_HEADER_HEIGHT + (onClose ? 25 : 0), height: MENU_HEADER_HEIGHT }
           }
         )
       )
@@ -158,7 +158,7 @@ export default forwardRef(
             sx={{
               zIndex,
               position: 'relative',
-              display: snapZone ? 'block' : 'none',
+              display: snapZone ? 'block' : 'none'
             }}
           >
             <Div
@@ -167,7 +167,7 @@ export default forwardRef(
                 boxShadow: '0px 0px 7px 3px rgba(140,140,140,1)',
                 backgroundColor: 'black',
                 opacity: '20%',
-                ...snapZones[snapZone]?.({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y }),
+                ...snapZones[snapZone]?.({ PORTAL, GHOST_GUTTER_X, GHOST_GUTTER_Y })
               }}
             />
           </Div>
@@ -194,7 +194,7 @@ export default forwardRef(
                   style={Object.assign(style, {
                     opacity,
                     zIndex,
-                    position: 'relative',
+                    position: 'relative'
                   })}
                 >
                   <Card style={state.snapped ? { borderRadius: 0 } : {}} variant="elevation">

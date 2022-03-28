@@ -34,11 +34,11 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
             onChange={() => {
               if (activeFilters?.map(({ value }) => value)?.includes(key)) {
                 setGlobal({
-                  terms: terms?.filter(({ value }) => value !== key),
+                  terms: terms?.filter(({ value }) => value !== key)
                 })
               } else {
                 setGlobal({
-                  terms: [...new Set([...terms, { field, boost, value: key, filterId }])],
+                  terms: [...new Set([...terms, { field, boost, value: key, filterId }])]
                 })
               }
             }}
@@ -50,7 +50,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                marginRight: theme.spacing(2),
+                marginRight: theme.spacing(2)
               }}
               variant="overline"
             >{`${typeof key === 'string' ? key.toUpperCase() : key} (${doc_count})`}</Typography>

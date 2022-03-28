@@ -3,7 +3,7 @@ import DownloadRecords from './download-records-button'
 import CreateAtlasButton from './create-atlas-button'
 
 const cache = {
-  atlases: {},
+  atlases: {}
 }
 
 export default ({ catalogue }) => {

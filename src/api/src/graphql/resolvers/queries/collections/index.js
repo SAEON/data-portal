@@ -13,8 +13,8 @@ export default async (self, { institution }, ctx) => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      authorization,
-    },
+      authorization
+    }
   })
 
   return await res.json()

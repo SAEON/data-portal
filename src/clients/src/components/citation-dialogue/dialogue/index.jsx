@@ -12,7 +12,7 @@ export default ({ doi, open, setOpen }) => {
   const [citationParams, setCitationParams] = useState({
     style: DEFAULT_CITATION_STYLE,
     language: DEFAULT_CITATION_LANG,
-    copied: false,
+    copied: false
   })
 
   return (

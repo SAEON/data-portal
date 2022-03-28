@@ -6,18 +6,18 @@ export default {
       properties: {
         type: {
           enum: ['curated', 'public'],
-          description: 'A curated list is a list defined on the /data-lists UI',
-        },
-      },
-    },
+          description: 'A curated list is a list defined on the /data-lists UI'
+        }
+      }
+    }
   },
   indices: [
     {
       index: 'hashedSearch',
       options: {
         unique: true,
-        partialFilterExpression: { hashedSearch: { $exists: true } },
-      },
-    },
-  ],
+        partialFilterExpression: { hashedSearch: { $exists: true } }
+      }
+    }
+  ]
 }

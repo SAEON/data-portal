@@ -13,7 +13,7 @@ Promise.all(
           ? mask(value)
           : typeof value === 'function'
           ? value.toString()
-          : value,
+          : value
       ]
     })
   )

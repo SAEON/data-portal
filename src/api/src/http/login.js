@@ -18,9 +18,9 @@ export default async (ctx, next) =>
             ? ctx.request.query.redirect == 'undefined'
               ? `${HOSTNAME}`
               : ctx.request.query.redirect
-            : HOSTNAME,
+            : HOSTNAME
         })
-      ),
+      )
     })(ctx, next)
     .catch(error => {
       ctx.status = 500

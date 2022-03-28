@@ -8,21 +8,21 @@ export default {
     {
       dir: 'dist/cjs',
       format: 'cjs',
-      exports: 'named',
+      exports: 'named'
     },
     {
       dir: 'dist/esm',
       format: 'esm',
-      exports: 'named',
-    },
+      exports: 'named'
+    }
   ],
   plugins: [
     nodeResolve({
-      preferBuiltins: true,
+      preferBuiltins: true
     }),
     commonjs(),
     json({
-      compact: true,
-    }),
-  ],
+      compact: true
+    })
+  ]
 }

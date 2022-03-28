@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 import {
   ODP_API_CATALOGUE_ENDPOINT,
   ODP_INTEGRATION_BATCH_SIZE,
-  ODP_DEBUG_IDS,
+  ODP_DEBUG_IDS
 } from '../../../config/index.js'
 import parseDates from '../../../lib/process-metadata/parse-dates.js'
 import parseSpatial from '../../../lib/process-metadata/parse-spatial.js'
@@ -24,8 +24,8 @@ const iterate = async ({ offset = 0, token }) => {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: token,
-      },
+        Authorization: token
+      }
     }
   ).catch(error => {
     console.error('Error fetching from ODP', error)
@@ -52,7 +52,7 @@ const iterate = async ({ offset = 0, token }) => {
           project_keys: projects,
           schema_key: schema,
           metadata,
-          published,
+          published
         },
         i
       ) => {
@@ -82,7 +82,7 @@ const iterate = async ({ offset = 0, token }) => {
                   ? [key, parseSpatial(id, value)]
                   : [key, value]
               )
-            ),
+            )
           }
         } catch (error) {
           console.error(
@@ -100,7 +100,7 @@ const iterate = async ({ offset = 0, token }) => {
   return {
     next,
     data,
-    done,
+    done
   }
 }
 
@@ -111,8 +111,8 @@ export const testConnection = () =>
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: [token_type, access_token].join(' '),
-        },
+          Authorization: [token_type, access_token].join(' ')
+        }
       })
     )
     .catch(error => {

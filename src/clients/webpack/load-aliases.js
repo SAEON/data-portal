@@ -41,5 +41,5 @@ module.exports = (ROOT, mode) => ({
   '@saeon/logger': path.resolve(
     ROOT,
     mode === 'production' ? './node_modules/@saeon/logger' : '../packages/logger'
-  ),
+  )
 })

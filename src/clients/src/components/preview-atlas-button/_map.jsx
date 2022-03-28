@@ -79,11 +79,11 @@ export default ({ geoLocations, linkedResource, id, title }) => {
           ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
               .getExtent()
               .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-          : undefined,
+          : undefined
       }}
       layers={[
         createLayer({ id: layerId, layerType: LayerTypes.TileWMS, title, uri, LAYERS }),
-        terrestrisBaseMap(),
+        terrestrisBaseMap()
       ]}
       style={{ width: '100%', height: '100%' }}
     />

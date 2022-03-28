@@ -12,7 +12,7 @@ export default {
     const cols = [
       config['series-geo-names'],
       config['series-geo-json'],
-      config['series-geo-values'],
+      config['series-geo-values']
     ]
     return data.map(row => {
       return Object.fromEntries(Object.entries(row).filter(([k]) => cols.includes(k)))
@@ -36,7 +36,7 @@ export default {
             setOption={setValue}
           />
         )
-      },
+      }
     },
     {
       id: 'series-geo-values',
@@ -50,7 +50,7 @@ export default {
             setOption={setValue}
           />
         )
-      },
+      }
     },
     {
       id: 'series-geo-json',
@@ -64,8 +64,8 @@ export default {
             setOption={setValue}
           />
         )
-      },
-    },
+      }
+    }
   ],
 
   /**
@@ -73,5 +73,5 @@ export default {
    * parameter that is determined by the
    * config field above
    */
-  getComponent: () => import('./chart'),
+  getComponent: () => import('./chart')
 }

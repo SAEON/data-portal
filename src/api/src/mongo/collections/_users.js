@@ -8,17 +8,17 @@ export default {
       properties: {
         emailAddress: {
           bsonType: 'string',
-          description: "User's email address (used as a primary key)",
-        },
-      },
-    },
+          description: "User's email address (used as a primary key)"
+        }
+      }
+    }
   },
   indices: [
     {
       index: 'emailAddress',
       options: {
-        unique: true,
-      },
-    },
-  ],
+        unique: true
+      }
+    }
+  ]
 }

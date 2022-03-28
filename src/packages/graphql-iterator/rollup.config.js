@@ -10,14 +10,14 @@ export default {
       exports: 'default',
       dir: 'dist',
       format: 'cjs',
-      compact: true,
-    },
+      compact: true
+    }
   ],
   plugins: [
     resolve(),
     commonjs(),
     json({
-      compact: true,
-    }),
-  ],
+      compact: true
+    })
+  ]
 }

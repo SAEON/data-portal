@@ -22,10 +22,10 @@ export default ({ config, data, title, description }) => {
           type: 'Feature',
           id: i,
           properties: { name: row[geoNamesField] }, // TODO row.name => this is explicit column name usage. should come from config object instead
-          geometry: JSON.parse(row[geoJsonField]),
+          geometry: JSON.parse(row[geoJsonField])
         }
       })
-      .filter(_ => _),
+      .filter(_ => _)
   }
 
   if (!customMapJson.features.length) {
@@ -51,13 +51,13 @@ export default ({ config, data, title, description }) => {
       option={{
         title: {
           text: title,
-          subtext: description,
+          subtext: description
         },
         tooltip: {
           trigger: 'item',
           showDelay: 0,
           transitionDuration: 0.2,
-          formatter: '{b} : {c}',
+          formatter: '{b} : {c}'
         },
         visualMap: {
           min: dataMin,
@@ -74,9 +74,9 @@ export default ({ config, data, title, description }) => {
               '#fdae61',
               '#f46d43',
               '#d73027',
-              '#a50026',
-            ],
-          },
+              '#a50026'
+            ]
+          }
         },
         // },
         series: [
@@ -86,16 +86,16 @@ export default ({ config, data, title, description }) => {
             map: nano,
             roam: true, //allows dragging of map
             label: {
-              show: false,
+              show: false
             },
             emphasis: {
               label: {
-                show: false, //true,
-              },
+                show: false //true,
+              }
             },
-            data: chartData,
-          },
-        ],
+            data: chartData
+          }
+        ]
       }}
     />
   )

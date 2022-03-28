@@ -7,6 +7,6 @@ export const openStreetMaps = () =>
     title: 'Open Street Maps',
     visible: true,
     source: new OSM({
-      url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    }),
+      url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    })
   })

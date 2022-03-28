@@ -5,10 +5,10 @@ const importFrom = require(import.meta)
 
 export default describe(
   {
-    saeon: importFrom('./saeon-odp/index.js'),
+    saeon: importFrom('./saeon-odp/index.js')
   },
   {
     title: 'sdp :: integrations :: SAEON ODP',
-    describe: 'SAEON ODP integration',
+    describe: 'SAEON ODP integration'
   }
 )

@@ -12,10 +12,10 @@ export default ({ config, data, title, description }) => {
     type: 'category',
     data: data.map(entry => entry[namesField]),
     name: namesField,
-    axisLabel: isVertical ? { rotate: 50 } : { rotate: 0 },
+    axisLabel: isVertical ? { rotate: 50 } : { rotate: 0 }
   }
   const valueAxis = {
-    type: 'value',
+    type: 'value'
   }
 
   return (
@@ -23,22 +23,22 @@ export default ({ config, data, title, description }) => {
       style={{
         height: '95%',
         paddingTop: '10px', //STEVEN:TO-DO: move to generic parent of all charts
-        paddingRight: '10px',
+        paddingRight: '10px'
       }}
       theme={theme}
       option={{
         grid: {
-          bottom: 50, //giving wiggle room for larger x axis labels
+          bottom: 50 //giving wiggle room for larger x axis labels
         },
 
         title: {
           text: title,
           subtext: description,
-          left: 'center',
+          left: 'center'
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{b} : {c}',
+          formatter: '{b} : {c}'
         },
         toolbox: {},
         legend: {},
@@ -56,9 +56,9 @@ export default ({ config, data, title, description }) => {
                 itemStyle: {
                   shadowBlur: 10,
                   shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)',
-                },
-              },
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
 
               // smooth: false,
             }
@@ -71,15 +71,15 @@ export default ({ config, data, title, description }) => {
               : {
                   lineStyle: {
                     type: 'dotted',
-                    width: 2,
+                    width: 2
                   },
                   symbol: 'none',
                   data: marklines.map(markline => {
                     return { name: markline.name, yAxis: markline.value }
-                  }),
-                },
-          },
-        ],
+                  })
+                }
+          }
+        ]
       }}
     />
   )

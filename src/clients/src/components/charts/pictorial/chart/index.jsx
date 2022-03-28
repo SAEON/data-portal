@@ -18,7 +18,7 @@ export default ({ config, data, title, description }) => {
   return (
     <ReactEcharts
       style={{
-        height: '95%',
+        height: '95%'
       }}
       theme={theme}
       option={{
@@ -26,10 +26,10 @@ export default ({ config, data, title, description }) => {
         title: {
           text: title,
           subtext: description,
-          left: 'center',
+          left: 'center'
         },
         xAxis: {
-          splitLine: { show: false },
+          splitLine: { show: false }
         },
         yAxis: {
           data: data.map(entry => entry[namesField]),
@@ -38,8 +38,8 @@ export default ({ config, data, title, description }) => {
           // axisLine: { show: false },
           axisLabel: {
             margin: 10,
-            rotate: 0,
-          },
+            rotate: 0
+          }
         },
         series: [
           {
@@ -68,31 +68,31 @@ export default ({ config, data, title, description }) => {
             //           },
             //         ],
             // },
-            z: 10,
+            z: 10
           },
           {
             // full data
             type: 'pictorialBar',
             itemStyle: {
               normal: {
-                opacity: 0.3,
-              },
+                opacity: 0.3
+              }
             },
             label: {
               show: true,
-              formatter: function (params) {
+              formatter: function(params) {
                 return ((params.value / total) * 100).toFixed(1) + ' %'
               },
               position: 'right',
-              offset: [10, 0],
+              offset: [10, 0]
             },
             animationDuration: 0,
             symbolRepeat: 'fixed',
             symbol: symbolOutline, //https://echarts.apache.org/en/option.html#series-pictorialBar.symbol
             data: data.map(entry => entry[valuesField]),
-            z: 5,
-          },
-        ],
+            z: 5
+          }
+        ]
       }}
     />
   )

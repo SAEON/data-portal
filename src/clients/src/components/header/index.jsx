@@ -3,7 +3,7 @@ import { context as layoutContext } from '../../contexts/layout'
 import AppBar from '@mui/material/AppBar'
 import ApplicationBanner, {
   IMAGE_HEIGHT,
-  Toolbar as ApplicationBanner_,
+  Toolbar as ApplicationBanner_
 } from './application-banner'
 import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
 import Divider from '@mui/material/Divider'

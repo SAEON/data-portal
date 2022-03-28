@@ -16,8 +16,8 @@ export default ({ link, query }, interval) => {
         execute(link, {
           query,
           variables: {
-            input: browserEvents,
-          },
+            input: browserEvents
+          }
         })
       )
         .then(json => {

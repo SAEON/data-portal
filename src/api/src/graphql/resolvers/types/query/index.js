@@ -22,5 +22,5 @@ export default {
   user: async (...args) =>
     authorize(PERMISSIONS['users:view'], await getUserDocumentOwner(...args))(user)(...args),
   users: authorize(PERMISSIONS['users:view'])(users),
-  permissions: authorize(PERMISSIONS['permissions:view'])(permissions),
+  permissions: authorize(PERMISSIONS['permissions:view'])(permissions)
 }

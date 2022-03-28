@@ -10,5 +10,5 @@ export default (host, user, database, password, port) =>
     port,
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000,
+    connectionTimeoutMillis: 10000
   })

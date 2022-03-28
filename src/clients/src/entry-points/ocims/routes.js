@@ -34,7 +34,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <HomePage />
         </Transition>
-      ),
+      )
     },
     {
       label: 'Login',
@@ -46,7 +46,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <LoginPage />
         </Transition>
-      ),
-    },
+      )
+    }
   ]
 }

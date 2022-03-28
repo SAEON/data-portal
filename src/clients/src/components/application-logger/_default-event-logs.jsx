@@ -21,8 +21,8 @@ export default ({ children }) => {
         innerHeight,
         innerWidth,
         x,
-        y,
-      },
+        y
+      }
     }),
     [innerHeight, innerWidth, referrer]
   )

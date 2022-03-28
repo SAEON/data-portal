@@ -50,14 +50,14 @@ export default ({ children }) => {
                               layers: [],
                               text: undefined,
                               extent: undefined,
-                              terms: [],
+                              terms: []
                             }
                           : {},
                         obj
                       )
                     )
                     if (cb) cb()
-                  },
+                  }
                 }}
               >
                 {children}

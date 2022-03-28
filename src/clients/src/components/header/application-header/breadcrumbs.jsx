@@ -7,12 +7,12 @@ import MuiLink from '@mui/material/Link'
 const sxIcon = {
   marginRight: theme => theme.spacing(0.5),
   width: 18,
-  height: 18,
+  height: 18
 }
 
 const sxLink = {
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'center'
 }
 
 export default ({ contentBase = '/', routes }) => {

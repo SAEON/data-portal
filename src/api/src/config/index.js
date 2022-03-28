@@ -1,5 +1,12 @@
 import { readFileSync } from 'fs'
-export const packageJson = JSON.parse(readFileSync('../../package.json'))
+import { join, normalize } from 'path'
+import getCurrentDirectory from '../lib/get-current-directory.js'
+
+const __dirname = getCurrentDirectory()
+
+export const packageJson = JSON.parse(
+  readFileSync(normalize(join(__dirname, '../../package.json')))
+)
 
 export * from './_deployment.js'
 export * from './_app.js'

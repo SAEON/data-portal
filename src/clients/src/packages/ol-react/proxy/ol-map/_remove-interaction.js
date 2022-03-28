@@ -6,6 +6,6 @@ export default (map, rerender) => {
     get: () => interaction => {
       map.removeInteraction(interaction)
       rerender(r => r + 1)
-    },
+    }
   }
 }

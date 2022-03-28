@@ -2,11 +2,11 @@ import fetch from 'node-fetch'
 import {
   ELASTICSEARCH_CATALOGUE_INDEX,
   ELASTICSEARCH_ADDRESS,
-  ODP_FILTER,
+  ODP_FILTER
 } from '../../config/index.js'
 import {
   makeIterator as makeOdpIterator,
-  testConnection as testOdpConnection,
+  testConnection as testOdpConnection
 } from './iterator/index.js'
 import { performance } from 'perf_hooks'
 import { client } from '../../elasticsearch/index.js'
@@ -22,7 +22,7 @@ const filter = async items => {
 
 let lock = false
 
-export default async function () {
+export default async function() {
   if (lock) {
     throw new Error(
       'This integration is already running. Please wait for it to finish and try again'
@@ -36,7 +36,7 @@ export default async function () {
   const result = {
     updated: 0,
     created: 0,
-    errors: false,
+    errors: false
   }
 
   try {
@@ -47,8 +47,8 @@ export default async function () {
     await fetch(`${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     })
     console.info('Existing index deleted')
 
@@ -60,11 +60,11 @@ export default async function () {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-ndjson',
+            'Content-Type': 'application/x-ndjson'
           },
           body: (await filter(iterator.data))
             .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
-            .join(''),
+            .join('')
         }
       )
 
@@ -79,7 +79,7 @@ export default async function () {
               esResponseJson.items
                 .filter(({ index: doc }) => doc.error)
                 .map(({ index: doc }) => ({
-                  [doc._id]: JSON.stringify(doc.error),
+                  [doc._id]: JSON.stringify(doc.error)
                 })),
               null,
               2
@@ -88,9 +88,8 @@ export default async function () {
         }
 
         console.info(
-          `Processed ${
-            esResponseJson.items?.length || 0
-          } docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
+          `Processed ${esResponseJson.items?.length ||
+            0} docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
         )
 
         esResponseJson.items?.forEach(({ index }) => {
@@ -115,7 +114,7 @@ export default async function () {
     // Flush the index
     await client.indices.flush({
       index: ELASTICSEARCH_CATALOGUE_INDEX,
-      wait_if_ongoing: false,
+      wait_if_ongoing: false
     })
 
     // Done!

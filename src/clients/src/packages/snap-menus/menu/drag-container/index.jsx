@@ -22,7 +22,7 @@ export default ({
   defaultHeight,
   snapZone,
   setSnapZone,
-  GHOST_GUTTER_X,
+  GHOST_GUTTER_X
 }) => {
   return (
     <Draggable
@@ -76,18 +76,18 @@ export default ({
               {
                 position: {
                   x: x - state.previousDimensions.width / 2 - offset(PORTAL).left,
-                  y: y - 15 - offset(PORTAL).top,
+                  y: y - 15 - offset(PORTAL).top
                 },
                 dimensions: Object.assign(
                   { ...state.previousDimensions },
                   {
                     height: state.minimized
                       ? MENU_HEADER_HEIGHT
-                      : state.maximizedHeight || state.previousDimensions.height,
+                      : state.maximizedHeight || state.previousDimensions.height
                   }
                 ),
                 previousDimensions: null,
-                maximizedHeight: defaultHeight,
+                maximizedHeight: defaultHeight
               }
             )
           )
@@ -143,7 +143,7 @@ export default ({
                 snapped: true,
                 dimensions: getDimensions(snapZone, PORTAL, GHOST_GUTTER_X),
                 position: getPosition(snapZone, PORTAL, GHOST_GUTTER_X),
-                previousDimensions: state.dimensions,
+                previousDimensions: state.dimensions
               }
             )
           )
@@ -153,7 +153,7 @@ export default ({
               { ...state },
               {
                 snapped: false,
-                position: undefined,
+                position: undefined
               }
             )
           )

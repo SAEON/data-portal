@@ -16,8 +16,8 @@ export default memo(({ permissions }) => (
           key: 'description',
           name: 'Description',
           headerRenderer,
-          resizable: true,
-        },
+          resizable: true
+        }
       ]}
       rows={permissions.map(({ id, name, description }) => ({ id, name, description }))}
     />

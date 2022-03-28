@@ -13,17 +13,17 @@ const Root = styled('div')(({ theme }) => ({
   transition: theme.transitions.create('background-color'),
   backgroundColor: alpha(theme.palette.common.white, 0.1),
   '& .MuiInput-underline:before': {
-    borderBottom: 'none',
+    borderBottom: 'none'
   },
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.2),
+    backgroundColor: alpha(theme.palette.common.white, 0.2)
   },
   '& .MuiInput-underline:hover:before': {
-    border: 'none',
+    border: 'none'
   },
   '& .MuiInput-underline:after': {
-    borderBottomColor: alpha(theme.palette.common.white, 0.5),
-  },
+    borderBottomColor: alpha(theme.palette.common.white, 0.5)
+  }
 }))
 
 export default ({ children, autofocus = true, onFocus, onBlur }) => {
@@ -58,13 +58,13 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
                   </InputAdornment>
                 ),
                 inputProps: {
-                  'aria-label': 'Enter search text and press enter',
+                  'aria-label': 'Enter search text and press enter'
                 },
                 sx: {
                   color: theme.palette.common.white,
                   padding: `${theme.spacing(4)} 0`,
-                  caretColor: theme.palette.common.white,
-                },
+                  caretColor: theme.palette.common.white
+                }
               }}
               value={text}
               placeholder="Search SAEON data"

@@ -32,7 +32,7 @@ export default ({ catalogue }) => {
                     isLastFilter
                       ? {
                           zIndex: 1,
-                          borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+                          borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`
                         }
                       : { zIndex: 1 }
                   }

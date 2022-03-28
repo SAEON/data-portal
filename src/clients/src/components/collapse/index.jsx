@@ -15,7 +15,7 @@ export default ({
   Icon = undefined,
   defaultExpanded = false,
   actions = [],
-  cardStyle = {},
+  cardStyle = {}
 }) => {
   const theme = useTheme()
   const [collapsed, setCollapsed] = useState(!defaultExpanded)
@@ -26,7 +26,7 @@ export default ({
       style={{
         width: '100%',
         backgroundColor: alpha(theme.palette.common.white, 0.9),
-        ...cardStyle,
+        ...cardStyle
       }}
     >
       <CardHeader
@@ -40,7 +40,7 @@ export default ({
           <IconButton key="in-out" size="large">
             {collapsed && <ExpandIcon />}
             {!collapsed && <CollapseIcon />}
-          </IconButton>,
+          </IconButton>
         ]}
       />
 

@@ -9,12 +9,12 @@ const ListItem = styled('li')(({ theme }) => ({
   backgroundColor: theme.palette.grey[100],
   '&:hover': {
     backgroundColor: theme.palette.grey[300],
-    transition: theme.transitions.create(['background-color']),
+    transition: theme.transitions.create(['background-color'])
   },
   height: '40px',
   lineHeight: '40px',
   marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
+  marginBottom: theme.spacing(1)
 }))
 
 export default ({ options, selectedOptions, setOption, label, Icon }) => {
@@ -55,7 +55,7 @@ export default ({ options, selectedOptions, setOption, label, Icon }) => {
                     sx={{
                       paddingLeft: '10px',
                       textOverflow: 'ellipsis',
-                      overflow: 'hidden',
+                      overflow: 'hidden'
                     }}
                   >
                     {value}
@@ -72,8 +72,8 @@ export default ({ options, selectedOptions, setOption, label, Icon }) => {
                         marginLeft: 'auto',
                         marginRight: theme => theme.spacing(1),
                         '&:hover': {
-                          cursor: 'pointer',
-                        },
+                          cursor: 'pointer'
+                        }
                       }}
                     >
                       <CloseIcon size={20} />

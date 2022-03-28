@@ -49,12 +49,12 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
       titleProps={{
         style: {
           paddingRight: theme.spacing(2),
-          paddingLeft: theme.spacing(2),
-        },
+          paddingLeft: theme.spacing(2)
+        }
       }}
       tooltipProps={{
         placement: 'left',
-        title: disabled ? 'No preview available' : `Preview dataset as map`,
+        title: disabled ? 'No preview available' : `Preview dataset as map`
       }}
       dialogueContentProps={{ style: { padding: 0 } }}
       dialogueProps={{ fullWidth: true }}
