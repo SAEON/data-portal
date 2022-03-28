@@ -1,4 +1,10 @@
-import packageJson from '../../package.json' assert { type: 'json' }
+import { readFileSync } from 'fs'
+import { dirname, join, normalize } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const packageJson = JSON.parse(readFileSync(normalize(join(__dirname, '../../package.json'))))
 
 const getLongestKey = obj =>
   Object.keys(obj).reduce(

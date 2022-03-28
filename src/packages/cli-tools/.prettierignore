@@ -1,0 +1,6 @@
+**/dist
+**/node_modules
+**/.build
+src/generators/**
+**/package-lock.json
+src/tools/metadata-to-csv/metadata-records.json

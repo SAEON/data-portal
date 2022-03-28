@@ -1,9 +1,6 @@
 import { createInterface } from 'readline'
-import { start as startspinner, stop as stopSpinner } from './lib/spinner.js'
 
 export const prompt = query => {
-  stopSpinner()
-
   const rl = createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -13,7 +10,6 @@ export const prompt = query => {
     rl.question(query, ans => {
       rl.close()
       resolve(ans)
-      startspinner()
     })
   )
 }

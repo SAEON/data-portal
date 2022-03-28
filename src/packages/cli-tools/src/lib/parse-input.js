@@ -1,5 +1,4 @@
 import parseArgs from './parse-args.js'
-import { start as startSpinner, stop as stopSpinner } from './spinner.js'
 import buildHelpOutput from './build-help-output.js'
 
 export default async function parseInput(config, args) {
@@ -23,9 +22,7 @@ export default async function parseInput(config, args) {
 
   // If CLI argument is an operation
   if (typeof config[command] === 'function') {
-    // startSpinner()
     const result = await config[command](parseArgs(config[command].flags)(args.slice(1)))
-    // stopSpinner()
     return result
   }
 
