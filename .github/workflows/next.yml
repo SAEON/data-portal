@@ -127,7 +127,6 @@ jobs:
             CURATOR_CONTACT=curation@saeon.nrf.ac.za
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
-            SUBDOMAIN_APP_ENTRIES=ocims
             TECHNICAL_CONTACT=development@saeon.nrf.ac.za
             NGINX_SERVER_BLOCK=nginx/clients-internal.conf
           push: true
@@ -177,7 +176,6 @@ jobs:
             CURATOR_CONTACT=curation@saeon.nrf.ac.za
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
-            SUBDOMAIN_APP_ENTRIES=ocims
             TECHNICAL_CONTACT=development@saeon.nrf.ac.za
             NGINX_SERVER_BLOCK=nginx/clients-public.conf
           push: true

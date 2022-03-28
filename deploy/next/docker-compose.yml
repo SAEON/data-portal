@@ -67,7 +67,7 @@ services:
       - sdp_next
 
   api:
-    image: $API_IMAGE
+    image: ghcr.io/saeon/sdp-dev-api:latest
     deploy:
       placement:
         max_replicas_per_node: 2
