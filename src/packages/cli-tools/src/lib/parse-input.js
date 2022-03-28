@@ -20,10 +20,9 @@ export default async function parseInput(config, args) {
     return await parseInput(config[command], args.slice(1))
   }
 
-  // If CLI argument is an operation
+  // If CLI argument is an operation, execute it. Don't return result
   if (typeof config[command] === 'function') {
-    const result = await config[command](parseArgs(config[command].flags)(args.slice(1)))
-    return result
+    await config[command](parseArgs(config[command].flags)(args.slice(1)))
   }
 
   // If CLI configuration is not valid
