@@ -13,11 +13,11 @@ export default new ApolloServer({
       settings: {
         'editor.cursorShape': 'line',
         'request.credentials': 'include',
-        'editor.theme': 'light'
-      }
-    })
+        'editor.theme': 'light',
+      },
+    }),
   ],
   context: ({ ctx }) => {
     return ctx
-  }
+  },
 })
