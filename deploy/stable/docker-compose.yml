@@ -7,40 +7,12 @@ networks:
     attachable: true
 
 volumes:
-  postgis:
-    driver: local
   data:
     driver: local
   tmp:
     driver: local
 
 services:
-  postgis:
-    image: ghcr.io/saeon/postgis:13
-    deploy:
-      replicas: 1
-      rollback_config:
-        parallelism: 0
-      update_config:
-        parallelism: 0
-        order: stop-first
-        failure_action: rollback
-      restart_policy:
-        condition: any
-        delay: 30s
-    environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_DB: sdp_stable
-      POSTGRES_PASSWORD: $POSTGIS_PASSWORD
-      POSTGRES_USER: $POSTGIS_USERNAME
-    ports:
-      - 6010:5432
-    volumes:
-      - postgis:/var/lib/postgresql/data/pgdata
-      - data:/var/lib/sdp-data
-    networks:
-      - sdp_stable
-
   proxy:
     image: $PROXY_IMAGE
     deploy:
@@ -90,7 +62,6 @@ services:
       DOCKER_NETWORK: sdp_stable
       DOCKER_TMP_VOLUME: sdp_stable_tmp
       ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
-      GDAL_DOCKER_IMAGE: osgeo/gdal:latest
       HOSTNAME: https://catalogue.saeon.ac.za
       LOG_QUERY_DETAILS: 'false'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27217
@@ -106,15 +77,6 @@ services:
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
       ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
-      POSTGIS_CONTAINER_NAME: postgis
-      POSTGIS_DB: sdp_stable
-      POSTGIS_HOST: postgis
-      POSTGIS_IMAGE_NAME: ghcr.io/saeon/postgis:13
-      POSTGIS_PASSWORD_PUBLIC: $POSTGIS_PASSWORD_PUBLIC
-      POSTGIS_PASSWORD: $POSTGIS_PASSWORD
-      POSTGIS_PORT: 5432
-      POSTGIS_USERNAME_PUBLIC: $POSTGIS_USERNAME_PUBLIC
-      POSTGIS_USERNAME: $POSTGIS_USERNAME
       TECHNICAL_CONTACT: development@saeon.nrf.ac.za
       TZ: utc
     ports:

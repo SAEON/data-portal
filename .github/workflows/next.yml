@@ -218,8 +218,4 @@ jobs:
             echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_DEV_USERNAME }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_NEXT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "POSTGIS_PASSWORD=${{ secrets.POSTGIS_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "POSTGIS_USERNAME=${{ secrets.POSTGIS_USERNAME }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "POSTGIS_USERNAME_PUBLIC=${{ secrets.POSTGIS_USERNAME_PUBLIC }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "POSTGIS_PASSWORD_PUBLIC=${{ secrets.POSTGIS_PASSWORD_PUBLIC }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next

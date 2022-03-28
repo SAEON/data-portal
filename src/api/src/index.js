@@ -41,7 +41,6 @@ import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callba
 import loginRoute from './http/login.js'
 import saeonOdpIntegration from './integrations/saeon-odp/index.js'
 import gqlServer from './graphql/index.js'
-import './postgis/setup.js'
 import './passport/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)

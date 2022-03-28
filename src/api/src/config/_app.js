@@ -11,7 +11,6 @@ export const APP_KEY = process.env.APP_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0Ed
 export const DEFAULT_ADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_ADMIN_EMAIL_ADDRESSES || ''
 export const DEFAULT_SYSADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES || ''
 export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'configure-this@saeon.nrf.ac.za'
-export const GDAL_DOCKER_IMAGE = process.env.GDAL_DOCKER_IMAGE || 'osgeo/gdal:latest'
 export const API_BIND_PROTOCOL = 'http'
 export const API_BIND_HOSTNAME = process.env.API_BIND_HOSTNAME || 'localhost'
 export const API_BIND_PORT = process.env.API_BIND_PORT || 3000

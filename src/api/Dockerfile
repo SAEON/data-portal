@@ -119,9 +119,6 @@ ENV TZ=$TZ
 
 WORKDIR /app
 
-# Allow access to host's Docker engine
-COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/
-
 # Copy code
 COPY . .
 

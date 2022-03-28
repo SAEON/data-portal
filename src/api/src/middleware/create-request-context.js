@@ -1,5 +1,4 @@
 import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/index.js'
-import postgisQuery, { publicQuery, createClient } from '../postgis/query.js'
 import { query as elasticQuery } from '../elasticsearch/index.js'
 import { APP_KEY } from '../config/index.js'
 import gqlServer, { schema as gqlSchema } from '../graphql/index.js'
@@ -20,12 +19,6 @@ export default app => async (ctx, next) => {
     collections,
     dataFinders: getDataFinders(), // Request level batching
     logToMongo: logToMongo.load.bind(logToMongo)
-  }
-
-  app.context.postgis = {
-    query: postgisQuery,
-    publicQuery,
-    createClient
   }
 
   app.context.gql = {
