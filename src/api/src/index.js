@@ -51,6 +51,7 @@ const __dirname = getCurrentDirectory(import.meta)
  * Pull metadata into Elasticsearch
  */
 
+
 SERVER_TASKS.addTask(
   new Task(
     { schedule: SAEON_ODP_INTEGRATION_SCHEDULE, id: 'SAEON ODP Metadata integration' },
