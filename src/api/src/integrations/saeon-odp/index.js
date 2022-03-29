@@ -1,4 +1,3 @@
-import fetch from 'node-fetch'
 import {
   ELASTICSEARCH_CATALOGUE_INDEX,
   ELASTICSEARCH_ADDRESS,
@@ -44,39 +43,40 @@ export default async function() {
     await testOdpConnection()
 
     // Delete the index
-    await fetch(`${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    console.info('Existing index deleted')
+    await client.indices
+      .delete({ index: ELASTICSEARCH_CATALOGUE_INDEX })
+      .catch(error =>
+        console.error(
+          'Error deleting Elasticsearch index',
+          ELASTICSEARCH_CATALOGUE_INDEX,
+          "This probably means it didn't exist and you can ignore this message",
+          error
+        )
+      )
 
-    // Insert new records from the ODP
+    // Recreate the index
+    await client.indices.create({ index: ELASTICSEARCH_CATALOGUE_INDEX })
+
+    /**
+     * Iterate over the ODP records
+     * Insert each batch into ES
+     */
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
-      const esResponse = await fetch(
-        `${ELASTICSEARCH_ADDRESS}/${ELASTICSEARCH_CATALOGUE_INDEX}/_bulk`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-ndjson'
-          },
+      try {
+        const result = await client.bulk({
+          index: ELASTICSEARCH_CATALOGUE_INDEX,
+          refresh: true,
           body: (await filter(iterator.data))
             .map(doc => `{ "index": {"_id": "${doc.id}"} }\n${JSON.stringify(doc)}\n`)
             .join('')
-        }
-      )
+        })
 
-      // Process ODP response into Elasticsearch
-      try {
-        const esResponseJson = await esResponse.json()
-
-        if (esResponseJson?.errors) {
+        if (result?.errors) {
           console.info(
             'Failure integrating the following ODP records into the Elasticsearch index',
             JSON.stringify(
-              esResponseJson.items
+              result.items
                 .filter(({ index: doc }) => doc.error)
                 .map(({ index: doc }) => ({
                   [doc._id]: JSON.stringify(doc.error)
@@ -88,16 +88,14 @@ export default async function() {
         }
 
         console.info(
-          `Processed ${esResponseJson.items?.length ||
+          `Processed ${result.items?.length ||
             0} docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
         )
 
-        esResponseJson.items?.forEach(({ index }) => {
-          if (index.result) {
+        result.items?.forEach(({ index }) => {
+          if (index.status === 201) {
             result[index.result]++
-          }
-
-          if (index.error) {
+          } else {
             result.errors++
           }
         })
@@ -122,7 +120,7 @@ export default async function() {
     const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
     console.info('Index integration complete', runtime, result)
   } catch (error) {
-    throw error
+    throw new Error(`ERROR integration with SAEON ODP: ${error.message}`)
   } finally {
     lock = false
   }

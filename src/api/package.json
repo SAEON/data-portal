@@ -39,7 +39,7 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
-    "es7.14": "npm:@elastic/elasticsearch@^7.14.1",
+    "es8.1": "npm:@elastic/elasticsearch@8.1.0",
     "formdata-node": "^4.3.2",
     "graphql": "^16.3.0",
     "graphql-type-json": "^0.3.2",

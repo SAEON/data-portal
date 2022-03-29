@@ -1,5 +1,5 @@
 import { ELASTICSEARCH_ADDRESS, ELASTICSEARCH_CATALOGUE_INDEX } from '../config/index.js'
-import { Client as ElasticClient } from 'es7.14'
+import { Client as ElasticClient } from 'es8.1'
 import setupTemplates from './setup-templates/index.js'
 
 export const client = new ElasticClient({ node: ELASTICSEARCH_ADDRESS })

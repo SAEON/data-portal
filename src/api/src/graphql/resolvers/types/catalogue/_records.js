@@ -1,5 +1,5 @@
-import { GraphQLError } from 'graphql'
 import buildDsl from './dsl/index.js'
+import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../../../config/index.js'
 
 /**
  * NOTE
@@ -63,12 +63,13 @@ export default async (_, args, ctx) => {
     dsl.search_after = [cursor.score || 0, cursor.id]
   }
 
-  const { body: data } = await elastic.query({
+  const data = await elastic.query({
+    index: ELASTICSEARCH_CATALOGUE_INDEX,
     body: buildDsl({ dsl, ids, dois, text, terms, extent, identifiers })
   })
 
   if (data.error) {
-    return new GraphQLError(`${JSON.stringify(data.error, null, 2)}`)
+    return new Error(`${JSON.stringify(data.error, null, 2)}`)
   }
 
   const totalCount = data.hits.total.value

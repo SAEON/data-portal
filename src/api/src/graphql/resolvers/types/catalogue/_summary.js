@@ -1,4 +1,5 @@
 import buildDsl from './dsl/index.js'
+import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../../../config/index.js'
 
 /**
  * NOTE
@@ -175,7 +176,8 @@ export default async (_, args, ctx) => {
     }
   }
 
-  const { body: result } = await elastic.query({
+  const result = await elastic.query({
+    index: ELASTICSEARCH_CATALOGUE_INDEX,
     body: buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
   })
 

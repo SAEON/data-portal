@@ -24,4 +24,4 @@ export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || 'http:
 
 export const TERRESTRIS_ADDRESS = 'https://ows.terrestris.de'
 
-export const ALLOWED_ES_INDICES = ['saeon-odp-catalogue-search']
+export const ALLOWED_ES_INDICES = ['saeon-odp']

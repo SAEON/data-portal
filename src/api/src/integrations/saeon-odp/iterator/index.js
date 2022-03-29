@@ -4,9 +4,9 @@ import {
   ODP_INTEGRATION_BATCH_SIZE,
   ODP_DEBUG_IDS
 } from '../../../config/index.js'
-import parseDates from '../../../lib/process-metadata/parse-dates.js'
-import parseSpatial from '../../../lib/process-metadata/parse-spatial.js'
-import parseImmutableResource from '../../../lib/process-metadata/parse-immutable-resource.js'
+import parseDates from '../../../lib/transform-saeon-odp-metadata/parse-dates.js'
+import parseSpatial from '../../../lib/transform-saeon-odp-metadata/parse-spatial.js'
+import parseImmutableResource from '../../../lib/transform-saeon-odp-metadata/parse-immutable-resource.js'
 import authenticateWithOdp from '../../../lib/authenticate-with-odp.js'
 
 const DEBUG_IDS = ODP_DEBUG_IDS.split(',')
