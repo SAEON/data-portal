@@ -112,6 +112,7 @@ run = '''
 
 [[task]]
 name = 'deps:update'
+serial = true
 deps = ['ncu-u:all', 'deps:install']
 
 # PACKAGES
