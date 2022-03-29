@@ -21,7 +21,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
@@ -44,7 +44,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
@@ -96,7 +96,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
@@ -114,7 +114,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any

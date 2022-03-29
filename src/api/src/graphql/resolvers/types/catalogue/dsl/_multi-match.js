@@ -9,19 +9,19 @@ const fields = {
   'descriptions.description': { boost: 5, fuzziness: 0 },
 
   // Institution
-  institution: { boost: 5, fuzziness: 3 },
+  institution: { boost: 5, fuzziness: 1 },
   'institution.raw': { boost: 100, fuzziness: 0 },
 
   // Collection
-  collection: { boost: 5, fuzziness: 3 },
+  collection: { boost: 5, fuzziness: 1 },
   'collection.raw': { boost: 100, fuzziness: 0 },
 
   // Creators
-  'creators.name': { boost: 5, fuzziness: 3 },
+  'creators.name': { boost: 5, fuzziness: 1 },
   'creators.name.raw': { boost: 10, fuzziness: 0 },
 
   // Contributors
-  'contributors.name': { boost: 5, fuzziness: 3 },
+  'contributors.name': { boost: 5, fuzziness: 1 },
   'contributors.name.raw': { boost: 10, fuzziness: 0 },
 
   // Subjects
@@ -29,7 +29,7 @@ const fields = {
   'subjects.subject.raw': { boost: 10, fuzziness: 0 },
 
   // DOI
-  doi: { boost: 50, fuzziness: 5 },
+  doi: { boost: 50, fuzziness: 2 },
   'doi.raw': { boost: 100, fuzziness: 0 }
 }
 

@@ -21,13 +21,13 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
         delay: 30s
     environment:
-      ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
+      ELASTICSEARCH_ADDRESS: http://8.1.elasticsearch.saeon.int
       TZ: utc
       NODE_ENV: production
     ports:
@@ -44,7 +44,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
@@ -96,7 +96,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
@@ -114,7 +114,7 @@ services:
         parallelism: 0
       update_config:
         parallelism: 0
-        order: start-first
+        order: stop-first
         failure_action: rollback
       restart_policy:
         condition: any
