@@ -5,25 +5,25 @@ module.exports = {
     browser: true,
     es6: true,
     node: true,
-    jest: true,
+    jest: true
   },
   extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
   globals: {
     globalThis: false,
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
   parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
-      modules: true,
+      modules: true
     },
     ecmaVersion: 2021,
     sourceType: 'module',
     babelOptions: {
-      configFile: path.join(__dirname, './babel.config.cjs'),
-    },
+      configFile: path.join(__dirname, './babel.config.cjs')
+    }
   },
   plugins: ['@babel', 'react'],
   rules: {
@@ -33,11 +33,11 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'no-control-regex': 0,
     'react/react-in-jsx-scope': 'off',
-    'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
+    'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }]
   },
   settings: {
     react: {
-      version: require('./package.json').dependencies.react,
-    },
-  },
+      version: require('./package.json').dependencies.react
+    }
+  }
 }

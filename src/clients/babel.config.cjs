@@ -7,11 +7,11 @@ module.exports = {
       {
         debug: false,
         useBuiltIns: 'entry',
-        corejs: { version: 3, proposals: true },
-      },
+        corejs: { version: 3, proposals: true }
+      }
     ],
     ['@babel/preset-react', { runtime: 'automatic' }],
-    ['@babel/preset-typescript'],
+    ['@babel/preset-typescript']
   ],
-  plugins: [],
+  plugins: []
 }
