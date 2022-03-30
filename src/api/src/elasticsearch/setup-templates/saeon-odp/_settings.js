@@ -11,7 +11,7 @@ export default {
       filter: {
         vocabulary_mapping: {
           type: 'synonym',
-          synonyms: ['bryan, rainfall', 'zach, rainfall']
+          synonyms: ['examplesynonymforrainfall, rainfall', 'examplesynonym2forrainfall, rainfall']
         }
       },
       analyzer: {

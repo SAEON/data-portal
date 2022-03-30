@@ -49,6 +49,7 @@
     "epel",
     "EPSG",
     "firewalld",
+    "formdata",
     "fuzzystrmatch",
     "fynbos",
     "geoserver",
