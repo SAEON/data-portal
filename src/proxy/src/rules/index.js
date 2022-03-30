@@ -1,7 +1,7 @@
 import { URL } from 'url'
 import csirRule from './_csir.js'
 import hstRule from './_hst.js'
-import elasticsearchRule from './_elasticsearch.js'
+import deprecatedElasticsearchRule from './_elasticsearch-deprecated.js'
 import elasticsearch714Rule from './_elasticsearch-7.14.js'
 import elasticsearch81Rule from './_elasticsearch-8.1.js'
 import saeonGeoServersRule from './_saeon-geoservers.js'
@@ -26,7 +26,14 @@ const beforeSendRequest = async requestDetail => {
     } else if (pathname.includes('/elasticsearch/7.14')) {
       proxiedRequest = elasticsearch714Rule(requestDetail, url)
     } else if (pathname.includes('/elasticsearch')) {
-      proxiedRequest = elasticsearchRule(requestDetail, url)
+      /**
+       * This rule is used by Marc Pienaar's QGIS plugin.
+       * 
+       * Once he updates the QGIS plugin to access Elasticsearch on
+       * proxy.saeon.ac.za/elasticsearch/7.14/saeon-odp-catalogue-search/_search,
+       * this rule can be deleted
+       **/
+      proxiedRequest = deprecatedElasticsearchRule(requestDetail, url)
     } else if (pathname.includes('/saeon-spatialdata/spatialdata.saeon.ac.za')) {
       proxiedRequest = saeonGeoServersRule(requestDetail, url)
     } else if (pathname.includes('/saeon-spatialdata/geoserver.saeon.ac.za')) {

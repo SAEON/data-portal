@@ -1,7 +1,7 @@
 import { URL } from 'url'
 import { normalize } from 'path'
 import {
-  ELASTICSEARCH_NEXT_ADDRESS as ELASTICSEARCH_ADDRESS,
+  ELASTICSEARCH_7_14_ADDRESS as ELASTICSEARCH_ADDRESS,
   ALLOWED_ES_INDICES
 } from '../config.js'
 
