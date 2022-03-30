@@ -26,7 +26,7 @@ npm start
 Default configuration values can be found in [src/config.js](src/config.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly. For the most part this service just provides limited access to certain SAEON endpoints that should not change regardless of the deployment.
 
 ```txt
-ELASTICSEARCH_ADDRESS=...
+ELASTICSEARCH_NEXT_ADDRESS=...
 ```
 
 
@@ -36,7 +36,7 @@ For a full list of `--build-arg`s that is accepted refer to the [Dockerfile](Doc
 ```sh
 # Create a Docker image
 docker build -t proxy . \
---build-arg ELASTICSEARCH_ADDRESS=http://elasticsearch:9200 \
+--build-arg ELASTICSEARCH_NEXT_ADDRESS=http://elasticsearch:9200 \
 ... etc
 
 # Run as a Docker container

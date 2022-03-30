@@ -20,7 +20,12 @@ export const CATALOGUE_PROXY_THROTTLE = 10000
 
 export const CATALOGUE_PROXY_WEB_INTERFACE_PORT = 8002
 
-export const ELASTICSEARCH_ADDRESS = process.env.ELASTICSEARCH_ADDRESS || 'http://localhost:9200'
+export const ELASTICSEARCH_NEXT_ADDRESS =
+  process.env.ELASTICSEARCH_NEXT_ADDRESS || 'http://localhost:9200'
+export const ELASTICSEARCH_7_14_ADDRESS =
+  process.env.ELASTICSEARCH_7_14_ADDRESS || 'http://localhost:9200'
+export const ELASTICSEARCH_8_1_ADDRESS =
+  process.env.ELASTICSEARCH_8_1_ADDRESS || 'http://localhost:9200'
 
 export const TERRESTRIS_ADDRESS = 'https://ows.terrestris.de'
 

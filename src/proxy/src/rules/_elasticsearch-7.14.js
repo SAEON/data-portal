@@ -1,6 +1,9 @@
 import { URL } from 'url'
 import { normalize } from 'path'
-import { ELASTICSEARCH_ADDRESS, ALLOWED_ES_INDICES } from '../config.js'
+import {
+  ELASTICSEARCH_7_14_ADDRESS as ELASTICSEARCH_ADDRESS,
+  ALLOWED_ES_INDICES
+} from '../config.js'
 
 const { protocol, hostname, port, host, pathname: destinationPathname } = new URL(
   ELASTICSEARCH_ADDRESS
