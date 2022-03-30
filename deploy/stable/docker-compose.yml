@@ -61,7 +61,7 @@ services:
       DOCKER_DATA_VOLUME: sdp_stable_data
       DOCKER_NETWORK: sdp_stable
       DOCKER_TMP_VOLUME: sdp_stable_tmp
-      ELASTICSEARCH_ADDRESS: http://7.14.elasticsearch.saeon.int
+      ELASTICSEARCH_ADDRESS: http://8.1.elasticsearch.saeon.int
       HOSTNAME: https://catalogue.saeon.ac.za
       LOG_QUERY_DETAILS: 'false'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27217
