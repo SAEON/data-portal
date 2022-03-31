@@ -32,11 +32,7 @@ export default async function() {
 
   const t0 = performance.now()
 
-  const result = {
-    updated: 0,
-    created: 0,
-    errors: false
-  }
+  const result = {}
 
   try {
     // Test that the ODP is up
@@ -93,11 +89,7 @@ export default async function() {
         )
 
         res.items?.forEach(({ index }) => {
-          if (index.status === 201) {
-            result[index.result]++
-          } else {
-            result.errors++
-          }
+          result[index.status] = (result[index.status] || 0) + 1
         })
       } catch (error) {
         console.warn(
