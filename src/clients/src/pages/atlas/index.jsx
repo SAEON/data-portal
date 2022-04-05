@@ -9,7 +9,7 @@ export default ({ id, ...props }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query($id: ID!) {
+      query ($id: ID!) {
         atlas(id: $id)
       }
     `,
@@ -32,7 +32,7 @@ export default ({ id, ...props }) => {
         top: 0,
         bottom: 0,
         right: 0,
-        left: 0
+        left: 0,
       }}
     >
       <LayerSearch

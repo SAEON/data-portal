@@ -26,7 +26,7 @@ export default ({ routes }) => {
                       <div
                         style={{
                           display: 'flex',
-                          alignItems: 'center'
+                          alignItems: 'center',
                         }}
                       >
                         <Icon size={18} />
