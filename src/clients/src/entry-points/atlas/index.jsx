@@ -1,6 +1,5 @@
-import '../../index/main'
+import mount from '../../index/main'
 import { lazy, Suspense } from 'react'
-import { render } from 'react-dom'
 import Loading from '../../components/loading'
 import RouteSwitcher from '../../index/route-switcher'
 import { SizeContent } from '../../contexts/layout'
@@ -10,10 +9,10 @@ import routes from './routes'
 const App = lazy(() => import('../../index/application'))
 
 const config = {
-  backgroundImage: false
+  backgroundImage: false,
 }
 
-render(
+const Page = () => (
   <Suspense fallback={<Loading />}>
     <App {...config}>
       <Banner title="SAEON Data" />
@@ -21,6 +20,7 @@ render(
         <RouteSwitcher routes={routes} />
       </SizeContent>
     </App>
-  </Suspense>,
-  document.getElementById('root')
+  </Suspense>
 )
+
+mount(Page)

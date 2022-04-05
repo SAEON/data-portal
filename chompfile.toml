@@ -84,6 +84,12 @@ run = 'find . -name node_modules -type d -exec rm -rv {} + && find . -name packa
 name = 'ncu:all'
 run = '''
   chomp ncu
+  chomp ncu -c src/api/chompfile.toml
+  chomp ncu -c src/clients/chompfile.toml
+  chomp ncu -c src/proxy/chompfile.toml
+  chomp ncu -c src/packages/cli-tools/chompfile.toml
+  chomp ncu -c src/packages/graphql-iterator/chompfile.toml
+  chomp ncu -c src/packages/logger/chompfile.toml
 '''
 
 [[task]]

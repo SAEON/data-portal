@@ -1,6 +1,5 @@
-import '../../index/main'
+import mount from '../../index/main'
 import { lazy, Suspense } from 'react'
-import { render } from 'react-dom'
 import Loading from '../../components/loading'
 import RouteSwitcher from '../../index/route-switcher'
 import { SizeContent } from '../../contexts/layout'
@@ -15,12 +14,12 @@ const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('list')
 
 const config = {
   backgroundImage: true,
-  contentBase: isSubdomainEntry ? undefined : '/list'
+  contentBase: isSubdomainEntry ? undefined : '/list',
 }
 
 const routes = configureRoutes(config)
 
-render(
+const Page = () => (
   <Suspense fallback={<Loading />}>
     <App {...config}>
       <Banner title="SAEON Data" />
@@ -29,6 +28,7 @@ render(
       </SizeContent>
       <Footer routes={routes} />
     </App>
-  </Suspense>,
-  document.getElementById('root')
+  </Suspense>
 )
+
+mount(Page)

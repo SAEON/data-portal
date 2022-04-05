@@ -1,6 +1,5 @@
-import '../../index/main'
+import mount from '../../index/main'
 import { lazy, Suspense } from 'react'
-import { render } from 'react-dom'
 import Loading from '../../components/loading'
 import RouteSwitcher from '../../index/route-switcher'
 import { SizeContent } from '../../contexts/layout'
@@ -14,10 +13,10 @@ const App = lazy(() => import('../../index/application'))
 
 const config = {
   backgroundImage: true,
-  contentBase: undefined
+  contentBase: undefined,
 }
 
-render(
+const Page = () => (
   <Suspense fallback={<Loading />}>
     <App {...config}>
       <Header
@@ -32,6 +31,7 @@ render(
       </SizeContent>
       <Footer routes={routes} />
     </App>
-  </Suspense>,
-  document.getElementById('root')
+  </Suspense>
 )
+
+mount(Page)
