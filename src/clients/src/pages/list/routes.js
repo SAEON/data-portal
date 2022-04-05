@@ -1,4 +1,7 @@
 import { lazy } from 'react'
+import { styled } from '@mui/material/styles'
+import { PUBLIC_GQL_ADDRESS } from '../../config'
+
 import SearchIcon from 'mdi-react/SearchIcon'
 import AboutIcon from 'mdi-react/AboutIcon'
 import TermsIcon from 'mdi-react/ContractIcon'
@@ -7,6 +10,13 @@ import DisclaimerIcon from 'mdi-react/AlertIcon'
 import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
 import HomeIcon from 'mdi-react/HomeIcon'
+import GithubIcon_ from 'mdi-react/GithubIcon'
+import ApiIcon_ from 'mdi-react/ApiIcon'
+import LicenseIcon_ from 'mdi-react/LicenseIcon'
+
+const ApiIcon = styled(ApiIcon_)({})
+const GithubIcon = styled(GithubIcon_)({})
+const LicenseIcon = styled(LicenseIcon_)({})
 
 const HomePage = lazy(() => import('../../modules/home'))
 const RecordPage = lazy(() => import('../../modules/record'))
@@ -16,6 +26,7 @@ const TermsOfUsePage = lazy(() => import('../../modules/terms-of-use'))
 const AboutPage = lazy(() => import('../../modules/about'))
 const PrivacyPolicyPage = lazy(() => import('../../modules/privacy-policy'))
 const DisclaimerPage = lazy(() => import('../../modules/disclaimer'))
+const LicensePage = lazy(() => import('../../modules/license'))
 
 const getPath = (contentBase, p) => `${contentBase}${p}`
 
@@ -82,6 +93,7 @@ export default ({ contentBase = '' }) => {
       to: getPath(contentBase, '/privacy-policy'),
       excludeFromNav: true,
       includeInFooter: true,
+      group: 'legal',
     },
     {
       label: 'Terms of service',
@@ -95,6 +107,7 @@ export default ({ contentBase = '' }) => {
       ),
       excludeFromNav: true,
       includeInFooter: true,
+      group: 'legal',
     },
     {
       label: 'Terms of use',
@@ -108,9 +121,11 @@ export default ({ contentBase = '' }) => {
       to: getPath(contentBase, '/terms-of-use'),
       excludeFromNav: true,
       includeInFooter: true,
+      group: 'legal',
     },
     {
       label: 'Disclaimer',
+      group: 'legal',
       Icon: DisclaimerIcon,
       to: getPath(contentBase, '/disclaimer'),
       exact: true,
@@ -121,6 +136,36 @@ export default ({ contentBase = '' }) => {
       ),
       excludeFromNav: true,
       includeInFooter: true,
+    },
+    {
+      label: 'GraphQL Playground',
+      Icon: ApiIcon,
+      href: PUBLIC_GQL_ADDRESS,
+      excludeFromNav: true,
+      includeInFooter: true,
+      to: '/no-route', // Hack - the to property is still required
+    },
+    {
+      group: 'source code',
+      label: 'Source code',
+      Icon: GithubIcon,
+      href: 'https://github.com/SAEON/data-portal',
+      excludeFromNav: true,
+      includeInFooter: true,
+      to: '/no-route', // Hack - the to property is still required
+    },
+    {
+      group: 'source code',
+      label: 'License (MIT)',
+      Icon: LicenseIcon,
+      excludeFromNav: true,
+      includeInFooter: true,
+      to: '/license',
+      render: () => (
+        <Transition>
+          <LicensePage />
+        </Transition>
+      ),
     },
   ]
 }

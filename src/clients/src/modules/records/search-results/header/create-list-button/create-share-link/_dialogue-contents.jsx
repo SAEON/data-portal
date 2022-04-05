@@ -32,8 +32,8 @@ export default ({ tabIndex, search = undefined }) => {
       saveList({
         variables: {
           createdBy: `${packageJson.name} v${packageJson.version}`,
-          search: search || global
-        }
+          search: search || global,
+        },
       })
     }
   }, [isAtlasPage, global, saveList, search])
@@ -50,7 +50,7 @@ export default ({ tabIndex, search = undefined }) => {
           margin: 24,
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <CircularProgress />
@@ -60,7 +60,9 @@ export default ({ tabIndex, search = undefined }) => {
     <Fade in={Boolean(data || isAtlasPage)} key="data">
       <div>
         <TabPanel value={tabIndex} index={0}>
-          <Link href={uri}>{uri}</Link>
+          <Link target="_blank" rel="noopener noreferrer" href={uri}>
+            {uri}
+          </Link>
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
           {`<iframe width="100%" height="100%" src="${uri}" frameborder="0" allowfullscreen></iframe>`}
