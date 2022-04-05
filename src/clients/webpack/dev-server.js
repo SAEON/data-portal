@@ -3,8 +3,8 @@ const fs = require('fs')
 
 module.exports = (ROOT, output) => {
   const rewrites = fs
-    .readdirSync(path.join(ROOT, 'src/entry-points'))
-    .filter(name => fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory())
+    .readdirSync(path.join(ROOT, 'src/pages'))
+    .filter(name => fs.lstatSync(path.join(ROOT, `src/pages/${name}`)).isDirectory())
     .sort(name => (name === 'index' ? 1 : -1))
     .map(name => {
       if (name === 'index') {

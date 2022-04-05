@@ -1,45 +1,26 @@
-import { useRef } from 'react'
-import { useQuery } from '@apollo/client'
+import mount from '../../index/main'
+import { lazy, Suspense } from 'react'
 import Loading from '../../components/loading'
-import { gql } from '@apollo/client'
-import LayerSearch from './_layer-search'
+import RouteSwitcher from '../../index/route-switcher'
+import { SizeContent } from '../../contexts/layout'
+import { Banner } from '../../components/header'
+import routes from './routes'
 
-export default ({ id, ...props }) => {
-  const snapMenusContainer = useRef()
+const App = lazy(() => import('../../index/application'))
 
-  const { error, loading, data } = useQuery(
-    gql`
-      query($id: ID!) {
-        atlas(id: $id)
-      }
-    `,
-    { variables: { id } }
-  )
-
-  if (loading) {
-    return <Loading />
-  }
-
-  if (error) {
-    throw new Error('Error loading search state for Atlas')
-  }
-
-  return (
-    <div
-      ref={snapMenusContainer}
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0
-      }}
-    >
-      <LayerSearch
-        ref={snapMenusContainer}
-        referrer={props.match.params.referrer || undefined}
-        search={data.atlas.search}
-      />
-    </div>
-  )
+const config = {
+  backgroundImage: false,
 }
+
+const Page = () => (
+  <Suspense fallback={<Loading />}>
+    <App {...config}>
+      <Banner title="SAEON Data" />
+      <SizeContent height>
+        <RouteSwitcher routes={routes} />
+      </SizeContent>
+    </App>
+  </Suspense>
+)
+
+mount(Page)

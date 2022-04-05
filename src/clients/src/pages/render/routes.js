@@ -6,20 +6,19 @@ import PrivacyIcon from 'mdi-react/LockCheckIcon'
 import DisclaimerIcon from 'mdi-react/AlertIcon'
 import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
-import HomeIcon from 'mdi-react/HomeIcon'
+import { Redirect } from 'react-router-dom'
 
-const HomePage = lazy(() => import('../../pages/home'))
-const RecordPage = lazy(() => import('../../pages/record'))
-const RecordsPage = lazy(() => import('../../pages/records'))
-const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
-const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
-const AboutPage = lazy(() => import('../../pages/about'))
-const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
-const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
+const RecordPage = lazy(() => import('../../modules/record'))
+const RecordsPage = lazy(() => import('../../modules/records'))
+const TermsOfServicePage = lazy(() => import('../../modules/terms-of-service'))
+const TermsOfUsePage = lazy(() => import('../../modules/terms-of-use'))
+const AboutPage = lazy(() => import('../../modules/about'))
+const PrivacyPolicyPage = lazy(() => import('../../modules/privacy-policy'))
+const DisclaimerPage = lazy(() => import('../../modules/disclaimer'))
 
 const getPath = (contentBase, p) => `${contentBase}${p}`
 
-export default ({ contentBase = '' }) => {
+export default ({ contentBase }) => {
   return [
     {
       label: 'Search SAEON data',
@@ -32,18 +31,7 @@ export default ({ contentBase = '' }) => {
             <RecordsPage {...getUriState()} />
           </Transition>
         )
-      }
-    },
-    {
-      label: 'Home',
-      to: getPath(contentBase, '/'),
-      exact: true,
-      Icon: HomeIcon,
-      render: () => (
-        <Transition>
-          <HomePage />
-        </Transition>
-      )
+      },
     },
     {
       label: 'Record',
@@ -55,20 +43,18 @@ export default ({ contentBase = '' }) => {
         <Transition tKey="record">
           <RecordPage id={props.match.params.id} {...props} />
         </Transition>
-      )
+      ),
     },
-
     {
       label: 'About',
       Icon: AboutIcon,
-      includeInFooter: true,
       to: getPath(contentBase, '/about'),
       exact: true,
       render: () => (
         <Transition>
           <AboutPage />
         </Transition>
-      )
+      ),
     },
     {
       label: 'Privacy policy',
@@ -81,7 +67,7 @@ export default ({ contentBase = '' }) => {
       ),
       to: getPath(contentBase, '/privacy-policy'),
       excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'Terms of service',
@@ -94,7 +80,7 @@ export default ({ contentBase = '' }) => {
         </Transition>
       ),
       excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'Terms of use',
@@ -107,7 +93,7 @@ export default ({ contentBase = '' }) => {
       ),
       to: getPath(contentBase, '/terms-of-use'),
       excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'Disclaimer',
@@ -120,7 +106,16 @@ export default ({ contentBase = '' }) => {
         </Transition>
       ),
       excludeFromNav: true,
-      includeInFooter: true
-    }
+      includeInFooter: true,
+    },
+    {
+      label: 'Render',
+      to: getPath(contentBase, '/render'),
+      exact: false,
+      render: ({ location: { pathname, search } }) => {
+        return <Redirect to={`${pathname.replace('/render', '')}${search}`} />
+      },
+      excludeFromNav: true,
+    },
   ]
 }

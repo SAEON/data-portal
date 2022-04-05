@@ -13,19 +13,19 @@ import UsageIcon from 'mdi-react/ChartBoxIcon'
 import CollectionsIcon from 'mdi-react/PackageVariantIcon'
 // import CuratorToolsIcon from 'mdi-react/BookshelfIcon'
 
-const HomePage = lazy(() => import('../../pages/home'))
-const RecordPage = lazy(() => import('../../pages/record'))
-const RecordsPage = lazy(() => import('../../pages/records'))
-const UsersPage = lazy(() => import('../../pages/users'))
-const LoginPage = lazy(() => import('../../pages/login'))
-const TermsOfServicePage = lazy(() => import('../../pages/terms-of-service'))
-const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
-const AboutPage = lazy(() => import('../../pages/about'))
-const PrivacyPolicyPage = lazy(() => import('../../pages/privacy-policy'))
-const DisclaimerPage = lazy(() => import('../../pages/disclaimer'))
-const AccessPage = lazy(() => import('../../pages/access'))
-const UsageReportsPage = lazy(() => import('../../pages/usage'))
-const DataListsPage = lazy(() => import('../../pages/data-lists'))
+const HomePage = lazy(() => import('../../modules/home'))
+const RecordPage = lazy(() => import('../../modules/record'))
+const RecordsPage = lazy(() => import('../../modules/records'))
+const UsersPage = lazy(() => import('../../modules/users'))
+const LoginPage = lazy(() => import('../../modules/login'))
+const TermsOfServicePage = lazy(() => import('../../modules/terms-of-service'))
+const TermsOfUsePage = lazy(() => import('../../modules/terms-of-use'))
+const AboutPage = lazy(() => import('../../modules/about'))
+const PrivacyPolicyPage = lazy(() => import('../../modules/privacy-policy'))
+const DisclaimerPage = lazy(() => import('../../modules/disclaimer'))
+const AccessPage = lazy(() => import('../../modules/access'))
+const UsageReportsPage = lazy(() => import('../../modules/usage'))
+const DataListsPage = lazy(() => import('../../modules/data-lists'))
 
 export default [
   {
@@ -37,7 +37,7 @@ export default [
       <Transition>
         <HomePage />
       </Transition>
-    )
+    ),
   },
 
   {
@@ -51,7 +51,7 @@ export default [
           <RecordsPage {...getUriState()} />
         </Transition>
       )
-    }
+    },
   },
   {
     label: 'Usage reports',
@@ -63,7 +63,7 @@ export default [
       <Transition>
         <UsageReportsPage />
       </Transition>
-    )
+    ),
   },
   {
     label: 'Data lists',
@@ -75,7 +75,7 @@ export default [
       <Transition>
         <DataListsPage />
       </Transition>
-    )
+    ),
   },
   {
     label: 'Record',
@@ -87,7 +87,7 @@ export default [
       <Transition tKey="record">
         <RecordPage id={props.match.params.id} {...props} />
       </Transition>
-    )
+    ),
   },
   {
     label: 'About the data portal',
@@ -100,7 +100,7 @@ export default [
       <Transition>
         <AboutPage />
       </Transition>
-    )
+    ),
   },
   {
     label: 'Privacy policy',
@@ -113,7 +113,7 @@ export default [
     ),
     to: '/privacy-policy',
     excludeFromNav: true,
-    includeInFooter: true
+    includeInFooter: true,
   },
   {
     label: 'Terms of service',
@@ -126,7 +126,7 @@ export default [
       </Transition>
     ),
     excludeFromNav: true,
-    includeInFooter: true
+    includeInFooter: true,
   },
   {
     label: 'Terms of use',
@@ -139,7 +139,7 @@ export default [
     ),
     to: '/terms-of-use',
     excludeFromNav: true,
-    includeInFooter: true
+    includeInFooter: true,
   },
   {
     label: 'Disclaimer',
@@ -152,7 +152,7 @@ export default [
       </Transition>
     ),
     excludeFromNav: true,
-    includeInFooter: true
+    includeInFooter: true,
   },
   {
     label: 'Login',
@@ -164,7 +164,7 @@ export default [
       <Transition>
         <LoginPage />
       </Transition>
-    )
+    ),
   },
   {
     label: 'Access',
@@ -176,7 +176,7 @@ export default [
       <Transition tKey={'access'}>
         <AccessPage {...props} />
       </Transition>
-    )
+    ),
   },
   {
     label: 'Users',
@@ -188,6 +188,6 @@ export default [
       <Transition tKey={'users'}>
         <UsersPage {...props} />
       </Transition>
-    )
-  }
+    ),
+  },
 ]
