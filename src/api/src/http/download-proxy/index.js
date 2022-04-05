@@ -12,7 +12,7 @@
 
 import fetch from 'node-fetch'
 import { URL } from 'url'
-import { CURATOR_CONTACT } from '../../config/index.js'
+import { CURATOR_CONTACT, TECHNICAL_CONTACT } from '../../config/index.js'
 import htmlTemplate from './html.js'
 
 const HOSTNAME_WHITELIST = ['media.dirisa.org', 'dap.saeon.ac.za']
@@ -46,5 +46,6 @@ export default async ctx => {
       .replace(/\$hostname/g, hostname)
       .replace(/\$uri/g, uri)
       .replace(/\$CURATOR_CONTACT/g, CURATOR_CONTACT.replace('@', ' [ at ] '))
+      .replace(/\$TECHNICAL_CONTACT/g, TECHNICAL_CONTACT.replace('@', ' [ at ] '))
   }
 }
