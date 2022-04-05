@@ -13,7 +13,7 @@ export default () => {
         <Typography variant="body2">{CURATOR_CONTACT.replace('@', ' [ at ] ')}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="body1">Software development inquiries</Typography>
+        <Typography variant="body1">Software development enquiries</Typography>
         <Typography variant="body2">{TECHNICAL_CONTACT.replace('@', ' [ at ] ')}</Typography>
       </Grid>
       <Grid item xs={12}>
