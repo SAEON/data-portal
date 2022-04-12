@@ -63,7 +63,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Engine
-2. Node.js **node:17.8.0**
+2. Node.js **node:17.9.0**
 
 ## Install source code and dependencies
 
