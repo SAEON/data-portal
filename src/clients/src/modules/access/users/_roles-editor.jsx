@@ -26,7 +26,7 @@ export default ({ row: user, onClose, roles }) => {
     {
       onCompleted: () => {
         onClose()
-      }
+      },
     }
   )
 
@@ -67,7 +67,7 @@ export default ({ row: user, onClose, roles }) => {
                             update({
                               roleIds: checked
                                 ? [...roleIds, id]
-                                : roleIds.filter(id_ => id_ !== id)
+                                : roleIds.filter(id_ => id_ !== id),
                             })
                           }}
                           disabled={name === 'sysadmin'}
@@ -90,8 +90,8 @@ export default ({ row: user, onClose, roles }) => {
                 assignRolesToUser({
                   variables: {
                     userId,
-                    roleIds
-                  }
+                    roleIds,
+                  },
                 })
               }}
               size="small"

@@ -70,7 +70,7 @@ const Editor = memo(
                       highlightGutterLine: true,
                       fontSize: 12,
                       fixedWidthGutter: true,
-                      showPrintMargin: false
+                      showPrintMargin: false,
                     }}
                   />
                 )

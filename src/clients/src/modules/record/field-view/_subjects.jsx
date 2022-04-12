@@ -30,9 +30,9 @@ export default ({ subjects }) => {
                       terms: [
                         {
                           field: 'subjects.subject.raw',
-                          value: subject.subject.toLowerCase().trim()
-                        }
-                      ]
+                          value: subject.subject.toLowerCase().trim(),
+                        },
+                      ],
                     },
                     true
                   )

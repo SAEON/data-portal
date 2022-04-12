@@ -30,7 +30,7 @@ export default () => {
             id: layerId,
             title: layerTitle,
             uri,
-            LAYERS
+            LAYERS,
           })
         })
       )

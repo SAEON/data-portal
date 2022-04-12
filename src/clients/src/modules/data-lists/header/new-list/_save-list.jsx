@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 export default ({ closeFn, title, description, createdBy }) => {
   const [saveList, { error, loading }] = useMutation(
     gql`
-      mutation(
+      mutation (
         $search: JSON!
         $createdBy: String!
         $type: ListType
@@ -39,7 +39,7 @@ export default ({ closeFn, title, description, createdBy }) => {
         `
 
         const { lists: existingLists } = cache.read({
-          query
+          query,
         })
 
         const merged = [...existingLists, newList]
@@ -47,12 +47,12 @@ export default ({ closeFn, title, description, createdBy }) => {
         cache.writeQuery({
           query,
           data: {
-            lists: merged
-          }
+            lists: merged,
+          },
         })
 
         closeFn()
-      }
+      },
     }
   )
 
@@ -69,8 +69,8 @@ export default ({ closeFn, title, description, createdBy }) => {
             search: { dois: ['doi1', 'doi2', 'doi3', 'etc...'] },
             description,
             title,
-            type: 'curated'
-          }
+            type: 'curated',
+          },
         })
       }
       startIcon={

@@ -30,7 +30,7 @@ export default ({ proxy }) => {
   const layer = new VectorLayer({
     id: `${nanoid()}-drawLayer`,
     title: 'Draw layer',
-    source
+    source,
   })
 
   /**
@@ -39,7 +39,7 @@ export default ({ proxy }) => {
    */
   useEffect(() => {
     setGlobal({
-      extent: extent || undefined
+      extent: extent || undefined,
     })
   }, [extent]) // TODO - the suggested eslint fix breaks the code
 
@@ -97,7 +97,7 @@ export default ({ proxy }) => {
         zIndex: 1,
         margin: '10px 10px 0 0',
         padding: theme.spacing(1),
-        backgroundColor: alpha(theme.palette.common.white, 0.9)
+        backgroundColor: alpha(theme.palette.common.white, 0.9),
       }}
     >
       <Tooltip title={'Filter by bounding box'}>
@@ -111,7 +111,7 @@ export default ({ proxy }) => {
                 freehand: true,
                 source,
                 type: 'Circle',
-                geometryFunction: createBox()
+                geometryFunction: createBox(),
               })
 
               proxy.addInteraction(draw)
@@ -135,7 +135,7 @@ export default ({ proxy }) => {
         >
           <CropIcon
             style={{
-              color: selectActive ? theme.palette.success.main : theme.palette.text.secondary
+              color: selectActive ? theme.palette.success.main : theme.palette.text.secondary,
             }}
           />
         </IconButton>

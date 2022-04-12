@@ -33,14 +33,14 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
           name: 'Email address',
           resizable: true,
           width: 200,
-          headerRenderer
+          headerRenderer,
         },
         {
           key: 'name',
           name: 'Name',
           resizable: true,
           width: 250,
-          headerRenderer
+          headerRenderer,
         },
         {
           key: 'roles',
@@ -48,7 +48,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
           resizable: true,
           headerRenderer,
           editorOptions: {
-            renderFormatter: true
+            renderFormatter: true,
           },
           editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
           formatter: ({ row: { roles } }) =>
@@ -59,8 +59,8 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
                 return 0
               })
               .map(({ name }) => name.toUpperCase())
-              .join(', ')
-        }
+              .join(', '),
+        },
       ]}
     />
   )

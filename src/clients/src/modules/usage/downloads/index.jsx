@@ -12,13 +12,8 @@ const BarChart = lazy(() => import('./charts/bar-chart'))
 
 export default () => {
   const theme = useTheme()
-  const {
-    downloadsCount,
-    referrerCount,
-    deviceCount,
-    downloadsByDate,
-    ipLocationCount
-  } = useContext(downloadsContext)
+  const { downloadsCount, referrerCount, deviceCount, downloadsByDate, ipLocationCount } =
+    useContext(downloadsContext)
 
   return (
     <Grid container spacing={2}>

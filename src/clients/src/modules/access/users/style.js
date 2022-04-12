@@ -5,8 +5,8 @@ export default makeStyles(() => {
     cell: {
       padding: '0px !important',
       '&> div': {
-        flexGrow: 1
-      }
-    }
+        flexGrow: 1,
+      },
+    },
   }
 })

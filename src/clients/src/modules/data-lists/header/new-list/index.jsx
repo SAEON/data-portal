@@ -18,11 +18,11 @@ export default () => {
         children: 'New list',
         size: 'small',
         variant: 'text',
-        startIcon: <NewListIcon size={18} />
+        startIcon: <NewListIcon size={18} />,
       }}
       title="New list"
       tooltipProps={{
-        title: 'Add new list'
+        title: 'Add new list',
       }}
     >
       {closeFn => {

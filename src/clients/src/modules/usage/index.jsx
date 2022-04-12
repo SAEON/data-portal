@@ -22,7 +22,7 @@ const sections = [
     // eslint-disable-next-line
     Icon: ({ active }) => <DownloadsIcon />,
     requiredPermission: 'site-analytics:view',
-    Section: Downloads
+    Section: Downloads,
   },
   {
     primaryText: 'Users',
@@ -30,8 +30,8 @@ const sections = [
     // eslint-disable-next-line
     Icon: ({ active }) => <UsersIcon />,
     requiredPermission: 'site-analytics:view',
-    Section: Users
-  }
+    Section: Users,
+  },
 ]
 
 export default () => {

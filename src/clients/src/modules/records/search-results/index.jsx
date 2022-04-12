@@ -19,7 +19,7 @@ const Filters = lazy(() => import('./filters'))
 const DEFAULT_CURSORS = {
   start: undefined,
   end: undefined,
-  currentPage: 0
+  currentPage: 0,
 }
 
 export default ({ disableSidebar }) => {
@@ -49,7 +49,7 @@ export default ({ disableSidebar }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query(
+      query (
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
@@ -103,13 +103,13 @@ export default ({ disableSidebar }) => {
           {
             id: '_linked-resources-filter',
             field: 'linkedResources.linkedResourceType.raw',
-            path: 'linkedResources'
+            path: 'linkedResources',
           },
           ...CATALOGUE_CLIENT_FILTER_CONFIG.map(
             ({ id, field, path, filters, sortBy, sortOrder }) => {
               return { id, field, path, filters, sortBy, sortOrder }
             }
-          )
+          ),
         ],
         ids,
         dois,
@@ -120,8 +120,8 @@ export default ({ disableSidebar }) => {
         after: cursors.end,
         before: cursors.start,
         summaryLimit: 75,
-        referrer
-      }
+        referrer,
+      },
     }
   )
 

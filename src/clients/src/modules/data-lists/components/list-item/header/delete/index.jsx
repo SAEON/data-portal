@@ -10,12 +10,12 @@ export default props => {
       title="Confirm"
       text="Are you sure you want to delete this list?"
       tooltipProps={{
-        title: 'Delete this list'
+        title: 'Delete this list',
       }}
       buttonProps={{
         startIcon: <DeleteIcon size={18} />,
         children: 'Delete list',
-        size: 'small'
+        size: 'small',
       }}
       actions={[
         ({ toggle }) => (
@@ -23,7 +23,7 @@ export default props => {
             Cancel
           </Button>
         ),
-        ({ toggle }) => <Mutation toggle={toggle} {...props} />
+        ({ toggle }) => <Mutation toggle={toggle} {...props} />,
       ]}
     />
   )
