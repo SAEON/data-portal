@@ -10,8 +10,10 @@ export const HOSTNAME = process.env.HOSTNAME || 'http://localhost:3001'
 export const APP_KEY = process.env.APP_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0EdIqD3RAUUCU='
 export const DEFAULT_ADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_ADMIN_EMAIL_ADDRESSES || ''
 export const DEFAULT_SYSADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES || ''
-export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'configure-curator-contact@saeon.nrf.ac.za'
-export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'configure-technical-contact@saeon.nrf.ac.za'
+export const CURATOR_CONTACT =
+  process.env.CURATOR_CONTACT || 'configure-curator-contact@saeon.nrf.ac.za'
+export const TECHNICAL_CONTACT =
+  process.env.TECHNICAL_CONTACT || 'configure-technical-contact@saeon.nrf.ac.za'
 export const API_BIND_PROTOCOL = 'http'
 export const API_BIND_HOSTNAME = process.env.API_BIND_HOSTNAME || 'localhost'
 export const API_BIND_PORT = process.env.API_BIND_PORT || 3000

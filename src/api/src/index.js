@@ -28,18 +28,20 @@ import whitelistRoutes from './middleware/whitelist-routes.js'
 import clientSession from './middleware/client-session.js'
 import fourOFour from './middleware/404.js'
 import createRequestContext from './middleware/create-request-context.js'
-import clientInfoRoute from './http/client-info.js'
-import downloadProxyRoute from './http/download-proxy/index.js'
-import sqlPrivate from './http/sql-private.js'
-import sqlPublic from './http/sql-public.js'
-import authenticateRoute from './http/authenticate.js'
-import logoutRoute from './http/logout.js'
-import homeRoute from './http/home.js'
-import loginSuccessRoute from './http/login-success.js'
-import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callback.js'
-import loginRoute from './http/login.js'
 import saeonOdpIntegration from './integrations/saeon-odp/index.js'
 import gqlServer from './graphql/index.js'
+import {
+  authenticate as authenticateRoute,
+  loginSuccess as loginSuccessRoute,
+  clientInfo as clientInfoRoute,
+  downloadProxy as downloadProxyRoute,
+  sqlPrivate as sqlPrivateRoute,
+  sqlPublic as sqlPublicRoute,
+  login as loginRoute,
+  logout as logoutRoute,
+  home as homeRoute,
+  oauthAuthenticationCallback as oauthAuthenticationCallbackRoute
+} from './http/index.js'
 import './passport/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
@@ -112,8 +114,8 @@ api
       .get('/http', homeRoute)
       .post('/http', homeRoute)
       .get('/http/client-info', clientInfoRoute)
-      .post('/http/sql/:schema', sqlPublic)
-      .post('/http/sql', sqlPrivate)
+      .post('/http/sql/:schema', sqlPublicRoute)
+      .post('/http/sql', sqlPrivateRoute)
       .get('/http/download-proxy', downloadProxyRoute)
       .get('/http/authenticate/redirect', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport
       .get('/http/login', loginRoute) // passport

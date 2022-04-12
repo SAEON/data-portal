@@ -1,4 +1,4 @@
-import { ODP_AUTH_LOGOUT_REDIRECT, HOSTNAME, API_ADDRESS } from '../config/index.js'
+import { ODP_AUTH_LOGOUT_REDIRECT, HOSTNAME, API_ADDRESS } from '../../config/index.js'
 import { ObjectId } from 'mongodb'
 
 export default async ctx => {

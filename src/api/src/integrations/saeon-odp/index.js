@@ -84,8 +84,7 @@ export default async function() {
         }
 
         console.info(
-          `Processed ${res.items?.length ||
-            0} docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
+          `Processed ${res.items?.length || 0} docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
         )
 
         res.items?.forEach(({ index }) => {
