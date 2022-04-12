@@ -9,12 +9,12 @@ export default () => {
         children: 'Download lists',
         size: 'small',
         variant: 'text',
-        startIcon: <DownloadIcon size={18} />,
+        startIcon: <DownloadIcon size={18} />
       }}
       title="Download list details"
       text={`Not implemented yet - this will be implemented if requested (${'https://github.com/SAEON/catalogue/issues/18'})`}
       tooltipProps={{
-        title: 'Download lists in .xlsx format',
+        title: 'Download lists in .xlsx format'
       }}
     />
   )

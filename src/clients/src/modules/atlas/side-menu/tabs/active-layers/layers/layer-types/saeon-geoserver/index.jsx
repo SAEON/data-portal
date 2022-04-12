@@ -29,7 +29,7 @@ export default ({
   immutableResource,
   proxy,
   LegendMenu,
-  DataMenu,
+  DataMenu
 }) => {
   const theme = useTheme()
   const title = layer.get('title')
@@ -127,10 +127,10 @@ export default ({
                   )}
                   tooltipProps={{
                     placement: 'top',
-                    title: 'Show layer metadata',
+                    title: 'Show layer metadata'
                   }}
                   titleProps={{
-                    style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) },
+                    style: { paddingRight: theme.spacing(2), paddingLeft: theme.spacing(2) }
                   }}
                   iconProps={{ size: 'small', fontSize: 'small' }}
                   dialogueContentProps={{ style: { padding: 0 } }}

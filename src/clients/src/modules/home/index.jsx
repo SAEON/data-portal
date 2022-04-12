@@ -16,7 +16,7 @@ export default () => {
         ref={el => (ref.current = el)}
         sx={{
           minHeight: '10vh',
-          backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
+          backgroundColor: theme => alpha(theme.palette.common.black, 0.4)
         }}
       >
         {/* SCROLL BUTTON */}

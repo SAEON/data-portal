@@ -9,7 +9,7 @@ import routes from './routes'
 const App = lazy(() => import('../../index/application'))
 
 const config = {
-  backgroundImage: false,
+  backgroundImage: false
 }
 
 const Page = () => (

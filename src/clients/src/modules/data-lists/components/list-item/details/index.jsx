@@ -19,7 +19,7 @@ export default () => {
               if (title !== value) {
                 update({ title: value })
               }
-            }, 500),
+            }, 500)
           ]}
           value={title}
         >
@@ -46,7 +46,7 @@ export default () => {
               if (description !== value) {
                 update({ description: value })
               }
-            }, 500),
+            }, 500)
           ]}
           value={description}
         >
@@ -75,7 +75,7 @@ export default () => {
               if (createdBy !== value) {
                 update({ createdBy: value })
               }
-            }, 500),
+            }, 500)
           ]}
           value={createdBy}
         >

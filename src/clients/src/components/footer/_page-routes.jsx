@@ -35,7 +35,7 @@ export default ({ routes }) => {
               <Div
                 sx={{
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Icon size={18} />
