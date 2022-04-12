@@ -224,8 +224,8 @@ jobs:
             echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET}}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
-            echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "DEFAULT_ADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_ADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "DEFAULT_SYSADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "DEFAULT_ADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_ADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
+            echo "DEFAULT_SYSADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-stable/deploy/stable/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-stable/deploy/stable/docker-compose.yml /home/runner/sdp-stable/deploy/stable/docker-compose.env sdp_stable
