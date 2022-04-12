@@ -8,15 +8,15 @@ export default ({
   title,
   yScale = 'value',
   tooltip = {},
-  type = 'bar',
+  type = 'bar'
 }) => {
   const series = {}
   const xAxis = {
     type: 'category',
     data: [],
     axisLabel: {
-      rotate: 80,
-    },
+      rotate: 80
+    }
   }
 
   data.forEach(datum => {
@@ -37,11 +37,11 @@ export default ({
         type,
         stack: 'total',
         emphasis: {
-          focus: 'series',
+          focus: 'series'
         },
         count: {
-          [_categoryFieldName]: count || 0,
-        },
+          [_categoryFieldName]: count || 0
+        }
       }
     }
   })
@@ -53,25 +53,25 @@ export default ({
       {
         type: 'slider',
         showDataShadow: 'auto',
-        height: 24,
+        height: 24
       },
       {
-        type: 'inside',
-      },
+        type: 'inside'
+      }
     ],
     title: title
       ? {
           text: title,
-          x: 'center',
+          x: 'center'
         }
       : false,
     tooltip: {
       trigger: 'axis',
       appendToBody: true,
       axisPointer: {
-        type: 'line',
+        type: 'line'
       },
-      ...tooltip,
+      ...tooltip
     },
     grid: {
       show: false,
@@ -79,13 +79,13 @@ export default ({
       right: 16,
       bottom: 64,
       top: 16,
-      containLabel: true,
+      containLabel: true
     },
     yAxis: {
       type: yScale,
       axisLine: {
-        show: true,
-      },
+        show: true
+      }
     },
     xAxis,
     series: _series.map(series => {
@@ -99,11 +99,11 @@ export default ({
           show: isLastIndex ? true : false,
           formatter: ({ dataIndex: i }) =>
             option.series.reduce((sum, { data }) => sum + data[i], 0),
-          position: 'top',
+          position: 'top'
         },
-        ...other,
+        ...other
       }
-    }),
+    })
   }
 
   return (

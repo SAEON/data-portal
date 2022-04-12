@@ -13,7 +13,7 @@ const App = lazy(() => import('../../index/application'))
 
 const config = {
   backgroundImage: true,
-  contentBase: undefined,
+  contentBase: undefined
 }
 
 const Page = () => (

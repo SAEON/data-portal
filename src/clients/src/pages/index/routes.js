@@ -48,7 +48,7 @@ export default [
       <Transition>
         <HomePage />
       </Transition>
-    ),
+    )
   },
 
   {
@@ -63,7 +63,7 @@ export default [
           <RecordsPage {...getUriState()} />
         </Transition>
       )
-    },
+    }
   },
   {
     label: 'Usage reports',
@@ -76,7 +76,7 @@ export default [
       <Transition>
         <UsageReportsPage />
       </Transition>
-    ),
+    )
   },
   {
     label: 'Data lists',
@@ -89,7 +89,7 @@ export default [
       <Transition>
         <DataListsPage />
       </Transition>
-    ),
+    )
   },
   {
     label: 'Record',
@@ -101,7 +101,7 @@ export default [
       <Transition tKey="record">
         <RecordPage id={props.match.params.id} {...props} />
       </Transition>
-    ),
+    )
   },
   {
     label: 'About the data portal',
@@ -114,7 +114,7 @@ export default [
       <Transition>
         <AboutPage />
       </Transition>
-    ),
+    )
   },
   {
     label: 'Privacy policy',
@@ -128,7 +128,7 @@ export default [
     ),
     to: '/privacy-policy',
     excludeFromNav: true,
-    includeInFooter: true,
+    includeInFooter: true
   },
   {
     label: 'Terms of service',
@@ -142,7 +142,7 @@ export default [
       </Transition>
     ),
     excludeFromNav: true,
-    includeInFooter: true,
+    includeInFooter: true
   },
   {
     label: 'Terms of use',
@@ -156,7 +156,7 @@ export default [
     ),
     to: '/terms-of-use',
     excludeFromNav: true,
-    includeInFooter: true,
+    includeInFooter: true
   },
   {
     label: 'Disclaimer',
@@ -170,7 +170,7 @@ export default [
       </Transition>
     ),
     excludeFromNav: true,
-    includeInFooter: true,
+    includeInFooter: true
   },
   {
     label: 'Login',
@@ -183,7 +183,7 @@ export default [
       <Transition>
         <LoginPage />
       </Transition>
-    ),
+    )
   },
   {
     label: 'Access',
@@ -196,7 +196,7 @@ export default [
       <Transition tKey={'access'}>
         <AccessPage {...props} />
       </Transition>
-    ),
+    )
   },
   {
     label: 'Users',
@@ -208,7 +208,7 @@ export default [
       <Transition tKey={'users'}>
         <UsersPage {...props} />
       </Transition>
-    ),
+    )
   },
   {
     label: 'GraphQL Playground',
@@ -216,7 +216,7 @@ export default [
     href: PUBLIC_GQL_ADDRESS,
     excludeFromNav: true,
     includeInFooter: true,
-    to: '/no-route', // Hack - the to property is still required
+    to: '/no-route' // Hack - the to property is still required
   },
   {
     group: 'source code',
@@ -225,7 +225,7 @@ export default [
     href: 'https://github.com/SAEON/data-portal',
     excludeFromNav: true,
     includeInFooter: true,
-    to: '/no-route', // Hack - the to property is still required
+    to: '/no-route' // Hack - the to property is still required
   },
   {
     group: 'source code',
@@ -238,6 +238,6 @@ export default [
       <Transition>
         <LicensePage />
       </Transition>
-    ),
-  },
+    )
+  }
 ]
