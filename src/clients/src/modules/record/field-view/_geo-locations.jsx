@@ -27,7 +27,7 @@ export default ({ geoLocations }) => {
             ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
                 .getExtent()
                 .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-            : undefined,
+            : undefined
         }}
         layers={[
           new VectorLayer({
@@ -38,17 +38,17 @@ export default ({ geoLocations }) => {
               features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) =>
                 geoLocationBox
                   ? new Feature({
-                      geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates()),
+                      geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates())
                     })
                   : geoLocationPoint
                   ? new Feature({
-                      geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
+                      geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates())
                     })
                   : []
-              ),
-            }),
+              )
+            })
           }),
-          terrestrisBaseMap(),
+          terrestrisBaseMap()
         ]}
         style={{ height: '350px', position: 'relative' }}
       />

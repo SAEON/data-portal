@@ -16,7 +16,7 @@ export default ({ descriptions }) => {
           boxOrient: 'vertical',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
-          display: '-webkit-box',
+          display: '-webkit-box'
         }}
         variant="body2"
       >

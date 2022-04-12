@@ -28,7 +28,7 @@ const beforeSendRequest = async requestDetail => {
     } else if (pathname.includes('/elasticsearch')) {
       /**
        * This rule is used by Marc Pienaar's QGIS plugin.
-       * 
+       *
        * Once he updates the QGIS plugin to access Elasticsearch on
        * proxy.saeon.ac.za/elasticsearch/7.14/saeon-odp-catalogue-search/_search,
        * this rule can be deleted

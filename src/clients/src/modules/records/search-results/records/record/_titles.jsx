@@ -15,7 +15,7 @@ export default ({ titles, id }) => {
     <header>
       <CardContent
         sx={{
-          paddingBottom: 0,
+          paddingBottom: 0
         }}
       >
         <Typography
@@ -31,7 +31,7 @@ export default ({ titles, id }) => {
             fontWeight: 700,
             letterSpacing: '0.08333em',
             textTransform: 'uppercase',
-            color: theme.palette.text.primary,
+            color: theme.palette.text.primary
           }}
           variant="h2"
         >

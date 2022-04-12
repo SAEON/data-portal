@@ -8,14 +8,14 @@ export default ({ creators }) => {
   return (
     <CardContent
       sx={{
-        paddingTop: theme.spacing(1),
+        paddingTop: theme.spacing(1)
       }}
     >
       <Typography
         sx={{
           lineHeight: 1.5,
           display: 'block',
-          textAlign: 'center',
+          textAlign: 'center'
         }}
         variant="overline"
       >

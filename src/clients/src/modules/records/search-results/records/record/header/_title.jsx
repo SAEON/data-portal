@@ -8,7 +8,7 @@ const sx = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  fontSize: '0.6rem',
+  fontSize: '0.6rem'
 }
 
 export default ({ doi }) => {
@@ -22,7 +22,7 @@ export default ({ doi }) => {
           href={`https://doi.org/${doi}`}
           sx={sx}
           style={{
-            cursor: 'pointer',
+            cursor: 'pointer'
           }}
           target="_blank"
           rel="noopener noreferrer"

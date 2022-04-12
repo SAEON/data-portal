@@ -1,7 +1,7 @@
 /**
  * This function decorates GraphQL resolvers (self, args, ctx) => ...
  */
-export const authorizeGql = ({permission, resourceOwner = false}) => op => async (...args) => {
+export const authorizeGql = ({ permission, resourceOwner = false }) => op => async (...args) => {
   const [, , ctx] = args
   const { user } = ctx
   if (!resourceOwner) {
@@ -13,7 +13,7 @@ export const authorizeGql = ({permission, resourceOwner = false}) => op => async
 /**
  * This function decorates HTTP routes (ctx) => ...
  */
-export const authorizeHttp = ({permission, resourceOwner = false}) => op => async (...args) => {
+export const authorizeHttp = ({ permission, resourceOwner = false }) => op => async (...args) => {
   const [ctx] = args
   const { user } = ctx
   if (!resourceOwner) {

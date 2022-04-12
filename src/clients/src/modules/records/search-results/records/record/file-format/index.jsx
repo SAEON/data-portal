@@ -13,7 +13,7 @@ export default ({ id, immutableResource }) => {
         display: 'flex',
         justifyContent: 'flex-end',
         paddingTop: 0,
-        paddingBottom: `0 !important`,
+        paddingBottom: `0 !important`
       }}
     >
       {unknown ? (
