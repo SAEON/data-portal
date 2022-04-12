@@ -12,6 +12,10 @@ env:
   INTERNAL_CLIENTS_IMAGE_NAME: saeon/sdp-dev-clients-int
   PUBLIC_CLIENTS_IMAGE_NAME: saeon/sdp-dev-clients-pub
   BRANCH_REF: next
+  CURATOR_CONTACT: curation@saeon.nrf.ac.za
+  TECHNICAL_CONTACT: development@saeon.nrf.ac.za
+  DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
+  DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
 
 jobs:
   build-api:
@@ -124,10 +128,10 @@ jobs:
             CLIENTS_DEFAULT_NOTICES='Welcome to the SAEON Catalogue!,info'
             CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.dvn
             CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
-            CURATOR_CONTACT=curation@saeon.nrf.ac.za
+            CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}
+            TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
-            TECHNICAL_CONTACT=development@saeon.nrf.ac.za
             NGINX_SERVER_BLOCK=nginx/clients-internal.conf
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -173,10 +177,10 @@ jobs:
             CLIENTS_DEFAULT_NOTICES='Welcome to the SAEON Catalogue!,info'
             CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.dvn
             CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
-            CURATOR_CONTACT=curation@saeon.nrf.ac.za
+            CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}
+            TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
-            TECHNICAL_CONTACT=development@saeon.nrf.ac.za
             NGINX_SERVER_BLOCK=nginx/clients-public.conf
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -217,5 +221,8 @@ jobs:
             echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_DEV_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_DEV_USERNAME }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET_NEXT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
-            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT}}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "DEFAULT_ADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_ADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
+            echo "DEFAULT_SYSADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-next/deploy/next/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/sdp-next/deploy/next/docker-compose.yml /home/runner/sdp-next/deploy/next/docker-compose.env sdp_next

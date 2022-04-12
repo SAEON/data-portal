@@ -13,7 +13,7 @@ name = 'ncu'
 run = 'ncu -x react-router,react-router-dom'
 
 [[task]]
-name = 'ncu -u'
+name = 'ncu:u'
 run = 'ncu -u -x react-router,react-router-dom'
 
 [[task]]

@@ -32,11 +32,7 @@ export default async function() {
 
   const t0 = performance.now()
 
-  const result = {
-    updated: 0,
-    created: 0,
-    errors: false
-  }
+  const result = {}
 
   try {
     // Test that the ODP is up
@@ -64,7 +60,7 @@ export default async function() {
     let iterator = await makeOdpIterator()
     while (!iterator.done) {
       try {
-        const result = await client.bulk({
+        const res = await client.bulk({
           index: ELASTICSEARCH_CATALOGUE_INDEX,
           refresh: true,
           body: (await filter(iterator.data))
@@ -72,11 +68,11 @@ export default async function() {
             .join('')
         })
 
-        if (result?.errors) {
+        if (res?.errors) {
           console.info(
             'Failure integrating the following ODP records into the Elasticsearch index',
             JSON.stringify(
-              result.items
+              res.items
                 .filter(({ index: doc }) => doc.error)
                 .map(({ index: doc }) => ({
                   [doc._id]: JSON.stringify(doc.error)
@@ -88,16 +84,12 @@ export default async function() {
         }
 
         console.info(
-          `Processed ${result.items?.length ||
+          `Processed ${res.items?.length ||
             0} docs into the ${ELASTICSEARCH_CATALOGUE_INDEX} index`
         )
 
-        result.items?.forEach(({ index }) => {
-          if (index.status === 201) {
-            result[index.result]++
-          } else {
-            result.errors++
-          }
+        res.items?.forEach(({ index }) => {
+          result[index.status] = (result[index.status] || 0) + 1
         })
       } catch (error) {
         console.warn(

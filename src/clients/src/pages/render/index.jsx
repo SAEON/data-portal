@@ -1,5 +1,27 @@
-import { Redirect } from 'react-router-dom'
+import mount from '../../index/main'
+import { lazy, Suspense } from 'react'
+import Loading from '../../components/loading'
+import RouteSwitcher from '../../index/route-switcher'
+import configureRoutes from './routes'
+import { SUBDOMAIN_APP_ENTRIES } from '../../config'
 
-export default ({ location: { pathname } }) => {
-  return <Redirect to={pathname.replace('/render', '')} />
+const App = lazy(() => import('../../index/application'))
+
+const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('render')
+
+const config = {
+  backgroundImage: true,
+  contentBase: isSubdomainEntry ? undefined : '/render',
 }
+
+const routes = configureRoutes(config)
+
+const Page = () => (
+  <Suspense fallback={<Loading />}>
+    <App {...config}>
+      <RouteSwitcher routes={routes} />
+    </App>
+  </Suspense>
+)
+
+mount(Page)

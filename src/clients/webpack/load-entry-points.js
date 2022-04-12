@@ -4,13 +4,13 @@ const path = require('path')
 const fs = require('fs')
 
 module.exports = (ROOT, output) => {
-  const entries = fs.readdirSync(path.join(ROOT, 'src/entry-points'))
+  const entries = fs.readdirSync(path.join(ROOT, 'src/pages'))
   return entries
-    .filter(name => fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory())
+    .filter(name => fs.lstatSync(path.join(ROOT, `src/pages/${name}`)).isDirectory())
     .map(
       name =>
         new HtmlWebPackPlugin({
-          template: path.join(ROOT, `src/entry-points/${name}/index.html`),
+          template: path.join(ROOT, `src/pages/${name}/index.html`),
           filename: path.join(ROOT, output, `${name}.html`),
           PUBLIC_PATH: '',
           PACKAGE_DESCRIPTION: packageJson.description,

@@ -55,10 +55,10 @@ services:
       ALLOWED_ORIGINS: https://catalogue.saeon.ac.za,https://ocims.saeon.int
       API_ADDRESS: https://api.catalogue.saeon.ac.za
       APP_KEY: $APP_KEY
-      CURATOR_CONTACT: curation@saeon.nrf.ac.za
-      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
-      DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
-      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 4 * * *'
+      CURATOR_CONTACT: $CURATOR_CONTACT
+      DEFAULT_ADMIN_EMAIL_ADDRESSES: $DEFAULT_ADMIN_EMAIL_ADDRESSES
+      DEFAULT_SYSADMIN_EMAIL_ADDRESSES: $DEFAULT_SYSADMIN_EMAIL_ADDRESSES
+      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 3 * * *'
       DEPLOYMENT_ENV: production
       DOCKER_DATA_VOLUME: sdp_stable_data
       DOCKER_NETWORK: sdp_stable
@@ -79,7 +79,7 @@ services:
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
       ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
-      TECHNICAL_CONTACT: development@saeon.nrf.ac.za
+      TECHNICAL_CONTACT: $TECHNICAL_CONTACT
       TZ: utc
     ports:
       - 7002:3000

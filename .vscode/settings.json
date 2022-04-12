@@ -60,6 +60,7 @@
     "gtag",
     "Hetzner",
     "INITDB",
+    "inmemory",
     "installdependencies",
     "intarray",
     "jspm",

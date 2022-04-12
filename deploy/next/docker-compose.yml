@@ -55,9 +55,9 @@ services:
       ALLOWED_ORIGINS: https://catalogue.saeon.dvn,https://ocims.saeon.dvn
       API_ADDRESS: https://api.catalogue.saeon.dvn
       APP_KEY: $APP_KEY
-      CURATOR_CONTACT: curation@saeon.nrf.ac.za
-      DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
-      DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
+      CURATOR_CONTACT: $CURATOR_CONTACT
+      DEFAULT_ADMIN_EMAIL_ADDRESSES: $DEFAULT_ADMIN_EMAIL_ADDRESSES
+      DEFAULT_SYSADMIN_EMAIL_ADDRESSES: $DEFAULT_SYSADMIN_EMAIL_ADDRESSES
       DEPLOYMENT_ENV: production
       DOCKER_DATA_VOLUME: sdp_next_data
       DOCKER_NETWORK: sdp_next
@@ -65,7 +65,7 @@ services:
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
-      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 4 * * *'
+      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 2 * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
@@ -79,7 +79,7 @@ services:
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
       ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
-      TECHNICAL_CONTACT: development@saeon.nrf.ac.za
+      TECHNICAL_CONTACT: $TECHNICAL_CONTACT
       TZ: utc
     ports:
       - 6003:3000

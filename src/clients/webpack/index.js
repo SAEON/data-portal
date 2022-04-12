@@ -11,9 +11,9 @@ const { NODE_ENV: mode, DEPLOYMENT_ENV = 'local' } = process.env
 
 const entries = Object.fromEntries(
   fs
-    .readdirSync(path.join(ROOT, 'src/entry-points'))
-    .filter(name => fs.lstatSync(path.join(ROOT, `src/entry-points/${name}`)).isDirectory())
-    .map(name => [name, path.join(ROOT, `src/entry-points/${name}/index.jsx`)])
+    .readdirSync(path.join(ROOT, 'src/pages'))
+    .filter(name => fs.lstatSync(path.join(ROOT, `src/pages/${name}`)).isDirectory())
+    .map(name => [name, path.join(ROOT, `src/pages/${name}/index.jsx`)])
 )
 
 module.exports = () => {

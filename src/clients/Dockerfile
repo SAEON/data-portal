@@ -30,7 +30,7 @@ RUN echo "TECHNICAL_CONTACT=$TECHNICAL_CONTACT" >> .env
 
 COPY . .
 RUN npm install -g chomp
-RUN npm ci --only=production
+RUN npm ci --only=production --force
 RUN chomp build
 
 

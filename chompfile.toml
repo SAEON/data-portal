@@ -103,8 +103,11 @@ name = 'deps:install'
 run = '''
   npm install
   npm --prefix src/api install
-  npm --prefix src/clients install
+  npm --prefix src/clients install --force
   npm --prefix src/proxy install
+  npm --prefix src/packages/cli-tools install
+  npm --prefix src/packages/graphql-iterator install --force
+  npm --prefix src/packages/logger install
 '''
 
 [[task]]
