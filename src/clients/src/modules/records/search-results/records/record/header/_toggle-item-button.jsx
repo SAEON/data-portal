@@ -17,7 +17,7 @@ export default ({ id }) => {
         color="primary"
         inputProps={{
           'aria-label': 'Select/unselect search result',
-          'aria-checked': checked,
+          'aria-checked': checked
         }}
         checked={checked}
         indeterminate={selectAll}
@@ -28,7 +28,7 @@ export default ({ id }) => {
             setGlobal({ selectedIds: [...new Set([...selectedIds, id])] })
           } else {
             setGlobal({
-              selectedIds: selectedIds.filter(selectedId => selectedId !== id),
+              selectedIds: selectedIds.filter(selectedId => selectedId !== id)
             })
           }
         }}

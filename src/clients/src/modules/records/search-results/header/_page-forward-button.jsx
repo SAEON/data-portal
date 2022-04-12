@@ -14,7 +14,7 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
         setCursors({
           start: undefined,
           end: catalogue?.records?.pageInfo?.endCursor,
-          currentPage: cursors?.currentPage + 1,
+          currentPage: cursors?.currentPage + 1
         })
       }}
       style={{ marginRight: 5 }}
