@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid'
 export default () => {
   const { data } = useSummary()
 
-  const count = data?.catalogue.records.totalCount
+  const count = data?.catalogue.search.totalCount
 
   return (
     <Toolbar

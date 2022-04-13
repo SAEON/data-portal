@@ -7,7 +7,7 @@ import StyledBadge from '../components/styled-badge'
 export default ({ catalogue }) => {
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global
-  const resultCount = catalogue?.records.totalCount
+  const resultCount = catalogue?.search.totalCount
   const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
 
   return (

@@ -1,7 +1,7 @@
-import records from './_records.js'
+import search from './_records.js'
 import summary from './_summary.js'
 
 export default {
-  records,
+  search,
   summary
 }

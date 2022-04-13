@@ -20,8 +20,8 @@ export default ({ id }) => {
       query catalogue($identifiers: [String!], $size: Int) {
         catalogue {
           id
-          records(identifiers: $identifiers, size: $size) {
-            nodes {
+          search(identifiers: $identifiers, size: $size) {
+            records {
               metadata
             }
           }
@@ -44,7 +44,7 @@ export default ({ id }) => {
     )
   }
 
-  if (!data?.catalogue?.records?.nodes?.[0]?.metadata?._source) {
+  if (!data?.catalogue?.search?.records?.[0]?.metadata?._source) {
     throw new Error(
       `Sorry, we cannot find record "${id}". If you think that we SHOULD be able to find this record, please forward this message onto us so that we can look into why it appears to be missing.`
     )
@@ -55,7 +55,7 @@ export default ({ id }) => {
       <Header
         codeView={codeView}
         toggleCodeView={() => updateCodeView(!codeView)}
-        _source={{ ...data?.catalogue?.records?.nodes?.[0]?.metadata?._source }}
+        _source={{ ...data?.catalogue?.search?.records?.[0]?.metadata?._source }}
       />
       <Hidden mdDown>
         <div style={{ marginTop: theme.spacing(1) }} />
@@ -63,12 +63,12 @@ export default ({ id }) => {
       <Container disableGutters={smDown}>
         <Fade key="code-view-in" in={codeView}>
           <span style={{ display: codeView ? 'inherit' : 'none' }}>
-            <CodeView json={data?.catalogue?.records?.nodes?.[0]?.metadata?._source} />
+            <CodeView json={data?.catalogue?.search?.records?.[0]?.metadata?._source} />
           </span>
         </Fade>
         <Fade key="field-view-in" in={!codeView}>
           <span style={{ display: codeView ? 'none' : 'inherit' }}>
-            <FieldView {...data?.catalogue?.records?.nodes?.[0]?.metadata?._source} />
+            <FieldView {...data?.catalogue?.search?.records?.[0]?.metadata?._source} />
           </span>
         </Fade>
       </Container>

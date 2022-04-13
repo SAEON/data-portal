@@ -12,7 +12,7 @@ import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
 
 export default ({ catalogue }) => {
-  const resultCount = catalogue?.records.totalCount
+  const resultCount = catalogue?.search.totalCount
   const { isAuthenticated } = useContext(authorizationContext)
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global

@@ -40,78 +40,91 @@ type Catalogue {
   """
   Fetch metadata records from SAEON's data catalogue
   """
-  records(
-    "Fetch records by either SAEON IDs or DOIs (other arguments ignored)"
+  search(
+    """
+    Fetch records by either SAEON IDs or DOIs (other arguments ignored)
+    """
     identifiers: [String!]
-    "Fetch records by SAEON IDs (other arguments are ignored)"
+    """
+    Fetch records by SAEON IDs (other arguments are ignored)
+    """
     ids: [ID!]
     "Fetch records by DOIs (other arguments are ignored)"
     dois: [String!]
-    "Full-text search for provided string"
+    """
+    Full-text search for provided string
+    """
     text: String
-    "Search for exact matches of field values (intersection)"
+    """
+    Search for exact matches of field values (intersection)
+    """
     terms: [TermInput!]
-    "Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)"
+    """
+    Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
+    """
     extent: WKT_4326
-    "Page size (maximum allowed is 10 000 items per page)"
+    """
+    Page size (maximum allowed is 10 000 items per page)
+    """
     size: Int
-    "Return elements in the list that come after the specified cursor"
-    after: String # TODO - this could be a cursor scaler
-    "Return elements in the list that come before the specified cursor"
-    before: String # TODO - this could be a cursor scaler
-  ): CatalogueConnection!
+    after: String
+    before: String
+  ): SearchResult!
 
   """
   Get count aggregation of records by fields, with optional filters
   """
   summary(
-    "Filter by ID or DOI. Other filters are ignored"
+    """
+    Filter by ID or DOI. Other filters are ignored
+    """
     filterByIdentifiers: [String!]
-    "Filter by ID. Other filters are ignored"
+    """
+    Filter by ID. Other filters are ignored
+    """
     filterByIds: [ID!]
-    "Filter by DOI. Other filters are ignored"
+    """
+    Filter by DOI. Other filters are ignored
+    """
     filterByDois: [String!]
-    "Filter on full text search"
+    """
+    Filter on full text search
+    """
     filterByText: String
-    "Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)"
+    """
+    Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
+    """
     filterByExtent: WKT_4326
-    "List of terms to filter on"
+    """
+    List of terms to filter on
+    """
     filterByTerms: [TermInput!]
-    "A list of fields to perform term aggregation on"
+    """
+    A list of fields to perform term aggregation on
+    """
     fields: [FieldInput!]
-    "Limit of aggregation items to return"
+    """
+    Limit of aggregation items to return
+    """
     limit: Int
   ): JSON!
 }
 
-type CatalogueConnection implements Connection {
-  edges: [CatalogueRecordEdge!]!
-  nodes: [CatalogueRecord!]
+type SearchResult {
+  records: [Record!]
   pageInfo: PageInfo!
   totalCount: Int!
   pageSize: Int!
 }
 
-type CatalogueRecordEdge implements Edge {
-  cursor: String!
-  node: CatalogueRecord!
-}
-
-type CatalogueRecord implements Node {
+type Record {
   id: ID!
-
-  """
-  Dataset descriptive record
-  """
   metadata: JSON!
-
   """
   DOI-based citation via the Datacite citation API
   """
   citation(
-    "Journal-specific formatting rules"
     style: CitationStyle
-    "Citation language (?)"
     language: CitationLocale
   ): String!
 }

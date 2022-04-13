@@ -13,7 +13,7 @@ const wkt = new WKT()
 export default ({ children, data }) => {
   const layers = useMemo(
     () =>
-      data.catalogue.records.nodes
+      data.catalogue.search.records
         .map(({ metadata }) => {
           const { _source } = metadata
           const { id, doi: DOI, geoLocations, immutableResource, linkedResources, titles } = _source

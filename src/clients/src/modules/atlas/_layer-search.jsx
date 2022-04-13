@@ -32,14 +32,7 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
       ) {
         catalogue(referrer: $referrer) {
           id
-          records(
-            extent: $extent
-            text: $text
-            terms: $terms
-            size: $size
-            ids: $ids
-            dois: $dois
-          ) {
+          search(extent: $extent, text: $text, terms: $terms, size: $size, ids: $ids, dois: $dois) {
             pageInfo {
               hasNextPage
               hasPreviousPage
@@ -47,7 +40,7 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
               endCursor
             }
             totalCount
-            nodes {
+            records {
               metadata
             }
           }

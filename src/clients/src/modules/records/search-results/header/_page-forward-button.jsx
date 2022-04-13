@@ -6,14 +6,16 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
     <IconButton
       aria-label="Go to next results page"
       disabled={
-        loading
-          ? true
-          : cursors?.currentPage * pageSize + pageSize >= catalogue?.records?.totalCount
+        loading ? true : cursors?.currentPage * pageSize + pageSize >= catalogue?.search?.totalCount
       }
       onClick={() => {
         setCursors({
           start: undefined,
+<<<<<<< HEAD
           end: catalogue?.records?.pageInfo?.endCursor,
+=======
+          end: catalogue?.search?.pageInfo?.endCursor,
+>>>>>>> next
           currentPage: cursors?.currentPage + 1,
         })
       }}

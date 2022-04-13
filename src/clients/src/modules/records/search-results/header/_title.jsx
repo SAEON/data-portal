@@ -4,7 +4,7 @@ export default ({ catalogue, style }) => {
   return (
     <header>
       <Typography component="div" variant="overline" noWrap style={style}>
-        {catalogue?.records ? `${catalogue.records.totalCount}` : '...'} Results
+        {catalogue?.search ? `${catalogue.search.totalCount}` : '...'} Results
       </Typography>
     </header>
   )

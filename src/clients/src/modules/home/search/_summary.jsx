@@ -10,7 +10,7 @@ export default () => {
       query catalogue($text: String!) {
         catalogue {
           id
-          records(text: $text) {
+          search(text: $text) {
             totalCount
           }
         }

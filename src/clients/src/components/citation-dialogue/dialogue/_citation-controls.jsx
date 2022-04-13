@@ -21,8 +21,8 @@ export default ({
     gql`
       query ($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
         catalogue {
-          records(dois: $dois) {
-            nodes {
+          search(dois: $dois) {
+            records {
               citation(style: $style, language: $language)
             }
           }
@@ -66,7 +66,7 @@ export default ({
 
       <Div sx={{ marginTop: theme => theme.spacing(6) }} />
 
-      <Pre>{data.catalogue.records.nodes[0].citation}</Pre>
+      <Pre>{data.catalogue.search.records[0].citation}</Pre>
 
       <Div sx={{ marginTop: theme => theme.spacing(3) }} />
 
@@ -86,7 +86,7 @@ export default ({
           aria-label="Copy citation"
           disabled={error || loading}
           onClick={() => {
-            navigator.clipboard.writeText(data.catalogue.records.nodes[0].citation)
+            navigator.clipboard.writeText(data.catalogue.search.records[0].citation)
             setCitationParams(Object.assign({ ...citationParams }, { copied: true }))
           }}
           startIcon={<AssignmentIcon />}

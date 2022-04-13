@@ -8,7 +8,7 @@ export default ({ setCursors, loading, cursors, catalogue }) => {
       disabled={loading ? true : cursors?.currentPage < 1}
       onClick={() => {
         setCursors({
-          start: catalogue?.records?.pageInfo?.startCursor,
+          start: catalogue?.search?.pageInfo?.startCursor,
           end: undefined,
           currentPage: cursors?.currentPage - 1,
         })
