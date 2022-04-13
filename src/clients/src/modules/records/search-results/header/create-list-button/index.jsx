@@ -23,18 +23,18 @@ export default ({ catalogue }) => {
       iconProps={{
         color: 'default',
         disabled: !applicableRecordsCount,
-        style: { marginRight: 4 }
+        style: { marginRight: 4 },
       }}
       tooltipProps={{
         title: `Share list of ${applicableRecordsCount} selected records`,
-        placement: 'bottom'
+        placement: 'bottom',
       }}
       badgeProps={{
         color: applicableRecordsCount ? 'primary' : 'default',
         badgeContent: applicableRecordsCount,
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
         invisible: false,
-        _component: StyledBadge
+        _component: StyledBadge,
       }}
     />
   )

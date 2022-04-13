@@ -15,11 +15,11 @@ export default ({
   citationParams,
   setCitationParams,
   DEFAULT_CITATION_LANG,
-  DEFAULT_CITATION_STYLE
+  DEFAULT_CITATION_STYLE,
 }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
+      query ($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
         catalogue {
           records(dois: $dois) {
             nodes {
@@ -33,9 +33,9 @@ export default ({
       variables: {
         dois: [doi],
         style: citationParams.style,
-        language: citationParams.language
+        language: citationParams.language,
       },
-      fetchPolicy: 'no-cache'
+      fetchPolicy: 'no-cache',
     }
   )
 

@@ -18,7 +18,7 @@ export default () => {
     `,
     {
       variables: { text: global.text || '' },
-      fetchPolicy: 'cache-first'
+      fetchPolicy: 'cache-first',
     }
   )
 
