@@ -21,11 +21,11 @@
     "@babel/eslint-plugin": "^7.17.7",
     "eslint": "^8.13.0",
     "nodemon": "^2.0.15",
-    "npm-check-updates": "^12.5.8",
+    "npm-check-updates": "^12.5.9",
     "prettier": "^2.6.2"
   },
   "dependencies": {
-    "@graphql-tools/schema": "^8.3.7",
+    "@graphql-tools/schema": "^8.3.8",
     "@koa/router": "^10.1.1",
     "@saeon/cli-tools": "^0.1.4",
     "@saeon/logger": "^6.2.22",

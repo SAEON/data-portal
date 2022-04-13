@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
-    "npm-check-updates": "^12.5.8",
+    "npm-check-updates": "^12.5.9",
     "prettier": "^2.6.2"
   }
 }
