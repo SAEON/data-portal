@@ -3,7 +3,7 @@ import { join } from 'path'
 import { readFileSync } from 'fs'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import datacite from './datacite.graphql/index.js'
-import resolvers from '../resolvers/index.js'
+import * as resolvers from '../resolvers/index.js'
 
 const _import = p =>
   readFileSync(join(getCurrentDirectory(import.meta), p), {

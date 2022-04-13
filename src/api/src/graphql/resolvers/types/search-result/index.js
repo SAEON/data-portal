@@ -1,9 +1,5 @@
 export default {
-  edges: async self => {
-    const { hits } = self
-    return hits
-  },
-  nodes: async self => {
+  records: async self => {
     const { hits } = self
     return hits
   },

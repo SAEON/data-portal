@@ -3,7 +3,7 @@ import DownloadRecords from './download-records-button'
 import CreateAtlasButton from './create-atlas-button'
 
 const cache = {
-  atlases: {}
+  atlases: {},
 }
 
 export default ({ catalogue }) => {
@@ -12,7 +12,7 @@ export default ({ catalogue }) => {
    * if a record is valid for an Atlas
    */
   useMemo(() => {
-    for (let node of catalogue?.records.nodes) {
+    for (let node of catalogue?.search.records) {
       var { metadata } = node
       var { _source } = metadata
       var { linkedResources, id: itemId } = _source

@@ -19,7 +19,7 @@ const Filters = lazy(() => import('./filters'))
 const DEFAULT_CURSORS = {
   start: undefined,
   end: undefined,
-  currentPage: 0
+  currentPage: 0,
 }
 
 export default ({ disableSidebar }) => {
@@ -49,7 +49,7 @@ export default ({ disableSidebar }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query(
+      query (
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
@@ -73,7 +73,7 @@ export default ({ disableSidebar }) => {
             filterByIds: $ids
             filterByDois: $dois
           )
-          records(
+          search(
             extent: $extent
             text: $text
             terms: $terms
@@ -90,7 +90,7 @@ export default ({ disableSidebar }) => {
               endCursor
             }
             totalCount
-            nodes {
+            records {
               metadata
             }
           }
@@ -103,13 +103,13 @@ export default ({ disableSidebar }) => {
           {
             id: '_linked-resources-filter',
             field: 'linkedResources.linkedResourceType.raw',
-            path: 'linkedResources'
+            path: 'linkedResources',
           },
           ...CATALOGUE_CLIENT_FILTER_CONFIG.map(
             ({ id, field, path, filters, sortBy, sortOrder }) => {
               return { id, field, path, filters, sortBy, sortOrder }
             }
-          )
+          ),
         ],
         ids,
         dois,
@@ -120,8 +120,8 @@ export default ({ disableSidebar }) => {
         after: cursors.end,
         before: cursors.start,
         summaryLimit: 75,
-        referrer
-      }
+        referrer,
+      },
     }
   )
 
@@ -139,8 +139,8 @@ export default ({ disableSidebar }) => {
    * data items must be reversed when paged BACK
    */
   const results = cursors.start
-    ? data.catalogue.records.nodes.slice(0).reverse()
-    : data.catalogue.records.nodes
+    ? data.catalogue.search.records.slice(0).reverse()
+    : data.catalogue.search.records
 
   return (
     <main id="search-results">

@@ -8,7 +8,7 @@ export default ({ catalogue }) => {
   const { global, setGlobal } = useContext(globalContext)
   const { selectedIds, selectAll } = global
   const isIndeterminate = Boolean(selectedIds?.length)
-  const resultCount = catalogue?.records.totalCount
+  const resultCount = catalogue?.search.totalCount
   const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
 
   return (
@@ -22,14 +22,14 @@ export default ({ catalogue }) => {
           sx={{
             '& .MuiBadge-badge': {
               top: 10,
-              right: 4
-            }
+              right: 4,
+            },
           }}
         >
           <Checkbox
             inputProps={{
               'aria-label': `Select/unselect all search results`,
-              'aria-checked': selectAll
+              'aria-checked': selectAll,
             }}
             size="small"
             checked={isIndeterminate || selectAll ? true : false}

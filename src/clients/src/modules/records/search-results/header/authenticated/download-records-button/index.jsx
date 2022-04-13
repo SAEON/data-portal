@@ -12,7 +12,7 @@ import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
 
 export default ({ catalogue }) => {
-  const resultCount = catalogue?.records.totalCount
+  const resultCount = catalogue?.search.totalCount
   const { isAuthenticated } = useContext(authorizationContext)
   const { global } = useContext(globalContext)
   const { selectedIds, selectAll } = global
@@ -24,7 +24,7 @@ export default ({ catalogue }) => {
 
   const [saveList, { error, loading }] = useMutation(
     gql`
-      mutation($search: JSON!, $createdBy: String!) {
+      mutation ($search: JSON!, $createdBy: String!) {
         saveList(search: $search, createdBy: $createdBy) {
           id
         }
@@ -35,7 +35,7 @@ export default ({ catalogue }) => {
         if (data) {
           window.open(`${PUBLIC_HTTP_ADDRESS}/metadata-records?search=${data.saveList.id}`)
         }
-      }
+      },
     }
   )
 
@@ -73,8 +73,8 @@ export default ({ catalogue }) => {
                       ? { ids: selectedIds }
                       : Object.fromEntries(
                           Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
-                        )
-                  }
+                        ),
+                  },
                 })
               }
               disabled={!applicableRecordsCount}

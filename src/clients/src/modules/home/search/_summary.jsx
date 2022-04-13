@@ -10,7 +10,7 @@ export default () => {
       query catalogue($text: String!) {
         catalogue {
           id
-          records(text: $text) {
+          search(text: $text) {
             totalCount
           }
         }
@@ -18,7 +18,7 @@ export default () => {
     `,
     {
       variables: { text: global.text || '' },
-      fetchPolicy: 'cache-first'
+      fetchPolicy: 'cache-first',
     }
   )
 

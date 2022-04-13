@@ -9,13 +9,13 @@ import Grid from '@mui/material/Grid'
 export default () => {
   const { data } = useSummary()
 
-  const count = data?.catalogue.records.totalCount
+  const count = data?.catalogue.search.totalCount
 
   return (
     <Toolbar
       sx={{
         backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
-        height: '90vh'
+        height: '90vh',
       }}
     >
       <Container>

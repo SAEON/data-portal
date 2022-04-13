@@ -16,12 +16,12 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
     dois = undefined,
     extent = undefined,
     terms = undefined,
-    text = undefined
+    text = undefined,
   } = search
 
   const { error, loading, data } = useQuery(
     gql`
-      query(
+      query (
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
@@ -32,14 +32,7 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
       ) {
         catalogue(referrer: $referrer) {
           id
-          records(
-            extent: $extent
-            text: $text
-            terms: $terms
-            size: $size
-            ids: $ids
-            dois: $dois
-          ) {
+          search(extent: $extent, text: $text, terms: $terms, size: $size, ids: $ids, dois: $dois) {
             pageInfo {
               hasNextPage
               hasPreviousPage
@@ -47,7 +40,7 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
               endCursor
             }
             totalCount
-            nodes {
+            records {
               metadata
             }
           }
@@ -62,8 +55,8 @@ export default forwardRef(({ search, referrer }, snapMenusContainer) => {
         terms,
         text,
         size: CATALOGUE_CLIENT_MAX_ATLAS_LAYERS,
-        referrer
-      }
+        referrer,
+      },
     }
   )
 
