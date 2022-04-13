@@ -11,11 +11,7 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
       onClick={() => {
         setCursors({
           start: undefined,
-<<<<<<< HEAD
-          end: catalogue?.records?.pageInfo?.endCursor,
-=======
           end: catalogue?.search?.pageInfo?.endCursor,
->>>>>>> next
           currentPage: cursors?.currentPage + 1,
         })
       }}
