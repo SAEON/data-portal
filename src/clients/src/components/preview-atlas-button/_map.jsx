@@ -9,6 +9,7 @@ import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'
 import DialogContent from '@mui/material/DialogContent'
 import { Pre } from '../../components/html-tags'
+import OsmAcknowledgement from '../osm-acknowledgement'
 
 const wkt = new WKT()
 
@@ -67,25 +68,28 @@ export default ({ geoLocations, linkedResource, id, title }) => {
   }
 
   return (
-    <OlReact
-      viewOptions={{
-        smoothExtentConstraint: true,
-        showFullExtent: true,
-        extent: geoLocations[0].geoLocationBox
-          ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
-              .getExtent()
-              .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-          : geoLocations[0].geoLocationPoint
-          ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
-              .getExtent()
-              .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-          : undefined
-      }}
-      layers={[
-        createLayer({ id: layerId, layerType: LayerTypes.TileWMS, title, uri, LAYERS }),
-        terrestrisBaseMap()
-      ]}
-      style={{ width: '100%', height: '100%' }}
-    />
+    <>
+      <OlReact
+        viewOptions={{
+          smoothExtentConstraint: true,
+          showFullExtent: true,
+          extent: geoLocations[0].geoLocationBox
+            ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
+                .getExtent()
+                .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
+            : geoLocations[0].geoLocationPoint
+            ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
+                .getExtent()
+                .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
+            : undefined,
+        }}
+        layers={[
+          createLayer({ id: layerId, layerType: LayerTypes.TileWMS, title, uri, LAYERS }),
+          terrestrisBaseMap(),
+        ]}
+        style={{ width: '100%', height: '100%' }}
+      />
+      <OsmAcknowledgement />
+    </>
   )
 }
