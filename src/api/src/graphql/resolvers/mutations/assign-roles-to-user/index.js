@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { sysadmin } from '../../../user-model/roles.js'
+import { sysadmin } from '../../../../user-model/roles.js'
 
 export default async (self, { userId, roleIds }, ctx) => {
   const { Users } = await ctx.mongo.collections

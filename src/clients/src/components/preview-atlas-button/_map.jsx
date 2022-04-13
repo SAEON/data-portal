@@ -9,7 +9,7 @@ import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'
 import DialogContent from '@mui/material/DialogContent'
 import { Pre } from '../../components/html-tags'
-import OsmAcknowledgement from '../osm-acknowledgement'
+import OsmAcknowledgement from '../osm-attribution'
 
 const wkt = new WKT()
 

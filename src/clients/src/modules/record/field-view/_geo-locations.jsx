@@ -7,7 +7,7 @@ import { terrestrisBaseMap } from '../../../lib/ol'
 import { OlReact } from '../../../packages/ol-react'
 import WKT from 'ol/format/WKT'
 import Row from '../_row'
-import OsmAcknowlegement from '../../../components/osm-acknowledgement'
+import OsmAcknowlegement from '../../../components/osm-attribution'
 import { Div } from '../../../components/html-tags'
 
 const wkt = new WKT()
