@@ -9,7 +9,7 @@ import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'
 import DialogContent from '@mui/material/DialogContent'
 import { Pre } from '../../components/html-tags'
-import OsmAttribution from '../osm-attribution'
+import OsmAcknowledgement from '../osm-attribution'
 
 const wkt = new WKT()
 
@@ -89,7 +89,7 @@ export default ({ geoLocations, linkedResource, id, title }) => {
         ]}
         style={{ width: '100%', height: '100%' }}
       />
-      <OsmAttribution />
+      <OsmAcknowledgement />
     </>
   )
 }
