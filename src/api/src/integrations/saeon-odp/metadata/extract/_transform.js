@@ -43,7 +43,7 @@ export default data =>
           }
         } catch (error) {
           console.error(
-            'ERROR processing record from the ODP. Try debugging by setting the ID for ODP_DEBUG_IDS',
+            'ERROR processing record from the ODP',
             id,
             error.message
           )

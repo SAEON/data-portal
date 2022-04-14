@@ -35,7 +35,6 @@ export const ODP_FILTER_PATH = process.env.ODP_FILTER_PATH
   ? join(__apiRootDirectory, process.env.ODP_FILTER_PATH)
   : join(__dirname, '../../../../deploy/next/config/odp-filter.js')
 export const ODP_FILTER = import(ODP_FILTER_PATH).then(({ default: fn }) => fn)
-export const ODP_DEBUG_IDS = process.env.ODP_DEBUG_IDS || ''
 export const ODP_INTEGRATION_BATCH_SIZE = process.env.ODP_INTEGRATION_BATCH_SIZE || 100
 
 /**
