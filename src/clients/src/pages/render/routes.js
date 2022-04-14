@@ -10,7 +10,6 @@ import { Redirect } from 'react-router-dom'
 
 const RecordPage = lazy(() => import('../../modules/record'))
 const RecordsPage = lazy(() => import('../../modules/records'))
-const TermsOfServicePage = lazy(() => import('../../modules/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../modules/terms-of-use'))
 const AboutPage = lazy(() => import('../../modules/about'))
 const PrivacyPolicyPage = lazy(() => import('../../modules/privacy-policy'))
@@ -31,7 +30,7 @@ export default ({ contentBase }) => {
             <RecordsPage {...getUriState()} />
           </Transition>
         )
-      }
+      },
     },
     {
       label: 'Record',
@@ -43,7 +42,7 @@ export default ({ contentBase }) => {
         <Transition tKey="record">
           <RecordPage id={props.match.params.id} {...props} />
         </Transition>
-      )
+      ),
     },
     {
       label: 'About',
@@ -54,7 +53,7 @@ export default ({ contentBase }) => {
         <Transition>
           <AboutPage />
         </Transition>
-      )
+      ),
     },
     {
       label: 'Privacy policy',
@@ -67,20 +66,7 @@ export default ({ contentBase }) => {
       ),
       to: getPath(contentBase, '/privacy-policy'),
       excludeFromNav: true,
-      includeInFooter: true
-    },
-    {
-      label: 'Terms of service',
-      Icon: TermsIcon,
-      to: getPath(contentBase, '/terms-of-service'),
-      exact: true,
-      render: () => (
-        <Transition>
-          <TermsOfServicePage />
-        </Transition>
-      ),
-      excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'Terms of use',
@@ -93,7 +79,7 @@ export default ({ contentBase }) => {
       ),
       to: getPath(contentBase, '/terms-of-use'),
       excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'Disclaimer',
@@ -106,7 +92,7 @@ export default ({ contentBase }) => {
         </Transition>
       ),
       excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'Render',
@@ -115,7 +101,7 @@ export default ({ contentBase }) => {
       render: ({ location: { pathname, search } }) => {
         return <Redirect to={`${pathname.replace('/render', '')}${search}`} />
       },
-      excludeFromNav: true
-    }
+      excludeFromNav: true,
+    },
   ]
 }

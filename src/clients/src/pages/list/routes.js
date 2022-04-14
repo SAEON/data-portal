@@ -21,7 +21,6 @@ const LicenseIcon = styled(LicenseIcon_)({})
 const HomePage = lazy(() => import('../../modules/home'))
 const RecordPage = lazy(() => import('../../modules/record'))
 const RecordsPage = lazy(() => import('../../modules/records'))
-const TermsOfServicePage = lazy(() => import('../../modules/terms-of-service'))
 const TermsOfUsePage = lazy(() => import('../../modules/terms-of-use'))
 const AboutPage = lazy(() => import('../../modules/about'))
 const PrivacyPolicyPage = lazy(() => import('../../modules/privacy-policy'))
@@ -43,7 +42,7 @@ export default ({ contentBase = '' }) => {
             <RecordsPage {...getUriState()} />
           </Transition>
         )
-      }
+      },
     },
     {
       label: 'Home',
@@ -54,7 +53,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <HomePage />
         </Transition>
-      )
+      ),
     },
     {
       label: 'Record',
@@ -66,7 +65,7 @@ export default ({ contentBase = '' }) => {
         <Transition tKey="record">
           <RecordPage id={props.match.params.id} {...props} />
         </Transition>
-      )
+      ),
     },
 
     {
@@ -79,7 +78,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <AboutPage />
         </Transition>
-      )
+      ),
     },
     {
       label: 'Privacy policy',
@@ -93,21 +92,7 @@ export default ({ contentBase = '' }) => {
       to: getPath(contentBase, '/privacy-policy'),
       excludeFromNav: true,
       includeInFooter: true,
-      group: 'legal'
-    },
-    {
-      label: 'Terms of service',
-      Icon: TermsIcon,
-      to: getPath(contentBase, '/terms-of-service'),
-      exact: true,
-      render: () => (
-        <Transition>
-          <TermsOfServicePage />
-        </Transition>
-      ),
-      excludeFromNav: true,
-      includeInFooter: true,
-      group: 'legal'
+      group: 'legal',
     },
     {
       label: 'Terms of use',
@@ -121,7 +106,7 @@ export default ({ contentBase = '' }) => {
       to: getPath(contentBase, '/terms-of-use'),
       excludeFromNav: true,
       includeInFooter: true,
-      group: 'legal'
+      group: 'legal',
     },
     {
       label: 'Disclaimer',
@@ -135,7 +120,7 @@ export default ({ contentBase = '' }) => {
         </Transition>
       ),
       excludeFromNav: true,
-      includeInFooter: true
+      includeInFooter: true,
     },
     {
       label: 'GraphQL Playground',
@@ -143,7 +128,7 @@ export default ({ contentBase = '' }) => {
       href: PUBLIC_GQL_ADDRESS,
       excludeFromNav: true,
       includeInFooter: true,
-      to: '/no-route' // Hack - the to property is still required
+      to: '/no-route', // Hack - the to property is still required
     },
     {
       group: 'source code',
@@ -152,7 +137,7 @@ export default ({ contentBase = '' }) => {
       href: 'https://github.com/SAEON/data-portal',
       excludeFromNav: true,
       includeInFooter: true,
-      to: '/no-route' // Hack - the to property is still required
+      to: '/no-route', // Hack - the to property is still required
     },
     {
       group: 'source code',
@@ -165,7 +150,7 @@ export default ({ contentBase = '' }) => {
         <Transition>
           <LicensePage />
         </Transition>
-      )
-    }
+      ),
+    },
   ]
 }
