@@ -57,5 +57,5 @@ export default new GraphQLScalarType({
       )
     }
     return ast.value
-  }
+  },
 })

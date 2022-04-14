@@ -20,10 +20,10 @@ export default describe(
     help: Boolean,
     run: Boolean,
     h: 'help',
-    r: 'run'
+    r: 'run',
   }),
   {
     title: 'sdp :: integrations :: odp',
-    description: 'SDP integrations CLI'
+    description: 'SDP integrations CLI',
   }
 )

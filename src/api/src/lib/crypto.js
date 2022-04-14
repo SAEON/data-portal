@@ -6,7 +6,7 @@ const ALGORITHM = {
   AUTH_TAG_BYTE_LEN: 16,
   IV_BYTE_LEN: 12,
   KEY_BYTE_LEN: 32,
-  SALT_BYTE_LEN: 16
+  SALT_BYTE_LEN: 16,
 }
 
 const getIV = () => crypto.randomBytes(ALGORITHM.IV_BYTE_LEN)
@@ -43,7 +43,7 @@ export const getKeyFromPassword = (password, salt) => {
 export const encrypt = (messageText, key) => {
   const iv = getIV()
   const cipher = crypto.createCipheriv(ALGORITHM.BLOCK_CIPHER, key, iv, {
-    authTagLength: ALGORITHM.AUTH_TAG_BYTE_LEN
+    authTagLength: ALGORITHM.AUTH_TAG_BYTE_LEN,
   })
   let encryptedMessage = cipher.update(messageText)
   encryptedMessage = Buffer.concat([encryptedMessage, cipher.final()])
@@ -64,7 +64,7 @@ export const decrypt = (ciphertext, key) => {
   const iv = ciphertext.slice(0, 12)
   const encryptedMessage = ciphertext.slice(12, -16)
   const decipher = crypto.createDecipheriv(ALGORITHM.BLOCK_CIPHER, key, iv, {
-    authTagLength: ALGORITHM.AUTH_TAG_BYTE_LEN
+    authTagLength: ALGORITHM.AUTH_TAG_BYTE_LEN,
   })
   decipher.setAuthTag(authTag)
   let messageText = decipher.update(encryptedMessage)

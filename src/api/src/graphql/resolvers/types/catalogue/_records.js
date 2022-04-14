@@ -21,7 +21,7 @@ export default async (_, args, ctx) => {
     text = undefined,
     extent = undefined,
     terms = undefined,
-    identifiers = undefined
+    identifiers = undefined,
   } = args
 
   let { before = undefined, after = undefined } = args
@@ -47,15 +47,15 @@ export default async (_, args, ctx) => {
     query: {
       bool: {
         must: [],
-        filter: []
-      }
+        filter: [],
+      },
     },
     sort: [
       { _score: before ? 'asc' : 'desc' },
       {
-        'id.raw': before ? 'asc' : 'desc'
-      }
-    ]
+        'id.raw': before ? 'asc' : 'desc',
+      },
+    ],
   }
 
   if (before || after) {
@@ -65,7 +65,7 @@ export default async (_, args, ctx) => {
 
   const data = await elastic.query({
     index: ELASTICSEARCH_CATALOGUE_INDEX,
-    body: buildDsl({ dsl, ids, dois, text, terms, extent, identifiers })
+    body: buildDsl({ dsl, ids, dois, text, terms, extent, identifiers }),
   })
 
   if (data.error) {
@@ -83,6 +83,6 @@ export default async (_, args, ctx) => {
       before === undefined ? data.hits.hits[0] : data.hits.hits[data.hits.hits.length - 1],
     _lastResult:
       before === undefined ? data.hits.hits[data.hits.hits.length - 1] : data.hits.hits[0],
-    hits: data.hits.hits
+    hits: data.hits.hits,
   }
 }

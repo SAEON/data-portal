@@ -29,7 +29,7 @@ export default async (_, args, ctx) => {
     identifiers = undefined,
     filterByDois: dois = undefined,
     filterByTerms: terms = undefined,
-    limit: size
+    limit: size,
   } = args
 
   const dsl = {
@@ -60,11 +60,11 @@ export default async (_, args, ctx) => {
                   terms: {
                     field,
                     size,
-                    order
-                  }
-                }
-              }
-            }
+                    order,
+                  },
+                },
+              },
+            },
           }
         } else {
           dsl.aggs = {
@@ -72,9 +72,9 @@ export default async (_, args, ctx) => {
               terms: {
                 field,
                 size,
-                order
-              }
-            }
+                order,
+              },
+            },
           }
         }
 
@@ -93,8 +93,8 @@ export default async (_, args, ctx) => {
         if (filters) {
           _filter = {
             bool: {
-              must: []
-            }
+              must: [],
+            },
           }
           filters.forEach(
             ({ field: filterField, values: filterValues, includeIfMissingField = undefined }) => {
@@ -108,28 +108,28 @@ export default async (_, args, ctx) => {
                           bool: {
                             must_not: {
                               exists: {
-                                field: filterField
-                              }
-                            }
-                          }
+                                field: filterField,
+                              },
+                            },
+                          },
                         },
                         {
                           terms: {
-                            [filterField]: filterValues
-                          }
-                        }
-                      ]
-                    }
-                  }
+                            [filterField]: filterValues,
+                          },
+                        },
+                      ],
+                    },
+                  },
                 ]
               } else {
                 _filter.bool.must = [
                   ..._filter.bool.must,
                   {
                     terms: {
-                      [filterField]: filterValues
-                    }
-                  }
+                      [filterField]: filterValues,
+                    },
+                  },
                 ]
               }
             }
@@ -137,8 +137,8 @@ export default async (_, args, ctx) => {
         } else {
           _filter = {
             exists: {
-              field
-            }
+              field,
+            },
           }
         }
 
@@ -155,7 +155,7 @@ export default async (_, args, ctx) => {
 
         return [id, dsl]
       })
-    )
+    ),
   }
 
   /**
@@ -171,19 +171,19 @@ export default async (_, args, ctx) => {
     dsl.query = {
       bool: {
         must: [],
-        filter: []
-      }
+        filter: [],
+      },
     }
   }
 
   const result = await elastic.query({
     index: ELASTICSEARCH_CATALOGUE_INDEX,
-    body: buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
+    body: buildDsl({ dsl, ids, dois, text, terms, identifiers, extent }),
   })
 
   return Object.entries(result.aggregations).map(([name, result]) => {
     const summaryResult = {
-      [name]: undefined
+      [name]: undefined,
     }
 
     if (result[name][name]?.buckets) {

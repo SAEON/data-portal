@@ -10,11 +10,11 @@ export default {
             raw: {
               ignore_above: 256,
               type: 'keyword',
-              normalizer: 'keyword_trimmed_lower'
-            }
-          }
-        }
-      }
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
+        },
+      },
     },
     linkedResources: {
       type: 'nested',
@@ -26,11 +26,11 @@ export default {
             raw: {
               ignore_above: 256,
               type: 'keyword',
-              normalizer: 'keyword_trimmed_lower'
-            }
-          }
-        }
-      }
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
+        },
+      },
     },
     subjects: {
       type: 'nested',
@@ -42,9 +42,9 @@ export default {
             raw: {
               ignore_above: 256,
               type: 'keyword',
-              normalizer: 'keyword_trimmed_lower'
-            }
-          }
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
         },
         subjectScheme: {
           type: 'text',
@@ -52,37 +52,37 @@ export default {
             raw: {
               ignore_above: 256,
               type: 'keyword',
-              normalizer: 'keyword_trimmed_lower'
-            }
-          }
-        }
-      }
-    }
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
+        },
+      },
+    },
   },
   dynamic_templates: [
     {
       booleans: {
         mapping: {
-          type: 'boolean'
+          type: 'boolean',
         },
-        match_mapping_type: 'boolean'
-      }
+        match_mapping_type: 'boolean',
+      },
     },
     {
       integers: {
         mapping: {
-          type: 'long'
+          type: 'long',
         },
-        match_mapping_type: 'long'
-      }
+        match_mapping_type: 'long',
+      },
     },
     {
       doubles: {
         mapping: {
-          type: 'double'
+          type: 'double',
         },
-        match_mapping_type: 'double'
-      }
+        match_mapping_type: 'double',
+      },
     },
     {
       dates: {
@@ -92,33 +92,33 @@ export default {
             raw: {
               ignore_above: 256,
               type: 'keyword',
-              normalizer: 'keyword_trimmed_lower'
-            }
-          }
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
         },
         match_mapping_type: 'string',
-        match: 'gte|lte'
-      }
+        match: 'gte|lte',
+      },
     },
     {
       spatial: {
         mapping: {
           type: 'geo_shape',
           orientation: 'counterclockwise',
-          ignore_malformed: true
+          ignore_malformed: true,
         },
         match_mapping_type: 'string',
-        match: 'geoLocationBox*'
-      }
+        match: 'geoLocationBox*',
+      },
     },
     {
       publicationYear: {
         mapping: {
-          type: 'long'
+          type: 'long',
         },
         match_mapping_type: 'string',
-        match: 'publicationYear'
-      }
+        match: 'publicationYear',
+      },
     },
     {
       strings: {
@@ -129,13 +129,13 @@ export default {
             raw: {
               ignore_above: 256,
               type: 'keyword',
-              normalizer: 'keyword_trimmed_lower'
-            }
-          }
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
         },
         match_mapping_type: 'string',
-        unmatch: 'publicationYear|gte|lte|subjects'
-      }
-    }
-  ]
+        unmatch: 'publicationYear|gte|lte|subjects',
+      },
+    },
+  ],
 }

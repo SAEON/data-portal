@@ -13,5 +13,5 @@ export default {
   assignRolesToUser: a({ permission: PERMISSIONS['users:assign-roles'] })(assignRolesToUser),
   logBrowserEvents,
   saveList,
-  submitDataDownloadForm
+  submitDataDownloadForm,
 }

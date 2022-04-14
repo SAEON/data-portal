@@ -68,12 +68,15 @@ const chooseFileFormat = format => {
 }
 
 export default (id, values) => {
-  const { fileFormat = undefined, archive = false, archivedFormats = undefined } =
-    values.resourceDownload || {}
+  const {
+    fileFormat = undefined,
+    archive = false,
+    archivedFormats = undefined,
+  } = values.resourceDownload || {}
 
   return {
     _archive: archive || false,
     _fileFormat: chooseFileFormat(fileFormat || archivedFormats),
-    ...values
+    ...values,
   }
 }

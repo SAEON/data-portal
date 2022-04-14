@@ -22,8 +22,8 @@ export default {
   user: async (...args) =>
     a({
       permission: PERMISSIONS['users:view'],
-      resourceOwner: await getUserDocumentOwner(...args)
+      resourceOwner: await getUserDocumentOwner(...args),
     })(user)(...args),
   users: a({ permission: PERMISSIONS['users:view'] })(users),
-  permissions: a({ permission: PERMISSIONS['permissions:view'] })(permissions)
+  permissions: a({ permission: PERMISSIONS['permissions:view'] })(permissions),
 }

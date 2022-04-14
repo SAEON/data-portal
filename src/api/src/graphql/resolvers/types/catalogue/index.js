@@ -3,5 +3,5 @@ import summary from './_summary.js'
 
 export default {
   search,
-  summary
+  summary,
 }

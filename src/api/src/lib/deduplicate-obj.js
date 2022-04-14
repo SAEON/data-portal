@@ -1,7 +1,7 @@
 /**
  * deduplicate([...objs], (obj1, obj2) => obj1.item === obj2.item)
  */
-export default function(originalArr, equalityCheckFn) {
+export default function (originalArr, equalityCheckFn) {
   const newArray = []
 
   for (const obj of originalArr) {

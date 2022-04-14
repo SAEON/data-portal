@@ -123,8 +123,5 @@ type Record {
   """
   DOI-based citation via the Datacite citation API
   """
-  citation(
-    style: CitationStyle
-    language: CitationLocale
-  ): String!
+  citation(style: CitationStyle, language: CitationLocale): String!
 }

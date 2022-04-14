@@ -27,7 +27,7 @@ export default async ({ useCachedToken = true } = {}) => {
         access_token: access_token_,
         expires_in: expires_in_,
         scope: scope_,
-        token_type: token_type_
+        token_type: token_type_,
       }
     }
 
@@ -40,9 +40,9 @@ export default async ({ useCachedToken = true } = {}) => {
       {
         method: 'POST',
         headers: {
-          Authorization: `Basic ${TOKEN}`
+          Authorization: `Basic ${TOKEN}`,
         },
-        body: form
+        body: form,
       }
     ).then(res => {
       if (res.status !== 200) {
@@ -61,7 +61,7 @@ export default async ({ useCachedToken = true } = {}) => {
       access_token,
       expires_in,
       scope,
-      token_type
+      token_type,
     }
   } catch (error) {
     console.error('Error authenticating with the ODP', error)

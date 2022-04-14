@@ -30,7 +30,7 @@ const fields = {
 
   // DOI
   doi: { boost: 50, fuzziness: 2 },
-  'doi.raw': { boost: 100, fuzziness: 0 }
+  'doi.raw': { boost: 100, fuzziness: 0 },
 }
 
 /**
@@ -45,9 +45,9 @@ export default query => ({
         [field]: {
           query,
           boost,
-          fuzziness
-        }
-      }
-    }))
-  }
+          fuzziness,
+        },
+      },
+    })),
+  },
 })

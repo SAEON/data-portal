@@ -13,12 +13,12 @@ export default async (self, { userId, roleIds }, ctx) => {
     { _id: ObjectId(userId) },
     {
       $set: {
-        roles: roleIds.map(id => ObjectId(id))
-      }
+        roles: roleIds.map(id => ObjectId(id)),
+      },
     },
     {
       upsert: false,
-      returnDocument: 'after'
+      returnDocument: 'after',
     }
   )
 

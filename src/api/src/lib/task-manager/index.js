@@ -2,7 +2,7 @@ import { CronJob } from 'cron'
 import { performance } from 'perf_hooks'
 
 function compose(cb) {
-  return async function() {
+  return async function () {
     const now = performance.now()
     console.info(this.id, 'starting')
     try {
@@ -53,6 +53,6 @@ export default () => {
         tasks.splice(index, 1)
         console.info('Task removed', id)
       }
-    }
+    },
   }
 }

@@ -11,7 +11,7 @@ export const update = async ({ id, index = ELASTICSEARCH_CATALOGUE_INDEX, body }
   client.update({
     id,
     index,
-    body
+    body,
   })
 
 export const query = async ({ index = ELASTICSEARCH_CATALOGUE_INDEX, body }) => {
@@ -24,7 +24,7 @@ export const query = async ({ index = ELASTICSEARCH_CATALOGUE_INDEX, body }) => 
   try {
     return await client.search({
       index,
-      body
+      body,
     })
   } catch (error) {
     throw new Error(`Elasticsearch query failed with DSL body ${JSON.stringify(body)}. ${error}`)

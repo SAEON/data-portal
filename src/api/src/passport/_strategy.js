@@ -5,7 +5,7 @@ import {
   ODP_SSO_CLIENT_SECRET,
   ODP_SSO_CLIENT_ID,
   ODP_SSO_CLIENT_REDIRECT,
-  ODP_AUTH_LOGOUT_REDIRECT
+  ODP_AUTH_LOGOUT_REDIRECT,
 } from '../config/index.js'
 
 export default hydra =>
@@ -17,8 +17,8 @@ export default hydra =>
         redirect_uris: [ODP_SSO_CLIENT_REDIRECT],
         post_logout_redirect_uris: [ODP_AUTH_LOGOUT_REDIRECT],
         token_endpoint_auth_method: 'client_secret_post',
-        response_types: ['code']
-      })
+        response_types: ['code'],
+      }),
     },
     async (tokenSet, userInfo, cb) => {
       const { email, sub: saeonId, name, picture } = userInfo
@@ -31,28 +31,28 @@ export default hydra =>
       try {
         const userQuery = await Users.findOneAndUpdate(
           {
-            emailAddress
+            emailAddress,
           },
           {
             $setOnInsert: {
               emailAddress,
-              roles: [isSaeon ? saeonRoleId : userRoleId]
+              roles: [isSaeon ? saeonRoleId : userRoleId],
             },
             $set: {
               authAddress: ODP_AUTH,
               saeonId,
               name,
-              tokenSet
+              tokenSet,
             },
             $addToSet: {
               links: {
-                picture
-              }
-            }
+                picture,
+              },
+            },
           },
           {
             upsert: true,
-            returnDocument: 'after'
+            returnDocument: 'after',
           }
         )
         const user = userQuery.value

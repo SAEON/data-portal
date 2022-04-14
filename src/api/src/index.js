@@ -16,7 +16,7 @@ import {
   API_BIND_PORT,
   SERVER_TASKS,
   SAEON_ODP_INTEGRATION_SCHEDULE,
-  APP_KEY
+  APP_KEY,
 } from './config/index.js'
 import { Task } from './lib/task-manager/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
@@ -40,7 +40,7 @@ import {
   login as loginRoute,
   logout as logoutRoute,
   home as homeRoute,
-  oauthAuthenticationCallback as oauthAuthenticationCallbackRoute
+  oauthAuthenticationCallback as oauthAuthenticationCallbackRoute,
 } from './http/index.js'
 import './passport/index.js'
 
@@ -80,7 +80,7 @@ api
   .use(
     koaCompress({
       threshold: 2048,
-      flush: zlib.constants.Z_SYNC_FLUSH
+      flush: zlib.constants.Z_SYNC_FLUSH,
     })
   )
   .use(koaBody())
@@ -98,7 +98,7 @@ api
         rolling: true,
         renew: true,
         secure: isHttp ? false : true,
-        sameSite: isHttp ? 'lax' : 'none'
+        sameSite: isHttp ? 'lax' : 'none',
       },
       api
     )(ctx, next)

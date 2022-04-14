@@ -18,12 +18,12 @@ const resolveIpBatch = async keys => {
       [...new Set(keys)].map(query => ({
         query,
         fields: 'city,countryCode,district,query',
-        lang: 'en'
+        lang: 'en',
       }))
     ),
     headers: {
-      'Content-type': 'application/json'
-    }
+      'Content-type': 'application/json',
+    },
   })
 
   const xTtl = res.headers.get('X-Ttl')
@@ -40,7 +40,7 @@ const resolveIpBatch = async keys => {
 }
 
 const locationFinder = new DataLoader(ipAddresses => resolveIpBatch(ipAddresses), {
-  maxBatchSize: 100
+  maxBatchSize: 100,
 })
 
 export default async (self, args, ctx) => {
@@ -66,8 +66,8 @@ export default async (self, args, ctx) => {
           clientInfo: {
             ipAddress,
             ipLocation,
-            userAgent: ctx.request.headers['user-agent']
-          }
+            userAgent: ctx.request.headers['user-agent'],
+          },
         },
         log
       )

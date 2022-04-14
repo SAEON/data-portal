@@ -1,3 +1,3 @@
 export default {
-  id: ({ _id: id }) => id
+  id: ({ _id: id }) => id,
 }

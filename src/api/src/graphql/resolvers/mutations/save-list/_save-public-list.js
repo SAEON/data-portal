@@ -6,7 +6,7 @@ export default async (self, args, ctx) => {
 
   const result = await Lists.findOneAndUpdate(
     {
-      hashedSearch: hash(search)
+      hashedSearch: hash(search),
     },
     {
       $setOnInsert: {
@@ -14,12 +14,12 @@ export default async (self, args, ctx) => {
         search,
         createdAt: new Date(),
         createdBy,
-        type
-      }
+        type,
+      },
     },
     {
       upsert: true,
-      returnDocument: 'after'
+      returnDocument: 'after',
     }
   )
 

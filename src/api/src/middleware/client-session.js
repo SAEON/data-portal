@@ -11,14 +11,14 @@ export default async (ctx, next) => {
       Buffer.from(
         JSON.stringify({
           date: new Date(),
-          id: nanoid()
+          id: nanoid(),
         })
       ).toString('base64'),
       {
         signed: true,
         httpOnly: true,
         secure: isHttp ? false : true,
-        sameSite: isHttp ? 'lax' : 'none'
+        sameSite: isHttp ? 'lax' : 'none',
       }
     )
   }

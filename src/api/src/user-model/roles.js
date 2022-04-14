@@ -6,7 +6,7 @@ const deduplicate = arr => _deduplicate(arr, (p1, p2) => p1.name === p2.name)
 export const user = {
   name: 'user',
   description: 'Default login role',
-  permissions: deduplicate([permissions['atlas:create']])
+  permissions: deduplicate([permissions['atlas:create']]),
 }
 
 export const saeon = {
@@ -15,8 +15,8 @@ export const saeon = {
   permissions: deduplicate([
     ...user.permissions,
     permissions['/usage'],
-    permissions['site-analytics:view']
-  ])
+    permissions['site-analytics:view'],
+  ]),
 }
 
 export const curator = {
@@ -27,8 +27,8 @@ export const curator = {
     permissions['list:update'],
     permissions['list:delete'],
     permissions['lists:view'],
-    permissions['/data-lists']
-  ])
+    permissions['/data-lists'],
+  ]),
 }
 
 export const admin = {
@@ -41,14 +41,14 @@ export const admin = {
     permissions['users:assign-roles'],
     permissions['users:view'],
     permissions['roles:view'],
-    permissions['permissions:view']
-  ])
+    permissions['permissions:view'],
+  ]),
 }
 
 export const sysadmin = {
   name: 'sysadmin',
   description: 'System administrators',
-  permissions: deduplicate([...admin.permissions])
+  permissions: deduplicate([...admin.permissions]),
 }
 
 export default [user, saeon, curator, admin, sysadmin]

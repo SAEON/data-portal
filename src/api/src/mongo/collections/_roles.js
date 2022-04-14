@@ -4,9 +4,9 @@ export default {
     {
       index: 'name',
       options: {
-        unique: true
-      }
-    }
+        unique: true,
+      },
+    },
   ],
   validator: {
     $jsonSchema: {
@@ -16,9 +16,9 @@ export default {
       properties: {
         emailAddress: {
           bsonType: 'string',
-          description: 'The name of the role'
-        }
-      }
-    }
-  }
+          description: 'The name of the role',
+        },
+      },
+    },
+  },
 }

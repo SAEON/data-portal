@@ -11,7 +11,7 @@ const MASKED_FIELDS = [
   'POSTGIS_USERNAME',
   'POSTGIS_PASSWORD',
   'POSTGIS_USERNAME_PUBLIC',
-  'POSTGIS_PASSWORD_PUBLIC'
+  'POSTGIS_PASSWORD_PUBLIC',
 ]
 
 Promise.all(
@@ -23,7 +23,7 @@ Promise.all(
           ? mask(value)
           : typeof value === 'function'
           ? value.toString()
-          : value
+          : value,
       ]
     })
   )

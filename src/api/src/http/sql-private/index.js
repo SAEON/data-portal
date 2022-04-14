@@ -3,7 +3,7 @@ import JSONStream from 'JSONStream'
 
 export default async ctx => {
   const { username, password: encryptedPassword } = {
-    TODO: 'This used to be in the databook mongo doc'
+    TODO: 'This used to be in the databook mongo doc',
   }
   const password = ctx.crypto.decrypt(encryptedPassword)
   const { createClient } = ctx.postgis
@@ -15,7 +15,7 @@ export default async ctx => {
    * Configure the query
    */
   const query = new QueryStream(sql, [], {
-    batchSize: 100
+    batchSize: 100,
   })
 
   /**
@@ -23,7 +23,7 @@ export default async ctx => {
    */
   const client = createClient({
     user: username,
-    password
+    password,
   })
 
   client.connect()

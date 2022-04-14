@@ -1,4 +1,4 @@
-String.prototype.toBoolean = function() {
+String.prototype.toBoolean = function () {
   return this.toLowerCase() === 'true'
 }
 
@@ -9,7 +9,7 @@ String.prototype.toBoolean = function() {
  * @license MIT
  */
 if (!String.prototype.replaceAll) {
-  String.prototype.replaceAll = function(str, newStr) {
+  String.prototype.replaceAll = function (str, newStr) {
     // If a regex pattern
     if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
       return this.replace(str, newStr)
