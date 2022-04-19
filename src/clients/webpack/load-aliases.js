@@ -29,14 +29,6 @@ module.exports = (ROOT, mode) => ({
   react: path.resolve(ROOT, './node_modules/react'),
   'react-dom': path.resolve(ROOT, './node_modules/react-dom'),
 
-  // @saeon/snap-menus
-  '@saeon/snap-menus': path.resolve(
-    ROOT,
-    mode === 'production'
-      ? './node_modules/@saeon/snap-menus/dist/esm'
-      : '../packages/snap-menus/src'
-  ),
-
   // @saeon/logger
   '@saeon/logger': path.resolve(
     ROOT,
