@@ -14,13 +14,13 @@ export default () => {
       title="Confirm"
       text="Are you sure you want to overwrite this list?"
       tooltipProps={{
-        title: preventSave ? 'There is an error in the Search JSON' : 'Save list'
+        title: preventSave ? 'There is an error in the Search JSON' : 'Save list',
       }}
       buttonProps={{
         startIcon: <SaveIcon size={18} />,
         children: 'Save list',
         size: 'small',
-        disabled: Boolean(preventSave)
+        disabled: Boolean(preventSave),
       }}
       actions={[
         ({ toggle }) => (
@@ -28,7 +28,7 @@ export default () => {
             Cancel
           </Button>
         ),
-        ({ toggle }) => <Mutation toggle={toggle} />
+        ({ toggle }) => <Mutation toggle={toggle} />,
       ]}
     />
   )

@@ -42,11 +42,7 @@ export default data =>
             ),
           }
         } catch (error) {
-          console.error(
-            'ERROR processing record from the ODP',
-            id,
-            error.message
-          )
+          console.error('ERROR processing record from the ODP', id, error.message)
           return undefined
         }
       }

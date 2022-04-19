@@ -4,7 +4,7 @@ import insertToEs from './load/index.js'
 export default async () => {
   const result = {}
 
-  let iterator =await makeIterator()
+  let iterator = await makeIterator()
   while (!iterator.done) {
     const { data } = iterator
 

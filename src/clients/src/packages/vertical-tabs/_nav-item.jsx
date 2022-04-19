@@ -20,7 +20,7 @@ export default memo(
     tooltipTitle,
     onClick,
     i,
-    activeIndex
+    activeIndex,
   }) => {
     const theme = useTheme()
     const xsAndDown = useMediaQuery(theme.breakpoints.down('sm'))
@@ -35,8 +35,8 @@ export default memo(
       <Tooltip
         PopperProps={{
           style: {
-            zIndex: 500 // Keep it under AppBars and ToolBars
-          }
+            zIndex: 500, // Keep it under AppBars and ToolBars
+          },
         }}
         title={
           tooltipTitle || disabled
@@ -50,16 +50,16 @@ export default memo(
           sx={{
             transition: theme.transitions.create(['all']),
             [theme.breakpoints.up('lg')]: {
-              minHeight: theme.spacing(10)
+              minHeight: theme.spacing(10),
             },
             ...(i === activeIndex
               ? {
                   backgroundColor: alpha(theme.palette.primary.main, 0.3),
                   [theme.breakpoints.up('lg')]: {
-                    minHeight: theme.spacing(16)
-                  }
+                    minHeight: theme.spacing(16),
+                  },
                 }
-              : {})
+              : {}),
           }}
           onClick={onClick}
           style={{ width: '100%' }}
@@ -75,13 +75,13 @@ export default memo(
               <ListItemText
                 primaryTypographyProps={{
                   variant: 'overline',
-                  display: 'block'
+                  display: 'block',
                 }}
                 style={{
                   textAlign: mdAndUp ? 'left' : 'center',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
                 }}
                 primary={primaryText || 'Missing primaryText'}
                 secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}

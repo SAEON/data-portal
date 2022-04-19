@@ -18,7 +18,7 @@ export default ({ title, children, ...props }) => {
           marginLeft: theme.spacing(1),
           marginRight: theme.spacing(1),
           marginTop: theme.spacing(1),
-          marginBottom: theme.spacing(mdUp ? 1 : 0)
+          marginBottom: theme.spacing(mdUp ? 1 : 0),
         },
         style
       )}
@@ -27,7 +27,7 @@ export default ({ title, children, ...props }) => {
     >
       <Card
         style={{
-          backgroundColor: alpha(theme.palette.common.white, 0.9)
+          backgroundColor: alpha(theme.palette.common.white, 0.9),
         }}
         variant="outlined"
       >

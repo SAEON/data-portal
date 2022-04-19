@@ -2,9 +2,12 @@ import { URL } from 'url'
 import { normalize } from 'path'
 import { CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04 } from '../config.js'
 
-const { protocol, hostname, host, pathname: destinationPath } = new URL(
-  CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04
-)
+const {
+  protocol,
+  hostname,
+  host,
+  pathname: destinationPath,
+} = new URL(CATALOGUE_PROXY_SAEON_SPATIALDATA_ADDRESS_APP04)
 
 export default (requestDetail, { pathname: originPathname, search }) => {
   const port = originPathname.match(/^\/saeon-spatialdata\/app04.saeon.ac.za\/\d{4}/)[0].slice(-4)
@@ -19,6 +22,6 @@ export default (requestDetail, { pathname: originPathname, search }) => {
         /\/saeon-spatialdata\/app04.saeon.ac.za\/\d{4}\//,
         '/'
       )}${search}`
-    )
+    ),
   }
 }

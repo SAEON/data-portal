@@ -8,9 +8,13 @@ import { URL } from 'url'
 import { normalize } from 'path'
 import { ELASTICSEARCH_7_14_ADDRESS as ELASTICSEARCH_ADDRESS } from '../config.js'
 
-const { protocol, hostname, port, host, pathname: destinationPathname } = new URL(
-  ELASTICSEARCH_ADDRESS
-)
+const {
+  protocol,
+  hostname,
+  port,
+  host,
+  pathname: destinationPathname,
+} = new URL(ELASTICSEARCH_ADDRESS)
 
 export default (requestDetail, { pathname: originPathname, search }) => {
   requestDetail.protocol = protocol
@@ -25,6 +29,6 @@ export default (requestDetail, { pathname: originPathname, search }) => {
       `${destinationPathname}${originPathname
         .replace(`/elasticsearch/${index}/_search`, `nccis-qgis-index/_search${search}`)
         .replace(`/elasticsearch/${index}`, `nccis-qgis-index/_search`)}${search}`
-    )
+    ),
   }
 }

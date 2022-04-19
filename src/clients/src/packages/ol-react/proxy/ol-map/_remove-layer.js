@@ -6,6 +6,6 @@ export default (map, rerender) => {
     get: () => layer => {
       map.removeLayer(layer) || map.removeLayer(layer._self)
       rerender(r => r + 1)
-    }
+    },
   }
 }

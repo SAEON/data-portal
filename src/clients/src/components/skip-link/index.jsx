@@ -8,8 +8,8 @@ const Styled = styled('a')(({ theme }) => ({
   color: theme.palette.common.white,
   padding: theme.spacing(2),
   '&:focus': {
-    top: 0
-  }
+    top: 0,
+  },
 }))
 
 export default ({ href, text }) => <Styled href={href}>{text}</Styled>

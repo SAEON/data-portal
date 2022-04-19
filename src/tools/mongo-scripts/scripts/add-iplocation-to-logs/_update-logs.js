@@ -7,15 +7,15 @@ export default async (location = {}) => {
   try {
     const result = await logs.updateMany(
       {
-        'clientInfo.ipAddress': ip
+        'clientInfo.ipAddress': ip,
       },
       {
         $set: {
           'clientInfo.ipLocation':
             countryCode && city
               ? `${countryCode}/${city}${district ? `/${district}` : ''}`
-              : 'UNKNOWN'
-        }
+              : 'UNKNOWN',
+        },
       }
     )
 

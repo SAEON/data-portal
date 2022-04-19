@@ -22,7 +22,7 @@ export default () => {
         primaryText: title,
         secondaryText: description,
         Icon: ({ active }) => (active ? <ActiveIcon /> : <InactiveIcon />),
-        ...props
+        ...props,
       })),
     [lists]
   )

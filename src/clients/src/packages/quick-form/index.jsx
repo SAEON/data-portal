@@ -24,6 +24,6 @@ export default ({ children, effects = [], ...formFields }) => {
   }
 
   return children(updateForm, {
-    ...fields
+    ...fields,
   })
 }

@@ -32,8 +32,8 @@ export default ({ tabIndex, search = undefined }) => {
       saveList({
         variables: {
           createdBy: `${packageJson.name} v${packageJson.version}`,
-          search: search || global
-        }
+          search: search || global,
+        },
       })
     }
   }, [isAtlasPage, global, saveList, search])
@@ -50,7 +50,7 @@ export default ({ tabIndex, search = undefined }) => {
           margin: 24,
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <CircularProgress />

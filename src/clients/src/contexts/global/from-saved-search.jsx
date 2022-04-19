@@ -6,7 +6,7 @@ export default ({ id, children }) =>
   id ? (
     <WithGqlQuery
       QUERY={gql`
-        query($id: ID!) {
+        query ($id: ID!) {
           list(id: $id) {
             id
             search

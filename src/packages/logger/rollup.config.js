@@ -10,14 +10,14 @@ export default {
       exports: 'auto',
       dir: 'dist',
       format: 'esm',
-      compact: true
-    }
+      compact: true,
+    },
   ],
   plugins: [
     commonjs(),
     resolve(),
     json({
-      compact: true
-    })
-  ]
+      compact: true,
+    }),
+  ],
 }

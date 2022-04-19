@@ -3,7 +3,7 @@ import {
   CATALOGUE_PROXY_PORT,
   CATALOGUE_PROXY_ENABLE_WEB_INTERFACE,
   CATALOGUE_PROXY_WEB_INTERFACE_PORT,
-  CATALOGUE_PROXY_THROTTLE
+  CATALOGUE_PROXY_THROTTLE,
 } from './config.js'
 
 export default {
@@ -11,10 +11,10 @@ export default {
   rule,
   webInterface: {
     enable: CATALOGUE_PROXY_ENABLE_WEB_INTERFACE,
-    webPort: CATALOGUE_PROXY_WEB_INTERFACE_PORT
+    webPort: CATALOGUE_PROXY_WEB_INTERFACE_PORT,
   },
   throttle: CATALOGUE_PROXY_THROTTLE,
   forceProxyHttps: false,
   wsIntercept: false,
-  silent: false
+  silent: false,
 }

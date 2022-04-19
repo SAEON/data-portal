@@ -8,12 +8,12 @@ export default async ips => {
       ips.map(query => ({
         query,
         fields: 'city,countryCode,district,query',
-        lang: 'en'
+        lang: 'en',
       }))
     ),
     headers: {
-      'Content-type': 'application/json'
-    }
+      'Content-type': 'application/json',
+    },
   })
 
   const xTtl = res.headers.get('X-Ttl')

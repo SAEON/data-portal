@@ -16,7 +16,7 @@ export default ({ children, resizable, state, setState, defaultWidth, defaultHei
             { ...state },
             {
               isResizing: true,
-              dimensions: { ...state.dimensions }
+              dimensions: { ...state.dimensions },
             }
           )
         )
@@ -31,9 +31,9 @@ export default ({ children, resizable, state, setState, defaultWidth, defaultHei
               previousDimensions: null,
               dimensions: {
                 width: size.width,
-                height: size.height
+                height: size.height,
               },
-              isResizing: false
+              isResizing: false,
             }
           )
         )

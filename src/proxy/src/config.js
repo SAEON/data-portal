@@ -32,5 +32,5 @@ export const TERRESTRIS_ADDRESS = 'https://ows.terrestris.de'
 export const ALLOWED_ES_INDICES = [
   'saeon-odp-search',
   'saeon-odp-catalogue-search',
-  'nccis-qgis-index'
+  'nccis-qgis-index',
 ]

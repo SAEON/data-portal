@@ -39,8 +39,8 @@ export default _source => {
                     pathname: window.location.pathname,
                     uri: resourceDownload?.downloadURL,
                     odpId: _source.id,
-                    doi: _source.doi
-                  }
+                    doi: _source.doi,
+                  },
                 })
               }}
             >

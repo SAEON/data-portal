@@ -26,7 +26,7 @@ export default ({
   disableSidebar,
   children,
   showSidebar,
-  setShowSidebar
+  setShowSidebar,
 }) => {
   const { isAuthenticated } = useContext(authorizationContext)
   const theme = useTheme()

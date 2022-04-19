@@ -34,14 +34,14 @@ export default class extends PureComponent {
       const { feature, layer } =
         this.map.forEachFeatureAtPixel(e.pixel, (feature, layer) => ({
           feature,
-          layer
+          layer,
         })) || {}
       if (selectedFeature) selectedFeature.setStyle(unselectedStyle(selectedFeature))
       if (feature && feature !== selectedFeature) {
         this.setState(
           {
             selectedFeature: feature,
-            selectedLayer: layer
+            selectedLayer: layer,
           },
           () => {
             const { selectedFeature } = this.state

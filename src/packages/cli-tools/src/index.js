@@ -3,7 +3,7 @@ import { createInterface } from 'readline'
 export const prompt = query => {
   const rl = createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   })
 
   return new Promise(resolve =>
@@ -34,8 +34,8 @@ export const describe = (obj, description) =>
     meta: {
       writable: false,
       enumerable: false,
-      value: description
-    }
+      value: description,
+    },
   })
 
 export const withFlags = (fn, flags) =>
@@ -50,10 +50,10 @@ export const withFlags = (fn, flags) =>
                 key,
                 {
                   get: () => def,
-                  enumerable: true
-                }
+                  enumerable: true,
+                },
               ]
         )
       )
-    )
+    ),
   })

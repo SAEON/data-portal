@@ -39,7 +39,7 @@ export default ({ id }) => {
     PORTAL_MARGIN_TOP,
     PORTAL_MARGIN_RIGHT,
     PORTAL_MARGIN_BOTTOM,
-    PORTAL_MARGIN_LEFT
+    PORTAL_MARGIN_LEFT,
   } = useContext(context)
 
   return props => (

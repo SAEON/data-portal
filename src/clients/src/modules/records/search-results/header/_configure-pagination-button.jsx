@@ -6,11 +6,7 @@ import Tooltip from '@mui/material/Tooltip'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 
 const pageSizes = [
-  10,
-  20,
-  50,
-  100,
-  200
+  10, 20, 50, 100, 200,
   // 'ALL'
 ]
 

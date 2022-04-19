@@ -17,7 +17,7 @@ export const getValues = (spreadsheetId, range) =>
       sheets.spreadsheets.values.get(
         {
           spreadsheetId,
-          range
+          range,
         },
         (err, res) => (err ? reject(err) : resolve(res))
       )

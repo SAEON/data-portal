@@ -5,7 +5,7 @@ const ARGS = arg({
   '--semver': String,
   '--package': String,
   '-s': '--semver',
-  '-p': '--package'
+  '-p': '--package',
 })
 
 const SEMVER = ARGS['--semver']

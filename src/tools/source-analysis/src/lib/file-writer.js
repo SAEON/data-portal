@@ -35,11 +35,11 @@ export default () => {
                 return format(new Date(value), 'yyyy-MM-dd')
               }
               return value
-            }
+            },
           },
           columns: [
             {
-              key: 'committer.date'
+              key: 'committer.date',
             },
             'committer.name',
             'oid',
@@ -47,12 +47,12 @@ export default () => {
             'deletions',
             'commitUrl',
             'message',
-            'issue#'
-          ]
+            'issue#',
+          ],
         }
       ).pipe(stream, {
-        end: false
+        end: false,
       })
-    }
+    },
   }
 }

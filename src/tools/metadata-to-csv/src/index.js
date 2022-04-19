@@ -35,7 +35,7 @@ stringify(
           institution,
           collection,
           projects: projects.join(','),
-          schema
+          schema,
         }
       }
     ),
@@ -45,6 +45,6 @@ stringify(
     quoted: false,
     quoted_empty: true,
     quote: '"',
-    escape: '\\'
+    escape: '\\',
   }
 ).pipe(stream)

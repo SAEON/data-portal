@@ -25,8 +25,8 @@ export default ({ children }) => {
     `,
     {
       variables: {
-        id: sessionUser?.id || 0
-      }
+        id: sessionUser?.id || 0,
+      },
     }
   )
 
@@ -42,7 +42,7 @@ export default ({ children }) => {
         user,
         isAuthenticated: Boolean(sessionUser),
         hasPermission: permission =>
-          Boolean(user?.permissions.find(({ name }) => name === permission))
+          Boolean(user?.permissions.find(({ name }) => name === permission)),
       }}
     >
       {children}

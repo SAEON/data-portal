@@ -5,24 +5,24 @@ module.exports = mode => [
     use: {
       loader: 'babel-loader',
       options: {
-        envName: mode
-      }
-    }
+        envName: mode,
+      },
+    },
   },
   {
     test: /\.*css$/,
-    use: ['style-loader', 'css-loader']
+    use: ['style-loader', 'css-loader'],
   },
   {
     test: /\.(woff|woff2|eot|ttf)$/,
-    type: 'asset/resource'
+    type: 'asset/resource',
   },
   {
     test: /\.svg$/,
-    use: ['@svgr/webpack']
+    use: ['@svgr/webpack'],
   },
   {
     test: /\.(png|jpg|gif)$/,
-    type: 'asset/inline'
-  }
+    type: 'asset/inline',
+  },
 ]

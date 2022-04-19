@@ -13,7 +13,7 @@ export default ({
   variables,
   pageInfoPath,
   dataPath,
-  httpHeaders
+  httpHeaders,
 }) => {
   if (!fetch) {
     throw new Error(`No 'fetch' client available in current environment. Try using node-fetch`)
@@ -23,13 +23,13 @@ export default ({
       executor: createExecutor({
         client: new ApolloClient({
           link: createHttpLink({ uri, fetch }),
-          cache: new InMemoryCache()
+          cache: new InMemoryCache(),
         }),
         variables,
         httpHeaders,
-        query
+        query,
       }),
       pageInfoPath,
-      dataPath
+      dataPath,
     })
 }

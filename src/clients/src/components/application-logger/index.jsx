@@ -17,9 +17,9 @@ export default ({ children }) => {
             mutation logBrowserEvents($input: [BrowserEventInput]!) {
               logBrowserEvents(input: $input)
             }
-          `
-        })
-      }
+          `,
+        }),
+      },
     }))
   })
 

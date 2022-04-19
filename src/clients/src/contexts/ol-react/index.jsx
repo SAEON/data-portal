@@ -9,7 +9,7 @@ export default ({ children }) => {
     <OlReact
       viewOptions={{
         center: [23, -29],
-        zoom: 6.5
+        zoom: 6.5,
       }}
       layers={[terrestrisBaseMap()]}
       style={{ width: '100%', height: '100%' }}

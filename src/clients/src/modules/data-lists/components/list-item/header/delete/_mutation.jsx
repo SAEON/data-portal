@@ -6,7 +6,7 @@ import DeleteIcon from 'mdi-react/DeleteIcon'
 export default ({ id, toggle }) => {
   const [deleteList, { error, loading }] = useMutation(
     gql`
-      mutation($id: ID!) {
+      mutation ($id: ID!) {
         deleteList(id: $id)
       }
     `,
@@ -19,7 +19,7 @@ export default ({ id, toggle }) => {
         }
 
         cache.evict({ id: `List:${id}` })
-      }
+      },
     }
   )
 

@@ -6,7 +6,7 @@ const __dirname = getDirname(import.meta.url)
 
 const ARGS = arg({
   '--semver': String,
-  '-s': '--semver'
+  '-s': '--semver',
 })
 
 const SEMVER = ARGS['--semver']
@@ -21,5 +21,5 @@ const PACKAGES_PATH = normalize(join(__dirname, '../src/packages'))
 apply({
   PATH: PACKAGES_PATH,
   script: `publish:${SEMVER}`,
-  ignore: []
+  ignore: [],
 })

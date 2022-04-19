@@ -7,8 +7,9 @@ export default (selectAll, validCount, selectedIds, cache, max, name) => {
     if (validCount > max) {
       return `Too many records selected for ${name} - search returns ${validCount} records. Max. ${max}`
     } else {
-      return `Configure ${name} from ${selectedIds?.filter(id => cache[id]).length ||
-        validCount} search results`
+      return `Configure ${name} from ${
+        selectedIds?.filter(id => cache[id]).length || validCount
+      } search results`
     }
   } else {
     if (selectedIds.length) {

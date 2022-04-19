@@ -5,7 +5,7 @@ export default ({ title, uri }) => {
   const [state, setState] = useState({
     error: null,
     loading: true,
-    data: null
+    data: null,
   })
 
   useEffect(() => {
@@ -18,10 +18,10 @@ export default ({ title, uri }) => {
             {
               loading: false,
               data: await fetch(uri, {
-                signal: abortFetch.signal
+                signal: abortFetch.signal,
               })
                 .then(res => res.blob())
-                .then(blob => URL.createObjectURL(blob))
+                .then(blob => URL.createObjectURL(blob)),
             }
           )
         )
@@ -32,7 +32,7 @@ export default ({ title, uri }) => {
           console.error('Error', err)
           setState({
             loading: false,
-            error: err.message
+            error: err.message,
           })
         }
       }

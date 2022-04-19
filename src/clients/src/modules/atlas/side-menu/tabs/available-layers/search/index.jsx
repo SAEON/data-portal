@@ -48,8 +48,8 @@ export default () => {
       extractField: (document, fieldName) =>
         fieldName.split('.').reduce((doc, key) => doc && doc[key], document),
       searchOptions: {
-        fuzzy: 0.5
-      }
+        fuzzy: 0.5,
+      },
     })
 
     minisearch.addAll(layers)
@@ -84,7 +84,7 @@ export default () => {
                   <InputAdornment position="start">
                     <SearchIcon size={18} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
           )}
@@ -98,7 +98,7 @@ export default () => {
           marginTop: 16,
           paddingTop: 16,
           paddingBottom: 16,
-          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${SEARCH_BOX_MARGIN}px)`
+          height: `calc(100% - ${SEARCH_BOX_HEIGHT}px - ${SEARCH_BOX_MARGIN}px)`,
         }}
         m={1}
       >
@@ -114,7 +114,7 @@ export default () => {
                     ref={ref}
                     style={{
                       ...style,
-                      height: `${parseFloat(style.height) + LIST_PADDING_SIZE * 2}px`
+                      height: `${parseFloat(style.height) + LIST_PADDING_SIZE * 2}px`,
                     }}
                     {...otherProps}
                   />
@@ -131,7 +131,7 @@ export default () => {
                     id: record_id,
                     layerId,
                     LAYERS,
-                    uri
+                    uri,
                   } = layers.find(({ id: _id }) => _id === id)
 
                   return (
@@ -139,8 +139,9 @@ export default () => {
                       style={{
                         ...style,
                         top: `${parseFloat(style.top) + LIST_PADDING_SIZE}px`,
-                        padding: `${index &&
-                          ITEM_Y_PADDING}px ${ITEM_X_PADDING_RIGHT}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING_LEFT}px`
+                        padding: `${
+                          index && ITEM_Y_PADDING
+                        }px ${ITEM_X_PADDING_RIGHT}px ${ITEM_Y_PADDING}px ${ITEM_X_PADDING_LEFT}px`,
                       }}
                     >
                       <Card
@@ -149,13 +150,13 @@ export default () => {
                           width: '100%',
                           cursor: 'pointer',
                           '&:hover': {
-                            backgroundColor: theme.palette.grey[100]
+                            backgroundColor: theme.palette.grey[100],
                           },
                           ...(proxy.getLayerById(layerId)
                             ? {
-                                backgroundColor: theme => theme.palette.grey[100]
+                                backgroundColor: theme => theme.palette.grey[100],
                               }
-                            : {})
+                            : {}),
                         }}
                         variant="elevation"
                         onClick={() =>
@@ -173,7 +174,7 @@ export default () => {
                                   id: layerId,
                                   title: description,
                                   uri,
-                                  LAYERS
+                                  LAYERS,
                                 })
                               )
                         }
@@ -208,12 +209,12 @@ export default () => {
                             titleProps={{
                               style: {
                                 paddingRight: theme.spacing(2),
-                                paddingLeft: theme.spacing(2)
-                              }
+                                paddingLeft: theme.spacing(2),
+                              },
                             }}
                             tooltipProps={{
                               placement: 'right',
-                              title: `${description}`
+                              title: `${description}`,
                             }}
                             iconProps={{ size: 'small', fontSize: 'small' }}
                             dialogueContentProps={{ style: { padding: 0 } }}

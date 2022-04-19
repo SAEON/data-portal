@@ -16,7 +16,7 @@ export default ({ results }) => {
       paddingTop: smDown ? theme.spacing(1) : 0,
       paddingRight: smDown ? theme.spacing(1) : 0,
       paddingBottom: smDown ? theme.spacing(0) : 0,
-      paddingLeft: smDown ? theme.spacing(1) : 0
+      paddingLeft: smDown ? theme.spacing(1) : 0,
     }),
     [smDown, theme]
   )

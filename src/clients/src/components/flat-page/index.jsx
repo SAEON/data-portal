@@ -9,7 +9,7 @@ export const H = props => (
   <Typography
     sx={theme => ({
       marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     })}
     variant="h6"
     {...props}
@@ -19,7 +19,7 @@ export const H = props => (
 export const P = props => (
   <Typography
     sx={theme => ({
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     })}
     variant="body2"
     {...props}

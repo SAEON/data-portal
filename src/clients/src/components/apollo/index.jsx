@@ -11,23 +11,23 @@ export default ({ children }) => (
             Query: {
               fields: {
                 lists: {
-                  merge: mergeListByIds
-                }
-              }
+                  merge: mergeListByIds,
+                },
+              },
             },
             User: {
               fields: {
                 roles: {
-                  merge: (existing, incoming) => incoming
-                }
-              }
-            }
-          }
+                  merge: (existing, incoming) => incoming,
+                },
+              },
+            },
+          },
         }),
         link: new HttpLink({
           uri: PUBLIC_GQL_ADDRESS,
-          credentials: 'include'
-        })
+          credentials: 'include',
+        }),
       })
     }
   >

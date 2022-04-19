@@ -3,6 +3,6 @@ export default function iterate(array, { batchSize = 100 } = {}) {
   return {
     next: () => iterate(array, { batchSize }),
     items,
-    done: !items.length
+    done: !items.length,
   }
 }

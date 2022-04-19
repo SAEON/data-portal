@@ -33,7 +33,7 @@ export default ({ map, rerender }) => {
         addInteraction: addInteraction(map, rerender),
         removeInteraction: removeInteraction(map, rerender),
         getLayerById: getLayerById(map),
-        getLayers: getLayers(map, rerender)
+        getLayers: getLayers(map, rerender),
       }
     ),
 
@@ -58,7 +58,7 @@ export default ({ map, rerender }) => {
             return map[property]
           }
         }
-      }
+      },
     }
   )
 

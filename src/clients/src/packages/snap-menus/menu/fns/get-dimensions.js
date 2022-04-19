@@ -18,7 +18,7 @@ export default (snapZone, PORTAL, GHOST_GUTTER_SIZE) => {
   ) {
     return {
       width: containerWidth / 2 - GHOST_GUTTER_SIZE,
-      height: containerHeight / 2 - GHOST_GUTTER_SIZE
+      height: containerHeight / 2 - GHOST_GUTTER_SIZE,
     }
   }
 

@@ -24,12 +24,12 @@ export default ({ config, data, title, description }) => {
         height: '95%',
         width: '100%',
         paddingTop: '10px', //STEVEN:TO-DO: move to generic parent of all charts OR find a Echarts prop that allows for this and put it in theme
-        paddingRight: '10px'
+        paddingRight: '10px',
       }}
       theme={theme}
       option={{
         grid: {
-          bottom: 50 //giving wiggle room for larger x axis labels
+          bottom: 50, //giving wiggle room for larger x axis labels
         },
         //https://echarts.apache.org/en/option.html#color
         //apache echarts default color palette. Adopted sequentially and circularly from this list as the colors of series.
@@ -37,17 +37,17 @@ export default ({ config, data, title, description }) => {
         xAxis: {
           // type: 'category',
           data: data.map(entry => entry[namesField]),
-          name: namesField
+          name: namesField,
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
         },
         series: [
           ...valuesFields?.map((valueField, i) => {
             return {
               name: valueField, //data.map(entry => entry[namesField]),
               data: data.map(entry => entry[valueField]),
-              type: 'line'
+              type: 'line',
               // smooth: false,
             }
           }),
@@ -59,25 +59,25 @@ export default ({ config, data, title, description }) => {
               : {
                   lineStyle: {
                     type: 'dotted',
-                    width: 2
+                    width: 2,
                   },
                   symbol: 'none',
                   data: marklines.map(markline => {
                     return { name: markline.name, yAxis: markline.value }
-                  })
-                }
-          }
+                  }),
+                },
+          },
         ],
         legend: {},
         dataZoom: theme.dataZoom,
         title: {
           text: title,
           subtext: description,
-          left: 'center'
+          left: 'center',
         },
         tooltip: {},
         // https://echarts.apache.org/en/option.html#toolbox
-        toolbox: {}
+        toolbox: {},
       }}
     />
   )

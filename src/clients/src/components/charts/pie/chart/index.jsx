@@ -13,18 +13,18 @@ export default ({ config, data, title, description }) => {
         title: {
           text: title,
           subtext: description,
-          left: 'center'
+          left: 'center',
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
+          formatter: '{a} <br/>{b} : {c} ({d}%)',
         },
         legend: {
           orient: 'vertical',
           left: 'left',
           data: data.reduce((acc, cur) => {
             return [...acc, cur.reservoir_type]
-          }, [])
+          }, []),
         },
         series: [
           {
@@ -34,18 +34,18 @@ export default ({ config, data, title, description }) => {
             center: ['50%', '60%'],
             data: data.map(({ [namesField]: name, [valuesField]: value }) => ({
               value,
-              name
+              name,
             })),
 
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
-        ]
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              },
+            },
+          },
+        ],
       }}
     />
   )

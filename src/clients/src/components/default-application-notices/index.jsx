@@ -29,11 +29,11 @@ export default ({ children }) => {
           const [msg, variant] = str.split(',').map(s => s.trim())
           return {
             msg,
-            variant
+            variant,
           }
         })) {
         enqueueSnackbar(msg, {
-          variant
+          variant,
         })
         await new Promise(res => setTimeout(res, 250))
       }

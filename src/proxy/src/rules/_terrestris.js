@@ -11,6 +11,6 @@ export default (requestDetail, { pathname: originPathname, search }) => {
     port,
     path: normalize(
       `${destinationPathname}${originPathname.replace(/\/terrestris\//, '/')}${search}`
-    )
+    ),
   }
 }

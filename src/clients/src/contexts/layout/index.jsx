@@ -14,7 +14,7 @@ export default ({ children }) => {
         headerRef,
         setHeaderRef: el => setHeaderRef(el),
         contentRef,
-        setContentRef: el => setContentRef(el)
+        setContentRef: el => setContentRef(el),
       }}
     >
       {children}
@@ -40,7 +40,7 @@ export const SizeContent = ({ children, height = undefined, style = {} }) => {
       style={{
         position: 'relative',
         ...css,
-        ...style
+        ...style,
       }}
     >
       {children}

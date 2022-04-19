@@ -6,7 +6,7 @@ import {
   createContext,
   cloneElement,
   useRef,
-  useEffect
+  useEffect,
 } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ListSubheader from '@mui/material/ListSubheader'
@@ -66,8 +66,8 @@ export default forwardRef(({ children, ...other }, ref) => {
             cloneElement(data[index], {
               style: {
                 ...style,
-                top: style.top + LISTBOX_PADDING
-              }
+                top: style.top + LISTBOX_PADDING,
+              },
             })
           }
         </VariableSizeList>

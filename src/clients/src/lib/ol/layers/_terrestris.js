@@ -13,8 +13,8 @@ export const terrestrisBaseMap = () =>
       url: URL,
       params: {
         LAYERS: 'OSM-WMS',
-        TILED: false
+        TILED: false,
       },
-      serverType: 'geoserver'
-    })
+      serverType: 'geoserver',
+    }),
   })

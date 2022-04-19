@@ -15,7 +15,7 @@ module.exports = (ROOT, output) => {
           PUBLIC_PATH: '',
           PACKAGE_DESCRIPTION: packageJson.description,
           PACKAGE_KEYWORDS: packageJson.keywords,
-          chunks: [name]
+          chunks: [name],
         })
     )
 }

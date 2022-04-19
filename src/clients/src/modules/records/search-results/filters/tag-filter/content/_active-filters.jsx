@@ -42,7 +42,7 @@ export default ({ activeFilters, filterId }) => {
                   } else {
                     return value !== _value
                   }
-                })
+                }),
               })
             }
             inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
@@ -53,7 +53,7 @@ export default ({ activeFilters, filterId }) => {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                marginRight: theme.spacing(2)
+                marginRight: theme.spacing(2),
               }}
               variant="overline"
             >{`${typeof value === 'string' ? value.toUpperCase() : value}`}</Typography>

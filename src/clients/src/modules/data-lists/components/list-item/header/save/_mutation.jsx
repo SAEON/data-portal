@@ -10,7 +10,7 @@ export default ({ toggle }) => {
 
   const [saveList, { error, loading }] = useMutation(
     gql`
-      mutation(
+      mutation (
         $id: ID!
         $search: JSON!
         $createdBy: String!

@@ -14,13 +14,13 @@ export default ({ permissions }) => {
           key: 'description',
           name: 'Description',
           resizable: true,
-          headerRenderer
-        }
+          headerRenderer,
+        },
       ]}
       rows={permissions.map(({ id, name, description }) => ({
         id,
         name,
-        description
+        description,
       }))}
     />
   )

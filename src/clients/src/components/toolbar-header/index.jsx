@@ -7,10 +7,10 @@ const AnimateVariant = ({ children }) =>
   cloneElement(children, {
     variant: useScrollTrigger({
       disableHysteresis: true,
-      threshold: location.pathname === '/' ? 0 : 2
+      threshold: location.pathname === '/' ? 0 : 2,
     })
       ? 'regular'
-      : 'dense'
+      : 'dense',
   })
 
 export default ({ children, style, ...props }) => {
@@ -23,7 +23,7 @@ export default ({ children, style, ...props }) => {
             display: 'flex',
             justifyContent: 'flex-end',
             transition: 'min-height 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-            ...style
+            ...style,
           }}
         >
           {children}

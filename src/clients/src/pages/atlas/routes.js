@@ -12,6 +12,6 @@ export default [
       <Transition tKey="atlas">
         <AtlasPage id={props.match.params.id} {...props} />
       </Transition>
-    )
-  }
+    ),
+  },
 ]

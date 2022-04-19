@@ -8,7 +8,7 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query($bucket: DateBucket, $sortByDate: SortConfig, $sortByCount: SortConfig) {
+      query ($bucket: DateBucket, $sortByDate: SortConfig, $sortByCount: SortConfig) {
         downloadsCount: downloadsReport {
           count
         }
@@ -39,14 +39,14 @@ export default ({ children }) => {
         bucket: 'day',
         sortByCount: {
           dimension: 'count',
-          direction: 'DESC'
+          direction: 'DESC',
         },
         sortByDate: {
           dimension: 'date',
-          direction: 'DESC'
-        }
+          direction: 'DESC',
+        },
       },
-      fetchPolicy: 'no-cache'
+      fetchPolicy: 'no-cache',
     }
   )
 
@@ -63,7 +63,7 @@ export default ({ children }) => {
     downloadsByDate,
     referrerCount,
     deviceCount,
-    ipLocationCount
+    ipLocationCount,
   } = data
 
   return (
@@ -82,7 +82,7 @@ export default ({ children }) => {
 
               return {
                 device: `${name} (${osName})`,
-                ...other
+                ...other,
               }
             })
             .reduce(
@@ -91,12 +91,12 @@ export default ({ children }) => {
                   [device]: {
                     count: count + (devices[device]?.count || 0),
                     device,
-                    ...other
-                  }
+                    ...other,
+                  },
                 }),
               {}
             )
-        ).map(([, fields]) => fields)
+        ).map(([, fields]) => fields),
       }}
     >
       {children}

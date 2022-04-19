@@ -11,28 +11,28 @@ const Button = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
   [theme.breakpoints.down('sm')]: {
     width: '100% !important',
-    height: 100
+    height: 100,
   },
   '& .MuiTypography-root': {
-    outline: '2px solid transparent'
+    outline: '2px solid transparent',
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
     '& .MuiFancyButtonBackdrop-root': {
-      opacity: 0.15
+      opacity: 0.15,
     },
     '& .MuiFancyButtonMarked-root': {
-      opacity: 0
+      opacity: 0,
     },
     '& .MuiTypography-root': {
-      outline: '2px solid currentColor'
-    }
+      outline: '2px solid currentColor',
+    },
   },
   transition: theme.transitions.create(['border']),
   border: `1px solid ${alpha(theme.palette.common.white, 0.5)}`,
   '&:hover': {
-    border: `2px solid ${alpha(theme.palette.common.white, 0.1)}`
-  }
+    border: `2px solid ${alpha(theme.palette.common.white, 0.1)}`,
+  },
 }))
 
 const Image = styled('span')(({ theme }) => ({
@@ -44,7 +44,7 @@ const Image = styled('span')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: theme.palette.common.white
+  color: theme.palette.common.white,
 }))
 
 const Backdrop = styled('span')(({ theme }) => ({
@@ -55,7 +55,7 @@ const Backdrop = styled('span')(({ theme }) => ({
   bottom: 0,
   backgroundColor: theme.palette.common.black,
   opacity: 0.4,
-  transition: theme.transitions.create('opacity')
+  transition: theme.transitions.create('opacity'),
 }))
 
 const Mark = styled('span')(({ theme }) => ({
@@ -65,7 +65,7 @@ const Mark = styled('span')(({ theme }) => ({
   position: 'absolute',
   bottom: -2,
   left: 'calc(50% - 9px)',
-  transition: theme.transitions.create('opacity')
+  transition: theme.transitions.create('opacity'),
 }))
 
 const FancyButton = ({
@@ -97,7 +97,7 @@ const FancyButton = ({
               position: 'relative',
               p: 4,
               pt: 2,
-              pb: theme => `calc(${theme.spacing(1)} + 6px)`
+              pb: theme => `calc(${theme.spacing(1)} + 6px)`,
             }}
           >
             {title}

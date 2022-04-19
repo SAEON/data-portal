@@ -21,7 +21,7 @@ globalThis.console = {
   log: (...args) => writeToConsole('log', ...args),
   info: (...args) => writeToConsole('info', ...args),
   warn: (...args) => writeToConsole('warn', ...args),
-  error: (...args) => writeToConsole('error', ...args)
+  error: (...args) => writeToConsole('error', ...args),
 }
 
 export default {
@@ -29,5 +29,5 @@ export default {
     const { overwrites, formatter } = cb({ console: _console, timestampFormat })
     timestampFormat = formatter || timestampFormat
     globalThis.console = Object.assign(globalThis.console, overwrites)
-  }
+  },
 }

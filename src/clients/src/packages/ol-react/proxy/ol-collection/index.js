@@ -9,7 +9,7 @@ export default ({ map, rerender }) => {
         // Actually ... I'm not sure what this is doing
         _self: {
           ...descriptor,
-          get: () => map.getLayers()
+          get: () => map.getLayers(),
         },
 
         // TODO I don't think the arrays needs to return a proxy
@@ -34,14 +34,14 @@ export default ({ map, rerender }) => {
                         {
                           _self: {
                             ...descriptor,
-                            get: () => layer
+                            get: () => layer,
                           },
                           get: {
                             ...descriptor,
                             get: () => attribute => {
                               return layer.get(attribute)
-                            }
-                          }
+                            },
+                          },
                         }
                       ),
                       {
@@ -70,7 +70,7 @@ export default ({ map, rerender }) => {
                               return proxy._self[property]
                             }
                           }
-                        }
+                        },
                       }
                     )
                 ),
@@ -78,10 +78,10 @@ export default ({ map, rerender }) => {
               // getArray() proxy handler (proxies an array)
               // Arrays as proxy objects are transparent
               {
-                get: (target, prop) => target[prop]
+                get: (target, prop) => target[prop],
               }
-            )
-        }
+            ),
+        },
       }
     ),
 
@@ -104,7 +104,7 @@ export default ({ map, rerender }) => {
             return proxy._self[property]
           }
         }
-      }
+      },
     }
   )
   return _self

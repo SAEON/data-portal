@@ -11,7 +11,7 @@ const Pre = styled('pre')(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[200]}`,
   whiteSpace: 'pre-wrap',
   padding: theme.spacing(1),
-  wordBreak: 'break-word'
+  wordBreak: 'break-word',
 }))
 
 export default class ErrorBoundary extends Component {

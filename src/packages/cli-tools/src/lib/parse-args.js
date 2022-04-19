@@ -17,7 +17,7 @@ export default flags => {
 
   const parse = argv => {
     const parsedArgs = arg(defs, {
-      argv
+      argv,
     })
 
     return Object.fromEntries(

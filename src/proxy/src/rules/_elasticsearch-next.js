@@ -2,12 +2,16 @@ import { URL } from 'url'
 import { normalize } from 'path'
 import {
   ELASTICSEARCH_next_ADDRESS as ELASTICSEARCH_ADDRESS,
-  ALLOWED_ES_INDICES
+  ALLOWED_ES_INDICES,
 } from '../config.js'
 
-const { protocol, hostname, port, host, pathname: destinationPathname } = new URL(
-  ELASTICSEARCH_ADDRESS
-)
+const {
+  protocol,
+  hostname,
+  port,
+  host,
+  pathname: destinationPathname,
+} = new URL(ELASTICSEARCH_ADDRESS)
 
 export default (requestDetail, { pathname: originPathname, search }) => {
   requestDetail.protocol = protocol
@@ -25,6 +29,6 @@ export default (requestDetail, { pathname: originPathname, search }) => {
       `${destinationPathname}${originPathname
         .replace(`/elasticsearch/next/${index}/_search`, `${index}/_search${search}`)
         .replace(`/elasticsearch/next/${index}`, `${index}/_search`)}${search}`
-    )
+    ),
   }
 }

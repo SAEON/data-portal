@@ -8,7 +8,7 @@ export default ({
   MARGIN_RIGHT = 0,
   MARGIN_BOTTOM = 0,
   MARGIN_LEFT = 0,
-  SNAP_MENUS_CONTAINER_REF = null
+  SNAP_MENUS_CONTAINER_REF = null,
 }) => {
   const [portalNode, setPortalNode] = useState(null)
 
@@ -55,7 +55,7 @@ export default ({
         PORTAL_MARGIN_TOP: MARGIN_TOP,
         PORTAL_MARGIN_RIGHT: MARGIN_RIGHT,
         PORTAL_MARGIN_BOTTOM: MARGIN_BOTTOM,
-        PORTAL_MARGIN_LEFT: MARGIN_LEFT
+        PORTAL_MARGIN_LEFT: MARGIN_LEFT,
       }}
     >
       {children}

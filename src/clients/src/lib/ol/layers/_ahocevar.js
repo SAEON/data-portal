@@ -13,7 +13,7 @@ export const ahocevarBaseMap = () =>
       url: URL,
       params: {
         LAYERS: 'ne:NE1_HR_LC_SR_W_DR',
-        TILED: true
-      }
-    })
+        TILED: true,
+      },
+    }),
   })

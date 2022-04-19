@@ -29,20 +29,20 @@ module.exports = () => {
       chunkFilename: '[name].[contenthash].js',
       path: path.join(ROOT, output),
       publicPath: '/',
-      assetModuleFilename: 'assets/[hash][ext][query]'
+      assetModuleFilename: 'assets/[hash][ext][query]',
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
-      alias: loadAliases(ROOT, mode)
+      alias: loadAliases(ROOT, mode),
     },
     optimization: {
       minimize: ['local', 'development'].includes(DEPLOYMENT_ENV) ? false : true,
-      splitChunks: { chunks: 'all' }
+      splitChunks: { chunks: 'all' },
     },
     module: {
-      rules: configureRules(mode)
+      rules: configureRules(mode),
     },
     plugins: configurePlugins(ROOT, output),
-    devServer: configureDevServer(ROOT, output)
+    devServer: configureDevServer(ROOT, output),
   }
 }

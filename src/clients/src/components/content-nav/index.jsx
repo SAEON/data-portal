@@ -34,7 +34,7 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
             display: 'flex',
             flexDirection: lgAndUp ? 'column' : 'row',
             maxHeight: 1000,
-            overflow: 'auto'
+            overflow: 'auto',
           }}
         >
           {navItems.map((props, i) => (

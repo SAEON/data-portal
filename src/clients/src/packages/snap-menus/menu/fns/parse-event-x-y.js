@@ -28,6 +28,6 @@ export default ev => {
 
   return {
     x,
-    y
+    y,
   }
 }

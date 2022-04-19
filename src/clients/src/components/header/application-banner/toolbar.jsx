@@ -9,7 +9,7 @@ export default props => {
       style={Object.assign(
         {
           display: 'flex',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         },
         otherProps
       )}
