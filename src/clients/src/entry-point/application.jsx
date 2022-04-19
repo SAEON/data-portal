@@ -3,7 +3,6 @@ import ClientInfoProvider from '../contexts/client-info'
 import AuthorizationProvider from '../contexts/authorization'
 import AuthenticationProvider from '../contexts/authentication'
 import { SnackbarProvider } from 'notistack'
-import BackgroundImageProvider from '../contexts/background-image'
 import NativeExtensions from '../components/native-extensions'
 import ApplicationLogger from '../components/application-logger'
 import DefaultApplicationNotices from '../components/default-application-notices'
@@ -25,15 +24,13 @@ export default ({ children, ...config }) => (
                 <AuthenticationProvider>
                   <AuthorizationProvider>
                     <GlobalProvider>
-                      <BackgroundImageProvider {...config}>
-                        <ApplicationLogger>
-                          <SnackbarProvider>
-                            <DefaultApplicationNotices>
-                              <LayoutProvider>{children}</LayoutProvider>
-                            </DefaultApplicationNotices>
-                          </SnackbarProvider>
-                        </ApplicationLogger>
-                      </BackgroundImageProvider>
+                      <ApplicationLogger>
+                        <SnackbarProvider>
+                          <DefaultApplicationNotices>
+                            <LayoutProvider>{children}</LayoutProvider>
+                          </DefaultApplicationNotices>
+                        </SnackbarProvider>
+                      </ApplicationLogger>
                     </GlobalProvider>
                   </AuthorizationProvider>
                 </AuthenticationProvider>

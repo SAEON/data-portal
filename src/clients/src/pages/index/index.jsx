@@ -12,7 +12,6 @@ import packageJson from '../../../package.json'
 const App = lazy(() => import('../../entry-point/application'))
 
 const config = {
-  backgroundImage: true,
   contentBase: undefined,
 }
 

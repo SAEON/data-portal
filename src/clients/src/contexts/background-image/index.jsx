@@ -1,5 +1,6 @@
 import { createContext } from 'react'
 import { CATALOGUE_CLIENT_BACKGROUNDS } from '../../config'
+import { Div } from '../../components/html-tags'
 
 /**
  * Provides some measure of control over which background
@@ -18,24 +19,22 @@ const getBackgroundImagePath = () => {
 
 export const BgImageContext = createContext()
 
-export default ({ children, backgroundImage = true }) => {
+export default ({ children }) => {
   return (
     <>
-      {backgroundImage && (
-        <div
-          id="bg"
-          style={{
-            position: 'fixed',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundSize: 'cover',
-            backgroundImage: getBackgroundImagePath(),
-            zIndex: -1
-          }}
-        />
-      )}
+      <Div
+        id="bg"
+        sx={{
+          position: 'fixed',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundSize: 'cover',
+          backgroundImage: getBackgroundImagePath(),
+          zIndex: -1,
+        }}
+      />
 
       {children}
     </>

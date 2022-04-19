@@ -8,9 +8,7 @@ import routes from './routes'
 
 const App = lazy(() => import('../../entry-point/application'))
 
-const config = {
-  backgroundImage: false,
-}
+const config = {}
 
 const Page = () => (
   <Suspense fallback={<Loading />}>

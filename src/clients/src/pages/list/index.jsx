@@ -13,7 +13,6 @@ const App = lazy(() => import('../../entry-point/application'))
 const isSubdomainEntry = SUBDOMAIN_APP_ENTRIES.split(',').includes('list')
 
 const config = {
-  backgroundImage: true,
   contentBase: isSubdomainEntry ? undefined : '/list',
 }
 
