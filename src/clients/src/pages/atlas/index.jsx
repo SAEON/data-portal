@@ -1,15 +1,15 @@
-import mount from '../../index/main'
+import mount from '../../entry-point/main'
 import { lazy, Suspense } from 'react'
 import Loading from '../../components/loading'
-import RouteSwitcher from '../../index/route-switcher'
+import RouteSwitcher from '../../entry-point/route-switcher'
 import { SizeContent } from '../../contexts/layout'
 import { Banner } from '../../components/header'
 import routes from './routes'
 
-const App = lazy(() => import('../../index/application'))
+const App = lazy(() => import('../../entry-point/application'))
 
 const config = {
-  backgroundImage: false
+  backgroundImage: false,
 }
 
 const Page = () => (

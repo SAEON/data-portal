@@ -35,8 +35,6 @@ import {
   loginSuccess as loginSuccessRoute,
   clientInfo as clientInfoRoute,
   downloadProxy as downloadProxyRoute,
-  sqlPrivate as sqlPrivateRoute,
-  sqlPublic as sqlPublicRoute,
   login as loginRoute,
   logout as logoutRoute,
   home as homeRoute,
@@ -114,8 +112,6 @@ api
       .get('/http', homeRoute)
       .post('/http', homeRoute)
       .get('/http/client-info', clientInfoRoute)
-      .post('/http/sql/:schema', sqlPublicRoute)
-      .post('/http/sql', sqlPrivateRoute)
       .get('/http/download-proxy', downloadProxyRoute)
       .get('/http/authenticate/redirect', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport
       .get('/http/login', loginRoute) // passport
