@@ -12,36 +12,6 @@ type PageInfo {
   endCursor: JSON
 }
 
-# Interfaces
-
-interface Node {
-  id: ID!
-}
-
-interface Connection {
-  """
-  A list of edges
-  """
-  edges: [Edge!]!
-  """
-  A list of nodes
-  """
-  nodes: [Node!]
-  """
-  Information to aid in pagination
-  """
-  pageInfo: PageInfo!
-  """
-  Count of total results
-  """
-  totalCount: Int!
-}
-
-interface Edge {
-  cursor: String!
-  node: Node!
-}
-
 #  Types
 enum DateBucket {
   minute
