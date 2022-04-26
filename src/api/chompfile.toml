@@ -23,7 +23,8 @@ run = 'ncu -u -x es8.1'
 name = 'start'
 env = { NODE_ENV = 'development', TZ = 'utc', NODE_TLS_REJECT_UNAUTHORIZED='0' }
 run = """
-  nodemon --ext js,graphql,json \
+  nodemon \
+    --ext js,graphql,json \
     --watch ./src \
     --exec 'node --trace-warnings --experimental-json-modules src'
 """
