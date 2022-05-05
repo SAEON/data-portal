@@ -6,10 +6,10 @@
   "license": "MIT",
   "devDependencies": {
     "arg": "^5.0.1",
-    "doctoc": "^2.1.0",
+    "doctoc": "^2.2.0",
     "eslint": "^8.14.0",
     "husky": "^7.0.4",
-    "npm-check-updates": "^12.5.9",
+    "npm-check-updates": "^12.5.11",
     "prettier": "^2.6.2",
     "pretty-quick": "^3.1.3"
   },
