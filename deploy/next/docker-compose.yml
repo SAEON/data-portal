@@ -65,7 +65,7 @@ services:
       ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
-      SAEON_ODP_INTEGRATION_SCHEDULE: '* * 2 * * *'
+      SAEON_ODP_INTEGRATION_SCHEDULE: '0 0 2 * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
