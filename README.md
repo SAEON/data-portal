@@ -1,22 +1,9 @@
 ![next](https://github.com/SAEON/catalogue/workflows/deployment@next/badge.svg?branch=next)
 ![stable](https://github.com/SAEON/catalogue/workflows/deployment@stable/badge.svg?branch=stable)
 
-# SAEON Catalogue software
+# SAEON Data Portal
 
-A suite of services that provide a platform for searching and exploring SAEON-curated datasets. The tech stack is as listed below. This document shows how to setup a development environment for contributions, and also explains how to build and deploy the services.
-
-## The stack
-
-- Docker
-- GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
-- Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
-- Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
-
-## 3rd party service requirements
-
-- Docker
-- MongoDB
-- Elasticsearch & Kibana (external)
+A suite of services that provide a platform for searching and exploring SAEON-curated datasets
 
 # README Contents
 
@@ -24,18 +11,13 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Overview](#overview)
-    - [User/client scenarios](#userclient-scenarios)
+  - [The stack](#the-stack)
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
-  - [Local development](#local-development)
-    - [Endpoints](#endpoints)
-- [Deployment and installation](#deployment-and-installation)
-  - [Docker Stack](#docker-stack)
-  - [SAEON Data Portal endpoints](#saeon-data-portal-endpoints)
-    - [catalogue.saeon.dvn (`next` branch)](#cataloguesaeondvn-next-branch)
-    - [catalogue.saeon.ac.za (`stable` branch)](#cataloguesaeonacza-stable-branch)
-- [More documentation](#more-documentation)
+    - [Local development](#local-development)
+    - [Load catalogue data on first use](#load-catalogue-data-on-first-use)
+- [Service documentation](#service-documentation)
   - [API](#api)
   - [Proxy](#proxy)
   - [Clients](#clients)
@@ -50,11 +32,11 @@ In summary, this software facilitates:
 - Previewing WMS maps of datasets when metadata records support this
 - Downloading resources linked to by the metadata records
 
-### User/client scenarios
+## The stack
 
-The platform is primarily driven by user interactions with the React.js UI application. This sequence diagram shows all the user/client scenarios for the basic search / preview / download functionality:
-
-![Search sequence scenario](/diagrams/dist/client-scenarios.png)
+- GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
+- Proxy API (Node.js + [AnyProxy](http://anyproxy.io/))
+- Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 # Quick start
 
@@ -63,7 +45,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Engine
-2. Node.js **node:17.8.0**
+2. Node.js **node:17.8.0** (NB! use exactly this version)
 
 ## Install source code and dependencies
 
@@ -85,7 +67,7 @@ chomp install-dependencies
 chomp build-all-packages
 ```
 
-## Local development
+### Local development
 Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
 
 ```sh
@@ -111,46 +93,16 @@ chomp start:api
 chomp start:clients
 ```
 
-Then [configure the API for first use](#api-configuration)
+### Load catalogue data on first use
+The first time you use the Data Portal on a local you need to load metadata from the catalogue into Elasticsearch. There is a CLI to do this - from the root of the repository:
 
-### Endpoints
+```sh
+cd src/api
+source env.sh
+sdp integrations saeon --run
+```
 
-- http://localhost:3001
-- http://localhost:3000
-- http://localhost:3000/graphql
-- http://localhost:8001 (proxy)
-- http://localhost:8002 (proxy logs)
-- http://localhost:9200
-- http://localhost:5601
-- mongodb://localhost:27017
-
-# Deployment and installation
-
-## Docker Stack
-
-TODO
-
-## SAEON Data Portal endpoints
-
-### catalogue.saeon.dvn (`next` branch)
-
-- https://catalogue.saeon.dvn
-- https://api.catalogue.saeon.dvn
-- https://api.catalogue.saeon.dvn/graphql
-- https://proxy.saeon.dvn
-- http://catalogue.saeon.dvn:8002 (for proxy logs)
-- mongodb://catalogue.saeon.dvn:27017
-
-### catalogue.saeon.ac.za (`stable` branch)
-
-- https://catalogue.saeon.ac.za
-- https://api.catalogue.saeon.ac.za
-- https://api.catalogue.saeon.ac.za/graphql
-- https://proxy.saeon.ac.za
-- http://catalogue.saeon.int:8002 (for proxy logs)
-- mongodb://catalogue.saeon.int:27017
-
-# More documentation
+# Service documentation
 
 ## API
 
