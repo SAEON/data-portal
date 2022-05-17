@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader'
 import sift from 'sift'
 import collections from './collections/index.js'
-import logMongoQuery from '../lib/logMongoQuery.js'
+import logMongoQuery from '../lib/log-mongo-query.js'
 
 export default db => () =>
   Object.entries(collections).reduce((acc, [alias, { name }]) => {
