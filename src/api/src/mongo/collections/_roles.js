@@ -14,7 +14,7 @@ export default {
       description: 'Role document',
       required: ['name'],
       properties: {
-        emailAddress: {
+        name: {
           bsonType: 'string',
           description: 'The name of the role',
         },
