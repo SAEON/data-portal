@@ -28,3 +28,17 @@ run = """
     & webpack serve --port 3001 --config webpack/index.js
   """
 
+
+[[task]]
+name = 'reset'
+run = """
+rm -rf node_modules
+find . \
+  -name node_modules \
+  -type d \
+  -exec rm -rv {} + \
+    && find . \
+      -name package-lock.json \
+      -type f \
+      -delete
+"""

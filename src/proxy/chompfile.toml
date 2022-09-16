@@ -16,3 +16,17 @@ run = """
     --watch ./src \
     --exec 'node --trace-warnings --experimental-json-modules src'
 """
+
+[[task]]
+name = 'reset'
+run = """
+rm -rf node_modules
+find . \
+  -name node_modules \
+  -type d \
+  -exec rm -rv {} + \
+    && find . \
+      -name package-lock.json \
+      -type f \
+      -delete
+"""
