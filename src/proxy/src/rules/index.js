@@ -3,7 +3,7 @@ import csirRule from './_csir.js'
 import hstRule from './_hst.js'
 import deprecatedElasticsearchRule from './_elasticsearch-deprecated.js'
 import elasticsearch714Rule from './_elasticsearch-7.14.js'
-import elasticsearch81Rule from './_elasticsearch-8.1.js'
+import elasticsearch81Rule from './_elasticsearch-8.x.js'
 import saeonGeoServersRule from './_saeon-geoservers.js'
 import saeonGeoServerApp04Rule from './_saeon-geoserver-app04.js'
 import saeonGeoServerApp04Rule2 from './_saeon-geoserver-app04-2.js'
@@ -21,7 +21,7 @@ const beforeSendRequest = async requestDetail => {
       proxiedRequest = csirRule(requestDetail, url)
     } else if (pathname.includes('/hst')) {
       proxiedRequest = hstRule(requestDetail, url)
-    } else if (pathname.includes('/elasticsearch/8.1')) {
+    } else if (pathname.includes('/elasticsearch/8.x')) {
       proxiedRequest = elasticsearch81Rule(requestDetail, url)
     } else if (pathname.includes('/elasticsearch/7.14')) {
       proxiedRequest = elasticsearch714Rule(requestDetail, url)
