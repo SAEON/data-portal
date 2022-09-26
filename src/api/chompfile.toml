@@ -24,6 +24,7 @@ run = 'ncu -u -x es8.1'
 name = 'start'
 env = { NODE_ENV = 'development', TZ = 'utc', NODE_TLS_REJECT_UNAUTHORIZED='0' }
 run = """
+  NODE_TLS_REJECT_UNAUTHORIZED=0 \
   nodemon \
     --ext js,graphql,json \
     --watch ./src \

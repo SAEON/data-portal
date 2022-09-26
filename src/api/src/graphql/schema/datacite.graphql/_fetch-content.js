@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import fetch from 'make-fetch-happen'
 import { differenceInDays } from 'date-fns'
 import { readFile, stat, writeFile } from 'fs'
 import { ExpiredException } from './_custom-exceptions.js'

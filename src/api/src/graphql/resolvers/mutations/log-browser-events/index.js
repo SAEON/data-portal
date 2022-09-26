@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader'
-import fetch from 'node-fetch'
+import fetch from 'make-fetch-happen'
 import { PASSPORT_SSO_SESSION_ID } from '../../../../config/index.js'
 
 const IP_RESOLVER_API_ADDRESS = 'http://ip-api.com/batch'

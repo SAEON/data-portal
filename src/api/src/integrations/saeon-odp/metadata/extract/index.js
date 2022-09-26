@@ -1,6 +1,6 @@
-import fetch from 'node-fetch'
+import fetch from 'make-fetch-happen'
 import { ODP_API_CATALOGUE_ENDPOINT, ODP_INTEGRATION_BATCH_SIZE } from '../../../../config/index.js'
-import tranform from './_transform.js'
+import transform from './_transform.js'
 import authenticate from '../../../../lib/authenticate-with-odp.js'
 
 const iterate = async ({ offset = 0 } = {}) => {
@@ -19,10 +19,14 @@ const iterate = async ({ offset = 0 } = {}) => {
   )
 
   const data = await res.json()
+  
+  if (data?.detail === 'Not authenticated') {
+    throw new Error(JSON.stringify(data))
+  }
 
   return {
     next: () => iterate({ offset: offset + data.length }),
-    data: tranform(data),
+    data: transform(data),
     done: !data?.length,
   }
 }

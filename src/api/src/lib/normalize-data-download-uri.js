@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import fetch from 'make-fetch-happen'
 
 /**
  * Immutable resource links to repository.saeon.ac.za seem to go

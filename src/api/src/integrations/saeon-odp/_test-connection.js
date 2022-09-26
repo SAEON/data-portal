@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import fetch from 'make-fetch-happen'
 import authenticate from '../../lib/authenticate-with-odp.js'
 import { ODP_API_CATALOGUE_ENDPOINT } from '../../config/index.js'
 
