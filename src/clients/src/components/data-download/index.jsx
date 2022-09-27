@@ -30,12 +30,12 @@ const formFields = {
   comments: '',
   ageGroup: 'None',
   allowContact: false,
-  student: false,
+  student: 'NA',
 }
 
 const ageGroups = ['None', '< 18', '19 - 24', '25 - 30', '31 - 40', '> 41']
 
-const yesNo = ['Yes', 'No']
+const yesNo = ['NA', 'Yes', 'No']
 
 export default ({
   doi = undefined,
@@ -127,10 +127,8 @@ export default ({
                   </Typography>
                   <FormGroup>
                     <TextField
-                      value={fields.student ? 'Yes' : 'No'}
-                      onChange={({ target: { value } }) =>
-                        update({ student: value === 'Yes' ? true : false })
-                      }
+                      value={fields.student}
+                      onChange={({ target: { value: student } }) => update({ student })}
                       margin="normal"
                       select
                       helperText="Are you a student?"
@@ -150,25 +148,25 @@ export default ({
                       value={fields.organization}
                       onChange={({ target: { value: organization } }) => update({ organization })}
                       margin="normal"
-                      multiline={fields.student ? true : false}
-                      minRows={fields.student ? 2 : 1}
+                      multiline={fields.student === 'Yes' ? true : false}
+                      minRows={fields.student === 'Yes' ? 2 : 1}
                       helperText={
                         fields.organization === ''
-                          ? fields.student
+                          ? fields.student === 'Yes'
                             ? ''
                             : 'Optional'
-                          : fields.student
+                          : fields.student === 'Yes'
                           ? ''
                           : 'Organisation'
                       }
                       placeholder={
-                        fields.student
+                        fields.student === 'Yes'
                           ? '(Optional) please let us know if you are undergraduate or postgraduate, and which school/university you attend'
                           : 'Organisation'
                       }
                       autoComplete="off"
                       fullWidth
-                      variant={fields.student ? 'outlined' : 'standard'}
+                      variant={fields.student === 'Yes' ? 'outlined' : 'standard'}
                     />
                     <TextField
                       value={fields.emailAddress}
