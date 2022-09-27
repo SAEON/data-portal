@@ -41,22 +41,32 @@ export default [
     label: 'Home',
     to: '/',
     includeInFooter: true,
-    exact: true,
     Icon: HomeIcon,
-    render: () => (
+    element: () => (
       <Transition>
         <HomePage />
       </Transition>
     ),
   },
-
+  {
+    label: 'Record',
+    Icon: undefined,
+    to: '/records/:id',
+    excludeFromNav: true,
+    element: () => {
+      return (
+        <Transition tKey="record">
+          <RecordPage />
+        </Transition>
+      )
+    },
+  },
   {
     label: 'Search SAEON data',
     Icon: SearchIcon,
     includeInFooter: true,
     to: '/records',
-    exact: true,
-    render: () => {
+    element: () => {
       return (
         <Transition tKey="records">
           <RecordsPage {...getUriState()} />
@@ -68,10 +78,9 @@ export default [
     label: 'Usage reports',
     to: '/usage',
     includeInFooter: true,
-    exact: true,
     Icon: UsageIcon,
     requiredPermission: '/usage',
-    render: () => (
+    element: () => (
       <Transition>
         <UsageReportsPage />
       </Transition>
@@ -80,25 +89,12 @@ export default [
   {
     label: 'Data lists',
     to: '/data-lists',
-    exact: true,
     includeInFooter: true,
     Icon: CollectionsIcon,
     requiredPermission: '/data-lists',
-    render: () => (
+    element: () => (
       <Transition>
         <DataListsPage />
-      </Transition>
-    ),
-  },
-  {
-    label: 'Record',
-    Icon: undefined,
-    to: '/records/:id+',
-    exact: true,
-    excludeFromNav: true,
-    render: props => (
-      <Transition tKey="record">
-        <RecordPage id={props.match.params.id} {...props} />
       </Transition>
     ),
   },
@@ -106,10 +102,9 @@ export default [
     label: 'About the data portal',
     Icon: AboutIcon,
     to: '/about',
-    exact: true,
     excludeFromNav: true,
     includeInFooter: true,
-    render: () => (
+    element: () => (
       <Transition>
         <AboutPage />
       </Transition>
@@ -118,9 +113,8 @@ export default [
   {
     label: 'Privacy policy',
     Icon: PrivacyIcon,
-    exact: true,
     group: 'legal',
-    render: () => (
+    element: () => (
       <Transition>
         <PrivacyPolicyPage />
       </Transition>
@@ -133,8 +127,7 @@ export default [
     label: 'Terms of use',
     Icon: TermsIcon,
     group: 'legal',
-    exact: true,
-    render: () => (
+    element: () => (
       <Transition>
         <TermsOfUsePage />
       </Transition>
@@ -148,8 +141,7 @@ export default [
     Icon: DisclaimerIcon,
     group: 'legal',
     to: '/disclaimer',
-    exact: true,
-    render: () => (
+    element: () => (
       <Transition>
         <DisclaimerPage />
       </Transition>
@@ -163,8 +155,7 @@ export default [
     excludeFromNav: true,
     to: '/login',
     includeInFooter: true,
-    exact: true,
-    render: () => (
+    element: () => (
       <Transition>
         <LoginPage />
       </Transition>
@@ -176,8 +167,7 @@ export default [
     to: '/access',
     includeInFooter: true,
     requiredPermission: '/access',
-    exact: true,
-    render: props => (
+    element: props => (
       <Transition tKey={'access'}>
         <AccessPage {...props} />
       </Transition>
@@ -188,8 +178,7 @@ export default [
     Icon: UsersIcon,
     to: '/users',
     excludeFromNav: true,
-    exact: true,
-    render: props => (
+    element: props => (
       <Transition tKey={'users'}>
         <UsersPage {...props} />
       </Transition>
@@ -219,7 +208,7 @@ export default [
     excludeFromNav: true,
     includeInFooter: true,
     to: '/license',
-    render: () => (
+    element: () => (
       <Transition>
         <LicensePage />
       </Transition>

@@ -1,11 +1,12 @@
 import { Suspense } from 'react'
 import Fade from '@mui/material/Fade'
 import Loading from '../loading'
+import { Div } from '../../components/html-tags'
 
 const Fallback = () => (
-  <div style={{ height: 1000 }}>
+  <Div sx={{ height: 1000 }}>
     <Loading />
-  </div>
+  </Div>
 )
 
 export default ({ children, tKey }) => {
@@ -13,9 +14,9 @@ export default ({ children, tKey }) => {
 
   return (
     <Fade key={tKey} in={true}>
-      <div style={{ position: 'relative', height: '100%' }}>
+      <Div sx={{ position: 'relative', height: '100%' }}>
         <Suspense fallback={<Fallback />}>{children}</Suspense>
-      </div>
+      </Div>
     </Fade>
   )
 }

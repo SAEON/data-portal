@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
 import { context as configContext } from '../../../config'
@@ -9,7 +9,7 @@ import Row from '../_row'
 export default ({ subjects }) => {
   const { setGlobal } = useContext(globalContext)
   const { contentBase } = useContext(configContext)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <Row title="Keywords">
@@ -36,7 +36,7 @@ export default ({ subjects }) => {
                     },
                     true
                   )
-                  history.push(`${contentBase}/records`.replace('//', '/'))
+                  navigate(`${contentBase}/records`.replace('//', '/'))
                 }}
                 label={subject.subject.toUpperCase()}
               />

@@ -15,22 +15,24 @@ const config = {
   contentBase: undefined,
 }
 
-const Page = () => (
-  <Suspense fallback={<Loading />}>
-    <App {...config}>
-      <Header
-        {...config}
-        title={`SAEON DATA PORTAL ${
-          DEPLOYMENT_ENV === 'production' ? '' : `${DEPLOYMENT_ENV}.${packageJson.version}`
-        }`}
-        routes={routes}
-      />
-      <SizeContent>
-        <RouteSwitcher routes={routes} />
-      </SizeContent>
-      <Footer routes={routes} />
-    </App>
-  </Suspense>
-)
+const Page = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <App {...config}>
+        <Header
+          {...config}
+          title={`SAEON DATA PORTAL ${
+            DEPLOYMENT_ENV === 'production' ? '' : `${DEPLOYMENT_ENV}.${packageJson.version}`
+          }`}
+          routes={routes}
+        />
+        <SizeContent>
+          <RouteSwitcher routes={routes} />
+        </SizeContent>
+        <Footer routes={routes} />
+      </App>
+    </Suspense>
+  )
+}
 
 mount(Page)

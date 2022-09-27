@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as configContext } from '../../../../../config'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
@@ -9,7 +9,7 @@ import useTheme from '@mui/material/styles/useTheme'
 export default ({ titles, id }) => {
   const theme = useTheme()
   const { contentBase } = useContext(configContext)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <header>
@@ -21,7 +21,7 @@ export default ({ titles, id }) => {
         <Typography
           tabIndex="0"
           component={Link}
-          onClick={() => history.push(`${contentBase}/records/${id}`.replace('//', '/'))}
+          onClick={() => navigate(`${contentBase}/records/${id}`.replace('//', '/'))}
           sx={{
             lineHeight: 1.5,
             cursor: 'pointer',

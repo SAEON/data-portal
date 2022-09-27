@@ -11,11 +11,11 @@ run = 'eslint -c .eslintrc.cjs "src/**/*.{js,jsx}"'
 
 [[task]]
 name = 'ncu'
-run = 'ncu -x react-router,react-router-dom'
+run = 'ncu'
 
 [[task]]
 name = 'ncu:u'
-run = 'ncu -u -x react-router,react-router-dom'
+run = 'ncu -u'
 
 [[task]]
 name = 'start'

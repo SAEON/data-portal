@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from 'mdi-react/SearchIcon'
@@ -27,7 +27,7 @@ const Root = styled('div')(({ theme }) => ({
 }))
 
 export default ({ children, autofocus = true, onFocus, onBlur }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { global, setGlobal } = useContext(globalContext)
   const theme = useTheme()
 
@@ -73,7 +73,7 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
                 if (key === 'Enter') {
                   setGlobal({ text }, false)
                   if (history.location.pathname !== '/records') {
-                    history.push('/records')
+                    navigate('/records')
                   }
                 }
               }}

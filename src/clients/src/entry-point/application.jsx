@@ -13,32 +13,34 @@ import LayoutProvider from '../contexts/layout'
 import ConfigProvider from '../config'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-export default ({ children, ...config }) => (
-  <Router>
-    <ConfigProvider contentBase={config.contentBase || '/'}>
-      <ErrorBoundary>
-        <DetectDevice>
-          <NativeExtensions>
-            <ClientInfoProvider>
-              <CookieConsent>
-                <AuthenticationProvider>
-                  <AuthorizationProvider>
-                    <GlobalProvider>
-                      <ApplicationLogger>
-                        <SnackbarProvider>
-                          <DefaultApplicationNotices>
-                            <LayoutProvider>{children}</LayoutProvider>
-                          </DefaultApplicationNotices>
-                        </SnackbarProvider>
-                      </ApplicationLogger>
-                    </GlobalProvider>
-                  </AuthorizationProvider>
-                </AuthenticationProvider>
-              </CookieConsent>
-            </ClientInfoProvider>
-          </NativeExtensions>
-        </DetectDevice>
-      </ErrorBoundary>
-    </ConfigProvider>
-  </Router>
-)
+export default ({ children, ...config }) => {
+  return (
+    <Router>
+      <ConfigProvider contentBase={config.contentBase || '/'}>
+        <ErrorBoundary>
+          <DetectDevice>
+            <NativeExtensions>
+              <ClientInfoProvider>
+                <CookieConsent>
+                  <AuthenticationProvider>
+                    <AuthorizationProvider>
+                      <GlobalProvider>
+                        <ApplicationLogger>
+                          <SnackbarProvider>
+                            <DefaultApplicationNotices>
+                              <LayoutProvider>{children}</LayoutProvider>
+                            </DefaultApplicationNotices>
+                          </SnackbarProvider>
+                        </ApplicationLogger>
+                      </GlobalProvider>
+                    </AuthorizationProvider>
+                  </AuthenticationProvider>
+                </CookieConsent>
+              </ClientInfoProvider>
+            </NativeExtensions>
+          </DetectDevice>
+        </ErrorBoundary>
+      </ConfigProvider>
+    </Router>
+  )
+}

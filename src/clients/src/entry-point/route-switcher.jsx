@@ -1,11 +1,14 @@
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { useMemo } from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-export default withRouter(({ routes }) => {
+export default ({ routes: _routes }) => {
+  const routes = useMemo(() => _routes.filter(({ element }) => element), [_routes])
+
   return (
-    <Switch key={location.pathname || '/'}>
-      {routes.map(({ label: key, to: path, exact, render }) => (
-        <Route key={key} path={path} exact={exact} render={render} />
-      ))}
-    </Switch>
+    <Routes>
+      {routes.map(({ label, to, element: Element }) => {
+        return <Route key={label} path={to} element={<Element />} />
+      })}
+    </Routes>
   )
-})
+}

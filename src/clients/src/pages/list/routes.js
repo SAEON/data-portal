@@ -35,8 +35,7 @@ export default ({ contentBase = '' }) => {
       label: 'Search SAEON data',
       Icon: SearchIcon,
       to: getPath(contentBase, '/records'),
-      exact: true,
-      render: () => {
+      element: () => {
         return (
           <Transition tKey="records">
             <RecordsPage {...getUriState()} />
@@ -47,9 +46,8 @@ export default ({ contentBase = '' }) => {
     {
       label: 'Home',
       to: getPath(contentBase, '/'),
-      exact: true,
       Icon: HomeIcon,
-      render: () => (
+      element: () => (
         <Transition>
           <HomePage />
         </Transition>
@@ -59,11 +57,10 @@ export default ({ contentBase = '' }) => {
       label: 'Record',
       Icon: undefined,
       to: getPath(contentBase, '/records/:id+'),
-      exact: true,
       excludeFromNav: true,
-      render: props => (
+      element: () => (
         <Transition tKey="record">
-          <RecordPage id={props.match.params.id} {...props} />
+          <RecordPage />
         </Transition>
       ),
     },
@@ -73,8 +70,7 @@ export default ({ contentBase = '' }) => {
       Icon: AboutIcon,
       includeInFooter: true,
       to: getPath(contentBase, '/about'),
-      exact: true,
-      render: () => (
+      element: () => (
         <Transition>
           <AboutPage />
         </Transition>
@@ -83,8 +79,7 @@ export default ({ contentBase = '' }) => {
     {
       label: 'Privacy policy',
       Icon: PrivacyIcon,
-      exact: true,
-      render: () => (
+      element: () => (
         <Transition>
           <PrivacyPolicyPage />
         </Transition>
@@ -97,8 +92,7 @@ export default ({ contentBase = '' }) => {
     {
       label: 'Terms of use',
       Icon: TermsIcon,
-      exact: true,
-      render: () => (
+      element: () => (
         <Transition>
           <TermsOfUsePage />
         </Transition>
@@ -113,8 +107,7 @@ export default ({ contentBase = '' }) => {
       group: 'legal',
       Icon: DisclaimerIcon,
       to: getPath(contentBase, '/disclaimer'),
-      exact: true,
-      render: () => (
+      element: () => (
         <Transition>
           <DisclaimerPage />
         </Transition>
@@ -146,7 +139,7 @@ export default ({ contentBase = '' }) => {
       excludeFromNav: true,
       includeInFooter: true,
       to: '/license',
-      render: () => (
+      element: () => (
         <Transition>
           <LicensePage />
         </Transition>

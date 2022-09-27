@@ -1,5 +1,6 @@
 import { createContext, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
+import { Div } from '../../components/html-tags'
 
 export const context = createContext()
 
@@ -34,16 +35,16 @@ export const SizeContent = ({ children, height = undefined, style = {} }) => {
     : { minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)` }
 
   return (
-    <div
+    <Div
       id="size-content"
       ref={setContentRef}
-      style={{
+      sx={{
         position: 'relative',
         ...css,
         ...style,
       }}
     >
       {children}
-    </div>
+    </Div>
   )
 }

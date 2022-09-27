@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
+import { useParams } from 'react-router-dom'
 import Loading from '../../components/loading'
 import FieldView from './field-view'
 import Header from './header'
@@ -10,7 +11,8 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Hidden from '@mui/material/Hidden'
 
-export default ({ id }) => {
+export default () => {
+  const { id } = useParams()
   const [codeView, updateCodeView] = useState(false)
   const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
   const theme = useTheme()
