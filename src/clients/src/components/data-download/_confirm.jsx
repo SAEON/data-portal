@@ -47,15 +47,32 @@ export default memo(
                 ...Object.fromEntries(
                   Object.entries(form.current).map(([field, value]) => [
                     field,
-                    value === '' ? null : value,
+                    value === ''
+                      ? null
+                      : field === 'student'
+                      ? value === 'NA'
+                        ? null
+                        : value === 'Yes'
+                        ? true
+                        : false
+                      : value,
                   ])
                 ),
               }
+
+              console.log(_form)
 
               const shouldSubmit = Object.entries(formFields).reduce((a, [field]) => {
                 if (field === 'ageGroup' && _form[field] === 'None') {
                   return a
                 }
+
+                if (field === 'student') {
+                  if (_form[field] === true || _form[field] === false) {
+                    return true
+                  }
+                }
+
                 return a || Boolean(_form[field])
               }, false)
 
