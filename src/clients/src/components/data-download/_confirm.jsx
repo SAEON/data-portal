@@ -6,76 +6,86 @@ import { context as globalContext } from '../../contexts/global'
 import { gql, useMutation } from '@apollo/client'
 import Button from '@mui/material/Button'
 
-export default memo(({ id, doi, setOpen, downloadURL, resourceDescription, form, disabled }) => {
-  const [ref, setRef] = useState(null)
-  const { global } = useContext(globalContext)
-  const { referrer } = global
-  const theme = useTheme()
+export default memo(
+  ({ formFields, id, doi, setOpen, downloadURL, resourceDescription, form, disabled }) => {
+    const [ref, setRef] = useState(null)
+    const { global } = useContext(globalContext)
+    const { referrer } = global
+    const theme = useTheme()
 
-  const [submitDataDownloadForm] = useMutation(
-    gql`
-      mutation ($input: DataDownloadFormSubmission!) {
-        submitDataDownloadForm(input: $input)
-      }
-    `
-  )
+    const [submitDataDownloadForm] = useMutation(
+      gql`
+        mutation ($input: DataDownloadFormSubmission!) {
+          submitDataDownloadForm(input: $input)
+        }
+      `
+    )
 
-  return (
-    <span ref={el => setRef(el)}>
-      {ref && (
-        <RegisterEventLog
-          event="click"
-          target={ref}
-          handle={e => {
-            e.stopPropagation()
-            console.gql({
-              clientVersion: packageJson.version,
-              type: 'download',
-              referrer,
-              createdAt: new Date(),
-              info: {
-                pathname: window.location.pathname,
-                uri: downloadURL,
-                odpId: id,
-                doi,
-              },
-            })
-
-            const _form = {
-              recordId: doi || id,
-              ...Object.fromEntries(
-                Object.entries(form.current).map(([field, value]) => [
-                  field,
-                  value === '' ? null : value,
-                ])
-              ),
-            }
-            if (_form.emailAddress || _form.organization) {
-              submitDataDownloadForm({
-                variables: {
-                  input: { ..._form },
+    return (
+      <span ref={el => setRef(el)}>
+        {ref && (
+          <RegisterEventLog
+            event="click"
+            target={ref}
+            handle={e => {
+              e.stopPropagation()
+              console.gql({
+                clientVersion: packageJson.version,
+                type: 'download',
+                referrer,
+                createdAt: new Date(),
+                info: {
+                  pathname: window.location.pathname,
+                  uri: downloadURL,
+                  odpId: id,
+                  doi,
                 },
               })
-            }
 
-            setOpen(false)
-          }}
-        >
-          <Button
-            size="small"
-            variant="text"
-            disabled={disabled}
-            download={resourceDescription || downloadURL || 'Unknown resource'}
-            style={{ display: 'block', float: 'right', margin: theme.spacing(2) }}
-            href={downloadURL}
-            aria-label="Agree to terms and download resource"
-            target="_blank"
-            rel="noopener noreferrer"
+              const _form = {
+                recordId: doi || id,
+                ...Object.fromEntries(
+                  Object.entries(form.current).map(([field, value]) => [
+                    field,
+                    value === '' ? null : value,
+                  ])
+                ),
+              }
+
+              const shouldSubmit = Object.entries(formFields).reduce((a, [field]) => {
+                if (field === 'ageGroup' && _form[field] === 'None') {
+                  return a
+                }
+                return a || Boolean(_form[field])
+              }, false)
+
+              if (shouldSubmit) {
+                submitDataDownloadForm({
+                  variables: {
+                    input: { ..._form },
+                  },
+                })
+              }
+
+              setOpen(false)
+            }}
           >
-            I AGREE TO THE TERMS OF USE
-          </Button>
-        </RegisterEventLog>
-      )}
-    </span>
-  )
-})
+            <Button
+              size="small"
+              variant="text"
+              disabled={disabled}
+              download={resourceDescription || downloadURL || 'Unknown resource'}
+              style={{ display: 'block', float: 'right', margin: theme.spacing(2) }}
+              href={downloadURL}
+              aria-label="Agree to terms and download resource"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              I AGREE TO THE TERMS OF USE
+            </Button>
+          </RegisterEventLog>
+        )}
+      </span>
+    )
+  }
+)

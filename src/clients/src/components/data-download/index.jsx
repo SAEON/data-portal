@@ -17,8 +17,25 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import { useTheme } from '@mui/material/styles'
+import MenuItem from '@mui/material/MenuItem'
 
 const PLACEHOLDER_URI = 'http://nothing.com'
+
+const formFields = {
+  emailAddress: '',
+  organization: '',
+  race: '',
+  gender: '',
+  location: '',
+  comments: '',
+  ageGroup: 'None',
+  allowContact: false,
+  student: false,
+}
+
+const ageGroups = ['None', '< 18', '19 - 24', '25 - 30', '31 - 40', '> 41']
+
+const yesNo = ['Yes', 'No']
 
 export default ({
   doi = undefined,
@@ -83,21 +100,15 @@ export default ({
       </Tooltip>
 
       <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
-        <QuickForm
-          effects={[fields => (form.current = { ...fields })]}
-          emailAddress=""
-          organization=""
-          comments=""
-          allowContact={false}
-        >
-          {(update, { emailAddress, organization, allowContact, comments }) => {
-            const isValidEmailAddress = EMAIL_REGEX.test(emailAddress)
-            const formIsValid = emailAddress === '' ? true : isValidEmailAddress
+        <QuickForm effects={[fields => (form.current = { ...fields })]} {...formFields}>
+          {(update, fields) => {
+            const isValidEmailAddress = EMAIL_REGEX.test(fields.emailAddress)
+            const formIsValid = fields.emailAddress === '' ? true : isValidEmailAddress
 
             return (
               <>
                 <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
-                <DialogContent>
+                <DialogContent dividers>
                   <Typography gutterBottom variant="body2">
                     These data are made available with the express understanding that any such use
                     will properly acknowledge the originator(s) and publisher and cite the
@@ -111,38 +122,125 @@ export default ({
                     under control of the third-party provider.
                   </Typography>
                   <Typography style={{ marginTop: theme.spacing(2) }} gutterBottom variant="body2">
-                    Please (optionally) fill in the form below to help us improve our service.
+                    If you are open to filling in the form below, we appreciate it and would use the
+                    information to improve our service.
                   </Typography>
                   <FormGroup>
                     <TextField
-                      value={emailAddress}
+                      value={fields.student ? 'Yes' : 'No'}
+                      onChange={({ target: { value } }) =>
+                        update({ student: value === 'Yes' ? true : false })
+                      }
+                      margin="normal"
+                      select
+                      helperText="Are you a student?"
+                      fullWidth
+                      variant="standard"
+                    >
+                      {[
+                        ...yesNo.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        )),
+                      ]}
+                    </TextField>
+
+                    <TextField
+                      value={fields.organization}
+                      onChange={({ target: { value: organization } }) => update({ organization })}
+                      margin="normal"
+                      multiline={fields.student ? true : false}
+                      minRows={fields.student ? 2 : 1}
+                      helperText={
+                        fields.organization === ''
+                          ? fields.student
+                            ? ''
+                            : 'Optional'
+                          : fields.student
+                          ? ''
+                          : 'Organisation'
+                      }
+                      placeholder={
+                        fields.student
+                          ? '(Optional) please let us know if you are undergraduate or postgraduate, and which school/university you attend'
+                          : 'Organisation'
+                      }
+                      autoComplete="off"
+                      fullWidth
+                      variant={fields.student ? 'outlined' : 'standard'}
+                    />
+                    <TextField
+                      value={fields.emailAddress}
                       onChange={({ target: { value: emailAddress } }) => update({ emailAddress })}
                       margin="normal"
                       helperText={
-                        emailAddress === ''
-                          ? '(Optional)'
+                        fields.emailAddress === ''
+                          ? 'Optional'
                           : isValidEmailAddress
                           ? 'Thank you!'
                           : 'Email address must be valid'
                       }
                       placeholder="Email Address"
                       fullWidth
-                      error={emailAddress !== '' && !isValidEmailAddress}
+                      error={fields.emailAddress !== '' && !isValidEmailAddress}
                       variant="standard"
                     />
                     <TextField
-                      value={organization}
-                      onChange={({ target: { value: organization } }) => update({ organization })}
+                      value={fields.ageGroup}
+                      onChange={({ target: { value: ageGroup } }) => update({ ageGroup })}
                       margin="normal"
-                      helperText={organization === '' ? '(Optional)' : 'Organisation'}
-                      placeholder="Organisation"
+                      select
+                      helperText={fields.ageGroup === '' ? 'Optional' : 'Age group'}
+                      defaultValue="None"
+                      autoComplete="off"
+                      fullWidth
+                      variant="standard"
+                    >
+                      {[
+                        ...ageGroups.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        )),
+                      ]}
+                    </TextField>
+                    <TextField
+                      value={fields.race}
+                      onChange={({ target: { value: race } }) => update({ race })}
+                      margin="normal"
+                      helperText={fields.race === '' ? 'Optional' : 'Race'}
+                      placeholder="Race"
+                      autoComplete="off"
                       fullWidth
                       variant="standard"
                     />
                     <TextField
-                      value={comments}
+                      value={fields.gender}
+                      onChange={({ target: { value: gender } }) => update({ gender })}
+                      margin="normal"
+                      helperText={fields.gender === '' ? 'Optional' : 'Gender'}
+                      placeholder="Gender"
+                      autoComplete="off"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <TextField
+                      value={fields.location}
+                      onChange={({ target: { value: location } }) => update({ location })}
+                      margin="normal"
+                      placeholder="Where do you live/work from?"
+                      fullWidth
+                      autoComplete="off"
+                      multiline
+                      minRows={2}
+                      variant="outlined"
+                    />
+                    <TextField
+                      value={fields.comments}
                       onChange={({ target: { value: comments } }) => update({ comments })}
                       margin="normal"
+                      autoComplete="off"
                       placeholder="General comments"
                       multiline
                       minRows={4}
@@ -153,15 +251,15 @@ export default ({
                       <FormControlLabel
                         control={
                           <Checkbox
-                            disabled={!emailAddress || !isValidEmailAddress}
-                            checked={allowContact}
+                            disabled={!fields.emailAddress || !isValidEmailAddress}
+                            checked={fields.allowContact}
                             onChange={({ target: { checked: allowContact } }) =>
                               update({ allowContact })
                             }
                           />
                         }
                         label={
-                          allowContact
+                          fields.allowContact
                             ? `Wonderful! We'll be in touch`
                             : 'May we follow up with you?'
                         }
@@ -171,6 +269,7 @@ export default ({
                 </DialogContent>
                 <DialogActions>
                   <ConfirmDownload
+                    formFields={formFields}
                     id={id}
                     doi={doi}
                     disabled={!formIsValid}

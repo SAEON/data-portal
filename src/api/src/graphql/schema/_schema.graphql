@@ -113,8 +113,13 @@ input DataDownloadFormSubmission {
   recordId: ID!
   emailAddress: Email
   organization: String
+  race: String
+  gender: String
+  location: String
+  ageGroup: String
   comments: String
   allowContact: Boolean
+  student: Boolean
 }
 
 type Mutation {
