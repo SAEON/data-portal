@@ -6,11 +6,12 @@ import ListItemText from '@mui/material/ListItemText'
 
 export default forwardRef(({ onClick, label, to, Icon, href }, ref) => {
   const match = useMatch(to)
-  const isActive = Boolean(match)
 
   return (
     <MenuItem
       ref={ref}
+      dense
+      disabled={Boolean(match)}
       component={href ? 'a' : Link}
       rel={href && 'noopener noreferrer'}
       target={href && '_blank'}
@@ -18,8 +19,19 @@ export default forwardRef(({ onClick, label, to, Icon, href }, ref) => {
       to={to || ''}
       href={href}
     >
-      <ListItemIcon>{<Icon color={isActive ? 'primary' : 'inherit'} />}</ListItemIcon>
-      <ListItemText color={isActive ? 'primary' : 'inherit'} primary={label} />
+      <ListItemIcon
+        sx={{
+          color: theme => (match ? theme.palette.primary.light : theme.palette.primary.main),
+        }}
+      >
+        <Icon />
+      </ListItemIcon>
+      <ListItemText
+        sx={{
+          color: theme => (match ? theme.palette.primary.light : theme.palette.primary.main),
+        }}
+        primary={label}
+      />
     </MenuItem>
   )
 })
