@@ -25,12 +25,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Overview
-
-In summary, this software facilitates:
-
-- Searching metadata records
-- Previewing WMS maps of datasets when metadata records support this
-- Downloading resources linked to by the metadata records
+Search SAEON's data catalogue, preview datasets on a map, and download data.
 
 ## The stack
 
