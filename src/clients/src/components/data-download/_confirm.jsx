@@ -45,24 +45,32 @@ export default memo(
               const _form = {
                 recordId: doi || id,
                 ...Object.fromEntries(
-                  Object.entries(form.current).map(([field, value]) => [
-                    field,
-                    value === ''
-                      ? null
-                      : field === 'student'
-                      ? value === 'NA'
+                  Object.entries(form.current)
+                    .map(([field, value]) => [
+                      field,
+                      value === ''
                         ? null
-                        : value === 'Yes'
-                        ? true
-                        : false
-                      : value,
-                  ])
+                        : field === 'student'
+                        ? value === 'NA'
+                          ? null
+                          : value === 'Yes'
+                          ? true
+                          : false
+                        : field === 'ageGroup'
+                        ? value === 'None'
+                          ? null
+                          : value
+                        : value,
+                    ])
+                    .filter(([, value]) => value !== null)
                 ),
               }
 
-              console.log(_form)
-
               const shouldSubmit = Object.entries(formFields).reduce((a, [field]) => {
+                if (field === 'recordId') {
+                  return a
+                }
+
                 if (field === 'ageGroup' && _form[field] === 'None') {
                   return a
                 }
