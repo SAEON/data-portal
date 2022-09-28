@@ -18,5 +18,4 @@ export default {
   Logs,
   Lists,
   DataDownloadFormSubmissions,
-  Atlases: { name: 'atlases' },
 }

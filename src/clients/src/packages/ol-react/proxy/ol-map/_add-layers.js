@@ -16,7 +16,7 @@ export default (map, rerender) => {
           throw new Error(
             `ERROR: Cannot add layer with ID ${layer.get(
               'id'
-            )} to the atlas since a layer with that ID already exists`
+            )} to the map since a layer with that ID already exists`
           )
         } else {
           map.setLayerGroup(

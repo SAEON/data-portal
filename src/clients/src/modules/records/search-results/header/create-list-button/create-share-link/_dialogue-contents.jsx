@@ -16,27 +16,23 @@ import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../config'
  * fire every time the dialogue is opened
  */
 export default ({ tabIndex, search = undefined }) => {
-  const isAtlasPage = window.location.pathname.includes('atlas')
-
   const { global } = useContext(globalContext)
   const [saveList, { loading, error, data }] = useMutation(gql`
-    mutation($search: JSON!, $createdBy: String!) {
-      ${isAtlasPage ? 'createAtlas' : 'saveList'}(search: $search, createdBy: $createdBy) {
+    mutation ($search: JSON!, $createdBy: String!) {
+      saveList(search: $search, createdBy: $createdBy) {
         id
       }
     }
   `)
 
   useEffect(() => {
-    if (!isAtlasPage) {
-      saveList({
-        variables: {
-          createdBy: `${packageJson.name} v${packageJson.version}`,
-          search: search || global,
-        },
-      })
-    }
-  }, [isAtlasPage, global, saveList, search])
+    saveList({
+      variables: {
+        createdBy: `${packageJson.name} v${packageJson.version}`,
+        search: search || global,
+      },
+    })
+  }, [global, saveList, search])
 
   const id = data?.saveList.id || undefined
   const uri = `${CLIENTS_PUBLIC_ADDRESS}/list/records?disableSidebar=true&showSearchBar=true&search=${id}`
@@ -57,7 +53,7 @@ export default ({ tabIndex, search = undefined }) => {
       </div>
     </Fade>
   ) : (
-    <Fade in={Boolean(data || isAtlasPage)} key="data">
+    <Fade in={Boolean(data)} key="data">
       <div>
         <TabPanel value={tabIndex} index={0}>
           <Link target="_blank" rel="noopener noreferrer" href={uri}>

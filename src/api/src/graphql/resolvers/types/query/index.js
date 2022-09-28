@@ -1,7 +1,6 @@
 import catalogue from '../../queries/catalogue/index.js'
 import list from '../../queries/list/index.js'
 import lists from '../../queries/lists/index.js'
-import atlas from '../../queries/atlas/index.js'
 import roles from '../../queries/roles/index.js'
 import permissions from '../../queries/permissions/index.js'
 import user from '../../queries/user/index.js'
@@ -16,7 +15,6 @@ export default {
   catalogue,
   list,
   lists: a({ permission: PERMISSIONS['lists:view'] })(lists),
-  atlas,
   downloadsReport: a({ permission: PERMISSIONS['site-analytics:view'] })(downloadsReport),
   roles: a({ permission: PERMISSIONS['roles:view'] })(roles),
   user: async (...args) =>

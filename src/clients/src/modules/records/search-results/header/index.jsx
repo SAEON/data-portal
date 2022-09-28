@@ -51,7 +51,7 @@ export default ({
 
         <span style={{ marginLeft: 'auto' }} />
 
-        {/* ATLAS */}
+        {/* AUTHENTICATED */}
         {isAuthenticated && (
           <Hidden smDown>
             <Suspense fallback={<LoadingCircular />}>

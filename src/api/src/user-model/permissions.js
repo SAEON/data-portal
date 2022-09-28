@@ -27,10 +27,6 @@ export default Object.freeze({
     name: 'site-analytics:view',
     description: 'View catalogue deployment analytics',
   },
-  'atlas:create': {
-    name: 'atlas:create',
-    description: 'Create an atlas to view SAEON GeoServer maps',
-  },
   'users:view': {
     name: 'users:view',
     description: 'View all user details',

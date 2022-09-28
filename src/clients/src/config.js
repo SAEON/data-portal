@@ -13,8 +13,6 @@ export const CURATOR_CONTACT = process.env.CURATOR_CONTACT || 'curation@saeon.nr
 
 export const TECHNICAL_CONTACT = process.env.TECHNICAL_CONTACT || 'development@saeon.nrf.ac.za'
 
-export const CATALOGUE_CLIENT_MAX_ATLAS_LAYERS = 1000
-
 export const API_ADDRESS = process.env.API_ADDRESS || 'http://localhost:3000'
 
 export const PUBLIC_HTTP_ADDRESS = `${API_ADDRESS}/http`
