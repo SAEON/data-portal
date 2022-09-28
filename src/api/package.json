@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/SAEON/catalogue/tree/master/src/@saeon/api#readme",
   "devDependencies": {
-    "@babel/core": "^7.19.1",
+    "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/eslint-plugin": "^7.19.1",
     "eslint": "^8.24.0",
