@@ -12,7 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import Hidden from '@mui/material/Hidden'
 
 export default () => {
-  const { id } = useParams()
+  const id = useParams()['*']
   const [codeView, updateCodeView] = useState(false)
   const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
   const theme = useTheme()

@@ -51,7 +51,7 @@ export default [
   {
     label: 'Record',
     Icon: undefined,
-    to: '/records/:id',
+    to: '/records/*',
     excludeFromNav: true,
     element: () => {
       return (

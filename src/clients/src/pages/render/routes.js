@@ -34,7 +34,7 @@ export default ({ contentBase }) => {
     {
       label: 'Record',
       Icon: undefined,
-      to: getPath(contentBase, '/records/:id'),
+      to: getPath(contentBase, '/records/*'),
       excludeFromNav: true,
       element: () => (
         <Transition tKey="record">
