@@ -2,13 +2,9 @@ import { useContext } from 'react'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
-import { useTheme } from '@mui/material/styles'
-import { Link as RouterLink } from 'react-router-dom'
-import Link from '@mui/material/Link'
-import { Div } from '../../components/html-tags'
+import { Link } from './_components'
 
 export default ({ routes }) => {
-  const theme = useTheme()
   const { hasPermission } = useContext(authorizationContext)
 
   return (
@@ -30,35 +26,9 @@ export default ({ routes }) => {
 
             return true
           })
-          .map(({ label, Icon, href, to }) => (
-            <Grid item xs={12} key={label}>
-              <Div
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Icon size={18} />
-                <Typography
-                  component={({ style, ...otherProps }) => (
-                    <Link
-                      {...otherProps}
-                      style={{ ...style, color: 'white', marginLeft: theme.spacing(1) }}
-                      to={href ? undefined : to}
-                      href={href}
-                      rel={href && 'noopener noreferrer'}
-                      target={href && '_blank'}
-                      component={href ? 'a' : RouterLink}
-                      key={label}
-                    >
-                      {label}
-                    </Link>
-                  )}
-                  variant="overline"
-                >
-                  {label}
-                </Typography>
-              </Div>
+          .map(props => (
+            <Grid item xs={12} key={props.label}>
+              <Link {...props} />
             </Grid>
           ))}
       </Grid>

@@ -8,30 +8,13 @@ run = 'ncu'
 name = 'ncu:u'
 run = 'ncu -u'
 
-# START SCRIPTS
-
-[[task]]
-name = 'start:api'
-run = 'chomp start -c src/api/chompfile.toml'
-
-[[task]]
-name = 'start:clients'
-run = 'chomp start -c src/clients/chompfile.toml'
-
-[[task]]
-name = 'start:proxy'
-run = 'chomp start -c src/proxy/chompfile.toml'
-
 # REPOSITORY TOOLING
 
 [[task]]
 name = 'doc'
 run = '''
   doctoc README.md
-  doctoc src/clients/README.md
-  doctoc src/api/README.md
-  doctoc src/proxy/README.md
-  doctoc src/clients/tests/README.md
+  doctoc src/**/README.md
 '''
 
 [[task]]
@@ -59,7 +42,6 @@ name = 'lint'
 deps = [
   'lint:api',
   'lint:client',
-  'lint:proxy'
 ]
 
 [[task]]
@@ -70,50 +52,12 @@ run = 'chomp lint -c src/api/chompfile.toml'
 name = 'lint:client'
 run = 'chomp lint -c src/clients/chompfile.toml'
 
-[[task]]
-name = 'lint:proxy'
-run = 'chomp lint -c src/proxy/chompfile.toml'
-
 # DEPENDENCY MANAGEMNT
 
 [[task]]
 name = 'clean-deps'
 run = 'find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete'
 
-[[task]]
-name = 'ncu:all'
-run = '''
-  chomp ncu
-  chomp ncu -c src/api/chompfile.toml
-  chomp ncu -c src/clients/chompfile.toml
-  chomp ncu -c src/proxy/chompfile.toml
-'''
-
-[[task]]
-name = 'ncu-u:all'
-run = '''
-  chomp ncu:u
-  chomp ncu:u -c src/api/chompfile.toml
-  chomp ncu:u -c src/clients/chompfile.toml
-  chomp ncu:u -c src/proxy/chompfile.toml
-'''
-
-[[task]]
-name = 'deps:install'
-run = '''
-  npm install
-  npm --prefix src/api install
-  npm --prefix src/clients install --force
-  npm --prefix src/proxy install
-  npm --prefix src/packages/cli-tools install
-  npm --prefix src/packages/graphql-iterator install --force
-  npm --prefix src/packages/logger install
-'''
-
-[[task]]
-name = 'deps:update'
-serial = true
-deps = ['ncu-u:all', 'deps:install']
 
 # PACKAGES
 
@@ -124,21 +68,3 @@ run = '''
   chomp build -c src/packages/graphql-iterator/chompfile.toml
   chomp build -c src/packages/logger/chompfile.toml
 '''
-
-[[task]]
-name = 'pkgs:publish:major'
-env = { TC='utc' }
-deps = ['pkgs:build']
-run = 'node scripts/publish-all.js -s major'
-
-[[task]]
-name = 'pkgs:publish:minor'
-env = { TC='utc' }
-deps = ['pkgs:build']
-run = 'node scripts/publish-all.js -s minor'
-
-[[task]]
-name = 'pkgs:publish:patch'
-env = { TC='utc' }
-deps = ['pkgs:build']
-run = 'node scripts/publish-all.js -s patch'
