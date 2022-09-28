@@ -132,7 +132,6 @@ jobs:
             TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=production
             PROXY_ADDRESS=https://proxy.saeon.ac.za
-            SUBDOMAIN_APP_ENTRIES=ocims
             NGINX_SERVER_BLOCK=nginx/clients-internal.conf
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -182,7 +181,6 @@ jobs:
             CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}
             TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             PROXY_ADDRESS=https://proxy.saeon.ac.za
-            SUBDOMAIN_APP_ENTRIES=ocims
             NGINX_SERVER_BLOCK=nginx/clients-public.conf
           push: true
           tags: ${{ steps.meta.outputs.tags }}
