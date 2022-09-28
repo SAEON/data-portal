@@ -17,7 +17,7 @@ export const API_ADDRESS = process.env.API_ADDRESS || 'http://localhost:3000'
 
 export const PUBLIC_HTTP_ADDRESS = `${API_ADDRESS}/http`
 
-export const PROXY_ADDRESS = process.env.PROXY_ADDRESS || 'http://localhost:8001'
+export const PROXY_ADDRESS = process.env.PROXY_ADDRESS || 'https://proxy.saeon.ac.za'
 
 export const PUBLIC_GQL_ADDRESS = `${API_ADDRESS}/graphql`
 

@@ -1,12 +1,11 @@
 {
-  "eslint.workingDirectories": ["src/api", "src/proxy", "src/clients", "src/packages/quick-form"],
+  "eslint.workingDirectories": ["src/api", "src/clients"],
   "cSpell.words": [
     "abortcontroller",
     "adduser",
     "aggs",
     "ahocevar",
     "allowfullscreen",
-    "anyproxy",
     "apologise",
     "appbar",
     "appleboy",

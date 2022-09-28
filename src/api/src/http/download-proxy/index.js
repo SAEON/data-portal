@@ -10,7 +10,7 @@
  * user
  */
 
- import fetch from 'make-fetch-happen'
+import fetch from 'make-fetch-happen'
 import { URL } from 'url'
 import { CURATOR_CONTACT, TECHNICAL_CONTACT } from '../../config/index.js'
 import htmlTemplate from './html.js'

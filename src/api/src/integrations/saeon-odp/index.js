@@ -2,7 +2,7 @@ import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../config/index.js'
 import testConnection from './_test-connection.js'
 import { performance } from 'perf_hooks'
 import { client } from '../../elasticsearch/index.js'
-import {ODP_ADDRESS} from '../../config/index.js'
+import { ODP_ADDRESS } from '../../config/index.js'
 import metadata from './metadata/index.js'
 
 let lock = false

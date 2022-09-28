@@ -19,7 +19,7 @@ const iterate = async ({ offset = 0 } = {}) => {
   )
 
   const data = await res.json()
-  
+
   if (data?.detail === 'Not authenticated') {
     throw new Error(JSON.stringify(data))
   }

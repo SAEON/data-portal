@@ -1,8 +1,8 @@
 version: '3.8'
 
 networks:
-  sdp_next:
-    name: sdp_next
+  sdp_stable:
+    name: sdp_stable
     driver: overlay
     attachable: true
 
@@ -13,31 +13,6 @@ volumes:
     driver: local
 
 services:
-  proxy:
-    image: $PROXY_IMAGE
-    deploy:
-      replicas: 1
-      rollback_config:
-        parallelism: 0
-      update_config:
-        parallelism: 0
-        order: start-first
-        failure_action: rollback
-      restart_policy:
-        condition: any
-        delay: 30s
-    environment:
-      ELASTICSEARCH_NEXT_ADDRESS: http://next.elasticsearch.saeon.int
-      ELASTICSEARCH_7_14_ADDRESS: http://7.14.elasticsearch.saeon.int
-      ELASTICSEARCH_8_1_ADDRESS: http://8.1.elasticsearch.saeon.int
-      TZ: utc
-      NODE_ENV: production
-    ports:
-      - 6001:8001
-      - 6002:8002
-    networks:
-      - sdp_next
-
   api:
     image: $API_IMAGE
     deploy:
@@ -52,27 +27,27 @@ services:
         condition: any
         delay: 30s
     environment:
-      ALLOWED_ORIGINS: https://catalogue.saeon.dvn
-      API_ADDRESS: https://api.catalogue.saeon.dvn
+      ALLOWED_ORIGINS: https://catalogue.saeon.ac.za
+      API_ADDRESS: https://api.catalogue.saeon.ac.za
       APP_KEY: $APP_KEY
       CURATOR_CONTACT: $CURATOR_CONTACT
       DEFAULT_ADMIN_EMAIL_ADDRESSES: $DEFAULT_ADMIN_EMAIL_ADDRESSES
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: $DEFAULT_SYSADMIN_EMAIL_ADDRESSES
+      SAEON_ODP_INTEGRATION_SCHEDULE: '0 0 3 * * *'
       DEPLOYMENT_ENV: production
-      DOCKER_DATA_VOLUME: sdp_next_data
-      DOCKER_NETWORK: sdp_next
-      DOCKER_TMP_VOLUME: sdp_next_tmp
-      ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
-      HOSTNAME: https://catalogue.saeon.dvn
+      DOCKER_DATA_VOLUME: sdp_stable_data
+      DOCKER_NETWORK: sdp_stable
+      DOCKER_TMP_VOLUME: sdp_stable_tmp
+      ELASTICSEARCH_ADDRESS: http://8.x.elasticsearch.saeon.int
+      HOSTNAME: https://catalogue.saeon.ac.za
       LOG_QUERY_DETAILS: 'false'
-      SAEON_ODP_INTEGRATION_SCHEDULE: '0 0 2 * * *'
-      MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
+      MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27217
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
-      MONGO_DB: sdp_next
+      MONGO_DB: sdp_stable
       NODE_ENV: production
       NODE_TLS_REJECT_UNAUTHORIZED: 0
-      ODP_ADDRESS: https://odp.saeon.dvn
+      ODP_ADDRESS: https://odp.saeon.ac.za
       ODP_AUTH_SCOPES: 'ODP.Catalogue'
       ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
       ODP_FILTER_PATH: odp-filter.js
@@ -82,12 +57,13 @@ services:
       TECHNICAL_CONTACT: $TECHNICAL_CONTACT
       TZ: utc
     ports:
-      - 6003:3000
+      - 7002:3000
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - tmp:/tmp/sdp-data
       - data:/var/lib/sdp-data
     networks:
-      - sdp_next
+      - sdp_stable
 
   clients_internal:
     image: $INTERNAL_CLIENTS_IMAGE
@@ -103,9 +79,9 @@ services:
         condition: any
         delay: 30s
     ports:
-      - 6005:80
+      - 6015:80
     networks:
-      - sdp_next
+      - sdp_stable
 
   clients_public:
     image: $PUBLIC_CLIENTS_IMAGE
@@ -121,6 +97,6 @@ services:
         condition: any
         delay: 30s
     ports:
-      - 6006:80
+      - 7003:80
     networks:
-      - sdp_next
+      - sdp_stable

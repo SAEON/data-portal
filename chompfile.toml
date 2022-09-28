@@ -1,5 +1,7 @@
 version = 0.1
 
+extensions = ['chomp@0.1:prettier']
+
 [[task]]
 name = 'ncu'
 run = 'ncu'
@@ -31,7 +33,12 @@ run = 'husky install'
 
 [[task]]
 name = 'prettier'
-run = 'prettier --write "./**/*.@(js|jsx|json|mjs|cjs|graphql|yml)"'
+template = 'prettier'
+[task.template-options]
+ignore-path = '.prettierignore'
+files = 'src/**/*.@(js|jsx|json|mjs|cjs|graphql|yml)'
+loglevel = 'warn'
+config = '.prettierrc'
 
 [[task]]
 name = 'prettier:changed'
