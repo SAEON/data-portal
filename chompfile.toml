@@ -43,35 +43,3 @@ config = '.prettierrc'
 [[task]]
 name = 'prettier:changed'
 run = 'pretty-quick'
-
-[[task]]
-name = 'lint'
-deps = [
-  'lint:api',
-  'lint:client',
-]
-
-[[task]]
-name = 'lint:api'
-run = 'chomp lint -c src/api/chompfile.toml'
-
-[[task]]
-name = 'lint:client'
-run = 'chomp lint -c src/clients/chompfile.toml'
-
-# DEPENDENCY MANAGEMNT
-
-[[task]]
-name = 'clean-deps'
-run = 'find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete'
-
-
-# PACKAGES
-
-[[task]]
-name = 'pkgs:build'
-run = '''
-  chomp build -c src/packages/cli-tools/chompfile.toml
-  chomp build -c src/packages/graphql-iterator/chompfile.toml
-  chomp build -c src/packages/logger/chompfile.toml
-'''

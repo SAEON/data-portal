@@ -7,7 +7,6 @@
 - [Start the service](#start-the-service)
   - [Endpoints](#endpoints)
 - [Environment configuration](#environment-configuration)
-- [PostGIS configuration](#postgis-configuration)
 - [ODP integration configuration](#odp-integration-configuration)
   - [ODP integration](#odp-integration)
 - [Docker](#docker)
@@ -18,9 +17,9 @@
 Some configuration is required (refer to "Environment configuration" below). After adding an appropriate .env file, control the service via NPM.
 
 ```sh
-# From the API service directory root
+# From the /src/api folder
 npm install
-npm start
+chomp --watch
 ```
 
 ## Endpoints
@@ -34,15 +33,6 @@ Default configuration values can be found in [src/config/index.js](src/config/in
 # src/api/.env
 ODP_CLIENT_SECRET=<some secret>
 DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of email addresses"
-```
-
-# PostGIS configuration
-Make sure you are logged in by navigating to `/login`. Then navigate to `/graphql`. Run the following mutation
-
-```graphql
-mutation {
-  configureDefaultPostGISLayers
-}
 ```
 
 # ODP integration configuration
@@ -69,32 +59,23 @@ export default (record) => {
 ```
 
 ## ODP integration
-Make sure you are logged in by navigating to `/login`. Then navigate to `/graphql`. Run the following mutations to setup the ODP integration
-
-```graphql
-# Create the Elasticsearch template
-mutation {
-  configureElasticsearchTemplate
-}
-
-# Insert documents from the ODP into Elasticsearch
-mutation {
-  configureElasticsearchIndex
-}
-```
 
 # Docker
-For a full list of `--build-arg`s that is accepted refer to the [Dockerfile](Dockerfile)
+For a full list of `--build-arg`s and `-e` options refer to the [Dockerfile](Dockerfile)
 
 ```sh
 # Create a Docker image
-docker build -t api . \
---build-arg ELASTICSEARCH_ADDRESS=http://elasticsearch:9200 \
---build-arg MONGO_DB_ADDRESS=mongodb://mongo:27017 \
-... etc
+docker build \
+  --build-arg SOME_ARG=some-value \
+  --build-arg ...etc \
+  -t api .
 
 # Run as a Docker container
-docker run --net=catalogue -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 -p 4000:4000 -d api
+docker run \
+  --net=saeon_local \
+  -e SOME_ENV=some-value \
+  -e ...etc \
+  -p 3000:3000 \
+  -d \
+  api
 ```
-
-
