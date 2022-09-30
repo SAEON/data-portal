@@ -1,3 +1,4 @@
+import 'react-data-grid/lib/styles.css'
 import { useContext, Suspense, lazy, useState, useMemo } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
