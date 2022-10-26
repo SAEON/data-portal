@@ -1,7 +1,8 @@
 import { parseDates, parseSpatial, parseImmutableResource } from '../transform/index.js'
 
 export default data =>
-  data
+ { 
+  return data
     .map(
       (
         {
@@ -48,4 +49,4 @@ export default data =>
       }
     )
     // Filter away published === false
-    .filter(_ => _)
+    .filter(_ => _)}

@@ -14,11 +14,11 @@ run = 'eslint -c .eslintrc.cjs "src/**/*.{js,mjs,cjs}"'
 
 [[task]]
 name = 'ncu'
-run = 'ncu -x es8.1,koa-passport'
+run = 'ncu -x es8.x,koa-passport'
 
 [[task]]
 name = 'ncu:u'
-run = 'ncu -u -x es8.1,koa-passport'
+run = 'ncu -u -x es8.x,koa-passport'
 
 [[task]]
 name = 'start'
