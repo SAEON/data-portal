@@ -1,5 +1,5 @@
 import buildDsl from './dsl/index.js'
-import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../../../config/index.js'
+import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../../../config/index.js'
 
 /**
  * NOTE
@@ -176,9 +176,15 @@ export default async (_, args, ctx) => {
     }
   }
 
+  const body = buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
+
+  if (LOG_QUERY_DETAILS) {
+    console.info('ES DSL (AGG)', JSON.stringify(body, null, 2))
+  }
+
   const result = await elastic.query({
     index: ELASTICSEARCH_CATALOGUE_INDEX,
-    body: buildDsl({ dsl, ids, dois, text, terms, identifiers, extent }),
+    body
   })
 
   return Object.entries(result.aggregations).map(([name, result]) => {

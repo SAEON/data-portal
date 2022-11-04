@@ -1,5 +1,5 @@
 import buildDsl from './dsl/index.js'
-import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../../../config/index.js'
+import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../../../config/index.js'
 
 /**
  * NOTE
@@ -63,9 +63,16 @@ export default async (_, args, ctx) => {
     dsl.search_after = [cursor.score || 0, cursor.id]
   }
 
+  const body = buildDsl({ dsl, ids, dois, text, terms, extent, identifiers })
+
+  if (LOG_QUERY_DETAILS) {
+    console.info('ES DSL', JSON.stringify(body, null, 2))
+  }
+
+
   const data = await elastic.query({
     index: ELASTICSEARCH_CATALOGUE_INDEX,
-    body: buildDsl({ dsl, ids, dois, text, terms, extent, identifiers }),
+    body,
   })
 
   if (data.error) {
