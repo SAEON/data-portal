@@ -23,7 +23,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -32,7 +32,7 @@ jobs:
           cp deploy/next/config/odp-filter.js src/api/odp-filter.js
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@master
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -40,14 +40,14 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@master
         with:
           images: ${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}
           tags: |
             type=sha
 
       - name: Build and push API
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@master
         with:
           context: src/api
           push: true
@@ -60,7 +60,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -69,8 +69,7 @@ jobs:
           cp deploy/next/config/client-filters.json src/clients/client-filters.json
 
       - name: Log in to the Container registry
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
+        uses: docker/login-action@master
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -78,14 +77,14 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@master
         with:
           images: ${{ env.REGISTRY }}/${{ env.INTERNAL_CLIENTS_IMAGE_NAME }}
           tags: |
             type=sha
 
       - name: Build and push internal clients
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@master
         with:
           context: src/clients
           build-args: |
@@ -109,7 +108,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -118,8 +117,7 @@ jobs:
           cp deploy/next/config/client-filters.json src/clients/client-filters.json
 
       - name: Log in to the Container registry
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
+        uses: docker/login-action@master
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -127,14 +125,14 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@master
         with:
           images: ${{ env.REGISTRY }}/${{ env.PUBLIC_CLIENTS_IMAGE_NAME }}
           tags: |
             type=sha
 
       - name: Build and push public clients
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@master
         with:
           context: src/clients
           build-args: |
@@ -157,7 +155,7 @@ jobs:
     runs-on: github-runner.saeon.int
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 
