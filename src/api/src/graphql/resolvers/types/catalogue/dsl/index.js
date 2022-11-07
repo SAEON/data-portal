@@ -19,7 +19,7 @@ export default ({
   }
 
   if (text) {
-    text = text.split(' ')
+    text = text.split(' ').map(t => t.trim()).filter(_ => _)
   }
 
   /**

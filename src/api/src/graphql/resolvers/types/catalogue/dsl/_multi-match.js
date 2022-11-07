@@ -30,7 +30,9 @@ const fields = {
 
   // DOI
   doi: {},
-  'doi.raw': {},
+  'doi.raw': {
+    boost: 2
+  },
 }
 
 /**
@@ -42,6 +44,6 @@ export default query => ({
   multi_match: {
     query,
     type: 'best_fields',
-    fields: Object.entries(fields).map(([field]) => field),
+    fields: Object.entries(fields).map(([field, {boost}]) => `${field}${boost ? `^${boost}` : ''}`)
   },
 })
