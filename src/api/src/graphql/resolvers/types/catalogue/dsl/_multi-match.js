@@ -4,33 +4,33 @@
  */
 const fields = {
   // Titles and text
-  'titles.title': { boost: 5, fuzziness: 0 },
-  subtitle: { boost: 2, fuzziness: 0 },
-  'descriptions.description': { boost: 5, fuzziness: 0 },
+  'titles.title': { boost: undefined, fuzziness: 'AUTO' },
+  subtitle: { boost: undefined, fuzziness: 'AUTO' },
+  'descriptions.description': { boost: undefined, fuzziness: 'AUTO' },
 
   // Institution
-  institution: { boost: 5, fuzziness: 1 },
-  'institution.raw': { boost: 100, fuzziness: 0 },
+  institution: { boost: undefined, fuzziness: 'AUTO' },
+  'institution.raw': { boost: undefined, fuzziness: 'AUTO' },
 
   // Collection
-  collection: { boost: 5, fuzziness: 1 },
-  'collection.raw': { boost: 100, fuzziness: 0 },
+  collection: { boost: undefined, fuzziness: 'AUTO' },
+  'collection.raw': { boost: undefined, fuzziness: 'AUTO' },
 
   // Creators
-  'creators.name': { boost: 5, fuzziness: 1 },
-  'creators.name.raw': { boost: 10, fuzziness: 0 },
+  'creators.name': { boost: undefined, fuzziness: 'AUTO' },
+  'creators.name.raw': { boost: undefined, fuzziness: 'AUTO' },
 
   // Contributors
-  'contributors.name': { boost: 5, fuzziness: 1 },
-  'contributors.name.raw': { boost: 10, fuzziness: 0 },
+  'contributors.name': { boost: undefined, fuzziness: 'AUTO' },
+  'contributors.name.raw': { boost: undefined, fuzziness: 'AUTO' },
 
   // Subjects
-  'subjects.subject': { boost: 2, fuzziness: 'AUTO' },
-  'subjects.subject.raw': { boost: 10, fuzziness: 0 },
+  'subjects.subject': { boost: undefined, fuzziness: 'AUTO' },
+  'subjects.subject.raw': { boost: undefined, fuzziness: 'AUTO' },
 
   // DOI
-  doi: { boost: 50, fuzziness: 2 },
-  'doi.raw': { boost: 100, fuzziness: 0 },
+  doi: { boost: undefined, fuzziness: 'AUTO' },
+  'doi.raw': { boost: undefined, fuzziness: 'AUTO' },
 }
 
 /**
