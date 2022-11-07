@@ -121,6 +121,23 @@ export default {
       },
     },
     {
+      title: {
+        mapping: {
+          analyzer: 'saeon_text_fields',
+          type: 'text',
+          fields: {
+            raw: {
+              ignore_above: 512,
+              type: 'keyword',
+              normalizer: 'keyword_trimmed_lower',
+            },
+          },
+        },
+        match_mapping_type: 'string',
+        match: 'title',
+      },
+    },    
+    {
       strings: {
         mapping: {
           analyzer: 'saeon_text_fields',
@@ -134,7 +151,7 @@ export default {
           },
         },
         match_mapping_type: 'string',
-        unmatch: 'publicationYear|gte|lte|subjects',
+        unmatch: 'publicationYear|gte|lte|subjects|title',
       },
     },
   ],
