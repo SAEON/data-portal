@@ -184,7 +184,7 @@ export default async (_, args, ctx) => {
 
   const result = await elastic.query({
     index: ELASTICSEARCH_CATALOGUE_INDEX,
-    body
+    body,
   })
 
   return Object.entries(result.aggregations).map(([name, result]) => {

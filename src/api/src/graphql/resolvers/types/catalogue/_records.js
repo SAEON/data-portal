@@ -69,7 +69,6 @@ export default async (_, args, ctx) => {
     console.info('ES DSL', JSON.stringify(body, null, 2))
   }
 
-
   const data = await elastic.query({
     index: ELASTICSEARCH_CATALOGUE_INDEX,
     body,

@@ -4,33 +4,33 @@
  */
 const fields = {
   // Titles and text
-  'titles.title': { boost: undefined, fuzziness: 'AUTO' },
-  subtitle: { boost: undefined, fuzziness: 'AUTO' },
-  'descriptions.description': { boost: undefined, fuzziness: 'AUTO' },
+  'titles.title': {},
+  subtitle: {},
+  'descriptions.description': {},
 
   // Institution
-  institution: { boost: undefined, fuzziness: 'AUTO' },
-  'institution.raw': { boost: undefined, fuzziness: 'AUTO' },
+  institution: {},
+  'institution.raw': {},
 
   // Collection
-  collection: { boost: undefined, fuzziness: 'AUTO' },
-  'collection.raw': { boost: undefined, fuzziness: 'AUTO' },
+  collection: {},
+  'collection.raw': {},
 
   // Creators
-  'creators.name': { boost: undefined, fuzziness: 'AUTO' },
-  'creators.name.raw': { boost: undefined, fuzziness: 'AUTO' },
+  'creators.name': {},
+  'creators.name.raw': {},
 
   // Contributors
-  'contributors.name': { boost: undefined, fuzziness: 'AUTO' },
-  'contributors.name.raw': { boost: undefined, fuzziness: 'AUTO' },
+  'contributors.name': {},
+  'contributors.name.raw': {},
 
   // Subjects
-  'subjects.subject': { boost: undefined, fuzziness: 'AUTO' },
-  'subjects.subject.raw': { boost: undefined, fuzziness: 'AUTO' },
+  'subjects.subject': {},
+  'subjects.subject.raw': {},
 
   // DOI
-  doi: { boost: undefined, fuzziness: 'AUTO' },
-  'doi.raw': { boost: undefined, fuzziness: 'AUTO' },
+  doi: {},
+  'doi.raw': {},
 }
 
 /**
@@ -39,15 +39,9 @@ const fields = {
  * scores since the scores are calculated across many fields
  */
 export default query => ({
-  bool: {
-    should: Object.entries(fields).map(([field, { boost, fuzziness }]) => ({
-      match: {
-        [field]: {
-          query,
-          boost,
-          fuzziness,
-        },
-      },
-    })),
+  multi_match: {
+    query,
+    type: 'best_fields',
+    fields: Object.entries(fields).map(([field]) => field),
   },
 })

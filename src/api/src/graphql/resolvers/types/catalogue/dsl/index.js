@@ -18,6 +18,10 @@ export default ({
     dsl.min_score = min_score
   }
 
+  if (text) {
+    text = text.split(' ')
+  }
+
   /**
    * Collapse DOIs, IDs, and identifiers args
    */
@@ -37,7 +41,10 @@ export default ({
    * Text search applied to many field
    */
   if (text) {
-    dsl.query.bool.must = [...dsl.query.bool.must, multiMatch(text.toLowerCase())]
+    dsl.query.bool.must = [
+      ...dsl.query.bool.must,
+      ...text.map(text => multiMatch(text.toLowerCase())),
+    ]
   }
 
   /**
