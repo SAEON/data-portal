@@ -1,5 +1,5 @@
 import useSummary from './_summary'
-import Search from '../../../components/search'
+import Search from '../../../components/search/index-old'
 import { alpha } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'

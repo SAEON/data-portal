@@ -1,5 +1,4 @@
 import { Suspense, lazy, useContext } from 'react'
-import { useTheme } from '@mui/material/styles'
 import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
 import CreateListButton from './create-list-button'
@@ -9,6 +8,9 @@ import LoadingCircular from '../../../../components/loading-circular'
 import { context as authorizationContext } from '../../../../contexts/authorization'
 import Hidden from '@mui/material/Hidden'
 import ToolbarHeader from '../../../../components/toolbar-header'
+import Divider from '@mui/material/Divider'
+import Search from '../../../../components/search'
+import { Span } from '../../../../components/html-tags'
 // import ResetFiltersButton from './_reset-filters-button'
 
 const AuthenticatedOnly = lazy(() => import('./authenticated'))
@@ -23,14 +25,13 @@ export default ({
   cursors,
   setCursors,
   pageSize,
-  disableSidebar,
-  children,
   showSidebar,
-  setShowSidebar,
+  children,
+  sidebarVisible,
+  setSidebarVisible,
 }) => {
   const { isAuthenticated } = useContext(authorizationContext)
-  const theme = useTheme()
-  const sidebarEnabled = !disableSidebar
+  const sidebarEnabled = !showSidebar
 
   return (
     <>
@@ -38,18 +39,22 @@ export default ({
         {/* MOBILE FILTER TOGGLE */}
         {sidebarEnabled && (
           <Hidden mdUp>
-            <ToggleFiltersButton setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+            <ToggleFiltersButton setShowSidebar={setSidebarVisible} showSidebar={sidebarVisible} />
           </Hidden>
         )}
 
         {/* SEARCH RESULT COUNT */}
         <Hidden smDown>
           <Suspense fallback={<LoadingCircular />}>
-            <Title style={{ marginLeft: theme.spacing(2) }} catalogue={catalogue} />
+            <Title sx={{ ml: theme => theme.spacing(2) }} catalogue={catalogue} />
           </Suspense>
         </Hidden>
 
-        <span style={{ marginLeft: 'auto' }} />
+        {/* SEARCH */}
+        <Divider orientation="vertical" flexItem sx={{ mx: theme => theme.spacing(2) }} />
+        <Search />
+
+        <Span sx={{ marginLeft: 'auto' }} />
 
         {/* AUTHENTICATED */}
         {isAuthenticated && (

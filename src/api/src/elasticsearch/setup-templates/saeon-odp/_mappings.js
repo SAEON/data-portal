@@ -136,7 +136,7 @@ export default {
         match_mapping_type: 'string',
         match: 'title',
       },
-    },    
+    },
     {
       strings: {
         mapping: {

@@ -11,7 +11,12 @@ export default {
       filter: {
         vocabulary_mapping: {
           type: 'synonym',
-          synonyms: ['examplesynonymforrainfall, rainfall', 'examplesynonym2forrainfall, rainfall'],
+          synonyms: [
+            'examplesynonymforrainfall, rainfall',
+            'examplesynonym2forrainfall, rainfall',
+            'garbage, rubbish',
+            'trash, rubbish',
+          ],
         },
       },
       analyzer: {

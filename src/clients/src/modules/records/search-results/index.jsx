@@ -22,11 +22,11 @@ const DEFAULT_CURSORS = {
   currentPage: 0,
 }
 
-export default ({ disableSidebar }) => {
+export default ({ showSearch, showSidebar }) => {
   const theme = useTheme()
   const xsDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
-  const [showSidebar, setShowSidebar] = useState(!disableSidebar && !xsDown)
+  const [sidebarVisible, setSidebarVisible] = useState(!showSidebar && !xsDown)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
@@ -145,9 +145,9 @@ export default ({ disableSidebar }) => {
   return (
     <main id="search-results">
       <Header
-        disableSidebar={disableSidebar}
         showSidebar={showSidebar}
-        setShowSidebar={setShowSidebar}
+        sidebarVisible={sidebarVisible}
+        setSidebarVisible={setSidebarVisible}
         cursors={cursors}
         setCursors={setCursors}
         setPageSize={setPageSize}
@@ -172,11 +172,11 @@ export default ({ disableSidebar }) => {
               {/* MOBILE */}
               <Hidden mdUp>
                 <>
-                  {!disableSidebar && (
+                  {!showSidebar && (
                     <Suspense fallback={<Loading />}>
                       <MobileSideMenu
-                        setShowSidebar={setShowSidebar}
-                        showSidebar={showSidebar}
+                        setShowSidebar={setSidebarVisible}
+                        showSidebar={sidebarVisible}
                         data={data}
                       />
                     </Suspense>
@@ -189,7 +189,7 @@ export default ({ disableSidebar }) => {
               {/* LARGER SCREENS */}
               <Hidden mdDown>
                 <Grid container spacing={2}>
-                  {showSidebar && !disableSidebar && (
+                  {sidebarVisible && !showSidebar && (
                     <Grid item md={4}>
                       <Suspense
                         fallback={
