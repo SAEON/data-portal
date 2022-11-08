@@ -1,7 +1,7 @@
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import Badge from '@mui/material/Badge'
-import InfoIcon from 'mdi-react/InformationVariantIcon'
+import { InformationVariant } from '../icons'
 
 const IconButtonType = ({
   disabled,
@@ -25,18 +25,18 @@ const IconButtonType = ({
         setOpen(!open)
       }}
       {...iconProps}
-      size="large"
+      size="medium"
     >
       {badgeProps ? (
         badgeProps._component ? (
           <badgeProps._component {...badgeProps}>
-            {icon || <InfoIcon size={18} />}
+            {icon || <InformationVariant fontSize="small" />}
           </badgeProps._component>
         ) : (
-          <Badge {...badgeProps}>{icon || <InfoIcon size={18} />}</Badge>
+          <Badge {...badgeProps}>{icon || <InformationVariant fontSize="small" />}</Badge>
         )
       ) : (
-        icon || <InfoIcon size={18} />
+        icon || <InformationVariant fontSize="small" />
       )}
     </IconButton>
   )

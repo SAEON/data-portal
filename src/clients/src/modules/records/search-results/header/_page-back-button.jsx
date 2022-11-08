@@ -1,5 +1,5 @@
 import IconButton from '@mui/material/IconButton'
-import PageBackIcon from '@mui/icons-material/NavigateBefore'
+import { ChevronLeft as ChevronLeftIcon } from '../../../../components/icons'
 
 export default ({ setCursors, loading, cursors, catalogue }) => {
   return (
@@ -13,9 +13,9 @@ export default ({ setCursors, loading, cursors, catalogue }) => {
           currentPage: cursors?.currentPage - 1,
         })
       }}
-      size="large"
+      size="medium"
     >
-      <PageBackIcon />
+      <ChevronLeftIcon />
     </IconButton>
   )
 }

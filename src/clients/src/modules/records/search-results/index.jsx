@@ -126,7 +126,7 @@ export default ({ showSearch, showSidebar }) => {
   )
 
   if (loading) {
-    return <Loading withHeight />
+    return <Loading withHeight sx={{ position: 'fixed' }} />
   }
 
   if (error) {
@@ -154,6 +154,7 @@ export default ({ showSearch, showSidebar }) => {
         pageSize={pageSize}
         loading={loading}
         catalogue={data?.catalogue}
+        showSearch={showSearch}
       >
         <Hidden mdDown>
           <div style={{ marginTop: theme.spacing(2) }} />

@@ -36,6 +36,7 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
               ),
               inputProps: {
                 'aria-label': 'Enter search text and press enter',
+                style: { padding: 0, lineHeight: '100%' },
               },
             }}
             value={text}

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import MessageDialogue from '../../../../../../components/message-dialogue'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import ShareIcon from 'mdi-react/LinkPlusIcon'
+import { ContentCopy } from '../../../../../../components/icons'
 import DialogueContents from './_dialogue-contents'
 
 export default ({ icon, iconProps, tooltipProps, badgeProps, search, params }) => {
@@ -22,7 +22,7 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, search, params }) =
           color: 'inherit',
         }
       }
-      icon={icon || <ShareIcon />}
+      icon={icon || <ContentCopy fontSize="small" />}
       badgeProps={badgeProps}
     >
       <Tabs value={tabIndex} onChange={(e, i) => setTabIndex(i)}>

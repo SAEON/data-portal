@@ -32,6 +32,7 @@
     "@babel/runtime": "^7.20.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mdi/js": "^7.0.96",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.13",
     "@saeon/logger": "^6.2.22",

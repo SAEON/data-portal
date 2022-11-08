@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import Fade from '@mui/material/Fade'
 import CircularProgress from '@mui/material/CircularProgress'
-import DownloadIcon from 'mdi-react/DownloadCircleIcon'
+import { DownloadCircleOutline as DownloadCircleOutline } from '../../../../../../components/icons'
 import { context as globalContext } from '../../../../../../contexts/global'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
 import StyledBadge from '../../components/styled-badge'
@@ -78,7 +78,7 @@ export default ({ catalogue }) => {
                 })
               }
               disabled={!applicableRecordsCount}
-              size="large"
+              size="medium"
             >
               <StyledBadge
                 color={applicableRecordsCount ? 'primary' : 'default'}
@@ -86,7 +86,7 @@ export default ({ catalogue }) => {
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 invisible={false}
               >
-                <DownloadIcon />
+                <DownloadCircleOutline />
               </StyledBadge>
             </IconButton>
           </span>

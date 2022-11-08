@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import ListIcon from '@mui/icons-material/List'
 import { context as globalContext } from '../../../../../contexts/global'
 import ShareOrEmbed from './create-share-link'
 import StyledBadge from '../components/styled-badge'
@@ -19,7 +18,6 @@ export default ({ catalogue }) => {
               Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')
             )
       }
-      icon={<ListIcon />}
       iconProps={{
         color: 'default',
         disabled: !applicableRecordsCount,

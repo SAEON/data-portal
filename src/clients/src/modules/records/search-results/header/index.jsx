@@ -27,6 +27,7 @@ export default ({
   pageSize,
   showSidebar,
   children,
+  showSearch,
   sidebarVisible,
   setSidebarVisible,
 }) => {
@@ -51,8 +52,12 @@ export default ({
         </Hidden>
 
         {/* SEARCH */}
-        <Divider orientation="vertical" flexItem sx={{ mx: theme => theme.spacing(2) }} />
-        <Search />
+        {showSearch && (
+          <>
+            <Divider orientation="vertical" flexItem sx={{ mx: theme => theme.spacing(2) }} />
+            <Search />
+          </>
+        )}
 
         <Span sx={{ marginLeft: 'auto' }} />
 

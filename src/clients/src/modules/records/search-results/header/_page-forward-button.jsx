@@ -1,5 +1,5 @@
 import IconButton from '@mui/material/IconButton'
-import PageForwardIcon from '@mui/icons-material/NavigateNext'
+import { ChevronRight as ChevronRightIcon } from '../../../../components/icons'
 
 export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
   return (
@@ -16,9 +16,9 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
         })
       }}
       style={{ marginRight: 5 }}
-      size="large"
+      size="medium"
     >
-      <PageForwardIcon />
+      <ChevronRightIcon />
     </IconButton>
   )
 }

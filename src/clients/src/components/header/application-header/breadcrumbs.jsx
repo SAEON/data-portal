@@ -59,17 +59,19 @@ export default ({ contentBase = '/', routes }) => {
           )
         })}
 
-      {tree.slice(-1).map(({ label, breadcrumbsLabel, Icon, BreadcrumbsIcon } = {}) => {
-        Icon = BreadcrumbsIcon || Icon
-        label = breadcrumbsLabel || label
+      {tree
+        .slice(-1)
+        .map(({ label, breadcrumbsLabel, breadcrumbsIcon = true, Icon, BreadcrumbsIcon } = {}) => {
+          Icon = BreadcrumbsIcon || Icon
+          label = breadcrumbsLabel || label
 
-        return (
-          <Typography key={label} color="textPrimary" sx={sxLink}>
-            {Icon && <MuiIcon sx={sxIcon} size={18} component={Icon} />}
-            {label}
-          </Typography>
-        )
-      })}
+          return (
+            <Typography key={label} color="textPrimary" sx={sxLink}>
+              {Icon && breadcrumbsIcon && <MuiIcon sx={sxIcon} size={18} component={Icon} />}
+              {label}
+            </Typography>
+          )
+        })}
     </Breadcrumbs>
   )
 }

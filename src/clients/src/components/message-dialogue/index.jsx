@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions'
 import Tooltip from '@mui/material/Tooltip'
 import { nanoid } from 'nanoid'
 import ToggleButton from './_toggle-button'
+import { Span } from '../html-tags'
 
 export default ({
   actions = undefined,
@@ -42,11 +43,11 @@ export default ({
   }, [open, onOpenEffect])
 
   return (
-    <span onClick={e => e.stopPropagation()}>
+    <Span onClick={e => e.stopPropagation()}>
       {/* TOGGLE BUTTON */}
       {hideIcon ? undefined : (
         <Tooltip placement="right-end" {...tooltipProps}>
-          <span>
+          <Span>
             <ToggleButton
               buttonType={buttonType}
               disabled={disabled}
@@ -59,7 +60,7 @@ export default ({
               {...iconProps}
               {...buttonProps}
             />
-          </span>
+          </Span>
         </Tooltip>
       )}
 
@@ -114,6 +115,6 @@ export default ({
           </DialogActions>
         ) : null}
       </Dialog>
-    </span>
+    </Span>
   )
 }

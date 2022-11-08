@@ -65,6 +65,7 @@ export default [
     label: 'Search SAEON data',
     Icon: SearchIcon,
     includeInFooter: true,
+    breadcrumbsIcon: false,
     to: '/records',
     element: () => {
       return (
