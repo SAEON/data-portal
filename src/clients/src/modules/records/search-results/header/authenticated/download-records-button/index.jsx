@@ -10,6 +10,7 @@ import StyledBadge from '../../components/styled-badge'
 import { PUBLIC_HTTP_ADDRESS } from '../../../../../../config'
 import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
+import { Span } from '../../../../../../components/html-tags'
 
 export default ({ catalogue }) => {
   const resultCount = catalogue?.search.totalCount
@@ -42,9 +43,9 @@ export default ({ catalogue }) => {
   if (loading) {
     return (
       <Fade key="loading" in={loading}>
-        <span>
+        <Span>
           <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
-        </span>
+        </Span>
       </Fade>
     )
   }
@@ -55,7 +56,7 @@ export default ({ catalogue }) => {
 
   return (
     <Fade key="not-loading" in={!loading}>
-      <span>
+      <Span>
         <Tooltip
           title={
             applicableRecordsCount
@@ -63,7 +64,7 @@ export default ({ catalogue }) => {
               : 'No records selected'
           }
         >
-          <span>
+          <Span>
             <IconButton
               onClick={() =>
                 saveList({
@@ -89,9 +90,9 @@ export default ({ catalogue }) => {
                 <DownloadCircleOutline />
               </StyledBadge>
             </IconButton>
-          </span>
+          </Span>
         </Tooltip>
-      </span>
+      </Span>
     </Fade>
   )
 }

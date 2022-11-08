@@ -3,6 +3,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Checkbox from '@mui/material/Checkbox'
 import { context as globalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
+import { Span } from '../../../../components/html-tags'
 
 export default ({ catalogue }) => {
   const { global, setGlobal } = useContext(globalContext)
@@ -13,7 +14,7 @@ export default ({ catalogue }) => {
 
   return (
     <Tooltip title={selectAll || isIndeterminate ? `Unselect all records` : 'Select all records'}>
-      <span style={{ marginRight: 8 }}>
+      <Span>
         <StyledBadge
           color={applicableRecordsCount ? 'primary' : 'default'}
           badgeContent={applicableRecordsCount}
@@ -21,8 +22,8 @@ export default ({ catalogue }) => {
           invisible={false}
           sx={{
             '& .MuiBadge-badge': {
-              top: 10,
-              right: 4,
+              top: 11,
+              right: 6,
             },
           }}
         >
@@ -47,7 +48,7 @@ export default ({ catalogue }) => {
             indeterminate={isIndeterminate}
           />
         </StyledBadge>
-      </span>
+      </Span>
     </Tooltip>
   )
 }

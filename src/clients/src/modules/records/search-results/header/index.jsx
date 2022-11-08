@@ -59,7 +59,7 @@ export default ({
           </>
         )}
 
-        <Span sx={{ marginLeft: 'auto' }} />
+        <Span sx={{ ml: 'auto' }} />
 
         {/* AUTHENTICATED */}
         {isAuthenticated && (
@@ -67,11 +67,13 @@ export default ({
             <Suspense fallback={<LoadingCircular />}>
               <AuthenticatedOnly catalogue={catalogue} />
             </Suspense>
+            <Span sx={{ ml: theme => theme.spacing(1) }} />
           </Hidden>
         )}
 
         {/* CREATE LIST */}
         <CreateListButton catalogue={catalogue} />
+        {/* <Span sx={{ ml: theme => theme.spacing(1) }} /> */}
 
         {/* RESET SELECTION */}
         <ToggleSelectionButton catalogue={catalogue} />
