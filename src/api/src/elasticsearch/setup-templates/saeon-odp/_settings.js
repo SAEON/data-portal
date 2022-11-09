@@ -16,6 +16,8 @@ export default {
             'examplesynonym2forrainfall, rainfall',
             'garbage, rubbish',
             'trash, rubbish',
+            'sea, ocean',
+            'ocean, sea'
           ],
         },
       },

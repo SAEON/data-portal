@@ -4,6 +4,7 @@ import Paper_ from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { alpha } from '@mui/material/styles'
+import { Div } from '../../../../components/html-tags'
 
 const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.common.white, 0.85),
@@ -34,6 +35,8 @@ export default ({ results }) => {
               item
               xs={12}
               sx={theme => ({
+                display: 'flex',
+                position: 'relative',
                 mb: 0,
                 mt: theme.spacing(1),
                 pr: theme.spacing(1),
@@ -51,10 +54,30 @@ export default ({ results }) => {
                 transition: theme.transitions.create(['background-color']),
                 '&:hover': {
                   backgroundColor: theme.palette.common.white,
+                  '& > .record-tools': {
+                    display: 'block',
+                  },
                 },
               })}
             >
-              <Record i={i} length={arr.length} {..._source} />
+              <Div
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Record i={i} length={arr.length} {..._source} />
+              </Div>
+              {/* <Div
+                className="record-tools debug"
+                sx={{
+                  display: 'none',
+                  position: 'absolute',
+                  right: 0,
+                  width: theme => theme.spacing(8),
+                  height: '100%',
+                }}
+              ></Div> */}
             </Grid>
           )
         })}

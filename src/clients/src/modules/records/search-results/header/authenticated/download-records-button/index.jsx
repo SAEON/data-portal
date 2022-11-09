@@ -86,6 +86,12 @@ export default ({ catalogue }) => {
                 badgeContent={applicableRecordsCount}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 invisible={false}
+                sx={{
+                  '& .MuiBadge-badge': {
+                    top: 5,
+                    right: -2,
+                  },
+                }}
               >
                 <DownloadCircleOutline />
               </StyledBadge>

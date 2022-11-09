@@ -22,8 +22,8 @@ export default ({ catalogue }) => {
           invisible={false}
           sx={{
             '& .MuiBadge-badge': {
-              top: 11,
-              right: 6,
+              top: 12,
+              right: 7,
             },
           }}
         >

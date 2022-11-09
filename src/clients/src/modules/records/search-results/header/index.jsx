@@ -68,13 +68,12 @@ export default ({
             <Suspense fallback={<LoadingCircular />}>
               <AuthenticatedOnly catalogue={catalogue} />
             </Suspense>
-            <Span sx={{ ml: theme => theme.spacing(1) }} />
+            <Span sx={{ ml: theme => theme.spacing(0.5) }} />
           </Hidden>
         )}
 
         {/* CREATE LIST */}
         <CreateListButton catalogue={catalogue} />
-        {/* <Span sx={{ ml: theme => theme.spacing(1) }} /> */}
 
         {/* RESET SELECTION */}
         <ToggleSelectionButton catalogue={catalogue} />
