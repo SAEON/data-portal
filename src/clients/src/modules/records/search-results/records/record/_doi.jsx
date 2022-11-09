@@ -20,7 +20,7 @@ export default ({ doi }) => {
           variant="overline"
           href={`https://doi.org/${doi}`}
           sx={sx}
-          style={{
+          sx={{
             cursor: 'pointer',
           }}
           target="_blank"

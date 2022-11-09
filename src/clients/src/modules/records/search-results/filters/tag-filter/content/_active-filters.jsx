@@ -29,7 +29,7 @@ export default ({ activeFilters, filterId }) => {
       <Grid key={value} item xs={12}>
         <Div sx={{ display: 'flex', alignItems: 'center' }}>
           <Checkbox
-            style={{ alignSelf: 'baseline' }}
+            sx={{ alignSelf: 'baseline' }}
             size="small"
             color="primary"
             checked={checked}

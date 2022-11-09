@@ -11,7 +11,8 @@ import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../config'
 import Container from '@mui/material/Container'
 import Hidden from '@mui/material/Hidden'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { Div } from '../../../components/html-tags'
+import Fade from '@mui/material/Fade'
 
 const MobileSideMenu = lazy(() => import('./_side-menu'))
 const Filters = lazy(() => import('./filters'))
@@ -23,7 +24,6 @@ const DEFAULT_CURSORS = {
 }
 
 export default ({ showSearch, showSidebar }) => {
-  const theme = useTheme()
   const xsDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
   const [sidebarVisible, setSidebarVisible] = useState(!showSidebar && !xsDown)
@@ -143,75 +143,77 @@ export default ({ showSearch, showSidebar }) => {
     : data.catalogue.search.records
 
   return (
-    <main id="search-results">
-      <Header
-        showSidebar={showSidebar}
-        sidebarVisible={sidebarVisible}
-        setSidebarVisible={setSidebarVisible}
-        cursors={cursors}
-        setCursors={setCursors}
-        setPageSize={setPageSize}
-        pageSize={pageSize}
-        loading={loading}
-        catalogue={data?.catalogue}
-        showSearch={showSearch}
-      >
-        <Hidden mdDown>
-          <div style={{ marginTop: theme.spacing(2) }} />
-        </Hidden>
-        <Container disableGutters={smDown} style={{ minHeight: 1000 }}>
-          {/* SEARCH LOADING */}
-          {loading && (
-            <Grid item xs={12} style={{ position: 'relative' }}>
-              <Loading />
-            </Grid>
-          )}
+    <Fade key="search-results" in>
+      <main id="search-results">
+        <Header
+          showSidebar={showSidebar}
+          sidebarVisible={sidebarVisible}
+          setSidebarVisible={setSidebarVisible}
+          cursors={cursors}
+          setCursors={setCursors}
+          setPageSize={setPageSize}
+          pageSize={pageSize}
+          loading={loading}
+          catalogue={data?.catalogue}
+          showSearch={showSearch}
+        >
+          <Hidden mdDown>
+            <Div sx={{ mt: theme => theme.spacing(2) }} />
+          </Hidden>
+          <Container disableGutters={smDown} sx={{ minHeight: 1000 }}>
+            {/* SEARCH LOADING */}
+            {loading && (
+              <Grid item xs={12} sx={{ position: 'relative' }}>
+                <Loading />
+              </Grid>
+            )}
 
-          {/* SEARCH RESULTS & HEADER */}
-          {loading ? null : (
-            <>
-              {/* MOBILE */}
-              <Hidden mdUp>
-                <>
-                  {!showSidebar && (
-                    <Suspense fallback={<Loading />}>
-                      <MobileSideMenu
-                        setShowSidebar={setSidebarVisible}
-                        showSidebar={sidebarVisible}
-                        data={data}
-                      />
-                    </Suspense>
-                  )}
-
-                  <Records results={results} />
-                </>
-              </Hidden>
-
-              {/* LARGER SCREENS */}
-              <Hidden mdDown>
-                <Grid container spacing={2}>
-                  {sidebarVisible && !showSidebar && (
-                    <Grid item md={4}>
-                      <Suspense
-                        fallback={
-                          <div style={{ position: 'relative' }}>
-                            <Loading />
-                          </div>
-                        }
-                      >
-                        <Filters catalogue={data?.catalogue} />
+            {/* SEARCH RESULTS & HEADER */}
+            {loading ? null : (
+              <>
+                {/* MOBILE */}
+                <Hidden mdUp>
+                  <>
+                    {!showSidebar && (
+                      <Suspense fallback={<Loading />}>
+                        <MobileSideMenu
+                          setShowSidebar={setSidebarVisible}
+                          showSidebar={sidebarVisible}
+                          data={data}
+                        />
                       </Suspense>
-                    </Grid>
-                  )}
-                  <Grid item xs style={{ flexGrow: 1, minWidth: '1px' }}>
+                    )}
+
                     <Records results={results} />
+                  </>
+                </Hidden>
+
+                {/* LARGER SCREENS */}
+                <Hidden mdDown>
+                  <Grid container spacing={2}>
+                    {sidebarVisible && !showSidebar && (
+                      <Grid item md={4}>
+                        <Suspense
+                          fallback={
+                            <Div sx={{ position: 'relative' }}>
+                              <Loading />
+                            </Div>
+                          }
+                        >
+                          <Filters catalogue={data?.catalogue} />
+                        </Suspense>
+                      </Grid>
+                    )}
+                    <Grid item xs sx={{ flexGrow: 1, minWidth: '1px' }}>
+                      <Records results={results} />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Hidden>
-            </>
-          )}
-        </Container>
-      </Header>
-    </main>
+                </Hidden>
+              </>
+            )}
+          </Container>
+        </Header>
+      </main>
+    </Fade>
   )
 }

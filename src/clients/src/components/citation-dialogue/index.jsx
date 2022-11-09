@@ -4,8 +4,9 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import CitationIcon from 'mdi-react/FormatQuoteCloseIcon'
 import { nanoid } from 'nanoid'
+import { Span } from '../html-tags'
 
-export default ({ doi, buttonSize = 'small' }) => {
+export default ({ doi, buttonSize = 'small', ...props }) => {
   const [open, setOpen] = useState(false)
   const id = doi || nanoid()
 
@@ -20,7 +21,7 @@ export default ({ doi, buttonSize = 'small' }) => {
             : "Apologies, we cannot generate citations for records that don't have DOIS"
         }
       >
-        <span>
+        <Span>
           <IconButton
             disabled={!doi}
             aria-label="Generate citation"
@@ -29,10 +30,11 @@ export default ({ doi, buttonSize = 'small' }) => {
             aria-expanded={open}
             onClick={() => setOpen(!open)}
             size={buttonSize}
+            {...props}
           >
             <CitationIcon />
           </IconButton>
-        </span>
+        </Span>
       </Tooltip>
     </>
   )

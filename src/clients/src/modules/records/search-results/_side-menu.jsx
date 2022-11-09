@@ -4,15 +4,16 @@ import Grid from '@mui/material/Grid'
 import CloseIcon from 'mdi-react/CloseIcon'
 import IconButton from '@mui/material/IconButton'
 import Filters from './filters'
+import { Div } from '../../../components/html-tags'
 
 export default ({ showSidebar, data, setShowSidebar }) => {
   useEffect(() => () => setShowSidebar(false), [setShowSidebar])
 
   return (
-    <div style={{ maxWidth: '300px' }}>
+    <Div sx={{ maxWidth: '300px' }}>
       <Drawer
         id="mobile-filters-menu"
-        PaperProps={{ style: { maxWidth: '100%' } }}
+        PaperProps={{ sx: { maxWidth: '100%' } }}
         anchor="left"
         open={showSidebar}
         onOpen={() => setShowSidebar(true)}
@@ -20,7 +21,7 @@ export default ({ showSidebar, data, setShowSidebar }) => {
       >
         <Grid item xs={12}>
           <IconButton
-            style={{ marginLeft: 'auto', display: 'flex' }}
+            sx={{ marginLeft: 'auto', display: 'flex' }}
             aria-label="Toggle search filters"
             onClick={() => setShowSidebar(false)}
             size="large"
@@ -31,6 +32,6 @@ export default ({ showSidebar, data, setShowSidebar }) => {
           <Filters catalogue={data?.catalogue} />
         </Grid>
       </Drawer>
-    </div>
+    </Div>
   )
 }

@@ -62,7 +62,7 @@ export default [
     },
   },
   {
-    label: 'Search SAEON data',
+    label: 'Records',
     Icon: SearchIcon,
     includeInFooter: true,
     breadcrumbsIcon: false,

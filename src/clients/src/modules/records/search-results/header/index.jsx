@@ -56,6 +56,7 @@ export default ({
           <>
             <Divider orientation="vertical" flexItem sx={{ mx: theme => theme.spacing(2) }} />
             <Search />
+            <Span sx={{ mr: theme => theme.spacing(2) }} />
           </>
         )}
 

@@ -12,7 +12,7 @@ export default ({ id }) => {
   return (
     <Tooltip title={'Select record'} placement="left-start">
       <Checkbox
-        style={{ marginRight: 4 }}
+        sx={{ mr: theme => theme.spacing(1) }}
         size="small"
         color="primary"
         inputProps={{

@@ -17,6 +17,7 @@ export default ({ results, id, title, field, boost, sx = {} }) => {
     <Div sx={{ position: 'relative' }}>
       <FilterHeader title={title} sx={sx} collapsed={collapsed} setCollapsed={setCollapsed} />
       <Collapse
+        timeout="auto"
         sx={{ width: '100%' }}
         key={`result-list-collapse-${id}`}
         unmountOnExit

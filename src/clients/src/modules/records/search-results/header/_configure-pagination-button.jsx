@@ -41,7 +41,7 @@ export default ({ pageSize, setPageSize }) => {
         {pageSizes.map(x => (
           <Tooltip key={x} title={x === 'ALL' ? 'Warning - this can be slow' : ''}>
             <MenuItem
-              style={x === 'ALL' ? { color: 'red' } : {}}
+              sx={x === 'ALL' ? { color: 'red' } : {}}
               onClick={() => {
                 setPageSize(x === 'ALL' ? 10000 : x)
                 setAnchorEl(null)

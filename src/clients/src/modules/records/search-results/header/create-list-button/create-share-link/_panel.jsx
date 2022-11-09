@@ -16,7 +16,7 @@ export default props => {
       >
         {value === index && (
           <Box p={3}>
-            <Typography style={{ wordBreak: 'break-all' }}>{children}</Typography>
+            <Typography sx={{ wordBreak: 'break-all' }}>{children}</Typography>
           </Box>
         )}
       </div>

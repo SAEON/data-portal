@@ -12,14 +12,17 @@ const DataDownloadButton = lazy(() => import('../../../../../../components/data-
 
 export default ({ showDownload = false, showPreview = true, showSelect = true, ..._source }) => {
   return (
-    <Toolbar disableGutters variant="dense" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <Toolbar disableGutters variant="dense" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
       <DOI sx={{ mr: 'auto', ml: theme => theme.spacing(2) }} {..._source} />
 
       {/* ATLAS PREVIEW */}
       {showPreview && <PreviewAtlasButton {..._source} />}
 
       {/* CITATION */}
-      <CitationButton style={!showSelect && !showDownload ? { marginRight: 8 } : {}} {..._source} />
+      <CitationButton
+        sx={!showSelect && !showDownload ? { mr: theme => theme.spacing(2) } : {}}
+        {..._source}
+      />
 
       {/* DOWNLOAD */}
       <Hidden smDown>
@@ -37,7 +40,10 @@ export default ({ showDownload = false, showPreview = true, showSelect = true, .
       {/* SELECT */}
       {showSelect && (
         <>
-          <Divider orientation="vertical" style={{ height: 16, margin: 16 }} />
+          <Divider
+            orientation="vertical"
+            sx={{ height: theme => theme.spacing(4), m: theme => theme.spacing(4) }}
+          />
           <ToggleItemButton {..._source} />
         </>
       )}

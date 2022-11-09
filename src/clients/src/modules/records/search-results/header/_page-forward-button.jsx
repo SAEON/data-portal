@@ -15,7 +15,7 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
           currentPage: cursors?.currentPage + 1,
         })
       }}
-      style={{ marginRight: 5 }}
+      sx={{ mr: theme => theme.spacing(1) }}
       size="medium"
     >
       <ChevronRightIcon />

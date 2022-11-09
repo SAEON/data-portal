@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
-import Card from '@mui/material/Card'
+import Paper from '@mui/material/Paper'
 import { Pencil as PencilIcon, Close as CloseIcon } from '../../../../../../components/icons'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
@@ -87,7 +87,7 @@ export default ({ proxy }) => {
   }, []) // TODO - the suggested eslint fix breaks the code
 
   return (
-    <Card
+    <Paper
       variant="outlined"
       sx={{
         position: 'absolute',
@@ -161,6 +161,6 @@ export default ({ proxy }) => {
           </Span>
         </Tooltip>
       )}
-    </Card>
+    </Paper>
   )
 }

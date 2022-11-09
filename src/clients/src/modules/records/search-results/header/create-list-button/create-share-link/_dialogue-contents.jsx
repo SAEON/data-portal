@@ -8,6 +8,7 @@ import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../config'
+import { Div } from '../../../../../../components/html-tags'
 
 /**
  * Dialogue contents of the share dialogue
@@ -41,20 +42,20 @@ export default ({ tabIndex, search = undefined }) => {
     'Error'
   ) : loading ? (
     <Fade key="loading" in={loading}>
-      <div
-        style={{
-          margin: 24,
+      <Div
+        sx={{
+          margin: theme => theme.spacing(8),
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
         <CircularProgress />
-      </div>
+      </Div>
     </Fade>
   ) : (
     <Fade in={Boolean(data)} key="data">
-      <div>
+      <Div>
         <TabPanel value={tabIndex} index={0}>
           <Link target="_blank" rel="noopener noreferrer" href={uri}>
             {uri}
@@ -63,7 +64,7 @@ export default ({ tabIndex, search = undefined }) => {
         <TabPanel value={tabIndex} index={1}>
           {`<iframe width="100%" height="100%" src="${uri}" frameborder="0" allowfullscreen></iframe>`}
         </TabPanel>
-      </div>
+      </Div>
     </Fade>
   )
 }

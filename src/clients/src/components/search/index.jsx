@@ -23,7 +23,6 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
             onBlur={onBlur || undefined}
             autoComplete="off"
             fullWidth
-            color="primary"
             id="saeon-data-search"
             size="small"
             onChange={e => update({ text: e.target.value })}
@@ -36,13 +35,18 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
               ),
               inputProps: {
                 'aria-label': 'Enter search text and press enter',
-                style: { padding: 0, lineHeight: '100%' },
+                sx: {
+                  p: 0,
+                  lineHeight: '100%',
+                },
               },
             }}
             value={text}
             margin="none"
-            placeholder="Search SAEON data"
+            placeholder="Enter search terms ..."
             sx={{
+              backgroundColor: theme => theme.palette.grey[200],
+              p: theme => theme.spacing(0.5),
               '& .MuiInput-root': {
                 '&:before, :after, :hover:not(.Mui-disabled):before': {
                   borderBottom: 0,

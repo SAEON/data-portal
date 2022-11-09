@@ -44,7 +44,7 @@ export default ({ catalogue }) => {
     return (
       <Fade key="loading" in={loading}>
         <Span>
-          <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+          <CircularProgress thickness={2} size={18} sx={{ my: 0, mx: theme => theme.spacing(4) }} />
         </Span>
       </Fade>
     )

@@ -8,7 +8,7 @@ export default ({ setShowSidebar, showSidebar }) => {
       aria-controls="mobile-filters-menu"
       aria-haspopup="true"
       aria-expanded={showSidebar}
-      style={{ marginLeft: 5 }}
+      sx={{ ml: theme => theme.spacing(1) }}
       onClick={() => setShowSidebar(!showSidebar)}
       color={showSidebar ? 'primary' : 'inherit'}
       size="large"
