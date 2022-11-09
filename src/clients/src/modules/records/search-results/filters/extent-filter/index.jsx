@@ -6,8 +6,8 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Collapse from '@mui/material/Collapse'
 import Paper from '@mui/material/Paper'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { ChevronDown as ChevronDownIcon } from '../../../../../components/icons'
+import { ChevronUp as ChevronUpIcon } from '../../../../../components/icons'
 import { context as globalContext } from '../../../../../contexts/global'
 import Loading from '../../../../../components/loading'
 import { Div } from '../../../../../components/html-tags'
@@ -57,7 +57,7 @@ export default ({ title }) => {
           <Div sx={{ marginLeft: 'auto' }}>
             {/* Icon */}
             <IconButton aria-label="Collapse filter" onClick={toggle} color="inherit" size="small">
-              {collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+              {collapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
             </IconButton>
           </Div>
         </Toolbar>

@@ -6,6 +6,8 @@ import LoginIcon_ from 'mdi-react/LoginVariantIcon'
 import {
   mdiChevronLeft,
   mdiChevronRight,
+  mdiChevronDown,
+  mdiChevronUp,
   mdiClose,
   mdiContentCopy,
   mdiDownload,
@@ -13,6 +15,18 @@ import {
   mdiInformationVariant,
   mdiPencil,
 } from '@mdi/js'
+
+export const ChevronDown = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiChevronDown} />
+  </SvgIcon>
+))({})
+
+export const ChevronUp = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiChevronUp} />
+  </SvgIcon>
+))({})
 
 export const Close = styled(props => (
   <SvgIcon {...props}>

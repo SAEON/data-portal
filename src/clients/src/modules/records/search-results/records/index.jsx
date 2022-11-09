@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles'
 import { alpha } from '@mui/material/styles'
 
 const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.9),
+  backgroundColor: alpha(theme.palette.common.white, 0.85),
   p: 0,
 }))
 
@@ -37,7 +37,7 @@ export default ({ results }) => {
                 mb: 0,
                 mt: theme.spacing(1),
                 pr: theme.spacing(1),
-                pb: 0,
+                pb: theme.spacing(1),
                 pl: theme.spacing(1),
                 borderBottom: `1px solid ${theme.palette.divider}`,
                 ':last-child': {

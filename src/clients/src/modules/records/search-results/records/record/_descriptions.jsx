@@ -20,7 +20,7 @@ export default ({ descriptions }) => {
       }}
       variant="body2"
     >
-      {descriptions?.[0]?.description?.truncate(250).replace(/\s+/g, ' ') || 'No description'}
+      {descriptions?.[0]?.description?.truncate(230).replace(/\s+/g, ' ') || 'No description'}
     </Typography>
   )
 }

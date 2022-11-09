@@ -62,7 +62,7 @@ export default [
     },
   },
   {
-    label: 'Records',
+    label: 'Datasets',
     Icon: SearchIcon,
     includeInFooter: true,
     breadcrumbsIcon: false,
