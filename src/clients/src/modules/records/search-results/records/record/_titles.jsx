@@ -1,43 +1,38 @@
 import { useContext } from 'react'
 import { context as configContext } from '../../../../../config'
 import { useNavigate } from 'react-router-dom'
-import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-import useTheme from '@mui/material/styles/useTheme'
+import { Header } from '../../../../../components/html-tags'
 
 export default ({ titles, id }) => {
-  const theme = useTheme()
   const { contentBase } = useContext(configContext)
   const navigate = useNavigate()
 
   return (
-    <header>
-      <CardContent
+    <Header>
+      <Typography
+        tabIndex="0"
+        component={Link}
+        onClick={() => navigate(`${contentBase}/records/${id}`.replace('//', '/'))}
         sx={{
-          paddingBottom: 0,
+          lineHeight: 1.5,
+          cursor: 'pointer',
+          display: 'block',
+          textAlign: 'left',
+          fontSize: '0.75rem',
+          fontWeight: 700,
+          letterSpacing: '0.08333em',
+          textTransform: 'uppercase',
+          color: theme => theme.palette.text.primary,
+          mx: theme => theme.spacing(2),
+          mb: theme => theme.spacing(2),
+          mt: theme => theme.spacing(2),
         }}
+        variant="h2"
       >
-        <Typography
-          tabIndex="0"
-          component={Link}
-          onClick={() => navigate(`${contentBase}/records/${id}`.replace('//', '/'))}
-          sx={{
-            lineHeight: 1.5,
-            cursor: 'pointer',
-            display: 'block',
-            textAlign: 'center',
-            fontSize: '0.75rem',
-            fontWeight: 700,
-            letterSpacing: '0.08333em',
-            textTransform: 'uppercase',
-            color: theme.palette.text.primary,
-          }}
-          variant="h2"
-        >
-          {titles?.[0]?.title || 'Title missing'}
-        </Typography>
-      </CardContent>
-    </header>
+        {titles?.[0]?.title || 'Title missing'}
+      </Typography>
+    </Header>
   )
 }

@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import Divider from '@mui/material/Divider'
 import Toolbar from '@mui/material/Toolbar'
-import Title from './_title'
+import DOI from '../_doi'
 import PreviewAtlasButton from '../../../../../../components/preview-atlas-button'
 import CitationButton from '../../../../../../components/citation-dialogue'
 import LoadingCircular from '../../../../../../components/loading-circular'
@@ -13,7 +13,7 @@ const DataDownloadButton = lazy(() => import('../../../../../../components/data-
 export default ({ showDownload = false, showPreview = true, showSelect = true, ..._source }) => {
   return (
     <Toolbar disableGutters variant="dense" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Title {..._source} />
+      <DOI sx={{ mr: 'auto', ml: theme => theme.spacing(2) }} {..._source} />
 
       {/* ATLAS PREVIEW */}
       {showPreview && <PreviewAtlasButton {..._source} />}

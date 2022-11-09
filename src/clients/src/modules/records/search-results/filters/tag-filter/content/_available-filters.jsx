@@ -4,12 +4,11 @@ import Typography from '@mui/material/Typography'
 import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { useTheme } from '@mui/material/styles'
+import { Div } from '../../../../../../components/html-tags'
 
 export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filterId }) => {
   const { global, setGlobal } = useContext(globalContext)
   const { terms } = global
-  const theme = useTheme()
 
   const availableFilters = showAll ? results : results.slice(0, LIST_SIZE + activeFilters.length)
 
@@ -25,9 +24,9 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
 
     return (
       <Grid key={key} item xs={12}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Div sx={{ display: 'flex', alignItems: 'center' }}>
           <Checkbox
-            style={{ alignSelf: 'baseline', display: 'flex' }}
+            sx={{ alignSelf: 'baseline', display: 'flex' }}
             size="small"
             color="primary"
             checked={checked}
@@ -46,16 +45,16 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
           />
           <Tooltip title={`${key?.toUpperCase()} (${doc_count})`} placement="top">
             <Typography
-              style={{
+              sx={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                marginRight: theme.spacing(2),
+                marginRight: theme => theme.spacing(2),
               }}
               variant="overline"
             >{`${typeof key === 'string' ? key.toUpperCase() : key} (${doc_count})`}</Typography>
           </Tooltip>
-        </div>
+        </Div>
       </Grid>
     )
   })

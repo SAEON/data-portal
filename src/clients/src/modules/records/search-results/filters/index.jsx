@@ -1,16 +1,14 @@
 import Grid from '@mui/material/Grid'
 import Fade from '@mui/material/Fade'
-import { useTheme } from '@mui/material/styles'
 import TagFilter from './tag-filter'
 import ExtentFilter from './extent-filter'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
+import { Span } from '../../../../components/html-tags'
 
 export default ({ catalogue }) => {
-  const theme = useTheme()
-
   return (
     <Fade in={Boolean(catalogue)}>
-      <span>
+      <Span>
         <Grid container item xs={12} spacing={0}>
           {/* EXTENT FILTER */}
           <Grid item xs={12} style={{ position: 'relative' }}>
@@ -28,11 +26,12 @@ export default ({ catalogue }) => {
             return (
               <Grid key={id} item xs={12}>
                 <TagFilter
-                  style={
+                  sx={
                     isLastFilter
                       ? {
                           zIndex: 1,
-                          borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+                          borderRadius: theme =>
+                            `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
                         }
                       : { zIndex: 1 }
                   }
@@ -46,7 +45,7 @@ export default ({ catalogue }) => {
             )
           })}
         </Grid>
-      </span>
+      </Span>
     </Fade>
   )
 }

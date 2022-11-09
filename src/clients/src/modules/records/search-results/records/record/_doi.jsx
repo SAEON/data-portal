@@ -4,7 +4,6 @@ import Hidden from '@mui/material/Hidden'
 
 const sx = {
   marginRight: 'auto',
-  marginLeft: theme => theme.spacing(2),
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

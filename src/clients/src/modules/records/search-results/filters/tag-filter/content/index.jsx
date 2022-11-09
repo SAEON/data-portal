@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import ActiveFilters from './_active-filters'
 import AvailableFilters from './_available-filters'
+import { Div } from '../../../../../../components/html-tags'
 
 const LIST_SIZE = 3
 
@@ -22,7 +23,7 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
         {Boolean(activeFilters.length) && (
           <Grid container item xs={12} spacing={0}>
             <Grid item xs>
-              <div style={{ margin: 8 }} />
+              <Div sx={{ m: theme => theme.spacing(2) }} />
             </Grid>
           </Grid>
         )}
@@ -41,7 +42,11 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
         {/* SHOW MORE */}
         {results?.length > LIST_SIZE && (
           <Button
-            style={{ marginTop: 10, marginLeft: 5, marginBottom: 10 }}
+            sx={{
+              mt: theme => theme.spacing(2),
+              ml: theme => theme.spacing(1),
+              mb: theme => theme.spacing(2),
+            }}
             disableElevation
             size="small"
             variant="text"

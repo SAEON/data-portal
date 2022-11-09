@@ -203,7 +203,7 @@ export default ({ showSearch, showSidebar }) => {
                       </Suspense>
                     </Grid>
                   )}
-                  <Grid item xs style={{ flexGrow: 1 }}>
+                  <Grid item xs style={{ flexGrow: 1, minWidth: '1px' }}>
                     <Records results={results} />
                   </Grid>
                 </Grid>

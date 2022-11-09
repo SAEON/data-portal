@@ -7,18 +7,17 @@ import IconButton from '@mui/material/IconButton'
 import Collapse from '@mui/material/Collapse'
 import Fade from '@mui/material/Fade'
 import Card from '@mui/material/Card'
-import { useTheme } from '@mui/material/styles'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { context as globalContext } from '../../../../../contexts/global'
 import Loading from '../../../../../components/loading'
+import { Div, Span } from '../../../../../components/html-tags'
 
 const Map = lazy(() => import('./map'))
 
 export default ({ title }) => {
   const { global } = useContext(globalContext)
   const [collapsed, setCollapsed] = useState(!global?.extent)
-  const theme = useTheme()
 
   return (
     <>
@@ -27,22 +26,22 @@ export default ({ title }) => {
         variant="outlined"
         elevation={0}
         color="inherit"
-        style={{
-          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
+        sx={{
+          borderRadius: theme => `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
           zIndex: 1,
         }}
       >
         <Toolbar variant="regular">
           <Typography
             onClick={() => setCollapsed(!collapsed)}
-            style={{ cursor: 'pointer' }}
+            sx={{ cursor: 'pointer' }}
             variant="overline"
             noWrap
           >
             {title}
           </Typography>
 
-          <div style={{ marginLeft: 'auto' }}>
+          <Div sx={{ marginLeft: 'auto' }}>
             {/* Icon */}
             <IconButton
               aria-label="Collapse filter"
@@ -52,35 +51,35 @@ export default ({ title }) => {
             >
               {collapsed ? (
                 <Fade key={1} timeout={750} in={collapsed}>
-                  <span>
+                  <Span>
                     <ExpandMoreIcon />
-                  </span>
+                  </Span>
                 </Fade>
               ) : (
                 <Fade key={2} timeout={750} in={!collapsed}>
-                  <span>
+                  <Span>
                     <ExpandLessIcon />
-                  </span>
+                  </Span>
                 </Fade>
               )}
             </IconButton>
-          </div>
+          </Div>
         </Toolbar>
       </AppBar>
-      <Collapse style={{ width: '100%' }} key="result-list-collapse" unmountOnExit in={!collapsed}>
+      <Collapse sx={{ width: '100%' }} key="result-list-collapse" unmountOnExit in={!collapsed}>
         <Suspense
           fallback={
-            <div>
+            <Div>
               <Loading />
-            </div>
+            </Div>
           }
         >
           <Grid container spacing={0}>
             <Grid item xs={12}>
               <Card>
-                <div style={{ position: 'relative' }}>
+                <Div sx={{ position: 'relative' }}>
                   <Map />
-                </div>
+                </Div>
               </Card>
             </Grid>
           </Grid>

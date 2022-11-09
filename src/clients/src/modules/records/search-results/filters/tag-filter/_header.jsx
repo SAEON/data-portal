@@ -5,21 +5,22 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import { Div, Span } from '../../../../../components/html-tags'
 
-export default ({ title, style, collapsed, setCollapsed }) => {
+export default ({ title, sx, collapsed, setCollapsed }) => {
   return (
-    <AppBar style={style} position="relative" color="inherit" variant="outlined" elevation={0}>
+    <AppBar sx={sx} position="relative" color="inherit" variant="outlined" elevation={0}>
       <Toolbar variant="regular">
         <Typography
           onClick={() => setCollapsed(!collapsed)}
-          style={{ cursor: 'pointer' }}
+          sx={{ cursor: 'pointer' }}
           variant="overline"
           noWrap
         >
           {title}
         </Typography>
 
-        <div style={{ marginLeft: 'auto' }}>
+        <Div sx={{ marginLeft: 'auto' }}>
           {/* Icon */}
           <IconButton
             onClick={() => setCollapsed(!collapsed)}
@@ -29,19 +30,19 @@ export default ({ title, style, collapsed, setCollapsed }) => {
           >
             {collapsed ? (
               <Fade key={1} timeout={750} in={collapsed}>
-                <span>
+                <Span>
                   <ExpandMoreIcon />
-                </span>
+                </Span>
               </Fade>
             ) : (
               <Fade key={2} timeout={750} in={!collapsed}>
-                <span>
+                <Span>
                   <ExpandLessIcon />
-                </span>
+                </Span>
               </Fade>
             )}
           </IconButton>
-        </div>
+        </Div>
       </Toolbar>
     </AppBar>
   )

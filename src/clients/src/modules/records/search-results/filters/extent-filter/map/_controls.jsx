@@ -2,15 +2,15 @@ import { useState, useEffect, useContext } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import Card from '@mui/material/Card'
-import CropIcon from 'mdi-react/EditIcon'
-import CloseIcon from 'mdi-react/CloseIcon'
+import { Pencil as PencilIcon, Close as CloseIcon } from '../../../../../../components/icons'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { useTheme, alpha } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
+import { Span } from '../../../../../../components/html-tags'
 
 const wkt = new WKT()
 
@@ -22,7 +22,6 @@ export default ({ proxy }) => {
   const [selectActive, setSelectActive] = useState(false)
   const { global, setGlobal } = useContext(globalContext)
   const [extent, setExtent] = useState(global.extent)
-  const theme = useTheme()
 
   defaultZoom = defaultZoom || proxy.getView().getZoom()
   defaultCenter = defaultCenter || proxy.getView().getCenter()
@@ -90,14 +89,14 @@ export default ({ proxy }) => {
   return (
     <Card
       variant="outlined"
-      style={{
+      sx={{
         position: 'absolute',
         top: 0,
         right: 0,
         zIndex: 1,
         margin: '10px 10px 0 0',
-        padding: theme.spacing(1),
-        backgroundColor: alpha(theme.palette.common.white, 0.9),
+        padding: theme => theme.spacing(1),
+        backgroundColor: theme => alpha(theme.palette.common.white, 0.9),
       }}
     >
       <Tooltip title={'Filter by bounding box'}>
@@ -133,16 +132,17 @@ export default ({ proxy }) => {
             setSelectActive(isActive)
           }}
         >
-          <CropIcon
-            style={{
-              color: selectActive ? theme.palette.success.main : theme.palette.text.secondary,
+          <PencilIcon
+            sx={{
+              color: theme =>
+                selectActive ? theme.palette.success.main : theme.palette.text.secondary,
             }}
           />
         </IconButton>
       </Tooltip>
       {extent && (
         <Tooltip title={'Clear the extent filter'}>
-          <span>
+          <Span>
             <IconButton
               aria-label="Remove extent filter"
               size="small"
@@ -156,9 +156,9 @@ export default ({ proxy }) => {
                 view.setCenter(defaultCenter)
               }}
             >
-              <CloseIcon style={{ color: theme.palette.error.dark }} />
+              <CloseIcon sx={{ color: theme => theme.palette.error.dark }} />
             </IconButton>
-          </span>
+          </Span>
         </Tooltip>
       )}
     </Card>

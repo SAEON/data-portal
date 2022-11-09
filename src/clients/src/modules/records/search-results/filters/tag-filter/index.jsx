@@ -3,29 +3,30 @@ import Collapse from '@mui/material/Collapse'
 import { context as globalContext } from '../../../../../contexts/global'
 import FilterHeader from './_header'
 import Loading from '../../../../../components/loading'
+import { Div } from '../../../../../components/html-tags'
 
 const FilterContent = lazy(() => import('./content'))
 
-export default ({ results, id, title, field, boost, style = {} }) => {
+export default ({ results, id, title, field, boost, sx = {} }) => {
   const { global } = useContext(globalContext)
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
   const [collapsed, setCollapsed] = useState(!activeFilters.length)
 
   return (
-    <div style={{ position: 'relative' }}>
-      <FilterHeader title={title} style={style} collapsed={collapsed} setCollapsed={setCollapsed} />
+    <Div sx={{ position: 'relative' }}>
+      <FilterHeader title={title} sx={sx} collapsed={collapsed} setCollapsed={setCollapsed} />
       <Collapse
-        style={{ width: '100%' }}
+        sx={{ width: '100%' }}
         key={`result-list-collapse-${id}`}
         unmountOnExit
         in={!collapsed}
       >
         <Suspense
           fallback={
-            <div>
+            <Div>
               <Loading />
-            </div>
+            </Div>
           }
         >
           <FilterContent
@@ -37,6 +38,6 @@ export default ({ results, id, title, field, boost, style = {} }) => {
           />
         </Suspense>
       </Collapse>
-    </div>
+    </Div>
   )
 }

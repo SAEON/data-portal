@@ -4,13 +4,27 @@ import { styled } from '@mui/material/styles'
 import SearchIcon_ from 'mdi-react/SearchIcon'
 import LoginIcon_ from 'mdi-react/LoginVariantIcon'
 import {
-  mdiChevronRight,
   mdiChevronLeft,
+  mdiChevronRight,
+  mdiClose,
   mdiContentCopy,
-  mdiInformationVariant,
   mdiDownload,
   mdiDownloadCircleOutline,
+  mdiInformationVariant,
+  mdiPencil,
 } from '@mdi/js'
+
+export const Close = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiClose} />
+  </SvgIcon>
+))({})
+
+export const Pencil = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiPencil} />
+  </SvgIcon>
+))({})
 
 export const ChevronRight = styled(props => (
   <SvgIcon {...props}>

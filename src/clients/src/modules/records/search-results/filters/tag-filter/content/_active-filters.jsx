@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { useTheme } from '@mui/material/styles'
+import { Div } from '../../../../../../components/html-tags'
 
 /**
  * Show the selected filters in alphabetical order
@@ -13,7 +13,6 @@ import { useTheme } from '@mui/material/styles'
  * double looping
  */
 export default ({ activeFilters, filterId }) => {
-  const theme = useTheme()
   const { global, setGlobal } = useContext(globalContext)
   const { terms } = global
 
@@ -28,7 +27,7 @@ export default ({ activeFilters, filterId }) => {
 
     return (
       <Grid key={value} item xs={12}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Div sx={{ display: 'flex', alignItems: 'center' }}>
           <Checkbox
             style={{ alignSelf: 'baseline' }}
             size="small"
@@ -49,16 +48,16 @@ export default ({ activeFilters, filterId }) => {
           />
           <Tooltip title={value?.toUpperCase()} placement="top">
             <Typography
-              style={{
+              sx={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                marginRight: theme.spacing(2),
+                marginRight: theme => theme.spacing(2),
               }}
               variant="overline"
             >{`${typeof value === 'string' ? value.toUpperCase() : value}`}</Typography>
           </Tooltip>
-        </div>
+        </Div>
       </Grid>
     )
   })
