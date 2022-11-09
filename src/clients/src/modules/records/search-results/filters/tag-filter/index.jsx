@@ -7,11 +7,13 @@ import { Div } from '../../../../../components/html-tags'
 
 const FilterContent = lazy(() => import('./content'))
 
-export default ({ results, id, title, field, boost, sx = {} }) => {
+export default ({ results, id, title, field, boost, sx = {}, defaultExpanded = false }) => {
   const { global } = useContext(globalContext)
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
-  const [collapsed, setCollapsed] = useState(!activeFilters.length)
+  const [collapsed, setCollapsed] = useState(
+    defaultExpanded === true ? false : !activeFilters.length
+  )
 
   return (
     <Div sx={{ position: 'relative' }}>
