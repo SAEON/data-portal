@@ -10,9 +10,8 @@ export default ({ id }) => {
   const checked = selectAll || selectedIds.includes(id)
 
   return (
-    <Tooltip title={'Select record'} placement="left-start">
+    <Tooltip title={'Select record'} placement="top-start">
       <Checkbox
-        sx={{ mr: theme => theme.spacing(1) }}
         size="small"
         color="primary"
         inputProps={{

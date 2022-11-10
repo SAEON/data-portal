@@ -14,7 +14,28 @@ import {
   mdiDownloadCircleOutline,
   mdiInformationVariant,
   mdiPencil,
+  mdiEye,
+  mdiEyeOff,
+  mdiFormatQuoteOpen,
 } from '@mdi/js'
+
+export const FormatQuoteOpen = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiFormatQuoteOpen} />
+  </SvgIcon>
+))({})
+
+export const EyeOff = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiEyeOff} />
+  </SvgIcon>
+))({})
+
+export const Eye = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiEye} />
+  </SvgIcon>
+))({})
 
 export const ChevronDown = styled(props => (
   <SvgIcon {...props}>

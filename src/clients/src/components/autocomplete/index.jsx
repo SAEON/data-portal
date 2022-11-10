@@ -14,7 +14,6 @@ export default ({
   renderTags = undefined,
   ...props
 }) => {
-  console.log('option', options)
   return (
     <Autocomplete
       aria-label="Select option"

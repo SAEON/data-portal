@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Typography from '@mui/material/Typography'
-import DownloadIcon from 'mdi-react/DownloadIcon'
+import { DownloadCircleOutline as DownloadIcon } from '../icons'
 import { PUBLIC_HTTP_ADDRESS, EMAIL_REGEX } from '../../config'
 import ConfirmDownload from './_confirm'
 import QuickForm from '../../packages/quick-form'
@@ -18,6 +18,7 @@ import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import { useTheme } from '@mui/material/styles'
 import MenuItem from '@mui/material/MenuItem'
+import { Span } from '../html-tags'
 
 const PLACEHOLDER_URI = 'http://nothing.com'
 
@@ -42,7 +43,8 @@ export default ({
   id = undefined,
   immutableResource = undefined,
   children,
-  size = 22,
+  title = undefined,
+  fontSize = 'small',
   IconButtonSize = 'medium',
   tooltipPlacement,
   buttonProps,
@@ -65,11 +67,12 @@ export default ({
       <Tooltip
         placement={tooltipPlacement || 'bottom'}
         title={
+          title ||
           `${resourceDescription || 'Download'} (${downloadURL?.replace(/.*\./, '')})` ||
           'Unknown download'
         }
       >
-        <span>
+        <Span>
           {children ? (
             <Button
               aria-label="Download data"
@@ -93,10 +96,10 @@ export default ({
               size={IconButtonSize}
               {...buttonProps}
             >
-              <DownloadIcon size={size} />
+              <DownloadIcon fontSize={fontSize} />
             </IconButton>
           )}
-        </span>
+        </Span>
       </Tooltip>
 
       <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>

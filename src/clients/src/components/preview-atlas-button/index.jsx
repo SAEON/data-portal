@@ -3,10 +3,10 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import DialogContent from '@mui/material/DialogContent'
 import { useTheme } from '@mui/material/styles'
-import CloseIcon from 'mdi-react/CloseIcon'
-import PreviewIcon from 'mdi-react/EyeIcon'
+import { Eye as EyeIcon, Close as CloseIcon } from '../icons'
 import MessageDialogue from '../../components/message-dialogue'
 import Loading from '../../components/loading'
+import { Div } from '../html-tags'
 
 const Map = lazy(() => import('./_map'))
 
@@ -27,9 +27,9 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
       ariaLabel="Toggle map preview"
       id={`map-preview-${id}`}
       iconProps={{ size: buttonSize, 'aria-label': 'Preview dataset as a map' }}
-      icon={<PreviewIcon />}
+      icon={<EyeIcon fontSize="small" />}
       title={(onClose, open) => (
-        <div style={{ display: 'flex' }}>
+        <Div sx={{ display: 'flex' }}>
           <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
           <IconButton
             aria-label="Close map preview"
@@ -42,9 +42,9 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
             }}
             style={{ marginLeft: 'auto', alignSelf: 'center' }}
           >
-            <CloseIcon />
+            <CloseIcon fontSize="small" />
           </IconButton>
-        </div>
+        </Div>
       )}
       titleProps={{
         style: {
@@ -53,7 +53,7 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
         },
       }}
       tooltipProps={{
-        placement: 'left',
+        placement: 'top-start',
         title: disabled ? 'No preview available' : `Preview dataset as map`,
       }}
       dialogueContentProps={{ style: { padding: 0 } }}

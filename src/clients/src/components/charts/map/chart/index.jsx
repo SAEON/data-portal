@@ -43,7 +43,6 @@ export default ({ config, data, title, description }) => {
     if (row[geoValuesField] > dataMax) dataMax = row[geoValuesField]
     return { name: row[geoNamesField], value: row[geoValuesField] }
   })
-  // console.log('map chartData', chartData)
   return (
     <ReactEcharts
       style={{ height: '95%', width: '95%' }}

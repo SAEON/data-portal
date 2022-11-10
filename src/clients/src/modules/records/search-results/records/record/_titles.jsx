@@ -25,9 +25,10 @@ export default ({ titles, id }) => {
           letterSpacing: '0.08333em',
           textTransform: 'uppercase',
           color: theme => theme.palette.text.primary,
-          mx: theme => theme.spacing(2),
-          mb: theme => theme.spacing(2),
           mt: theme => theme.spacing(2),
+          mr: theme => theme.spacing(4),
+          mb: theme => theme.spacing(2),
+          ml: theme => theme.spacing(2),
         }}
         variant="h2"
       >

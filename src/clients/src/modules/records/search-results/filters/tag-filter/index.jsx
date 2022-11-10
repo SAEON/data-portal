@@ -1,11 +1,9 @@
-import { useState, useContext, lazy, Suspense } from 'react'
+import { useState, useContext } from 'react'
 import Collapse from '@mui/material/Collapse'
 import { context as globalContext } from '../../../../../contexts/global'
 import FilterHeader from './_header'
-import Loading from '../../../../../components/loading'
 import { Div } from '../../../../../components/html-tags'
-
-const FilterContent = lazy(() => import('./content'))
+import FilterContent from './content'
 
 export default ({ results, id, title, field, boost, sx = {}, defaultExpanded = false }) => {
   const { global } = useContext(globalContext)
@@ -25,21 +23,13 @@ export default ({ results, id, title, field, boost, sx = {}, defaultExpanded = f
         unmountOnExit
         in={!collapsed}
       >
-        <Suspense
-          fallback={
-            <Div>
-              <Loading />
-            </Div>
-          }
-        >
-          <FilterContent
-            filterId={id}
-            field={field}
-            boost={boost}
-            results={results}
-            activeFilters={activeFilters}
-          />
-        </Suspense>
+        <FilterContent
+          filterId={id}
+          field={field}
+          boost={boost}
+          results={results}
+          activeFilters={activeFilters}
+        />
       </Collapse>
     </Div>
   )

@@ -11,7 +11,6 @@ export default ({ config, data, title, description }) => {
   const valuesField = config['series-values']
   var total = 0
   for (let i = 0; i < data.length; i++) {
-    console.log('data[i][valuesField]', data[i][valuesField])
     total += parseFloat(data[i][valuesField])
   }
 

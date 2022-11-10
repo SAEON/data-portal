@@ -57,7 +57,7 @@
     "minisearch": "^5.0.0",
     "mkdirp": "^1.0.4",
     "nanoid": "^4.0.0",
-    "node-sass": "^7.0.3",
+    "node-sass": "^8.0.0",
     "notistack": "^2.0.8",
     "ol": "7.1",
     "react": "^18.2.0",
@@ -80,7 +80,7 @@
     "ua-parser-js": "^1.0.32",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
-    "webpack": "^5.74.0",
+    "webpack": "^5.75.0",
     "webpack-cli": "^4.10.0"
   },
   "devDependencies": {

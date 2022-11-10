@@ -2,11 +2,11 @@ import { useState } from 'react'
 import Dialogue from './dialogue'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
-import CitationIcon from 'mdi-react/FormatQuoteCloseIcon'
+import { FormatQuoteOpen as FormatQuoteOpenIcon } from '../icons'
 import { nanoid } from 'nanoid'
 import { Span } from '../html-tags'
 
-export default ({ doi, buttonSize = 'small', ...props }) => {
+export default ({ doi, buttonSize = 'medium', ...props }) => {
   const [open, setOpen] = useState(false)
   const id = doi || nanoid()
 
@@ -14,7 +14,7 @@ export default ({ doi, buttonSize = 'small', ...props }) => {
     <>
       <Dialogue id={`citation-dialogue-${id}`} doi={doi} open={open} setOpen={setOpen} />
       <Tooltip
-        placement="left-start"
+        placement="top-start"
         title={
           doi
             ? 'Cite this record'
@@ -32,7 +32,7 @@ export default ({ doi, buttonSize = 'small', ...props }) => {
             size={buttonSize}
             {...props}
           >
-            <CitationIcon />
+            <FormatQuoteOpenIcon fontSize="small" />
           </IconButton>
         </Span>
       </Tooltip>

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { alpha } from '@mui/material/styles'
 import { Div } from '../../../../components/html-tags'
+import Tools from './record/tools'
 
 const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.common.white, 0.85),
@@ -42,6 +43,7 @@ export default ({ results }) => {
                 pr: theme.spacing(1),
                 pb: theme.spacing(1),
                 pl: theme.spacing(1),
+                overflow: 'hidden',
                 borderBottom: `1px solid ${theme.palette.divider}`,
                 ':last-child': {
                   borderBottom: 'unset',
@@ -55,7 +57,10 @@ export default ({ results }) => {
                 '&:hover': {
                   backgroundColor: theme.palette.common.white,
                   '& > .record-tools': {
-                    display: 'block',
+                    backgroundColor: theme.palette.common.white,
+                    right: 0,
+                    outline: theme => `1px solid ${theme.palette.divider}`,
+                    boxShadow: theme => theme.shadows[2],
                   },
                 },
               })}
@@ -64,20 +69,25 @@ export default ({ results }) => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
+                  maxWidth: '100%',
                 }}
               >
                 <Record i={i} length={arr.length} {..._source} />
               </Div>
-              {/* <Div
-                className="record-tools debug"
+              <Div
+                className="record-tools"
                 sx={{
-                  display: 'none',
                   position: 'absolute',
-                  right: 0,
-                  width: theme => theme.spacing(8),
-                  height: '100%',
+                  transition: theme =>
+                    theme.transitions.create(['right', 'background-color', 'outline', 'boxShadow']),
+                  boxShadow: 'none',
+                  outline: `1px solid transparent`,
+                  right: -108,
+                  top: 0,
                 }}
-              ></Div> */}
+              >
+                <Tools {..._source} />
+              </Div>
             </Grid>
           )
         })}

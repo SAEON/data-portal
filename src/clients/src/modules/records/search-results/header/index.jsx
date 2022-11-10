@@ -11,7 +11,6 @@ import ToolbarHeader from '../../../../components/toolbar-header'
 import Divider from '@mui/material/Divider'
 import Search from '../../../../components/search'
 import { Span } from '../../../../components/html-tags'
-// import ResetFiltersButton from './_reset-filters-button'
 
 const AuthenticatedOnly = lazy(() => import('./authenticated'))
 const ConfigurePaginationButton = lazy(() => import('./_configure-pagination-button'))
@@ -77,9 +76,6 @@ export default ({
 
         {/* RESET SELECTION */}
         <ToggleSelectionButton catalogue={catalogue} />
-
-        {/* RESET FILTERS */}
-        {/* <ResetFiltersButton /> */}
 
         {/* PAGINATION CONFIG */}
 

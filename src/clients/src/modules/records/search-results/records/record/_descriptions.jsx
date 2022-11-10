@@ -4,19 +4,17 @@ export default ({ descriptions }) => {
   return (
     <Typography
       sx={{
+        boxOrient: 'vertical',
         color: theme => theme.palette.text.primary,
         fontSize: '0.8rem',
-        lineHeight: 1.5,
+        lineClamp: 2,
+        mb: theme => theme.spacing(1),
+        mx: theme => theme.spacing(2),
+        overflow: 'hidden',
         textAlign: 'justify',
+        textOverflow: 'ellipsis',
         whiteSpace: 'break-spaces',
         wordBreak: 'break-word',
-        lineClamp: 3,
-        boxOrient: 'vertical',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        display: '-webkit-box',
-        mx: theme => theme.spacing(2),
-        mb: theme => theme.spacing(1),
       }}
       variant="body2"
     >
