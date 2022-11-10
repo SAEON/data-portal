@@ -5,6 +5,7 @@ import Chip from '@mui/material/Chip'
 import { context as configContext } from '../../../config'
 import { context as globalContext } from '../../../contexts/global'
 import Row from '../_row'
+import Tooltip from '@mui/material/Tooltip'
 
 /**
  * filter = {
@@ -45,28 +46,30 @@ export default ({ subjects }) => {
             return true
           })
           .map(subject => (
-            <Grid item key={subject.subject}>
-              <Chip
-                aria-label="Click to search for records with this keyword"
-                size="small"
-                color="primary"
-                clickable
-                onClick={() => {
-                  setGlobal(
-                    {
-                      terms: [
-                        {
-                          field: 'subjects.subject.raw',
-                          value: subject.subject.toLowerCase().trim(),
-                        },
-                      ],
-                    },
-                    true
-                  )
-                  navigate(`${contentBase}/records`.replace('//', '/'))
-                }}
-                label={subject.subject.toUpperCase()}
-              />
+            <Grid item key={subject.subject} sx={{ overflow: 'hidden', maxWidth: '100%' }}>
+              <Tooltip title={subject.subject}>
+                <Chip
+                  aria-label="Click to search for records with this keyword"
+                  size="small"
+                  color="primary"
+                  clickable
+                  onClick={() => {
+                    setGlobal(
+                      {
+                        terms: [
+                          {
+                            field: 'subjects.subject.raw',
+                            value: subject.subject.toLowerCase().trim(),
+                          },
+                        ],
+                      },
+                      true
+                    )
+                    navigate(`${contentBase}/records`.replace('//', '/'))
+                  }}
+                  label={subject.subject.toUpperCase().truncate(30)}
+                />
+              </Tooltip>
             </Grid>
           ))}
       </Grid>

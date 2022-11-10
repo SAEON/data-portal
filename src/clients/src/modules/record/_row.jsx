@@ -3,24 +3,25 @@ import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { alpha } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default ({ title, children, ...props }) => {
-  const mdUp = useMediaQuery(theme => theme.breakpoints.up('md'))
-  const { style, ...otherProps } = props
+  const { sx, ...otherProps } = props
 
   return (
     <Grid
-      sx={Object.assign(
-        {},
-        {
-          ml: theme => theme.spacing(1),
-          mr: theme => theme.spacing(1),
-          mt: theme => theme.spacing(1),
-          mb: theme => theme.spacing(mdUp ? 1 : 0),
+      sx={theme => ({
+        mt: 0,
+        mr: 0,
+        mb: 0,
+        ml: 0,
+        [theme.breakpoints.up('md')]: {
+          ml: theme.spacing(1),
+          mr: theme.spacing(1),
+          mt: theme.spacing(1),
+          mb: theme.spacing(1),
         },
-        style
-      )}
+        ...sx,
+      })}
       item
       {...otherProps}
     >

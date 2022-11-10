@@ -17,7 +17,7 @@ export default _source => {
   const { resourceDescription, resourceDownload } = immutableResource
 
   return (
-    <Row title={'Download'} style={{ position: 'relative' }}>
+    <Row title={'Download'} sx={{ position: 'relative' }}>
       {resourceDescription ? (
         <DownloadButton
           TextButton={({ onClick }) => (
