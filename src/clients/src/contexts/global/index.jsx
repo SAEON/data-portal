@@ -30,7 +30,7 @@ export default ({ children }) => {
       {search => (
         <QuickForm
           referrer={referrer}
-          text={text || search?.text || undefined}
+          text={text || search?.text || ''}
           extent={search?.extent || undefined}
           terms={search?.terms || []}
           ids={search?.ids || []}
