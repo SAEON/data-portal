@@ -8,14 +8,13 @@ import { Div } from '../../../../components/html-tags'
 import Tools from './record/tools'
 
 const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.85),
+  backgroundColor: alpha(theme.palette.common.white, 0.9),
   p: 0,
 }))
 
 export default ({ results }) => {
   return (
     <Grid
-      component={Paper}
       container
       item
       xs={12}
@@ -33,20 +32,20 @@ export default ({ results }) => {
           return (
             <Grid
               key={_source.id}
+              component={Paper}
               item
               xs={12}
               sx={theme => ({
                 display: 'flex',
                 position: 'relative',
-                mb: 0,
+                mb: theme => theme.spacing(1),
                 mt: theme.spacing(1),
                 pr: theme.spacing(1),
                 pb: theme.spacing(1),
                 pl: theme.spacing(1),
                 overflow: 'hidden',
-                borderBottom: `1px solid ${theme.palette.divider}`,
                 ':last-child': {
-                  borderBottom: 'unset',
+                  mb: 0,
                 },
                 [theme.breakpoints.up('md')]: {
                   mt: 0,
