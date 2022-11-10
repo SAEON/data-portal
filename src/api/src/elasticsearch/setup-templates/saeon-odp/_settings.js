@@ -17,7 +17,7 @@ export default {
             'garbage, rubbish',
             'trash, rubbish',
             'sea, ocean',
-            'ocean, sea'
+            'ocean, sea',
           ],
         },
       },
