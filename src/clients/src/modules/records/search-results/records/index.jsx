@@ -38,8 +38,9 @@ export default ({ results }) => {
               sx={theme => ({
                 display: 'flex',
                 position: 'relative',
-                mb: theme => theme.spacing(1),
+                mb: 0,
                 mt: theme.spacing(1),
+                mx: theme.spacing(1),
                 pr: theme.spacing(1),
                 pb: theme.spacing(1),
                 pl: theme.spacing(1),
@@ -48,6 +49,8 @@ export default ({ results }) => {
                   mb: 0,
                 },
                 [theme.breakpoints.up('md')]: {
+                  mb: theme.spacing(1),
+                  mx: 0,
                   mt: 0,
                   pr: 0,
                   pl: 0,

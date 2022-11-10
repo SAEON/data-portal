@@ -14,7 +14,6 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { Div } from '../../../components/html-tags'
 import Fade from '@mui/material/Fade'
 
-const MobileSideMenu = lazy(() => import('./_side-menu'))
 const Filters = lazy(() => import('./filters'))
 
 const DEFAULT_CURSORS = {
@@ -146,9 +145,6 @@ export default ({ showSearch, showSidebar }) => {
     <Fade key="search-results" in>
       <main id="search-results">
         <Header
-          showSidebar={showSidebar}
-          sidebarVisible={sidebarVisible}
-          setSidebarVisible={setSidebarVisible}
           cursors={cursors}
           setCursors={setCursors}
           setPageSize={setPageSize}
@@ -171,21 +167,9 @@ export default ({ showSearch, showSidebar }) => {
             {/* SEARCH RESULTS & HEADER */}
             {loading ? null : (
               <>
-                {/* MOBILE */}
+                {/* MOBILE and TABLET */}
                 <Hidden mdUp>
-                  <>
-                    {!showSidebar && (
-                      <Suspense fallback={<Loading />}>
-                        <MobileSideMenu
-                          setShowSidebar={setSidebarVisible}
-                          showSidebar={sidebarVisible}
-                          data={data}
-                        />
-                      </Suspense>
-                    )}
-
-                    <Records results={results} />
-                  </>
+                  <Records results={results} />
                 </Hidden>
 
                 {/* LARGER SCREENS */}

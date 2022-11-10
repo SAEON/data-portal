@@ -1,5 +1,4 @@
 import { Suspense, lazy, useContext } from 'react'
-import ToggleFiltersButton from './_toggle-filters-button'
 import ToggleSelectionButton from './_toggle-select-button'
 import CreateListButton from './create-list-button'
 import PageBackButton from './_page-back-button'
@@ -24,25 +23,14 @@ export default ({
   cursors,
   setCursors,
   pageSize,
-  showSidebar,
   children,
   showSearch,
-  sidebarVisible,
-  setSidebarVisible,
 }) => {
   const { isAuthenticated } = useContext(authorizationContext)
-  const sidebarEnabled = !showSidebar
 
   return (
     <>
       <ToolbarHeader>
-        {/* MOBILE FILTER TOGGLE */}
-        {sidebarEnabled && (
-          <Hidden mdUp>
-            <ToggleFiltersButton setShowSidebar={setSidebarVisible} showSidebar={sidebarVisible} />
-          </Hidden>
-        )}
-
         {/* SEARCH RESULT COUNT */}
         <Hidden smDown>
           <Suspense fallback={<LoadingCircular />}>
@@ -53,7 +41,18 @@ export default ({
         {/* SEARCH */}
         {showSearch && (
           <>
-            <Divider orientation="vertical" flexItem sx={{ mx: theme => theme.spacing(2) }} />
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={theme => ({
+                mr: theme => theme.spacing(2),
+                visiblity: 'hidden',
+                [theme.breakpoints.up('sm')]: {
+                  visiblity: 'unset',
+                  mx: theme => theme.spacing(2),
+                },
+              })}
+            />
             <Search />
             <Span sx={{ mr: theme => theme.spacing(2) }} />
           </>
