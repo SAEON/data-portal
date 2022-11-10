@@ -46,6 +46,7 @@ export default ({
   title = undefined,
   fontSize = 'small',
   IconButtonSize = 'medium',
+  TextButton = undefined,
   tooltipPlacement,
   buttonProps,
 }) => {
@@ -62,46 +63,50 @@ export default ({
 
   return (
     <>
-      <Tooltip
-        placement={tooltipPlacement || 'top-start'}
-        title={
-          disabaled
-            ? 'No available download'
-            : title ||
-              `${resourceDescription || 'Download'} (${downloadURL?.replace(/.*\./, '')})` ||
-              'Unknown download'
-        }
-      >
-        <Span>
-          {children ? (
-            <Button
-              disabled={disabaled}
-              aria-label="Download data"
-              aria-controls="usage-terms-confirmation-dialogue"
-              aria-haspopup="true"
-              aria-expanded={open}
-              onClick={() => setOpen(!open)}
-              {...buttonProps}
-              startIcon={<DownloadIcon />}
-            >
-              {children}
-            </Button>
-          ) : (
-            <IconButton
-              aria-label="Download data"
-              aria-controls="usage-terms-confirmation-dialogue"
-              aria-haspopup="true"
-              aria-expanded={open}
-              onClick={() => setOpen(!open)}
-              disabled={disabaled || downloadURL === PLACEHOLDER_URI}
-              size={IconButtonSize}
-              {...buttonProps}
-            >
-              <DownloadIcon fontSize={fontSize} />
-            </IconButton>
-          )}
-        </Span>
-      </Tooltip>
+      {!TextButton && (
+        <Tooltip
+          placement={tooltipPlacement || 'top-start'}
+          title={
+            disabaled
+              ? 'No available download'
+              : title ||
+                `${resourceDescription || 'Download'} (${downloadURL?.replace(/.*\./, '')})` ||
+                'Unknown download'
+          }
+        >
+          <Span>
+            {children ? (
+              <Button
+                disabled={disabaled}
+                aria-label="Download data"
+                aria-controls="usage-terms-confirmation-dialogue"
+                aria-haspopup="true"
+                aria-expanded={open}
+                onClick={() => setOpen(open => !open)}
+                {...buttonProps}
+                startIcon={<DownloadIcon />}
+              >
+                {children}
+              </Button>
+            ) : (
+              <IconButton
+                aria-label="Download data"
+                aria-controls="usage-terms-confirmation-dialogue"
+                aria-haspopup="true"
+                aria-expanded={open}
+                onClick={() => setOpen(open => !open)}
+                disabled={disabaled || downloadURL === PLACEHOLDER_URI}
+                size={IconButtonSize}
+                {...buttonProps}
+              >
+                <DownloadIcon fontSize={fontSize} />
+              </IconButton>
+            )}
+          </Span>
+        </Tooltip>
+      )}
+
+      {TextButton && <TextButton onClick={() => setOpen(open => !open)} />}
 
       <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
         <QuickForm effects={[fields => (form.current = { ...fields })]} {...formFields}>

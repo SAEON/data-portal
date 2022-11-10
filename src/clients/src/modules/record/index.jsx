@@ -7,15 +7,14 @@ import Header from './header'
 import CodeView from './code-view'
 import Container from '@mui/material/Container'
 import Fade from '@mui/material/Fade'
-import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Hidden from '@mui/material/Hidden'
+import { Div, Span } from '../../components/html-tags'
 
 export default () => {
   const id = useParams()['*']
   const [codeView, updateCodeView] = useState(false)
   const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
-  const theme = useTheme()
 
   const { error, loading, data } = useQuery(
     gql`
@@ -60,21 +59,21 @@ export default () => {
         _source={{ ...data?.catalogue?.search?.records?.[0]?.metadata?._source }}
       />
       <Hidden mdDown>
-        <div style={{ marginTop: theme.spacing(1) }} />
+        <Div sx={{ marginTop: theme => theme.spacing(1) }} />
       </Hidden>
       <Container disableGutters={smDown}>
         <Fade key="code-view-in" in={codeView}>
-          <span style={{ display: codeView ? 'inherit' : 'none' }}>
+          <Span sx={{ display: codeView ? 'inherit' : 'none' }}>
             <CodeView json={data?.catalogue?.search?.records?.[0]?.metadata?._source} />
-          </span>
+          </Span>
         </Fade>
         <Fade key="field-view-in" in={!codeView}>
-          <span style={{ display: codeView ? 'none' : 'inherit' }}>
+          <Span sx={{ display: codeView ? 'none' : 'inherit' }}>
             <FieldView {...data?.catalogue?.search?.records?.[0]?.metadata?._source} />
-          </span>
+          </Span>
         </Fade>
       </Container>
-      <div style={{ marginTop: theme.spacing(1) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(1) }} />
     </>
   )
 }

@@ -1,28 +1,38 @@
 import { useState, useContext } from 'react'
 import Row from '../_row'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
 import DownloadButton from '../../../components/data-download'
 import RegisterEventLog from '../../../components/application-logger/register-event-log'
 import Link from '@mui/material/Link'
 import Hidden from '@mui/material/Hidden'
 import packageJson from '../../../../package.json'
 import { context as globalContext } from '../../../contexts/global'
+import { Div, Span } from '../../../components/html-tags'
 
 export default _source => {
   const { global } = useContext(globalContext)
   const { referrer } = global
   const [ref, setRef] = useState(null)
-  const theme = useTheme()
   const { immutableResource, rightsList } = _source
   const { resourceDescription, resourceDownload } = immutableResource
 
   return (
     <Row title={'Download'} style={{ position: 'relative' }}>
       {resourceDescription ? (
-        <Typography variant="body2" component="h2">
-          {resourceDescription}
-        </Typography>
+        <DownloadButton
+          TextButton={({ onClick }) => (
+            <Typography
+              sx={{ display: 'block', cursor: 'pointer' }}
+              variant="body2"
+              component={Link}
+              variantMapping={{ body2: 'h2' }}
+              onClick={onClick}
+            >
+              {resourceDescription}
+            </Typography>
+          )}
+          {..._source}
+        />
       ) : resourceDownload?.downloadURL ? (
         <Typography ref={el => setRef(el)} variant="body2" component="h2">
           {ref && (
@@ -54,20 +64,22 @@ export default _source => {
         </Typography>
       )}
       <Hidden smDown>
-        <span style={{ position: 'absolute', top: `calc(50% - 30px)`, right: theme.spacing(2) }}>
-          <DownloadButton size={36} {..._source} />
-        </span>
+        <Span
+          sx={{ position: 'absolute', top: `calc(50% - 30px)`, right: theme => theme.spacing(2) }}
+        >
+          <DownloadButton IconButtonSize="large" fontSize="large" {..._source} />
+        </Span>
       </Hidden>
 
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Div sx={{ mt: theme => theme.spacing(2) }} />
 
-      <div>
+      <Div>
         <Typography gutterBottom variant="overline">
           <b>License</b>
         </Typography>
         {rightsList.map(rl => {
           return (
-            <div key={rl.rightsURI}>
+            <Div key={rl.rightsURI}>
               <Typography variant="body2">{rl.rights}</Typography>
               <Typography
                 target="_blank"
@@ -78,10 +90,10 @@ export default _source => {
               >
                 {rl.rightsURI}
               </Typography>
-            </div>
+            </Div>
           )
         })}
-      </div>
+      </Div>
     </Row>
   )
 }
