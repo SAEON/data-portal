@@ -6,10 +6,12 @@ import { SearchIcon } from '../../components/icons'
 import QuickForm from '../../packages/quick-form'
 import { context as globalContext } from '../../contexts/global'
 import debounce from '../../lib/fns/debounce'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default ({ autofocus = true, onFocus, onBlur }) => {
   const navigate = useNavigate()
   const { global, setGlobal } = useContext(globalContext)
+  const smUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
   return (
     <QuickForm
@@ -43,7 +45,7 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
             }}
             value={text}
             margin="none"
-            placeholder="Enter search terms ..."
+            placeholder={smUp ? 'Enter search terms ...' : ''}
             sx={{
               backgroundColor: theme => theme.palette.grey[200],
               p: theme => theme.spacing(0.5),

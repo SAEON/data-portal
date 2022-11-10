@@ -19,7 +19,7 @@ export default ({ results }) => {
       item
       xs={12}
       sx={theme => ({
-        mb: theme.spacing(1),
+        mb: 0,
         [theme.breakpoints.up('md')]: {
           mb: theme.spacing(2),
         },
@@ -39,8 +39,6 @@ export default ({ results }) => {
                 display: 'flex',
                 position: 'relative',
                 mb: 0,
-                mt: theme.spacing(1),
-                mx: theme.spacing(1),
                 pr: theme.spacing(1),
                 pb: theme.spacing(1),
                 pl: theme.spacing(1),

@@ -73,7 +73,13 @@ export default () => {
           </Span>
         </Fade>
       </Container>
-      <Div sx={{ marginTop: theme => theme.spacing(1) }} />
+      <Div
+        sx={theme => ({
+          [theme.breakpoints.up('md')]: {
+            mt: theme.spacing(1),
+          },
+        })}
+      />
     </>
   )
 }
