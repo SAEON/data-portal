@@ -58,23 +58,24 @@ export default ({
       ? `${PUBLIC_HTTP_ADDRESS}/download-proxy?uri=${resourceDownload?.downloadURL}`
       : resourceDownload?.downloadURL
 
-  if (!resourceDownload?.downloadURL) {
-    return null
-  }
+  const disabaled = !resourceDownload?.downloadURL
 
   return (
     <>
       <Tooltip
-        placement={tooltipPlacement || 'bottom'}
+        placement={tooltipPlacement || 'top-start'}
         title={
-          title ||
-          `${resourceDescription || 'Download'} (${downloadURL?.replace(/.*\./, '')})` ||
-          'Unknown download'
+          disabaled
+            ? 'No available download'
+            : title ||
+              `${resourceDescription || 'Download'} (${downloadURL?.replace(/.*\./, '')})` ||
+              'Unknown download'
         }
       >
         <Span>
           {children ? (
             <Button
+              disabled={disabaled}
               aria-label="Download data"
               aria-controls="usage-terms-confirmation-dialogue"
               aria-haspopup="true"
@@ -92,7 +93,7 @@ export default ({
               aria-haspopup="true"
               aria-expanded={open}
               onClick={() => setOpen(!open)}
-              disabled={downloadURL === PLACEHOLDER_URI}
+              disabled={disabaled || downloadURL === PLACEHOLDER_URI}
               size={IconButtonSize}
               {...buttonProps}
             >

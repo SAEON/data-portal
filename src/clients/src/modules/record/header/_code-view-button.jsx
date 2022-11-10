@@ -1,10 +1,10 @@
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
-import CodeIcon from 'mdi-react/CodeIcon'
+import { CodeJson as CodeJsonIcon } from '../../../components/icons'
 
 export default ({ codeView, toggleCodeView }) => {
   return (
-    <Tooltip title="View raw metadata record (JSON)">
+    <Tooltip placement="top" title="View raw metadata record (JSON)">
       <IconButton
         aria-label="View raw (JSON) metadata"
         color={codeView ? 'primary' : 'default'}
@@ -12,9 +12,9 @@ export default ({ codeView, toggleCodeView }) => {
           e.stopPropagation()
           toggleCodeView()
         }}
-        size="large"
+        size="medium"
       >
-        <CodeIcon size={22} />
+        <CodeJsonIcon fontSize="small" />
       </IconButton>
     </Tooltip>
   )

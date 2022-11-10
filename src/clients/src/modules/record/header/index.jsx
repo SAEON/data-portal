@@ -8,6 +8,7 @@ import CodeViewButton from './_code-view-button'
 import Title from './_title'
 import FancyHeader from '../../../components/toolbar-header'
 import { useTheme } from '@mui/material/styles'
+import { Div } from '../../../components/html-tags'
 
 export default ({ codeView, toggleCodeView, _source }) => {
   const { isAuthenticated } = useContext(authorizationContext)
@@ -18,13 +19,13 @@ export default ({ codeView, toggleCodeView, _source }) => {
       style={{ paddingLeft: theme.spacing(2), paddingRight: theme.spacing(2), display: 'flex' }}
     >
       <Title {..._source} />
-      <div style={{ marginRight: 'auto' }} />
+      <Div sx={{ marginRight: 'auto' }} />
 
       <PreviewAtlasButton {..._source} buttonSize="medium" />
 
       <Hidden smDown>
         {isAuthenticated && <CodeViewButton codeView={codeView} toggleCodeView={toggleCodeView} />}
-        <CitationButton {..._source} buttonSize="medium" />
+        <CitationButton doi={_source.doi} buttonSize="medium" />
       </Hidden>
 
       <Hidden smDown>

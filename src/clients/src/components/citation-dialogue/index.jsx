@@ -18,7 +18,7 @@ export default ({ doi, buttonSize = 'medium', ...props }) => {
         title={
           doi
             ? 'Cite this record'
-            : "Apologies, we cannot generate citations for records that don't have DOIS"
+            : 'Auto-generated citations are only available for records with DOIs'
         }
       >
         <Span>
