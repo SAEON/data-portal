@@ -76,15 +76,22 @@ export default ({ results }) => {
               </Div>
               <Div
                 className="record-tools"
-                sx={{
+                sx={theme => ({
                   position: 'absolute',
-                  transition: theme =>
-                    theme.transitions.create(['right', 'background-color', 'outline', 'boxShadow']),
+                  transition: theme.transitions.create([
+                    'right',
+                    'background-color',
+                    'outline',
+                    'boxShadow',
+                  ]),
                   boxShadow: 'none',
                   outline: `1px solid transparent`,
-                  right: -108,
                   top: 0,
-                }}
+                  right: -70,
+                  [theme.breakpoints.up('sm')]: {
+                    right: -108,
+                  },
+                })}
               >
                 <Tools {..._source} />
               </Div>
