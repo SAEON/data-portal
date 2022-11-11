@@ -4,10 +4,9 @@ export default ({ descriptions }) => {
   return (
     <Typography
       sx={{
-        boxOrient: 'vertical',
         color: theme => theme.palette.text.primary,
-        fontSize: '0.8rem',
-        lineClamp: 2,
+        fontSize: '0.775rem',
+        fontStyle: 'italic',
         mb: theme => theme.spacing(1),
         mx: theme => theme.spacing(2),
         overflow: 'hidden',
@@ -18,7 +17,7 @@ export default ({ descriptions }) => {
       }}
       variant="body2"
     >
-      {descriptions?.[0]?.description?.truncate(230).replace(/\s+/g, ' ') || 'No description'}
+      {descriptions?.[0]?.description?.truncate(500).replace(/\s+/g, ' ') || 'No description'}
     </Typography>
   )
 }
