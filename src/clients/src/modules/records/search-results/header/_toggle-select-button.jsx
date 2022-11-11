@@ -1,9 +1,19 @@
 import { useContext } from 'react'
-import Tooltip from '@mui/material/Tooltip'
+import Tooltip_, { tooltipClasses } from '@mui/material/Tooltip'
 import Checkbox from '@mui/material/Checkbox'
 import { context as globalContext } from '../../../../contexts/global'
 import StyledBadge from './components/styled-badge'
 import { Span } from '../../../../components/html-tags'
+import { styled } from '@mui/material/styles'
+
+const Tooltip = styled(({ className, ...props }) => (
+  <Tooltip_ {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    position: 'relative',
+    top: theme.spacing(-1.25),
+  },
+}))
 
 export default ({ catalogue }) => {
   const { global, setGlobal } = useContext(globalContext)

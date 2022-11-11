@@ -9,6 +9,17 @@ import Title from './_title'
 import FancyHeader from '../../../components/toolbar-header'
 import { useTheme } from '@mui/material/styles'
 import { Div } from '../../../components/html-tags'
+import Tooltip_, { tooltipClasses } from '@mui/material/Tooltip'
+import { styled } from '@mui/material/styles'
+
+const Tooltip = styled(({ className, ...props }) => (
+  <Tooltip_ {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    position: 'relative',
+    top: theme.spacing(-0.8),
+  },
+}))
 
 export default ({ codeView, toggleCodeView, _source }) => {
   const { isAuthenticated } = useContext(authorizationContext)
@@ -21,7 +32,7 @@ export default ({ codeView, toggleCodeView, _source }) => {
       <Title {..._source} />
       <Div sx={{ marginRight: 'auto' }} />
 
-      <PreviewAtlasButton {..._source} buttonSize="medium" />
+      <PreviewAtlasButton Tooltip={Tooltip} {..._source} buttonSize="medium" />
 
       <Hidden smDown>
         {isAuthenticated && <CodeViewButton codeView={codeView} toggleCodeView={toggleCodeView} />}

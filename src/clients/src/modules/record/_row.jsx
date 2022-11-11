@@ -15,10 +15,10 @@ export default ({ title, children, ...props }) => {
         mb: 0,
         ml: 0,
         [theme.breakpoints.up('md')]: {
-          ml: theme.spacing(1),
-          mr: theme.spacing(1),
-          mt: theme.spacing(1),
-          mb: theme.spacing(1),
+          mb: theme.spacing(0.75),
+          ':last-child': {
+            mb: 0,
+          },
         },
         ...sx,
       })}
@@ -28,6 +28,10 @@ export default ({ title, children, ...props }) => {
       <Card
         sx={{
           backgroundColor: theme => alpha(theme.palette.common.white, 0.9),
+          '& :hover': {
+            backgroundColor: theme => theme.palette.common.white,
+            transition: theme => theme.transitions.create(['background-color']),
+          },
         }}
         variant="outlined"
       >

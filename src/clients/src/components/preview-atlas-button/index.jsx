@@ -7,10 +7,18 @@ import { Eye as EyeIcon, Close as CloseIcon } from '../icons'
 import MessageDialogue from '../../components/message-dialogue'
 import Loading from '../../components/loading'
 import { Div } from '../html-tags'
+import Tooltip from '@mui/material/Tooltip'
 
 const Map = lazy(() => import('./_map'))
 
-export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small' }) => {
+export default ({
+  id,
+  titles,
+  linkedResources,
+  geoLocations,
+  Tooltip: CustomTooltip = Tooltip,
+  buttonSize = 'small',
+}) => {
   const theme = useTheme()
   const title = titles[0].title
 
@@ -52,10 +60,13 @@ export default ({ id, titles, linkedResources, geoLocations, buttonSize = 'small
           paddingLeft: theme.spacing(2),
         },
       }}
-      tooltipProps={{
-        placement: 'top-start',
-        title: disabled ? 'No preview available' : `Preview dataset as map`,
-      }}
+      Tooltip={props => (
+        <CustomTooltip
+          placement="top-start"
+          title={disabled ? 'No preview available' : `Preview dataset as map`}
+          {...props}
+        />
+      )}
       dialogueContentProps={{ style: { padding: 0 } }}
       dialogueProps={{ fullWidth: true }}
       paperProps={{ style: { maxWidth: 'none', minHeight: '66px' } }}

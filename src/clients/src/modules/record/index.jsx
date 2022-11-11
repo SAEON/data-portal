@@ -8,8 +8,7 @@ import CodeView from './code-view'
 import Container from '@mui/material/Container'
 import Fade from '@mui/material/Fade'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Hidden from '@mui/material/Hidden'
-import { Div, Span } from '../../components/html-tags'
+import { Span } from '../../components/html-tags'
 
 export default () => {
   const id = useParams()['*']
@@ -58,10 +57,14 @@ export default () => {
         toggleCodeView={() => updateCodeView(!codeView)}
         _source={{ ...data?.catalogue?.search?.records?.[0]?.metadata?._source }}
       />
-      <Hidden mdDown>
-        <Div sx={{ marginTop: theme => theme.spacing(1) }} />
-      </Hidden>
-      <Container disableGutters={smDown}>
+      <Container
+        disableGutters={smDown}
+        sx={theme => ({
+          [theme.breakpoints.up('md')]: {
+            my: theme.spacing(2),
+          },
+        })}
+      >
         <Fade key="code-view-in" in={codeView}>
           <Span sx={{ display: codeView ? 'inherit' : 'none' }}>
             <CodeView json={data?.catalogue?.search?.records?.[0]?.metadata?._source} />
@@ -73,13 +76,6 @@ export default () => {
           </Span>
         </Fade>
       </Container>
-      <Div
-        sx={theme => ({
-          [theme.breakpoints.up('md')]: {
-            mt: theme.spacing(1),
-          },
-        })}
-      />
     </>
   )
 }

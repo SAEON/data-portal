@@ -30,6 +30,7 @@ export default ({
   title = undefined,
   titleProps = {},
   tooltipProps,
+  Tooltip: CustomTooltip = Tooltip,
   handleClose = () => {},
 }) => {
   const [open, setOpen] = useState(defaultOpen)
@@ -46,7 +47,7 @@ export default ({
     <Span onClick={e => e.stopPropagation()}>
       {/* TOGGLE BUTTON */}
       {hideIcon ? undefined : (
-        <Tooltip placement="right-end" {...tooltipProps}>
+        <CustomTooltip {...tooltipProps}>
           <Span>
             <ToggleButton
               buttonType={buttonType}
@@ -61,7 +62,7 @@ export default ({
               {...buttonProps}
             />
           </Span>
-        </Tooltip>
+        </CustomTooltip>
       )}
 
       {/* DIALOGUE */}
