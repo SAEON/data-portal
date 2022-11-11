@@ -47,7 +47,7 @@ export default ({ results }) => {
                   mb: 0,
                 },
                 [theme.breakpoints.up('md')]: {
-                  mb: theme.spacing(1),
+                  mb: theme.spacing(0.75),
                   mx: 0,
                   mt: 0,
                   pr: 0,
@@ -94,7 +94,16 @@ export default ({ results }) => {
 
       {/* NO Results */}
       {!results.length && (
-        <Grid item xs={12} sx={{}}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            '&:hover': {
+              backgroundColor: theme => theme.palette.common.white,
+            },
+          }}
+          component={Paper}
+        >
           <Typography
             sx={{ m: theme => theme.spacing(5), display: 'block', textAlign: 'center' }}
             variant="overline"
