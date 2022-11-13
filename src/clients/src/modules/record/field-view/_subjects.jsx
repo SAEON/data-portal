@@ -60,6 +60,7 @@ export default ({ subjects }) => {
                           {
                             field: 'subjects.subject.raw',
                             value: subject.subject.toLowerCase().trim(),
+                            filterId: 'keywords-filter',
                           },
                         ],
                       },

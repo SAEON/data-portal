@@ -6,6 +6,7 @@ import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
 const defaultExpandedFields = ['subjects.subject.raw']
 
 export default ({ catalogue }) => {
+  console.log('rendering filters')
   return (
     <Grid container item xs={12} spacing={0}>
       {/* EXTENT FILTER */}

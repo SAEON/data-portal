@@ -25,13 +25,13 @@ const DEFAULT_CURSORS = {
 export default ({ showSearch, showSidebar }) => {
   const xsDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const smDown = useMediaQuery(theme => theme.breakpoints.down('md'))
-  const [sidebarVisible, setSidebarVisible] = useState(!showSidebar && !xsDown)
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   const { referrer } = getUriState()
   const { global } = useContext(globalContext)
   const { terms, extent = undefined, text = undefined, ids = [], dois = [] } = global
+  const sidebarVisible = !showSidebar && !xsDown
 
   useEffect(() => {
     if (ref.current) {
@@ -140,6 +140,8 @@ export default ({ showSearch, showSidebar }) => {
   const results = cursors.start
     ? data.catalogue.search.records.slice(0).reverse()
     : data.catalogue.search.records
+
+  console.log('rendering a')
 
   return (
     <Fade key="search-results" in>
