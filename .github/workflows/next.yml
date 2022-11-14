@@ -29,7 +29,7 @@ jobs:
 
       - name: Configure ODP integration filter
         run: |
-          cp deploy/next/config/odp-filter.js src/api/odp-filter.js
+          cp deploy/next/config/odp-filter.js api/odp-filter.js
 
       - name: Log in to the Container registry
         uses: docker/login-action@master
@@ -66,7 +66,7 @@ jobs:
 
       - name: Configure internal client UI filters
         run: |
-          cp deploy/next/config/client-filters.json src/clients/client-filters.json
+          cp deploy/next/config/client-filters.json clients/client-filters.json
 
       - name: Log in to the Container registry
         uses: docker/login-action@master
@@ -114,7 +114,7 @@ jobs:
 
       - name: Configure public client UI filters
         run: |
-          cp deploy/next/config/client-filters.json src/clients/client-filters.json
+          cp deploy/next/config/client-filters.json clients/client-filters.json
 
       - name: Log in to the Container registry
         uses: docker/login-action@master

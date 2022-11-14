@@ -12,7 +12,9 @@ const run = async (args = {}) => {
   }
 
   if (help) {
-    console.info('Help -- NOT IMPLEMENTED (but you probably want to specify the "run" flag (-r or --run)')
+    console.info(
+      'Help -- NOT IMPLEMENTED (but you probably want to specify the "run" flag (-r or --run)'
+    )
     return
   }
 
