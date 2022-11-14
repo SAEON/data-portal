@@ -21,7 +21,7 @@
     "@babel/eslint-plugin": "^7.19.1",
     "eslint": "^8.27.0",
     "nodemon": "^2.0.20",
-    "npm-check-updates": "^16.3.18",
+    "npm-check-updates": "^16.3.25",
     "prettier": "^2.7.1"
   },
   "dependencies": {
@@ -53,7 +53,7 @@
     "make-fetch-happen": "^11.0.1",
     "mongodb": "^4.11.0",
     "nanoid": "^4.0.0",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^3.3.0",
     "object-hash": "^3.0.0",
     "openid-client": "^5.3.0",
     "rimraf": "^3.0.2",

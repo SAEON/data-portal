@@ -9,7 +9,7 @@
     "doctoc": "^2.2.1",
     "eslint": "^8.27.0",
     "husky": "^8.0.2",
-    "npm-check-updates": "^16.3.18",
+    "npm-check-updates": "^16.3.25",
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3"
   },
