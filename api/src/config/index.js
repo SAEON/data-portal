@@ -1,4 +1,4 @@
-import  'dotenv/config'
+import 'dotenv/config'
 import { readFileSync } from 'fs'
 import { join, normalize } from 'path'
 import getCurrentDirectory from '../lib/get-current-directory.js'

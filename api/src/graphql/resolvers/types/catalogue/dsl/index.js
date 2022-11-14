@@ -65,6 +65,6 @@ export default ({
     dsl.query.bool.must = [...dsl.query.bool.must, geoShape(extent)]
     dsl.query.bool.filter = [...dsl.query.bool.filter, geoShape(extent)]
   }
-  
+
   return dsl
 }

@@ -16,7 +16,7 @@ run = 'ncu -u'
 name = 'doc'
 run = '''
   doctoc README.md
-  doctoc src/**/README.md
+  doctoc **/README.md
 '''
 
 [[task]]
@@ -36,8 +36,8 @@ name = 'prettier'
 template = 'prettier'
 [task.template-options]
 ignore-path = '.prettierignore'
-files = 'src/**/*.@(js|jsx|json|mjs|cjs|graphql|yml)'
-loglevel = 'warn'
+files = '**/*.@(js|jsx|json|mjs|cjs|graphql|yml)'
+loglevel = 'log'
 config = '.prettierrc'
 
 [[task]]
