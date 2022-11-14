@@ -7,15 +7,20 @@ import Hidden from '@mui/material/Hidden'
 
 const DataDownloadButton = lazy(() => import('../../../../../../components/data-download'))
 
-export default ({ ..._source }) => {
+export default ({ onClose, ..._source }) => {
   return (
     <>
       <ToggleItemButton {..._source} />
-      <PreviewAtlasButton {..._source} />
-      <CitationButton doi={_source.doi} />
+      <PreviewAtlasButton onClose={onClose} {..._source} />
+      <CitationButton onClose={onClose} doi={_source.doi} />
       <Hidden smDown>
         <Suspense fallback={<LoadingCircular />}>
-          <DataDownloadButton title="Download data" buttonProps={{ style: {} }} {..._source} />
+          <DataDownloadButton
+            onClose={onClose}
+            title="Download data"
+            buttonProps={{ style: {} }}
+            {..._source}
+          />
         </Suspense>
       </Hidden>
     </>

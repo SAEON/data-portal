@@ -1,16 +1,6 @@
-import Record from './record'
 import Grid from '@mui/material/Grid'
-import Paper_ from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import { alpha } from '@mui/material/styles'
-import { Div } from '../../../../components/html-tags'
-import Tools from './record/tools'
-
-const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.9),
-  p: 0,
-}))
+import Record, { Wrapper } from './record'
 
 export default ({ results }) => {
   return (
@@ -30,72 +20,9 @@ export default ({ results }) => {
         results.map(({ metadata }, i, arr) => {
           const { _source } = metadata
           return (
-            <Grid
-              key={_source.id}
-              component={Paper}
-              item
-              xs={12}
-              sx={theme => ({
-                display: 'flex',
-                position: 'relative',
-                mb: 0,
-                pr: theme.spacing(1),
-                pb: theme.spacing(1),
-                pl: theme.spacing(1),
-                overflow: 'hidden',
-                ':last-child': {
-                  mb: 0,
-                },
-                [theme.breakpoints.up('md')]: {
-                  mb: theme.spacing(0.75),
-                  mx: 0,
-                  mt: 0,
-                  pr: 0,
-                  pl: 0,
-                },
-                transition: theme.transitions.create(['background-color']),
-                '&:hover': {
-                  backgroundColor: theme.palette.common.white,
-                  '& > .record-tools': {
-                    backgroundColor: theme.palette.common.white,
-                    right: 0,
-                    outline: theme => `1px solid ${theme.palette.divider}`,
-                    boxShadow: theme => theme.shadows[2],
-                  },
-                },
-              })}
-            >
-              <Div
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  maxWidth: '100%',
-                }}
-              >
-                <Record i={i} length={arr.length} {..._source} />
-              </Div>
-              <Div
-                className="record-tools"
-                sx={theme => ({
-                  position: 'absolute',
-                  transition: theme.transitions.create([
-                    'right',
-                    'background-color',
-                    'outline',
-                    'boxShadow',
-                  ]),
-                  boxShadow: 'none',
-                  outline: `1px solid transparent`,
-                  top: 0,
-                  right: -70,
-                  [theme.breakpoints.up('sm')]: {
-                    right: -108,
-                  },
-                })}
-              >
-                <Tools {..._source} />
-              </Div>
-            </Grid>
+            <Wrapper key={_source.id} {..._source}>
+              <Record i={i} length={arr.length} {..._source} />
+            </Wrapper>
           )
         })}
 

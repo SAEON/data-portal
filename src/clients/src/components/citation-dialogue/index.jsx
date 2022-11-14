@@ -6,13 +6,19 @@ import { FormatQuoteOpen as FormatQuoteOpenIcon } from '../icons'
 import { nanoid } from 'nanoid'
 import { Span } from '../html-tags'
 
-export default ({ doi, buttonSize = 'medium', ...props }) => {
+export default ({ onClose, doi, buttonSize = 'medium', ...props }) => {
   const [open, setOpen] = useState(false)
   const id = doi || nanoid()
 
   return (
     <>
-      <Dialogue id={`citation-dialogue-${id}`} doi={doi} open={open} setOpen={setOpen} />
+      <Dialogue
+        onClose={onClose}
+        id={`citation-dialogue-${id}`}
+        doi={doi}
+        open={open}
+        setOpen={setOpen}
+      />
       <Tooltip
         placement="top-start"
         title={

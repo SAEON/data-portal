@@ -17,6 +17,7 @@ export default ({
   children = undefined,
   defaultOpen = false,
   dialogueContentProps,
+  onClose = undefined,
   dialogueProps,
   disabled = false,
   hideIcon = false,
@@ -76,6 +77,7 @@ export default ({
             return
           }
           handleClose()
+          onClose && onClose()
           setOpen(false)
         }}
         PaperProps={paperProps}

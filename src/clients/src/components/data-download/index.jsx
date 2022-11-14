@@ -44,6 +44,7 @@ export default ({
   immutableResource = undefined,
   children,
   title = undefined,
+  onClose,
   fontSize = 'small',
   IconButtonSize = 'medium',
   TextButton = undefined,
@@ -108,7 +109,15 @@ export default ({
 
       {TextButton && <TextButton onClick={() => setOpen(open => !open)} />}
 
-      <Dialog id="usage-terms-confirmation-dialogue" open={open} onClose={() => setOpen(false)}>
+      <Dialog
+        disableScrollLock
+        id="usage-terms-confirmation-dialogue"
+        open={open}
+        onClose={() => {
+          setOpen(false)
+          onClose && onClose()
+        }}
+      >
         <QuickForm effects={[fields => (form.current = { ...fields })]} {...formFields}>
           {(update, fields) => {
             const isValidEmailAddress = EMAIL_REGEX.test(fields.emailAddress)

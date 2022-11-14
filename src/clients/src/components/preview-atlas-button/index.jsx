@@ -18,6 +18,7 @@ export default ({
   geoLocations,
   Tooltip: CustomTooltip = Tooltip,
   buttonSize = 'small',
+  onClose: _onClose,
 }) => {
   const theme = useTheme()
   const title = titles[0].title
@@ -31,6 +32,7 @@ export default ({
 
   return (
     <MessageDialogue
+      onClose={_onClose}
       disabled={disabled}
       ariaLabel="Toggle map preview"
       id={`map-preview-${id}`}
@@ -47,6 +49,7 @@ export default ({
             onClick={e => {
               e.stopPropagation()
               onClose()
+              _onClose()
             }}
             style={{ marginLeft: 'auto', alignSelf: 'center' }}
           >

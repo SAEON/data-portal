@@ -8,7 +8,7 @@ const CitationControls = lazy(() => import('./_citation-controls'))
 const DEFAULT_CITATION_STYLE = 'apa'
 const DEFAULT_CITATION_LANG = 'en_US'
 
-export default ({ doi, open, setOpen }) => {
+export default ({ doi, open, setOpen, onClose = undefined }) => {
   const [citationParams, setCitationParams] = useState({
     style: DEFAULT_CITATION_STYLE,
     language: DEFAULT_CITATION_LANG,
@@ -19,9 +19,12 @@ export default ({ doi, open, setOpen }) => {
     <Dialog
       onClose={() => {
         setOpen(false)
+        onClose && onClose()
       }}
+      disableScrollLock
       open={open}
       maxWidth="sm"
+      scroll="paper"
       fullWidth={true}
     >
       {/* TITLE */}
