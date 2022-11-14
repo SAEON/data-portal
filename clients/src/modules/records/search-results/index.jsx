@@ -141,8 +141,6 @@ export default ({ showSearch, showSidebar }) => {
     ? data.catalogue.search.records.slice(0).reverse()
     : data.catalogue.search.records
 
-  console.log('rendering a')
-
   return (
     <Fade key="search-results" in>
       <main id="search-results">

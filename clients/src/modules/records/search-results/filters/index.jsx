@@ -3,10 +3,9 @@ import TagFilter from './tag-filter'
 import ExtentFilter from './extent-filter'
 import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
 
-const defaultExpandedFields = ['subjects.subject.raw']
+const defaultExpandedFields = ['keywords'].map(w => w.toLowerCase())
 
 export default ({ catalogue }) => {
-  console.log('rendering filters')
   return (
     <Grid container item xs={12} spacing={0}>
       {/* EXTENT FILTER */}
@@ -35,7 +34,7 @@ export default ({ catalogue }) => {
                   : { zIndex: 1 }
               }
               id={id}
-              defaultExpanded={defaultExpandedFields.includes(field)}
+              defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}
               field={field}
               title={title}
               boost={boost}
