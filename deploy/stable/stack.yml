@@ -59,7 +59,6 @@ services:
     ports:
       - 7002:3000
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - tmp:/tmp/sdp-data
       - data:/var/lib/sdp-data
     networks:

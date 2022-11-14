@@ -1,0 +1,12 @@
+import { Tile as TileLayer } from 'ol/layer'
+import { OSM } from 'ol/source'
+
+export const openStreetMaps = () =>
+  new TileLayer({
+    id: 'openStreetMap',
+    title: 'Open Street Maps',
+    visible: true,
+    source: new OSM({
+      url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    }),
+  })

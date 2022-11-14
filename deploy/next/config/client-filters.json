@@ -51,6 +51,48 @@
     "sortOrder": "asc"
   },
   {
+    "id": "themes-filter",
+    "title": "Themes",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType theme"]
+      }
+    ]
+  },
+  {
+    "id": "stratums-filter",
+    "title": "Stratums",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType stratum"]
+      }
+    ]
+  },
+  {
+    "id": "places-filter",
+    "title": "Places",
+    "field": "subjects.subject.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "subjects",
+    "filters": [
+      {
+        "field": "subjects.subjectScheme.raw",
+        "values": ["SANS1878 keywordType place"]
+      }
+    ]
+  },
+  {
     "id": "collection-filter",
     "title": "Collection",
     "field": "collection.raw",

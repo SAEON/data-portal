@@ -49,7 +49,7 @@ jobs:
       - name: Build and push API
         uses: docker/build-push-action@master
         with:
-          context: src/api
+          context: api
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -86,7 +86,7 @@ jobs:
       - name: Build and push internal clients
         uses: docker/build-push-action@master
         with:
-          context: src/clients
+          context: clients
           build-args: |
             API_ADDRESS=https://api.catalogue.saeon.ac.za
             CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
@@ -134,7 +134,7 @@ jobs:
       - name: Build and push public clients
         uses: docker/build-push-action@master
         with:
-          context: src/clients
+          context: clients
           build-args: |
             API_ADDRESS=https://api.catalogue.saeon.ac.za
             CATALOGUE_NGINX_SERVER_NAME=catalogue.saeon.ac.za
