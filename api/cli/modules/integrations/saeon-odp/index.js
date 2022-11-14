@@ -2,13 +2,17 @@ import { withFlags, describe } from '@saeon/cli-tools'
 import runOdpIntegration from './_run.js'
 
 const run = async (args = {}) => {
-  const { run, help } = args
+  let { run, help } = args
+  if (!run && !help) {
+    help = true
+  }
+
   if (run) {
     return await runOdpIntegration()
   }
 
   if (help) {
-    console.info('Help -- NOT IMPLEMENTED')
+    console.info('Help -- NOT IMPLEMENTED (but you probably want to specify the "run" flag (-r or --run)')
     return
   }
 

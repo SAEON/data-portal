@@ -61,18 +61,18 @@ npm install -g chomp
 chomp configure-git
 
 # Install package dependencies. From the root of this repository:
-cd src/api \
+cd api \
   && npm install \
   && cd ../clients \
   && npm install \
   && cd ..
 
 # Open a terminal window to run the API
-cd src/api
+cd api
 chomp --watch
 
 # Open a terminal window to run the clients
-cd src/clients
+cd clients
 chomp --watch
 ```
 
@@ -80,7 +80,7 @@ chomp --watch
 The first time you use the Data Portal on a local you need to load metadata from the catalogue into Elasticsearch. There is a CLI to do this - from the root of this repository:
 
 ```sh
-cd src/api
+cd api
 source env.sh
 sdp integrations saeon --run
 ```
