@@ -15,12 +15,7 @@ export default ({ immutableResource }) => {
         )}
         {_fileFormat && (
           <Grid item>
-            <Chip
-              size="small"
-              color="primary"
-              clickable={false}
-              label={_fileFormat.toUpperCase()}
-            />
+            <Chip size="small" label={_fileFormat.toUpperCase()} />
           </Grid>
         )}
       </Grid>

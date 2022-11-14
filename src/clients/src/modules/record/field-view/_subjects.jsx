@@ -1,9 +1,5 @@
-import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
-import { context as configContext } from '../../../config'
-import { context as globalContext } from '../../../contexts/global'
 import Row from '../_row'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -25,10 +21,6 @@ const filter = {
 }
 
 export default ({ subjects }) => {
-  const { setGlobal } = useContext(globalContext)
-  const { contentBase } = useContext(configContext)
-  const navigate = useNavigate()
-
   return (
     <Row title="Keywords">
       <Grid container spacing={1} justifyContent="flex-start">
@@ -42,32 +34,13 @@ export default ({ subjects }) => {
             } else {
               return !Boolean(exclude?.includes(subject))
             }
-
-            return true
           })
           .map(subject => (
             <Grid item key={subject.subject} sx={{ overflow: 'hidden', maxWidth: '100%' }}>
               <Tooltip title={subject.subject}>
                 <Chip
-                  aria-label="Click to search for records with this keyword"
+                  aria-label="Keyword"
                   size="small"
-                  color="primary"
-                  clickable
-                  onClick={() => {
-                    setGlobal(
-                      {
-                        terms: [
-                          {
-                            field: 'subjects.subject.raw',
-                            value: subject.subject.toLowerCase().trim(),
-                            filterId: 'keywords-filter',
-                          },
-                        ],
-                      },
-                      true
-                    )
-                    navigate(`${contentBase}/records`.replace('//', '/'))
-                  }}
                   label={subject.subject.toUpperCase().truncate(30)}
                 />
               </Tooltip>
