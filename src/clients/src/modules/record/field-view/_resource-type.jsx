@@ -10,7 +10,7 @@ export default ({ immutableResource }) => {
       <Grid container spacing={1} justifyContent="flex-start">
         {_archive === true && (
           <Grid item>
-            <Chip size="small" color="primary" clickable={false} label={'ARCHIVE'} />
+            <Chip size="small" label={'ARCHIVE'} />
           </Grid>
         )}
         {_fileFormat && (
