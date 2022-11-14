@@ -18,7 +18,7 @@ export default ({
   geoLocations,
   Tooltip: CustomTooltip = Tooltip,
   buttonSize = 'small',
-  onClose: _onClose,
+  onClose: _onClose = undefined,
 }) => {
   const theme = useTheme()
   const title = titles[0].title
@@ -49,7 +49,7 @@ export default ({
             onClick={e => {
               e.stopPropagation()
               onClose()
-              _onClose()
+              _onClose && _onClose()
             }}
             style={{ marginLeft: 'auto', alignSelf: 'center' }}
           >
