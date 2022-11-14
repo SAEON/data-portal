@@ -34,7 +34,7 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
   return (
     <Root>
       <QuickForm
-        effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
+        effects={[debounce(({ text = '' }) => setGlobal({ text }, true), 500)]}
         text={global.text || ''}
       >
         {(update, { text }) => {
@@ -71,7 +71,7 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
               variant="standard"
               onKeyDown={({ key }) => {
                 if (key === 'Enter') {
-                  setGlobal({ text }, false)
+                  setGlobal({ text }, true)
                   if (history.location.pathname !== '/records') {
                     navigate('/records')
                   }
