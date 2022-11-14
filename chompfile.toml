@@ -3,14 +3,30 @@ version = 0.1
 extensions = ['chomp@0.1:prettier']
 
 [[task]]
+name = 'build'
+deps = ['bundle']
+serial = true
+run = 'mv clients/dist api/src/clients'
+
+[[task]]
+name = 'bundle'
+deps = ['clean-dist']
+run = 'chomp -c clients build'
+
+[[task]]
+name = 'clean-dist'
+run = 'rm -rf api/src/clients'
+
+
+# REPOSITORY TOOLING
+
+[[task]]
 name = 'ncu'
 run = 'ncu'
 
 [[task]]
 name = 'ncu:u'
 run = 'ncu -u'
-
-# REPOSITORY TOOLING
 
 [[task]]
 name = 'doc'

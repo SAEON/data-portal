@@ -7,7 +7,7 @@ import { Div } from '../../../../../components/html-tags'
 import Tools from './tools'
 import clsx from 'clsx'
 
-const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
+export const Paper = styled(props => <Paper_ variant="outlined" {...props} />)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.common.white, 0.9),
   p: 0,
 }))

@@ -64,7 +64,7 @@ api.keys = [APP_KEY]
 api.proxy = true
 
 // Configure static files server
-const SPA_PATH = path.join(__dirname, './__clients')
+const SPA_PATH = path.join(__dirname, './clients')
 const reactClient = new Koa()
 reactClient.use(serve(SPA_PATH))
 
@@ -111,7 +111,6 @@ api
   .use(createRequestContext(api))
   .use(
     new KoaRouter()
-      .get('/http', homeRoute)
       .post('/http', homeRoute)
       .get('/http/client-info', clientInfoRoute)
       .get('/http/download-proxy', downloadProxyRoute)

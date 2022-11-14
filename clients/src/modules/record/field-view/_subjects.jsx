@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { context as configContext } from '../../../config'
+import { context as globalContext } from '../../../contexts/global'
 import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
 import Row from '../_row'
@@ -21,6 +25,10 @@ const filter = {
 }
 
 export default ({ subjects }) => {
+  const { setGlobal } = useContext(globalContext)
+  const { contentBase } = useContext(configContext)
+  const navigate = useNavigate()
+
   return (
     <Row title="Keywords">
       <Grid container spacing={1} justifyContent="flex-start">
@@ -39,8 +47,28 @@ export default ({ subjects }) => {
             <Grid item key={subject.subject} sx={{ overflow: 'hidden', maxWidth: '100%' }}>
               <Tooltip title={subject.subject}>
                 <Chip
+                  sx={{ '& :hover': { backgroundColor: 'transparent' } }}
                   aria-label="Keyword"
                   size="small"
+                  clickable
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => {
+                    setGlobal(
+                      {
+                        text: '',
+                        terms: [
+                          {
+                            field: 'subjects.subject.raw',
+                            value: subject.subject.toLowerCase().trim(),
+                            filterId: 'keywords-filter',
+                          },
+                        ],
+                      },
+                      true
+                    )
+                    navigate(`${contentBase}/records`.replace('//', '/'))
+                  }}
                   label={subject.subject.toUpperCase().truncate(30)}
                 />
               </Tooltip>

@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import Record, { Wrapper } from './record'
+import Record, { Wrapper, Paper } from './record'
 
 export default ({ results }) => {
   return (

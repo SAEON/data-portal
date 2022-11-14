@@ -1,7 +1,7 @@
 import Descriptions from './_descriptions'
 import Titles from './_titles'
 import Footer from './footer'
-export { default as Wrapper } from './_wrapper'
+export { default as Wrapper, Paper } from './_wrapper'
 
 export default ({ i, length, ..._source }) => {
   return (

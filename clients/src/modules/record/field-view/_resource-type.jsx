@@ -10,12 +10,24 @@ export default ({ immutableResource }) => {
       <Grid container spacing={1} justifyContent="flex-start">
         {_archive === true && (
           <Grid item>
-            <Chip size="small" label={'ARCHIVE'} />
+            <Chip
+              sx={{ '& :hover': { backgroundColor: 'transparent' } }}
+              size="small"
+              variant="outlined"
+              color="primary"
+              label={'ARCHIVE'}
+            />
           </Grid>
         )}
         {_fileFormat && (
           <Grid item>
-            <Chip size="small" label={_fileFormat.toUpperCase()} />
+            <Chip
+              sx={{ '& :hover': { backgroundColor: 'transparent' } }}
+              size="small"
+              variant="outlined"
+              color="primary"
+              label={_fileFormat.toUpperCase()}
+            />
           </Grid>
         )}
       </Grid>
