@@ -93,6 +93,9 @@ COPY api .
 COPY --from=client /data-portal-clients/dist /app/src/clients
 RUN npm ci --only=production
 ENV PATH="$PATH:bin"
+RUN echo $PATH
+RUN pwd
+RUN ls
 RUN chmod +x bin/sdp
 RUN chmod +x bin/start
 
