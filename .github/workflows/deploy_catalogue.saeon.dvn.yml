@@ -52,8 +52,8 @@ jobs:
           build-args: |
             API_ADDRESS=https://catalogue.saeon.dvn
             CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
-            CURATOR_CONTACT=${{ env.CURATOR_CONTACT }
-            TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }
+            CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}
+            TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
           push: true
