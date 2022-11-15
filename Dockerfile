@@ -22,8 +22,8 @@ RUN echo "PROXY_ADDRESS=$PROXY_ADDRESS" >> .env
 RUN echo "TECHNICAL_CONTACT=$TECHNICAL_CONTACT" >> .env
 
 COPY clients .
-RUN npm ci --only=production
-RUN npm run build
+RUN npm install -g chomp@0.2.11 & npm ci --only=production
+RUN chomp build
 
 # Build API
 FROM node:19.1.0-alpine

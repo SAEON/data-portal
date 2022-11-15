@@ -3,7 +3,8 @@ default-task = 'start'
 
 [[task]]
 name = 'build'
-run = 'rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js'
+env = { NODE_ENV="production" }
+run = 'rimraf ./dist && webpack --config webpack/index.js'
 
 [[task]]
 name = 'lint'
@@ -26,7 +27,9 @@ run = """
     "src/**/*.@(js|jsx|ts|tsx|css|scss)" \
     "../packages/logger/dist/**/*.@(js|jsx|ts|tsx)" \
     -- prettier --write {{changed}} \
-    & webpack serve --port 3001 --config webpack/index.js
+    & webpack serve \
+      --port 3001 \
+      --config webpack/index.js
   """
 
 
