@@ -1,0 +1,100 @@
+name: Deploy catalogue.saeon.ac.za
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  REGISTRY: ghcr.io
+  DOCKER_IMAGE_NAME: saeon/sdp-stable-api
+  BRANCH_REF: stable
+  CURATOR_CONTACT: curation@saeon.nrf.ac.za
+  TECHNICAL_CONTACT: development@saeon.nrf.ac.za
+  DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
+  DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
+    steps:
+      - name: Check out source code (shared)
+        uses: actions/checkout@master
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: Configure API and Clients source files
+        run: |
+          cp deploy/${{ env.BRANCH_REF }}/config/odp-filter.js api/odp-filter.js
+          cp deploy/${{ env.BRANCH_REF }}/config/client-filters.json clients/client-filters.json
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@master
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@master
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
+          tags: |
+            type=sha
+
+      - name: Build and push API
+        uses: docker/build-push-action@master
+        with:
+          context: .
+          build-args: |
+            API_ADDRESS=https://api.catalogue.saeon.ac.za
+            CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
+            CURATOR_CONTACT=${{ env.CURATOR_CONTACT }
+            TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }
+            DEPLOYMENT_ENV=production
+            PROXY_ADDRESS=https://proxy.saeon.ac.za
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: [build]
+    runs-on: github-runner.saeon.int
+    steps:
+      - name: Check out source code (shared)
+        uses: actions/checkout@master
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: (SCP) Copy stack configuration to app server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          source: 'deploy/stable/stack.yml'
+          target: 'sdp-stable'
+
+      - name: (SSH) Deploy stack
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          script: |
+            echo "DOCKER_IMAGE=${{ needs.build.outputs.image }}" > /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET}}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "DEFAULT_ADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_ADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "DEFAULT_SYSADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            sudo /opt/deploy-docker-stack.sh /home/runner/sdp-stable/deploy/stable/stack.yml /home/runner/sdp-stable/deploy/stable/stack.env sdp_stable
