@@ -1,3 +1,5 @@
+import { useEffect, useContext } from 'react'
+import { context as globalContext } from '../../contexts/global'
 import Results from './search-results'
 import SkipLink from '../../components/skip-link'
 
@@ -8,11 +10,17 @@ import SkipLink from '../../components/skip-link'
  * it to be toggled in mobile. This feature only applies when rendering
  * in mobile
  */
+const Render = ({ showSearchBar, disableSidebar }) => (
+  <>
+    <SkipLink href="#search-results" text="Skip to search results" />
+    <Results showSearch={showSearchBar.toBoolean()} showSidebar={disableSidebar.toBoolean()} />
+  </>
+)
+
 export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
-  return (
-    <>
-      <SkipLink href="#search-results" text="Skip to search results" />
-      <Results showSearch={showSearchBar.toBoolean()} showSidebar={disableSidebar.toBoolean()} />
-    </>
-  )
+  const { setGlobal } = useContext(globalContext)
+
+  useEffect(() => () => setGlobal({ selectAll: false, selectedIds: [] }), [])
+
+  return <Render showSearchBar={showSearchBar} disableSidebar={disableSidebar} />
 }

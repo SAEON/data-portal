@@ -14,25 +14,29 @@ export default ({ catalogue }) => {
       </Grid>
 
       {/* CONFIGURABLE FILTERS */}
-      {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }, i) => {
-        const isLastFilter = i === CATALOGUE_CLIENT_FILTER_CONFIG.length - 1
+      {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }) => {
         const items = catalogue?.summary.find(obj => {
           const agg = Object.entries(obj).find(([key]) => key === id)
           return agg
         })[id]
 
         return (
-          <Grid key={id} item xs={12}>
+          <Grid
+            key={id}
+            item
+            xs={12}
+            sx={{
+              ':last-child': {
+                mb: theme => theme.spacing(2),
+                borderRadius: theme =>
+                  `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+              },
+            }}
+          >
             <TagFilter
-              sx={
-                isLastFilter
-                  ? {
-                      zIndex: 1,
-                      borderRadius: theme =>
-                        `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-                    }
-                  : { zIndex: 1 }
-              }
+              sx={{
+                zIndex: 1,
+              }}
               id={id}
               defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}
               field={field}
