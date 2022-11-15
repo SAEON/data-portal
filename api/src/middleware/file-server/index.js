@@ -1,11 +1,13 @@
 import Koa from 'koa'
-import path from 'path'
 import serve from 'koa-static'
 import { readdir } from 'fs/promises'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
+import { createReadStream } from 'fs'
+import { join, normalize } from 'path'
+import replacestream from 'replacestream'
 
 const __dirname = getCurrentDirectory(import.meta)
-const SPA_PATH = path.join(__dirname, '../../clients')
+const SPA_PATH = join(__dirname, '../../clients')
 const ENTRY_HTML = (await readdir(SPA_PATH))
   .filter(f => f.endsWith('.html'))
   .map(f => f.replace('.html', ''))
@@ -13,15 +15,29 @@ const ENTRY_HTML = (await readdir(SPA_PATH))
 const koa = new Koa()
 koa.use(serve(SPA_PATH))
 
-export const fileServer = async (ctx, next) => {
-  const page = ctx.request.url.match(/\/\w+/)[0].replace('/', '')
-  const entry = ENTRY_HTML.includes(page) ? `${page}.html` : 'index.html'
+const DEFAULT_SEO = {
+  list: {
+    $TITLE: 'Data list',
+    $DESCRIPTION: 'Selection of SAEON datasets',
+    $KEYWORDS: 'SAEON, data, metadata',
+  },
+}
 
-  try {
-    return await serve(SPA_PATH)(Object.assign(ctx, { path: entry }), next)
-  } catch (error) {
-    console.error('Error setting up static SPA middleware', error)
+export const templateServer = async ctx => {
+  const page = ctx.request.url.match(/\/\w+/)[0].replace('/', '')
+  const fileName = ENTRY_HTML.includes(page) ? `${page}.html` : 'index.html'
+  const filePath = normalize(join(SPA_PATH, fileName))
+
+  const configureTemplate = match => {
+    const value = DEFAULT_SEO[page][match]
+    if (!value) {
+      console.error('Missing SEO configuration for page', page, 'for variable', match)
+    }
+    return value || match
   }
+
+  ctx.response.set('content-type', 'text/html')
+  ctx.body = createReadStream(filePath).pipe(replacestream(/\$[A-Z]+/g, configureTemplate))
 }
 
 export default koa
