@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import { Header } from '../../../../../components/html-tags'
+import { alpha } from '@mui/material/styles'
 
 export default ({ titles, id }) => {
   const { contentBase } = useContext(configContext)
@@ -16,19 +17,28 @@ export default ({ titles, id }) => {
         component={Link}
         onClick={() => navigate(`${contentBase}/records/${id}`.replace('//', '/'))}
         sx={{
-          lineHeight: 1.5,
+          color: theme => theme.palette.text.primary,
           cursor: 'pointer',
           display: 'block',
-          textAlign: 'left',
           fontSize: '0.75rem',
           fontWeight: 700,
           letterSpacing: '0.08333em',
-          textTransform: 'uppercase',
-          color: theme => theme.palette.text.primary,
-          mt: theme => theme.spacing(2),
-          mr: theme => theme.spacing(4),
+          lineHeight: 1.5,
           mb: theme => theme.spacing(2),
           ml: theme => theme.spacing(2),
+          mr: theme => theme.spacing(4),
+          mt: theme => theme.spacing(2),
+          textAlign: 'left',
+          textDecoration: theme => `none 0.15em ${alpha(theme.palette.primary.main, 0)}`,
+          textTransform: 'uppercase',
+          textUnderlineOffset: '0.25em',
+          transition: theme =>
+            theme.transitions.create(['text-decoration-color'], {
+              duration: theme.transitions.duration.shorter,
+            }),
+          '&:hover': {
+            textDecoration: theme => `underline 0.15em ${alpha(theme.palette.primary.main, 1)}`,
+          },
         }}
         variant="h2"
       >
