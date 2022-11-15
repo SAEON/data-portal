@@ -51,6 +51,7 @@ jobs:
           context: .
           build-args: |
             API_ADDRESS=https://api.catalogue.saeon.ac.za
+            CLIENTS_PUBLIC_ADDRESS=https://catalogue.saeon.ac.za
             CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
             CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}
             TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
