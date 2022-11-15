@@ -92,9 +92,9 @@ WORKDIR /app
 COPY api .
 COPY --from=client /data-portal-clients/dist /app/src/clients
 RUN npm ci --only=production
-ENV PATH="bin:$PATH"
+ENV PATH="api/bin:$PATH"
 RUN chmod +x bin/sdp
-RUN chmod +x bin/api
+RUN chmod +x bin/start
 
 EXPOSE 3000
-CMD api
+CMD start
