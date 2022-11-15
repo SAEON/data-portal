@@ -3,8 +3,7 @@ import { API_ADDRESS } from './_app.js'
 import getCurrentDirectory from '../lib/get-current-directory.js'
 
 const __dirname = getCurrentDirectory(import.meta)
-const __repositoryRoot = join(__dirname, '../../../')
-const __apiRootDirectory = join(__repositoryRoot, 'api')
+const __apiRootDirectory = join(__dirname, '../../')
 
 /**
  * ODP

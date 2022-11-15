@@ -50,7 +50,7 @@ services:
       ODP_ADDRESS: https://odp.saeon.dvn
       ODP_AUTH_SCOPES: 'ODP.Catalogue'
       ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
-      ODP_FILTER_PATH: odp-filter.js
+      ODP_FILTER_PATH: /app/odp-filter.js
       ODP_SSO_CLIENT_ID: $ODP_SSO_CLIENT_ID
       ODP_SSO_CLIENT_SCOPES: 'openid SAEON.DataPortal'
       ODP_SSO_CLIENT_SECRET: $ODP_SSO_CLIENT_SECRET
