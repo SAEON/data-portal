@@ -8,6 +8,7 @@ export default new ApolloServer({
   uploads: false,
   schema,
   introspection: true,
+  cache: 'bounded',
   plugins: [
     ApolloServerPluginLandingPageGraphQLPlayground({
       settings: {

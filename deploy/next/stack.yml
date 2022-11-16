@@ -28,7 +28,7 @@ services:
         delay: 30s
     environment:
       ALLOWED_ORIGINS: https://catalogue.saeon.dvn
-      API_ADDRESS: https://api.catalogue.saeon.dvn
+      API_ADDRESS: https://catalogue.saeon.dvn
       APP_KEY: $APP_KEY
       CURATOR_CONTACT: $CURATOR_CONTACT
       DEFAULT_ADMIN_EMAIL_ADDRESSES: $DEFAULT_ADMIN_EMAIL_ADDRESSES
