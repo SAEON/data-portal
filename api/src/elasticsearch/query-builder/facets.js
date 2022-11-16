@@ -19,7 +19,7 @@ import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../config/i
  * will need to be adjusted (term I think)
  */
 
-export default async ({ args, ctx }) => {
+export default async ({ ctx, args }) => {
   const { elastic } = ctx
   const {
     fields,

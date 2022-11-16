@@ -38,7 +38,7 @@ export const CLIENT_FILTER_CONFIG_PATH =
 
 export const CLIENT_FILTER_CONFIG = await import(CLIENT_FILTER_CONFIG_PATH, {
   assert: { type: 'json' },
-})
+}).then(({ default: json }) => json)
 
 /**
  * Ensure required directories exists

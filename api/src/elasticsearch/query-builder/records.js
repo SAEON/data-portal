@@ -11,7 +11,7 @@ import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../config/i
  * this.
  */
 
-export default async ({ args, ctx }) => {
+export default async ({ ctx, args }) => {
   const { elastic } = ctx
 
   const {
