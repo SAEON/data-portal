@@ -17,9 +17,9 @@ koa.use(serve(SPA_PATH))
 
 const DEFAULT_SEO = {
   list: {
-    $TITLE: 'Data list',
+    $TITLE: 'SAEON Collection',
     $DESCRIPTION: 'Selection of SAEON datasets',
-    $KEYWORDS: 'SAEON, data, metadata',
+    $KEYWORDS: 'SAEON, data, metadata, SAEON collection',
   },
 }
 
