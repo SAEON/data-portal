@@ -5,6 +5,7 @@ import getCurrentDirectory from '../../lib/get-current-directory.js'
 import { createReadStream } from 'fs'
 import { join, normalize } from 'path'
 import replacestream from 'replacestream'
+import { getData, replace } from './templates/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 const SPA_PATH = join(__dirname, '../../clients')
@@ -15,29 +16,16 @@ const ENTRY_HTML = (await readdir(SPA_PATH))
 const koa = new Koa()
 koa.use(serve(SPA_PATH))
 
-const DEFAULT_SEO = {
-  list: {
-    $TITLE: 'SAEON Collection',
-    $DESCRIPTION: 'Selection of SAEON datasets',
-    $KEYWORDS: 'SAEON, data, metadata, SAEON collection',
-  },
-}
-
 export const templateServer = async ctx => {
   const page = ctx.request.url.match(/\/\w+/)[0].replace('/', '')
   const fileName = ENTRY_HTML.includes(page) ? `${page}.html` : 'index.html'
   const filePath = normalize(join(SPA_PATH, fileName))
 
-  const configureTemplate = match => {
-    const value = DEFAULT_SEO[page][match]
-    if (!value) {
-      console.error('Missing SEO configuration for page', page, 'for variable', match)
-    }
-    return value || match
-  }
-
+  const data = await getData({ ctx, page })
   ctx.response.set('content-type', 'text/html')
-  ctx.body = createReadStream(filePath).pipe(replacestream(/\$[A-Z]+/g, configureTemplate))
+  ctx.body = data
+    ? createReadStream(filePath).pipe(replacestream(/\$[A-Z]+/g, replace.bind(data)))
+    : createReadStream(filePath)
 }
 
 export default koa
