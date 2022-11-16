@@ -1,5 +1,10 @@
+import { join } from 'path'
 import ensureDirectory from '../lib/ensure-directory.js'
 import TaskManager from '../lib/task-manager/index.js'
+import getCurrentDirectory from '../lib/get-current-directory.js'
+
+const __dirname = getCurrentDirectory(import.meta)
+const __apiRootDirectory = join(__dirname, '../../')
 
 /**
  * Application config
@@ -26,6 +31,14 @@ export const SERVER_TASKS = TaskManager()
 export const EMAIL_REGEX = new RegExp(
   `^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`
 )
+
+export const CLIENT_FILTER_CONFIG_PATH =
+  process.env.CLIENT_FILTER_CONFIG_PATH ||
+  join(__apiRootDirectory, '../clients/client-filters.json')
+
+export const CLIENT_FILTER_CONFIG = await import(CLIENT_FILTER_CONFIG_PATH, {
+  assert: { type: 'json' },
+})
 
 /**
  * Ensure required directories exists

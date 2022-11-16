@@ -28,6 +28,7 @@ jobs:
       - name: Configure API and Clients source files
         run: |
           cp deploy/${{ env.BRANCH_REF }}/config/odp-filter.js api/odp-filter.js
+          cp deploy/${{ env.BRANCH_REF }}/config/client-filters.json api/client-filters.json
           cp deploy/${{ env.BRANCH_REF }}/config/client-filters.json clients/client-filters.json
 
       - name: Log in to the Container registry

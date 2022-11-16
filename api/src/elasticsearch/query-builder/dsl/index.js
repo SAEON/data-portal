@@ -6,7 +6,7 @@ import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
 
 export default ({
-  dsl, // The base query
+  dsl = {}, // The base query
   ids = [], // A list of ODP IDs
   dois = [], // A list of DOIs
   text, // Text to search
@@ -28,7 +28,7 @@ export default ({
   /**
    * Collapse DOIs, IDs, and identifiers args
    */
-  identifiers = [...identifiers, ...ids, ...dois]
+  identifiers = [...new Set([...identifiers, ...ids, ...dois])]
   if (identifiers && identifiers.length) {
     dsl.query.bool.should = [idsQuery(identifiers), doisQuery(identifiers)]
     dsl.query.bool.filter = [

@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid'
 import TagFilter from './tag-filter'
 import ExtentFilter from './extent-filter'
-import { CATALOGUE_CLIENT_FILTER_CONFIG } from '../../../../config'
+import { CLIENT_FILTER_CONFIG } from '../../../../config'
 
 const defaultExpandedFields = ['keywords'].map(w => w.toLowerCase())
 
@@ -14,7 +14,7 @@ export default ({ catalogue }) => {
       </Grid>
 
       {/* CONFIGURABLE FILTERS */}
-      {CATALOGUE_CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }) => {
+      {CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }) => {
         const items = catalogue?.summary.find(obj => {
           const agg = Object.entries(obj).find(([key]) => key === id)
           return agg

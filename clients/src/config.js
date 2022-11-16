@@ -28,7 +28,7 @@ export const API_GQL_SUBSCRIPTIONS_ADDRESS = `${url.protocol === 'http:' ? 'ws:'
 
 export const CLIENTS_PUBLIC_ADDRESS = process.env.CLIENTS_PUBLIC_ADDRESS || 'http://localhost:3001'
 
-export const CATALOGUE_CLIENT_FILTER_CONFIG = JSON.parse(process.env.CATALOGUE_CLIENT_FILTER_CONFIG)
+export const CLIENT_FILTER_CONFIG = JSON.parse(process.env.CLIENT_FILTER_CONFIG)
 
 export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()
 

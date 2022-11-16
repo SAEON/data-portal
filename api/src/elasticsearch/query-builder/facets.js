@@ -1,5 +1,5 @@
 import buildDsl from './dsl/index.js'
-import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../../../config/index.js'
+import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../config/index.js'
 
 /**
  * NOTE
@@ -19,7 +19,7 @@ import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../../../co
  * will need to be adjusted (term I think)
  */
 
-export default async (_, args, ctx) => {
+export default async ({ args, ctx }) => {
   const { elastic } = ctx
   const {
     fields,

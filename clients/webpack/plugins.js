@@ -31,7 +31,7 @@ module.exports = (ROOT, output) => {
           .join(',')
       ),
       'process.env.SUBDOMAIN_APP_ENTRIES': JSON.stringify(SUBDOMAIN_APP_ENTRIES),
-      'process.env.CATALOGUE_CLIENT_FILTER_CONFIG': JSON.stringify(
+      'process.env.CLIENT_FILTER_CONFIG': JSON.stringify(
         fs.readFileSync(CLIENTS_SEARCH_FILTER_CONFIG_PATH, { encoding: 'utf8' }).toString()
       ),
       'process.env.PACKAGE_DESCRIPTION': JSON.stringify(packageJson.description),
