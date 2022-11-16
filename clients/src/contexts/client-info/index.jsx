@@ -16,7 +16,7 @@ export default ({ children }) => {
         if (error) {
           const msg = `Unable to reach server
 
-This error usually occurs because we are updating our catalogue software. Please wait a few seconds and then refresh the page`
+This error usually occurs because we are updating our catalogue software. Please wait a few minutes and then refresh the page`
           console.error(msg, error)
           throw new Error(msg)
         }
