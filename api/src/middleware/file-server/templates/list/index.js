@@ -71,7 +71,7 @@ export default async ctx => {
 
   return {
     $TITLE,
-    $KEYWORDS: [...new Set([...$KEYWORDS.split(',').filter(_ => _), ...generatedKeywords])].sort(
+    $KEYWORDS: [...new Set([$TITLE, ...$KEYWORDS.split(',').filter(_ => _), ...generatedKeywords])].sort(
       (a, b) => {
         if (a.length < b.length) return 1
         if (a.length > b.length) return -1
