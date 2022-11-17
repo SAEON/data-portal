@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import Fade from '@mui/material/Fade'
 import CircularProgress from '@mui/material/CircularProgress'
-import { DownloadCircleOutline as DownloadCircleOutline } from '../../../../../../components/icons'
+import { Download as DownloadIcon } from '../../../../../../components/icons'
 import { context as globalContext } from '../../../../../../contexts/global'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
 import StyledBadge from '../../components/styled-badge'
@@ -88,12 +88,12 @@ export default ({ catalogue }) => {
                 invisible={false}
                 sx={{
                   '& .MuiBadge-badge': {
-                    top: 5,
-                    right: -2,
+                    top: 3,
+                    right: -4,
                   },
                 }}
               >
-                <DownloadCircleOutline />
+                <DownloadIcon fontSize="small" />
               </StyledBadge>
             </IconButton>
           </Span>

@@ -1,13 +1,12 @@
 import Typography from '@mui/material/Typography'
 
 export default ({ doi }) => (
-  <Typography variant="overline" component="h1">
-    {doi && (
-      <>
-        <b>DOI: </b>
-        {doi}
-      </>
-    )}
-    {!doi && 'UNKNOWN DOI'}
-  </Typography>
+  <>
+    <Typography sx={{ fontWeight: 'bold', mr: theme => theme.spacing(1) }} variant="overline">
+      DOI:
+    </Typography>
+    <Typography variant="overline" component="h3">
+      {doi ? doi : 'UNKNOWN'}
+    </Typography>
+  </>
 )

@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { context as configContext } from '../../../../../config'
 import { useNavigate, useLocation } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
 import { Header } from '../../../../../components/html-tags'
 import { alpha } from '@mui/material/styles'
 
@@ -15,7 +14,6 @@ export default ({ titles, id }) => {
     <Header>
       <Typography
         tabIndex="0"
-        component={Link}
         onClick={() => navigate(`${contentBase}/records/${id}${search}`.replace('//', '/'))}
         sx={{
           color: theme => theme.palette.text.primary,

@@ -18,7 +18,14 @@ import {
   mdiEyeOff,
   mdiFormatQuoteOpen,
   mdiCodeJson,
+  mdiShare,
 } from '@mdi/js'
+
+export const Share = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiShare} />
+  </SvgIcon>
+))({})
 
 export const CodeJson = styled(props => (
   <SvgIcon {...props}>
