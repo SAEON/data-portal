@@ -49,6 +49,7 @@ export default ({ children, ..._source }) => {
     >
       <Div
         sx={{
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
           maxWidth: '100%',

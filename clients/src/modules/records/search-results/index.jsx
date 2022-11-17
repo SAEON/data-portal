@@ -11,7 +11,7 @@ import { CLIENT_FILTER_CONFIG } from '../../../config'
 import Container from '@mui/material/Container'
 import Hidden from '@mui/material/Hidden'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { Div } from '../../../components/html-tags'
+import { Div, Main } from '../../../components/html-tags'
 import Fade from '@mui/material/Fade'
 
 const Filters = lazy(() => import('./filters'))
@@ -141,7 +141,7 @@ export default ({ showSearch, showSidebar }) => {
 
   return (
     <Fade key="search-results" in>
-      <main id="search-results">
+      <Main id="search-results">
         <Header
           cursors={cursors}
           setCursors={setCursors}
@@ -195,7 +195,7 @@ export default ({ showSearch, showSidebar }) => {
             )}
           </Container>
         </Header>
-      </main>
+      </Main>
     </Fade>
   )
 }
