@@ -2,11 +2,12 @@ import { ObjectId } from 'mongodb'
 import facets from '../../../../elasticsearch/query-builder/facets.js'
 import { CLIENT_FILTER_CONFIG } from '../../../../config/index.js'
 
+const EXCLUDE_KEYWORDS = ['unknown']
+
 const AGG_FIELDS = [
   {
-    id: '_linked-resources-filter',
-    field: 'linkedResources.linkedResourceType.raw',
-    path: 'linkedResources',
+    id: 'doi-list',
+    field: 'doi.raw',
   },
   ...CLIENT_FILTER_CONFIG.map(({ id, field, path, filters, sortBy, sortOrder }) => {
     return { id, field, path, filters, sortBy, sortOrder }
@@ -20,8 +21,9 @@ export default async ctx => {
 
   const {
     title: $TITLE = 'SAEON Collection',
-    keywords: $KEYWORDS = 'SAEON collection, datasets, saeon',
+    keywords: $KEYWORDS = '',
     description: $DESCRIPTION = 'SAEON metedata collection',
+    generateKeywords = true,
     search: {
       text: filterByText = undefined,
       extent: filterByExtent = undefined,
@@ -31,21 +33,21 @@ export default async ctx => {
     } = {},
   } = list || {}
 
-  const tags = await facets({
-    ctx,
-    args: {
-      fields: AGG_FIELDS,
-      filterByText,
-      filterByExtent,
-      filterByIds,
-      filterByDois,
-      filterByTerms,
-    },
-  })
-
-  const keywords = [
-    ...new Set(
-      tags
+  const generatedKeywords = generateKeywords
+    ? (
+        await facets({
+          ctx,
+          args: {
+            fields: AGG_FIELDS,
+            filterByText,
+            filterByExtent,
+            filterByIds,
+            filterByDois,
+            filterByTerms,
+            limit: 10000,
+          },
+        })
+      )
         .map(tags =>
           Object.entries(tags)
             .map(([key, tags]) => {
@@ -58,22 +60,24 @@ export default async ctx => {
             .flat()
         )
         .flat()
-        .sort(({ doc_count: a }, { doc_count: b }) => {
-          if (a > b) return 1
-          if (b > a) return -1
-          return 0
-        })
         .map(({ key }) => key)
         .filter(val => {
-          if (isNaN(parseFloat(val))) return true
-          return false
+          if (!val) return false
+          if (typeof val === 'number') return false
+          if (EXCLUDE_KEYWORDS.includes(val)) return false // Exclude certain words
+          return true
         })
-    ),
-  ]
+    : []
 
   return {
     $TITLE,
-    $KEYWORDS: keywords.join(','),
+    $KEYWORDS: [...new Set([...$KEYWORDS.split(',').filter(_ => _), ...generatedKeywords])].sort(
+      (a, b) => {
+        if (a.length < b.length) return 1
+        if (a.length > b.length) return -1
+        return 0
+      }
+    ),
     $DESCRIPTION,
   }
 }
