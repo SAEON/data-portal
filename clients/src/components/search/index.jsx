@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import { SearchIcon } from '../../components/icons'
@@ -10,6 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default ({ autofocus = true, onFocus, onBlur }) => {
   const navigate = useNavigate()
+  const { search } = useLocation()
   const { global, setGlobal } = useContext(globalContext)
   const smUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
@@ -58,8 +59,8 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
             onKeyDown={({ key }) => {
               if (key === 'Enter') {
                 setGlobal({ text }, false)
-                if (history.location.pathname !== '/records') {
-                  navigate('/records')
+                if (window.location.pathname !== '/records') {
+                  navigate(`/records${search}`)
                 }
               }
             }}

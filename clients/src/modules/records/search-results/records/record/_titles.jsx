@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as configContext } from '../../../../../config'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import { Header } from '../../../../../components/html-tags'
@@ -8,6 +8,7 @@ import { alpha } from '@mui/material/styles'
 
 export default ({ titles, id }) => {
   const { contentBase } = useContext(configContext)
+  const { search } = useLocation()
   const navigate = useNavigate()
 
   return (
@@ -15,7 +16,7 @@ export default ({ titles, id }) => {
       <Typography
         tabIndex="0"
         component={Link}
-        onClick={() => navigate(`${contentBase}/records/${id}`.replace('//', '/'))}
+        onClick={() => navigate(`${contentBase}/records/${id}${search}`.replace('//', '/'))}
         sx={{
           color: theme => theme.palette.text.primary,
           cursor: 'pointer',

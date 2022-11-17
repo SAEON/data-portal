@@ -1,4 +1,5 @@
 import { styled, alpha } from '@mui/material/styles'
+import { useLocation } from 'react-router-dom'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
@@ -76,13 +77,14 @@ const FancyButton = ({
   to = '/records',
   ...props
 }) => {
+  const { search } = useLocation()
   return (
     <Div sx={{ width: '100%', height: '100%' }} {...props}>
       <Button
         component={onClick || href ? undefined : Link}
         href={href}
         onClick={onClick}
-        to={onClick ? undefined : href ? undefined : to}
+        to={onClick ? undefined : href ? undefined : `${to}${search}`}
         disabled={disabled}
         focusRipple
         className="MuiFancyButton-root"

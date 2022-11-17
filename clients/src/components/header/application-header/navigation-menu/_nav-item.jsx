@@ -1,4 +1,4 @@
-import { Link, useMatch } from 'react-router-dom'
+import { Link, useMatch, useLocation } from 'react-router-dom'
 import { forwardRef } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -6,6 +6,7 @@ import ListItemText from '@mui/material/ListItemText'
 
 export default forwardRef(({ onClick, label, to, Icon, href }, ref) => {
   const match = useMatch(to)
+  const { search } = useLocation()
 
   return (
     <MenuItem
@@ -16,7 +17,7 @@ export default forwardRef(({ onClick, label, to, Icon, href }, ref) => {
       rel={href && 'noopener noreferrer'}
       target={href && '_blank'}
       onClick={onClick}
-      to={to || ''}
+      to={`${to || ''}${search}`}
       href={href}
     >
       <ListItemIcon

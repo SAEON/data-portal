@@ -16,7 +16,7 @@ const sxLink = {
 }
 
 export default ({ contentBase = '/', routes }) => {
-  const { pathname } = useLocation() // Trigger re-render on location changes
+  const { pathname, search } = useLocation() // Trigger re-render on location changes
   const normalizedPathname = pathname.replace(contentBase, '/')
 
   const _pathname = normalizedPathname.match(/\/records\/./)
@@ -44,13 +44,13 @@ export default ({ contentBase = '/', routes }) => {
               component={Link}
               key={label}
               color="inherit"
-              to={
+              to={`${
                 to ||
                 tree
                   .slice(1, -1)
                   .map(({ to, label }) => to || label)
                   .join('/')
-              }
+              }${search}`}
               sx={sxLink}
             >
               {Icon && <MuiIcon sx={sxIcon} size={18} component={Icon} />}
