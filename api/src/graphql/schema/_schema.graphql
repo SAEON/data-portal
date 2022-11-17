@@ -72,6 +72,7 @@ enum ListType {
 type List {
   id: ID!
   search: JSON!
+  filter: JSON
   title: String
   description: String
   referrer: String
@@ -131,6 +132,7 @@ type Mutation {
   saveList(
     id: ID
     search: JSON!
+    filter: JSON
     createdBy: String!
     type: ListType
     title: String

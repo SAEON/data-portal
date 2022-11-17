@@ -1,7 +1,7 @@
 import hash from 'object-hash'
 
 export default async (self, args, ctx) => {
-  const { search, createdBy, type = 'public' } = args
+  const { search, filter = {}, createdBy, type = 'public' } = args
   const { Lists } = await ctx.mongo.collections
 
   const result = await Lists.findOneAndUpdate(
@@ -12,6 +12,7 @@ export default async (self, args, ctx) => {
       $setOnInsert: {
         hashedSearch: hash(search),
         search,
+        filter,
         createdAt: new Date(),
         createdBy,
         type,

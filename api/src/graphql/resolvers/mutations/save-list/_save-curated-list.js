@@ -4,7 +4,7 @@ import PERMISSIONS from '../../../../user-model/permissions.js'
 
 export default async (self, args, ctx) => {
   await userModel.ensurePermission({ ctx, permission: PERMISSIONS['list:update'] })
-  const { id, search, createdBy, ...otherFields } = args
+  const { id, search, filter = {}, createdBy, ...otherFields } = args
   const { Lists } = await ctx.mongo.collections
 
   const _id = ObjectId()
@@ -21,6 +21,7 @@ export default async (self, args, ctx) => {
       $set: {
         modifiedAt: new Date(),
         search,
+        filter,
         createdBy,
         ...otherFields,
       },
