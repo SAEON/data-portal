@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  DOCKER_IMAGE_NAME: saeon/sdp-dev-api
+  DOCKER_IMAGE_NAME: saeon/sdp-next
   BRANCH_REF: next
   CURATOR_CONTACT: curation@saeon.nrf.ac.za
   TECHNICAL_CONTACT: development@saeon.nrf.ac.za
