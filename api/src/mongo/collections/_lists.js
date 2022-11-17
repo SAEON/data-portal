@@ -13,10 +13,10 @@ export default {
   },
   indices: [
     {
-      index: 'hashedSearch',
+      index: 'hashOfFilter',
       options: {
         unique: true,
-        partialFilterExpression: { hashedSearch: { $exists: true } },
+        partialFilterExpression: { hashOfFilter: { $exists: true } },
       },
     },
   ],

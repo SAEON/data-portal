@@ -25,8 +25,8 @@ export default ({ catalogue }) => {
 
   const [saveList, { error, loading }] = useMutation(
     gql`
-      mutation ($search: JSON!, $createdBy: String!) {
-        saveList(search: $search, createdBy: $createdBy) {
+      mutation ($filter: JSON, $createdBy: String!) {
+        saveList(filter: $filter, createdBy: $createdBy) {
           id
         }
       }
@@ -70,7 +70,7 @@ export default ({ catalogue }) => {
                 saveList({
                   variables: {
                     createdBy: `${packageJson.name} v${packageJson.version}`,
-                    search: selectedIds.length
+                    filter: selectedIds.length
                       ? { ids: selectedIds }
                       : Object.fromEntries(
                           Object.entries({ ...global }).filter(([key]) => key !== 'selectedIds')

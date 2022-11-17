@@ -7,14 +7,14 @@ export default ({ closeFn, title, description, createdBy }) => {
   const [saveList, { error, loading }] = useMutation(
     gql`
       mutation (
-        $search: JSON!
+        $filter: JSON
         $createdBy: String!
         $type: ListType
         $title: String
         $description: String
       ) {
         saveList(
-          search: $search
+          filter: $filter
           createdBy: $createdBy
           type: $type
           title: $title
@@ -66,7 +66,7 @@ export default ({ closeFn, title, description, createdBy }) => {
         saveList({
           variables: {
             createdBy,
-            search: { dois: ['doi1', 'doi2', 'doi3', 'etc...'] },
+            filter: { dois: ['doi1', 'doi2', 'doi3', 'etc...'] },
             description,
             title,
             type: 'curated',

@@ -12,7 +12,7 @@ export default ({ toggle }) => {
     gql`
       mutation (
         $id: ID!
-        $search: JSON!
+        $filter: JSON
         $createdBy: String!
         $title: String
         $description: String
@@ -20,14 +20,14 @@ export default ({ toggle }) => {
       ) {
         saveList(
           id: $id
-          search: $search
+          filter: $filter
           createdBy: $createdBy
           title: $title
           description: $description
           type: $type
         ) {
           id
-          search
+          filter
           createdBy
           title
           description
@@ -54,7 +54,7 @@ export default ({ toggle }) => {
         )
       }
       onClick={() => {
-        saveList({ variables: { id, search, createdBy, title, description, type } })
+        saveList({ variables: { id, filter: search, createdBy, title, description, type } })
         toggle()
       }}
     >

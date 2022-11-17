@@ -19,8 +19,8 @@ import { Div } from '../../../../../../components/html-tags'
 export default ({ tabIndex, search = undefined }) => {
   const { global } = useContext(globalContext)
   const [saveList, { loading, error, data }] = useMutation(gql`
-    mutation ($search: JSON!, $createdBy: String!) {
-      saveList(search: $search, createdBy: $createdBy) {
+    mutation ($filter: JSON, $createdBy: String!) {
+      saveList(filter: $filter, createdBy: $createdBy) {
         id
       }
     }
@@ -30,7 +30,7 @@ export default ({ tabIndex, search = undefined }) => {
     saveList({
       variables: {
         createdBy: `${packageJson.name} v${packageJson.version}`,
-        search: search || global,
+        filter: search || global,
       },
     })
   }, [global, saveList, search])

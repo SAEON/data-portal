@@ -9,7 +9,7 @@ export default ({ id, children }) =>
         query ($id: ID!) {
           list(id: $id) {
             id
-            search
+            filter
             title
             description
             referrer
@@ -32,7 +32,7 @@ export default ({ id, children }) =>
           throw new Error('Unable to load saved search.' + error.message)
         }
 
-        return children(data?.list.search)
+        return children(data?.list.filter)
       }}
     </WithGqlQuery>
   ) : (
