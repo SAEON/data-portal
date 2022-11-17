@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import QuickForm from '../../packages/quick-form'
 import getUriState from '../../lib/fns/get-uri-state'
-import FromSavedSearch from './from-saved-search'
+import List from './list'
 
 export const context = createContext()
 
@@ -26,16 +26,17 @@ export default ({ children }) => {
   const { search, text = undefined, referrer = undefined } = getUriState()
 
   return (
-    <FromSavedSearch id={search}>
-      {search => (
+    <List id={search}>
+      {filter => (
         <QuickForm
           referrer={referrer}
-          text={text || search?.text || ''}
-          extent={search?.extent || undefined}
-          terms={search?.terms || []}
-          ids={search?.ids || []}
-          dois={search?.dois || []}
-          selectedIds={search?.selectedIds || []}
+          filter={filter?.filter || {}}
+          text={text || filter?.text || ''}
+          extent={filter?.extent || undefined}
+          terms={filter?.terms || []}
+          ids={filter?.ids || []}
+          dois={filter?.dois || []}
+          selectedIds={filter?.selectedIds || []}
         >
           {(setGlobal, global) => {
             return (
@@ -66,6 +67,6 @@ export default ({ children }) => {
           }}
         </QuickForm>
       )}
-    </FromSavedSearch>
+    </List>
   )
 }
