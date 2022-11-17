@@ -43,11 +43,37 @@ export default async ctx => {
     },
   })
 
-  console.log('TODO - decide which of these become keywords', JSON.stringify(tags))
+  const keywords = [
+    ...new Set(
+      tags
+        .map(tags =>
+          Object.entries(tags)
+            .map(([key, tags]) => {
+              if (key === 'collection-filter' || key === 'data-provider-filter') {
+                return tags.map(({ key, ...rest }) => ({ key: key.split('-').join(' '), ...rest }))
+              }
+
+              return tags
+            })
+            .flat()
+        )
+        .flat()
+        .sort(({ doc_count: a }, { doc_count: b }) => {
+          if (a > b) return 1
+          if (b > a) return -1
+          return 0
+        })
+        .map(({ key }) => key)
+        .filter(val => {
+          if (isNaN(parseFloat(val))) return true
+          return false
+        })
+    ),
+  ]
 
   return {
     $TITLE,
-    $KEYWORDS,
+    $KEYWORDS: keywords.join(','),
     $DESCRIPTION,
   }
 }
