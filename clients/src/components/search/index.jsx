@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import { SearchIcon } from '../../components/icons'
+import { Magnify as SearchIcon } from '../../components/icons'
 import QuickForm from '../../packages/quick-form'
 import { context as globalContext } from '../../contexts/global'
 import debounce from '../../lib/fns/debounce'
@@ -33,7 +33,7 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon size={24} />
+                  <SearchIcon fontSize="small" />
                 </InputAdornment>
               ),
               inputProps: {

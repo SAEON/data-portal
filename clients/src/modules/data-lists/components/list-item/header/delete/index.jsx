@@ -1,6 +1,6 @@
 import Mutation from './_mutation'
 import MessageDialogue from '../.././../../../../components/message-dialogue'
-import DeleteIcon from 'mdi-react/DeleteIcon'
+import { Delete as DeleteIcon } from '../../../../../../components/icons'
 import Button from '@mui/material/Button'
 
 export default props => {
@@ -13,7 +13,7 @@ export default props => {
         title: 'Delete this list',
       }}
       buttonProps={{
-        startIcon: <DeleteIcon size={18} />,
+        startIcon: <DeleteIcon fontSize="small" />,
         children: 'Delete list',
         size: 'small',
       }}

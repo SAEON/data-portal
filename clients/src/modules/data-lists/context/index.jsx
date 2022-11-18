@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
+
 export const context = createContext()
 
 export default ({ children }) => {
@@ -9,7 +10,7 @@ export default ({ children }) => {
       query {
         lists {
           id
-          search
+          filter
           title
           description
           url

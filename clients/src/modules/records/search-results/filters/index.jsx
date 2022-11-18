@@ -34,9 +34,6 @@ export default ({ catalogue }) => {
             }}
           >
             <TagFilter
-              sx={{
-                zIndex: 1,
-              }}
               id={id}
               defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}
               field={field}

@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import SaveIcon from 'mdi-react/ContentSaveIcon'
+import { ContentSave as SaveIcon } from '../../../../components/icons'
 import CircularProgress from '@mui/material/CircularProgress'
 import Button from '@mui/material/Button'
 
@@ -77,7 +77,7 @@ export default ({ closeFn, title, description, createdBy }) => {
         loading ? (
           <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
         ) : (
-          <SaveIcon size={18} />
+          <SaveIcon fontSize="small" />
         )
       }
       variant="text"

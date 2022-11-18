@@ -2,7 +2,7 @@ import { useState } from 'react'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import Tooltip from '@mui/material/Tooltip'
-import UserIcon from 'mdi-react/AccountIcon'
+import { Account as UserIcon } from '../../../../icons'
 import Logout from './_logout'
 
 export default props => {
@@ -16,7 +16,7 @@ export default props => {
       {/* MENU TRIGGER */}
       <Tooltip title={`Hi ${props.user.name || props.user.emailAddress}`}>
         <IconButton onClick={onOpen} size="large">
-          <UserIcon />
+          <UserIcon fontSize="medium" />
         </IconButton>
       </Tooltip>
 

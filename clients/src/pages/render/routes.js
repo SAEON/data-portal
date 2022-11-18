@@ -1,12 +1,14 @@
 import { lazy } from 'react'
-import SearchIcon from 'mdi-react/SearchIcon'
-import AboutIcon from 'mdi-react/AboutIcon'
-import TermsIcon from 'mdi-react/ContractIcon'
-import PrivacyIcon from 'mdi-react/LockCheckIcon'
-import DisclaimerIcon from 'mdi-react/AlertIcon'
 import Transition from '../../components/page-transition'
 import getUriState from '../../lib/fns/get-uri-state'
 import { Navigate } from 'react-router-dom'
+import {
+  Magnify as SearchIcon,
+  Information as AboutIcon,
+  FileSign as TermsIcon,
+  LockCheck as PrivacyIcon,
+  Alert as DisclaimerIcon,
+} from '../../components/icons'
 
 const RecordPage = lazy(() => import('../../modules/record'))
 const RecordsPage = lazy(() => import('../../modules/records'))

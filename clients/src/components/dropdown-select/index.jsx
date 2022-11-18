@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton'
 import Grid from '@mui/material/Grid'
-import CloseIcon from 'mdi-react/CloseIcon'
+import { Close as CloseIcon } from '../icons'
 import AutoComplete from '../../components/autocomplete'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
@@ -76,7 +76,7 @@ export default ({ options, selectedOptions, setOption, label, Icon }) => {
                         },
                       }}
                     >
-                      <CloseIcon size={20} />
+                      <CloseIcon fontSize="mediam" />
                     </IconButton>
                   </Grid>
                 </Grid>

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
-import MenuIcon from 'mdi-react/MenuIcon'
+import { Menu as MenuIcon } from '../../../icons'
 import NavItem from './_nav-item'
 import { context as authorizationContext } from '../../../../contexts/authorization'
 
@@ -17,7 +17,7 @@ export default ({ routes }) => {
         color="inherit"
         size="large"
       >
-        <MenuIcon />
+        <MenuIcon fontSize="medium" />
       </IconButton>
 
       <Menu

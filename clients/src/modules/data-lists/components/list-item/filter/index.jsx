@@ -5,46 +5,47 @@ import Collapse from '../../../../../components/collapse'
 import QuickForm from '../../../../../packages/quick-form'
 import debounce from '../../../../../lib/fns/debounce'
 import AceEditor from 'react-ace'
+import { Div } from '../../../../../components/html-tags'
 import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-min-noconflict/mode-json'
 import 'ace-builds/src-min-noconflict/theme-vibrant_ink'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
 
 const Editor = memo(
-  ({ update, search, id }) => {
+  ({ update, filter, id }) => {
     const ref = useRef(null)
 
     const doUpdate = useCallback(
       obj => {
-        if (JSON.stringify(search) !== JSON.stringify(obj.search)) {
+        if (JSON.stringify(filter) !== JSON.stringify(obj.filter)) {
           update(obj)
         }
       },
-      [search, update]
+      [filter, update]
     )
 
     return (
-      <Collapse title="Search" subheader="Configure list search DSL object" defaultExpanded>
+      <Collapse title="Filter" subheader="Configure list filter DSL object" defaultExpanded>
         <CardContent>
-          <div style={{ height: 800, width: '100%' }}>
-            <QuickForm search={JSON.stringify(search, null, 2)}>
-              {(updateQ, { search }) => {
+          <Div sx={{ height: 800, width: '100%' }}>
+            <QuickForm filter={JSON.stringify(filter, null, 2)}>
+              {(updateQ, { filter }) => {
                 return (
                   <AceEditor
                     ref={e => (ref.current = e)}
                     height="100%"
                     width="100%"
                     name={`ace-editor-${id}`}
-                    value={search}
+                    value={filter}
                     onValidate={debounce(annotations => {
                       const error = annotations.find(({ type }) => type === 'error')
                       if (error) {
                         doUpdate({ preventSave: JSON.stringify(error) })
                       } else {
-                        doUpdate({ search: JSON.parse(search), preventSave: false })
+                        doUpdate({ filter: JSON.parse(filter), preventSave: false })
                       }
                     }, 500)}
-                    onChange={debounce(search => updateQ({ search }))}
+                    onChange={debounce(filter => updateQ({ filter }))}
                     editorProps={{ $blockScrolling: false, $blockSelectEnabled: true }}
                     mode="json"
                     theme="vibrant_ink"
@@ -76,7 +77,7 @@ const Editor = memo(
                 )
               }}
             </QuickForm>
-          </div>
+          </Div>
         </CardContent>
       </Collapse>
     )

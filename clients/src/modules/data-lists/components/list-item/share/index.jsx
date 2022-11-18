@@ -4,14 +4,18 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import TextField from '@mui/material/TextField'
 import Q from '../../../../../packages/quick-form'
+import Link from '@mui/material/Link'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../config'
 import Collapse from '../../../../../components/collapse'
+import { Div } from '../../../../../components/html-tags'
 
-export default ({ id, url }) => {
+export default ({ id, url: todo }) => {
   return (
     <Collapse title="Link sharing and embedding" subheader="Create and share links to this link">
       <Q referrer={''} disableSidebar={false} showSearchBar={false}>
         {(update, { disableSidebar, showSearchBar, referrer }) => {
+          const url = `${CLIENTS_PUBLIC_ADDRESS}/list/records?search=${id}&referrer=${referrer}&showSearchBar=${showSearchBar}&disableSidebar=${disableSidebar}`
+
           return (
             <CardContent>
               <FormGroup>
@@ -28,20 +32,23 @@ export default ({ id, url }) => {
                 <TextField
                   value={referrer}
                   name="referrer"
-                  variant="standard"
+                  variant="outlined"
                   margin="normal"
                   helperText="Who should be the referrer for this link"
                   onChange={({ target: { value: referrer } }) => update({ referrer })}
                 />
               </FormGroup>
-              <div>
-                <pre style={{ whiteSpace: 'break-spaces', wordBreak: 'break-all' }}>{`
-// Current
-${CLIENTS_PUBLIC_ADDRESS}/list/records?search=${id}&referrer=${referrer}&showSearchBar=${showSearchBar}&disableSidebar=${disableSidebar}
-  
-// Legacy
-${url.replace('/list/', '/render/')}`}</pre>
-              </div>
+              <Div sx={{ mt: theme => theme.spacing(2) }}>
+                <Link
+                  href={url}
+                  sx={{
+                    whiteSpace: 'break-spaces',
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  {url}
+                </Link>
+              </Div>
             </CardContent>
           )
         }}

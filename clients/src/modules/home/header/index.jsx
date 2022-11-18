@@ -2,7 +2,7 @@ import Header from '../../../components/toolbar-header'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import { Div } from '../../../components/html-tags'
-import SubmitIcon from 'mdi-react/DatabasePlusIcon'
+import { DatabasePlus as SubmitIcon } from '../../../components/icons'
 import Tooltip from '@mui/material/Tooltip'
 
 export default () => {
@@ -15,7 +15,7 @@ export default () => {
           href="https://saeon.ac.za/data-curation/"
           target="_blank"
           rel="noopener noreferrer"
-          startIcon={<SubmitIcon size={18} />}
+          startIcon={<SubmitIcon fontSize="small" />}
           size="small"
           variant="text"
         >

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { gql } from '@apollo/client'
 import DialogActions from '@mui/material/DialogActions'
-import AssignmentIcon from 'mdi-react/ContentCopyIcon'
+import { ContentCopy as AssignmentIcon } from '../../icons'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
@@ -9,6 +9,7 @@ import Link from '@mui/material/Link'
 import LanguageSelector from './_language-selector'
 import StyleSelector from './_style-selector'
 import { Div, Pre } from '../../html-tags'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default ({
   doi,
@@ -17,6 +18,8 @@ export default ({
   DEFAULT_CITATION_LANG,
   DEFAULT_CITATION_STYLE,
 }) => {
+  const mdUp = useMediaQuery(theme => theme.breakpoints.up('md'))
+
   const { error, loading, data } = useQuery(
     gql`
       query ($dois: [String!], $style: CitationStyle, $language: CitationLocale) {
@@ -74,11 +77,11 @@ export default ({
         {/* DISCLAIMER */}
         <Typography variant="caption" sx={{ marginRight: 'auto' }}>
           <Link target="_blank" rel="noopener noreferrer" href="https://citation.crosscite.org/">
-            crosscite.org
+            crosscite{mdUp ? '.org' : ''}
           </Link>{' '}
           |{' '}
           <Link target="_blank" rel="noopener noreferrer" href="https://datacite.org">
-            datacite.org
+            datacite{mdUp ? '.org' : ''}
           </Link>
         </Typography>
 
@@ -89,9 +92,9 @@ export default ({
             navigator.clipboard.writeText(data.catalogue.search.records[0].citation)
             setCitationParams(Object.assign({ ...citationParams }, { copied: true }))
           }}
-          startIcon={<AssignmentIcon />}
+          startIcon={<AssignmentIcon fontSize="small" />}
         >
-          {citationParams.copied ? 'Copied!' : 'Copy to clipboard'}
+          {citationParams.copied ? 'Copied!' : `Copy${mdUp ? ' to clipboard' : ''}`}
         </Button>
       </DialogActions>
     </>

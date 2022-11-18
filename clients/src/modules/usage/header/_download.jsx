@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Button from '@mui/material/Button'
-import DownloadIcon from 'mdi-react/DownloadIcon'
+import { Download as DownloadIcon } from '../../../components/icons'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -14,7 +14,7 @@ export default () => {
       {/* TOGGLE */}
       <Button
         onClick={() => setOpen(true)}
-        startIcon={<DownloadIcon size={18} />}
+        startIcon={<DownloadIcon fontSize="small" />}
         variant="text"
         size="small"
         disableElevation

@@ -4,8 +4,10 @@ import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
 import ContentNav from '../../components/content-nav'
-import UsersIcon from 'mdi-react/AccountMultipleIcon'
-import DownloadsIcon from 'mdi-react/DownloadMultipleIcon'
+import {
+  AccountMultiple as UsersIcon,
+  DownloadMultiple as DownloadsIcon,
+} from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
 import { useTheme } from '@mui/material/styles'
 import Fade from '@mui/material/Fade'
@@ -20,7 +22,7 @@ const sections = [
     primaryText: 'Downloads',
     secondaryText: 'Data downloads reports',
     // eslint-disable-next-line
-    Icon: ({ active }) => <DownloadsIcon />,
+    Icon: ({ active }) => <DownloadsIcon fontSize="medium" />,
     requiredPermission: 'site-analytics:view',
     Section: Downloads,
   },
@@ -28,7 +30,7 @@ const sections = [
     primaryText: 'Users',
     secondaryText: 'User sessions',
     // eslint-disable-next-line
-    Icon: ({ active }) => <UsersIcon />,
+    Icon: ({ active }) => <UsersIcon fontSize="medium" />,
     requiredPermission: 'site-analytics:view',
     Section: Users,
   },

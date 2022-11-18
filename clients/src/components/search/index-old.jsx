@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import SearchIcon from 'mdi-react/SearchIcon'
+import { Magnify as SearchIcon } from '../icons'
 import QuickForm from '../../packages/quick-form'
 import { context as globalContext } from '../../contexts/global'
 import debounce from '../../lib/fns/debounce'
@@ -54,7 +54,7 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
                   <InputAdornment position="start">
                     <SearchIcon
                       style={{ color: theme.palette.common.white, margin: theme.spacing(4) }}
-                      size={36}
+                      fontSize="large"
                     />
                   </InputAdornment>
                 ),

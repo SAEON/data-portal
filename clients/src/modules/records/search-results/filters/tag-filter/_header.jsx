@@ -2,14 +2,23 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import {
+  ChevronDown as ExpandMoreIcon,
+  ChevronUp as ExpandLessIcon,
+} from '../../../../../components/icons'
 import { Div } from '../../../../../components/html-tags'
 
-export default ({ title, sx, collapsed, setCollapsed }) => {
+export default ({ title, collapsed, setCollapsed }) => {
   return (
-    <AppBar sx={sx} position="relative" color="inherit" variant="outlined" elevation={0}>
-      <Toolbar variant="dense">
+    <AppBar position="relative" color="inherit" variant="outlined" elevation={0}>
+      <Toolbar
+        disableGutters
+        sx={{
+          pl: theme => theme.spacing(2),
+          pr: theme => theme.spacing(1),
+        }}
+        variant="dense"
+      >
         <Typography
           onClick={() => setCollapsed(!collapsed)}
           sx={{ cursor: 'pointer' }}
@@ -27,7 +36,7 @@ export default ({ title, sx, collapsed, setCollapsed }) => {
             color="inherit"
             size="small"
           >
-            {collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            {collapsed ? <ExpandMoreIcon fontSize="small" /> : <ExpandLessIcon fontSize="small" />}
           </IconButton>
         </Div>
       </Toolbar>

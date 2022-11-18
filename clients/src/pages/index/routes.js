@@ -1,26 +1,22 @@
 import { lazy } from 'react'
-import { styled } from '@mui/material/styles'
 import Transition from '../../components/page-transition'
 import { PUBLIC_GQL_ADDRESS } from '../../config'
 import getUriState from '../../lib/fns/get-uri-state'
-
-import SearchIcon from 'mdi-react/SearchIcon'
-import AboutIcon from 'mdi-react/AboutIcon'
-import TermsIcon from 'mdi-react/ContractIcon'
-import PrivacyIcon from 'mdi-react/LockCheckIcon'
-import UsersIcon from 'mdi-react/AccountMultipleIcon'
-import DisclaimerIcon from 'mdi-react/AlertIcon'
-import LoginIcon from 'mdi-react/LoginIcon'
-import HomeIcon from 'mdi-react/HomeIcon'
-import UsageIcon from 'mdi-react/ChartBoxIcon'
-import CollectionsIcon from 'mdi-react/PackageVariantIcon'
-import GithubIcon_ from 'mdi-react/GithubIcon'
-import ApiIcon_ from 'mdi-react/ApiIcon'
-import LicenseIcon_ from 'mdi-react/LicenseIcon'
-
-const ApiIcon = styled(ApiIcon_)({})
-const GithubIcon = styled(GithubIcon_)({})
-const LicenseIcon = styled(LicenseIcon_)({})
+import {
+  Magnify as SearchIcon,
+  Login as LoginIcon,
+  Information as AboutIcon,
+  FileSign as TermsIcon,
+  LockCheck as PrivacyIcon,
+  AccountMultiple as UsersIcon,
+  Alert as DisclaimerIcon,
+  Home as HomeIcon,
+  ChartBox as UsageIcon,
+  Package as CollectionsIcon,
+  Api as ApiIcon,
+  Github as GithubIcon,
+  License as LicenseIcon,
+} from '../../components/icons'
 
 const HomePage = lazy(() => import('../../modules/home'))
 const RecordPage = lazy(() => import('../../modules/record'))

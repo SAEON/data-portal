@@ -3,10 +3,10 @@ import { context as listContext } from '../../_context'
 import Button from '@mui/material/Button'
 import { gql, useMutation } from '@apollo/client'
 import CircularProgress from '@mui/material/CircularProgress'
-import SaveIcon from 'mdi-react/ContentSaveIcon'
+import { ContentSave as SaveIcon } from '../../../../../../components/icons'
 
 export default ({ toggle }) => {
-  const { id, search, createdBy, title, description, type } = useContext(listContext)
+  const { id, filter, createdBy, title, description, type } = useContext(listContext)
 
   const [saveList, { error, loading }] = useMutation(
     gql`
@@ -54,7 +54,7 @@ export default ({ toggle }) => {
         )
       }
       onClick={() => {
-        saveList({ variables: { id, filter: search, createdBy, title, description, type } })
+        saveList({ variables: { id, filter, createdBy, title, description, type } })
         toggle()
       }}
     >

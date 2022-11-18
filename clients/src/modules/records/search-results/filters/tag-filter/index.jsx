@@ -5,7 +5,7 @@ import FilterHeader from './_header'
 import { Div } from '../../../../../components/html-tags'
 import FilterContent from './content'
 
-export default ({ results, id, title, field, boost, sx = {}, defaultExpanded = false }) => {
+export default ({ results, id, title, field, boost, defaultExpanded = false }) => {
   const { global } = useContext(globalContext)
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
@@ -15,7 +15,7 @@ export default ({ results, id, title, field, boost, sx = {}, defaultExpanded = f
 
   return (
     <Div sx={{ position: 'relative' }}>
-      <FilterHeader title={title} sx={sx} collapsed={collapsed} setCollapsed={setCollapsed} />
+      <FilterHeader title={title} collapsed={collapsed} setCollapsed={setCollapsed} />
       <Collapse
         timeout="auto"
         sx={{ width: '100%' }}

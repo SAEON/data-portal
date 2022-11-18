@@ -1,16 +1,16 @@
 import Grid from '@mui/material/Grid'
 import Header from './header'
-import Search from './search'
+import Filter from './filter'
 import Details from './details'
 import Share from './share'
 import ListItemContextProvider from './_context'
 import QuickForm from '../../../../packages/quick-form'
 
 export default props => {
-  const { search, createdBy, title, description, type } = props
+  const { filter, createdBy, title, description, type } = props
   return (
     <QuickForm
-      search={search}
+      filter={filter}
       createdBy={createdBy || ''}
       title={title || ''}
       description={description || ''}
@@ -36,9 +36,9 @@ export default props => {
                 <Share {...props} />
               </Grid>
 
-              {/* SEARCH */}
+              {/* FILTER */}
               <Grid item xs={12}>
-                <Search />
+                <Filter />
               </Grid>
             </Grid>
           </ListItemContextProvider>

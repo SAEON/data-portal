@@ -1,6 +1,6 @@
 import Card from '@mui/material/Card'
 import Avatar from '@mui/material/Avatar'
-import Icon from 'mdi-react/CancelIcon'
+import { Cancel as Icon } from '../icons'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import { useTheme } from '@mui/material/styles'
@@ -23,7 +23,7 @@ export default ({ requiredPermission = 'NA' }) => {
                 backgroundColor: theme.palette.primary.main,
               }}
             >
-              <Icon size={24} />
+              <Icon fontSize="large" />
             </Avatar>
           }
           title={<Typography variant="h4">No Access</Typography>}

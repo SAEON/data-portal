@@ -46,18 +46,28 @@ export default ({ title }) => {
         color="inherit"
         sx={{
           borderRadius: theme => `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-          zIndex: 1,
         }}
       >
-        <Toolbar variant="dense">
+        <Toolbar
+          disableGutters
+          sx={{
+            pl: theme => theme.spacing(2),
+            pr: theme => theme.spacing(1),
+          }}
+          variant="dense"
+        >
           <Typography onClick={toggle} sx={{ cursor: 'pointer' }} variant="overline" noWrap>
             {title}
           </Typography>
 
-          <Div sx={{ marginLeft: 'auto' }}>
+          <Div sx={{ ml: 'auto' }}>
             {/* Icon */}
             <IconButton aria-label="Collapse filter" onClick={toggle} color="inherit" size="small">
-              {collapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
+              {collapsed ? (
+                <ChevronDownIcon fontSize="small" />
+              ) : (
+                <ChevronUpIcon fontSize="small" />
+              )}
             </IconButton>
           </Div>
         </Toolbar>

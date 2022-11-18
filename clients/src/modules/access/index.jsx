@@ -4,15 +4,17 @@ import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
 import VerticalTabs from '../../packages/vertical-tabs'
-import UsersIcon from 'mdi-react/AccountMultipleIcon'
-import RolesIcon from 'mdi-react/AccountLockIcon'
-import PermissionsIcon from 'mdi-react/AxisLockIcon'
+import {
+  AccountMultiple as UsersIcon,
+  AccountLock as RolesIcon,
+  AxisLock as PermissionsIcon,
+} from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
 import Fade from '@mui/material/Fade'
 import Container from '@mui/material/Container'
 import Header from './header'
-import useTheme from '@mui/material/styles/useTheme'
+import { Div, Span } from '../../components/html-tags'
 
 const Users = lazy(() => import('./users'))
 const Roles = lazy(() => import('./roles'))
@@ -22,21 +24,21 @@ const _sections = [
   {
     primaryText: 'Users',
     secondaryText: 'Manage application users',
-    Icon: () => <UsersIcon />,
+    Icon: () => <UsersIcon fontSize="medium" />,
     requiredPermission: 'users:view',
     Render: Users,
   },
   {
     primaryText: 'Roles',
     secondaryText: 'Manage application roles',
-    Icon: () => <RolesIcon />,
+    Icon: () => <RolesIcon fontSize="medium" />,
     requiredPermission: 'roles:view',
     Render: Roles,
   },
   {
     primaryText: 'Permissions',
     secondaryText: 'Manage application permissions',
-    Icon: () => <PermissionsIcon />,
+    Icon: () => <PermissionsIcon fontSize="medium" />,
     requiredPermission: 'permissions:view',
     Render: Permissions,
   },
@@ -44,7 +46,6 @@ const _sections = [
 
 export default () => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const theme = useTheme()
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -59,36 +60,32 @@ export default () => {
 
   if (!hasPermission('/access')) {
     return (
-      <div style={{ marginTop: theme.spacing(2) }}>
+      <Div sx={{ mt: theme => theme.spacing(2) }}>
         <AccessDenied requiredPermission="/access" />
-      </div>
+      </Div>
     )
   }
 
   return (
     <UserRolesProvider>
       <Header />
-      <div style={{ marginTop: theme.spacing(2) }} />
-      <Container style={{ minHeight: 1000 }}>
+      <Div sx={{ mt: theme => theme.spacing(2) }} />
+      <Container sx={{ minHeight: 1000 }}>
         <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
           {sections.map(({ Render, primaryText }, i) => {
             return (
               <Suspense key={primaryText} fallback={<Loading />}>
-                <Fade
-                  timeout={theme.transitions.duration.regular}
-                  in={activeIndex === i}
-                  key={`loaded-${i}`}
-                >
-                  <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                <Fade in={activeIndex === i} key={`loaded-${i}`}>
+                  <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
                     <Render active={activeIndex === i} />
-                  </span>
+                  </Span>
                 </Fade>
               </Suspense>
             )
           })}
         </VerticalTabs>
       </Container>
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Div sx={{ mt: theme => theme.spacing(2) }} />
     </UserRolesProvider>
   )
 }

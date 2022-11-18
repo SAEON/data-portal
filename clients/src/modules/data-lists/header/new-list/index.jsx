@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as authContext } from '../../../../contexts/authentication'
-import NewListIcon from 'mdi-react/DatabaseAddIcon'
+import { PlaylistPlus as NewListIcon } from '../../../../components/icons'
 import MessageDialogue from '../../../../components/message-dialogue'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
@@ -18,7 +18,7 @@ export default () => {
         children: 'New list',
         size: 'small',
         variant: 'text',
-        startIcon: <NewListIcon size={18} />,
+        startIcon: <NewListIcon fontSize="small" />,
       }}
       title="New list"
       tooltipProps={{

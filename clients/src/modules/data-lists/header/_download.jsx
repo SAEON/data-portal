@@ -1,4 +1,4 @@
-import DownloadIcon from 'mdi-react/DownloadMultipleIcon'
+import { Download as DownloadIcon } from '../../../components/icons'
 import MessageDialogue from '../../../components/message-dialogue'
 
 export default () => {
@@ -9,7 +9,7 @@ export default () => {
         children: 'Download lists',
         size: 'small',
         variant: 'text',
-        startIcon: <DownloadIcon size={18} />,
+        startIcon: <DownloadIcon fontSize="small" />,
       }}
       title="Download list details"
       text={`Not implemented yet - this will be implemented if requested (${'https://github.com/SAEON/catalogue/issues/18'})`}

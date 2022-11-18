@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button'
 import { gql, useMutation } from '@apollo/client'
 import CircularProgress from '@mui/material/CircularProgress'
-import DeleteIcon from 'mdi-react/DeleteIcon'
+import { Delete as DeleteIcon } from '../../../../../../components/icons'
 
 export default ({ id, toggle }) => {
   const [deleteList, { error, loading }] = useMutation(
@@ -36,7 +36,7 @@ export default ({ id, toggle }) => {
         loading ? (
           <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
         ) : (
-          <DeleteIcon size={18} />
+          <DeleteIcon fontSize="small" />
         )
       }
       onClick={() => {
