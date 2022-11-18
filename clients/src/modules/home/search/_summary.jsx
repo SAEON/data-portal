@@ -5,7 +5,6 @@ import { PUBLIC_GQL_ADDRESS } from '../../../config'
 
 export default () => {
   const { global } = useContext(globalContext)
-  console.log('hi', global)
   const { error, loading, data } = useQuery(
     gql`
       query catalogue($text: String!, $filter: JSON) {
