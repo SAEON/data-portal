@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { context as globalContext } from '../../../../../../contexts/global'
-import { Div } from '../../../../../../components/html-tags'
+import { Div, Span } from '../../../../../../components/html-tags'
 
 /**
  * Show the selected filters in alphabetical order
@@ -27,7 +27,7 @@ export default ({ activeFilters, filterId }) => {
 
     return (
       <Grid key={value} item xs={12}>
-        <Div sx={{ display: 'flex', alignItems: 'center' }}>
+        <Div sx={{ pl: theme => theme.spacing(1), display: 'flex', alignItems: 'center' }}>
           <Checkbox
             sx={{ alignSelf: 'baseline' }}
             size="small"
@@ -46,16 +46,30 @@ export default ({ activeFilters, filterId }) => {
             }
             inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
           />
-          <Tooltip title={value?.toUpperCase()} placement="top">
+          <Tooltip title={typeof value === 'string' ? value?.titleize() : value} placement="top">
             <Typography
+              onClick={() =>
+                setGlobal({
+                  terms: terms.filter(({ value: _value, filterId: _id }) => {
+                    if (filterId !== _id) {
+                      return true
+                    } else {
+                      return value !== _value
+                    }
+                  }),
+                })
+              }
+              component={Span}
               sx={{
+                cursor: 'pointer',
+                lineHeight: '100%',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 marginRight: theme => theme.spacing(2),
               }}
-              variant="overline"
-            >{`${typeof value === 'string' ? value.toUpperCase() : value}`}</Typography>
+              variant="caption"
+            >{`${typeof value === 'string' ? value.titleize() : value}`}</Typography>
           </Tooltip>
         </Div>
       </Grid>

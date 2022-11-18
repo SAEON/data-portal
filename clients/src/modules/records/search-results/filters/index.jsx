@@ -1,13 +1,24 @@
 import Grid from '@mui/material/Grid'
 import TagFilter from './tag-filter'
 import ExtentFilter from './extent-filter'
+import Paper from '@mui/material/Paper'
 import { CLIENT_FILTER_CONFIG } from '../../../../config'
 
 const defaultExpandedFields = ['keywords'].map(w => w.toLowerCase())
 
 export default ({ catalogue }) => {
   return (
-    <Grid container item xs={12} spacing={0}>
+    <Grid
+      sx={{
+        mb: theme => theme.spacing(2),
+        borderRadius: theme => `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+      }}
+      component={Paper}
+      container
+      item
+      xs={12}
+      spacing={0}
+    >
       {/* EXTENT FILTER */}
       <Grid item xs={12} sx={{ position: 'relative' }}>
         <ExtentFilter title="Domain" />
@@ -21,18 +32,7 @@ export default ({ catalogue }) => {
         })[id]
 
         return (
-          <Grid
-            key={id}
-            item
-            xs={12}
-            sx={{
-              ':last-child': {
-                mb: theme => theme.spacing(2),
-                borderRadius: theme =>
-                  `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-              },
-            }}
-          >
+          <Grid key={id} item xs={12}>
             <TagFilter
               id={id}
               defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}

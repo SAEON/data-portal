@@ -16,7 +16,7 @@ export default ({ cursors, pageSize, catalogue, setCursors, loading }) => {
         })
       }}
       sx={{ mr: theme => theme.spacing(1) }}
-      size="small"
+      size="medium"
     >
       <ChevronRightIcon fontSize="small" />
     </IconButton>

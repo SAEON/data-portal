@@ -45,7 +45,7 @@ export default ({ title }) => {
         elevation={0}
         color="inherit"
         sx={{
-          borderRadius: theme => `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
+          border: 'none',
         }}
       >
         <Toolbar
@@ -56,7 +56,12 @@ export default ({ title }) => {
           }}
           variant="dense"
         >
-          <Typography onClick={toggle} sx={{ cursor: 'pointer' }} variant="overline" noWrap>
+          <Typography
+            onClick={toggle}
+            sx={{ cursor: 'pointer', fontWeight: 500 }}
+            variant="overline"
+            noWrap
+          >
             {title}
           </Typography>
 
@@ -88,11 +93,9 @@ export default ({ title }) => {
         >
           <Grid container spacing={0}>
             <Grid item xs={12}>
-              <Paper>
-                <Div sx={{ position: 'relative' }}>
-                  <Map />
-                </Div>
-              </Paper>
+              <Div sx={{ position: 'relative' }}>
+                <Map />
+              </Div>
             </Grid>
           </Grid>
         </Suspense>

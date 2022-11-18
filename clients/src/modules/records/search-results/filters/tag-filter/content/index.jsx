@@ -3,7 +3,6 @@ import {
   ChevronDown as ExpandMoreIcon,
   ChevronUp as ExpandLessIcon,
 } from '../../../../../../components/icons'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import ActiveFilters from './_active-filters'
@@ -17,59 +16,58 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
   const [showAll, toggleShowAll] = useState(false)
 
   return (
-    <Paper variant="outlined">
-      <Grid container item xs={12} spacing={0}>
-        {!results.length && !activeFilters.length && (
-          <Div sx={{ my: theme => theme.spacing(2), ml: theme => theme.spacing(3) }}>
-            <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-              No filters available
-            </Typography>
-          </Div>
-        )}
+    <Grid container item xs={12} spacing={0}>
+      {!results.length && !activeFilters.length && (
+        <Div sx={{ my: theme => theme.spacing(2), ml: theme => theme.spacing(3) }}>
+          <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+            No filters available
+          </Typography>
+        </Div>
+      )}
 
-        {/* SELECTED FILTERS */}
-        <ActiveFilters activeFilters={activeFilters} filterId={filterId} />
+      {/* SELECTED FILTERS */}
+      <ActiveFilters activeFilters={activeFilters} filterId={filterId} />
 
-        {/* SPACING (between active filters and available filters) */}
-        {Boolean(activeFilters.length) && (
-          <Grid container item xs={12} spacing={0}>
-            <Grid item xs>
-              <Div sx={{ m: theme => theme.spacing(2) }} />
-            </Grid>
+      {/* SPACING (between active filters and available filters) */}
+      {Boolean(activeFilters.length) && (
+        <Grid container item xs={12} spacing={0}>
+          <Grid item xs>
+            <Div sx={{ m: theme => theme.spacing(2) }} />
           </Grid>
-        )}
+        </Grid>
+      )}
 
-        {/* AVAILABLE FILTERS */}
-        <AvailableFilters
-          field={field}
-          boost={boost}
-          filterId={filterId}
-          activeFilters={activeFilters}
-          showAll={showAll}
-          results={results}
-          LIST_SIZE={LIST_SIZE}
-        />
+      {/* AVAILABLE FILTERS */}
+      <AvailableFilters
+        field={field}
+        boost={boost}
+        filterId={filterId}
+        activeFilters={activeFilters}
+        showAll={showAll}
+        results={results}
+        LIST_SIZE={LIST_SIZE}
+      />
 
-        {/* SHOW MORE */}
-        {results?.length > LIST_SIZE && (
-          <Button
-            sx={{
-              mt: theme => theme.spacing(2),
-              ml: theme => theme.spacing(1),
-              mb: theme => theme.spacing(2),
-            }}
-            disableElevation
-            size="small"
-            variant="text"
-            startIcon={
-              showAll ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />
-            }
-            onClick={() => toggleShowAll(!showAll)}
-          >
-            Show {showAll ? 'less' : 'more'}
-          </Button>
-        )}
-      </Grid>
-    </Paper>
+      {/* SHOW MORE */}
+      {results?.length > LIST_SIZE && (
+        <Button
+          sx={{
+            mt: theme => theme.spacing(2),
+            ml: theme => theme.spacing(2),
+            mb: theme => theme.spacing(2),
+            pl: theme => theme.spacing(0.5),
+          }}
+          disableElevation
+          size="small"
+          variant="text"
+          startIcon={
+            showAll ? <ExpandLessIcon fontSize="medium" /> : <ExpandMoreIcon fontSize="medium" />
+          }
+          onClick={() => toggleShowAll(!showAll)}
+        >
+          Show {showAll ? 'less' : 'more'}
+        </Button>
+      )}
+    </Grid>
   )
 }

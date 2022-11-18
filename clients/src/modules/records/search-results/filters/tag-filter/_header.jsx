@@ -10,7 +10,13 @@ import { Div } from '../../../../../components/html-tags'
 
 export default ({ title, collapsed, setCollapsed }) => {
   return (
-    <AppBar position="relative" color="inherit" variant="outlined" elevation={0}>
+    <AppBar
+      sx={{ borderBottom: 'none' }}
+      position="relative"
+      color="inherit"
+      variant="outlined"
+      elevation={0}
+    >
       <Toolbar
         disableGutters
         sx={{
@@ -21,14 +27,14 @@ export default ({ title, collapsed, setCollapsed }) => {
       >
         <Typography
           onClick={() => setCollapsed(!collapsed)}
-          sx={{ cursor: 'pointer' }}
+          sx={{ cursor: 'pointer', fontWeight: 500 }}
           variant="overline"
           noWrap
         >
           {title}
         </Typography>
 
-        <Div sx={{ marginLeft: 'auto' }}>
+        <Div sx={{ ml: 'auto' }}>
           {/* Icon */}
           <IconButton
             onClick={() => setCollapsed(!collapsed)}
