@@ -94,54 +94,62 @@ export default ({ proxy }) => {
         top: 0,
         right: 0,
         zIndex: 1,
-        margin: '10px 10px 0 0',
-        padding: theme => theme.spacing(1),
+        mt: theme => theme.spacing(1),
+        mr: theme => theme.spacing(1),
+        padding: theme => theme.spacing(0.25),
         backgroundColor: theme => alpha(theme.palette.common.white, 0.9),
+        transition: theme => theme.transitions.create(['background-color']),
+        '&:hover': {
+          backgroundColor: theme => theme.palette.common.white,
+        },
       }}
     >
-      <Tooltip title={'Filter by bounding box'}>
-        <IconButton
-          aria-label="Toggle extent filter draw tool"
-          size="small"
-          onClick={() => {
-            const isActive = !selectActive
-            if (isActive) {
-              draw = new Draw({
-                freehand: true,
-                source,
-                type: 'Circle',
-                geometryFunction: createBox(),
-              })
+      <Tooltip title={'Filter by bounding box'} placement="top-start">
+        <Span>
+          <IconButton
+            aria-label="Toggle extent filter draw tool"
+            size="small"
+            onClick={() => {
+              const isActive = !selectActive
+              if (isActive) {
+                draw = new Draw({
+                  freehand: true,
+                  source,
+                  type: 'Circle',
+                  geometryFunction: createBox(),
+                })
 
-              proxy.addInteraction(draw)
+                proxy.addInteraction(draw)
 
-              // Always create a fresh polygon
-              draw.on('drawstart', () => {
-                source.clear()
-              })
+                // Always create a fresh polygon
+                draw.on('drawstart', () => {
+                  source.clear()
+                })
 
-              // On drawend, apply the filter
-              draw.on('drawend', e => {
-                const feat = e.feature
-                const geometry = feat.getGeometry()
-                setExtent(wkt.writeGeometry(geometry))
-              })
-            } else {
-              proxy.removeInteraction(draw)
-            }
-            setSelectActive(isActive)
-          }}
-        >
-          <PencilIcon
-            sx={{
-              color: theme =>
-                selectActive ? theme.palette.success.main : theme.palette.text.secondary,
+                // On drawend, apply the filter
+                draw.on('drawend', e => {
+                  const feat = e.feature
+                  const geometry = feat.getGeometry()
+                  setExtent(wkt.writeGeometry(geometry))
+                })
+              } else {
+                proxy.removeInteraction(draw)
+              }
+              setSelectActive(isActive)
             }}
-          />
-        </IconButton>
+          >
+            <PencilIcon
+              sx={{
+                color: theme =>
+                  selectActive ? theme.palette.success.main : theme.palette.text.secondary,
+              }}
+              fontSize="small"
+            />
+          </IconButton>
+        </Span>
       </Tooltip>
       {extent && (
-        <Tooltip title={'Clear the extent filter'}>
+        <Tooltip title={'Clear the extent filter'} placement="top-start">
           <Span>
             <IconButton
               aria-label="Remove extent filter"
@@ -156,7 +164,7 @@ export default ({ proxy }) => {
                 view.setCenter(defaultCenter)
               }}
             >
-              <CloseIcon sx={{ color: theme => theme.palette.error.dark }} />
+              <CloseIcon fontSize="small" sx={{ color: theme => theme.palette.error.dark }} />
             </IconButton>
           </Span>
         </Tooltip>
