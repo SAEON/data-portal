@@ -27,46 +27,48 @@ export default ({ children }) => {
 
   return (
     <List id={search}>
-      {filter => (
-        <QuickForm
-          referrer={referrer}
-          filter={filter?.filter || {}}
-          text={text || filter?.text || ''}
-          extent={filter?.extent || undefined}
-          terms={filter?.terms || []}
-          ids={filter?.ids || []}
-          dois={filter?.dois || []}
-          selectedIds={filter?.selectedIds || []}
-        >
-          {(setGlobal, global) => {
-            return (
-              <context.Provider
-                value={{
-                  global,
-                  setGlobal: (obj, clearHistory = false, cb) => {
-                    setGlobal(
-                      Object.assign(
-                        clearHistory
-                          ? {
-                              layers: [],
-                              text: undefined,
-                              extent: undefined,
-                              terms: [],
-                            }
-                          : {},
-                        obj
+      {({ list: { filter = {} } = {} } = {}) => {
+        return (
+          <QuickForm
+            referrer={referrer}
+            filter={filter}
+            text={text || ''}
+            extent={undefined}
+            terms={[]}
+            ids={[]}
+            dois={[]}
+            selectedIds={[]}
+          >
+            {(setGlobal, global) => {
+              return (
+                <context.Provider
+                  value={{
+                    global,
+                    setGlobal: (obj, clearHistory = false, cb) => {
+                      setGlobal(
+                        Object.assign(
+                          clearHistory
+                            ? {
+                                layers: [],
+                                text: '',
+                                extent: undefined,
+                                terms: [],
+                              }
+                            : {},
+                          obj
+                        )
                       )
-                    )
-                    if (cb) cb()
-                  },
-                }}
-              >
-                {children}
-              </context.Provider>
-            )
-          }}
-        </QuickForm>
-      )}
+                      if (cb) cb()
+                    },
+                  }}
+                >
+                  {children}
+                </context.Provider>
+              )
+            }}
+          </QuickForm>
+        )
+      }}
     </List>
   )
 }

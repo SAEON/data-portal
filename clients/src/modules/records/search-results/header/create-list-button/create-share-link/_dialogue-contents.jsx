@@ -27,16 +27,40 @@ export default ({ tabIndex, search = undefined }) => {
   `)
 
   useEffect(() => {
+    console.log(global)
     saveList({
       variables: {
         createdBy: `${packageJson.name} v${packageJson.version}`,
-        filter: search || global,
+        filter: Object.fromEntries(
+          Object.entries(global.filter).map(([key, value]) => {
+            if (key === 'extent') {
+              return [key, global.extent || value]
+            }
+
+            if (value?.constructor === Array) {
+              return [
+                key,
+                [
+                  ...value,
+                  ...(global[key] || []),
+                  ...(key === 'ids' ? global.selectedIds || [] : []),
+                ].filter(_ => _),
+              ]
+            }
+
+            if (key === 'text') {
+              return [key, `${global[key] || ''} ${value}`]
+            }
+
+            return [key, global[key] || value]
+          })
+        ),
       },
     })
   }, [global, saveList, search])
 
   const id = data?.saveList.id || undefined
-  const uri = `${CLIENTS_PUBLIC_ADDRESS}/list/records?disableSidebar=true&showSearchBar=true&search=${id}`
+  const uri = `${CLIENTS_PUBLIC_ADDRESS}/list/records?search=${id}&disableSidebar=false&showSearchBar=true`
 
   return error ? (
     'Error'

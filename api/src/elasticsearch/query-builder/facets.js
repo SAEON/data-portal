@@ -29,6 +29,7 @@ export default async ({ ctx, args }) => {
     identifiers = undefined,
     filterByDois: dois = undefined,
     filterByTerms: terms = undefined,
+    listFilter = {},
     limit: size,
   } = args
 
@@ -167,7 +168,15 @@ export default async ({ ctx, args }) => {
    * over a subset of docs. To do this, a query must be
    * defined in addition to the aggregation
    */
-  if (extent || terms?.length || text || ids?.length || dois?.length || identifiers?.length) {
+  if (
+    extent ||
+    terms?.length ||
+    text ||
+    ids?.length ||
+    dois?.length ||
+    identifiers?.length ||
+    Object.keys(listFilter).length
+  ) {
     dsl.query = {
       bool: {
         must: [],
@@ -176,7 +185,7 @@ export default async ({ ctx, args }) => {
     }
   }
 
-  const body = buildDsl({ dsl, ids, dois, text, terms, identifiers, extent })
+  const body = buildDsl({ dsl, ids, dois, text, terms, identifiers, extent, filter: listFilter })
 
   if (LOG_QUERY_DETAILS) {
     console.info('ES DSL (AGG)', JSON.stringify(body, null, 2))

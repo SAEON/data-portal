@@ -42,6 +42,10 @@ type Catalogue {
   """
   search(
     """
+    A filter object that has the same fields as the search constraints, and is used for the list functionality. TODO refactor to type
+    """
+    filter: JSON
+    """
     Fetch records by either SAEON IDs or DOIs (other arguments ignored)
     """
     identifiers: [String!]
@@ -99,6 +103,10 @@ type Catalogue {
     List of terms to filter on
     """
     filterByTerms: [TermInput!]
+    """
+    A filter object that has the same fields as the search constraints, and is used for the list functionality. TODO refactor to type
+    """
+    listFilter: JSON
     """
     A list of fields to perform term aggregation on
     """

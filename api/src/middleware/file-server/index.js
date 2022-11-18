@@ -6,11 +6,23 @@ import { createReadStream } from 'fs'
 import { join, normalize } from 'path'
 import replacestream from 'replacestream'
 import { getData, replace } from './templates/index.js'
+import { DEPLOYMENT_ENV, NODE_ENV } from '../../config/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 const SPA_PATH = join(__dirname, '../../clients')
-const ENTRY_HTML = (await readdir(SPA_PATH))
-  .filter(f => f.endsWith('.html'))
+const ENTRY_HTML = (
+  await readdir(SPA_PATH).catch(error => {
+    if (DEPLOYMENT_ENV === 'production' || NODE_ENV === 'production') {
+      throw error
+    } else {
+      console.error(
+        'Missing react client. This is probably fine if you are developing the client locally',
+        error
+      )
+    }
+  })
+)
+  ?.filter(f => f.endsWith('.html'))
   .map(f => f.replace('.html', ''))
 
 const koa = new Koa()

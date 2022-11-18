@@ -32,7 +32,7 @@ export default ({ id, children }) =>
           throw new Error('Unable to load saved search.' + error.message)
         }
 
-        return children(data?.list.filter)
+        return children(data)
       }}
     </WithGqlQuery>
   ) : (

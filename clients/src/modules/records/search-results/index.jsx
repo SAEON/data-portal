@@ -30,7 +30,7 @@ export default ({ showSearch, showSidebar }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   const { referrer } = getUriState()
   const { global } = useContext(globalContext)
-  const { terms, extent = undefined, text = undefined, ids = [], dois = [] } = global
+  const { terms, extent = undefined, text = undefined, ids = [], dois = [], filter = {} } = global
   const sidebarVisible = !showSidebar && !xsDown
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export default ({ showSearch, showSidebar }) => {
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
+        $filter: JSON
         $size: Int
         $before: String
         $after: String
@@ -68,6 +69,7 @@ export default ({ showSearch, showSidebar }) => {
             filterByText: $text
             filterByExtent: $extent
             filterByTerms: $terms
+            listFilter: $filter
             limit: $summaryLimit
             filterByIds: $ids
             filterByDois: $dois
@@ -77,6 +79,7 @@ export default ({ showSearch, showSidebar }) => {
             text: $text
             terms: $terms
             size: $size
+            filter: $filter
             before: $before
             after: $after
             ids: $ids
@@ -111,6 +114,7 @@ export default ({ showSearch, showSidebar }) => {
         ids,
         dois,
         extent,
+        filter,
         terms: terms.map(({ field, boost, value }) => ({ field, boost, value })),
         text,
         size: pageSize,

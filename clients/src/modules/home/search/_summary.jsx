@@ -5,19 +5,20 @@ import { PUBLIC_GQL_ADDRESS } from '../../../config'
 
 export default () => {
   const { global } = useContext(globalContext)
+  console.log('hi', global)
   const { error, loading, data } = useQuery(
     gql`
-      query catalogue($text: String!) {
+      query catalogue($text: String!, $filter: JSON) {
         catalogue {
           id
-          search(text: $text) {
+          search(text: $text, filter: $filter) {
             totalCount
           }
         }
       }
     `,
     {
-      variables: { text: global.text || '' },
+      variables: { text: global.text || '', filter: global.filter },
       fetchPolicy: 'cache-first',
     }
   )

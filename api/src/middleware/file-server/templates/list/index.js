@@ -71,13 +71,13 @@ export default async ctx => {
 
   return {
     $TITLE,
-    $KEYWORDS: [...new Set([$TITLE, ...$KEYWORDS.split(',').filter(_ => _), ...generatedKeywords])].sort(
-      (a, b) => {
-        if (a.length < b.length) return 1
-        if (a.length > b.length) return -1
-        return 0
-      }
-    ),
+    $KEYWORDS: [
+      ...new Set([$TITLE, ...$KEYWORDS.split(',').filter(_ => _), ...generatedKeywords]),
+    ].sort((a, b) => {
+      if (a.length < b.length) return 1
+      if (a.length > b.length) return -1
+      return 0
+    }),
     $DESCRIPTION,
   }
 }

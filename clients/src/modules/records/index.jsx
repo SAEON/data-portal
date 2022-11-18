@@ -19,8 +19,6 @@ const Render = ({ showSearchBar, disableSidebar }) => (
 
 export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
   const { setGlobal } = useContext(globalContext)
-
   useEffect(() => () => setGlobal({ selectAll: false, selectedIds: [] }), [])
-
   return <Render showSearchBar={showSearchBar} disableSidebar={disableSidebar} />
 }
