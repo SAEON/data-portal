@@ -11,6 +11,13 @@ import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../config'
 import { Div } from '../../../../../../components/html-tags'
 
 /**
+ * TODO This should probably be generated from a GraphQL type query
+ * otherwise in the future this may become outdated, causing bugs
+ * that are difficult to track down
+ */
+const FILTER_KEYS = ['identifiers', 'ids', 'dois', 'text', 'terms', 'extent']
+
+/**
  * Dialogue contents of the share dialogue
  * This component will be mounted AFTER the
  * dialogue is opened. The useEffect hook will
@@ -27,33 +34,73 @@ export default ({ tabIndex, search = undefined }) => {
   `)
 
   useEffect(() => {
-    console.log(global)
-    saveList({
-      variables: {
-        createdBy: `${packageJson.name} v${packageJson.version}`,
-        filter: Object.fromEntries(
-          Object.entries(global.filter).map(([key, value]) => {
+    console.log('global', global)
+    console.log(
+      'filter',
+      Object.fromEntries(
+        Object.entries(global)
+          .map(([key, value]) => {
+            if (key === 'filter' || key === 'selectedIds' || key === 'selectAll') {
+              return null
+            }
+
             if (key === 'extent') {
-              return [key, global.extent || value]
+              return [key, value || global.filter[key]]
             }
 
             if (value?.constructor === Array) {
               return [
                 key,
                 [
+                  ...(global.filter[key] || []),
                   ...value,
-                  ...(global[key] || []),
                   ...(key === 'ids' ? global.selectedIds || [] : []),
                 ].filter(_ => _),
               ]
             }
 
             if (key === 'text') {
-              return [key, `${global[key] || ''} ${value}`]
+              return [key, `${value || ''} ${global.filter[key] || ''}`.trim()]
             }
 
-            return [key, global[key] || value]
+            return [key, global.filter[key] || value]
           })
+          .filter(_ => _)
+      )
+    )
+
+    saveList({
+      variables: {
+        createdBy: `${packageJson.name} v${packageJson.version}`,
+        filter: Object.fromEntries(
+          Object.entries(global)
+            .map(([key, value]) => {
+              if (!FILTER_KEYS.includes(key)) {
+                return null
+              }
+
+              if (key === 'text') {
+                return [key, `${value || ''} ${global.filter[key] || ''}`.trim()]
+              }
+
+              if (key === 'extent') {
+                return [key, value || global.filter[key]]
+              }
+
+              if (value?.constructor === Array) {
+                return [
+                  key,
+                  [
+                    ...(global.filter[key] || []),
+                    ...value,
+                    ...(key === 'ids' ? global.selectedIds || [] : []),
+                  ].filter(_ => _),
+                ]
+              }
+
+              return [key, global.filter[key] || value]
+            })
+            .filter(_ => _)
         ),
       },
     })
