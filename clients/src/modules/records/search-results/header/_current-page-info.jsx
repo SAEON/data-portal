@@ -7,6 +7,7 @@ export default ({ catalogue, pageSize, cursors }) => {
         overflow: 'revert',
         textOverflow: 'revert',
         lineHeight: '100%',
+        mx: theme => theme.spacing(0.25),
       }}
       variant="overline"
       noWrap

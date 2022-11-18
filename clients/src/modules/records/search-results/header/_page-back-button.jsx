@@ -13,9 +13,9 @@ export default ({ setCursors, loading, cursors, catalogue }) => {
           currentPage: cursors?.currentPage - 1,
         })
       }}
-      size="medium"
+      size="small"
     >
-      <ChevronLeftIcon />
+      <ChevronLeftIcon fontSize="small" />
     </IconButton>
   )
 }

@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import {
+  ChevronDown as ExpandMoreIcon,
+  ChevronUp as ExpandLessIcon,
+} from '../../../../../../components/icons'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -59,7 +61,9 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
             disableElevation
             size="small"
             variant="text"
-            startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            startIcon={
+              showAll ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />
+            }
             onClick={() => toggleShowAll(!showAll)}
           >
             Show {showAll ? 'less' : 'more'}

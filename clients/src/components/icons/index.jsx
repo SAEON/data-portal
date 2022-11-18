@@ -43,7 +43,14 @@ import {
   mdiPencil,
   mdiPlaylistPlus,
   mdiShare,
+  mdiMenuDown,
 } from '@mdi/js'
+
+export const MenuDown = styled(props => (
+  <SvgIcon {...props}>
+    <path d={mdiMenuDown} />
+  </SvgIcon>
+))({})
 
 export const License = styled(props => (
   <SvgIcon {...props}>

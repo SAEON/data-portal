@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import { MenuDown as ArrowDropDownIcon } from '../../../../components/icons'
 
 const pageSizes = [
   10, 20, 50, 100, 200,
@@ -22,9 +22,14 @@ export default ({ pageSize, setPageSize }) => {
         aria-expanded={Boolean(anchorEl)}
         aria-haspopup="true"
         aria-label="Change pagination size"
-        endIcon={<ArrowDropDownIcon />}
+        endIcon={<ArrowDropDownIcon fontSize="small" />}
+        size="small"
         onClick={event => {
           setAnchorEl(event.currentTarget)
+        }}
+        sx={{
+          justifyContent: 'center',
+          pr: 0,
         }}
       >
         {pageSize}
