@@ -6,19 +6,16 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run prettier && TC=utc node --trace-warnings --experimental-json-modules index.js",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|cjs|graphql)\"",
-    "ncu": "ncu",
-    "ncu -u": "ncu -u"
+    "prettier": "prettier --write \"./**/*.@(js|jsx|mjs|cjs|graphql)\""
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.0",
-    "mongodb": "^4.4.1",
-    "node-fetch": "^3.2.3"
+    "dotenv": "^16.0.3",
+    "mongodb": "^4.12.0",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
-    "npm-check-updates": "^12.5.4",
-    "prettier": "^2.6.0"
+    "prettier": "^2.7.1"
   }
 }

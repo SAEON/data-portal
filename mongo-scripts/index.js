@@ -1,4 +1,5 @@
 import { join, normalize, dirname, sep } from 'path'
+import { readdir, stat } from 'fs/promises'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -7,6 +8,15 @@ const _script = process.argv[2]
 /**
  * Import the requested script
  */
+const dir = normalize(join(__dirname, `.${sep}scripts${sep}`))
+const availableScripts = await readdir(dir)
+
+if (!availableScripts.includes(_script)) {
+  throw new Error(
+    `Unkown scripts "${_script}". Available scripts are "${availableScripts.join('", "')}"`
+  )
+}
+
 const scriptPath = normalize(join(__dirname, `.${sep}scripts${sep}${_script}${sep}index.js`))
 const script = await import(scriptPath)
   .then(({ default: fn }) => fn)
