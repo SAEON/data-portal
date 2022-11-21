@@ -12,12 +12,12 @@ export default {
     },
   },
   indices: [
-    {
-      index: 'hashOfFilter',
-      options: {
-        unique: true,
-        partialFilterExpression: { hashOfFilter: { $exists: true } },
-      },
-    },
+    // {
+    //   index: 'hashOfFilter',
+    //   options: {
+    //     unique: true,
+    //     partialFilterExpression: { hashOfFilter: { $exists: true } },
+    //   },
+    // },
   ],
 }
