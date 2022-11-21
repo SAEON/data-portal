@@ -108,7 +108,6 @@ export const getDataFinders = makeDataFinders(db)
                 if (error.code === 85) {
                   console.info('Recreating index on', name, ':: Index name:', index)
                   try {
-                    console.log(index)
                     await _db.collection(name).dropIndex(`${index}_1`)
                     await _db.collection(name).createIndex(index, options)
                   } catch (error) {

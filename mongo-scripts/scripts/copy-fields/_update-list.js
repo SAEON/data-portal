@@ -7,13 +7,14 @@ export default async list => {
   const hashOfFilter = list.hashedSearch
   const filter = list.search
 
+  const $set = {}
+  if (hashOfFilter) $set.hashOfFilter = hashOfFilter
+  if (filter) $set.filter = filter
+
   const doc = await lists.findOneAndUpdate(
     { _id },
     {
-      $set: {
-        hashOfFilter,
-        filter,
-      },
+      $set,
     },
     {
       upsert: false,
