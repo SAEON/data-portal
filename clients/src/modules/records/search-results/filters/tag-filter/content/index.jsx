@@ -18,7 +18,7 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
   return (
     <Grid container item xs={12} spacing={0}>
       {!results.length && !activeFilters.length && (
-        <Div sx={{ my: theme => theme.spacing(2), ml: theme => theme.spacing(3) }}>
+        <Div sx={{ mt: theme => theme.spacing(1), ml: theme => theme.spacing(2) }}>
           <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
             No filters available
           </Typography>
@@ -49,7 +49,7 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
       />
 
       {/* SHOW MORE */}
-      {results?.length > LIST_SIZE && (
+      {results?.length > LIST_SIZE ? (
         <Button
           sx={{
             mt: theme => theme.spacing(2),
@@ -67,6 +67,8 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
         >
           Show {showAll ? 'less' : 'more'}
         </Button>
+      ) : (
+        !activeFilters.length && <Div sx={{ width: '100%', mb: theme => theme.spacing(2) }} />
       )}
     </Grid>
   )
