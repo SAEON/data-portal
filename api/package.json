@@ -59,6 +59,7 @@
     "replacestream": "^4.0.3",
     "rimraf": "^3.0.2",
     "sift": "^16.0.1",
+    "sitemap": "^7.1.1",
     "wkt": "^0.1.1"
   },
   "author": "zd.smith@saeon.nrf.ac.za,steven@saeon.ac.za",

@@ -22,7 +22,11 @@ import restrictCors from './middleware/restrict-cors.js'
 import openCors from './middleware/open-cors.js'
 import blacklistRoutes from './middleware/blacklist-routes.js'
 import whitelistRoutes from './middleware/whitelist-routes.js'
-import reactClient, { templateServer } from './middleware/file-server/index.js'
+import reactClient, {
+  templateServer,
+  robotsTxt,
+  sitemapXml,
+} from './middleware/file-server/index.js'
 import clientSession from './middleware/client-session.js'
 import fourOFour from './middleware/404.js'
 import createRequestContext from './middleware/create-request-context.js'
@@ -98,7 +102,9 @@ api
   .use(createRequestContext(api))
   .use(
     new KoaRouter()
-      .post('/http', homeRoute)
+      .get('/sitemap.xml', sitemapXml)
+      .get('/robots.txt', robotsTxt)
+      .get('/http', homeRoute)
       .get('/http/client-info', clientInfoRoute)
       .get('/http/download-proxy', downloadProxyRoute)
       .get('/http/authenticate/redirect', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport

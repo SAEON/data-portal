@@ -7,6 +7,8 @@ import { join, normalize } from 'path'
 import replacestream from 'replacestream'
 import { getData, replace } from './templates/index.js'
 import { DEPLOYMENT_ENV, NODE_ENV } from '../../config/index.js'
+export { default as robotsTxt } from './robots.txt/index.js'
+export { default as sitemapXml } from './sitemap.xml/index.js'
 
 const hoursToMs = h => h * 60 * 60 * 1000
 
