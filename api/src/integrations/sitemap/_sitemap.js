@@ -2,7 +2,7 @@ import { API_ADDRESS } from '../../config/index.js'
 import { SitemapStream } from 'sitemap'
 import { createWriteStream } from 'fs'
 
-export default (path) => {
+export default path => {
   const file = createWriteStream(path, { flags: 'w' })
 
   const sitemap = new SitemapStream({

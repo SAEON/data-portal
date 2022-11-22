@@ -7,7 +7,7 @@ import createSitemap from './_sitemap.js'
 import { query as elasticQuery } from '../../elasticsearch/index.js'
 import fetchElasticRecords from '../../elasticsearch/query-builder/records.js'
 import { join, normalize } from 'path'
-import {copyFile} from 'fs/promises'
+import { copyFile } from 'fs/promises'
 
 const __dirname = getCurrentDirectory(import.meta)
 const clientAssetsDirectory = normalize(join(__dirname, '../../clients'))
@@ -76,7 +76,6 @@ export default async function () {
                 priority: 1,
               })
             }
-            
           }
 
           // Close the child sitemap
