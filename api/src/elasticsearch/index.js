@@ -31,9 +31,10 @@ export const query = async ({ index = ELASTICSEARCH_CATALOGUE_INDEX, body }) => 
   }
 }
 
-setupTemplates(client)
-  .then(res => console.info('Elasticsearch templates configured', res))
-  .catch(error => {
-    console.error('Unable to setup Elasticsearch templates', error.message)
-    process.exit(1)
-  })
+export default () =>
+  setupTemplates(client)
+    .then(res => console.info('Elasticsearch templates configured', res))
+    .catch(error => {
+      console.error('Unable to setup Elasticsearch templates', error.message)
+      process.exit(1)
+    })

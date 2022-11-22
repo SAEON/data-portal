@@ -71,7 +71,6 @@ enum ListType {
 
 type List {
   id: ID!
-  search: JSON
   filter: JSON
   title: String
   description: String

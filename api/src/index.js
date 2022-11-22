@@ -14,6 +14,7 @@ import {
   API_BIND_PORT,
   SERVER_TASKS,
   SAEON_ODP_INTEGRATION_SCHEDULE,
+  SITEMAP_INTEGRATION_SCHEDULE,
   APP_KEY,
 } from './config/index.js'
 import { Task } from './lib/task-manager/index.js'
@@ -25,12 +26,12 @@ import whitelistRoutes from './middleware/whitelist-routes.js'
 import reactClient, {
   templateServer,
   robotsTxt,
-  sitemapXml,
 } from './middleware/file-server/index.js'
 import clientSession from './middleware/client-session.js'
 import fourOFour from './middleware/404.js'
 import createRequestContext from './middleware/create-request-context.js'
 import saeonOdpIntegration from './integrations/saeon-odp/index.js'
+import sitemapGenerator from './integrations/sitemap/index.js'
 import gqlServer from './graphql/index.js'
 import {
   authenticate as authenticateRoute,
@@ -44,16 +45,22 @@ import {
 } from './http/index.js'
 import './passport/index.js'
 
-/**
- * Metadata integration
- * Pull metadata into Elasticsearch
- */
-
+// Schedule integration with SAEON ODP
 if (SAEON_ODP_INTEGRATION_SCHEDULE) {
   SERVER_TASKS.addTask(
     new Task(
       { schedule: SAEON_ODP_INTEGRATION_SCHEDULE, id: 'SAEON ODP Metadata integration' },
       saeonOdpIntegration
+    )
+  )
+}
+
+// Schedule the sitemap build
+if (SITEMAP_INTEGRATION_SCHEDULE) {
+  SERVER_TASKS.addTask(
+    new Task(
+      { schedule: SITEMAP_INTEGRATION_SCHEDULE, id: 'SAEON Data Portal sitemap.xml builder' },
+      sitemapGenerator
     )
   )
 }
@@ -102,7 +109,6 @@ api
   .use(createRequestContext(api))
   .use(
     new KoaRouter()
-      .get('/sitemap.xml', sitemapXml)
       .get('/robots.txt', robotsTxt)
       .get('/http', homeRoute)
       .get('/http/client-info', clientInfoRoute)

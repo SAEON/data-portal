@@ -44,7 +44,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
             inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
           />
           <Tooltip
-            title={`${typeof key === 'string' ? key.titleize() : key} (${doc_count})`}
+            title={`${typeof key === 'string' ? key.toUpperCase() : key} (${doc_count})`}
             placement="top"
           >
             <Typography
@@ -69,7 +69,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
                 marginRight: theme => theme.spacing(2),
               }}
               variant="caption"
-            >{`${typeof key === 'string' ? key.titleize() : key} (${doc_count})`}</Typography>
+            >{`${typeof key === 'string' ? key.toUpperCase() : key} (${doc_count})`}</Typography>
           </Tooltip>
         </Div>
       </Grid>

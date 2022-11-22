@@ -24,7 +24,7 @@ export default async ctx => {
     keywords: $KEYWORDS = '',
     description: $DESCRIPTION = 'SAEON metedata collection',
     generateKeywords = true,
-    search: {
+    filter: {
       text: filterByText = undefined,
       extent: filterByExtent = undefined,
       ids: filterByIds = undefined,

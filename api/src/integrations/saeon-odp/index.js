@@ -1,7 +1,7 @@
 import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../config/index.js'
 import testConnection from './_test-connection.js'
 import { performance } from 'perf_hooks'
-import { client } from '../../elasticsearch/index.js'
+import configureElasticsearch, { client } from '../../elasticsearch/index.js'
 import { ODP_ADDRESS } from '../../config/index.js'
 import metadata from './metadata/index.js'
 
@@ -19,6 +19,9 @@ export default async function () {
   const t0 = performance.now()
 
   try {
+    // Make sure that the template settings are up-to-date
+    await configureElasticsearch()
+
     // Test that the ODP is up
     await testConnection()
     console.info(`Connection to ${ODP_ADDRESS} tested and working!`)

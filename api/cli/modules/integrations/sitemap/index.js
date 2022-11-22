@@ -27,7 +27,7 @@ export default describe(
     r: 'run',
   }),
   {
-    title: 'sdp :: integrations :: SAEON odp',
-    description: 'Index SAEON ODP records for searching in the catalogue',
+    title: 'sdp :: integrations :: sitemap',
+    description: 'Generate a sitemap for the SAEON Data Portal',
   }
 )

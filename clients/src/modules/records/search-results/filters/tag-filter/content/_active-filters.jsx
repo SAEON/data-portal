@@ -46,7 +46,7 @@ export default ({ activeFilters, filterId }) => {
             }
             inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
           />
-          <Tooltip title={typeof value === 'string' ? value?.titleize() : value} placement="top">
+          <Tooltip title={typeof value === 'string' ? value?.toUpperCase() : value} placement="top">
             <Typography
               onClick={() =>
                 setGlobal({
@@ -69,7 +69,7 @@ export default ({ activeFilters, filterId }) => {
                 marginRight: theme => theme.spacing(2),
               }}
               variant="caption"
-            >{`${typeof value === 'string' ? value.titleize() : value}`}</Typography>
+            >{`${typeof value === 'string' ? value.toUpperCase() : value}`}</Typography>
           </Tooltip>
         </Div>
       </Grid>

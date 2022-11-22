@@ -26,6 +26,7 @@ export const TEMP_DIRECTORY = '/tmp/sdp-data'
 export const DATA_DIRECTORY = '/var/lib/sdp-data'
 export const LOG_QUERY_DETAILS = (process.env.LOG_QUERY_DETAILS || 'false').toBoolean()
 export const SAEON_ODP_INTEGRATION_SCHEDULE = process.env.SAEON_ODP_INTEGRATION_SCHEDULE || false
+export const SITEMAP_INTEGRATION_SCHEDULE = process.env.SITEMAP_INTEGRATION_SCHEDULE || false
 export const GIS_MAX_RESOLUTION_DECIMALS = 5 // About 1.1M accuracy. higher values result in Elasticsearch parsing errors
 export const SERVER_TASKS = TaskManager()
 export const EMAIL_REGEX = new RegExp(

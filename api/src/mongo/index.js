@@ -58,9 +58,8 @@ export const getDataFinders = makeDataFinders(db)
   await Promise.all(
     Object.entries(_collections).map(([, { name, validator = {} }]) =>
       _db.createCollection(name, { validator }).catch(error => {
-        if (error.code == 48) {
-          console.info(`Collection already exists`, name)
-        } else {
+        // error.code === 48 just means the collection already exists
+        if (error.code !== 48) {
           console.error(error)
           process.exit(1)
         }
