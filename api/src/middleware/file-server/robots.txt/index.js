@@ -15,7 +15,7 @@ let sitemaps
 try {
   sitemaps = await loadSitemaps()
   if (sitemaps.length < 1) {
-    throw new Error('Sitemaps don\'t appear to exist')
+    throw new Error("Sitemaps don't appear to exist")
   }
 } catch (error) {
   console.error('Unable to load sitemaps', error)

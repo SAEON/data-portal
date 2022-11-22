@@ -17,5 +17,6 @@ export default path => {
   })
 
   sitemap.pipe(file)
+
   return { sitemap, file }
 }

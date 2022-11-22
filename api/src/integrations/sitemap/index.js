@@ -34,10 +34,15 @@ export default async function () {
     const f1Name = 'sitemap_collections.xml'
     const f1CachePath = normalize(join(cachedir, f1Name))
     const { sitemap: s1, file: f1 } = createSitemap(f1CachePath)
-    await new Promise(async res1 => {
+    await new Promise(async (res1, rej1) => {
       f1.on('finish', async () => {
         await copyFile(f1CachePath, normalize(join(clientAssetsDirectory, f1Name)))
         res1()
+      })
+
+      s1.on('error', error => {
+        console.error('Error generating main sitemap', error)
+        rej1(error)
       })
 
       for (const list of lists) {
@@ -54,33 +59,44 @@ export default async function () {
         const f2Name = `sitemap_collection_records-${id}.xml`
         const f2CachePath = normalize(join(cachedir, f2Name))
         const { sitemap: s2, file: f2 } = createSitemap(f2CachePath)
-        await new Promise(async res2 => {
-          f2.on('finish', async () => {
-            await copyFile(f2CachePath, normalize(join(clientAssetsDirectory, f2Name)))
-            res2()
-          })
+        try {
+          await new Promise(async (res2, rej2) => {
+            f2.on('finish', async () => {
+              await copyFile(f2CachePath, normalize(join(clientAssetsDirectory, f2Name)))
+              res2()
+            })
 
-          // Fetch records for this list
-          const { hits: records } = await fetchElasticRecords({
-            ctx: { elastic: { query: elasticQuery } },
-            args: filter,
-          })
+            s2.on('error', error => {
+              console.error(
+                'Error generating sub-sitemaps. This is possible if a list of records are without DOIs',
+                f2Name,
+                error
+              )
+              rej2(error)
+            })
 
-          for (const {
-            _source: { doi },
-          } of records) {
-            if (doi) {
-              s2.write({
-                url: `/list/records/${doi}?search=${id}`,
-                changefreq: 'monthly',
-                priority: 1,
-              })
+            // Fetch records for this list
+            const { hits: records } = await fetchElasticRecords({
+              ctx: { elastic: { query: elasticQuery } },
+              args: filter,
+            })
+
+            for (const {
+              _source: { doi },
+            } of records) {
+              if (doi) {
+                s2.write({
+                  url: `/list/records/${doi}?search=${id}`,
+                  changefreq: 'monthly',
+                  priority: 1,
+                })
+              }
             }
-          }
 
-          // Close the child sitemap
-          s2.end()
-        })
+            // Close the child sitemap
+            s2.end()
+          })
+        } catch {}
       }
 
       // Close the main sitemap
@@ -92,7 +108,7 @@ export default async function () {
     const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
     console.info('Sitemap generated successfully', runtime)
   } catch (error) {
-    throw new Error(`ERROR generating sitemap.xml: ${error.message}`)
+    console.error('ERROR Unable to generate sitemap', error?.message)
   } finally {
     lock = false
   }
