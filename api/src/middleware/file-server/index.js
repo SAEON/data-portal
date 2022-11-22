@@ -33,6 +33,7 @@ const koa = new Koa()
 koa.use(
   serve(SPA_PATH, {
     maxage: hoursToMs(730), // 1 month
+    index: false,
     hidden: false,
     defer: false,
     gzip: true,
@@ -42,7 +43,7 @@ koa.use(
 )
 
 export const templateServer = async ctx => {
-  const page = ctx.request.url.match(/\/\w+/)[0].replace('/', '')
+  const page = ctx.request.url.match(/\/\w+/)?.[0]?.replace('/', '') || 'index'
   const fileName = ENTRY_HTML.includes(page) ? `${page}.html` : 'index.html'
   const filePath = normalize(join(SPA_PATH, fileName))
 
