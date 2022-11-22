@@ -30,7 +30,6 @@ ${sitemaps.join('\n')}
 
 User-agent: *
 
-Disallow: /about
 Disallow: /login
 Disallow: /privacy-policy
 Disallow: /terms-of-use
