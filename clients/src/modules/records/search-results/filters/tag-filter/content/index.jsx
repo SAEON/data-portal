@@ -55,7 +55,7 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
             mt: theme => theme.spacing(2),
             ml: theme => theme.spacing(2),
             mb: theme => theme.spacing(2),
-            pl: theme => theme.spacing(0.5),
+            pl: theme => theme.spacing(0.25),
           }}
           disableElevation
           size="small"

@@ -29,7 +29,7 @@ export default ({ activeFilters, filterId }) => {
       <Grid key={value} item xs={12}>
         <Div sx={{ pl: theme => theme.spacing(1), display: 'flex', alignItems: 'center' }}>
           <Checkbox
-            sx={{ alignSelf: 'baseline' }}
+            sx={{ alignSelf: 'baseline', '& .MuiSvgIcon-root': { fontSize: 16 } }}
             size="small"
             color="primary"
             checked={checked}

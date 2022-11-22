@@ -26,8 +26,8 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
       <Grid key={key} item xs={12}>
         <Div sx={{ pl: theme => theme.spacing(1), display: 'flex', alignItems: 'center' }}>
           <Checkbox
-            sx={{ alignSelf: 'baseline', display: 'flex' }}
             size="small"
+            sx={{ alignSelf: 'baseline', '& .MuiSvgIcon-root': { fontSize: 16 } }}
             color="primary"
             checked={checked}
             onChange={() => {
