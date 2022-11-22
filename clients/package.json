@@ -52,7 +52,6 @@
     "file-loader": "^6.2.0",
     "graphql": "^16.6.0",
     "html-webpack-plugin": "^5.5.0",
-    "minisearch": "^5.0.0",
     "mkdirp": "^1.0.4",
     "nanoid": "^4.0.0",
     "node-sass": "^8.0.0",
@@ -84,8 +83,8 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
     "@babel/eslint-plugin": "^7.19.1",
-    "eslint": "^8.27.0",
-    "eslint-plugin-react": "^7.31.10",
+    "eslint": "^8.28.0",
+    "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "npm-check-updates": "^16.4.1",
     "onchange": "^7.1.0",
