@@ -6,7 +6,6 @@ export default ({ descriptions }) => {
       sx={{
         color: theme => theme.palette.text.primary,
         fontSize: '0.775rem',
-        fontStyle: 'italic',
         mb: theme => theme.spacing(1),
         mx: theme => theme.spacing(2),
         overflow: 'hidden',

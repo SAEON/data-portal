@@ -33,7 +33,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mdi/js": "^7.0.96",
-    "@mui/material": "^5.10.14",
+    "@mui/material": "^5.10.15",
     "@saeon/logger": "^6.2.22",
     "@svgr/webpack": "^6.5.1",
     "abortcontroller-polyfill": "^1.7.5",
@@ -61,7 +61,7 @@
     "react-ace": "^10.1.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-cookie-consent": "^8.0.1",
-    "react-data-grid": "^7.0.0-beta.19",
+    "react-data-grid": "^7.0.0-beta.20",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-markdown": "^8.0.3",
@@ -86,9 +86,9 @@
     "eslint": "^8.28.0",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "npm-check-updates": "^16.4.1",
+    "npm-check-updates": "^16.4.3",
     "onchange": "^7.1.0",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.0",
     "webpack-dev-server": "^4.11.1"
   }
 }
