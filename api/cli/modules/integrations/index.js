@@ -6,7 +6,7 @@ const importFrom = require(import.meta)
 export default describe(
   {
     saeon: importFrom('./saeon-odp/index.js'),
-    sitemap: importFrom('./sitemap/index.js'),
+    sitemaps: importFrom('./sitemaps/index.js'),
   },
   {
     title: 'sdp :: integrations',

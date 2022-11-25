@@ -7,7 +7,7 @@ import createSitemap from './_sitemap.js'
 import { query as elasticQuery } from '../../elasticsearch/index.js'
 import fetchElasticRecords from '../../elasticsearch/query-builder/records.js'
 import { join, normalize } from 'path'
-import { copyFile } from 'fs/promises'
+import { copyFile, readdir, unlink } from 'fs/promises'
 
 const __dirname = getCurrentDirectory(import.meta)
 const clientAssetsDirectory = normalize(join(__dirname, '../../clients'))
@@ -27,6 +27,18 @@ export default async function () {
     await ensureDirectory(cachedir)
     await ensureDirectory(clientAssetsDirectory)
 
+    /**
+     * As sitemaps are created in the cache directory,
+     * register them in this array so that they can
+     * then be copied to the client public folder
+     *
+     * [{
+     *   from: absotelute path of cache,
+     *   to: absolutep path of client public folder
+     * }, etc]
+     */
+    const newSitemaps = []
+
     const lists = await getLists()
     console.info('Sitemaps temp cache configured', cachedir)
 
@@ -36,7 +48,7 @@ export default async function () {
     const { sitemap: s1, file: f1 } = createSitemap(f1CachePath)
     await new Promise(async (res1, rej1) => {
       f1.on('finish', async () => {
-        await copyFile(f1CachePath, normalize(join(clientAssetsDirectory, f1Name)))
+        newSitemaps.push({ from: f1CachePath, to: normalize(join(clientAssetsDirectory, f1Name)) })
         res1()
       })
 
@@ -62,7 +74,10 @@ export default async function () {
         try {
           await new Promise(async (res2, rej2) => {
             f2.on('finish', async () => {
-              await copyFile(f2CachePath, normalize(join(clientAssetsDirectory, f2Name)))
+              newSitemaps.push({
+                from: f2CachePath,
+                to: normalize(join(clientAssetsDirectory, f2Name)),
+              })
               res2()
             })
 
@@ -94,9 +109,11 @@ export default async function () {
                 }
               }
             } catch (error) {
-              console.error('Error generating sub-sitemap files from Elasticsearch query (this shouldn\'t fail and needs to be looked at, but don\'t throw and error here!)', error)
+              console.error(
+                "Error generating sub-sitemap files from Elasticsearch query (this shouldn't fail and needs to be looked at, but don't throw and error here!)",
+                error
+              )
             }
-            
 
             // Close the child sitemap
             s2.end()
@@ -109,6 +126,24 @@ export default async function () {
       // Close the main sitemap
       s1.end()
     })
+
+    // Create new sitemaps
+    for (const { from, to } of newSitemaps) {
+      console.info('Regstering new sitemap', to)
+      await copyFile(from, to)
+    }
+
+    // Remove obsolete sitemaps
+    const newSitemapPaths = new Set(newSitemaps.map(({ to }) => to))
+    const pathsToDelete = (await readdir(clientAssetsDirectory)).filter(
+      p => !newSitemapPaths.has(normalize(join(clientAssetsDirectory, p)))
+    )
+
+    for (let p of pathsToDelete) {
+      p = normalize(join(clientAssetsDirectory, p))
+      console.info('Removing obsolute sitemap', p)
+      await unlink(p)
+    }
 
     // DONE
     const t1 = performance.now()
