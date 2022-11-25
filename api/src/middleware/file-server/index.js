@@ -32,7 +32,7 @@ const ENTRY_HTML = (
 const koa = new Koa()
 koa.use(
   serve(SPA_PATH, {
-    maxage: 0, // hoursToMs(730), // 1 month
+    maxage: hoursToMs(730), // 1 month
     index: false,
     hidden: false,
     defer: false,
