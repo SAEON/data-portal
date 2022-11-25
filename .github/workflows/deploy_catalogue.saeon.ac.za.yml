@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on: github-runner.saeon.int
+    runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
