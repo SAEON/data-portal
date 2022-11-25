@@ -41,6 +41,7 @@ import {
   oauthAuthenticationCallback as oauthAuthenticationCallbackRoute,
 } from './http/index.js'
 import './passport/index.js'
+import redirectRenderRoute from './http/redirects/render.js'
 
 // Schedule integration with SAEON ODP
 if (SAEON_ODP_INTEGRATION_SCHEDULE) {
@@ -106,6 +107,7 @@ api
   .use(createRequestContext(api))
   .use(
     new KoaRouter()
+      .get(/\/render\/.*/, redirectRenderRoute)
       .get('/robots.txt', robotsTxt)
       .get('/http', homeRoute)
       .get('/http/client-info', clientInfoRoute)
