@@ -94,8 +94,7 @@ export default async function () {
                 }
               }
             } catch (error) {
-              console.error('Error generating sitemap files from Elasticsearch query', error)
-              rej2(error)
+              console.error('Error generating sub-sitemap files from Elasticsearch query (this shouldn\'t fail and needs to be looked at, but don\'t throw and error here!)', error)
             }
             
 
@@ -103,7 +102,7 @@ export default async function () {
             s2.end()
           })
         } catch {
-          // This error should not catch the app and has already been logged
+          // This error should not crash the app and has already been logged
         }
       }
 
