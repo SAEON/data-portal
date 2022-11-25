@@ -81,22 +81,30 @@ export default async function () {
               args: filter,
             })
 
-            for (const {
-              _source: { doi },
-            } of records) {
-              if (doi) {
-                s2.write({
-                  url: `/list/records/${doi}?search=${id}`,
-                  changefreq: 'monthly',
-                  priority: 1,
-                })
+            try {
+              for (const {
+                _source: { doi },
+              } of records) {
+                if (doi) {
+                  s2.write({
+                    url: `/list/records/${doi}?search=${id}`,
+                    changefreq: 'monthly',
+                    priority: 1,
+                  })
+                }
               }
+            } catch (error) {
+              console.error('Error generating sitemap files from Elasticsearch query', error)
+              rej2(error)
             }
+            
 
             // Close the child sitemap
             s2.end()
           })
-        } catch {}
+        } catch {
+          // This error should not catch the app and has already been logged
+        }
       }
 
       // Close the main sitemap
