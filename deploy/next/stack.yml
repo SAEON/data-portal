@@ -41,7 +41,7 @@ services:
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
       SAEON_ODP_INTEGRATION_SCHEDULE: '0 0 2 * * *'
-      SITEMAP_INTEGRATION_SCHEDULE: '0 0 2 * * *'
+      SITEMAP_INTEGRATION_SCHEDULE: '0 0 3 * * *'
       MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
