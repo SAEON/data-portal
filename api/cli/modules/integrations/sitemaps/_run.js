@@ -1,4 +1,4 @@
-import generateSitemap from '../../../../src/integrations/sitemap/index.js'
+import generateSitemap from '../../../../src/integrations/sitemaps/index.js'
 
 export default async () => {
   await generateSitemap()

@@ -2,7 +2,7 @@ import { API_ADDRESS } from '../../../config/index.js'
 import getCurrentDirectory from '../../../lib/get-current-directory.js'
 import { readdir } from 'fs/promises'
 import { join, normalize } from 'path'
-import generateSitemaps from '../../../integrations/sitemap/index.js'
+import generateSitemaps from '../../../integrations/sitemaps/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 

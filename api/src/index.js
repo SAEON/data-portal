@@ -28,7 +28,7 @@ import clientSession from './middleware/client-session.js'
 import fourOFour from './middleware/404.js'
 import createRequestContext from './middleware/create-request-context.js'
 import saeonOdpIntegration from './integrations/saeon-odp/index.js'
-import sitemapGenerator from './integrations/sitemap/index.js'
+import sitemapGenerator from './integrations/sitemaps/index.js'
 import gqlServer from './graphql/index.js'
 import {
   authenticate as authenticateRoute,
