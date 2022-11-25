@@ -27,7 +27,8 @@ export const query = async ({ index = ELASTICSEARCH_CATALOGUE_INDEX, body }) => 
       body,
     })
   } catch (error) {
-    throw new Error(`Elasticsearch query failed with DSL body ${JSON.stringify(body)}. ${error}`)
+    console.error(`Elasticsearch query failed with DSL body ${JSON.stringify(body)}. ${error}`)
+    return undefined
   }
 }
 
