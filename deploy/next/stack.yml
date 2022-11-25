@@ -25,7 +25,7 @@ services:
         failure_action: rollback
       restart_policy:
         condition: any
-        delay: 30s
+        delay: 10s
     environment:
       ALLOWED_ORIGINS: https://catalogue.saeon.dvn
       API_ADDRESS: https://catalogue.saeon.dvn
