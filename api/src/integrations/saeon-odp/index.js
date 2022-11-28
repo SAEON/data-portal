@@ -7,7 +7,7 @@ import metadata from './metadata/index.js'
 
 let lock = false
 
-export default async function () {
+export default async function ({ rebuild = false } = {}) {
   if (lock) {
     throw new Error(
       'This integration is already running. Please wait for it to finish and try again'
@@ -22,24 +22,30 @@ export default async function () {
     // Make sure that the template settings are up-to-date
     await configureElasticsearch()
 
-    // Test that the ODP is up
-    await testConnection()
-    console.info(`Connection to ${ODP_ADDRESS} tested and working!`)
+    /**
+     * Delete and recreate index
+     */
+    if (rebuild) {
+      await testConnection()
+      console.info(`Connection to ${ODP_ADDRESS} tested and working!`)
 
-    // Delete the index
-    await client.indices
-      .delete({ index: ELASTICSEARCH_CATALOGUE_INDEX })
-      .catch(() =>
-        console.error(
-          'Error deleting Elasticsearch index',
-          ELASTICSEARCH_CATALOGUE_INDEX,
-          "This probably means it didn't exist and you can ignore this message"
+      // Delete the index
+      await client.indices
+        .delete({ index: ELASTICSEARCH_CATALOGUE_INDEX })
+        .catch(() =>
+          console.error(
+            'Error deleting Elasticsearch index',
+            ELASTICSEARCH_CATALOGUE_INDEX,
+            "This probably means it didn't exist and you can ignore this message"
+          )
         )
-      )
+    }
 
     // Recreate the index
-    await client.indices.create({ index: ELASTICSEARCH_CATALOGUE_INDEX })
-    console.info(`Recreated ${ELASTICSEARCH_CATALOGUE_INDEX}`)
+    await client.indices
+      .create({ index: ELASTICSEARCH_CATALOGUE_INDEX })
+      .then(() => console.info(`Created ${ELASTICSEARCH_CATALOGUE_INDEX}`))
+      .catch(() => console.info(`Index ${ELASTICSEARCH_CATALOGUE_INDEX} already exists. Skipping`))
 
     // Load the metadata
     const result = await metadata().catch(error => {

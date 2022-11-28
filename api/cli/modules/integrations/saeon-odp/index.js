@@ -2,11 +2,11 @@ import { withFlags, describe } from '@saeon/cli-tools'
 import runIntegration from './_run.js'
 
 const run = async (args = {}) => {
-  let { run, help } = args
+  let { run, help, rebuild = false } = args
   if (!run) help = true
 
   if (run) {
-    return await runIntegration()
+    return await runIntegration({ rebuild })
   }
 
   if (help) {
@@ -23,8 +23,10 @@ export default describe(
   withFlags(run, {
     help: Boolean,
     run: Boolean,
+    rebuild: Boolean,
     h: 'help',
     r: 'run',
+    d: 'rebuild',
   }),
   {
     title: 'sdp :: integrations :: SAEON odp',

@@ -136,7 +136,10 @@ export default async function () {
     // Remove obsolete sitemaps
     const newSitemapPaths = new Set(newSitemaps.map(({ to }) => to))
     const pathsToDelete = (await readdir(clientAssetsDirectory)).filter(
-      p => p.startsWith('sitemap') && p.endsWith('.xml') && !newSitemapPaths.has(normalize(join(clientAssetsDirectory, p)))
+      p =>
+        p.startsWith('sitemap') &&
+        p.endsWith('.xml') &&
+        !newSitemapPaths.has(normalize(join(clientAssetsDirectory, p)))
     )
 
     for (let p of pathsToDelete) {

@@ -1,59 +1,53 @@
 import { parseDates, parseSpatial, parseImmutableResource } from '../transform/index.js'
 
-export default data => {
-  try {
-    return (
-      data
-        .map(
-          (
-            {
-              id,
-              sid, // eslint-disable-line
-              doi,
-              institution_key: institution,
-              collection_key: collection,
-              project_keys: projects,
-              schema_key: schema,
-              metadata,
-              published,
-            },
-            i
-          ) => {
-            try {
-              if (!published) {
-                return undefined
-              }
+export default data =>
+  data.reduce(
+    (
+      acc,
+      {
+        id,
+        sid, // eslint-disable-line
+        doi,
+        institution_key: institution,
+        collection_key: collection,
+        project_keys: projects,
+        schema_key: schema,
+        metadata,
+        published,
+      }
+    ) => {
+      if (!published) {
+        acc.unpublish.push(id)
+      } else {
+        try {
+          acc.publish.push({
+            id,
+            doi,
+            institution,
+            collection,
+            projects,
+            schema,
+            ...Object.fromEntries(
+              Object.entries(metadata).map(([key, value]) =>
+                key === 'immutableResource'
+                  ? [key, parseImmutableResource(id, value)]
+                  : key === 'dates'
+                  ? [key, parseDates(id, value)]
+                  : key === 'geoLocations'
+                  ? [key, parseSpatial(id, value)]
+                  : [key, value]
+              )
+            ),
+          })
+        } catch (error) {
+          console.error('ERROR processing published record from the ODP', id, error.message)
+        }
+      }
 
-              return {
-                id,
-                doi,
-                institution,
-                collection,
-                projects,
-                schema,
-                ...Object.fromEntries(
-                  Object.entries(metadata).map(([key, value]) =>
-                    key === 'immutableResource'
-                      ? [key, parseImmutableResource(id, value)]
-                      : key === 'dates'
-                      ? [key, parseDates(id, value)]
-                      : key === 'geoLocations'
-                      ? [key, parseSpatial(id, value)]
-                      : [key, value]
-                  )
-                ),
-              }
-            } catch (error) {
-              console.error('ERROR processing record from the ODP', id, error.message)
-              return undefined
-            }
-          }
-        )
-        // Filter away published === false
-        .filter(_ => _)
-    )
-  } catch (error) {
-    console.error('data', data)
-    throw error
-  }
-}
+      return acc
+    },
+    {
+      publish: [],
+      unpublish: [],
+    }
+  )
