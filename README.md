@@ -18,9 +18,14 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Start the ELK stack locally](#start-the-elk-stack-locally)
   - [Install dependencies and run the services](#install-dependencies-and-run-the-services)
     - [Load catalogue data on first use](#load-catalogue-data-on-first-use)
-- [Service documentation](#service-documentation)
-  - [API](#api)
-  - [Clients](#clients)
+- [Deployment](#deployment)
+- [Build and Deploy a Docker image](#build-and-deploy-a-docker-image)
+  - [Build Docker image locally](#build-docker-image-locally)
+  - [Run that image](#run-that-image)
+  - [Deploy via a Docker image](#deploy-via-a-docker-image)
+  - [Deploy from source code](#deploy-from-source-code)
+- [API documentation](#api-documentation)
+- [CLient documentation](#client-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
