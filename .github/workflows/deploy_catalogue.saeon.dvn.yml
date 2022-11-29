@@ -45,6 +45,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
           tags: |
             type=sha
+            type=raw,value=dev,priority=1
 
       - name: Build and push API
         uses: docker/build-push-action@master
