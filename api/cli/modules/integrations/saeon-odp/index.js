@@ -2,9 +2,9 @@ import { withFlags, describe } from '@saeon/cli-tools'
 import runIntegration from './_run.js'
 
 const run = async (args = {}) => {
-  let { run, help, rebuild = false, delete: deleteSelected = '' } = args
+  let { run, help, rebuild = false, delete: deleteSelected } = args
 
-  deleteSelected = deleteSelected.split(',').map(s => s.trim()).filter(_ => _)
+  deleteSelected = (deleteSelected || '').split(',').map(s => s.trim()).filter(_ => _) || []
 
   if (run || deleteSelected.length) {
     help = false
