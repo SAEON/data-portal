@@ -9,6 +9,7 @@ const cli = args =>
     describe(
       {
         integrations: importFrom('./modules/integrations/index.js'),
+        sitemaps: importFrom('./modules/sitemaps/index.js'),
       },
       {
         title: 'sdp',

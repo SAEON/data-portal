@@ -27,7 +27,7 @@ export default describe(
     r: 'run',
   }),
   {
-    title: 'sdp :: integrations :: sitemap',
-    description: 'Generate a sitemap for the SAEON Data Portal',
+    title: 'sdp :: sitemaps',
+    description: 'Generate sitemap.xml files ',
   }
 )

@@ -14,7 +14,7 @@ const cleanText = (...text) =>
     .filter(_ => _)
 
 export default ({
-  dsl = {}, // The base query
+  dsl = { query: { bool: {} } }, // The base query
   ids = [], // A list of ODP IDs
   dois = [], // A list of DOIs
   text, // Text to search
