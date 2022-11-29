@@ -27,7 +27,9 @@ export default async function ({ rebuild = false, skipInsert = false, deleteSele
      */
     if (rebuild) {
       await testConnection()
-      console.info(`Connection to ${ODP_ADDRESS} tested and working! Deleting existing index for complete rebuild`)
+      console.info(
+        `Connection to ${ODP_ADDRESS} tested and working! Deleting existing index for complete rebuild`
+      )
 
       // Delete the index
       await client.indices
