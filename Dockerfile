@@ -22,7 +22,7 @@ RUN echo "PROXY_ADDRESS=$PROXY_ADDRESS" >> .env
 RUN echo "TECHNICAL_CONTACT=$TECHNICAL_CONTACT" >> .env
 
 COPY clients .
-RUN npm install -g chomp@0.2.11 & npm ci --only=production
+RUN npm install -g chomp@0.2.11 & npm ci --omit=dev
 RUN chomp build
 
 # Build API
@@ -95,11 +95,8 @@ ENV TZ=$TZ
 WORKDIR /app
 COPY api .
 COPY --from=client /data-portal-clients/dist /app/src/clients
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 ENV PATH="$PATH:/app/bin"
-RUN echo $PATH
-RUN pwd
-RUN ls
 RUN chmod +x bin/sdp
 RUN chmod +x bin/start
 

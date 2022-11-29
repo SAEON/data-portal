@@ -86,21 +86,84 @@ sdp integrations saeon --run
 ```
 
 # Deployment
-Although the client and API are treated as separate during development, when deploying the software the client ***must*** be served via the API server
+Although the client and API are treated as separate during development, when deploying the software the client ***must*** be served via the API server. SEO and other features are configured this way.
 
-## Deploy the latest Docker image
+# Build and Deploy a Docker image
+Please refer to source code for build time & runtime configuration options (or request additional documentation). But in short, the domain of the image currently has to be specified at build time (when the React.js client is built via Webpack. Here is a minimum working example for deploying a Docker image on localhost.
+
+## Build Docker image locally
+From the root of the repository:
+
 ```sh
-docker run \
-  --rm \
-  
+docker build -t sdp_local .
 ```
 
-# Service documentation
+## Run that image
 
-## API
+```sh
+NETWORK=saeon_local
 
-[src/api/README.md](src/api/)
+# Assuming containers named "mongo" and "elasticsearch" can be found on the "saeon_local" network
 
-## Clients
+# Control what ODP records get included by mounting a js file at ODP_FILTER_PATH
+# Control what filters are shown on the /records path by mounting a JSON file at CLIENT_FILTER_CONFIG_PATH
 
-[src/clients/README.md](src/clients/)
+# Or if you want to test the image built above
+IMAGE=sdp_local:latest
+
+docker \
+  run \
+    -v $(pwd)/api/odp-filter.js:/app/odp-filter.js \
+    -v $(pwd)/clients/client-filters.json:/app/client-filters.json \
+    -e DEFAULT_SYSADMIN_EMAIL_ADDRESSES="..." \
+    -e MONGO_DB_ADDRESS="mongodb://mongo:27017" \
+    -e ELASTICSEARCH_ADDRESS="http://elasticsearch:9200" \
+    -e ODP_ADDRESS=https://odp.saeon.ac.za \
+    -e ODP_CLIENT_SECRET=... \
+    -e ODP_SSO_CLIENT_SECRET=... \
+    -e ODP_AUTH_SCOPES=ODP.Catalogue \
+    -e ODP_FILTER_PATH=/app/odp-filter.js \
+    -e CLIENT_FILTER_CONFIG_PATH=/app/client-filters.json \
+    -p 3000:3000 \
+    -d \
+    --rm \
+    --name sdp_local \
+    --net=$NETWORK \
+    $IMAGE
+```
+
+
+## Deploy via a Docker image
+Deploy the latest docker image configured for `catalogue.saeon.ac.za` using the same `docker run` command as above, but specify the correct Docker image:
+
+```sh
+IMAGE=ghcr.io/saeon/saeon-data-portal:latest
+
+NETWORK=...
+```
+
+SAEON production and development deployments are configured as [Docker stacks](/deploy/).
+
+## Deploy from source code
+From the root of the repository:
+
+```sh
+chomp build
+cd api
+
+# Either start node via chomp
+chomp
+
+# Or run node directly
+node \
+  --no-warnings \
+  --experimental-json-modules \
+  src/index.js
+
+# or start via the shell script
+srouce env.sh
+start
+```
+
+# [API documentation](api/)
+# [CLient documentation](clients/)
