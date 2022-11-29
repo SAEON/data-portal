@@ -2,11 +2,22 @@ import { withFlags, describe } from '@saeon/cli-tools'
 import runIntegration from './_run.js'
 
 const run = async (args = {}) => {
-  let { run, help, rebuild = false } = args
-  if (!run) help = true
+  let { run, help, rebuild = false, delete: deleteSelected = '' } = args
+
+  deleteSelected = deleteSelected.split(',').map(s => s.trim()).filter(_ => _)
+
+  if (run || deleteSelected.length) {
+    help = false
+  } else {
+    help = true
+  }
 
   if (run) {
     return await runIntegration({ rebuild })
+  }
+
+  if (deleteSelected.length) {
+    return await runIntegration({ skipInsert: true, deleteSelected })
   }
 
   if (help) {
@@ -24,9 +35,10 @@ export default describe(
     help: Boolean,
     run: Boolean,
     rebuild: Boolean,
+    delete: String,
     h: 'help',
     r: 'run',
-    d: 'rebuild',
+    d: 'delete',
   }),
   {
     title: 'sdp :: integrations :: SAEON odp',

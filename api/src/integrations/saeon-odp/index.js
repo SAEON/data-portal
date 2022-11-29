@@ -7,7 +7,7 @@ import metadata from './metadata/index.js'
 
 let lock = false
 
-export default async function ({ rebuild = false } = {}) {
+export default async function ({ rebuild = false, skipInsert = false, deleteSelected = [] } = {}) {
   if (lock) {
     throw new Error(
       'This integration is already running. Please wait for it to finish and try again'
@@ -48,7 +48,7 @@ export default async function ({ rebuild = false } = {}) {
       .catch(() => console.info(`Index ${ELASTICSEARCH_CATALOGUE_INDEX} already exists. Skipping`))
 
     // Load the metadata
-    const result = await metadata().catch(error => {
+    const result = await metadata({ skipInsert, deleteSelected }).catch(error => {
       console.error('Error calling metadata()')
       throw error
     })
