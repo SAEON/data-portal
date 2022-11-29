@@ -36,7 +36,7 @@ Search SAEON's data catalogue, preview datasets on a map, and download data.
 
 Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (Mongo, Elasticsearch) are run via Docker containers.
 
-Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software.
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software (the server crashes on startup with a helpful error message in this case).
 
 ## System requirements
 
@@ -86,7 +86,14 @@ sdp integrations saeon --run
 ```
 
 # Deployment
-TODO
+Although the client and API are treated as separate during development, when deploying the software the client ***must*** be served via the API server
+
+## Deploy the latest Docker image
+```sh
+docker run \
+  --rm \
+  
+```
 
 # Service documentation
 
