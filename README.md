@@ -19,10 +19,10 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Install dependencies and run the services](#install-dependencies-and-run-the-services)
     - [Load catalogue data on first use](#load-catalogue-data-on-first-use)
 - [Deployment](#deployment)
-- [Build and Deploy a Docker image](#build-and-deploy-a-docker-image)
-  - [Build Docker image locally](#build-docker-image-locally)
-  - [Run that image](#run-that-image)
-  - [Deploy via a Docker image](#deploy-via-a-docker-image)
+  - [Build and Deploy a Docker image](#build-and-deploy-a-docker-image)
+    - [Build Docker image locally](#build-docker-image-locally)
+    - [Run that image](#run-that-image)
+    - [SAEON production/dev deployments](#saeon-productiondev-deployments)
   - [Deploy from source code](#deploy-from-source-code)
 - [API documentation](#api-documentation)
 - [CLient documentation](#client-documentation)
@@ -93,17 +93,17 @@ sdp integrations saeon --run
 # Deployment
 Although the client and API are treated as separate during development, when deploying the software the client ***must*** be served via the API server. SEO and other features are configured this way.
 
-# Build and Deploy a Docker image
+## Build and Deploy a Docker image
 Please refer to source code for build time & runtime configuration options (or request additional documentation). But in short, the domain of the image currently has to be specified at build time (when the React.js client is built via Webpack. Here is a minimum working example for deploying a Docker image on localhost.
 
-## Build Docker image locally
+### Build Docker image locally
 From the root of the repository:
 
 ```sh
 docker build -t sdp_local .
 ```
 
-## Run that image
+### Run that image
 
 ```sh
 NETWORK=saeon_local
@@ -138,11 +138,12 @@ docker \
 ```
 
 
-## Deploy via a Docker image
+### SAEON production/dev deployments
 Deploy the latest docker image configured for `catalogue.saeon.ac.za` using the same `docker run` command as above, but specify the correct Docker image:
 
 ```sh
 IMAGE=ghcr.io/saeon/saeon-data-portal:latest
+# or IMAGE=ghcr.io/saeon/sdp_next:dev
 
 NETWORK=...
 ```
