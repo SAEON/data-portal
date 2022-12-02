@@ -40,7 +40,7 @@ services:
       DOCKER_DATA_VOLUME: sdp_next_data
       DOCKER_NETWORK: sdp_next
       DOCKER_TMP_VOLUME: sdp_next_tmp
-      ELASTICSEARCH_ADDRESS: 192.168.118.196:9200
+      ELASTICSEARCH_ADDRESS: http://192.168.118.196:9200
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
       SAEON_ODP_INTEGRATION_SCHEDULE: '0 0 2 * * *'
