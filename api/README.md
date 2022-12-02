@@ -17,7 +17,7 @@
 Some configuration is required (refer to "Environment configuration" below). After adding an appropriate .env file, control the service via NPM.
 
 ```sh
-# From the /src/api folder
+# From the /api folder
 npm install
 chomp --watch
 ```
@@ -30,7 +30,7 @@ chomp --watch
 Default configuration values can be found in [src/config/index.js](src/config/index.js). To update the default values, create a `.env` file in the root of the API service source code and adjust values accordingly. At a minimum, to use the service for the first time you will need to include the following configuration
 
 ```sh
-# src/api/.env
+# api/.env
 ODP_CLIENT_SECRET=<some secret>
 DEFAULT_ADMIN_EMAIL_ADDRESSES="comma separated list of email addresses"
 ```
@@ -42,7 +42,7 @@ Provide a path to a different filter function to configure this filter:
 
 ```sh
 # .env
-ODP_FILTER_PATH=some-other-filter.js # This assumes you have copied the file to the root of the API source code (src/api)
+ODP_FILTER_PATH=some-other-filter.js # This assumes you have copied the file to the root of the API source code
 ```
 
 For example, to include records for only one project, the filter function could look like this:
