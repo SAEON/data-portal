@@ -73,7 +73,7 @@ jobs:
 
   deploy:
     needs: [build]
-    runs-on: github-runner.saeon.int
+    runs-on: saeon
     steps:
       - name: Check out source code (shared)
         uses: actions/checkout@master
