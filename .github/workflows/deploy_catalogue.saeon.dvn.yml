@@ -14,7 +14,7 @@ env:
   MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_DEV_PASSWORD }} # Repository secret
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_DEV_USERNAME }} # Repository secret
   ODP_CLIENT_SECRET: ${{ secrets.ODP_CLIENT_SECRET_NEXT }} # Repository secret
-  ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET}}" # Repository secret
+  ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT }}" # Repository secret
   APP_KEY: ${{ secrets.APP_KEY }} # Repository secret
   REGISTRY: ghcr.io
   DOCKER_IMAGE_NAME: saeon/sdp-next
@@ -55,7 +55,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
           tags: |
             type=sha
-            type=raw,value=dev,priority=1
 
       - name: Build and push API
         uses: docker/build-push-action@master
