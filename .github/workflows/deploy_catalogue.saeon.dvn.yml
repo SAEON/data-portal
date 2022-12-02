@@ -68,7 +68,7 @@ jobs:
             CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}
             TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=development
-            PROXY_ADDRESS=https://proxy.saeon.dvn
+            PROXY_ADDRESS=https://192.168.118.193:6001
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -17,6 +17,9 @@ services:
     image: $DOCKER_IMAGE
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.service == apps
       rollback_config:
         parallelism: 0
       update_config:
@@ -39,10 +42,10 @@ services:
       DOCKER_DATA_VOLUME: sdp_stable_data
       DOCKER_NETWORK: sdp_stable
       DOCKER_TMP_VOLUME: sdp_stable_tmp
-      ELASTICSEARCH_ADDRESS: http://8.x.elasticsearch.saeon.int
+      ELASTICSEARCH_ADDRESS: 192.168.118.196:9202
       HOSTNAME: https://catalogue.saeon.ac.za
       LOG_QUERY_DETAILS: 'false'
-      MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27217
+      MONGO_DB_ADDRESS: mongodb://192.168.118.195:27217
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
       MONGO_DB: sdp_stable
