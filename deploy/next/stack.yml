@@ -17,6 +17,9 @@ services:
     image: $DOCKER_IMAGE
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.service == apps
       rollback_config:
         parallelism: 0
       update_config:
@@ -37,12 +40,12 @@ services:
       DOCKER_DATA_VOLUME: sdp_next_data
       DOCKER_NETWORK: sdp_next
       DOCKER_TMP_VOLUME: sdp_next_tmp
-      ELASTICSEARCH_ADDRESS: http://next.elasticsearch.saeon.int
+      ELASTICSEARCH_ADDRESS: 192.168.118.196:9200
       HOSTNAME: https://catalogue.saeon.dvn
       LOG_QUERY_DETAILS: 'false'
       SAEON_ODP_INTEGRATION_SCHEDULE: '0 0 2 * * *'
       SITEMAP_INTEGRATION_SCHEDULE: '0 0 3 * * *'
-      MONGO_DB_ADDRESS: mongodb://mongo.saeon.int:27117
+      MONGO_DB_ADDRESS: mongodb://192.168.118.194:27117
       MONGO_DB_PASSWORD: $MONGO_DB_PASSWORD
       MONGO_DB_USERNAME: $MONGO_DB_USERNAME
       MONGO_DB: sdp_next
