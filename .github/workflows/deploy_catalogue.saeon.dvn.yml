@@ -14,7 +14,7 @@ env:
   MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_DEV_PASSWORD }} # Repository secret
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_DEV_USERNAME }} # Repository secret
   ODP_CLIENT_SECRET: ${{ secrets.ODP_CLIENT_SECRET_NEXT }} # Repository secret
-  ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT }}" # Repository secret
+  ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT }} # Repository secret
   APP_KEY: ${{ secrets.APP_KEY }} # Repository secret
   REGISTRY: ghcr.io
   DOCKER_IMAGE_NAME: saeon/sdp-next
@@ -104,7 +104,7 @@ jobs:
             echo "MONGO_DB_PASSWORD=${{ env.MONGO_DB_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "MONGO_DB_USERNAME=${{ env.MONGO_DB_USERNAME }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "ODP_CLIENT_SECRET=${{ env.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/stack.env
-            echo "ODP_SSO_CLIENT_SECRET=${{ env.ODP_SSO_CLIENT_SECRET}}" >> /home/runner/sdp-next/deploy/next/stack.env
+            echo "ODP_SSO_CLIENT_SECRET=${{ env.ODP_SSO_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "DEFAULT_ADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_ADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-next/deploy/next/stack.env
