@@ -1,6 +1,7 @@
 name: Deploy catalogue.saeon.ac.za
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - '*'
