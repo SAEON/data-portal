@@ -13,6 +13,7 @@ env:
   SWARM_SSH_PORT: ${{ secrets.SWARM_SSH_PORT }} # Organization secret
   MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_DEV_PASSWORD }} # Repository secret
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_DEV_USERNAME }} # Repository secret
+  MONGO_HOST_NEXT: ${{ secrets.MONGO_HOST_NEXT }} # Organization secret
   ODP_CLIENT_SECRET: ${{ secrets.ODP_CLIENT_SECRET_NEXT }} # Repository secret
   ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT }} # Repository secret
   APP_KEY: ${{ secrets.APP_KEY }} # Repository secret
@@ -103,6 +104,7 @@ jobs:
             echo "APP_KEY=${{ env.APP_KEY }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "MONGO_DB_PASSWORD=${{ env.MONGO_DB_PASSWORD }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "MONGO_DB_USERNAME=${{ env.MONGO_DB_USERNAME }}" >> /home/runner/sdp-next/deploy/next/stack.env
+            echo "MONGO_HOST_NEXT=${{ env.MONGO_HOST_NEXT }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "ODP_CLIENT_SECRET=${{ env.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "ODP_SSO_CLIENT_SECRET=${{ env.ODP_SSO_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-next/deploy/next/stack.env

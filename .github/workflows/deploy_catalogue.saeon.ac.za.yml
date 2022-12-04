@@ -12,6 +12,7 @@ env:
   SWARM_PASSWORD: ${{ secrets.SWARM_PASSWORD }} # Organization secret
   SWARM_SSH_PORT: ${{ secrets.SWARM_SSH_PORT }} # Organization secret
   APP_KEY: ${{ secrets.APP_KEY }} # Repository secret
+  MONGO_HOST_STABLE: ${{ secrets.MONGO_HOST_STABLE }} # Organization secret
   MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }} # Repository secret
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_USERNAME }} # Repository secret
   ODP_CLIENT_SECRET: ${{ secrets.ODP_CLIENT_SECRET }} # Repository secret
@@ -103,6 +104,7 @@ jobs:
             echo "APP_KEY=${{ secrets.APP_KEY }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "MONGO_DB_PASSWORD=${{ secrets.MONGO_DB_PASSWORD }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "MONGO_DB_USERNAME=${{ secrets.MONGO_DB_USERNAME }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "MONGO_HOST_STABLE=${{ secrets.MONGO_HOST_STABLE }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET}}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
