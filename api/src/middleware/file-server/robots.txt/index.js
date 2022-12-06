@@ -34,6 +34,10 @@ Disallow: /login
 Disallow: /privacy-policy
 Disallow: /terms-of-use
 Disallow: /disclaimer
+Disallow: /license
+Disallow: /list/privacy-policy
+Disallow: /list/terms-of-use
+Disallow: /list/disclaimer
 Disallow: /http
 Disallow: /graphql
 
