@@ -32,6 +32,22 @@ export default {
         },
       },
     },
+    rightsList: {
+      type: 'nested',
+      include_in_parent: true,
+      properties: {
+        rights: {
+          type: 'text',
+          fields: {
+            raw: {
+              ignore_above: 500,
+              type: 'keyword',
+              normalizer: 'keyword_trimmed_lower',
+            }
+          }
+        }
+      }
+    },
     subjects: {
       type: 'nested',
       include_in_parent: true,

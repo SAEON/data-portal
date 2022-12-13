@@ -29,6 +29,14 @@
     "sortOrder": "asc"
   },
   {
+    "id": "rights-filter",
+    "title": "License",
+    "field": "rightsList.rights.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "rightsList"
+  },
+  {
     "id": "creators-filter",
     "title": "Creators",
     "field": "creators.name.raw",

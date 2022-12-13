@@ -29,6 +29,14 @@
     "sortOrder": "asc"
   },
   {
+    "id": "rights-filter",
+    "title": "License",
+    "field": "rightsList.rights.raw",
+    "sortOrder": "desc",
+    "sortBy": "_count",
+    "path": "rightsList"
+  },
+  {
     "id": "creators-filter",
     "title": "Creators",
     "field": "creators.name.raw",
@@ -66,7 +74,7 @@
   },
   {
     "id": "stratums-filter",
-    "title": "Stratums",
+    "title": "Instrument",
     "field": "subjects.subject.raw",
     "sortOrder": "desc",
     "sortBy": "_count",
@@ -80,7 +88,7 @@
   },
   {
     "id": "places-filter",
-    "title": "Places",
+    "title": "Location",
     "field": "subjects.subject.raw",
     "sortOrder": "desc",
     "sortBy": "_count",
