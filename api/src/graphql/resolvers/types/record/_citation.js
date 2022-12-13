@@ -1,5 +1,3 @@
-import fetch from 'make-fetch-happen'
-
 export default ({ _source }, { style = 'apa', language = 'en-US' }) => {
   let url
   if (style === 'ris') {

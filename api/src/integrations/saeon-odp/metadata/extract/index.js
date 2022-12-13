@@ -1,4 +1,3 @@
-import fetch from 'make-fetch-happen'
 import { ODP_API_CATALOGUE_ENDPOINT, ODP_INTEGRATION_BATCH_SIZE } from '../../../../config/index.js'
 import transform from './_transform.js'
 import authenticate from '../../../../lib/authenticate-with-odp.js'

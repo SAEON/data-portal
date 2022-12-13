@@ -1,4 +1,3 @@
-import fetch from 'node-fetch'
 import btoa from 'btoa'
 import { FormData } from 'formdata-node'
 import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_AUTH_SCOPES } from '../config/index.js'

@@ -1,5 +1,3 @@
-import fetch from 'make-fetch-happen'
-
 /**
  * Immutable resource links to repository.saeon.ac.za seem to go
  * to a landing page. So /download needs to be appended
