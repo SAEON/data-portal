@@ -1,5 +1,6 @@
 import Row from '../_row'
 import Typography from '@mui/material/Typography'
+import { Div, B } from '../../../components/html-tags'
 
 export default ({ identifiers }) => {
   const _identifiers = identifiers.filter(
@@ -13,11 +14,11 @@ export default ({ identifiers }) => {
   return (
     <Row title="Identifiers">
       {_identifiers.map(identifier => (
-        <div key={identifier.identifier}>
+        <Div key={identifier.identifier}>
           <Typography variant="body2">
-            <b>{identifier.identifierType.toUpperCase()}</b> {identifier.identifier}
+            <B>{identifier.identifierType.toUpperCase()}</B> {identifier.identifier}
           </Typography>
-        </div>
+        </Div>
       ))}
     </Row>
   )

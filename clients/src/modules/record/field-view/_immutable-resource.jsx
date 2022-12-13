@@ -7,7 +7,7 @@ import Link from '@mui/material/Link'
 import Hidden from '@mui/material/Hidden'
 import packageJson from '../../../../package.json'
 import { context as globalContext } from '../../../contexts/global'
-import { Div, Span } from '../../../components/html-tags'
+import { Div, Span, B } from '../../../components/html-tags'
 
 export default _source => {
   const { global } = useContext(globalContext)
@@ -75,7 +75,7 @@ export default _source => {
 
       <Div>
         <Typography gutterBottom variant="overline">
-          <b>License</b>
+          <B>License</B>
         </Typography>
         {rightsList.map(rl => {
           return (

@@ -1,24 +1,25 @@
 import Row from '../_row'
 import Typography from '@mui/material/Typography'
+import { Div, Sup, Br } from '../../../components/html-tags'
 
 export default ({ creators }) => (
   <Row title="Author">
     {creators.map((creator, i) => (
-      <div key={creator.name}>
+      <Div key={creator.name}>
         <Typography variant="body2">
           {creator.name}&nbsp;
-          <sup>[{i + 1}]</sup>
+          <Sup>[{i + 1}]</Sup>
         </Typography>
-      </div>
+      </Div>
     ))}
-    <br />
+    <Br />
     {creators.map((creator, i) => (
-      <div key={creator.name}>
+      <Div key={creator.name}>
         <Typography gutterBottom variant="body2">
-          <sup>[{i + 1}]</sup>&nbsp;
+          <Sup>[{i + 1}]</Sup>&nbsp;
           {creator.affiliation?.map(aff => aff.affiliation)}
         </Typography>
-      </div>
+      </Div>
     ))}
   </Row>
 )

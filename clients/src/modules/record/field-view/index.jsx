@@ -11,6 +11,7 @@ import LinkedResources from './_linked-resources'
 import Identifiers from './_identifiers'
 import ResourceType from './_resource-type'
 import ImmutableResource from './_immutable-resource'
+import RelatedIdentifiers from './_related-identifiers'
 
 /**
  * Fields correlate to fields in the metadata docs
@@ -56,6 +57,9 @@ export default ({ ..._source }) => {
 
       {/* IDENTIFIERS */}
       {_source.identifiers?.length && <Identifiers {..._source} />}
+
+      {/* RELATED IDENTIFIERS */}
+      {Boolean(_source.relatedIdentifiers?.length) && <RelatedIdentifiers {..._source} />}
     </Grid>
   )
 }
