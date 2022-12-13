@@ -43,10 +43,10 @@ export default {
               ignore_above: 500,
               type: 'keyword',
               normalizer: 'keyword_trimmed_lower',
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     },
     subjects: {
       type: 'nested',
