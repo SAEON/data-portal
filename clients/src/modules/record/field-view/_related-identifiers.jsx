@@ -9,13 +9,17 @@ export default ({ relatedIdentifiers }) => (
       <Div key={`related-resource${i}`}>
         <Typography variant="body2">
           <B>{`${lr?.relationType?.split(/(?=[A-Z])/).join(' ') || '(Unknown relationship)'}`}</B>{' '}
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            href={`${lr.relatedIdentifierType === 'DOI' ? ' https://doi.org/' : ''}${
-              lr.relatedIdentifier
-            }`}
-          >{`${lr.relatedIdentifier || 'Missing/incorrect metadata'}`}</Link>
+          {lr?.relatedIdentifierType.toUpperCase() === 'DOI' ? (
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`${lr.relatedIdentifierType === 'DOI' ? ' https://doi.org/' : ''}${
+                lr.relatedIdentifier
+              }`}
+            >{`${lr.relatedIdentifier || 'Missing/incorrect metadata'}`}</Link>
+          ) : (
+            lr.relatedIdentifier || 'Missing/incorrect metadata'
+          )}
         </Typography>
       </Div>
     ))}
