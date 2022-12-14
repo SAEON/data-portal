@@ -154,6 +154,20 @@ export const getFilters = (facet, field) => {
 
   return Object.entries(facet.aggs).reduce((a, [, { aggs, filter }]) => {
     filter = filter || Object.entries(aggs)[0][1].filter
+
+    if (field.path) {
+      if (filter.bool?.must) {
+        filter.bool.must = filter.bool.must.map(f => ({
+          nested: {
+            path: field.path,
+            query: {
+              ...f,
+            },
+          },
+        }))
+      }
+    }
+
     return [...a, filter]
   }, [])
 }

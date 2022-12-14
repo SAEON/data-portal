@@ -79,7 +79,8 @@ export default ({
       .filter(_ => _)
       .map(obj => obj || obj)
       .flat()
-    dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
+
+    dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms), ...facetFilters]
     dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms), ...facetFilters]
   }
 
