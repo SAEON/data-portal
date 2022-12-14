@@ -130,6 +130,6 @@ gqlServer.start().then(() => gqlServer.applyMiddleware({ app: api, cors: false }
 
 // Start public HTTP server
 httpServer.listen(API_BIND_PORT, () => {
-  console.log(`@saeon/catalogue API server ready`)
-  console.log(`@saeon/catalogue GraphQL server ready`)
+  console.info(`@saeon/catalogue API server ready`)
+  console.info(`@saeon/catalogue GraphQL server ready`)
 })

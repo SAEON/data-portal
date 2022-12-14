@@ -1,4 +1,8 @@
 input TermInput {
+  """
+  This should correlate with a filter ID as defined in client-filters.json at build time
+  """
+  id: ID
   field: String!
   value: String!
   boost: Int
@@ -12,7 +16,7 @@ input TermsFilterInput {
 
 input FieldInput {
   """
-  An SH1 hash of the entire field object as defined on the client
+  This should correlate with a filter ID as defined in client-filters.json at build time
   """
   id: ID!
   """
@@ -64,6 +68,10 @@ type Catalogue {
     """
     terms: [TermInput!]
     """
+    A list of fields to perform term aggregation on (defined in client config at build time)
+    """
+    fields: [FieldInput!]
+    """
     Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     """
     extent: WKT_4326
@@ -108,7 +116,7 @@ type Catalogue {
     """
     listFilter: JSON
     """
-    A list of fields to perform term aggregation on
+    A list of fields to perform term aggregation on (defined in client config at build time)
     """
     fields: [FieldInput!]
     """

@@ -6,7 +6,7 @@ import { dirname, join, normalize } from 'path'
 export const getDirname = url => dirname(fileURLToPath(url))
 
 export const exec = (CMD, debug = false) =>
-  debug ? console.log(CMD) : execSync(CMD, { stdio: [0, 1, 2] })
+  debug ? console.info(CMD) : execSync(CMD, { stdio: [0, 1, 2] })
 
 export const print = msg => console.info(`\n\n********** ${msg} **********\n\n`)
 

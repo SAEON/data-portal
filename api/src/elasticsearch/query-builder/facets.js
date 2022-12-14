@@ -33,9 +33,10 @@ export default async ({ ctx, args }) => {
     limit: size,
   } = args
 
+  const facets = facetAggregations({ fields, size })
   const dsl = {
     size: 0,
-    aggs: facetAggregations({ fields, size }),
+    aggs: facets,
   }
 
   /**
@@ -64,7 +65,18 @@ export default async ({ ctx, args }) => {
     }
   }
 
-  const body = buildDsl({ dsl, ids, dois, text, terms, identifiers, extent, filter: listFilter })
+  const body = buildDsl({
+    dsl,
+    ids,
+    dois,
+    text,
+    terms,
+    identifiers,
+    extent,
+    filter: listFilter,
+    fields,
+    facets,
+  })
 
   if (LOG_QUERY_DETAILS) {
     console.info('ES DSL (AGG)', JSON.stringify(body, null, 2))

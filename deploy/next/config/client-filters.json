@@ -68,6 +68,7 @@
     "filters": [
       {
         "field": "subjects.subjectScheme.raw",
+        "includeIfMissingField": false,
         "values": ["SANS1878 keywordType theme"]
       }
     ]
@@ -82,6 +83,7 @@
     "filters": [
       {
         "field": "subjects.subjectScheme.raw",
+        "includeIfMissingField": false,
         "values": ["SANS1878 keywordType stratum"]
       }
     ]
@@ -96,6 +98,7 @@
     "filters": [
       {
         "field": "subjects.subjectScheme.raw",
+        "includeIfMissingField": false,
         "values": ["SANS1878 keywordType place"]
       }
     ]

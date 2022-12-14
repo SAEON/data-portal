@@ -41,11 +41,6 @@ export const EMAIL_REGEX = new RegExp(
 )
 
 export const CLIENT_FACET_CONFIGURATION = [
-  {
-    id: '_linked-resources-filter',
-    field: 'linkedResources.linkedResourceType.raw',
-    path: 'linkedResources',
-  },
   ...CLIENT_FILTER_CONFIG.map(({ id, field, path, filters, sortBy, sortOrder }) => {
     return { id, field, path, filters, sortBy, sortOrder }
   }),

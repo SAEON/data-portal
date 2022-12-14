@@ -1,4 +1,4 @@
-import buildDsl from './dsl/index.js'
+import buildDsl, { facetAggregations } from './dsl/index.js'
 import { ELASTICSEARCH_CATALOGUE_INDEX, LOG_QUERY_DETAILS } from '../../config/index.js'
 
 /**
@@ -24,6 +24,7 @@ export default async ({ ctx, args }) => {
       terms = undefined,
       identifiers = undefined,
       filter: listFilter = {},
+      fields = [],
     } = args
 
     let { before = undefined, after = undefined } = args
@@ -65,7 +66,18 @@ export default async ({ ctx, args }) => {
       dsl.search_after = [cursor.score || 0, cursor.id]
     }
 
-    const body = buildDsl({ dsl, ids, dois, text, terms, extent, identifiers, filter: listFilter })
+    const body = buildDsl({
+      dsl,
+      ids,
+      dois,
+      text,
+      terms,
+      extent,
+      identifiers,
+      filter: listFilter,
+      fields,
+      facets: facetAggregations({ fields, size }),
+    })
 
     if (LOG_QUERY_DETAILS) {
       console.info('ES DSL', JSON.stringify(body, null, 2))

@@ -75,6 +75,7 @@ export default ({ showSearch, showSidebar }) => {
             filterByDois: $dois
           )
           search(
+            fields: $fields
             extent: $extent
             text: $text
             terms: $terms
@@ -106,7 +107,7 @@ export default ({ showSearch, showSidebar }) => {
         dois,
         extent,
         filter,
-        terms: terms.map(({ field, boost, value }) => ({ field, boost, value })),
+        terms: terms.map(({ field, boost, value, filterId: id }) => ({ id, field, boost, value })),
         text,
         size: pageSize,
         after: cursors.end,

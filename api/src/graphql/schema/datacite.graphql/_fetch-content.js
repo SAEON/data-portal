@@ -32,10 +32,10 @@ export default ({ cachePath, contentUri }) => {
               const daysOld = differenceInDays(mtime, new Date())
               if (daysOld > MAX_CACHE_AGE_DAYS) {
                 staleData = data
-                console.log('GraphQL schema', contentUri, 'cache expired')
+                console.info('GraphQL schema', contentUri, 'cache expired')
                 return reject(new ExpiredException(`${cachePath} is expired`))
               } else {
-                console.log('GraphQL schema', contentUri, 'from cache')
+                console.info('GraphQL schema', contentUri, 'from cache')
                 return resolve(formatJson(JSON.parse(data)))
               }
             }
@@ -51,12 +51,12 @@ export default ({ cachePath, contentUri }) => {
       if (error.code === 'ENOENT' || error.code === 'EXPIRED') {
         const json = await _fetch(contentUri)
           .then(res => {
-            console.log('datacite', contentUri, 'new data')
+            console.info('datacite', contentUri, 'new data')
             return res
           })
           .catch(error => {
             if (staleData) {
-              console.log('datacite', contentUri, error.message, 'Using stale data')
+              console.info('datacite', contentUri, error.message, 'Using stale data')
               setCache = false
             } else {
               throw error

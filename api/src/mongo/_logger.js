@@ -20,7 +20,7 @@ export default collections => {
         try {
           const { Logs } = await collections
           const { insertedCount } = await Logs.insertMany(batch)
-          console.log('Client events logged', insertedCount)
+          console.info('Client events logged', insertedCount)
         } catch (error) {
           console.error(
             'Error logging client events to Mongo (ignore this unless very frequent).',
