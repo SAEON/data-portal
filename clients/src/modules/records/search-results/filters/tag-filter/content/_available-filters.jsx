@@ -13,6 +13,7 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
   const availableFilters = showAll ? results : results.slice(0, LIST_SIZE + activeFilters.length)
 
   return availableFilters.map(({ key, doc_count }) => {
+    doc_count = doc_count <= 10 ? doc_count : `${Math.floor(doc_count / 10) * 10}+`
     key = typeof key === 'number' ? `${key}` : key
 
     // Don't show filters that are already selected

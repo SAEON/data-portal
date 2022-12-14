@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import Loading from '../../../components/loading'
 import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
-import { CLIENT_FILTER_CONFIG } from '../../../config'
+import { CLIENT_FACET_CONFIGURATION } from '../../../config'
 import Container from '@mui/material/Container'
 import Hidden from '@mui/material/Hidden'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -101,16 +101,7 @@ export default ({ showSearch, showSidebar }) => {
     `,
     {
       variables: {
-        fields: [
-          {
-            id: '_linked-resources-filter',
-            field: 'linkedResources.linkedResourceType.raw',
-            path: 'linkedResources',
-          },
-          ...CLIENT_FILTER_CONFIG.map(({ id, field, path, filters, sortBy, sortOrder }) => {
-            return { id, field, path, filters, sortBy, sortOrder }
-          }),
-        ],
+        fields: CLIENT_FACET_CONFIGURATION,
         ids,
         dois,
         extent,

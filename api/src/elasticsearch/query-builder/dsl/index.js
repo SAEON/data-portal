@@ -4,6 +4,7 @@ import termsQuery from './_terms.js'
 import doisQuery from './_dois.js'
 import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
+export { default as facetAggregations } from './_facet-aggregations.js'
 
 const cleanText = (...text) =>
   [...text]
@@ -21,14 +22,14 @@ export default ({
   terms, // Terms to search
   extent, // A GIS extent to limit by
   identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
-  filter = {}, // This defines a 'maximum' result set, and is the search used to create a list
+  filter: listFilter = {}, // This defines a 'maximum' result set, and is the search used to create a list
 }) => {
-  if (terms?.length || text || filter.text) {
+  if (terms?.length || text || listFilter.text) {
     dsl.min_score = min_score
   }
 
-  if (text || filter.text) {
-    text = cleanText(text, filter.text)
+  if (text || listFilter.text) {
+    text = cleanText(text, listFilter.text)
     dsl.query.bool.must = [
       ...dsl.query.bool.must,
       ...text.map(text => multiMatch(text.toLowerCase())),
@@ -43,14 +44,15 @@ export default ({
       ...identifiers,
       ...ids,
       ...dois,
-      ...(filter.identifiers || []),
-      ...(filter.ids || []),
-      ...(filter.dois || []),
+      ...(listFilter.identifiers || []),
+      ...(listFilter.ids || []),
+      ...(listFilter.dois || []),
     ]),
   ]
   if (identifiers && identifiers.length) {
     dsl.query.bool.should = [idsQuery(identifiers), doisQuery(identifiers)]
     dsl.query.bool.filter = [
+      ...(dsl.query.bool.filter || []),
       {
         bool: {
           should: [idsQuery(identifiers), doisQuery(identifiers)],
@@ -62,8 +64,8 @@ export default ({
   /**
    * Terms (exact matches)
    */
-  if (terms?.length || filter.terms?.length) {
-    terms = [...new Set([...(terms || []), ...(filter.terms || [])])].filter(_ => _)
+  if (terms?.length || listFilter.terms?.length) {
+    terms = [...new Set([...(terms || []), ...(listFilter.terms || [])])].filter(_ => _)
     dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
     dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
   }
@@ -71,8 +73,8 @@ export default ({
   /**
    * Extent
    */
-  if (extent || filter.extent) {
-    extent = [extent || null, filter.extent || null].filter(_ => _).map(e => geoShape(e))
+  if (extent || listFilter.extent) {
+    extent = [extent || null, listFilter.extent || null].filter(_ => _).map(e => geoShape(e))
     dsl.query.bool.must = [...dsl.query.bool.must, ...extent]
     dsl.query.bool.filter = [...dsl.query.bool.filter, ...extent]
   }

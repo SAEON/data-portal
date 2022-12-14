@@ -23,7 +23,7 @@ export default async ({ ctx, args }) => {
       extent = undefined,
       terms = undefined,
       identifiers = undefined,
-      filter = {},
+      filter: listFilter = {},
     } = args
 
     let { before = undefined, after = undefined } = args
@@ -65,7 +65,7 @@ export default async ({ ctx, args }) => {
       dsl.search_after = [cursor.score || 0, cursor.id]
     }
 
-    const body = buildDsl({ dsl, ids, dois, text, terms, extent, identifiers, filter })
+    const body = buildDsl({ dsl, ids, dois, text, terms, extent, identifiers, filter: listFilter })
 
     if (LOG_QUERY_DETAILS) {
       console.info('ES DSL', JSON.stringify(body, null, 2))
