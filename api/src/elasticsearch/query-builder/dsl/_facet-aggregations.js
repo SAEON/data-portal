@@ -59,57 +59,72 @@ const facetAggregations = ({ fields, size }) =>
        * NOTE filters are 'AND' bound. i.e. ALL conditions have
        * to be met
        */
-      let _filter
-      if (filters) {
-        _filter = {
-          bool: {
-            must: [],
-          },
-        }
-        filters.forEach(
-          ({ field: filterField, values: filterValues, includeIfMissingField = undefined }) => {
-            if (includeIfMissingField) {
-              _filter.bool.must = [
-                ..._filter.bool.must,
-                {
-                  bool: {
-                    should: [
-                      {
-                        bool: {
-                          must_not: {
+      const filter = {
+        bool: {
+          must: [
+            /**
+             * In all cases the field that is being aggregated on must exist
+             */
+            {
+              exists: {
+                field,
+              },
+            },
+
+            /**
+             * Facets defined inthe client config file. Because different facet 'sections'
+             * can be defined from the same metadata field, these filters need to be added
+             */
+            ...(filters?.map(
+              ({ field: filterField, values: filterValues, includeIfMissingField = false }) =>
+                includeIfMissingField
+                  ? /**
+                     * Include docs that DON'T have the filter field,
+                     * or, if the filter field exists, then check for certain values
+                     */
+                    {
+                      bool: {
+                        should: [
+                          {
+                            bool: {
+                              must_not: {
+                                exists: {
+                                  field: filterField,
+                                },
+                              },
+                            },
+                          },
+                          {
+                            terms: {
+                              [filterField]: filterValues,
+                            },
+                          },
+                        ],
+                      },
+                    }
+                  : /**
+                     * Otherwise only include docs where the filter field exists
+                     * AND the value is correct
+                     */
+                    {
+                      bool: {
+                        must: [
+                          {
                             exists: {
                               field: filterField,
                             },
                           },
-                        },
+                          {
+                            terms: {
+                              [filterField]: filterValues,
+                            },
+                          },
+                        ],
                       },
-                      {
-                        terms: {
-                          [filterField]: filterValues,
-                        },
-                      },
-                    ],
-                  },
-                },
-              ]
-            } else {
-              _filter.bool.must = [
-                ..._filter.bool.must,
-                {
-                  terms: {
-                    [filterField]: filterValues,
-                  },
-                },
-              ]
-            }
-          }
-        )
-      } else {
-        _filter = {
-          exists: {
-            field,
-          },
-        }
+                    }
+            ) || []),
+          ],
+        },
       }
 
       /**
@@ -118,22 +133,10 @@ const facetAggregations = ({ fields, size }) =>
        * is across sub-documents (path === true) or not
        */
       if (path) {
-        dsl.aggs[id].filter = _filter
+        dsl.aggs[id].filter = filter
       } else {
-        dsl.filter = _filter
+        dsl.filter = filter
       }
-
-      /**
-       * Hide the original fieldname on the DSL object
-       * for easily accessing the field in the ES index
-       * that this filter applies to
-       */
-      Object.defineProperty(dsl, 'field', {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: field,
-      })
 
       return [id, dsl]
     })

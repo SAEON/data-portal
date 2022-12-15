@@ -70,18 +70,18 @@ export default ({
    */
   if (terms?.length || listFilter.terms?.length) {
     terms = [...new Set([...(terms || []), ...(listFilter.terms || [])])].filter(_ => _)
-    const facetFilters = terms
-      .map(({ id }) => {
-        const field = fields.find(({ id: _id }) => id === _id)
-        return getFilters(facets[id], field)
-      })
-      .flat()
-      .filter(_ => _)
-      .map(obj => obj || obj)
-      .flat()
+    // const facetFilters = terms
+    //   .map(({ id }) => {
+    //     const field = fields.find(({ id: _id }) => id === _id)
+    //     return getFilters(facets[id], field)
+    //   })
+    //   .flat()
+    //   .filter(_ => _)
+    //   .map(obj => obj || obj)
+    //   .flat()
 
-    dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms), ...facetFilters]
-    dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms), ...facetFilters]
+    dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
+    dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
   }
 
   /**
