@@ -1,4 +1,4 @@
-const facetAggregations = ({ fields, size }) =>
+export default ({ fields, size }) =>
   Object.fromEntries(
     fields.map(({ id, field, filters, path, sortBy = '_count', sortOrder = 'desc' }) => {
       const order = { [sortBy]: sortOrder }
@@ -141,24 +141,3 @@ const facetAggregations = ({ fields, size }) =>
       return [id, dsl]
     })
   )
-
-/**
- * "field" is accepted as an argument in case
- * addition information on the field is required
- */
-export const getFilters = (facet, field) => {
-  if (!facet) {
-    return null
-  }
-
-  if (facet.filter) {
-    return [facet.filter]
-  }
-
-  return Object.entries(facet.aggs).reduce((a, [, { aggs, filter }]) => {
-    filter = filter || Object.entries(aggs)[0][1].filter
-    return [...a, filter]
-  }, [])
-}
-
-export default facetAggregations

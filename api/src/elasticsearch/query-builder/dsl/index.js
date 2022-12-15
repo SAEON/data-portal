@@ -4,9 +4,7 @@ import termsQuery from './_terms.js'
 import doisQuery from './_dois.js'
 import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
-import { getFilters as _getFilters } from './_facet-aggregations.js'
 export { default as facetAggregations } from './_facet-aggregations.js'
-export const getFilters = _getFilters
 
 const cleanText = (...text) =>
   [...text]
