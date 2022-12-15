@@ -123,10 +123,9 @@ export default ({ showSearch, showSidebar }) => {
   }
 
   if (error) {
-    throw new Error(
-      `Error searching catalogue: ${error}\n\nPlease check Elasticsearch configuration`
-    )
+    throw new Error(`Error searching catalogue: ${error}`)
   }
+
   /**
    * cursors.start is only set when navigating BACK,
    * data items must be reversed when paged BACK
