@@ -25,8 +25,6 @@ export default ({
   extent, // A GIS extent to limit by
   identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
   filter: listFilter = {}, // This defines a 'maximum' result set, and is the search used to create a list
-  fields = [], // Client facet configuration list. When facets are used for filtering, these filters should be applied to the search
-  facets = {},
 }) => {
   if (terms?.length || text || listFilter.text) {
     dsl.min_score = min_score
@@ -70,16 +68,6 @@ export default ({
    */
   if (terms?.length || listFilter.terms?.length) {
     terms = [...new Set([...(terms || []), ...(listFilter.terms || [])])].filter(_ => _)
-    // const facetFilters = terms
-    //   .map(({ id }) => {
-    //     const field = fields.find(({ id: _id }) => id === _id)
-    //     return getFilters(facets[id], field)
-    //   })
-    //   .flat()
-    //   .filter(_ => _)
-    //   .map(obj => obj || obj)
-    //   .flat()
-
     dsl.query.bool.must = [...dsl.query.bool.must, ...termsQuery(terms)]
     dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
   }

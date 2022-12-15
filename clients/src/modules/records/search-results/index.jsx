@@ -75,7 +75,6 @@ export default ({ showSearch, showSidebar }) => {
             filterByDois: $dois
           )
           search(
-            fields: $fields
             extent: $extent
             text: $text
             terms: $terms

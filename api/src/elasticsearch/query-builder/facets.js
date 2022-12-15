@@ -74,8 +74,6 @@ export default async ({ ctx, args }) => {
     identifiers,
     extent,
     filter: listFilter,
-    fields,
-    facets,
   })
 
   if (LOG_QUERY_DETAILS) {
