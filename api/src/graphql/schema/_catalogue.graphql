@@ -68,10 +68,6 @@ type Catalogue {
     """
     terms: [TermInput!]
     """
-    A list of fields to perform term aggregation on (defined in client config at build time)
-    """
-    fields: [FieldInput!]
-    """
     Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     """
     extent: WKT_4326

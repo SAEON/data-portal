@@ -36,7 +36,7 @@ export default async ({ ctx, args }) => {
   const facets = facetAggregations({ fields, size })
   const dsl = {
     size: 0,
-    ...facets,
+    aggs: facets,
   }
 
   /**
@@ -74,8 +74,6 @@ export default async ({ ctx, args }) => {
     identifiers,
     extent,
     filter: listFilter,
-    fields,
-    facets,
   })
 
   if (LOG_QUERY_DETAILS) {
@@ -87,11 +85,19 @@ export default async ({ ctx, args }) => {
     body,
   })
 
-  const buckets = Object.entries(result.aggregations).map(([name, result]) => {
-    return {
-      [name]: result.facets.buckets,
+  return Object.entries(result.aggregations).map(([name, result]) => {
+    const summaryResult = {
+      [name]: undefined,
     }
-  })
 
-  return buckets
+    if (result[name][name]?.buckets) {
+      summaryResult[name] = result[name][name].buckets
+    } else if (result[name].buckets) {
+      summaryResult[name] = result[name].buckets
+    } else {
+      throw new Error('Unexpected return from the Elasticsearch aggregation query')
+    }
+
+    return summaryResult
+  })
 }
