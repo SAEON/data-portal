@@ -11,7 +11,6 @@ import Divider from '@mui/material/Divider'
 import Search from '../../../../components/search'
 import { Span } from '../../../../components/html-tags'
 
-const AuthenticatedOnly = lazy(() => import('./authenticated'))
 const ConfigurePaginationButton = lazy(() => import('./_configure-pagination-button'))
 const CurrentPageInfo = lazy(() => import('./_current-page-info'))
 const Title = lazy(() => import('./_title'))
@@ -54,21 +53,11 @@ export default ({
               })}
             />
             <Search />
-            <Span sx={{ mr: theme => theme.spacing(2) }} />
+            <Span sx={{ mr: theme => theme.spacing(1) }} />
           </>
         )}
 
         <Span sx={{ ml: 'auto' }} />
-
-        {/* AUTHENTICATED */}
-        {isAuthenticated && (
-          <Hidden smDown>
-            <Suspense fallback={<LoadingCircular />}>
-              <AuthenticatedOnly catalogue={catalogue} />
-            </Suspense>
-            <Span sx={{ ml: theme => theme.spacing(0.5) }} />
-          </Hidden>
-        )}
 
         {/* CREATE LIST */}
         <CreateListButton catalogue={catalogue} />
