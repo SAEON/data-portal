@@ -8,7 +8,7 @@ import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
 import { nanoid } from 'nanoid'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as searchContext } from '../../../../../../contexts/search'
 import { alpha } from '@mui/material/styles'
 import { Span } from '../../../../../../components/html-tags'
 
@@ -20,7 +20,7 @@ var defaultCenter
 
 export default ({ proxy }) => {
   const [selectActive, setSelectActive] = useState(false)
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const [extent, setExtent] = useState(global.extent)
 
   defaultZoom = defaultZoom || proxy.getView().getZoom()

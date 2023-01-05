@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Tooltip_, { tooltipClasses } from '@mui/material/Tooltip'
 import Checkbox from '@mui/material/Checkbox'
-import { context as globalContext } from '../../../../contexts/global'
+import { context as searchContext } from '../../../../contexts/search'
 import StyledBadge from './components/styled-badge'
 import { Span } from '../../../../components/html-tags'
 import { styled } from '@mui/material/styles'
@@ -16,7 +16,7 @@ const Tooltip = styled(({ className, ...props }) => (
 }))
 
 export default ({ catalogue }) => {
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const { selectedIds, selectAll } = global
   const isIndeterminate = Boolean(selectedIds?.length)
   const resultCount = catalogue?.search.totalCount

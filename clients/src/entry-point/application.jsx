@@ -1,4 +1,5 @@
-import GlobalProvider from '../contexts/global'
+import SearchProvider from '../contexts/search'
+import ReferrerProvider from '../contexts/referrer'
 import ClientInfoProvider from '../contexts/client-info'
 import AuthorizationProvider from '../contexts/authorization'
 import AuthenticationProvider from '../contexts/authentication'
@@ -24,15 +25,17 @@ export default ({ children, ...config }) => {
                 <CookieConsent>
                   <AuthenticationProvider>
                     <AuthorizationProvider>
-                      <GlobalProvider>
-                        <ApplicationLogger>
-                          <SnackbarProvider>
-                            <DefaultApplicationNotices>
-                              <LayoutProvider>{children}</LayoutProvider>
-                            </DefaultApplicationNotices>
-                          </SnackbarProvider>
-                        </ApplicationLogger>
-                      </GlobalProvider>
+                      <ReferrerProvider>
+                        <SearchProvider>
+                          <ApplicationLogger>
+                            <SnackbarProvider>
+                              <DefaultApplicationNotices>
+                                <LayoutProvider>{children}</LayoutProvider>
+                              </DefaultApplicationNotices>
+                            </SnackbarProvider>
+                          </ApplicationLogger>
+                        </SearchProvider>
+                      </ReferrerProvider>
                     </AuthorizationProvider>
                   </AuthenticationProvider>
                 </CookieConsent>

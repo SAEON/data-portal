@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Fade from '@mui/material/Fade'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Download as DownloadIcon } from '../../../../../../components/icons'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as searchContext } from '../../../../../../contexts/search'
 import { context as authorizationContext } from '../../../../../../contexts/authorization'
 import StyledBadge from '../../components/styled-badge'
 import { PUBLIC_HTTP_ADDRESS } from '../../../../../../config'
@@ -15,7 +15,7 @@ import { Span } from '../../../../../../components/html-tags'
 export default ({ catalogue }) => {
   const resultCount = catalogue?.search.totalCount
   const { isAuthenticated } = useContext(authorizationContext)
-  const { global } = useContext(globalContext)
+  const { global } = useContext(searchContext)
   const { selectedIds, selectAll } = global
   const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)
 

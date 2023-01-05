@@ -1,10 +1,10 @@
 import { useContext } from 'react'
-import { context as globalContext } from '../../../../../contexts/global'
+import { context as searchContext } from '../../../../../contexts/search'
 import ShareOrEmbed from './create-share-link'
 import StyledBadge from '../components/styled-badge'
 
 export default ({ catalogue }) => {
-  const { global } = useContext(globalContext)
+  const { global } = useContext(searchContext)
   const { selectedIds, selectAll } = global
   const resultCount = catalogue?.search.totalCount
   const applicableRecordsCount = selectedIds?.length || (selectAll ? resultCount : 0)

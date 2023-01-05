@@ -4,14 +4,14 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import { Magnify as SearchIcon } from '../../components/icons'
 import QuickForm from '../../packages/quick-form'
-import { context as globalContext } from '../../contexts/global'
+import { context as searchContext } from '../../contexts/search'
 import debounce from '../../lib/fns/debounce'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default ({ autofocus = true, onFocus, onBlur }) => {
   const navigate = useNavigate()
   const { search } = useLocation()
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const smUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
 
   return (

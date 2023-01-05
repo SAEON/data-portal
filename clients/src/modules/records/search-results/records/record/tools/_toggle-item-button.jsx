@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import Tooltip_, { tooltipClasses } from '@mui/material/Tooltip'
 import Checkbox from '@mui/material/Checkbox'
 import { styled } from '@mui/material/styles'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as searchContext } from '../../../../../../contexts/search'
 
 const Tooltip = styled(({ className, ...props }) => (
   <Tooltip_ {...props} classes={{ popper: className }} />
@@ -14,7 +14,7 @@ const Tooltip = styled(({ className, ...props }) => (
 }))
 
 export default ({ id }) => {
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const { selectedIds, selectAll } = global
 
   const checked = selectAll || selectedIds.includes(id)

@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as searchContext } from '../../../../../../contexts/search'
 import { Div, Span } from '../../../../../../components/html-tags'
 
 /**
@@ -13,7 +13,7 @@ import { Div, Span } from '../../../../../../components/html-tags'
  * double looping
  */
 export default ({ activeFilters, filterId }) => {
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const { terms } = global
 
   const sortedValues = activeFilters.sort(({ value: a }, { value: b }) =>

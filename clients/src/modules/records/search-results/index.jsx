@@ -2,10 +2,10 @@ import { useState, useEffect, useContext, useRef, lazy, Suspense } from 'react'
 import { useQuery } from '@apollo/client'
 import Header from './header'
 import Records from './records'
-import { context as globalContext } from '../../../contexts/global'
+import { context as searchContext } from '../../../contexts/search'
+import { context as referrerContext } from '../../../contexts/referrer'
 import Grid from '@mui/material/Grid'
 import Loading from '../../../components/loading'
-import getUriState from '../../../lib/fns/get-uri-state'
 import { gql } from '@apollo/client'
 import { CLIENT_FACET_CONFIGURATION } from '../../../config'
 import Container from '@mui/material/Container'
@@ -28,8 +28,8 @@ export default ({ showSearch, showSidebar }) => {
   const ref = useRef()
   const [pageSize, setPageSize] = useState(20)
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
-  const { referrer } = getUriState()
-  const { global } = useContext(globalContext)
+  const { referrer } = useContext(referrerContext)
+  const { global } = useContext(searchContext)
   const { terms, extent = undefined, text = undefined, ids = [], dois = [], filter = {} } = global
   const sidebarVisible = !showSidebar && !xsDown
 

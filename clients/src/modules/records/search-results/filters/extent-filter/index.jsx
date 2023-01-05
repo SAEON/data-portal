@@ -8,7 +8,7 @@ import Collapse from '@mui/material/Collapse'
 import Paper from '@mui/material/Paper'
 import { ChevronDown as ChevronDownIcon } from '../../../../../components/icons'
 import { ChevronUp as ChevronUpIcon } from '../../../../../components/icons'
-import { context as globalContext } from '../../../../../contexts/global'
+import { context as searchContext } from '../../../../../contexts/search'
 import Loading from '../../../../../components/loading'
 import { Div } from '../../../../../components/html-tags'
 
@@ -17,7 +17,7 @@ const Map = lazy(() => import('./map'))
 export default ({ title }) => {
   const {
     global: { extent },
-  } = useContext(globalContext)
+  } = useContext(searchContext)
   const [overrideCollapse, setOverrideCollapse] = useState(true)
 
   const toggle = useCallback(

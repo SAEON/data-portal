@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import { Magnify as SearchIcon } from '../icons'
 import QuickForm from '../../packages/quick-form'
-import { context as globalContext } from '../../contexts/global'
+import { context as searchContext } from '../../contexts/search'
 import debounce from '../../lib/fns/debounce'
 import { useTheme } from '@mui/material/styles'
 import { alpha, styled } from '@mui/material/styles'
@@ -29,7 +29,7 @@ const Root = styled('div')(({ theme }) => ({
 export default ({ children, autofocus = true, onFocus, onBlur }) => {
   const navigate = useNavigate()
   const { search } = useLocation()
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const theme = useTheme()
 
   return (

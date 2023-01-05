@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react'
-import { context as globalContext } from '../../contexts/global'
+import { context as searchContext } from '../../contexts/search'
 import Results from './search-results'
 import SkipLink from '../../components/skip-link'
 
@@ -18,7 +18,7 @@ const Render = ({ showSearchBar, disableSidebar }) => (
 )
 
 export default ({ showSearchBar = 'true', disableSidebar = 'false' } = {}) => {
-  const { setGlobal } = useContext(globalContext)
+  const { setGlobal } = useContext(searchContext)
   useEffect(() => () => setGlobal({ selectAll: false, selectedIds: [] }), [])
   return <Render showSearchBar={showSearchBar} disableSidebar={disableSidebar} />
 }

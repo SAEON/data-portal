@@ -1,7 +1,8 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { context as configContext } from '../../../config'
-import { context as globalContext } from '../../../contexts/global'
+import { context as searchContext } from '../../../contexts/search'
+import { useLocation } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
 import Row from '../_row'
@@ -25,8 +26,9 @@ const filter = {
 }
 
 export default ({ subjects }) => {
-  const { setGlobal } = useContext(globalContext)
+  const { setGlobal } = useContext(searchContext)
   const { contentBase } = useContext(configContext)
+  const { search } = useLocation()
   const navigate = useNavigate()
 
   return (
@@ -67,7 +69,7 @@ export default ({ subjects }) => {
                       },
                       true
                     )
-                    navigate(`${contentBase}/records`.replace('//', '/'))
+                    navigate(`${contentBase}/records${search}`.replace('//', '/'))
                   }}
                   label={subject.subject.toUpperCase().truncate(30)}
                 />

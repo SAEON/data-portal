@@ -3,11 +3,11 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as searchContext } from '../../../../../../contexts/search'
 import { Div, Span } from '../../../../../../components/html-tags'
 
 export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filterId }) => {
-  const { global, setGlobal } = useContext(globalContext)
+  const { global, setGlobal } = useContext(searchContext)
   const { terms } = global
 
   const availableFilters = showAll ? results : results.slice(0, LIST_SIZE + activeFilters.length)

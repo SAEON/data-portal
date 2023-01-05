@@ -90,7 +90,7 @@ type Query {
   """
   Retrieve search context (i.e. a dynamic list)
   """
-  list(id: ID!): List
+  list(id: ID): List
   """
   Retrieve many search contexts (i.e. many dynamic lists)
   """

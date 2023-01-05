@@ -1,10 +1,10 @@
 import { useContext } from 'react'
-import { context as globalContext } from '../../../contexts/global'
+import { context as searchContext } from '../../../contexts/search'
 import { gql, useQuery } from '@apollo/client'
 import { PUBLIC_GQL_ADDRESS } from '../../../config'
 
 export default () => {
-  const { global } = useContext(globalContext)
+  const { global } = useContext(searchContext)
   const { error, loading, data } = useQuery(
     gql`
       query catalogue($text: String!, $filter: JSON) {

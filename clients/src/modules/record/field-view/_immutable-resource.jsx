@@ -6,12 +6,11 @@ import RegisterEventLog from '../../../components/application-logger/register-ev
 import Link from '@mui/material/Link'
 import Hidden from '@mui/material/Hidden'
 import packageJson from '../../../../package.json'
-import { context as globalContext } from '../../../contexts/global'
+import { context as referrerContext } from '../../../contexts/referrer'
 import { Div, Span, B } from '../../../components/html-tags'
 
 export default _source => {
-  const { global } = useContext(globalContext)
-  const { referrer } = global
+  const { referrer } = useContext(referrerContext)
   const [ref, setRef] = useState(null)
   const { immutableResource, rightsList } = _source
   const { resourceDescription, resourceDownload } = immutableResource

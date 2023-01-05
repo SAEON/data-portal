@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Fade from '@mui/material/Fade'
 import CircularProgress from '@mui/material/CircularProgress'
-import { context as globalContext } from '../../../../../../contexts/global'
+import { context as searchContext } from '../../../../../../contexts/search'
 import Link from '@mui/material/Link'
 import { useEffect } from 'react'
 import TabPanel from './_panel'
@@ -24,7 +24,7 @@ const FILTER_KEYS = ['identifiers', 'ids', 'dois', 'text', 'terms', 'extent']
  * fire every time the dialogue is opened
  */
 export default ({ tabIndex, search = undefined }) => {
-  const { global } = useContext(globalContext)
+  const { global } = useContext(searchContext)
   const [saveList, { loading, error, data }] = useMutation(gql`
     mutation ($filter: JSON, $createdBy: String!) {
       saveList(filter: $filter, createdBy: $createdBy) {

@@ -2,15 +2,14 @@ import { useContext, useState, memo } from 'react'
 import RegisterEventLog from '../application-logger/register-event-log'
 import packageJson from '../../../package.json'
 import { useTheme } from '@mui/material/styles'
-import { context as globalContext } from '../../contexts/global'
+import { context as referrerContext } from '../../contexts/referrer'
 import { gql, useMutation } from '@apollo/client'
 import Button from '@mui/material/Button'
 
 export default memo(
   ({ formFields, id, doi, setOpen, downloadURL, resourceDescription, form, disabled }) => {
     const [ref, setRef] = useState(null)
-    const { global } = useContext(globalContext)
-    const { referrer } = global
+    const { referrer } = useContext(referrerContext)
     const theme = useTheme()
 
     const [submitDataDownloadForm] = useMutation(

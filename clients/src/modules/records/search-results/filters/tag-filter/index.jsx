@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react'
 import Collapse from '@mui/material/Collapse'
-import { context as globalContext } from '../../../../../contexts/global'
+import { context as searchContext } from '../../../../../contexts/search'
 import FilterHeader from './_header'
 import { Div } from '../../../../../components/html-tags'
 import FilterContent from './content'
 
 export default ({ results, id, title, field, boost, defaultExpanded = false }) => {
-  const { global } = useContext(globalContext)
+  const { global } = useContext(searchContext)
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
   const [collapsed, setCollapsed] = useState(

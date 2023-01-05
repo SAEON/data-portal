@@ -3,11 +3,10 @@ import RegisterEventLog from './register-event-log'
 import packageJson from '../../../package.json'
 import debounce from '../../lib/fns/debounce'
 import useWindowSize from '../../hooks/use-window-size'
-import { context as globalContext } from '../../contexts/global'
+import { context as referrerContext } from '../../contexts/referrer'
 
 export default ({ children }) => {
-  const { global } = useContext(globalContext)
-  const { referrer } = global
+  const { referrer } = useContext(referrerContext)
   const [innerHeight, innerWidth] = useWindowSize()
 
   const makeLog = useCallback(
