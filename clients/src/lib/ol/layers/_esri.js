@@ -1,8 +1,5 @@
 import { Tile as TileLayer } from 'ol/layer'
 import { XYZ } from 'ol/source'
-import { PROXY_ADDRESS } from '../../../config'
-
-const URL = `${PROXY_ADDRESS}/ahocevar/geoserver/wms`
 
 export const esriBasemap = () =>
   new TileLayer({
