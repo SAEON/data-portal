@@ -1,12 +1,12 @@
 import { withFlags, describe } from '@saeon/cli-tools'
-import runIntegration from './_run.js'
+import runCommand from './_run.js'
 
 const run = async (args = {}) => {
   let { run, help } = args
   if (!run) help = true
 
   if (run) {
-    return await runIntegration()
+    return await runCommand()
   }
 
   if (help) {
@@ -27,7 +27,7 @@ export default describe(
     r: 'run',
   }),
   {
-    title: 'sdp :: sitemaps',
-    description: 'Generate sitemap.xml files',
+    title: 'sdp :: mongo :: update validation rules',
+    description: 'Update collection validation rules',
   }
 )

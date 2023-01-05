@@ -10,6 +10,7 @@ const cli = args =>
       {
         integrations: importFrom('./modules/integrations/index.js'),
         sitemaps: importFrom('./modules/sitemaps/index.js'),
+        mongo: importFrom('./modules/mongo/index.js')
       },
       {
         title: 'sdp',

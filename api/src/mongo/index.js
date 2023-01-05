@@ -45,6 +45,20 @@ export const collections = Object.entries(_collections)
 
 export const getDataFinders = makeDataFinders(db)
 
+// Update collection validation rules
+export const updateValidationRules = async () => {
+  const _db = await db
+
+  await Promise.all(
+    Object.entries(_collections).map(([, { name, validator = {} }]) => {
+      console.info('Updating validation rules for collection', name)
+      return _db.command({ collMod: name, validator }).catch(error => {
+        console.info('TODO - check why this errors', error)
+      })
+    })
+  )
+}
+
 /**
  * ================================================
  * Configure MongoDB on API startup
@@ -64,15 +78,6 @@ export const getDataFinders = makeDataFinders(db)
         }
       })
     )
-  )
-
-  // Update collection validation rules
-  await Promise.all(
-    Object.entries(_collections).map(([, { name, validator = {} }]) => {
-      return _db.command({ collMod: name, validator }).catch(error => {
-        console.info('TODO - check why this errors', error)
-      })
-    })
   )
 
   // Configure roles
