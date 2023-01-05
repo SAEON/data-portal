@@ -18,14 +18,16 @@ var draw
 var defaultZoom
 var defaultCenter
 
-export default ({ proxy }) => {
+export default ({ map }) => {
   const [selectActive, setSelectActive] = useState(false)
   const { global, setGlobal } = useContext(searchContext)
   const [extent, setExtent] = useState(global.extent)
 
-  defaultZoom = defaultZoom || proxy.getView().getZoom()
-  defaultCenter = defaultCenter || proxy.getView().getCenter()
+  defaultZoom = defaultZoom || map.getView().getZoom()
+  defaultCenter = defaultCenter || map.getView().getCenter()
+
   const source = new VectorSource({ wrapX: false })
+
   const layer = new VectorLayer({
     id: `${nanoid()}-drawLayer`,
     title: 'Draw layer',
@@ -40,22 +42,26 @@ export default ({ proxy }) => {
     setGlobal({
       extent: extent || undefined,
     })
-  }, [extent]) // TODO - the suggested eslint fix breaks the code
+  }, [extent])
 
   /**
    * On first render, if there is an extent
    * Add a feature to the map source
    */
   useEffect(() => {
-    if (extent) {
-      // Add feature to source
-      const feature = wkt.readFeature(extent)
-      source.addFeature(feature)
-      // Zoom into polygon
-      const view = proxy.getView()
-      view.fit(wkt.readGeometry(extent), { padding: [100, 100, 100, 100] })
-    }
-  }, []) // TODO - the suggested eslint fix breaks the code
+    map.on('loadstart', () => {
+      if (extent) {
+        // Add feature to source
+        const feature = wkt.readFeature(extent)
+        source.addFeature(feature)
+
+        // Zoom into polygon
+        const view = map.getView()
+        const _extent = wkt.readGeometry(extent)
+        view.fit(_extent, { padding: [100, 100, 100, 100] })
+      }
+    })
+  })
 
   /**
    * On first render configure
@@ -66,10 +72,10 @@ export default ({ proxy }) => {
   useEffect(() => {
     const keydown = e => {
       if (e.key === 'Escape') {
-        proxy.removeInteraction(draw)
+        map.removeInteraction(draw)
         setSelectActive(false)
         setExtent(undefined)
-        const view = proxy.getView()
+        const view = map.getView()
         view.setZoom(defaultZoom)
         view.setCenter(defaultCenter)
       }
@@ -77,14 +83,14 @@ export default ({ proxy }) => {
 
     const body = document.getElementsByTagName('body')[0]
     body.addEventListener('keydown', keydown)
-    proxy.addLayer(layer)
+    map.addLayer(layer)
 
     return () => {
-      proxy.removeInteraction(draw)
-      proxy.removeLayer(layer)
+      map.removeInteraction(draw)
+      map.removeLayer(layer)
       body.removeEventListener('keydown', keydown)
     }
-  }, []) // TODO - the suggested eslint fix breaks the code
+  }, [])
 
   return (
     <Paper
@@ -119,7 +125,7 @@ export default ({ proxy }) => {
                   geometryFunction: createBox(),
                 })
 
-                proxy.addInteraction(draw)
+                map.addInteraction(draw)
 
                 // Always create a fresh polygon
                 draw.on('drawstart', () => {
@@ -133,7 +139,7 @@ export default ({ proxy }) => {
                   setExtent(wkt.writeGeometry(geometry))
                 })
               } else {
-                proxy.removeInteraction(draw)
+                map.removeInteraction(draw)
               }
               setSelectActive(isActive)
             }}
@@ -157,9 +163,9 @@ export default ({ proxy }) => {
               onClick={() => {
                 setExtent(undefined)
                 setSelectActive(false)
-                proxy.removeInteraction(draw)
+                map.removeInteraction(draw)
                 source.clear()
-                const view = proxy.getView()
+                const view = map.getView()
                 view.setZoom(defaultZoom)
                 view.setCenter(defaultCenter)
               }}

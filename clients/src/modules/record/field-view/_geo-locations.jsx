@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
@@ -16,58 +16,62 @@ import LayerGroup from 'ol/layer/Group'
 
 const wkt = new WKT()
 
-const EXTENT_PADDING = 2
+const EXTENT_PADDING = 4
 
 export default ({ geoLocations }) => {
   const ref = useRef()
 
-  const map = new Map({
-    layers: new LayerGroup({
-      layers: [
-        terrestrisBaseMap(),
-        new VectorLayer({
-          id: 'extent-layer',
-          title: 'Extent',
-          source: new VectorSource({
-            wrapX: false,
-            features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) =>
-              geoLocationBox
-                ? new Feature({
-                    geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates()),
-                  })
-                : geoLocationPoint
-                ? new Feature({
-                    geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
-                  })
-                : []
-            ),
-          }),
+  const map = useMemo(
+    () =>
+      new Map({
+        layers: new LayerGroup({
+          layers: [
+            terrestrisBaseMap(),
+            new VectorLayer({
+              id: 'extent-layer',
+              title: 'Extent',
+              source: new VectorSource({
+                wrapX: false,
+                features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) =>
+                  geoLocationBox
+                    ? new Feature({
+                        geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates()),
+                      })
+                    : geoLocationPoint
+                    ? new Feature({
+                        geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
+                      })
+                    : []
+                ),
+              }),
+            }),
+          ],
         }),
-      ],
-    }),
-    controls: defaultControls({
-      zoom: false,
-      rotateOptions: false,
-      rotate: false,
-      attribution: false,
-    }),
-    view: new View({
-      center: [0, 0],
-      zoom: 3,
-      projection: 'EPSG:4326',
-      smoothExtentConstraint: true,
-      showFullExtent: true,
-      extent: geoLocations[0].geoLocationBox
-        ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
-            .getExtent()
-            .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-        : geoLocations[0].geoLocationPoint
-        ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
-            .getExtent()
-            .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-        : undefined,
-    }),
-  })
+        controls: defaultControls({
+          zoom: false,
+          rotateOptions: false,
+          rotate: false,
+          attribution: false,
+        }),
+        view: new View({
+          center: [0, 0],
+          zoom: 3,
+          projection: 'EPSG:4326',
+          smoothExtentConstraint: true,
+          showFullExtent: true,
+          extent: geoLocations[0].geoLocationBox
+            ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
+                .getExtent()
+                .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
+            : geoLocations[0].geoLocationPoint
+            ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
+                .getExtent()
+                .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
+            : undefined,
+        }),
+      }),
+    [geoLocations]
+  )
 
   useEffect(() => {
     map.setTarget(ref.current)
