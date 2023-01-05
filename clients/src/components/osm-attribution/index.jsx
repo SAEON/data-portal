@@ -9,6 +9,7 @@ export default () => (
       position: 'absolute',
       bottom: 0,
       right: 0,
+      zIndex: 1,
       backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
       m: theme => theme.spacing(0),
       p: theme => theme.spacing(0.5),

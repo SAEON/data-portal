@@ -28,7 +28,7 @@ export default ({ title, children, ...props }) => {
       <Card
         sx={{
           backgroundColor: theme => alpha(theme.palette.common.white, 0.9),
-          '& :hover': {
+          '&:hover': {
             backgroundColor: theme => theme.palette.common.white,
             transition: theme => theme.transitions.create(['background-color']),
           },

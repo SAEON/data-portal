@@ -1,59 +1,88 @@
+import { useEffect, useRef } from 'react'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 import Point from 'ol/geom/Point'
 import { terrestrisBaseMap } from '../../../lib/ol'
-import { OlReact } from '../../../packages/ol-react'
 import WKT from 'ol/format/WKT'
 import Row from '../_row'
 import OsmAcknowlegement from '../../../components/osm-attribution'
 import { Div } from '../../../components/html-tags'
+import Map from 'ol/Map'
+import View from 'ol/View'
+import { defaults as defaultControls } from 'ol/control'
+import LayerGroup from 'ol/layer/Group'
 
 const wkt = new WKT()
 
 const EXTENT_PADDING = 2
 
 export default ({ geoLocations }) => {
+  const ref = useRef()
+
+  const map = new Map({
+    layers: new LayerGroup({
+      layers: [
+        terrestrisBaseMap(),
+        new VectorLayer({
+          id: 'extent-layer',
+          title: 'Extent',
+          source: new VectorSource({
+            wrapX: false,
+            features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) =>
+              geoLocationBox
+                ? new Feature({
+                    geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates()),
+                  })
+                : geoLocationPoint
+                ? new Feature({
+                    geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
+                  })
+                : []
+            ),
+          }),
+        }),
+      ],
+    }),
+    controls: defaultControls({
+      zoom: false,
+      rotateOptions: false,
+      rotate: false,
+      attribution: false,
+    }),
+    view: new View({
+      center: [0, 0],
+      zoom: 3,
+      projection: 'EPSG:4326',
+      smoothExtentConstraint: true,
+      showFullExtent: true,
+      extent: geoLocations[0].geoLocationBox
+        ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
+            .getExtent()
+            .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
+        : geoLocations[0].geoLocationPoint
+        ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
+            .getExtent()
+            .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
+        : undefined,
+    }),
+  })
+
+  useEffect(() => {
+    map.setTarget(ref.current)
+  }, [map])
+
   return (
     <Row title={'Spatial coverage'}>
-      <Div sx={{ position: 'relative' }}>
-        <OlReact
-          viewOptions={{
-            smoothExtentConstraint: true,
-            showFullExtent: true,
-            extent: geoLocations[0].geoLocationBox
-              ? new Polygon(wkt.readGeometry(geoLocations[0].geoLocationBox).getCoordinates())
-                  .getExtent()
-                  .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-              : geoLocations[0].geoLocationPoint
-              ? new Point(wkt.readGeometry(geoLocations[0].geoLocationPoint).getCoordinates())
-                  .getExtent()
-                  .map((v, i) => ((i === 0) | (i === 1) ? v - EXTENT_PADDING : v + EXTENT_PADDING))
-              : undefined,
+      <Div sx={{ position: 'relative', height: 350 }}>
+        <Div
+          ref={ref}
+          sx={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
           }}
-          layers={[
-            new VectorLayer({
-              id: 'extent-layer',
-              title: 'Extent',
-              source: new VectorSource({
-                wrapX: false,
-                features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) =>
-                  geoLocationBox
-                    ? new Feature({
-                        geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates()),
-                      })
-                    : geoLocationPoint
-                    ? new Feature({
-                        geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
-                      })
-                    : []
-                ),
-              }),
-            }),
-            terrestrisBaseMap(),
-          ]}
-          style={{ height: '350px', position: 'relative' }}
         />
         <OsmAcknowlegement />
       </Div>
