@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { terrestrisBaseMap } from '../../../../../../lib/ol'
+import { esriBasemap } from '../../../../../../lib/ol'
 import Controls from './_controls'
-import OsmAcknowledgement from '../../../../../../components/osm-attribution'
+import MapAttribution from '../../../../../../components/map-attribution'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control'
@@ -15,7 +15,7 @@ export default () => {
     () =>
       new Map({
         layers: new LayerGroup({
-          layers: [terrestrisBaseMap()],
+          layers: [esriBasemap()],
         }),
         controls: defaultControls({
           zoom: false,
@@ -39,7 +39,7 @@ export default () => {
   return (
     <Div ref={ref} sx={{ height: 300, position: 'relative' }}>
       <Controls map={map} />
-      <OsmAcknowledgement />
+      <MapAttribution />
     </Div>
   )
 }

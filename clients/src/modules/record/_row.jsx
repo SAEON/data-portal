@@ -3,9 +3,10 @@ import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { alpha } from '@mui/material/styles'
+import { B } from '../../components/html-tags'
 
 export default ({ title, children, ...props }) => {
-  const { sx, ...otherProps } = props
+  const { sx, cardContentSx = {}, titleSx = {}, ...otherProps } = props
 
   return (
     <Grid
@@ -35,12 +36,12 @@ export default ({ title, children, ...props }) => {
         }}
         variant="outlined"
       >
-        <CardContent>
-          {
-            <Typography gutterBottom variant="overline">
-              <b>{title}</b>
+        <CardContent sx={cardContentSx}>
+          {title && (
+            <Typography sx={titleSx} gutterBottom variant="overline">
+              <B>{title}</B>
             </Typography>
-          }
+          )}
           {children}
         </CardContent>
       </Card>

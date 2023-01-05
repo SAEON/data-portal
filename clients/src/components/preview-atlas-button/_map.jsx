@@ -2,13 +2,12 @@ import { useEffect, useState, useRef, useMemo } from 'react'
 import Polygon from 'ol/geom/Polygon'
 import Point from 'ol/geom/Point'
 import WKT from 'ol/format/WKT'
-import { parse } from 'url' // TODO deprecated
 import Loading from '../loading'
-import { terrestrisBaseMap, createLayer, LayerTypes } from '../../lib/ol/layers'
+import { esriBasemap, createLayer, LayerTypes } from '../../lib/ol/layers'
 import { PROXY_ADDRESS } from '../../config'
 import DialogContent from '@mui/material/DialogContent'
 import { Pre, Div } from '../html-tags'
-import OsmAcknowledgement from '../osm-attribution'
+import MapAttribution from '../map-attribution'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control'
@@ -24,7 +23,13 @@ export default ({ geoLocations, linkedResource, id, title }) => {
   const ref = useRef()
   const { resourceURL = '' } = linkedResource
   const [uriInspection, setUriInspection] = useState({ error: undefined, loading: true })
-  const { pathname, hostname, port, query } = parse(resourceURL, true)
+  const { pathname, hostname, port, searchParams } = new URL(resourceURL)
+  const query = Object.fromEntries(
+    searchParams
+      .toString()
+      .split('&')
+      .map(kv => decodeURIComponent(kv).split('='))
+  )
   const { layers: LAYERS } = query
   const layerId = `${id} - ${LAYERS}`
   const uri = `${SPATIALDATA_PROXY}/${hostname}/${port}${pathname}`
@@ -34,7 +39,7 @@ export default ({ geoLocations, linkedResource, id, title }) => {
       new Map({
         layers: new LayerGroup({
           layers: [
-            terrestrisBaseMap(),
+            esriBasemap(),
             createLayer({ id: layerId, layerType: LayerTypes.TileWMS, title, uri, LAYERS }),
           ],
         }),
@@ -110,7 +115,7 @@ export default ({ geoLocations, linkedResource, id, title }) => {
           </Pre>
         </DialogContent>
       )}
-      {!uriInspection.error && !uriInspection.loading && <OsmAcknowledgement />}
+      {!uriInspection.error && !uriInspection.loading && <MapAttribution />}
     </Div>
   )
 }

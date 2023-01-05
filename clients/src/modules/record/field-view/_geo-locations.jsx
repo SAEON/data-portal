@@ -4,10 +4,10 @@ import VectorSource from 'ol/source/Vector'
 import Feature from 'ol/Feature'
 import Polygon from 'ol/geom/Polygon'
 import Point from 'ol/geom/Point'
-import { terrestrisBaseMap } from '../../../lib/ol'
+import { esriBasemap } from '../../../lib/ol'
 import WKT from 'ol/format/WKT'
 import Row from '../_row'
-import OsmAcknowlegement from '../../../components/osm-attribution'
+import MapAttribution from '../../../components/map-attribution'
 import { Div } from '../../../components/html-tags'
 import Map from 'ol/Map'
 import View from 'ol/View'
@@ -26,7 +26,7 @@ export default ({ geoLocations }) => {
       new Map({
         layers: new LayerGroup({
           layers: [
-            terrestrisBaseMap(),
+            esriBasemap(),
             new VectorLayer({
               id: 'extent-layer',
               title: 'Extent',
@@ -78,7 +78,18 @@ export default ({ geoLocations }) => {
   }, [map])
 
   return (
-    <Row title={'Spatial coverage'}>
+    <Row
+      cardContentSx={{ p: `0px !important` }}
+      titleSx={{
+        position: 'absolute',
+        zIndex: 1,
+        px: theme => theme.spacing(2),
+        m: theme => theme.spacing(0.5),
+        boxShadow: theme => theme.shadows[1],
+        backgroundColor: theme => theme.palette.common.white,
+      }}
+      title={'Spatial coverage'}
+    >
       <Div sx={{ position: 'relative', height: 350 }}>
         <Div
           ref={ref}
@@ -88,7 +99,7 @@ export default ({ geoLocations }) => {
             width: '100%',
           }}
         />
-        <OsmAcknowlegement />
+        <MapAttribution />
       </Div>
     </Row>
   )
