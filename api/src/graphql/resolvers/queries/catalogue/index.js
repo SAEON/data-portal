@@ -6,7 +6,6 @@ export default async (_, args, ctx, info) => {
   const referrer = args?.referrer || undefined
   const clientSession = ctx?.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session' // This can happen if the user blocks cookies or if the API is used programmatically
   const { operation, fragments, variableValues } = info
-  const { logToMongo } = ctx.mongo
 
   const query = {
     operation: JSON.stringify(operation),
@@ -29,8 +28,6 @@ export default async (_, args, ctx, info) => {
     apiVersion: packageJson.version,
     type: 'query',
   }
-
-  logToMongo(log)
 
   return {
     id: hash(JSON.stringify(log)),

@@ -1,15 +1,13 @@
-import { useContext, useState, memo } from 'react'
-import RegisterEventLog from '../application-logger/register-event-log'
-import packageJson from '../../../package.json'
+import { useState, memo } from 'react'
+import { RegisterEventLog, makeLog } from '../application-logger'
 import { useTheme } from '@mui/material/styles'
-import { context as referrerContext } from '../../contexts/referrer'
 import { gql, useMutation } from '@apollo/client'
 import Button from '@mui/material/Button'
+import { Span } from '../../components/html-tags'
 
 export default memo(
   ({ formFields, id, doi, setOpen, downloadURL, resourceDescription, form, disabled }) => {
     const [ref, setRef] = useState(null)
-    const { referrer } = useContext(referrerContext)
     const theme = useTheme()
 
     const [submitDataDownloadForm] = useMutation(
@@ -21,25 +19,21 @@ export default memo(
     )
 
     return (
-      <span ref={el => setRef(el)}>
+      <Span ref={el => setRef(el)}>
         {ref && (
           <RegisterEventLog
             event="click"
             target={ref}
             handle={e => {
               e.stopPropagation()
-              console.gql({
-                clientVersion: packageJson.version,
-                type: 'download',
-                referrer,
-                createdAt: new Date(),
-                info: {
-                  pathname: window.location.pathname,
+
+              console.gql(
+                makeLog('download', {
                   uri: downloadURL,
                   odpId: id,
                   doi,
-                },
-              })
+                })
+              )
 
               const _form = {
                 recordId: doi || id,
@@ -109,7 +103,7 @@ export default memo(
             </Button>
           </RegisterEventLog>
         )}
-      </span>
+      </Span>
     )
   }
 )

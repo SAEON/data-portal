@@ -5,12 +5,16 @@ export default {
       bsonType: 'object',
       required: ['clientSession', 'type', 'info', 'clientInfo'],
       properties: {
+        userId: {
+          bsonType: 'string',
+          description: 'ID of logged in user',
+        },
         clientSession: {
           bsonType: 'string',
           description: 'Browser session cookie',
         },
         type: {
-          enum: ['query', 'click', 'mousemove', 'download'],
+          enum: ['query', 'click', 'mousemove', 'download', 'appRender'],
           description: 'The type of event being logged',
         },
         info: {

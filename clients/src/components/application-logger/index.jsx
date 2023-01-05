@@ -2,26 +2,28 @@ import { useEffect } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
 import logger from '@saeon/logger'
 import logToGql from '@saeon/logger/dist/log-to-graphql'
-import DefaultEventLogs from './_default-event-logs'
+
+export { default as RegisterEventLog } from './_register-event-log'
+export { default as makeLog } from './_make-log'
+export { default as LogAppRender } from './_app-render'
+
 const { configure: configureLogger } = logger
 
 export default ({ children }) => {
   const { link } = useApolloClient()
 
-  useEffect(() => {
-    configureLogger(() => ({
-      overwrites: {
-        gql: logToGql({
-          link,
-          query: gql`
-            mutation logBrowserEvents($input: [BrowserEventInput]!) {
-              logBrowserEvents(input: $input)
-            }
-          `,
-        }),
-      },
-    }))
-  })
+  configureLogger(() => ({
+    overwrites: {
+      gql: logToGql({
+        link,
+        query: gql`
+          mutation logBrowserEvents($input: [BrowserEventInput]!) {
+            logBrowserEvents(input: $input)
+          }
+        `,
+      }),
+    },
+  }))
 
-  return <DefaultEventLogs>{children}</DefaultEventLogs>
+  return children
 }

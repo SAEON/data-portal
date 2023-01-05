@@ -61,6 +61,7 @@ export default async (self, args, ctx) => {
       Object.assign(
         {
           referrer,
+          userId: ctx.user.info(ctx)?.id || undefined,
           clientSession: ctx.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session', // This can happen if the user blocks cookies
           clientInfo: {
             ipAddress,

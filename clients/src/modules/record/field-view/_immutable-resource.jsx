@@ -1,16 +1,13 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import Row from '../_row'
 import Typography from '@mui/material/Typography'
 import DownloadButton from '../../../components/data-download'
-import RegisterEventLog from '../../../components/application-logger/register-event-log'
+import { RegisterEventLog, makeLog } from '../../../components/application-logger'
 import Link from '@mui/material/Link'
 import Hidden from '@mui/material/Hidden'
-import packageJson from '../../../../package.json'
-import { context as referrerContext } from '../../../contexts/referrer'
 import { Div, Span, B } from '../../../components/html-tags'
 
 export default _source => {
-  const { referrer } = useContext(referrerContext)
   const [ref, setRef] = useState(null)
   const { immutableResource, rightsList } = _source
   const { resourceDescription, resourceDownload } = immutableResource
@@ -39,18 +36,13 @@ export default _source => {
               event="copy"
               target={ref}
               handle={() => {
-                console.gql({
-                  clientVersion: packageJson.version,
-                  type: 'download',
-                  referrer,
-                  createdAt: new Date(),
-                  info: {
-                    pathname: window.location.pathname,
+                console.gql(
+                  makeLog('download', {
                     uri: resourceDownload?.downloadURL,
                     odpId: _source.id,
                     doi: _source.doi,
-                  },
-                })
+                  })
+                )
               }}
             >
               {resourceDownload?.downloadURL}

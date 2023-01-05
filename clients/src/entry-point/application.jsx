@@ -5,7 +5,7 @@ import AuthorizationProvider from '../contexts/authorization'
 import AuthenticationProvider from '../contexts/authentication'
 import { SnackbarProvider } from 'notistack'
 import NativeExtensions from '../components/native-extensions'
-import ApplicationLogger from '../components/application-logger'
+import ApplicationLogger, { LogAppRender } from '../components/application-logger'
 import DefaultApplicationNotices from '../components/default-application-notices'
 import ErrorBoundary from '../components/error-boundary'
 import DetectDevice from '../components/detect-device'
@@ -28,11 +28,13 @@ export default ({ children, ...config }) => {
                       <ReferrerProvider>
                         <SearchProvider>
                           <ApplicationLogger>
-                            <SnackbarProvider>
-                              <DefaultApplicationNotices>
-                                <LayoutProvider>{children}</LayoutProvider>
-                              </DefaultApplicationNotices>
-                            </SnackbarProvider>
+                            <LogAppRender>
+                              <SnackbarProvider>
+                                <DefaultApplicationNotices>
+                                  <LayoutProvider>{children}</LayoutProvider>
+                                </DefaultApplicationNotices>
+                              </SnackbarProvider>
+                            </LogAppRender>
                           </ApplicationLogger>
                         </SearchProvider>
                       </ReferrerProvider>
