@@ -11,6 +11,7 @@ import { nanoid } from 'nanoid'
 import { context as searchContext } from '../../../../../../contexts/search'
 import { alpha } from '@mui/material/styles'
 import { Span } from '../../../../../../components/html-tags'
+import Feature from 'ol/Feature'
 
 const wkt = new WKT()
 
@@ -47,21 +48,32 @@ export default ({ map }) => {
   /**
    * On first render, if there is an extent
    * Add a feature to the map source
+   *
+   * Every time the map is zoomed, the
+   * loadstart event is fired. So it's
+   * necessary to check if there are any
+   * features before adding any
    */
   useEffect(() => {
-    map.on('loadstart', () => {
-      if (extent) {
-        // Add feature to source
-        const feature = wkt.readFeature(extent)
-        source.addFeature(feature)
+    if (extent) {
+      map.on('loadstart', () => {
+        if (!source.getFeatures().length) {
+          // Add feature to source
+          source.addFeature(
+            new Feature({
+              id: 'extent-filter',
+              geometry: wkt.readGeometry(extent),
+            })
+          )
 
-        // Zoom into polygon
-        const view = map.getView()
-        const _extent = wkt.readGeometry(extent)
-        view.fit(_extent, { padding: [100, 100, 100, 100] })
-      }
-    })
-  })
+          // Zoom into polygon
+          const view = map.getView()
+          const _extent = wkt.readGeometry(extent)
+          view.fit(_extent, { padding: [100, 100, 100, 100] })
+        }
+      })
+    }
+  }, [])
 
   /**
    * On first render configure
