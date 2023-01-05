@@ -50,11 +50,10 @@ export const getDataFinders = makeDataFinders(db)
  * Configure MongoDB on API startup
  * ================================================
  */
-
-// Create collections
 ;(async () => {
   const _db = await db
 
+  // Create collections
   await Promise.all(
     Object.entries(_collections).map(([, { name, validator = {} }]) =>
       _db.createCollection(name, { validator }).catch(error => {
@@ -65,6 +64,15 @@ export const getDataFinders = makeDataFinders(db)
         }
       })
     )
+  )
+
+  // Update collection validation rules
+  await Promise.all(
+    Object.entries(_collections).map(([, { name, validator = {} }]) => {
+      return _db.command({ collMod: name, validator }).catch(error => {
+        console.info('TODO - check why this errors', error)
+      })
+    })
   )
 
   // Configure roles

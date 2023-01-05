@@ -14,7 +14,7 @@ export default {
           description: 'Browser session cookie',
         },
         type: {
-          enum: ['query', 'click', 'mousemove', 'download', 'appRender'],
+          enum: ['download', 'appRender'],
           description: 'The type of event being logged',
         },
         info: {
