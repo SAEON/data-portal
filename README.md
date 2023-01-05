@@ -46,7 +46,7 @@ Mostly configuration params have sensible defaults, only the API needs to be exp
 ## System requirements
 
 1. Docker Engine
-2. Node.js **node:19.1**
+2. Node.js **v19**
 
 ## [Start a local MongoDB server](https://github.com/SAEON/mongo#local-development)
 
