@@ -5,7 +5,8 @@ import Fade from '@mui/material/Fade'
 import NoItems from '../components/no-items'
 import ListItem from '../components/list-item'
 import { Folder as InactiveIcon, FolderOpen as ActiveIcon } from '../../../components/icons'
-import { Span } from '../../../components/html-tags'
+import { Div, Span } from '../../../components/html-tags'
+import Container from '@mui/material/Container'
 
 export default () => {
   const [renderCount, setRenderCount] = useState(0)
@@ -42,13 +43,19 @@ export default () => {
   return (
     <ContentNav activeIndex={renderCount === 1 ? 0 : lists.length - 1} navItems={navItems}>
       {({ activeIndex }) => {
-        return navItems.map(({ id, ...props }, i) => (
-          <Fade unmountOnExit mountOnEnter in={activeIndex === i} key={id}>
-            <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-              <ListItem key={id} id={id} {...props} />
-            </Span>
-          </Fade>
-        ))
+        return (
+          <Container style={{ minHeight: 1000 }}>
+            <Div sx={{ mt: theme => theme.spacing(2) }} />
+            {navItems.map(({ id, ...props }, i) => (
+              <Fade unmountOnExit mountOnEnter in={activeIndex === i} key={id}>
+                <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                  <ListItem key={id} id={id} {...props} />
+                </Span>
+              </Fade>
+            ))}
+            <Div sx={{ mt: theme => theme.spacing(2) }} />
+          </Container>
+        )
       }}
     </ContentNav>
   )

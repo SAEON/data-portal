@@ -4,7 +4,7 @@ import Filter from './filter'
 import Details from './details'
 import Share from './share'
 import ListItemContextProvider from './_context'
-import QuickForm from '../../../../packages/quick-form'
+import QuickForm from '../../../../components/quick-form'
 
 export default props => {
   const { filter, createdBy, title, description, type } = props

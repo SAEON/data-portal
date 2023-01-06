@@ -26,27 +26,20 @@ export default () => {
         </Card>
       </Grid>
 
-      {/* LISTS */}
-      <Grid item xs={12}>
-        <Collapse
-          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
-          defaultExpanded
-          title="Downloads by referrer"
-        >
+      {/* Downloads by referrer */}
+      <Grid item xs={6}>
+        <Card variant="outlined" sx={{ maxHeight: 400 }}>
           <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart yScale="log" categoryFieldName="referrer" data={referrerCount} />
             </Suspense>
           </CardContent>
-        </Collapse>
+        </Card>
       </Grid>
 
-      {/* LOCATION */}
-      <Grid item xs={12}>
-        <Collapse
-          title="Downloads by location"
-          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
-        >
+      {/* Downloads by location */}
+      <Grid item xs={6}>
+        <Card variant="outlined" sx={{ maxHeight: 400 }}>
           <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart
@@ -57,35 +50,29 @@ export default () => {
               />
             </Suspense>
           </CardContent>
-        </Collapse>
+        </Card>
       </Grid>
 
-      {/* DATE */}
-      <Grid item xs={12}>
-        <Collapse
-          title="Downloads by date"
-          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
-        >
+      {/* Downloads by date */}
+      <Grid item xs={6}>
+        <Card variant="outlined" sx={{ maxHeight: 400 }}>
           <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart type="bar" categoryFieldName="date" data={downloadsByDate} />
             </Suspense>
           </CardContent>
-        </Collapse>
+        </Card>
       </Grid>
 
-      {/* DEVICE */}
-      <Grid item xs={12}>
-        <Collapse
-          title="Downloads by device"
-          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
-        >
+      {/* Downloads by device */}
+      <Grid item xs={6}>
+        <Card variant="outlined" sx={{ maxHeight: 400 }}>
           <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart yScale="log" categoryFieldName="device" data={deviceCount} />
             </Suspense>
           </CardContent>
-        </Collapse>
+        </Card>
       </Grid>
     </Grid>
   )

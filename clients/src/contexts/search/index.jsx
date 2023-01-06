@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import QuickForm from '../../packages/quick-form'
+import QuickForm from '../../components/quick-form'
 import getUriState from '../../lib/fns/get-uri-state'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'

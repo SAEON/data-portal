@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography'
-import QuickForm from '../../packages/quick-form'
+import QuickForm from '../../components/quick-form'
 import debounce from '../../lib/fns/debounce'
 
 /**

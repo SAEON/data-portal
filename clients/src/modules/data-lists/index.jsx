@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import Container from '@mui/material/Container'
 import ListsProvider from './context'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
@@ -28,14 +27,7 @@ export default () => {
   return (
     <ListsProvider>
       <Header />
-
-      <Div sx={{ mt: theme => theme.spacing(2) }} />
-
-      <Container style={{ minHeight: 1000 }}>
-        <Layout />
-      </Container>
-
-      <Div sx={{ mt: theme => theme.spacing(2) }} />
+      <Layout />
     </ListsProvider>
   )
 }

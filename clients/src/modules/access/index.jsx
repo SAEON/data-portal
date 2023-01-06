@@ -3,7 +3,7 @@ import { useContext, Suspense, lazy, useState, useMemo } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
-import VerticalTabs from '../../packages/vertical-tabs'
+import ContentNav from '../../components/content-nav'
 import {
   AccountMultiple as UsersIcon,
   AccountLock as RolesIcon,
@@ -69,23 +69,28 @@ export default () => {
   return (
     <UserRolesProvider>
       <Header />
-      <Div sx={{ mt: theme => theme.spacing(2) }} />
-      <Container sx={{ minHeight: 1000 }}>
-        <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
-          {sections.map(({ Render, primaryText }, i) => {
-            return (
-              <Suspense key={primaryText} fallback={<Loading />}>
-                <Fade in={activeIndex === i} key={`loaded-${i}`}>
-                  <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                    <Render active={activeIndex === i} />
-                  </Span>
-                </Fade>
-              </Suspense>
-            )
-          })}
-        </VerticalTabs>
-      </Container>
-      <Div sx={{ mt: theme => theme.spacing(2) }} />
+
+      <ContentNav navItems={sections}>
+        {({ activeIndex }) => {
+          return (
+            <Container sx={{ minHeight: 1000 }}>
+              <Div sx={{ mt: theme => theme.spacing(2) }} />
+              {sections.map(({ Render, primaryText }, i) => {
+                return (
+                  <Suspense key={primaryText} fallback={<Loading />}>
+                    <Fade in={activeIndex === i} key={`loaded-${i}`}>
+                      <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                        <Render active={activeIndex === i} />
+                      </Span>
+                    </Fade>
+                  </Suspense>
+                )
+              })}
+              <Div sx={{ mt: theme => theme.spacing(2) }} />
+            </Container>
+          )
+        }}
+      </ContentNav>
     </UserRolesProvider>
   )
 }

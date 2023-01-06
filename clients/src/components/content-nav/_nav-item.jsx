@@ -48,6 +48,7 @@ export default memo(
         <ButtonBase
           sx={theme => ({
             width: '100%',
+            borderBottom: `1px solid ${theme.palette.divider}`,
             transition: theme.transitions.create(['all']),
             [theme.breakpoints.up('lg')]: {
               minHeight: theme.spacing(10),

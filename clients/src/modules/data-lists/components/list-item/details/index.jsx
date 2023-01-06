@@ -3,7 +3,7 @@ import { context as listContext } from '../_context'
 import CardContent from '@mui/material/CardContent'
 import TextField from '@mui/material/TextField'
 import Collapse from '../../../../../components/collapse'
-import Q from '../../../../../packages/quick-form'
+import Q from '../../../../../components/quick-form'
 import debounce from '../../../../../lib/fns/debounce'
 
 export default () => {

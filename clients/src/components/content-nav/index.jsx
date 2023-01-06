@@ -1,7 +1,5 @@
 import { useState, useEffect, memo } from 'react'
 import List from '@mui/material/List'
-import Grid from '@mui/material/Grid'
-import { alpha } from '@mui/material/styles'
 import NavItem from './_nav-item'
 import { Div } from '../html-tags'
 
@@ -34,7 +32,7 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
     >
       <Div
         sx={theme => ({
-          backgroundColor: alpha(theme.palette.grey[100], 0.9),
+          backgroundColor: theme.palette.common.white,
           [theme.breakpoints.up('lg')]: {
             minWidth: 250,
             maxWidth: 300,
