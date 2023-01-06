@@ -3,12 +3,9 @@ export default {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
-      required: ['clientSession', 'type', 'info', 'clientInfo'],
+      required: ['clientSession', 'type', 'info', 'clientInfo', 'createdAt'],
+      additionalProperties: true,
       properties: {
-        userId: {
-          bsonType: 'string',
-          description: 'ID of logged in user',
-        },
         clientSession: {
           bsonType: 'string',
           description: 'Browser session cookie',
@@ -29,6 +26,16 @@ export default {
               description: 'IP address of client user',
             },
           },
+        },
+        createdAt: {
+          bsonType: 'date',
+          description: 'Log creation timestamp',
+        },
+
+        // Not required
+        clientVersion: { description: 'Version of the client defined in package.json' },
+        userId: {
+          description: 'ID of logged in user',
         },
       },
     },
