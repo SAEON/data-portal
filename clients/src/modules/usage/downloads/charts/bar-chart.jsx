@@ -108,7 +108,7 @@ export default ({
   }
 
   return (
-    <Div sx={{ height: 700 }}>
+    <Div sx={{ height: 400 }}>
       <ReactECharts theme={echartsTheme} style={{ height: '100%' }} option={option} />
     </Div>
   )
