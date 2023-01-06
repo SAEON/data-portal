@@ -84,9 +84,8 @@ export default ({ geoLocations }) => {
         position: 'absolute',
         zIndex: 1,
         px: theme => theme.spacing(2),
-        m: theme => theme.spacing(0.5),
-        boxShadow: theme => theme.shadows[1],
-        backgroundColor: theme => theme.palette.common.white,
+        mx: theme => theme.spacing(0.5),
+        mt: theme => theme.spacing(2),
       }}
       title={'Spatial coverage'}
     >

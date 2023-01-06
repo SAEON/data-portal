@@ -9,6 +9,7 @@ export default () => (
       bottom: 0,
       right: 0,
       zIndex: 1,
+      lineHeight: 'unset',
       backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
       m: theme => theme.spacing(0),
       py: 0,
