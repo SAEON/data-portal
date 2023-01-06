@@ -9,8 +9,8 @@ const cli = args =>
     describe(
       {
         integrations: importFrom('./modules/integrations/index.js'),
+        mongo: importFrom('./modules/mongo/index.js'),
         sitemaps: importFrom('./modules/sitemaps/index.js'),
-        mongo: importFrom('./modules/mongo/index.js')
       },
       {
         title: 'sdp',

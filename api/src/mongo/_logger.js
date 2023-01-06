@@ -24,7 +24,8 @@ export default collections => {
         } catch (error) {
           console.error(
             'Error logging client events to Mongo (ignore this unless very frequent).',
-            error.message
+            error.message,
+            JSON.stringify(batch, null, 2)
           )
         } finally {
           this.load()
