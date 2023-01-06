@@ -9,10 +9,10 @@ import {
   DownloadMultiple as DownloadsIcon,
 } from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
-import { useTheme } from '@mui/material/styles'
 import Fade from '@mui/material/Fade'
 import Container from '@mui/material/Container'
 import Header from './header'
+import { Div, Span } from '../../components/html-tags'
 
 const Downloads = lazy(() => import('./downloads'))
 const Users = lazy(() => import('./users'))
@@ -37,7 +37,6 @@ const sections = [
 ]
 
 export default () => {
-  const theme = useTheme()
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -47,55 +46,49 @@ export default () => {
 
   if (!hasPermission('/usage')) {
     return (
-      <div style={{ minHeight: 1000, marginTop: theme.spacing(2) }}>
+      <Div sx={{ minHeight: 1000, mt: theme => theme.spacing(2) }}>
         <AccessDenied requiredPermission="/usage" />
-      </div>
+      </Div>
     )
   }
 
   return (
     <DownloadsContextProvider>
       <Header />
-      <div style={{ marginTop: theme.spacing(2) }} />
-      <Container style={{ minHeight: 1000 }}>
-        <ContentNav
-          navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
-        >
-          {({ activeIndex }) =>
-            sections
-              .filter(({ requiredPermission }) => hasPermission(requiredPermission))
-              .map(({ Section, primaryText }, i) => {
-                return (
-                  <Suspense
-                    key={primaryText}
-                    fallback={
-                      <Fade
-                        timeout={theme.transitions.duration.regular}
-                        in={activeIndex === i}
-                        key={'loading'}
-                      >
-                        <span>
-                          <Loading />
-                        </span>
-                      </Fade>
-                    }
-                  >
-                    <Fade
-                      timeout={theme.transitions.duration.regular}
-                      in={activeIndex === i}
-                      key={'loaded'}
+      <ContentNav
+        navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
+      >
+        {({ activeIndex }) => {
+          return (
+            <Container sx={{ minHeight: 1000 }}>
+              <Div sx={{ mt: theme => theme.spacing(2) }} />
+              {sections
+                .filter(({ requiredPermission }) => hasPermission(requiredPermission))
+                .map(({ Section, primaryText }, i) => {
+                  return (
+                    <Suspense
+                      key={primaryText}
+                      fallback={
+                        <Fade in={activeIndex === i} key={'loading'}>
+                          <Span>
+                            <Loading />
+                          </Span>
+                        </Fade>
+                      }
                     >
-                      <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                        <Section />
-                      </span>
-                    </Fade>
-                  </Suspense>
-                )
-              })
-          }
-        </ContentNav>
-      </Container>
-      <div style={{ marginTop: theme.spacing(2) }} />
+                      <Fade in={activeIndex === i} key={'loaded'}>
+                        <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                          <Section />
+                        </Span>
+                      </Fade>
+                    </Suspense>
+                  )
+                })}
+              <Div sx={{ mt: theme => theme.spacing(2) }} />
+            </Container>
+          )
+        }}
+      </ContentNav>
     </DownloadsContextProvider>
   )
 }

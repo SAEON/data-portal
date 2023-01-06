@@ -1,9 +1,9 @@
 import { useState, useEffect, memo } from 'react'
 import List from '@mui/material/List'
 import Grid from '@mui/material/Grid'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { alpha } from '@mui/material/styles'
 import NavItem from './_nav-item'
+import { Div } from '../html-tags'
 
 const RenderNavContent = memo(
   ({ children, activeIndex, setActiveIndex }) => {
@@ -16,8 +16,6 @@ const RenderNavContent = memo(
 )
 
 export default ({ navItems, children, activeIndex: _a = 0 }) => {
-  const theme = useTheme()
-  const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
   const [activeIndex, setActiveIndex] = useState(_a)
 
   useEffect(() => {
@@ -25,17 +23,37 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
   }, [_a])
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} lg={3}>
+    <Div
+      sx={theme => ({
+        display: 'flex',
+        flexDirection: 'column',
+        [theme.breakpoints.up('lg')]: {
+          flexDirection: 'row',
+        },
+      })}
+    >
+      <Div
+        sx={theme => ({
+          backgroundColor: alpha(theme.palette.grey[100], 0.9),
+          [theme.breakpoints.up('lg')]: {
+            minWidth: 250,
+            maxWidth: 300,
+          },
+        })}
+      >
         <List
-          style={{
-            backgroundColor: theme.palette.common.white,
+          sx={theme => ({
+            backgroundColor: theme => theme.palette.common.white,
             padding: 0,
             display: 'flex',
-            flexDirection: lgAndUp ? 'column' : 'row',
+            flexDirection: 'row',
             maxHeight: 1000,
             overflow: 'auto',
-          }}
+            flexDirection: 'row',
+            [theme.breakpoints.up('lg')]: {
+              flexDirection: 'column',
+            },
+          })}
         >
           {navItems.map((props, i) => (
             <NavItem
@@ -47,13 +65,24 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
             />
           ))}
         </List>
-      </Grid>
+      </Div>
 
-      <Grid item xs={12} lg={9} style={{ position: 'relative', height: '100%' }}>
+      <Div
+        sx={theme => ({
+          position: 'relative',
+          height: '100%',
+          flex: 1,
+          mt: theme.spacing(2),
+          [theme.breakpoints.up('lg')]: {
+            mx: theme.spacing(2),
+            mt: 'unset',
+          },
+        })}
+      >
         <RenderNavContent setActiveIndex={setActiveIndex} activeIndex={activeIndex}>
           {children}
         </RenderNavContent>
-      </Grid>
-    </Grid>
+      </Div>
+    </Div>
   )
 }

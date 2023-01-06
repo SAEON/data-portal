@@ -72,7 +72,7 @@ export default [
     },
   },
   {
-    label: 'Usage reports',
+    label: 'Site analytics',
     to: '/usage',
     includeInFooter: true,
     Icon: UsageIcon,

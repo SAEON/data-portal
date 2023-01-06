@@ -4,7 +4,6 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import IconButton from '@mui/material/IconButton'
 import { ChevronDown as ExpandIcon, ChevronUp as CollapseIcon } from '../icons'
-import { useTheme } from '@mui/material/styles'
 import { alpha } from '@mui/material/styles'
 
 export default ({
@@ -14,18 +13,17 @@ export default ({
   Icon = undefined,
   defaultExpanded = false,
   actions = [],
-  cardStyle = {},
+  cardSx = {},
 }) => {
-  const theme = useTheme()
   const [collapsed, setCollapsed] = useState(!defaultExpanded)
 
   return (
     <Card
       variant="outlined"
-      style={{
+      sx={{
         width: '100%',
-        backgroundColor: alpha(theme.palette.common.white, 0.9),
-        ...cardStyle,
+        backgroundColor: theme => alpha(theme.palette.common.white, 0.9),
+        ...cardSx,
       }}
     >
       <CardHeader

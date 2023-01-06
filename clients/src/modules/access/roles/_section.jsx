@@ -8,12 +8,12 @@ const Table = lazy(() => import('./_table'))
 export default ({ name, description, permissions }) => {
   return (
     <Collapse
-      cardStyle={{ border: 'none' }}
+      cardSx={{ border: 'none' }}
       title={`${name.toUpperCase()} permissions`}
       subheader={description}
     >
-      <CardContent style={{ position: 'relative' }}>
-        <Suspense fallback={<Loading style={{ bottom: '0' }} />}>
+      <CardContent sx={{ position: 'relative' }}>
+        <Suspense fallback={<Loading sx={{ bottom: '0' }} />}>
           <Table permissions={permissions} />
         </Suspense>
       </CardContent>

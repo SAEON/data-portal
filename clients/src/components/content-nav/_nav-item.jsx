@@ -23,9 +23,9 @@ export default memo(
     activeIndex,
   }) => {
     const theme = useTheme()
-    const xsAndDown = useMediaQuery(theme.breakpoints.down('sm'))
-    const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
-    const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
+    const xsAndDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
+    const smAndUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
+    const mdAndUp = useMediaQuery(theme => theme.breakpoints.up('md'))
 
     if (Component) {
       return <Component style={style} />
@@ -46,7 +46,8 @@ export default memo(
         placement="right"
       >
         <ButtonBase
-          sx={{
+          sx={theme => ({
+            width: '100%',
             transition: theme.transitions.create(['all']),
             [theme.breakpoints.up('lg')]: {
               minHeight: theme.spacing(10),
@@ -59,14 +60,13 @@ export default memo(
                   },
                 }
               : {}),
-          }}
+          })}
           disabled={disabled}
           onClick={() => setActiveIndex(i)}
-          style={{ width: '100%' }}
         >
-          <ListItem style={{ justifyContent: 'center' }}>
+          <ListItem sx={{ justifyContent: 'center' }}>
             {(xsAndDown || mdAndUp) && (
-              <ListItemIcon style={{ justifyContent: 'center' }}>
+              <ListItemIcon sx={{ justifyContent: 'center' }}>
                 <Icon active={activeIndex === i} />
               </ListItemIcon>
             )}
@@ -77,7 +77,7 @@ export default memo(
                   variant: 'overline',
                   display: 'block',
                 }}
-                style={{
+                sx={{
                   textAlign: mdAndUp ? 'left' : 'center',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
@@ -89,7 +89,7 @@ export default memo(
             )}
 
             {(xsAndDown || mdAndUp) && SecondaryIcon && (
-              <ListItemIcon style={{ justifyContent: 'center' }}>
+              <ListItemIcon sx={{ justifyContent: 'center' }}>
                 <SecondaryIcon />
               </ListItemIcon>
             )}

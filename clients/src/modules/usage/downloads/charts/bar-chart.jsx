@@ -1,5 +1,6 @@
 import ReactECharts from 'echarts-for-react'
 import echartsTheme from '../../../../theme/echarts'
+import { Div } from '../../../../components/html-tags'
 
 export default ({
   data,
@@ -107,8 +108,8 @@ export default ({
   }
 
   return (
-    <div style={{ height: 700 }}>
+    <Div sx={{ height: 700 }}>
       <ReactECharts theme={echartsTheme} style={{ height: '100%' }} option={option} />
-    </div>
+    </Div>
   )
 }

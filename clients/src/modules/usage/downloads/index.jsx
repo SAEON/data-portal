@@ -4,14 +4,12 @@ import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardContent from '@mui/material/CardContent'
 import Loading from '../../../components/loading'
-import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Collapse from '../../../components/collapse'
 
 const BarChart = lazy(() => import('./charts/bar-chart'))
 
 export default () => {
-  const theme = useTheme()
   const { downloadsCount, referrerCount, deviceCount, downloadsByDate, ipLocationCount } =
     useContext(downloadsContext)
 
@@ -20,8 +18,8 @@ export default () => {
       {/* TITLE */}
       <Grid item xs={12}>
         <Card variant="outlined">
-          <CardContent style={{ padding: theme.spacing(2) }}>
-            <Typography style={{ display: 'block', textAlign: 'center' }} variant="overline">
+          <CardContent sx={{ padding: theme => theme.spacing(2) }}>
+            <Typography sx={{ display: 'block', textAlign: 'center' }} variant="overline">
               Downloads: {downloadsCount?.count}
             </Typography>
           </CardContent>
@@ -31,11 +29,11 @@ export default () => {
       {/* LISTS */}
       <Grid item xs={12}>
         <Collapse
-          cardStyle={{ backgroundColor: theme.palette.common.white }}
+          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
           defaultExpanded
           title="Downloads by referrer"
         >
-          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart yScale="log" categoryFieldName="referrer" data={referrerCount} />
             </Suspense>
@@ -47,9 +45,9 @@ export default () => {
       <Grid item xs={12}>
         <Collapse
           title="Downloads by location"
-          cardStyle={{ backgroundColor: theme.palette.common.white }}
+          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
         >
-          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart
                 yScale="log"
@@ -66,9 +64,9 @@ export default () => {
       <Grid item xs={12}>
         <Collapse
           title="Downloads by date"
-          cardStyle={{ backgroundColor: theme.palette.common.white }}
+          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
         >
-          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart type="bar" categoryFieldName="date" data={downloadsByDate} />
             </Suspense>
@@ -80,9 +78,9 @@ export default () => {
       <Grid item xs={12}>
         <Collapse
           title="Downloads by device"
-          cardStyle={{ backgroundColor: theme.palette.common.white }}
+          cardSx={{ backgroundColor: theme => theme.palette.common.white }}
         >
-          <CardContent style={{ padding: theme.spacing(1), position: 'relative' }}>
+          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
             <Suspense fallback={<Loading />}>
               <BarChart yScale="log" categoryFieldName="device" data={deviceCount} />
             </Suspense>
