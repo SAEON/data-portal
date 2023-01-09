@@ -42,7 +42,7 @@ export const admin = {
     permissions['users:view'],
     permissions['roles:view'],
     permissions['permissions:view'],
-    permissions['download-forms:view'],
+    permissions['user-form-submissions:view'],
   ]),
 }
 

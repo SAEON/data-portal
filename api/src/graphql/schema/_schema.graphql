@@ -96,6 +96,8 @@ type Query {
   """
   lists(filter: String): [List!]!
   downloadsReport(sort: SortConfig): [DownloadSummary]!
+  usageReport: JSON
+  userFormSubmissions: JSON
   roles: [Role]!
   permissions: [Permission]!
   users: [User]!

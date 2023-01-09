@@ -27,8 +27,8 @@ export default Object.freeze({
     name: 'site-analytics:view',
     description: 'View catalogue deployment analytics',
   },
-  'download-forms:view': {
-    name: 'download-forms:view',
+  'user-form-submissions:view': {
+    name: 'user-form-submissions:view',
     description: 'View user-feedback submitted when downloading data',
   },
   'users:view': {

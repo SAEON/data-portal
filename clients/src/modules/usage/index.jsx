@@ -16,7 +16,7 @@ import Header from './header'
 import { Div, Span } from '../../components/html-tags'
 
 const Downloads = lazy(() => import('./downloads'))
-const Users = lazy(() => import('./users'))
+const Usage = lazy(() => import('./usage'))
 const Feedback = lazy(() => import('./feedback'))
 
 const sections = [
@@ -34,13 +34,13 @@ const sections = [
     secondaryText: 'User sessions',
     Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'site-analytics:view',
-    Section: Users,
+    Section: Usage,
   },
   {
     primaryText: 'Feedback',
     secondaryText: 'User feedback',
     Icon: ({ active }) => <ChatIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
-    requiredPermission: 'download-forms:view',
+    requiredPermission: 'user-form-submissions:view',
     Section: Feedback,
   },
 ]
