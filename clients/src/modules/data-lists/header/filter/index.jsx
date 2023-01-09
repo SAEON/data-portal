@@ -16,6 +16,7 @@ export default () => {
       {(update, { text }) => {
         return (
           <TextField
+            autoFocus
             autoComplete="off"
             fullWidth
             id="saeon-data-search"
