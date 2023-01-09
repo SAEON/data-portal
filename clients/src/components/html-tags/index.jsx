@@ -17,6 +17,8 @@ export const Br = styled('br')({})
 
 export const Sup = styled('sup')({})
 
+export const Path = styled('path')({})
+
 export const Table = styled('table')({})
 export const Thead = styled('thead')({})
 export const Tbody = styled('tbody')({})

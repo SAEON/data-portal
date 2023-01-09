@@ -1,5 +1,5 @@
 import 'react-data-grid/lib/styles.css'
-import { useContext, Suspense, lazy, useState, useMemo } from 'react'
+import { useContext, Suspense, lazy, useMemo } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
@@ -24,28 +24,29 @@ const _sections = [
   {
     primaryText: 'Users',
     secondaryText: 'Manage application users',
-    Icon: () => <UsersIcon fontSize="medium" />,
+    Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'users:view',
     Render: Users,
   },
   {
     primaryText: 'Roles',
     secondaryText: 'Manage application roles',
-    Icon: () => <RolesIcon fontSize="medium" />,
+    Icon: ({ active }) => <RolesIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'roles:view',
     Render: Roles,
   },
   {
     primaryText: 'Permissions',
     secondaryText: 'Manage application permissions',
-    Icon: () => <PermissionsIcon fontSize="medium" />,
+    Icon: ({ active }) => (
+      <PermissionsIcon color={active ? 'primary' : 'default'} fontSize="medium" />
+    ),
     requiredPermission: 'permissions:view',
     Render: Permissions,
   },
 ]
 
 export default () => {
-  const [activeIndex, setActiveIndex] = useState(0)
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 

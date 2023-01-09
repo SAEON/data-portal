@@ -20,7 +20,7 @@ export default () => {
         description,
         primaryText: title,
         secondaryText: description,
-        Icon: ({ active }) => (active ? <ActiveIcon /> : <InactiveIcon />),
+        Icon: ({ active }) => (active ? <ActiveIcon color="primary" /> : <InactiveIcon />),
         ...props,
       })),
     [lists]

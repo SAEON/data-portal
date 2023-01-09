@@ -7,6 +7,7 @@ import ContentNav from '../../components/content-nav'
 import {
   AccountMultiple as UsersIcon,
   DownloadMultiple as DownloadsIcon,
+  Chat as ChatIcon,
 } from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
 import Fade from '@mui/material/Fade'
@@ -16,23 +17,31 @@ import { Div, Span } from '../../components/html-tags'
 
 const Downloads = lazy(() => import('./downloads'))
 const Users = lazy(() => import('./users'))
+const Feedback = lazy(() => import('./feedback'))
 
 const sections = [
   {
     primaryText: 'Downloads',
     secondaryText: 'Data downloads reports',
-    // eslint-disable-next-line
-    Icon: ({ active }) => <DownloadsIcon fontSize="medium" />,
+    Icon: ({ active }) => (
+      <DownloadsIcon color={active ? 'primary' : 'default'} fontSize="medium" />
+    ),
     requiredPermission: 'site-analytics:view',
     Section: Downloads,
   },
   {
-    primaryText: 'Users',
+    primaryText: 'Usage',
     secondaryText: 'User sessions',
-    // eslint-disable-next-line
-    Icon: ({ active }) => <UsersIcon fontSize="medium" />,
+    Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'site-analytics:view',
     Section: Users,
+  },
+  {
+    primaryText: 'Feedback',
+    secondaryText: 'User feedback',
+    Icon: ({ active }) => <ChatIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
+    requiredPermission: 'download-forms:view',
+    Section: Feedback,
   },
 ]
 
