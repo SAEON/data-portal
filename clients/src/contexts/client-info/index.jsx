@@ -3,6 +3,8 @@ import WithFetch from './with-fetch'
 import Loading from '../../components/loading'
 import { PUBLIC_HTTP_ADDRESS } from '../../config'
 
+const RENDERED_PAGE = document.getElementsByTagName('html')[0].attributes['data-page'].value
+
 export const context = createContext()
 
 export default ({ children }) => {
@@ -25,6 +27,7 @@ This error usually occurs because we are updating our catalogue software. Please
           <context.Provider
             value={{
               ...data,
+              renderedPage: RENDERED_PAGE,
             }}
           >
             {children}

@@ -4,15 +4,19 @@ import Header from './header'
 import Records from './records'
 import { context as searchContext } from '../../../contexts/search'
 import { context as referrerContext } from '../../../contexts/referrer'
+import { context as clientContext } from '../../../contexts/client-info'
 import Grid from '@mui/material/Grid'
 import Loading from '../../../components/loading'
 import { gql } from '@apollo/client'
-import { CLIENT_FACET_CONFIGURATION } from '../../../config'
+import { CLIENT_FACET_CONFIGURATION, CLIENTS_PUBLIC_ADDRESS } from '../../../config'
 import Container from '@mui/material/Container'
 import Hidden from '@mui/material/Hidden'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Div, Main } from '../../../components/html-tags'
 import Fade from '@mui/material/Fade'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
 
 const Filters = lazy(() => import('./filters'))
 
@@ -30,6 +34,7 @@ export default ({ showSearch, showSidebar }) => {
   const [cursors, setCursors] = useState(DEFAULT_CURSORS)
   const { referrer } = useContext(referrerContext)
   const { global } = useContext(searchContext)
+  const { renderedPage } = useContext(clientContext)
   const { terms, extent = undefined, text = undefined, ids = [], dois = [], filter = {} } = global
   const sidebarVisible = !showSidebar && !xsDown
 
@@ -145,6 +150,36 @@ export default ({ showSearch, showSidebar }) => {
           catalogue={data?.catalogue}
           showSearch={showSearch}
         >
+          {renderedPage === 'list' && (
+            <Tooltip title="Navigate to the main SAEON catalogue" placement="top-start">
+              <Typography
+                component={Link}
+                href={CLIENTS_PUBLIC_ADDRESS}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="body2"
+                sx={theme => ({
+                  background: theme => theme.palette.common.white,
+                  display: 'flex',
+                  flexDirection: 'row-reverse',
+                  py: theme => theme.spacing(0.5),
+                  px: theme => theme.spacing(1),
+                  [theme.breakpoints.up('sm')]: {
+                    mx: theme => theme.spacing(3),
+                    mt: theme => theme.spacing(2),
+                    display: 'inline-block',
+                    flexDirection: 'unset',
+                    float: 'right',
+                  },
+                  [theme.breakpoints.up('lg')]: {
+                    m: 0,
+                  },
+                })}
+              >
+                View full catalogue
+              </Typography>
+            </Tooltip>
+          )}
           <Hidden mdDown>
             <Div sx={{ mt: theme => theme.spacing(2) }} />
           </Hidden>
