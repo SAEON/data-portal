@@ -94,7 +94,7 @@ type Query {
   """
   Retrieve many search contexts (i.e. many dynamic lists)
   """
-  lists: [List!]!
+  lists(filter: String): [List!]!
   downloadsReport(sort: SortConfig): [DownloadSummary]!
   roles: [Role]!
   permissions: [Permission]!

@@ -27,25 +27,35 @@ export default ({ closeFn, title, description, createdBy }) => {
       }
     `,
     {
+      refetchQueries: ['lists'],
       update: (cache, { data: { saveList: newList } }) => {
-        const query = gql`
-          query {
-            lists {
-              id
-              title
-              description
+        const { lists: existingLists } = cache.readQuery({
+          query: gql`
+            query ($filter: String) {
+              lists(filter: $filter) {
+                id
+                title
+                description
+              }
             }
-          }
-        `
-
-        const { lists: existingLists } = cache.read({
-          query,
+          `,
+          variables: {
+            filter: '',
+          },
         })
 
         const merged = [...existingLists, newList]
 
         cache.writeQuery({
-          query,
+          query: gql`
+            query {
+              lists {
+                id
+                title
+                description
+              }
+            }
+          `,
           data: {
             lists: merged,
           },

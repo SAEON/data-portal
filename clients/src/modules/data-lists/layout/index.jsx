@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState, useEffect } from 'react'
+import { useContext, useMemo } from 'react'
 import { context as ListsContext } from '../context'
 import ContentNav from '../../../components/content-nav'
 import Fade from '@mui/material/Fade'
@@ -9,7 +9,6 @@ import { Div, Span } from '../../../components/html-tags'
 import Container from '@mui/material/Container'
 
 export default () => {
-  const [renderCount, setRenderCount] = useState(0)
   const { lists } = useContext(ListsContext)
 
   const navItems = useMemo(
@@ -26,22 +25,18 @@ export default () => {
     [lists]
   )
 
-  useEffect(() => {
-    setRenderCount(c => c + 1)
-  }, [navItems])
-
   if (!navItems.length) {
     return (
       <Fade unmountOnExit mountOnEnter in={true}>
-        <Span>
+        <Container sx={{ mt: theme => theme.spacing(2) }}>
           <NoItems />
-        </Span>
+        </Container>
       </Fade>
     )
   }
 
   return (
-    <ContentNav activeIndex={renderCount === 1 ? 0 : lists.length - 1} navItems={navItems}>
+    <ContentNav activeIndex={lists.length - 1} navItems={navItems}>
       {({ activeIndex }) => {
         return (
           <Container style={{ minHeight: 1000 }}>

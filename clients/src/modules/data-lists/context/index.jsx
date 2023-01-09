@@ -1,14 +1,16 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const [filter, setFilter] = useState('')
+
   const { error, loading, data } = useQuery(
     gql`
-      query {
-        lists {
+      query lists($filter: String) {
+        lists(filter: $filter) {
           id
           filter
           title
@@ -19,7 +21,7 @@ export default ({ children }) => {
         }
       }
     `,
-    { variables: {} }
+    { variables: { filter }, fetchPolicy: 'cache-and-network' }
   )
 
   if (loading) {
@@ -30,5 +32,7 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ lists: data.lists }}>{children}</context.Provider>
+  return (
+    <context.Provider value={{ lists: data.lists, filter, setFilter }}>{children}</context.Provider>
+  )
 }
