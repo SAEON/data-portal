@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, useRef } from 'react'
+import { useState, useEffect, memo } from 'react'
 import List from '@mui/material/List'
 import NavItem from './_nav-item'
 import { Div } from '../html-tags'
@@ -15,7 +15,7 @@ const RenderNavContent = memo(
 
 export default ({ navItems, children, activeIndex: _a = 0 }) => {
   const [activeIndex, setActiveIndex] = useState(_a)
-  const ref = useRef(null)
+  const [ref, setRef] = useState(null)
 
   useEffect(() => {
     setActiveIndex(_a)
@@ -32,12 +32,12 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
       })}
     >
       <Div
-        ref={ref}
+        ref={el => setRef(el)}
         sx={theme => ({
           backgroundColor: theme.palette.common.white,
           [theme.breakpoints.up('lg')]: {
             minWidth: 250,
-            maxWidth: 300,
+            maxWidth: 400,
           },
         })}
       >
@@ -47,7 +47,7 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
             padding: 0,
             display: 'flex',
             flexDirection: 'row',
-            maxHeight: ref.current?.offsetHeight || 1000,
+            maxHeight: ref?.offsetHeight ? ref.offsetHeight + 64 : 1000,
             overflow: 'auto',
             flexDirection: 'row',
             [theme.breakpoints.up('lg')]: {
