@@ -111,24 +111,37 @@ export const updateValidationRules = async () => {
     Object.entries(_collections)
       .map(([, { name, indices = [] }]) => {
         return Promise.all(
-          indices.map(async ({ index, options }) => {
-            console.info('Applying index', index, 'to collection', name, options)
-            return _db
-              .collection(name)
-              .createIndex(index, options)
-              .catch(async error => {
-                if (error.code === 85) {
-                  console.info('Recreating index on', name, ':: Index name:', index)
-                  try {
-                    await _db.collection(name).dropIndex(`${index}_1`)
-                    await _db.collection(name).createIndex(index, options)
-                  } catch (error) {
-                    throw new Error(`Unable to recreate index. ${error.message}`)
-                  }
-                } else {
-                  throw error
+          indices.map(async ({ _type = undefined, options, ...indexFields }) => {
+            const collection = await _db.collection(name)
+            try {
+              if (_type === 'text') {
+                console.info(
+                  'Applying text index',
+                  options.name,
+                  'to collection',
+                  name,
+                  indexFields,
+                  options
+                )
+                return collection.createIndex(indexFields, options)
+              } else {
+                const { index } = indexFields
+                console.info('Applying index', index, 'to collection', name, options)
+                return collection.createIndex(index, options)
+              }
+            } catch (error) {
+              if (error.code === 85) {
+                console.info('Recreating index on', name, ':: Index', indexFields)
+                try {
+                  await _db.collection(name).dropIndex(options.name)
+                  await _db.collection(name).createIndex(index, options)
+                } catch (error) {
+                  throw new Error(`Unable to recreate index. ${error.message}`)
                 }
-              })
+              } else {
+                throw error
+              }
+            }
           })
         )
       })

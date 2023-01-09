@@ -1,13 +1,5 @@
 export default {
   name: 'roles',
-  indices: [
-    {
-      index: 'name',
-      options: {
-        unique: true,
-      },
-    },
-  ],
   validator: {
     $jsonSchema: {
       bsonType: 'object',
@@ -21,4 +13,13 @@ export default {
       },
     },
   },
+  indices: [
+    {
+      index: 'name',
+      options: {
+        name: 'name',
+        unique: true,
+      },
+    },
+  ],
 }

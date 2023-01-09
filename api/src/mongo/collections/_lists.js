@@ -21,6 +21,18 @@ export default {
           bsonType: 'string',
           description: 'List description',
         },
+        createdBy: {
+          bsonType: 'string',
+          description: 'The person or application that created the list',
+        },
+        userId: {
+          description:
+            'ID of logged in user who requested the list be created (if user is logged in)',
+        },
+        clientSession: {
+          bsonType: 'string',
+          description: 'ID of the browser session if it exists',
+        },
       },
     },
   },
@@ -28,8 +40,19 @@ export default {
     {
       index: 'hashOfFilter',
       options: {
+        name: 'hashOfFilter',
         unique: true,
         partialFilterExpression: { hashOfFilter: { $exists: true } },
+      },
+    },
+    {
+      _type: 'text',
+      createdBy: 'text',
+      description: 'text',
+      title: 'text',
+      type: 'text',
+      options: {
+        name: 'text',
       },
     },
   ],

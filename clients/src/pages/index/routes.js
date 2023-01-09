@@ -84,7 +84,7 @@ export default [
     ),
   },
   {
-    label: 'Data lists',
+    label: 'Curated lists',
     to: '/data-lists',
     includeInFooter: true,
     Icon: CollectionsIcon,
