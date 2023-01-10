@@ -4,6 +4,8 @@ import { ObjectId } from 'mongodb'
  * TODO
  * Once Mongo Docker is updated to v5, look at options for
  * joining in a single query
+ *
+ * update => this can be done now as mongo is v6
  */
 export default async (ctx, ...permissions) => {
   permissions = permissions.map(({ name }) => name)
@@ -41,4 +43,19 @@ export default async (ctx, ...permissions) => {
   if (!user) {
     ctx.throw(403)
   }
+
+  /**
+   * Otherwise log the authorization request
+   */
+  const { logToMongo, makeLog } = ctx.mongo
+
+  logToMongo(
+    await makeLog(ctx, {
+      type: 'authorization',
+      info: {
+        userId,
+        permissions,
+      },
+    })
+  )
 }

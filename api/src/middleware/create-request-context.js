@@ -1,4 +1,4 @@
-import { db as mongoDb, collections, getDataFinders, Logger } from '../mongo/index.js'
+import { db as mongoDb, collections, getDataFinders, Logger, makeLog } from '../mongo/index.js'
 import { query as elasticQuery } from '../elasticsearch/index.js'
 import { APP_KEY } from '../config/index.js'
 import gqlServer, { schema as gqlSchema } from '../graphql/index.js'
@@ -19,6 +19,7 @@ export default app => async (ctx, next) => {
     collections,
     dataFinders: getDataFinders(), // Request level batching
     logToMongo: logToMongo.load.bind(logToMongo),
+    makeLog,
   }
 
   app.context.gql = {

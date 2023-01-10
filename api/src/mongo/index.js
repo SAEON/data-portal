@@ -10,6 +10,7 @@ import {
 } from '../config/index.js'
 import _collections from './collections/index.js'
 import _Logger from './_logger.js'
+export { makeLog } from './_logger.js'
 import insertUsers from './_insert-users.js'
 import configureRolesAndPermissions from './_configure-roles-and-permissions.js'
 import makeDataFinders from './_data-finders.js'
