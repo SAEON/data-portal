@@ -1,17 +1,8 @@
-import { useState, useEffect, memo } from 'react'
+import { useState, useEffect } from 'react'
 import List from '@mui/material/List'
 import NavItem from './_nav-item'
 import { Div } from '../html-tags'
-
-const RenderNavContent = memo(
-  ({ children, activeIndex, setActiveIndex }) => {
-    return <div>{children({ setActiveIndex, activeIndex })}</div>
-  },
-  (a, b) => {
-    if (a.activeIndex !== b.activeIndex) return false
-    return true
-  }
-)
+import RenderNavContent from './_render-content'
 
 export default ({ navItems, children, activeIndex: _a = 0 }) => {
   const [activeIndex, setActiveIndex] = useState(_a)
@@ -36,7 +27,6 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
         sx={theme => ({
           backgroundColor: theme.palette.common.white,
           [theme.breakpoints.up('lg')]: {
-            minWidth: 250,
             maxWidth: 400,
           },
         })}
@@ -72,10 +62,9 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
           position: 'relative',
           height: '100%',
           flex: 1,
-          mt: theme.spacing(2),
+          mt: 0,
           [theme.breakpoints.up('lg')]: {
             mx: theme.spacing(2),
-            mt: 'unset',
           },
         })}
       >

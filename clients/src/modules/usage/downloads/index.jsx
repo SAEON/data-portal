@@ -1,13 +1,21 @@
-import { useContext, lazy, Suspense } from 'react'
+import { useContext } from 'react'
 import { context as downloadsContext } from './context'
-import Card from '@mui/material/Card'
+import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
-import CardContent from '@mui/material/CardContent'
-import Loading from '../../../components/loading'
 import Typography from '@mui/material/Typography'
-import Collapse from '../../../components/collapse'
+import BarChart from './charts/bar-chart'
+import { styled, alpha } from '@mui/material/styles'
 
-const BarChart = lazy(() => import('./charts/bar-chart'))
+const Item = styled(({ children, gridProps }) => (
+  <Grid item xs={12} lg={4} {...gridProps}>
+    <Paper
+      variant="elevation"
+      sx={{ height: 420, background: theme => alpha(theme.palette.common.white, 0.95) }}
+    >
+      {children}
+    </Paper>
+  </Grid>
+))({})
 
 export default () => {
   const { downloadsCount, referrerCount, deviceCount, downloadsByDate, ipLocationCount } =
@@ -17,63 +25,47 @@ export default () => {
     <Grid container spacing={2}>
       {/* TITLE */}
       <Grid item xs={12}>
-        <Card variant="outlined">
-          <CardContent sx={{ padding: theme => theme.spacing(2) }}>
-            <Typography sx={{ display: 'block', textAlign: 'center' }} variant="overline">
-              Downloads: {downloadsCount?.count}
-            </Typography>
-          </CardContent>
-        </Card>
+        <Paper
+          variant="elevation"
+          sx={{
+            padding: theme => theme.spacing(1),
+            background: theme => alpha(theme.palette.common.white, 0.95),
+          }}
+        >
+          <Typography
+            sx={{ fontWeight: 'bold', display: 'block', textAlign: 'center' }}
+            variant="overline"
+          >
+            Total downloads {downloadsCount?.count}
+          </Typography>
+        </Paper>
       </Grid>
 
-      {/* Downloads by referrer */}
-      <Grid item xs={6}>
-        <Card variant="outlined" sx={{ maxHeight: 400 }}>
-          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
-            <Suspense fallback={<Loading />}>
-              <BarChart yScale="log" categoryFieldName="referrer" data={referrerCount} />
-            </Suspense>
-          </CardContent>
-        </Card>
-      </Grid>
+      <Item gridProps={{ lg: 5 }}>
+        <BarChart title={'By date'} type="bar" categoryFieldName="date" data={downloadsByDate} />
+      </Item>
 
-      {/* Downloads by location */}
-      <Grid item xs={6}>
-        <Card variant="outlined" sx={{ maxHeight: 400 }}>
-          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
-            <Suspense fallback={<Loading />}>
-              <BarChart
-                yScale="log"
-                tooltip={{ show: false }}
-                categoryFieldName="clientIpLocation"
-                data={ipLocationCount}
-              />
-            </Suspense>
-          </CardContent>
-        </Card>
-      </Grid>
+      <Item gridProps={{ lg: 7 }}>
+        <BarChart
+          title={'By referrer'}
+          yScale="log"
+          categoryFieldName="referrer"
+          data={referrerCount}
+        />
+      </Item>
 
-      {/* Downloads by date */}
-      <Grid item xs={6}>
-        <Card variant="outlined" sx={{ maxHeight: 400 }}>
-          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
-            <Suspense fallback={<Loading />}>
-              <BarChart type="bar" categoryFieldName="date" data={downloadsByDate} />
-            </Suspense>
-          </CardContent>
-        </Card>
-      </Grid>
+      <Item gridProps={{ lg: 8 }}>
+        <BarChart
+          title={'By location'}
+          yScale="log"
+          categoryFieldName="clientIpLocation"
+          data={ipLocationCount}
+        />
+      </Item>
 
-      {/* Downloads by device */}
-      <Grid item xs={6}>
-        <Card variant="outlined" sx={{ maxHeight: 400 }}>
-          <CardContent sx={{ padding: theme => theme.spacing(1), position: 'relative' }}>
-            <Suspense fallback={<Loading />}>
-              <BarChart yScale="log" categoryFieldName="device" data={deviceCount} />
-            </Suspense>
-          </CardContent>
-        </Card>
-      </Grid>
+      <Item>
+        <BarChart title={'By device'} yScale="log" categoryFieldName="device" data={deviceCount} />
+      </Item>
     </Grid>
   )
 }

@@ -17,7 +17,7 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return <Loading sx={{ position: 'relative' }} />
   }
 
   if (error) {

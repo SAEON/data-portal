@@ -78,32 +78,42 @@ export default () => {
       >
         {({ activeIndex }) => {
           return (
-            <Container sx={{ minHeight: 1000 }}>
+            <Div
+              sx={theme => ({
+                position: 'relative',
+                mx: 1,
+                [theme.breakpoints.up('lg')]: {
+                  mx: 0,
+                },
+              })}
+            >
               <Div sx={{ mt: theme => theme.spacing(2) }} />
               {sections
                 .filter(({ requiredPermission }) => hasPermission(requiredPermission))
                 .map(({ Section, primaryText }, i) => {
                   return (
-                    <Suspense
-                      key={primaryText}
-                      fallback={
-                        <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
+                    activeIndex === i && (
+                      <Suspense
+                        key={primaryText}
+                        fallback={
+                          <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
+                            <Span>
+                              <Loading sx={{ position: 'relative' }} />
+                            </Span>
+                          </Fade>
+                        }
+                      >
+                        <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
                           <Span>
-                            <Loading />
+                            <Section />
                           </Span>
                         </Fade>
-                      }
-                    >
-                      <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
-                        <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                          <Section />
-                        </Span>
-                      </Fade>
-                    </Suspense>
+                      </Suspense>
+                    )
                   )
                 })}
               <Div sx={{ mt: theme => theme.spacing(2) }} />
-            </Container>
+            </Div>
           )
         }}
       </ContentNav>

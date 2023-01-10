@@ -41,6 +41,8 @@ export default ({ id, url: todo }) => {
               <Div sx={{ mt: theme => theme.spacing(2) }}>
                 <Link
                   href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     whiteSpace: 'break-spaces',
                     wordBreak: 'break-all',

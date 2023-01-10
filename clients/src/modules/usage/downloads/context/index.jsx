@@ -51,7 +51,7 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return <Loading withHeight />
+    return <Loading withHeight sx={{ position: 'relative' }} />
   }
 
   if (error) {

@@ -1,6 +1,6 @@
 import ReactECharts from 'echarts-for-react'
-import echartsTheme from '../../../../theme/echarts'
-import { Div } from '../../../../components/html-tags'
+import makeEchartsTheme from '../../../../theme/echarts'
+import { useTheme } from '@mui/material/styles'
 
 export default ({
   data,
@@ -11,6 +11,7 @@ export default ({
   tooltip = {},
   type = 'bar',
 }) => {
+  const muiTheme = useTheme()
   const series = {}
   const xAxis = {
     type: 'category',
@@ -50,66 +51,97 @@ export default ({
   const _series = Object.entries(series).map(([, series]) => series)
 
   const option = {
-    dataZoom: [
-      {
-        type: 'slider',
-        showDataShadow: 'auto',
-        height: 24,
+    toolbox: {
+      showTitle: true,
+      top: 5,
+      right: 5,
+      feature: {
+        dataZoom: {
+          show: true,
+        },
+        magicType: {
+          type: ['line', 'bar', 'stack'],
+        },
+        saveAsImage: {
+          title: 'Save as image',
+          pixelRatio: 10,
+        },
       },
+    },
+    dataZoom: [
       {
         type: 'inside',
       },
     ],
-    title: title
-      ? {
-          text: title,
-          x: 'center',
-        }
-      : false,
+    title: {
+      top: '10px',
+      left: 'center',
+      text: title,
+    },
     tooltip: {
-      trigger: 'axis',
+      trigger: 'none',
       appendToBody: true,
       axisPointer: {
-        type: 'line',
+        type: 'cross',
       },
+      show: true,
       ...tooltip,
     },
     grid: {
-      show: false,
-      left: 16,
-      right: 16,
-      bottom: 64,
-      top: 16,
+      top: 90,
+      left: 50,
+      right: 30,
+      bottom: 40,
       containLabel: true,
+      show: true,
     },
     yAxis: {
+      nameRotate: 90,
+      nameGap: 50,
+      nameLocation: 'center',
+      nameTextStyle: {
+        fontStyle: 'italic',
+      },
+      axisTick: {
+        show: true,
+      },
+      minorTick: {
+        show: true,
+      },
       type: yScale,
+      axisLabel: {
+        formatter: value => value,
+      },
       axisLine: {
         show: true,
       },
+      offset: 0,
+      name: 'Total',
     },
     xAxis,
     series: _series.map(series => {
       const { count, name, ...other } = series
-      const isLastIndex = _series.at(-1).name === name
 
       return {
         name,
         data: xAxis.data.map(collection => count[collection] || 0),
-        label: {
-          show: isLastIndex ? true : false,
-          formatter: ({ dataIndex: i }) =>
-            option.series.reduce((sum, { data }) => sum + data[i], 0),
-          position: 'top',
-        },
+        label: false,
         ...other,
       }
     }),
   }
 
   return (
-    <Div sx={{ height: 400 }}>
-      <ReactECharts theme={echartsTheme} style={{ height: '100%' }} option={option} />
-    </Div>
+    <ReactECharts
+      theme={makeEchartsTheme(
+        9,
+        { color: muiTheme.palette.primary.main, pos: 0 },
+        { color: muiTheme.palette.grey[200], pos: 0.3 },
+        { color: muiTheme.palette.grey[400], pos: 0.6 },
+        { color: muiTheme.palette.secondary.main, pos: 1 }
+      )}
+      style={{ height: '100%', width: '100%' }}
+      option={option}
+    />
   )
 }
