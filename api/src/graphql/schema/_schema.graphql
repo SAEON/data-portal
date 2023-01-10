@@ -97,6 +97,7 @@ type Query {
   lists(filter: String): [List!]!
   downloadsReport(sort: SortConfig): [DownloadSummary]!
   usageReport: JSON
+  loginsReport: JSON
   userFormSubmissions: JSON
   roles: [Role]!
   permissions: [Permission]!
@@ -143,7 +144,10 @@ type Mutation {
 
 input BrowserEventInput {
   type: String!
-  createdAt: DateTime!
+  """
+  If the createdAt field is not included in the browser request it is created at insertion time (to )
+  """
+  createdAt: DateTime
   info: JSON!
   clientVersion: String!
   referrer: String

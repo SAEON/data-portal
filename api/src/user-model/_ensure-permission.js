@@ -45,17 +45,18 @@ export default async (ctx, ...permissions) => {
   }
 
   /**
-   * Otherwise log the authorization request
+   * Log successful authorization
+   *
+   * While this does allow for an audit trail of database changes
+   * via the API, this currently results in too many logs to be
+   * useful at this point
    */
-  const { logToMongo, makeLog } = ctx.mongo
-
-  logToMongo(
-    await makeLog(ctx, {
-      type: 'authorization',
-      info: {
-        userId,
-        permissions,
-      },
-    })
-  )
+  // ctx.mongo.logToMongo(
+  //   ctx.mongo.makeLog(ctx, {
+  //     type: 'authorization',
+  //     info: {
+  //       permissions,
+  //     },
+  //   })
+  // )
 }

@@ -47,4 +47,25 @@ export default async db => {
       { upsert: true }
     )
   }
+
+  /**
+   * Remove permissions not associated with any roles
+   * And any roles in the database that are not in the
+   * source code
+   **/
+  const { permissions: activePermissions, roles: activeRoles } = roles.reduce(
+    (acc, role) => ({
+      permissions: [...new Set([...acc.permissions, ...role.permissions.map(({ name }) => name)])],
+      roles: [...new Set([...acc.roles, role.name])],
+    }),
+    { permissions: [], roles: [] }
+  )
+
+  // Delete obsolete permissions
+  await db
+    .collection(collections.Permissions.name)
+    .deleteMany({ name: { $nin: activePermissions } })
+
+  // Delete obsolute roles
+  await db.collection(collections.Roles.name).deleteMany({ name: { $nin: activeRoles } })
 }

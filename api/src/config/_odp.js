@@ -43,3 +43,4 @@ export const ODP_SSO_CLIENT_SCOPES = process.env.ODP_SSO_CLIENT_SCOPES || 'openi
 export const ODP_SSO_CLIENT_REDIRECT =
   process.env.ODP_SSO_CLIENT_REDIRECT || `${API_ADDRESS}/http/authenticate/redirect`
 export const PASSPORT_SSO_SESSION_ID = process.env.PASSPORT_SSO_SESSION_ID || 'client.sess'
+export const PASSPORT_SSO_MAXAGE_HOURS = 12

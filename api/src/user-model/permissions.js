@@ -23,10 +23,6 @@ export default Object.freeze({
     name: '/data-lists',
     description: 'View the /data-lists route on client apps',
   },
-  'site-analytics:view': {
-    name: 'site-analytics:view',
-    description: 'View catalogue deployment analytics',
-  },
   'user-form-submissions:view': {
     name: 'user-form-submissions:view',
     description: 'View user-feedback submitted when downloading data',
@@ -46,5 +42,17 @@ export default Object.freeze({
   'permissions:view': {
     name: 'permissions:view',
     description: 'View all permission details',
+  },
+  'logs:authentication:view': {
+    name: 'logs:authentication:view',
+    description: 'View authentication logs',
+  },
+  'logs:download:view': {
+    name: 'logs:download:view',
+    description: 'View download logs',
+  },
+  'logs:appRender:view': {
+    name: 'logs:appRender:view',
+    description: 'View application render logs',
   },
 })

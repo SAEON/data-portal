@@ -8,6 +8,7 @@ import {
   AccountMultiple as UsersIcon,
   DownloadMultiple as DownloadsIcon,
   Chat as ChatIcon,
+  ChartBar as ChartBarIcon,
 } from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
 import Fade from '@mui/material/Fade'
@@ -18,6 +19,7 @@ import { Div, Span } from '../../components/html-tags'
 const Downloads = lazy(() => import('./downloads'))
 const Usage = lazy(() => import('./usage'))
 const Feedback = lazy(() => import('./feedback'))
+const Logins = lazy(() => import('./logins'))
 
 const sections = [
   {
@@ -26,15 +28,22 @@ const sections = [
     Icon: ({ active }) => (
       <DownloadsIcon color={active ? 'primary' : 'default'} fontSize="medium" />
     ),
-    requiredPermission: 'site-analytics:view',
+    requiredPermission: 'logs:download:view',
     Section: Downloads,
   },
   {
     primaryText: 'Usage',
-    secondaryText: 'User sessions',
-    Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
-    requiredPermission: 'site-analytics:view',
+    secondaryText: 'Application renders',
+    Icon: ({ active }) => <ChartBarIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
+    requiredPermission: 'logs:appRender:view',
     Section: Usage,
+  },
+  {
+    primaryText: 'Login history',
+    secondaryText: 'List of recent user logins',
+    Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
+    requiredPermission: 'logs:authentication:view',
+    Section: Logins,
   },
   {
     primaryText: 'Feedback',
@@ -78,14 +87,14 @@ export default () => {
                     <Suspense
                       key={primaryText}
                       fallback={
-                        <Fade in={activeIndex === i} key={'loading'}>
+                        <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
                           <Span>
                             <Loading />
                           </Span>
                         </Fade>
                       }
                     >
-                      <Fade in={activeIndex === i} key={'loaded'}>
+                      <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
                         <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
                           <Section />
                         </Span>

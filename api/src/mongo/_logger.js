@@ -1,5 +1,6 @@
 import { PASSPORT_SSO_SESSION_ID } from '../config/index.js'
 import DataLoader from 'dataloader'
+import { ObjectId } from 'mongodb'
 
 const IP_RESOLVER_API_ADDRESS = 'http://ip-api.com/batch'
 
@@ -54,7 +55,7 @@ export const makeLog = async (ctx, otherFields) => {
     countryCode && city ? `${countryCode}/${city}${district ? `/${district}` : ''}` : 'UNKNOWN'
 
   return {
-    userId: ctx.user.info(ctx)?.id || undefined,
+    userId: ctx.user.info(ctx)?.id ? ObjectId(ctx.user.info(ctx).id) : undefined,
     createdAt: new Date(),
     clientSession: ctx.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session', // This can happen if user blocks cookies in their browser
     clientInfo: {
@@ -74,8 +75,8 @@ export default collections => {
       this._queries = []
     }
 
-    load(...queries) {
-      this._queries.push(...queries)
+    async load(...queries) {
+      this._queries.push(...(await Promise.all(queries)))
 
       process.nextTick(async () => {
         if (!this._queries.length) {
@@ -96,7 +97,7 @@ export default collections => {
             JSON.stringify(batch, null, 2)
           )
         } finally {
-          this.load()
+          await this.load()
         }
       })
     }

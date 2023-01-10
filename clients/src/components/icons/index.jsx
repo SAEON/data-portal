@@ -46,7 +46,14 @@ import {
   mdiShare,
   mdiMenuDown,
   mdiChat,
+  mdiChartBar,
 } from '@mdi/js'
+
+export const ChartBar = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiChartBar} />
+  </SvgIcon>
+))({})
 
 export const Chat = styled(props => (
   <SvgIcon {...props}>

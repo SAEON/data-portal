@@ -10,6 +10,7 @@ import { authorizeGql as a } from '../../../../user-model/authorize.js'
 import downloadsReport from '../../queries/downloads-report/index.js'
 import usageReport from '../../queries/usage-report/index.js'
 import userFormSubmissions from '../../queries/form-submissions/index.js'
+import loginsReport from '../../queries/logins-report/index.js'
 
 const getUserDocumentOwner = async (self, args, ctx) => ctx.userInfo.id === args.id
 
@@ -17,8 +18,9 @@ export default {
   catalogue,
   list,
   lists: a({ permission: PERMISSIONS['lists:view'] })(lists),
-  downloadsReport: a({ permission: PERMISSIONS['site-analytics:view'] })(downloadsReport),
-  usageReport: a({ permission: PERMISSIONS['site-analytics:view'] })(usageReport),
+  downloadsReport: a({ permission: PERMISSIONS['logs:download:view'] })(downloadsReport),
+  usageReport: a({ permission: PERMISSIONS['logs:appRender:view'] })(usageReport),
+  loginsReport: a({ permission: PERMISSIONS['logs:authentication:view'] })(loginsReport),
   roles: a({ permission: PERMISSIONS['roles:view'] })(roles),
   user: async (...args) =>
     a({

@@ -12,7 +12,6 @@ export default (type, info = {}) => {
     clientVersion: packageJson.version,
     type,
     referrer,
-    createdAt: new Date(),
     info: {
       pathname: window.location.pathname,
       ...info,

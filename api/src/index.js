@@ -16,6 +16,7 @@ import {
   SAEON_ODP_INTEGRATION_SCHEDULE,
   SITEMAP_INTEGRATION_SCHEDULE,
   APP_KEY,
+  PASSPORT_SSO_MAXAGE_HOURS,
 } from './config/index.js'
 import { Task } from './lib/task-manager/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
@@ -86,7 +87,7 @@ api
     return koaSession(
       {
         key: 'koa.sess',
-        maxAge: hoursToMilliseconds(12),
+        maxAge: hoursToMilliseconds(PASSPORT_SSO_MAXAGE_HOURS),
         autoCommit: true,
         overwrite: true,
         httpOnly: true,

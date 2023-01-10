@@ -27,6 +27,6 @@ export default async (self, args, ctx) => {
   ])
 
   return {
-    totalDownloads: await result.toArray(),
+    usage: await result.toArray(),
   }
 }
