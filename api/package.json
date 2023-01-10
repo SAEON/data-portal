@@ -33,7 +33,7 @@
     "apollo-server-koa": "3.11",
     "base64url": "^3.0.1",
     "btoa": "^1.2.1",
-    "cron": "^2.1.0",
+    "cron": "^2.2.0",
     "dataloader": "^2.1.0",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
