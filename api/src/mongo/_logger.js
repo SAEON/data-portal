@@ -97,7 +97,7 @@ export default collections => {
             JSON.stringify(batch, null, 2)
           )
         } finally {
-          await this.load()
+          this.load()
         }
       })
     }
