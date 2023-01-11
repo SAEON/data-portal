@@ -8,7 +8,9 @@ export default () => {
 
   return (
     <Card>
-      <CardContent>{JSON.stringify(data)}</CardContent>
+      <CardContent>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </CardContent>
     </Card>
   )
 }

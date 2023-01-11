@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
+import { Div } from '../../../components/html-tags'
 
 const headerRenderer = ({ column }) => (
-  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+  <Div sx={{ width: '100%', textAlign: 'center' }}>{column.name}</Div>
 )
 
 const sortUsersByEmail = users =>
