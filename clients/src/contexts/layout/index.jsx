@@ -40,6 +40,8 @@ export const SizeContent = ({ children, height = undefined, style = {} }) => {
       ref={setContentRef}
       sx={{
         position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
         ...css,
         ...style,
       }}

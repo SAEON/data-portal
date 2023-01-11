@@ -16,6 +16,7 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
     <Div
       sx={theme => ({
         display: 'flex',
+        flex: 1,
         flexDirection: 'column',
         [theme.breakpoints.up('lg')]: {
           flexDirection: 'row',

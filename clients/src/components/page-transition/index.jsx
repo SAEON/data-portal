@@ -14,7 +14,7 @@ export default ({ children, tKey }) => {
 
   return (
     <Fade key={tKey} in={true}>
-      <Div sx={{ position: 'relative', height: '100%' }}>
+      <Div sx={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1 }}>
         <Suspense fallback={<Fallback />}>{children}</Suspense>
       </Div>
     </Fade>

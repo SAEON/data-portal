@@ -1,12 +1,13 @@
 import { memo } from 'react'
 import DataGrid from 'react-data-grid'
+import { Div } from '../../../components/html-tags'
 
 const headerRenderer = ({ column }) => (
-  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+  <Div sx={{ width: '100%', textAlign: 'center' }}>{column.name}</Div>
 )
 
 export default memo(({ permissions }) => (
-  <div style={{ height: 1000 }}>
+  <Div sx={{ height: 1000 }}>
     <DataGrid
       style={{ height: '100%' }}
       enableVirtualization={true}
@@ -21,5 +22,5 @@ export default memo(({ permissions }) => (
       ]}
       rows={permissions.map(({ id, name, description }) => ({ id, name, description }))}
     />
-  </div>
+  </Div>
 ))

@@ -74,7 +74,7 @@ export default () => {
       <ContentNav navItems={sections}>
         {({ activeIndex }) => {
           return (
-            <Container sx={{ minHeight: 1000 }}>
+            <Container>
               <Div sx={{ mt: theme => theme.spacing(2) }} />
               {sections.map(({ Render, primaryText }, i) => {
                 return (
