@@ -14,6 +14,7 @@ export const A = styled('a')({})
 
 export const B = styled('b')({})
 export const Br = styled('br')({})
+export const I = styled('i')({})
 
 export const Sup = styled('sup')({})
 

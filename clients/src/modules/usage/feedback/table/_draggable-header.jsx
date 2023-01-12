@@ -1,5 +1,6 @@
 import { useDrag, useDrop } from 'react-dnd'
 import { headerRenderer } from 'react-data-grid'
+import { Div } from '../../../../components/html-tags'
 
 export default ({ onColumnsReorder, column, ...props }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -22,18 +23,19 @@ export default ({ onColumnsReorder, column, ...props }) => {
   })
 
   return (
-    <div
+    <Div
       ref={ref => {
         drag(ref)
         drop(ref)
       }}
-      style={{
+      sx={{
+        textAlign: 'center',
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: isOver ? '#ececec' : undefined,
         cursor: 'move',
       }}
     >
       {headerRenderer({ column, ...props })}
-    </div>
+    </Div>
   )
 }

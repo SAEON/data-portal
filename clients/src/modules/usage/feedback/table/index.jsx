@@ -8,6 +8,7 @@ import Link from '@mui/material/Link'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../config'
 import DraggableHeaderRenderer from './_draggable-header'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { I } from '../../../../components/html-tags'
 
 const FORMAT = 'do MMM yyyy'
 
@@ -37,12 +38,20 @@ const getComparator = sortColumn => {
 export default () => {
   const { userFormSubmissions: forms } = useContext(dataContext)
   const [sortColumns, setSortColumns] = useState([])
-  const [rows, setRows] = useState(forms.map(({ _id: id, ...rest }) => ({ id, ...rest })))
+  const [rows, setRows] = useState(
+    forms.map(({ _id: id, ...rest }, i) => ({ i: i + 1, id, ...rest }))
+  )
   const [columns, setColumns] = useState([
+    {
+      key: 'i',
+      name: ` `,
+      sortable: true,
+      resizable: false,
+      formatter: ({ row: { i } }) => <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>,
+    },
     {
       key: 'createdAt',
       name: 'Date',
-
       formatter: ({ row: { createdAt } }) => (createdAt ? format(new Date(createdAt), FORMAT) : ''),
     },
     {
@@ -66,7 +75,7 @@ export default () => {
 
       formatter: ({ row: { student } }) => (student ? '✔️' : ''),
     },
-    { key: 'location', name: 'Location' },
+    { key: 'location', name: 'Live/work location' },
     {
       key: 'ageGroup',
       name: 'Age group',

@@ -83,12 +83,12 @@ export default () => {
               sx={theme => ({
                 position: 'relative',
                 mx: 1,
+                my: theme => theme.spacing(2),
                 [theme.breakpoints.up('lg')]: {
                   mx: 0,
                 },
               })}
             >
-              <Div sx={{ mt: theme => theme.spacing(2) }} />
               {sections
                 .filter(({ requiredPermission }) => hasPermission(requiredPermission))
                 .map(({ Section, primaryText }, i) => {
@@ -113,7 +113,6 @@ export default () => {
                     )
                   )
                 })}
-              <Div sx={{ mt: theme => theme.spacing(2) }} />
             </Div>
           )
         }}
