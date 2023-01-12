@@ -1,10 +1,10 @@
 import Provider from './context'
-import MsgThreads from './msg-threads'
+import Table from './table'
 
 export default () => {
   return (
     <Provider>
-      <MsgThreads />
+      <Table />
     </Provider>
   )
 }

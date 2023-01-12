@@ -1,5 +1,7 @@
 export default async (self, args, ctx) => {
-  const { findDataDownloadFormSubmissions } = ctx.mongo.dataFinders
+  const { DataDownloadFormSubmissions: Forms } = await ctx.mongo.collections
 
-  return await findDataDownloadFormSubmissions({})
+  const result = await Forms.aggregate([{ $sort: { createdAt: -1 } }])
+
+  return await result.toArray()
 }

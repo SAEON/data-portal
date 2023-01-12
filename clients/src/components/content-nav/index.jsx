@@ -66,6 +66,7 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
           mt: 0,
           [theme.breakpoints.up('lg')]: {
             mx: theme.spacing(2),
+            width: 0,
           },
         })}
       >

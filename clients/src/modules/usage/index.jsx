@@ -1,3 +1,4 @@
+import 'react-data-grid/lib/styles.css'
 import { useContext, Suspense, lazy } from 'react'
 import DownloadsContextProvider from './downloads/context'
 import { context as authenticationContext } from '../../contexts/authentication'
@@ -40,14 +41,14 @@ const sections = [
   },
   {
     primaryText: 'Login history',
-    secondaryText: 'List of recent user logins',
+    secondaryText: 'Most recent 1000 logins',
     Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'logs:authentication:view',
     Section: Logins,
   },
   {
     primaryText: 'Feedback',
-    secondaryText: 'User feedback',
+    secondaryText: 'Voluntary user feedback',
     Icon: ({ active }) => <ChatIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'user-form-submissions:view',
     Section: Feedback,

@@ -1,6 +1,7 @@
 export default async (self, { input }, ctx) => {
-  const { DataDownloadFormSubmissions: Collection } = await ctx.mongo.collections
-  await Collection.insertOne({
+  const { DataDownloadFormSubmissions: Forms } = await ctx.mongo.collections
+  await Forms.insertOne({
+    createdAt: new Date(),
     ...input,
   })
 }

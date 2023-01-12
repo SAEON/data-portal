@@ -75,7 +75,7 @@ export default ({
     ],
     title: {
       top: '10px',
-      left: 'center',
+      left: 10,
       text: title,
     },
     tooltip: {

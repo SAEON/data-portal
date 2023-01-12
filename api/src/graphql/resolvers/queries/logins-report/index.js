@@ -3,6 +3,8 @@ export default async (self, args, ctx) => {
 
   const result = await Logs.aggregate([
     { $match: { type: 'authentication' } },
+    { $sort: { createdAt: -1 } },
+    { $limit: 1000 },
     {
       $lookup: {
         from: 'users',

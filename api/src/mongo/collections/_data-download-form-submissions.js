@@ -23,6 +23,9 @@ export default {
           bsonType: 'bool',
           description: 'Permission from the respondent to follow up with them',
         },
+        createdAt: {
+          description: '',
+        },
       },
     },
   },
