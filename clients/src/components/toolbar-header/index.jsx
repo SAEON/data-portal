@@ -13,17 +13,18 @@ const AnimateVariant = ({ children }) =>
       : 'dense',
   })
 
-export default ({ children, style, ...props }) => {
+export default ({ children, style, sx, ...props }) => {
+  sx = sx || style
   return (
     <AppBar color="inherit" variant="outlined" elevation={0} position="sticky" {...props}>
       <AnimateVariant>
         <Toolbar
           disableGutters
-          style={{
+          sx={{
             display: 'flex',
             justifyContent: 'flex-end',
             transition: 'min-height 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-            ...style,
+            ...sx,
           }}
         >
           {children}

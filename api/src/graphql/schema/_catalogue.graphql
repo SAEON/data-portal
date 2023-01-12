@@ -136,4 +136,8 @@ type Record {
   DOI-based citation via the Datacite citation API
   """
   citation(style: CitationStyle, language: CitationLocale): String!
+  """
+  Total number of times users have downloaded the underlying data for this metadata record
+  """
+  downloadCount: Int
 }

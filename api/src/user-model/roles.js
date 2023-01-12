@@ -6,7 +6,7 @@ const deduplicate = arr => _deduplicate(arr, (p1, p2) => p1.name === p2.name)
 export const user = {
   name: 'user',
   description: 'Default login role',
-  permissions: deduplicate([]),
+  permissions: deduplicate([permissions['record:view-downloadCount']]),
 }
 
 export const saeon = {

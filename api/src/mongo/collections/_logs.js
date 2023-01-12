@@ -40,4 +40,29 @@ export default {
       },
     },
   },
+  indices: [
+    {
+      index: 'info.doi',
+      options: {
+        name: 'downloadDOI',
+        unique: false,
+        partialFilterExpression: { hashOfFilter: { $exists: true } },
+      },
+    },
+    {
+      index: 'info.odpId',
+      options: {
+        name: 'downloadOdpID',
+        unique: false,
+        partialFilterExpression: { hashOfFilter: { $exists: true } },
+      },
+    },
+    {
+      index: 'type',
+      options: {
+        name: 'logType',
+        unique: false,
+      },
+    },
+  ],
 }

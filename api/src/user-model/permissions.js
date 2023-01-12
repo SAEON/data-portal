@@ -19,6 +19,10 @@ export default Object.freeze({
     name: 'list:delete',
     description: 'Delete a saved list (only lists of type = "curated" can be deleted)',
   },
+  'record:view-downloadCount': {
+    name: 'record:view-downloadCount',
+    description: 'View the number of times a record has been downloaded',
+  },
   '/data-lists': {
     name: '/data-lists',
     description: 'View the /data-lists route on client apps',

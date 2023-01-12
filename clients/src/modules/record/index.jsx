@@ -22,6 +22,7 @@ export default () => {
           id
           search(identifiers: $identifiers, size: $size) {
             records {
+              downloadCount
               metadata
             }
           }
@@ -55,6 +56,7 @@ export default () => {
       <Header
         codeView={codeView}
         toggleCodeView={() => updateCodeView(!codeView)}
+        downloadCount={data?.catalogue?.search?.records?.[0]?.downloadCount}
         _source={{ ...data?.catalogue?.search?.records?.[0]?.metadata?._source }}
       />
       <Container

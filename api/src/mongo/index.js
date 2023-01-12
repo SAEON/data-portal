@@ -127,7 +127,7 @@ export const updateValidationRules = async () => {
                 return collection.createIndex(indexFields, options)
               } else {
                 const { index } = indexFields
-                console.info('Applying index', index, 'to collection', name, options)
+                console.info('Applying index', options.name, 'to collection', name, options)
                 return collection.createIndex(index, options)
               }
             } catch (error) {

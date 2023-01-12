@@ -99,6 +99,7 @@ export default ({ showSearch, showSidebar }) => {
             totalCount
             records {
               metadata
+              downloadCount
             }
           }
         }
