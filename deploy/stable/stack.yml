@@ -52,7 +52,7 @@ services:
       NODE_ENV: production
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       ODP_ADDRESS: https://odp.saeon.ac.za
-      ODP_AUTH_SCOPES: 'ODP.Catalogue'
+      ODP_CLIENT_AUTH_SCOPES: 'ODP.Catalogue'
       ODP_CLIENT_SECRET: $ODP_CLIENT_SECRET
       ODP_FILTER_PATH: /app/odp-filter.js
       CLIENT_FILTER_CONFIG_PATH: /app/client-filters.json

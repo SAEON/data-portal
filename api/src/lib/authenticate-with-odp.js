@@ -1,6 +1,6 @@
 import btoa from 'btoa'
 import { FormData } from 'formdata-node'
-import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_AUTH_SCOPES } from '../config/index.js'
+import { ODP_CLIENT_ID, ODP_CLIENT_SECRET, ODP_AUTH, ODP_CLIENT_AUTH_SCOPES } from '../config/index.js'
 import { addSeconds, differenceInSeconds } from 'date-fns'
 
 const TOKEN = btoa(`${ODP_CLIENT_ID}:${ODP_CLIENT_SECRET}`)
@@ -32,7 +32,7 @@ export default async ({ useCachedToken = true } = {}) => {
 
     const form = new FormData()
     form.append('grant_type', 'client_credentials')
-    form.append('scope', ODP_AUTH_SCOPES)
+    form.append('scope', ODP_CLIENT_AUTH_SCOPES)
 
     const { access_token, expires_in, scope, token_type } = await fetch(
       `${ODP_AUTH}/oauth2/token`,

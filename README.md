@@ -126,7 +126,7 @@ docker \
     -e ODP_ADDRESS=https://odp.saeon.ac.za \
     -e ODP_CLIENT_SECRET=... \
     -e ODP_SSO_CLIENT_SECRET=... \
-    -e ODP_AUTH_SCOPES=ODP.Catalogue \
+    -e ODP_CLIENT_AUTH_SCOPES=ODP.Catalogue \
     -e ODP_FILTER_PATH=/app/odp-filter.js \
     -e CLIENT_FILTER_CONFIG_PATH=/app/client-filters.json \
     -p 3000:3000 \
