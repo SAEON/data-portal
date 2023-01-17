@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Button from '@mui/material/Button'
-import { Download as DownloadIcon } from '../../../components/icons'
+import { Download as DownloadIcon } from '../../../../components/icons'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -19,7 +19,7 @@ export default () => {
         size="small"
         disableElevation
       >
-        Download data
+        Download feedback data
       </Button>
 
       {/* DIALOGUE */}

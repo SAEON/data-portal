@@ -1,6 +1,5 @@
 import 'react-data-grid/lib/styles.css'
-import { useContext, Suspense, lazy } from 'react'
-import DownloadsContextProvider from './downloads/context'
+import { useContext, Suspense, lazy, useRef } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
@@ -13,7 +12,6 @@ import {
 } from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
 import Fade from '@mui/material/Fade'
-import Container from '@mui/material/Container'
 import Header from './header'
 import { Div, Span } from '../../components/html-tags'
 
@@ -56,6 +54,7 @@ const sections = [
 ]
 
 export default () => {
+  const headerRef = useRef(null)
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -72,8 +71,8 @@ export default () => {
   }
 
   return (
-    <DownloadsContextProvider>
-      <Header />
+    <>
+      <Header ref={headerRef} />
       <ContentNav
         navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
       >
@@ -106,7 +105,7 @@ export default () => {
                       >
                         <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
                           <Span>
-                            <Section />
+                            <Section headerRef={headerRef} />
                           </Span>
                         </Fade>
                       </Suspense>
@@ -117,6 +116,6 @@ export default () => {
           )
         }}
       </ContentNav>
-    </DownloadsContextProvider>
+    </>
   )
 }
