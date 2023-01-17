@@ -10,11 +10,17 @@ const fields = {
 
   'descriptions.description': {},
 
-  institution: {},
-  'institution.raw': {},
+  provider_key: {},
+  'provider_key.raw': {},
 
-  collection: {},
-  'collection.raw': {},
+  provider_name: {},
+  'provider_name.raw': {},
+
+  collection_key: {},
+  'collection_key.raw': {},
+
+  collection_name: {},
+  'collection_name.raw': {},
 
   'creators.name': {},
   'creators.name.raw': {},

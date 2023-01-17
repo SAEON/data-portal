@@ -6,7 +6,20 @@ import { GIS_MAX_RESOLUTION_DECIMALS as GIS_DECIMALS } from '../../../../config/
  * defined in the mapping, so NON-counterclockwise polygons
  * won't work
  */
-export default (id, spatial) => {
+export default (id, spatial, spatial_north, spatial_east, spatial_south, spatial_west) => {
+  if (!spatial) {
+    spatial = [
+      {
+        geoLocationBox: {
+          eastBoundLongitude: spatial_east,
+          northBoundLatitude: spatial_north,
+          southBoundLatitude: spatial_south,
+          westBoundLongitude: spatial_west,
+        },
+      },
+    ]
+  }
+
   try {
     return spatial.map(({ geoLocationBox, geoLocationPoint }) => {
       const shp = {
@@ -78,7 +91,7 @@ export default (id, spatial) => {
   } catch (error) {
     throw new Error(
       `Unable to parse spatial information for record ${id}, spatial: ${JSON.stringify(
-        spatial,
+        [spatial, spatial_north, spatial_east, spatial_south, spatial_west],
         null,
         2
       )}: ${error.message}`

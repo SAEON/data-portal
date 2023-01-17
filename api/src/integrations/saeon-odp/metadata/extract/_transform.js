@@ -1,53 +1,86 @@
 import { parseDates, parseSpatial, parseImmutableResource } from '../transform/index.js'
+import merge from './_merge-metadata-variants.js'
 
-export default data =>
-  data.reduce(
-    (
-      acc,
-      {
+export default (log, data) => {
+  return data.items.reduce(
+    (items, item) => {
+      const {
         id,
-        sid, // eslint-disable-line
         doi,
-        institution_key: institution,
-        collection_key: collection,
-        project_keys: projects,
-        schema_key: schema,
-        metadata,
+        sid,
+        collection_key,
+        collection_name,
+        provider_key,
+        provider_name,
+        metadata_records,
+        tags,
+        keywords,
+        spatial_north,
+        spatial_east,
+        spatial_south,
+        spatial_west,
+        temporal_start,
+        temporal_end,
+        timestamp,
         published,
-      }
-    ) => {
+      } = item
+
       if (!published) {
-        acc.unpublish.push(id)
+        items.unpublish.push(id)
       } else {
         try {
-          acc.publish.push({
-            id,
-            doi,
-            institution,
-            collection,
-            projects,
-            schema,
-            ...Object.fromEntries(
-              Object.entries(metadata).map(([key, value]) =>
-                key === 'immutableResource'
-                  ? [key, parseImmutableResource(id, value)]
-                  : key === 'dates'
-                  ? [key, parseDates(id, value)]
-                  : key === 'geoLocations'
-                  ? [key, parseSpatial(id, value)]
-                  : [key, value]
-              )
-            ),
-          })
+          const record = metadata_records.map(
+            ({
+              schema_id: schemaId,
+              schema_uri: schemaUri,
+              metadata: { immutableResource, dates, geoLocations, ...other },
+            }) => {
+              return {
+                schemaId,
+                schemaUri,
+                id,
+                doi,
+                sid,
+                collection_key,
+                collection_name,
+                provider_key,
+                provider_name,
+                tags,
+                keywords,
+                spatial_north,
+                spatial_east,
+                spatial_south,
+                spatial_west,
+                temporal_start,
+                temporal_end,
+                timestamp,
+                immutableResource: parseImmutableResource(id, immutableResource),
+                dates: parseDates(id, dates),
+                geoLocations: parseSpatial(
+                  id,
+                  geoLocations,
+                  spatial_north,
+                  spatial_east,
+                  spatial_south,
+                  spatial_west
+                ),
+                ...other,
+              }
+            }
+          )
+
+          items.publish.push(merge(...record))
         } catch (error) {
           console.error('ERROR processing published record from the ODP', id, error.message)
+          log.brokenRecords.push(id)
         }
       }
 
-      return acc
+      return items
     },
     {
       publish: [],
       unpublish: [],
     }
   )
+}

@@ -25,7 +25,7 @@ const _parse = (id, dt) => {
 
 export default (id, dates) => {
   try {
-    return dates.map(({ date, dateType }) => {
+    return dates?.map(({ date, dateType }) => {
       const delimiter = date.includes('/') ? '/' : ' '
       const dateStrings = date.split(delimiter)
       const from = dateStrings[0]
@@ -41,6 +41,6 @@ export default (id, dates) => {
       }
     })
   } catch (error) {
-    throw new Error(`Unable to parse dates. ${error.message}`)
+    throw new Error(`Unable to parse dates. ${dates} :: ${error.message}`)
   }
 }
