@@ -34,7 +34,7 @@ export default ({ id, toggle }) => {
       disableElevation
       startIcon={
         loading ? (
-          <CircularProgress thickness={2} size={18} style={{ margin: '0 15px' }} />
+          <CircularProgress thickness={2} size={18} sx={{ margin: '0 15px' }} />
         ) : (
           <DeleteIcon fontSize="small" />
         )

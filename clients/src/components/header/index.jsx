@@ -9,15 +9,11 @@ import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
 import Divider from '@mui/material/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { Div } from '../html-tags'
 
 const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
-  const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
-
   return (
-    <div ref={ref}>
+    <Div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={contentRef}>
@@ -32,18 +28,25 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
       {/* PUSH CONTENT DOWN */}
       <HideOnScroll contentRef={contentRef}>
         <ApplicationBanner_>
-          <div style={Object.assign({ margin: 9 }, mdDown ? {} : { minHeight: IMAGE_HEIGHT })} />
+          <Div
+            sx={theme => ({
+              m: theme.spacing(1),
+              [theme.breakpoints.up('md')]: {
+                minHeight: IMAGE_HEIGHT,
+              },
+            })}
+          />
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />
-    </div>
+    </Div>
   )
 })
 
 const AppHeaderOnly = forwardRef(
   ({ contentBase, routes, color = 'inherit', disableBreadcrumbs, ...props }, ref) => {
     return (
-      <div ref={ref}>
+      <Div ref={ref}>
         <ElevationOnScroll>
           <AppBar color={color}>
             <AppHeader
@@ -58,7 +61,7 @@ const AppHeaderOnly = forwardRef(
 
         {/* PUSH CONTENT DOWN */}
         <ApplicationHeader_ {...props} />
-      </div>
+      </Div>
     )
   }
 )
@@ -71,7 +74,7 @@ const AppHeaderOnly = forwardRef(
  */
 const BannerOnly = forwardRef(({ title }, ref) => {
   return (
-    <div ref={ref}>
+    <Div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <ApplicationBanner title={title} />
@@ -83,9 +86,9 @@ const BannerOnly = forwardRef(({ title }, ref) => {
       {/* PUSH CONTENT DOWN */}
 
       <ApplicationBanner_>
-        <div style={{ minHeight: IMAGE_HEIGHT }} />
+        <Div sx={{ minHeight: IMAGE_HEIGHT }} />
       </ApplicationBanner_>
-    </div>
+    </Div>
   )
 })
 

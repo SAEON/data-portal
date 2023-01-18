@@ -59,7 +59,7 @@ export default class ErrorBoundary extends Component {
                 </Pre>
               )}
               gutterBottom
-              style={{ marginBottom: 16 }}
+              sx={{ mb: 4 }}
             >
               {error}
             </DialogContentText>

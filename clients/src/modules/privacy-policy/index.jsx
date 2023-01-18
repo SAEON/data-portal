@@ -16,7 +16,7 @@ export default () => {
           })}
           variant="outlined"
         >
-          <CardHeader style={{ textAlign: 'center' }} title="Privacy Policy" />
+          <CardHeader sx={{ textAlign: 'center' }} title="Privacy Policy" />
 
           <CardContent>
             <H>Our commitment to privacy</H>

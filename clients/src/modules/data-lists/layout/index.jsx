@@ -28,7 +28,7 @@ export default () => {
   if (!navItems.length) {
     return (
       <Fade unmountOnExit mountOnEnter in={true}>
-        <Container sx={{ mt: theme => theme.spacing(2) }}>
+        <Container sx={{ mt: 2 }}>
           <NoItems />
         </Container>
       </Fade>
@@ -39,8 +39,8 @@ export default () => {
     <ContentNav activeIndex={lists.length - 1} navItems={navItems}>
       {({ activeIndex }) => {
         return (
-          <Container style={{ minHeight: 1000 }}>
-            <Div sx={{ mt: theme => theme.spacing(2) }} />
+          <Container sx={{ minHeight: 1000 }}>
+            <Div sx={{ mt: 2 }} />
             {navItems.map(({ id, ...props }, i) => (
               <Fade unmountOnExit mountOnEnter in={activeIndex === i} key={id}>
                 <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
@@ -48,7 +48,7 @@ export default () => {
                 </Span>
               </Fade>
             ))}
-            <Div sx={{ mt: theme => theme.spacing(2) }} />
+            <Div sx={{ mt: 2 }} />
           </Container>
         )
       }}

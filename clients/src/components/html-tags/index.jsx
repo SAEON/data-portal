@@ -30,6 +30,8 @@ export const Td = styled('td')({})
 
 export const Code = styled('code')({})
 
+export const Footer = styled('footer')({})
+
 export const Pre = styled('pre')(({ theme }) => ({
   backgroundColor: theme.palette.grey[100],
   borderRadius: theme.shape.borderRadius,
@@ -38,3 +40,5 @@ export const Pre = styled('pre')(({ theme }) => ({
   wordBreak: 'break-all',
   padding: theme.spacing(1),
 }))
+
+export const Input = styled('input')({})

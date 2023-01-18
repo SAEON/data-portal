@@ -2,7 +2,6 @@ import { Suspense, lazy } from 'react'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import DialogContent from '@mui/material/DialogContent'
-import { useTheme } from '@mui/material/styles'
 import { Eye as EyeIcon, Close as CloseIcon } from '../icons'
 import MessageDialogue from '../message-dialogue'
 import Loading from '../loading'
@@ -20,7 +19,6 @@ export default ({
   buttonSize = 'small',
   onClose: _onClose = undefined,
 }) => {
-  const theme = useTheme()
   const title = titles[0].title
 
   const linkedResource =
@@ -40,7 +38,7 @@ export default ({
       icon={<EyeIcon fontSize="small" />}
       title={(onClose, open) => (
         <Div sx={{ display: 'flex' }}>
-          <Typography style={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
+          <Typography sx={{ marginRight: 'auto', alignSelf: 'center' }}>{title}</Typography>
           <IconButton
             aria-label="Close map preview"
             aria-controls={`map-preview-${id}`}
@@ -51,16 +49,15 @@ export default ({
               onClose()
               _onClose && _onClose()
             }}
-            style={{ marginLeft: 'auto', alignSelf: 'center' }}
+            sx={{ marginLeft: 'auto', alignSelf: 'center' }}
           >
             <CloseIcon fontSize="small" />
           </IconButton>
         </Div>
       )}
       titleProps={{
-        style: {
-          paddingRight: theme.spacing(2),
-          paddingLeft: theme.spacing(2),
+        sx: {
+          px: 2,
         },
       }}
       Tooltip={props => (
@@ -74,7 +71,7 @@ export default ({
       dialogueProps={{ fullWidth: true }}
       paperProps={{ style: { maxWidth: 'none', minHeight: '66px' } }}
     >
-      <DialogContent style={{ margin: 0, padding: 0, height: window.innerHeight - 200 }}>
+      <DialogContent sx={{ m: 0, p: 0, height: window.innerHeight - 200 }}>
         <Suspense fallback={<Loading />}>
           <Map geoLocations={geoLocations} linkedResource={linkedResource} title={title} id={id} />
         </Suspense>

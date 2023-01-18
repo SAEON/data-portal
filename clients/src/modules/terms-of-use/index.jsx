@@ -15,7 +15,7 @@ export default () => {
           })}
           variant="outlined"
         >
-          <CardHeader style={{ textAlign: 'center' }} title="Terms of Use" />
+          <CardHeader sx={{ textAlign: 'center' }} title="Terms of Use" />
 
           <CardContent>
             <P>

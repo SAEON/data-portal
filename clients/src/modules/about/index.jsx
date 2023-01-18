@@ -17,12 +17,12 @@ export default () => {
           })}
           variant="outlined"
         >
-          <CardHeader style={{ textAlign: 'center' }} title="About" />
+          <CardHeader sx={{ textAlign: 'center' }} title="About" />
 
           <CardContent>
             <Typography
               sx={{
-                marginBottom: theme => theme.spacing(2),
+                mb: 2,
               }}
               variant="body2"
             >

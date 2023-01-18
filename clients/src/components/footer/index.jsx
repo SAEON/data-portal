@@ -9,7 +9,7 @@ import Legal from './_legal'
 import Grid from '@mui/material/Grid'
 import Contact from './_contact'
 import SourceCode from './_source-code'
-import { Div } from '../html-tags'
+import { Div, Footer } from '../html-tags'
 import Link from '@mui/material/Link'
 
 export default ({ routes }) => {
@@ -20,7 +20,7 @@ export default ({ routes }) => {
   const [photographer, unsplashId] = name.replace(/-unsplash.*/, '').split('~')
 
   return (
-    <Div sx={{ position: 'relative' }}>
+    <Footer sx={{ position: 'relative' }}>
       <AppBar
         variant="outlined"
         elevation={0}
@@ -83,13 +83,13 @@ export default ({ routes }) => {
           variant="dense"
           sx={{ backgroundColor: theme => theme.palette.grey[900], minHeight: 1, diplay: 'flex' }}
         >
-          <Container style={{ display: 'flex', justifyContent: 'center' }}>
+          <Container sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="overline" variantMapping={{ overline: 'p' }}>
               © SAEON 2020 - {new Date().getFullYear()}
             </Typography>
           </Container>
         </Toolbar>
       </AppBar>
-    </Div>
+    </Footer>
   )
 }

@@ -4,8 +4,6 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Tooltip from '@mui/material/Tooltip'
 import ButtonBase from '@mui/material/ButtonBase'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { alpha } from '@mui/material/styles'
 
 export default memo(
@@ -22,11 +20,6 @@ export default memo(
     i,
     activeIndex,
   }) => {
-    const theme = useTheme()
-    const xsAndDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
-    const smAndUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
-    const mdAndUp = useMediaQuery(theme => theme.breakpoints.up('md'))
-
     if (Component) {
       return <Component style={style} />
     }
@@ -66,31 +59,60 @@ export default memo(
           onClick={() => setActiveIndex(i)}
         >
           <ListItem sx={{ justifyContent: 'center' }}>
-            {(xsAndDown || mdAndUp) && (
-              <ListItemIcon sx={{ justifyContent: 'center' }}>
-                <Icon active={activeIndex === i} />
-              </ListItemIcon>
-            )}
+            <ListItemIcon
+              sx={theme => ({
+                justifyContent: 'center',
+                [theme.breakpoints.up('sm')]: {
+                  display: 'none',
+                  [theme.breakpoints.up('md')]: {
+                    display: 'unset',
+                  },
+                },
+              })}
+            >
+              <Icon active={activeIndex === i} />
+            </ListItemIcon>
 
-            {smAndUp && (
-              <ListItemText
-                primaryTypographyProps={{
-                  variant: 'overline',
-                  display: 'block',
-                }}
-                sx={{
-                  textAlign: mdAndUp ? 'left' : 'center',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}
-                primary={primaryText || 'Missing primaryText'}
-                secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}
-              />
-            )}
+            <ListItemText
+              primaryTypographyProps={{
+                variant: 'overline',
+                display: 'block',
+              }}
+              sx={theme => ({
+                textAlign: 'center',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                display: 'none',
+                '& .MuiListItemText-secondary': {
+                  display: 'none',
+                  [theme.breakpoints.up('md')]: {
+                    display: 'unset',
+                  },
+                },
+                [theme.breakpoints.up('sm')]: {
+                  display: 'unset',
+                  [theme.breakpoints.up('md')]: {
+                    textAlign: 'left',
+                  },
+                },
+              })}
+              primary={primaryText || 'Missing primaryText'}
+              secondary={secondaryText || 'Missing secondaryText'}
+            />
 
-            {(xsAndDown || mdAndUp) && SecondaryIcon && (
-              <ListItemIcon sx={{ justifyContent: 'center' }}>
+            {SecondaryIcon && (
+              <ListItemIcon
+                sx={theme => ({
+                  justifyContent: 'center',
+                  [theme.breakpoints.up('sm')]: {
+                    display: 'none',
+                    [theme.breakpoints.up('md')]: {
+                      display: 'unset',
+                    },
+                  },
+                })}
+              >
                 <SecondaryIcon />
               </ListItemIcon>
             )}

@@ -1,6 +1,7 @@
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Collapse from '@mui/material/Collapse'
 import { IMAGE_HEIGHT } from '../application-banner'
+import { Div } from '../../html-tags'
 
 export default ({ children, contentRef }) => {
   const trigger = useScrollTrigger({
@@ -13,7 +14,7 @@ export default ({ children, contentRef }) => {
 
   return (
     <Collapse collapsedSize={collapsedSize} in={!trigger}>
-      <div>{children}</div>
+      <Div>{children}</Div>
     </Collapse>
   )
 }
