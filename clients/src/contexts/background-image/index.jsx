@@ -14,14 +14,15 @@ const getBackgroundImagePath = () => {
   const min = 0
   const max = backgrounds.length - 1
   const i = Math.floor(Math.random() * (max - min + 1) + min)
-  return `url(/bg/${backgrounds[i]})`
+  return { name: backgrounds[i], url: `url(/bg/${backgrounds[i]})` }
 }
 
-export const BgImageContext = createContext()
+export const context = createContext()
 
 export default ({ children }) => {
+  const image = getBackgroundImagePath()
   return (
-    <>
+    <context.Provider value={{ image }}>
       <Div
         id="bg"
         sx={{
@@ -31,12 +32,12 @@ export default ({ children }) => {
           left: 0,
           right: 0,
           backgroundSize: 'cover',
-          backgroundImage: getBackgroundImagePath(),
+          backgroundImage: image.url,
           zIndex: -1,
         }}
       />
 
       {children}
-    </>
+    </context.Provider>
   )
 }
