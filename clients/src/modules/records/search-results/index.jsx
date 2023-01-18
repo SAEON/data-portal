@@ -165,7 +165,7 @@ export default ({ showSearch, showSidebar }) => {
                   flexDirection: 'row-reverse',
                   py: theme => theme.spacing(0.5),
                   px: theme => theme.spacing(1),
-                  [theme.breakpoints.up('sm')]: {
+                  [theme.breakpoints.up('md')]: {
                     mx: theme => theme.spacing(3),
                     mt: theme => theme.spacing(2),
                     display: 'inline-block',
