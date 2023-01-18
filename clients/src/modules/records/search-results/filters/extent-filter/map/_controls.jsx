@@ -75,32 +75,12 @@ export default ({ map }) => {
     }
   }, [])
 
-  /**
-   * On first render configure
-   * the page to allow user to
-   * escape draw mode by pressing
-   * the escape key
-   */
   useEffect(() => {
-    const keydown = e => {
-      if (e.key === 'Escape') {
-        map.removeInteraction(draw)
-        setSelectActive(false)
-        setExtent(undefined)
-        const view = map.getView()
-        view.setZoom(defaultZoom)
-        view.setCenter(defaultCenter)
-      }
-    }
-
-    const body = document.getElementsByTagName('body')[0]
-    body.addEventListener('keydown', keydown)
     map.addLayer(layer)
 
     return () => {
       map.removeInteraction(draw)
       map.removeLayer(layer)
-      body.removeEventListener('keydown', keydown)
     }
   }, [])
 
