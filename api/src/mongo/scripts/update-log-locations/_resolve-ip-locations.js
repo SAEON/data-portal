@@ -7,7 +7,7 @@ export default async ips => {
     body: JSON.stringify(
       ips.map(query => ({
         query,
-        fields: 'city,countryCode,district,query',
+        fields: 'status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,mobile,proxy,hosting,query',
         lang: 'en',
       }))
     ),
@@ -18,7 +18,7 @@ export default async ips => {
 
   const xTtl = res.headers.get('X-Ttl')
   const xRl = res.headers.get('X-Rl')
-  console.info('IP API usage:', `${xRl} / 15`)
+  console.info('IP API usage:', `${xRl} / 15 remaining`)
 
   if (xRl < 1) {
     throw new Error(

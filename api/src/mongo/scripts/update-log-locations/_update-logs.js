@@ -1,4 +1,4 @@
-import { db as _db } from '../../db/index.js'
+import { db as _db } from '../../index.js'
 
 export default async (location = {}) => {
   const { query: ip, city, district, countryCode } = location

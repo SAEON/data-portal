@@ -15,7 +15,4 @@ export default async () => {
     }
     ipIterator = ipIterator.next()
   } while (!ipIterator.done)
-
-  console.info('=== Script complete')
-  process.exit(0)
 }
