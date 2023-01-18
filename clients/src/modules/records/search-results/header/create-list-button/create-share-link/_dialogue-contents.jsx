@@ -34,41 +34,6 @@ export default ({ tabIndex, search = undefined }) => {
   `)
 
   useEffect(() => {
-    console.log('global', global)
-    console.log(
-      'filter',
-      Object.fromEntries(
-        Object.entries(global)
-          .map(([key, value]) => {
-            if (key === 'filter' || key === 'selectedIds' || key === 'selectAll') {
-              return null
-            }
-
-            if (key === 'extent') {
-              return [key, value || global.filter[key]]
-            }
-
-            if (value?.constructor === Array) {
-              return [
-                key,
-                [
-                  ...(global.filter[key] || []),
-                  ...value,
-                  ...(key === 'ids' ? global.selectedIds || [] : []),
-                ].filter(_ => _),
-              ]
-            }
-
-            if (key === 'text') {
-              return [key, `${value || ''} ${global.filter[key] || ''}`.trim()]
-            }
-
-            return [key, global.filter[key] || value]
-          })
-          .filter(_ => _)
-      )
-    )
-
     saveList({
       variables: {
         createdBy: `${packageJson.name} v${packageJson.version}`,
