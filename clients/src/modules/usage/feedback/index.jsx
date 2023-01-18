@@ -6,11 +6,17 @@ import { useSnackbar } from 'notistack'
 import Download from './download'
 
 export default ({ contentRef, headerRef }) => {
-  const { enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+
   useEffect(() => {
-    enqueueSnackbar('Sort rows, reorder/resize columns by clicking on the header', {
-      variant: 'default',
-    })
+    const snackbarId = enqueueSnackbar(
+      'Sort rows, reorder/resize columns by clicking on the header',
+      {
+        variant: 'default',
+      }
+    )
+
+    return () => closeSnackbar(snackbarId)
   })
   return (
     <Provider>

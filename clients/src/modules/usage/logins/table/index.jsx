@@ -12,7 +12,7 @@ const headerRenderer = ({ column }) => (
 )
 
 export default ({ contentRef }) => {
-  const { loginsReport: data } = useContext(dataContext)
+  const { data } = useContext(dataContext)
 
   const rows = useMemo(
     () =>

@@ -15,6 +15,7 @@ export default ({ children }) => {
             <Button
               color="primary"
               variant="contained"
+              disableElevation
               sx={{ mr: 1, ...style }}
               ref={ref}
               {...props}

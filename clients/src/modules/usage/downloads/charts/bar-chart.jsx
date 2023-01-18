@@ -19,6 +19,9 @@ export default ({
     axisLabel: {
       rotate: 80,
     },
+    axisPointer: {
+      snap: true,
+    },
   }
 
   data.forEach(datum => {
@@ -83,6 +86,9 @@ export default ({
       appendToBody: true,
       axisPointer: {
         type: 'cross',
+        label: {
+          formatter: ({ value }) => value,
+        },
       },
       show: true,
       ...tooltip,
@@ -114,6 +120,9 @@ export default ({
       },
       axisLine: {
         show: true,
+      },
+      axisPointer: {
+        snap: true,
       },
       offset: 0,
       name: 'Total',

@@ -1,6 +1,5 @@
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Collapse from '@mui/material/Collapse'
-import { IMAGE_HEIGHT } from '../application-banner'
 import { Div } from '../../html-tags'
 
 export default ({ children, contentRef }) => {
@@ -9,8 +8,7 @@ export default ({ children, contentRef }) => {
     threshold: 0,
   })
 
-  const availableHeight = Math.min(window.innerHeight - contentRef?.offsetHeight || 0, IMAGE_HEIGHT)
-  const collapsedSize = availableHeight < 0 ? 0 : availableHeight
+  const collapsedSize = 0
 
   return (
     <Collapse collapsedSize={collapsedSize} in={!trigger}>

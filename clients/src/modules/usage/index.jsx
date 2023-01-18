@@ -35,7 +35,7 @@ const sections = [
     },
   },
   {
-    primaryText: 'Usage',
+    primaryText: 'Visits',
     secondaryText: 'Application renders',
     Icon: ({ active }) => <ChartBarIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'logs:appRender:view',
@@ -107,7 +107,6 @@ export default () => {
                   {sections
                     .filter(({ requiredPermission }) => hasPermission(requiredPermission))
                     .map(({ Section, sx, primaryText }, i) => {
-                      console.log(contentRef.offsetHeight)
                       return (
                         activeIndex === i && (
                           <Suspense

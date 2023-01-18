@@ -24,5 +24,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ ...data }}>{children}</context.Provider>
+  return <context.Provider value={{ data: data.usageReport }}>{children}</context.Provider>
 }
