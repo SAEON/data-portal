@@ -61,8 +61,9 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
       <Div
         sx={theme => ({
           position: 'relative',
-          height: '100%',
           flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
           mt: 0,
           [theme.breakpoints.up('lg')]: {
             mx: theme.spacing(2),

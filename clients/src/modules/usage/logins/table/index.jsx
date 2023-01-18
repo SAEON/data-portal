@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react'
 import { context as dataContext } from '../context'
 import Paper from '@mui/material/Paper'
-import { Div, B } from '../../../../components/html-tags'
+import { Div, B, I } from '../../../../components/html-tags'
 import DataGrid from 'react-data-grid'
 import { format, add } from 'date-fns'
 
@@ -11,35 +11,42 @@ const headerRenderer = ({ column }) => (
   <Div sx={{ width: '100%', textAlign: 'center' }}>{column.name}</Div>
 )
 
-export default () => {
+export default ({ contentRef }) => {
   const { loginsReport: data } = useContext(dataContext)
 
   const rows = useMemo(
     () =>
       data.map(
-        ({ _id: id, user, clientInfo: { ipLocation }, createdAt, info: { maxAgeInHours } }) => ({
-          id,
-          user: user?.name || user?.emailAddress || '',
-          ipLocation,
-          createdAt: new Date(createdAt),
-          maxAgeInHours,
-        })
+        ({ _id: id, user, clientInfo: { ipLocation }, createdAt, info: { maxAgeInHours } }, i) => {
+          return {
+            i: i + 1,
+            id,
+            name: user?.name || '',
+            emailAddress: user?.emailAddress || '',
+            ipLocation,
+            createdAt: new Date(createdAt),
+            maxAgeInHours,
+          }
+        }
       ),
     [data]
   )
 
   return (
-    <Paper>
+    <Paper sx={{ height: theme => `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})` }}>
       <DataGrid
-        style={{ height: 1000 }}
+        style={{ height: '100%' }}
         enableVirtualization
         columns={[
-          { key: 'user', name: 'User', width: 200, resizable: true, headerRenderer },
           {
-            key: 'ipLocation',
-            name: 'IP Location',
-            resizable: true,
+            key: 'i',
+            name: ` `,
+            resizable: false,
+            width: 50,
             headerRenderer,
+            formatter: ({ row: { i } }) => (
+              <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>
+            ),
           },
           {
             key: 'createdAt',
@@ -48,6 +55,14 @@ export default () => {
             headerRenderer,
             formatter: ({ row: { createdAt } }) => format(createdAt, FORMAT),
           },
+          {
+            key: 'ipLocation',
+            name: 'IP Location',
+            resizable: true,
+            headerRenderer,
+          },
+          { key: 'name', name: 'Name', resizable: true, headerRenderer },
+          { key: 'emailAddress', name: 'Email', resizable: true, headerRenderer },
           {
             key: 'maxAgeInHours',
             name: 'Expire',

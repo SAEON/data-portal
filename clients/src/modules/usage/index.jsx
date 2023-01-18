@@ -1,5 +1,5 @@
 import 'react-data-grid/lib/styles.css'
-import { useContext, Suspense, lazy, useRef } from 'react'
+import { useContext, Suspense, lazy, useRef, useState } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
@@ -29,6 +29,10 @@ const sections = [
     ),
     requiredPermission: 'logs:download:view',
     Section: Downloads,
+    sx: {
+      overflowY: 'scroll',
+      pr: 2,
+    },
   },
   {
     primaryText: 'Usage',
@@ -36,6 +40,10 @@ const sections = [
     Icon: ({ active }) => <ChartBarIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
     requiredPermission: 'logs:appRender:view',
     Section: Usage,
+    sx: {
+      overflowY: 'scroll',
+      pr: 2,
+    },
   },
   {
     primaryText: 'Login history',
@@ -55,6 +63,7 @@ const sections = [
 
 export default () => {
   const headerRef = useRef(null)
+  const [contentRef, setContentRef] = useState(null)
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -64,7 +73,7 @@ export default () => {
 
   if (!hasPermission('/usage')) {
     return (
-      <Div sx={{ minHeight: 1000, mt: theme => theme.spacing(2) }}>
+      <Div sx={{ mt: theme => theme.spacing(2) }}>
         <AccessDenied requiredPermission="/usage" />
       </Div>
     )
@@ -73,49 +82,67 @@ export default () => {
   return (
     <>
       <Header ref={headerRef} />
-      <ContentNav
-        navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
-      >
-        {({ activeIndex }) => {
-          return (
-            <Div
-              sx={theme => ({
-                position: 'relative',
-                mx: 1,
-                my: theme => theme.spacing(2),
-                [theme.breakpoints.up('lg')]: {
-                  mx: 0,
-                },
-              })}
-            >
-              {sections
-                .filter(({ requiredPermission }) => hasPermission(requiredPermission))
-                .map(({ Section, primaryText }, i) => {
-                  return (
-                    activeIndex === i && (
-                      <Suspense
-                        key={primaryText}
-                        fallback={
-                          <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
-                            <Span>
-                              <Loading sx={{ position: 'relative' }} />
-                            </Span>
-                          </Fade>
-                        }
-                      >
-                        <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
-                          <Span>
-                            <Section headerRef={headerRef} />
-                          </Span>
-                        </Fade>
-                      </Suspense>
-                    )
-                  )
-                })}
-            </Div>
-          )
-        }}
-      </ContentNav>
+      <Div ref={el => setContentRef(el)} sx={{ flex: 1, display: 'flex' }}>
+        {contentRef && (
+          <ContentNav
+            navItems={sections.filter(({ requiredPermission }) =>
+              hasPermission(requiredPermission)
+            )}
+          >
+            {({ activeIndex }) => {
+              return (
+                <Div
+                  sx={theme => ({
+                    position: 'relative',
+                    mx: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
+                    my: theme => theme.spacing(2),
+                    [theme.breakpoints.up('lg')]: {
+                      mx: 0,
+                    },
+                  })}
+                >
+                  {sections
+                    .filter(({ requiredPermission }) => hasPermission(requiredPermission))
+                    .map(({ Section, sx, primaryText }, i) => {
+                      console.log(contentRef.offsetHeight)
+                      return (
+                        activeIndex === i && (
+                          <Suspense
+                            key={primaryText}
+                            fallback={
+                              <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
+                                <Span>
+                                  <Loading sx={{ position: 'relative' }} />
+                                </Span>
+                              </Fade>
+                            }
+                          >
+                            <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
+                              <Div>
+                                <Div
+                                  sx={{
+                                    height: theme =>
+                                      `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})`,
+                                    ...sx,
+                                  }}
+                                >
+                                  <Section contentRef={contentRef} headerRef={headerRef} />
+                                </Div>
+                              </Div>
+                            </Fade>
+                          </Suspense>
+                        )
+                      )
+                    })}
+                </Div>
+              )
+            }}
+          </ContentNav>
+        )}
+      </Div>
     </>
   )
 }

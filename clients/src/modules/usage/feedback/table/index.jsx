@@ -35,7 +35,7 @@ const getComparator = sortColumn => {
   }
 }
 
-export default () => {
+export default ({ contentRef }) => {
   const { userFormSubmissions: forms } = useContext(dataContext)
   const [sortColumns, setSortColumns] = useState([])
   const [rows, setRows] = useState(
@@ -134,13 +134,13 @@ export default () => {
   }, [rows, sortColumns])
 
   return (
-    <Paper>
+    <Paper sx={{ height: theme => `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})` }}>
       <DndProvider backend={HTML5Backend}>
         <DataGrid
           onRowsChange={setRows}
           sortColumns={sortColumns}
           onSortColumnsChange={setSortColumns}
-          style={{ height: 1000 }}
+          style={{ height: '100%' }}
           enableVirtualization
           defaultColumnOptions={{
             sortable: true,

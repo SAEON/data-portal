@@ -5,7 +5,7 @@ import Table from './table'
 import { useSnackbar } from 'notistack'
 import Download from './download'
 
-export default ({ headerRef }) => {
+export default ({ contentRef, headerRef }) => {
   const { enqueueSnackbar } = useSnackbar()
   useEffect(() => {
     enqueueSnackbar('Sort rows, reorder/resize columns by clicking on the header', {
@@ -15,7 +15,7 @@ export default ({ headerRef }) => {
   return (
     <Provider>
       {createPortal(<Download />, headerRef.current)}
-      <Table />
+      <Table contentRef={contentRef} />
     </Provider>
   )
 }

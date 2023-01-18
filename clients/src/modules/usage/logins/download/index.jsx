@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext, memo } from 'react'
+import { context as dataContext } from '../context'
 import Button from '@mui/material/Button'
 import { Download as DownloadIcon } from '../../../../components/icons'
 import Dialog from '@mui/material/Dialog'
@@ -6,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 
-export default () => {
+const Download = memo(({ data }) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -34,4 +35,9 @@ export default () => {
       </Dialog>
     </>
   )
+})
+
+export default () => {
+  const { loginsReport } = useContext(dataContext)
+  return <Download data={loginsReport} />
 }
