@@ -7,7 +7,8 @@ export default async ips => {
     body: JSON.stringify(
       ips.map(query => ({
         query,
-        fields: 'status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,mobile,proxy,hosting,query',
+        fields:
+          'status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,mobile,proxy,hosting,query',
         lang: 'en',
       }))
     ),
