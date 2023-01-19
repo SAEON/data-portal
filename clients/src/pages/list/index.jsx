@@ -25,7 +25,7 @@ const Page = () => {
   const title = (titleRef.current?.innerHTML || '$TITLE').replace('$TITLE', 'SAEON Data')
   const description = (contentRef.current?.content || '$DESCRIPTION').replace(
     '$DESCRIPTION',
-    'Curated data collection - but how does it look for much longer titles. The end'
+    'Curated data collection'
   )
 
   return (
