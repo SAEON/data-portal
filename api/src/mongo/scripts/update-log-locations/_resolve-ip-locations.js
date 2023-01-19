@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-const IP_RESOLVER_API_ADDRESS = 'http://ip-api.com/batch'
+import { IP_RESOLVER_API_ADDRESS, LOG_FIELDS } from '../../_logger.js'
 
 export default async ips => {
   const res = await fetch(IP_RESOLVER_API_ADDRESS, {
@@ -7,8 +7,7 @@ export default async ips => {
     body: JSON.stringify(
       ips.map(query => ({
         query,
-        fields:
-          'status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,mobile,proxy,hosting,query',
+        fields: LOG_FIELDS,
         lang: 'en',
       }))
     ),

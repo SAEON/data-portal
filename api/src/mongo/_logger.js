@@ -2,7 +2,10 @@ import { PASSPORT_SSO_SESSION_ID } from '../config/index.js'
 import DataLoader from 'dataloader'
 import { ObjectId } from 'mongodb'
 
-const IP_RESOLVER_API_ADDRESS = 'http://ip-api.com/batch'
+export const IP_RESOLVER_API_ADDRESS = 'http://ip-api.com/batch'
+
+export const LOG_FIELDS =
+  'status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,mobile,proxy,hosting,query'
 
 /**
  * Application level batching of requests for
@@ -17,7 +20,7 @@ const resolveIpBatch = async keys => {
     body: JSON.stringify(
       [...new Set(keys)].map(query => ({
         query,
-        fields: 'city,countryCode,district,query',
+        fields: LOG_FIELDS,
         lang: 'en',
       }))
     ),
@@ -46,10 +49,13 @@ const locationFinder = new DataLoader(ipAddresses => resolveIpBatch(ipAddresses)
 export const makeLog = async (ctx, otherFields) => {
   const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip
 
-  const { countryCode, city, district } = await locationFinder.load(ipAddress).catch(error => {
-    console.error('Error resolving log IP address to location', error.message)
-    return {}
-  })
+  const ipInfo =
+    (await locationFinder.load(ipAddress).catch(error => {
+      console.error('Error resolving log IP address to location', error.message)
+      return {}
+    })) || {}
+
+  const { countryCode, city, district } = ipInfo
 
   const ipLocation =
     countryCode && city ? `${countryCode}/${city}${district ? `/${district}` : ''}` : 'UNKNOWN'
@@ -62,6 +68,7 @@ export const makeLog = async (ctx, otherFields) => {
       ipAddress,
       ipLocation,
       userAgent: ctx.request.headers['user-agent'],
+      ipInfo: { ...ipInfo, _source: IP_RESOLVER_API_ADDRESS },
     },
     ...otherFields,
   }

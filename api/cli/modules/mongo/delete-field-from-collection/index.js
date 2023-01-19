@@ -2,11 +2,13 @@ import { withFlags, describe } from '@saeon/cli-tools'
 import runCommand from './_run.js'
 
 const run = async (args = {}) => {
-  let { run, help, collection } = args
-  if (!run || !collection) help = true
+  let { run, help, collection, field } = args
 
-  if (run && collection) {
-    return await runCommand(collection)
+  let okay = false
+  if (run && collection && field) {
+    okay = true
+  } else {
+    help = true
   }
 
   if (help) {
@@ -14,6 +16,10 @@ const run = async (args = {}) => {
       'Help -- NOT IMPLEMENTED (but you probably want to specify the "run" flag (-r or --run) and specify a collection (-c or --collection)'
     )
     return
+  }
+
+  if (okay) {
+    return await runCommand({ field, collection })
   }
 
   console.error('Unknown / unspecified option', args)
@@ -24,12 +30,14 @@ export default describe(
     help: Boolean,
     run: Boolean,
     collection: String,
+    field: String,
     h: 'help',
     r: 'run',
     c: 'collection',
+    f: 'field',
   }),
   {
-    title: 'sdp :: mongo :: ID to timestamp',
-    description: 'Update collection docs with a createdAt field, using the _id field',
+    title: 'sdp :: mongo :: delete field from collection',
+    description: 'Remove field from all documents in a collection',
   }
 )
