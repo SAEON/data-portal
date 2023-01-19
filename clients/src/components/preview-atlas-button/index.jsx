@@ -71,7 +71,7 @@ export default ({
       dialogueProps={{ fullWidth: true }}
       paperProps={{ style: { maxWidth: 'none', minHeight: '66px' } }}
     >
-      <DialogContent sx={{ m: 0, p: 0, height: window.innerHeight - 200 }}>
+      <DialogContent dividers sx={{ m: 0, p: 0, height: window.innerHeight - 200 }}>
         <Suspense fallback={<Loading />}>
           <Map geoLocations={geoLocations} linkedResource={linkedResource} title={title} id={id} />
         </Suspense>

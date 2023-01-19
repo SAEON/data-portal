@@ -1,25 +1,20 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Fade from '@mui/material/Fade'
+import { Div } from '../../../../../../components/html-tags'
 
 export default props => {
   const { children, value, index, ...other } = props
 
   return (
     <Fade in={value === index}>
-      <div
+      <Div
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box p={3}>
-            <Typography sx={{ wordBreak: 'break-all' }}>{children}</Typography>
-          </Box>
-        )}
-      </div>
+        {value === index && children}
+      </Div>
     </Fade>
   )
 }

@@ -5,12 +5,21 @@ import TextField from '@mui/material/TextField'
 import Collapse from '../../../../../components/collapse'
 import Q from '../../../../../components/quick-form'
 import debounce from '../../../../../lib/fns/debounce'
+import Typography from '@mui/material/Typography'
+import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../config'
+import Link from '@mui/material/Link'
 
 export default () => {
-  const { update, title, description, createdBy } = useContext(listContext)
+  const { id, update, title, description, createdBy } = useContext(listContext)
+
+  const sitemapAddress = `${CLIENTS_PUBLIC_ADDRESS}/sitemap_collection_records-${id}.xml`
 
   return (
-    <Collapse title="Details" subheader="Configure general list details here" defaultExpanded>
+    <Collapse
+      title={`Details (ID: ${id})`}
+      subheader="Configure general list details here"
+      defaultExpanded
+    >
       <CardContent>
         {/* TITLE */}
         <Q
@@ -38,7 +47,6 @@ export default () => {
             )
           }}
         </Q>
-
         {/* DESCRIPTION */}
         <Q
           effects={[
@@ -67,7 +75,6 @@ export default () => {
             )
           }}
         </Q>
-
         {/* CREATED BY */}
         <Q
           effects={[
@@ -94,6 +101,12 @@ export default () => {
             )
           }}
         </Q>
+        <Typography sx={{ mt: 2 }} variant="body1">
+          SITEMAP: <Link href={sitemapAddress}>{sitemapAddress}</Link>
+        </Typography>
+        <Typography variant="caption">
+          (Please allow for up to 24 hours for generating sitemaps after list creation)
+        </Typography>
       </CardContent>
     </Collapse>
   )

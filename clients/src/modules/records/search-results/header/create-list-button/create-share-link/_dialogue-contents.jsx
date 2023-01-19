@@ -8,7 +8,9 @@ import TabPanel from './_panel'
 import { gql, useMutation } from '@apollo/client'
 import packageJson from '../../../../../../../package.json'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../../../config'
-import { Div } from '../../../../../../components/html-tags'
+import { Div, Pre } from '../../../../../../components/html-tags'
+import DialogContent from '@mui/material/DialogContent'
+import Typography from '@mui/material/Typography'
 
 /**
  * TODO This should probably be generated from a GraphQL type query
@@ -29,6 +31,7 @@ export default ({ tabIndex, search = undefined }) => {
     mutation ($filter: JSON, $createdBy: String!) {
       saveList(filter: $filter, createdBy: $createdBy) {
         id
+        filter
       }
     }
   `)
@@ -72,6 +75,7 @@ export default ({ tabIndex, search = undefined }) => {
   }, [global, saveList, search])
 
   const id = data?.saveList.id || undefined
+  const filter = data?.saveList.filter || undefined
   const uri = `${CLIENTS_PUBLIC_ADDRESS}/list/records?search=${id}&disableSidebar=false&showSearchBar=true`
 
   return error ? (
@@ -91,16 +95,26 @@ export default ({ tabIndex, search = undefined }) => {
     </Fade>
   ) : (
     <Fade in={Boolean(data)} key="data">
-      <Div>
+      <DialogContent dividers>
         <TabPanel value={tabIndex} index={0}>
           <Link target="_blank" rel="noopener noreferrer" href={uri}>
-            {uri}
+            <Typography sx={{ wordBreak: 'break-all' }}>{uri}</Typography>
           </Link>
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-          {`<iframe width="100%" height="100%" src="${uri}" frameborder="0" allowfullscreen></iframe>`}
+          <Typography
+            sx={{ wordBreak: 'break-all' }}
+          >{`<iframe width="100%" height="100%" src="${uri}" frameborder="0" allowfullscreen></iframe>`}</Typography>
         </TabPanel>
-      </Div>
+        <TabPanel value={tabIndex} index={2}>
+          <Typography gutterBottom>
+            Look at the GraphQL HTTP requests in your browser network tab as a reference for
+            programatically searching our catalogue (experimental - the API may change in the
+            future)
+          </Typography>
+          <Pre sx={{ fontSize: '0.8rem' }}>{JSON.stringify(filter, null, 2)}</Pre>
+        </TabPanel>
+      </DialogContent>
     </Fade>
   )
 }
