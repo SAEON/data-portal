@@ -102,7 +102,10 @@ export default () => {
           }}
         </Q>
         <Typography sx={{ mt: 2 }} variant="body1">
-          SITEMAP: <Link href={sitemapAddress}>{sitemapAddress}</Link>
+          SITEMAP:{' '}
+          <Link target="_blank" rel="noopener noreferrer" href={sitemapAddress}>
+            {sitemapAddress}
+          </Link>
         </Typography>
         <Typography variant="caption">
           (Please allow for up to 24 hours for generating/updating sitemaps)
