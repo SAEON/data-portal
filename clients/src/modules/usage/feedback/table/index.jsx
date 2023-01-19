@@ -138,17 +138,17 @@ export default ({ contentRef }) => {
     <Paper sx={{ height: theme => `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})` }}>
       <DndProvider backend={HTML5Backend}>
         <DataGrid
-          onRowsChange={setRows}
-          sortColumns={sortColumns}
-          onSortColumnsChange={setSortColumns}
           style={{ height: '100%' }}
           enableVirtualization
+          columns={draggableColumns}
+          sortColumns={sortColumns}
+          onSortColumnsChange={setSortColumns}
+          rows={sortedRows}
+          onRowsChange={setRows}
           defaultColumnOptions={{
             sortable: true,
             resizable: true,
           }}
-          columns={draggableColumns}
-          rows={sortedRows}
         />
       </DndProvider>
     </Paper>

@@ -1,68 +1,133 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
 import { Div } from '../../../components/html-tags'
+import DraggableHeaderRenderer from './_draggable-header'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 const headerRenderer = ({ column }) => (
   <Div sx={{ width: '100%', textAlign: 'center' }}>{column.name}</Div>
 )
 
-const sortUsersByEmail = users =>
-  [...users].sort(({ emailAddress: a }, { emailAddress: b }) => {
-    if (a > b) return 1
-    if (a < b) return -1
-    return 0
-  })
+const getComparator = sortColumn => {
+  switch (sortColumn) {
+    default:
+      return (a, b) => {
+        a = a[sortColumn]?.toString() || ''
+        b = b[sortColumn]?.toString() || ''
+        if (a > b) return 1
+        if (b > a) return -1
+        return 0
+      }
+  }
+}
 
 export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
-  const [rows, setRows] = useState(sortUsersByEmail(users))
-  useEffect(() => setRows(sortUsersByEmail(users)), [users])
+  const [sortColumns, setSortColumns] = useState([])
+  const [rows, setRows] = useState(
+    [...users].sort(({ emailAddress: a }, { emailAddress: b }) => {
+      if (a > b) return 1
+      if (a < b) return -1
+      return 0
+    })
+  )
+
+  const [columns, setColumns] = useState([
+    SelectColumn,
+    {
+      key: 'emailAddress',
+      name: 'Email address',
+      resizable: true,
+      width: 200,
+      headerRenderer,
+    },
+    {
+      key: 'name',
+      name: 'Name',
+      resizable: true,
+      width: 250,
+      headerRenderer,
+    },
+    {
+      key: 'roles',
+      name: 'Roles',
+      resizable: true,
+      headerRenderer,
+      editorOptions: {
+        renderFormatter: true,
+      },
+      editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
+      formatter: ({ row: { roles } }) =>
+        [...roles]
+          .sort(({ name: a }, { name: b }) => {
+            if (a > b) return 1
+            if (a < b) return -1
+            return 0
+          })
+          .map(({ name }) => name.toUpperCase())
+          .join(', '),
+    },
+  ])
+
+  const draggableColumns = useMemo(() => {
+    function headerRenderer(props) {
+      return <DraggableHeaderRenderer {...props} onColumnsReorder={handleColumnsReorder} />
+    }
+
+    function handleColumnsReorder(sourceKey, targetKey) {
+      const sourceColumnIndex = columns.findIndex(c => c.key === sourceKey)
+      const targetColumnIndex = columns.findIndex(c => c.key === targetKey)
+      const reorderedColumns = [...columns]
+
+      reorderedColumns.splice(
+        targetColumnIndex,
+        0,
+        reorderedColumns.splice(sourceColumnIndex, 1)[0]
+      )
+
+      setColumns(reorderedColumns)
+    }
+
+    return columns.map(c => {
+      if (c.key === 'id') return c
+      return { ...c, headerRenderer }
+    })
+  }, [columns])
+
+  const sortedRows = useMemo(() => {
+    if (sortColumns.length === 0) return rows
+
+    return [...rows].sort((a, b) => {
+      for (const sort of sortColumns) {
+        const comparator = getComparator(sort.columnKey)
+        const compResult = comparator(a, b)
+        if (compResult !== 0) {
+          return sort.direction === 'ASC' ? compResult : -compResult
+        }
+      }
+      return 0
+    })
+  }, [rows, sortColumns])
 
   return (
-    <DataGrid
-      style={{ height: '100%' }}
-      enableVirtualization={true}
-      onSelectedRowsChange={setSelectedUsers}
-      selectedRows={selectedUsers}
-      rowKeyGetter={row => row.id}
-      onRowsChange={setRows}
-      rows={rows}
-      columns={[
-        SelectColumn,
-        {
-          key: 'emailAddress',
-          name: 'Email address',
+    <DndProvider backend={HTML5Backend}>
+      <DataGrid
+        style={{ height: '100%' }}
+        enableVirtualization
+        onSelectedRowsChange={setSelectedUsers}
+        columns={draggableColumns}
+        sortColumns={sortColumns}
+        onSortColumnsChange={setSortColumns}
+        selectedRows={selectedUsers}
+        rowKeyGetter={row => row.id}
+        rows={sortedRows}
+        onRowsChange={setRows}
+        defaultColumnOptions={{
+          sortable: true,
           resizable: true,
-          width: 200,
-          headerRenderer,
-        },
-        {
-          key: 'name',
-          name: 'Name',
-          resizable: true,
-          width: 250,
-          headerRenderer,
-        },
-        {
-          key: 'roles',
-          name: 'Roles',
-          resizable: true,
-          headerRenderer,
-          editorOptions: {
-            renderFormatter: true,
-          },
-          editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
-          formatter: ({ row: { roles } }) =>
-            [...roles]
-              .sort(({ name: a }, { name: b }) => {
-                if (a > b) return 1
-                if (a < b) return -1
-                return 0
-              })
-              .map(({ name }) => name.toUpperCase())
-              .join(', '),
-        },
-      ]}
-    />
+        }}
+      />
+    </DndProvider>
   )
 }
