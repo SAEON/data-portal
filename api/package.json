@@ -54,7 +54,7 @@
     "object-hash": "^3.0.0",
     "openid-client": "^5.3.1",
     "replacestream": "^4.0.3",
-    "rimraf": "^4.1.0",
+    "rimraf": "^4.1.1",
     "sift": "^16.0.1",
     "sitemap": "^7.1.1",
     "wkt": "^0.1.1"
