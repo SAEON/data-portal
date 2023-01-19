@@ -105,7 +105,7 @@ export default () => {
           SITEMAP: <Link href={sitemapAddress}>{sitemapAddress}</Link>
         </Typography>
         <Typography variant="caption">
-          (Please allow for up to 24 hours for generating sitemaps after list creation)
+          (Please allow for up to 24 hours for generating/updating sitemaps)
         </Typography>
       </CardContent>
     </Collapse>
