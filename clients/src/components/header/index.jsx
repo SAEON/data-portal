@@ -5,13 +5,13 @@ import ApplicationBanner, {
   IMAGE_HEIGHT,
   Toolbar as ApplicationBanner_,
 } from './application-banner'
-import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
+import AppHeader, { Toolbar as ApplicationHeader_, TitleHeader } from './application-header'
 import Divider from '@mui/material/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
 import { Div } from '../html-tags'
 
-const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
+const FullHeader = forwardRef(({ title, contentRef, AppHeader }, ref) => {
   return (
     <Div ref={ref}>
       <ElevationOnScroll>
@@ -20,7 +20,7 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
             <ApplicationBanner title={title} />
           </HideOnScroll>
           <Divider />
-          <AppHeader contentBase={contentBase} routes={routes} />
+          <AppHeader />
           <Divider />
         </AppBar>
       </ElevationOnScroll>
@@ -96,11 +96,10 @@ export default ({ contentBase, title, routes }) => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
   return (
     <FullHeader
-      contentBase={contentBase}
       title={title}
       contentRef={contentRef}
       ref={setHeaderRef}
-      routes={routes}
+      AppHeader={() => <AppHeader contentBase={contentBase} routes={routes} />}
     />
   )
 }
@@ -108,6 +107,18 @@ export default ({ contentBase, title, routes }) => {
 export const Banner = ({ title }) => {
   const { setHeaderRef } = useContext(layoutContext)
   return <BannerOnly title={title} ref={setHeaderRef} />
+}
+
+export const ListHeader = ({ title, description }) => {
+  const { setHeaderRef, contentRef } = useContext(layoutContext)
+  return (
+    <FullHeader
+      title={title}
+      contentRef={contentRef}
+      ref={setHeaderRef}
+      AppHeader={() => <TitleHeader description={description} />}
+    />
+  )
 }
 
 export const ApplicationHeader = ({ contentBase, routes, ...props }) => {

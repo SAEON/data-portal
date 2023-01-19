@@ -66,7 +66,7 @@ export default ({ contentBase = '/', routes }) => {
           label = breadcrumbsLabel || label
 
           return (
-            <Typography key={label} color="textPrimary" sx={sxLink}>
+            <Typography component={'h2'} key={label} color="textPrimary" sx={{ ...sxLink }}>
               {Icon && breadcrumbsIcon && <MuiIcon sx={sxIcon} size={18} component={Icon} />}
               {label}
             </Typography>

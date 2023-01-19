@@ -5,6 +5,7 @@ import Hidden from '@mui/material/Hidden'
 import Divider from '@mui/material/Divider'
 import Breadcrumbs from './breadcrumbs'
 import { Div } from '../../html-tags'
+export { default as TitleHeader } from './title-header'
 
 export const Toolbar = Toolbar_
 

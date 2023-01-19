@@ -39,7 +39,7 @@ export default ({ titles, id, doi }) => {
             textDecoration: theme => `underline 0.15em ${alpha(theme.palette.primary.main, 1)}`,
           },
         }}
-        variant="h2"
+        variant="h3"
       >
         {titles?.[0]?.title || 'Title missing'}
       </Typography>
