@@ -10,6 +10,15 @@ export default {
           bsonType: 'string',
           description: 'The name of the permission',
         },
+        description: {
+          bsonType: 'string',
+          description: 'Description of the permission type',
+        },
+        documentTypePermissions: {
+          bsonType: 'object',
+          description:
+            'Allows for checking user permissions against certain document types in a collection',
+        },
       },
     },
   },

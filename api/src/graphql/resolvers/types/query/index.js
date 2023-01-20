@@ -7,7 +7,7 @@ import user from '../../queries/user/index.js'
 import users from '../../queries/users/index.js'
 import PERMISSIONS from '../../../../user-model/permissions.js'
 import { authorizeGql as a } from '../../../../user-model/authorize.js'
-import downloadsReport from '../../queries/downloads-report/index.js'
+import logs from '../../queries/logs/index.js'
 import usageReport from '../../queries/usage-report/index.js'
 import userFormSubmissions from '../../queries/form-submissions/index.js'
 import loginsReport from '../../queries/logins-report/index.js'
@@ -18,9 +18,9 @@ export default {
   catalogue,
   list,
   lists: a({ permission: PERMISSIONS['lists:view'] })(lists),
-  downloadsReport: a({ permission: PERMISSIONS['logs:download:view'] })(downloadsReport),
-  usageReport: a({ permission: PERMISSIONS['logs:appRender:view'] })(usageReport),
-  loginsReport: a({ permission: PERMISSIONS['logs:authentication:view'] })(loginsReport),
+  logs,
+  usageReport: a({ permission: PERMISSIONS['logs:view:appRender'] })(usageReport),
+  loginsReport: a({ permission: PERMISSIONS['logs:view:authentication'] })(loginsReport),
   roles: a({ permission: PERMISSIONS['roles:view'] })(roles),
   user: async (...args) =>
     a({

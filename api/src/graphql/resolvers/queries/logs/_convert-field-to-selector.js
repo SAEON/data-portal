@@ -19,6 +19,7 @@ export default {
   referrer: () => '$referrer',
   clientUserAgent: () => '$clientInfo.userAgent',
   clientPathname: () => '$info.pathname',
+  type: () => '$type',
   date: args => {
     const { value: { value: bucket } = {} } = args[0] || {}
     return { $dateToString: { format: DATE_FORMATS[bucket || 'month'], date: '$createdAt' } }

@@ -8,27 +8,32 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query ($bucket: DateBucket, $sortByDate: SortConfig, $sortByCount: SortConfig) {
-        downloadsCount: downloadsReport {
+      query downloads(
+        $type: LogType
+        $bucket: DateBucket
+        $sortByDate: SortConfig
+        $sortByCount: SortConfig
+      ) {
+        downloadsCount: logs(type: $type) {
           count
         }
 
-        referrerCount: downloadsReport(sort: $sortByCount) {
+        referrerCount: logs(type: $type, sort: $sortByCount) {
           referrer
           count
         }
 
-        downloadsByDate: downloadsReport(sort: $sortByDate) {
+        downloadsByDate: logs(type: $type, sort: $sortByDate) {
           date(bucket: $bucket)
           count
         }
 
-        deviceCount: downloadsReport(sort: $sortByCount) {
+        deviceCount: logs(type: $type, sort: $sortByCount) {
           clientUserAgent
           count
         }
 
-        ipLocationCount: downloadsReport(sort: $sortByCount) {
+        ipLocationCount: logs(type: $type, sort: $sortByCount) {
           clientIpLocation
           count
         }
