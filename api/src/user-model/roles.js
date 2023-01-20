@@ -15,8 +15,8 @@ export const saeon = {
   permissions: deduplicate([
     ...user.permissions,
     permissions['/usage'],
-    permissions['logs:download:view'],
-    permissions['logs:appRender:view'],
+    permissions['logs:view:download'],
+    permissions['logs:view:appRender'],
   ]),
 }
 
@@ -44,7 +44,8 @@ export const admin = {
     permissions['roles:view'],
     permissions['permissions:view'],
     permissions['user-form-submissions:view'],
-    permissions['logs:authentication:view'],
+    permissions['logs:view:authentication'],
+    permissions['logs:view:authorization'],
   ]),
 }
 

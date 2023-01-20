@@ -7,12 +7,24 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query {
-        usageReport
+      query appRenders($type: LogType, $bucket: DateBucket, $sortByCount: SortConfig) {
+        logs(type: $type, sort: $sortByCount) {
+          clientSession
+          referrer
+          clientIpLocation
+          date(bucket: $bucket)
+        }
       }
     `,
     {
-      variables: {},
+      variables: {
+        bucket: 'day',
+        sortByCount: {
+          dimension: 'count',
+          direction: 'DESC',
+        },
+      },
+      fetchPolicy: 'no-cache',
     }
   )
 
@@ -24,5 +36,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ data: data.usageReport }}>{children}</context.Provider>
+  return <context.Provider value={{ data: data.logs }}>{children}</context.Provider>
 }

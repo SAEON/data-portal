@@ -43,11 +43,11 @@ input SortConfig {
   direction: SortDirection
 }
 
-type DownloadSummary {
+type LogAggregation {
   """
   DOI of metadata record (or SAEON id if no DOI)
   """
-  doi: ID!
+  doi: ID
   clientSession: String
   clientIpAddress: String
   """
@@ -62,6 +62,10 @@ type DownloadSummary {
   """
   date(bucket: DateBucket): DateTime!
   count: Int!
+  """
+  Event type
+  """
+  type: LogType
 }
 
 enum ListType {
@@ -95,7 +99,7 @@ type Query {
   Retrieve many search contexts (i.e. many dynamic lists)
   """
   lists(filter: String): [List!]!
-  downloadsReport(sort: SortConfig): [DownloadSummary]!
+  logs(type: LogType, sort: SortConfig): [LogAggregation]!
   usageReport: JSON
   loginsReport: JSON
   userFormSubmissions: JSON

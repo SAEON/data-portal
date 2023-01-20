@@ -27,7 +27,7 @@ const sections = [
     Icon: ({ active }) => (
       <DownloadsIcon color={active ? 'primary' : 'default'} fontSize="medium" />
     ),
-    requiredPermission: 'logs:download:view',
+    requiredPermission: 'logs:view:download',
     Section: Downloads,
     sx: {
       overflowY: 'scroll',
@@ -38,7 +38,7 @@ const sections = [
     primaryText: 'Visits',
     secondaryText: 'Application renders',
     Icon: ({ active }) => <ChartBarIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
-    requiredPermission: 'logs:appRender:view',
+    requiredPermission: 'logs:view:appRender',
     Section: Usage,
     sx: {
       overflowY: 'scroll',
@@ -49,7 +49,7 @@ const sections = [
     primaryText: 'Login history',
     secondaryText: 'Most recent 1000 logins',
     Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
-    requiredPermission: 'logs:authentication:view',
+    requiredPermission: 'logs:view:authentication',
     Section: Logins,
   },
   {

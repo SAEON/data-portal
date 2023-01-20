@@ -22,8 +22,15 @@ export default {
           bsonType: 'object',
           properties: {
             ipAddress: {
+              description: 'IP address',
+            },
+            ipAddress: {
               bsonType: 'string',
               description: 'IP address of client user',
+            },
+            ipInfo: {
+              bsonType: 'object',
+              description: 'Information about IP address, retrieved from 3rd party service',
             },
           },
         },
