@@ -103,13 +103,19 @@ export default () => {
         </Q>
         <Typography sx={{ mt: 2 }} variant="body1">
           SITEMAP:{' '}
-          <Link target="_blank" rel="noopener noreferrer" href={sitemapAddress}>
-            {sitemapAddress}
-          </Link>
+          {title && description ? (
+            <Link target="_blank" rel="noopener noreferrer" href={sitemapAddress}>
+              {sitemapAddress}
+            </Link>
+          ) : (
+            'Sitemaps only generated for lists with a title and description'
+          )}
         </Typography>
-        <Typography variant="caption">
-          (Please allow for up to 24 hours for generating/updating sitemaps)
-        </Typography>
+        {title && description && (
+          <Typography variant="caption">
+            (Please allow for up to 24 hours for generating/updating sitemaps)
+          </Typography>
+        )}
       </CardContent>
     </Collapse>
   )

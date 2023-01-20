@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
 import { Div } from '../../../components/html-tags'
@@ -12,10 +12,24 @@ const headerRenderer = ({ column }) => (
 
 const getComparator = sortColumn => {
   switch (sortColumn) {
+    case 'roles':
+      return (a, b) => {
+        a = (a[sortColumn]?.map(({ name }) => name.toUpperCase()) || [])
+          .sort()
+          .join('')
+          .replace(/\s+/g, '')
+        b = (b[sortColumn]?.map(({ name }) => name.toUpperCase()) || [])
+          .sort()
+          .join('')
+          .replace(/\s+/g, '')
+        if (a > b) return 1
+        if (b > a) return -1
+        return 0
+      }
     default:
       return (a, b) => {
-        a = a[sortColumn]?.toString() || ''
-        b = b[sortColumn]?.toString() || ''
+        a = (a[sortColumn]?.toString() || '').replace(/\s+/g, '').toUpperCase()
+        b = (b[sortColumn]?.toString() || '').replace(/\s+/g, '').toUpperCase()
         if (a > b) return 1
         if (b > a) return -1
         return 0
@@ -25,13 +39,7 @@ const getComparator = sortColumn => {
 
 export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
   const [sortColumns, setSortColumns] = useState([])
-  const [rows, setRows] = useState(
-    [...users].sort(({ emailAddress: a }, { emailAddress: b }) => {
-      if (a > b) return 1
-      if (a < b) return -1
-      return 0
-    })
-  )
+  const [rows, setRows] = useState([...users])
 
   const [columns, setColumns] = useState([
     SelectColumn,
@@ -109,6 +117,10 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
       return 0
     })
   }, [rows, sortColumns])
+
+  useEffect(() => {
+    setRows([...users])
+  }, [users])
 
   return (
     <DndProvider backend={HTML5Backend}>
