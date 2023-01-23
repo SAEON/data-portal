@@ -1,4 +1,5 @@
 import 'react-data-grid/lib/styles.css'
+import 'maplibre-gl/dist/maplibre-gl.css'
 import { useContext, Suspense, lazy, useRef, useState } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
@@ -81,8 +82,6 @@ export default () => {
 
   return (
     <>
-      <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
-
       <Header ref={headerRef} />
       <Div ref={el => setContentRef(el)} sx={{ flex: 1, display: 'flex' }}>
         {contentRef && (
