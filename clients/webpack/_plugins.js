@@ -4,7 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const fs = require('fs')
 const packageJson = require('../package.json')
 const path = require('path')
-const loadEntryPoints = require('./load-entry-points.js')
+const loadEntryPoints = require('./_load-entry-points.js')
 require('dotenv').config()
 
 let {
