@@ -152,13 +152,6 @@ export default ({ geojson, containerRef: container }) => {
         'circle-stroke-width': 0,
       },
     })
-
-    map.on('mouseenter', 'clusters', function () {
-      map.getCanvas().style.cursor = 'pointer'
-    })
-    map.on('mouseleave', 'clusters', function () {
-      map.getCanvas().style.cursor = ''
-    })
   })
 
   return <MapAttribution />
