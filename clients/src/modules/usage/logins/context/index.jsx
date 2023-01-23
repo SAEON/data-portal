@@ -7,12 +7,23 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query {
-        loginsReport
+      query ($type: LogType, $limit: Int) {
+        logs(type: $type, limit: $limit) {
+          createdAt
+          clientIpLocation
+          clientIpAddress
+          clientIpLat
+          clientIpLon
+          userId
+        }
       }
     `,
     {
-      variables: {},
+      fetchPolicy: 'network-only',
+      variables: {
+        type: 'authentication',
+        limit: 1000,
+      },
     }
   )
 
@@ -24,5 +35,5 @@ export default ({ children }) => {
     throw error
   }
 
-  return <context.Provider value={{ data: data.loginsReport }}>{children}</context.Provider>
+  return <context.Provider value={{ data: data.logs }}>{children}</context.Provider>
 }

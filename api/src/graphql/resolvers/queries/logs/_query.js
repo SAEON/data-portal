@@ -5,7 +5,7 @@ const _sortDirection = {
   DESC: -1,
 }
 
-export default ({ selectionSet, sort: { dimension: sortBy, direction }, $match }) => {
+export default ({ selectionSet, sort: { dimension: sortBy, direction }, $match, $limit }) => {
   const sortDirection = _sortDirection[direction]
 
   const { count, ...dimensions } = Object.fromEntries(
@@ -17,6 +17,7 @@ export default ({ selectionSet, sort: { dimension: sortBy, direction }, $match }
 
   return [
     $match,
+    $limit,
     {
       $group: {
         _id: dimensions,

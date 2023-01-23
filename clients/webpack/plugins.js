@@ -12,6 +12,7 @@ let {
   DEPLOYMENT_ENV = 'local',
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
   SUBDOMAIN_APP_ENTRIES = '',
+  ESRI_API_KEY = ''
 } = process.env
 
 module.exports = (ROOT, output) => {
@@ -23,6 +24,7 @@ module.exports = (ROOT, output) => {
     new Dotenv(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(mode),
+      'process.env.ESRI_API_KEY': JSON.stringify(ESRI_API_KEY),
       'process.env.DEPLOYMENT_ENV': JSON.stringify(DEPLOYMENT_ENV),
       'process.env.CATALOGUE_CLIENT_BACKGROUNDS': JSON.stringify(
         fs

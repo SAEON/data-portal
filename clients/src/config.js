@@ -36,6 +36,8 @@ export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',
 
 export const SUBDOMAIN_APP_ENTRIES = process.env.SUBDOMAIN_APP_ENTRIES || ''
 
+export const ESRI_API_KEY = process.env.ESRI_API_KEY || ''
+
 export const EMAIL_REGEX = new RegExp(
   `^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`
 )

@@ -33,6 +33,7 @@ enum DownloadsReportDimensions {
   clientIpLocation
   clientUserAgent
   clientPathname
+  createdAt
   referrer
   date
   count
@@ -54,9 +55,13 @@ type LogAggregation {
   Resolve an IP Address to location using https://ip-api.com/
   """
   clientIpLocation: String
+  clientIpLat: Float
+  clientIpLon: Float
   clientUserAgent: String
   clientPathname: String
+  userId: String
   referrer: String
+  createdAt: DateTime
   """
   Download date, rounded down to the hour
   """
@@ -99,9 +104,8 @@ type Query {
   Retrieve many search contexts (i.e. many dynamic lists)
   """
   lists(filter: String): [List!]!
-  logs(type: LogType, sort: SortConfig): [LogAggregation]!
+  logs(type: LogType, sort: SortConfig, limit: Int): [LogAggregation]!
   usageReport: JSON
-  loginsReport: JSON
   userFormSubmissions: JSON
   roles: [Role]!
   permissions: [Permission]!

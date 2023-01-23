@@ -15,20 +15,17 @@ export default () => {
       fields={['logId', 'userId', 'emailAddress', 'name', 'ipLocation', 'createdAt', 'expires']}
       transforms={[
         ({
-          _id: logId,
           createdAt,
-          clientInfo: { ipLocation } = {},
-          info: { maxAgeInHours },
-          user: { emailAddress, name } = {},
+          clientIpLocation: ipLocation,
+          clientIpLat: ipLat,
+          clientIpLon: ipLon,
           userId,
         }) => ({
-          logId,
           userId,
           createdAt: new Date(createdAt).toISOString(),
-          expires: add(new Date(createdAt), { hours: maxAgeInHours }).toISOString(),
-          emailAddress,
-          name,
           ipLocation,
+          ipLat,
+          ipLon,
         }),
       ]}
     />

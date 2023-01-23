@@ -8,7 +8,12 @@ const permissionToDocumentType = Object.fromEntries(
   Object.entries(documentTypePermissions).map(([key, value]) => [value, key])
 )
 
-export default async (self, { sort = { dimension: 'count', direction: 'DESC' }, type }, ctx, c) => {
+export default async (
+  self,
+  { sort = { dimension: 'count', direction: 'DESC' }, type, limit = 50000 },
+  ctx,
+  c
+) => {
   /**
    * Create a match clause for the type, based on user permissions
    * (1) If no type is specified, include the permissions the user has
@@ -27,6 +32,7 @@ export default async (self, { sort = { dimension: 'count', direction: 'DESC' }, 
   }
 
   const $match = { $match: { type: { $in: types } } }
+  const $limit = { $limit: limit }
 
   const selectionSet = c.fieldNodes
     .find(({ name }) => name.value === 'logs')
@@ -35,7 +41,7 @@ export default async (self, { sort = { dimension: 'count', direction: 'DESC' }, 
     })
 
   const { Logs } = await ctx.mongo.collections
-  const result = await Logs.aggregate(query({ selectionSet, sort, $match }))
+  const result = await Logs.aggregate(query({ selectionSet, sort, $match, $limit }))
 
   return await result.toArray()
 }

@@ -17,15 +17,23 @@ export default ({ contentRef }) => {
   const rows = useMemo(
     () =>
       data.map(
-        ({ _id: id, user, clientInfo: { ipLocation }, createdAt, info: { maxAgeInHours } }, i) => {
+        (
+          {
+            createdAt,
+            clientIpLocation: ipLocation,
+            clientIpLat: ipLat,
+            clientIpLon: ipLon,
+            userId,
+          },
+          i
+        ) => {
           return {
             i: i + 1,
-            id,
-            name: user?.name || '',
-            emailAddress: user?.emailAddress || '',
+            userId,
             ipLocation,
+            ipLat,
+            ipLon,
             createdAt: new Date(createdAt),
-            maxAgeInHours,
           }
         }
       ),
@@ -37,13 +45,17 @@ export default ({ contentRef }) => {
       <DataGrid
         style={{ height: '100%' }}
         enableVirtualization
+        defaultColumnOptions={{
+          resisable: true,
+          headerRenderer,
+        }}
         columns={[
           {
             key: 'i',
             name: ` `,
             resizable: false,
             width: 50,
-            headerRenderer,
+
             formatter: ({ row: { i } }) => (
               <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>
             ),
@@ -51,33 +63,13 @@ export default ({ contentRef }) => {
           {
             key: 'createdAt',
             name: 'Time',
-            resizable: true,
-            headerRenderer,
+
             formatter: ({ row: { createdAt } }) => format(createdAt, FORMAT),
           },
-          {
-            key: 'ipLocation',
-            name: 'IP Location',
-            resizable: true,
-            headerRenderer,
-          },
-          { key: 'name', name: 'Name', resizable: true, headerRenderer },
-          { key: 'emailAddress', name: 'Email', resizable: true, headerRenderer },
-          {
-            key: 'maxAgeInHours',
-            name: 'Expire',
-            resizable: true,
-            headerRenderer,
-            formatter: ({ row: { createdAt, maxAgeInHours } }) => {
-              const end = add(createdAt, { hours: maxAgeInHours })
-              if (end > new Date()) {
-                return (
-                  <B sx={{ color: theme => theme.palette.success.main }}>{format(end, FORMAT)}</B>
-                )
-              }
-              return format(end, FORMAT)
-            },
-          },
+          { key: 'ipLocation', name: 'IP Location' },
+          { key: 'ipLat', name: 'IP Lat' },
+          { key: 'ipLon', name: 'IP Lon' },
+          { key: 'userId', name: 'User ID' },
         ]}
         rows={rows}
       />

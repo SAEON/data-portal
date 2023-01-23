@@ -16,7 +16,7 @@ import Header from './header'
 import { Div, Span } from '../../components/html-tags'
 
 const Downloads = lazy(() => import('./downloads'))
-const Usage = lazy(() => import('./usage'))
+const Usage = lazy(() => import('./visits'))
 const Feedback = lazy(() => import('./feedback'))
 const Logins = lazy(() => import('./logins'))
 
@@ -81,6 +81,8 @@ export default () => {
 
   return (
     <>
+      <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
+
       <Header ref={headerRef} />
       <Div ref={el => setContentRef(el)} sx={{ flex: 1, display: 'flex' }}>
         {contentRef && (

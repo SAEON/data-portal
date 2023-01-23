@@ -8,7 +8,7 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query downloads(
+      query (
         $type: LogType
         $bucket: DateBucket
         $sortByDate: SortConfig
@@ -37,10 +37,17 @@ export default ({ children }) => {
           clientIpLocation
           count
         }
+
+        ipLatLonCount: logs(type: $type, sort: $sortByCount) {
+          createdAt
+          clientIpLat
+          clientIpLon
+        }
       }
     `,
     {
       variables: {
+        type: 'download',
         bucket: 'day',
         sortByCount: {
           dimension: 'count',
@@ -69,6 +76,7 @@ export default ({ children }) => {
     referrerCount,
     deviceCount,
     ipLocationCount,
+    ipLatLonCount,
   } = data
 
   return (
@@ -78,6 +86,7 @@ export default ({ children }) => {
         downloadsByDate,
         referrerCount,
         ipLocationCount,
+        ipLatLonCount,
         deviceCount: Object.entries(
           deviceCount
             .map(({ clientUserAgent, ...other }) => {
