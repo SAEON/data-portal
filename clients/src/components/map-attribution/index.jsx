@@ -11,7 +11,7 @@ export default () => (
       zIndex: 1,
       lineHeight: 'unset',
       backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
-      m: theme => theme.spacing(0),
+      m: 0,
       py: 0,
       px: theme => theme.spacing(0.5),
     }}

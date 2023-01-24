@@ -23,7 +23,7 @@ env:
   BRANCH_REF: next
   CURATOR_CONTACT: curation@saeon.nrf.ac.za
   TECHNICAL_CONTACT: development@saeon.nrf.ac.za
-  DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
+  DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za
   DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
 
 jobs:

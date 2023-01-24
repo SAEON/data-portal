@@ -89,6 +89,22 @@ export default () => {
               }}
             />
           )}
+          <Typography
+            variant="caption"
+            sx={{
+              zIndex: 1,
+              position: 'absolute',
+              lineHeight: 'unset',
+              backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
+              m: 0,
+              py: 0,
+              left: 0,
+              top: 0,
+              px: theme => theme.spacing(0.5),
+            }}
+          >
+            Only events with GPS coordinates included
+          </Typography>
         </Div>
       </Frame>
 
