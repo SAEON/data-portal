@@ -21,13 +21,14 @@ export default ({ children }) => {
         $bucket: DateBucket
         $sortByDate: SortConfig
         $sortByCount: SortConfig
+        $limit: Int
       ) {
-        downloadsByDate: logs(type: $type, sort: $sortByDate) {
+        downloadsByDate: logs(type: $type, sort: $sortByDate, limit: $limit) {
           date(bucket: $bucket)
           count
         }
 
-        ipLatLonCount: logs(type: $type, sort: $sortByCount) {
+        ipLatLonCount: logs(type: $type, sort: $sortByCount, limit: $limit) {
           createdAt
           clientIpLat
           clientIpLon
@@ -38,6 +39,7 @@ export default ({ children }) => {
       variables: {
         type: 'download',
         bucket: 'month',
+        limit: 1000,
         sortByCount: {
           dimension: 'count',
           direction: 'DESC',
@@ -61,11 +63,12 @@ export default ({ children }) => {
         $type: LogType
         $bucket: DateBucket
         $sortByCount: SortConfig
+        $referrerLimit: Int
         $limit: Int
         $locationCountLimit: Int
         $doiCountLimit: Int
       ) {
-        downloadsCount: logs(type: $type) {
+        downloadsCount: logs(type: $type, limit: $limit) {
           date(bucket: $bucket)
           count
         }
@@ -82,7 +85,7 @@ export default ({ children }) => {
           count
         }
 
-        referrerCount: logs(type: $type, sort: $sortByCount, limit: $limit) {
+        referrerCount: logs(type: $type, sort: $sortByCount, limit: $referrerLimit) {
           referrer
           date(bucket: $bucket)
           count
@@ -93,9 +96,10 @@ export default ({ children }) => {
       variables: {
         type: 'download',
         bucket: 'year',
+        limit: 1000,
         locationCountLimit: 25,
         doiCountLimit: 100,
-        limit: 25,
+        referrerLimit: 25,
         sortByCount: {
           dimension: 'count',
           direction: 'DESC',

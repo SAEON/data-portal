@@ -27,16 +27,35 @@ enum SortDirection {
 }
 
 enum DownloadsReportDimensions {
-  doi
-  clientSession
+  _id
   clientIpAddress
+  clientIpAs
+  clientIpAsname
+  clientIpCity
+  clientIpContinent
+  clientIpContinentCode
+  clientIpCountry
+  clientIpCountryCode
+  clientIpCurrency
+  clientIpDistrict
+  clientIpHosting
+  clientIpIsp
   clientIpLocation
-  clientUserAgent
+  clientIpMobile
+  clientIpOrg
+  clientIpProxy
+  clientIpRegion
+  clientIpRegionName
+  clientIpTimezone
+  clientIpZip
   clientPathname
-  createdAt
-  referrer
-  date
+  clientSession
+  clientUserAgent
   count
+  createdAt
+  date
+  doi
+  referrer
 }
 
 input SortConfig {
@@ -45,32 +64,39 @@ input SortConfig {
 }
 
 type LogAggregation {
-  """
-  DOI of metadata record (or SAEON id if no DOI)
-  """
-  doi: ID
-  clientSession: String
+  _id: ID
   clientIpAddress: String
-  """
-  Resolve an IP Address to location using https://ip-api.com/
-  """
-  clientIpLocation: String
+  clientIpAs: String
+  clientIpAsname: String
+  clientIpCity: String
+  clientIpContinent: String
+  clientIpContinentCode: String
+  clientIpCountry: String
+  clientIpCountryCode: String
+  clientIpCurrency: String
+  clientIpDistrict: String
+  clientIpHosting: Boolean
+  clientIpIsp: String
   clientIpLat: Float
+  clientIpLocation: String
   clientIpLon: Float
-  clientUserAgent: String
+  clientIpMobile: Boolean
+  clientIpOrg: String
+  clientIpProxy: Boolean
+  clientIpRegion: String
+  clientIpRegionName: String
+  clientIpTimezone: String
+  clientIpZip: String
   clientPathname: String
-  userId: String
-  referrer: String
-  createdAt: DateTime
-  """
-  Download date, rounded down to the hour
-  """
-  date(bucket: DateBucket): DateTime!
+  clientSession: String
+  clientUserAgent: String
   count: Int!
-  """
-  Event type
-  """
+  createdAt: DateTime
+  date(bucket: DateBucket): DateTime!
+  doi: ID
+  referrer: String
   type: LogType
+  userId: String
 }
 
 enum ListType {

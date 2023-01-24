@@ -8,7 +8,7 @@ export default () => {
 
   return (
     <Download
-      title="User feedback"
+      title="Download user feedback"
       description={'Download report in CSV format'}
       defaultFilename="sdp_user-feedback.csv"
       data={data}

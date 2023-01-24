@@ -8,6 +8,32 @@ import DialogActions from '@mui/material/DialogActions'
 import TextField from '@mui/material/TextField'
 import { Parser } from 'json2csv'
 
+const DownloadButton = ({ data, fields, transforms, filename, setOpen }) => (
+  <Button
+    onClick={() => {
+      const parser = new Parser({
+        fields,
+        quote: '"',
+        delimiter: ',',
+        eol: '\n',
+        transforms,
+      })
+      const csv = parser.parse(data)
+      const link = document.createElement('a')
+      link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv))
+      link.setAttribute('download', filename)
+      document.body.appendChild(link)
+      link.click()
+      setOpen(false)
+    }}
+    variant="contained"
+    disableElevation
+    size="small"
+  >
+    Okay
+  </Button>
+)
+
 export default ({
   title,
   description,
@@ -15,6 +41,7 @@ export default ({
   data,
   fields,
   transforms,
+  DataComponent = undefined,
 }) => {
   const [open, setOpen] = useState(false)
   const [filename, setFilename] = useState(defaultFilename)
@@ -34,7 +61,12 @@ export default ({
 
       {/* DIALOGUE */}
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>
+          {title
+            .replace(/download/i, '')
+            .trim()
+            .titleize()}
+        </DialogTitle>
         <DialogContent>
           {description}
           <TextField
@@ -48,29 +80,27 @@ export default ({
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={() => {
-              const parser = new Parser({
-                fields,
-                quote: '"',
-                delimiter: ',',
-                eol: '\n',
-                transforms,
-              })
-              const csv = parser.parse(data)
-              const link = document.createElement('a')
-              link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv))
-              link.setAttribute('download', filename)
-              document.body.appendChild(link)
-              link.click()
-              setOpen(false)
-            }}
-            variant="contained"
-            disableElevation
-            size="small"
-          >
-            Okay
-          </Button>
+          {DataComponent ? (
+            <DataComponent>
+              {({ data }) => (
+                <DownloadButton
+                  data={data}
+                  fields={fields}
+                  transforms={transforms}
+                  filename={filename}
+                  setOpen={setOpen}
+                />
+              )}
+            </DataComponent>
+          ) : (
+            <DownloadButton
+              data={data}
+              fields={fields}
+              transforms={transforms}
+              filename={filename}
+              setOpen={setOpen}
+            />
+          )}
         </DialogActions>
       </Dialog>
     </>

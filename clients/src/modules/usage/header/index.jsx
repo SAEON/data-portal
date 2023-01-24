@@ -8,7 +8,6 @@ export default forwardRef((props, ref) => {
     <>
       <Header sx={{ display: 'flex' }}>
         <Div sx={{ marginLeft: 'auto' }} />
-        <Divider flexItem orientation="vertical" sx={{ mr: theme => theme.spacing(1) }} />
         <Div ref={ref} />
         <Div sx={{ mr: theme => theme.spacing(1) }} />
       </Header>

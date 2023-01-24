@@ -33,6 +33,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mdi/js": "^7.1.96",
+    "@mui/lab": "^5.0.0-alpha.117",
     "@mui/material": "^5.11.5",
     "@saeon/logger": "^6.2.22",
     "@svgr/webpack": "^6.5.1",
