@@ -20,8 +20,6 @@ export default () => {
     ipLatLonCount,
   } = useContext(dataContext)
 
-  console.log(downloadsCount)
-
   return (
     <Grid container spacing={2}>
       {/* TITLE */}
@@ -33,6 +31,7 @@ export default () => {
             justifyContent: 'space-around',
             padding: theme => theme.spacing(1),
             background: theme => alpha(theme.palette.common.white, 0.95),
+            flexWrap: 'wrap',
           }}
         >
           {downloadsCount
@@ -101,14 +100,21 @@ export default () => {
           categoryFieldName="month"
           seriesFieldName="year"
           stackFieldName="year"
-          data={downloadsByDate.map(({ date, ...other }) => {
-            const dt = new Date(date)
-            return {
-              ...other,
-              month: dt.toLocaleString('en-US', { month: 'long' }),
-              year: dt.getFullYear(),
-            }
-          })}
+          data={downloadsByDate
+            .map(({ date, ...other }) => {
+              const dt = new Date(date)
+              return {
+                ...other,
+                m: dt.getMonth(),
+                month: dt.toLocaleString('en-US', { month: 'long' }),
+                year: dt.getFullYear(),
+              }
+            })
+            .sort(({ m: a }, { m: b }) => {
+              if (a > b) return 1
+              if (b > a) return -1
+              return 0
+            })}
         />
       </Frame>
 
@@ -127,7 +133,7 @@ export default () => {
       {/* BY LOCATION */}
       <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'Top 25 locations'}
+          title={'Top 25 user locations'}
           seriesFieldName="date"
           stackFieldName="date"
           categoryFieldName="clientIpLocation"

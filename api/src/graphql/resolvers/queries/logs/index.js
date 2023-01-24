@@ -1,6 +1,7 @@
 import query from './_query.js'
 import permissions from '../../../../user-model/permissions.js'
 import { ensurePermission } from '../../../../user-model/index.js'
+import { sub } from 'date-fns'
 
 const { documentTypePermissions } = permissions['logs:view']
 
@@ -31,7 +32,9 @@ export default async (
       .catch(() => null)
   }
 
-  const $match = { $match: { type: { $in: types } } }
+  const $match = {
+    $match: { type: { $in: types }, createdAt: { $gte: sub(new Date(), { years: 5 }) } },
+  }
   const $limit = { $limit: limit }
 
   /**

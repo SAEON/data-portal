@@ -12,11 +12,11 @@ import Frame from '../../components/frame'
 export default () => {
   const [mapContainer, setRef] = useState(null)
   const {
-    downloadsCount,
+    visitsCount,
     referrerCount,
-    downloadsByDate,
+    visitsByDate,
     ipLocationCount,
-    doiCount,
+    pathnameCount,
     ipLatLonCount,
   } = useContext(dataContext)
 
@@ -27,16 +27,28 @@ export default () => {
         <Paper
           variant="elevation"
           sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
             padding: theme => theme.spacing(1),
             background: theme => alpha(theme.palette.common.white, 0.95),
+            flexWrap: 'wrap',
           }}
         >
-          <Typography
-            sx={{ fontWeight: 'bold', display: 'block', textAlign: 'center' }}
-            variant="overline"
-          >
-            Total visits {downloadsCount?.count}
-          </Typography>
+          {visitsCount
+            .sort(({ date: a }, { date: b }) => {
+              if (a > b) return 1
+              if (b > a) return -1
+              return 0
+            })
+            .map(({ date, count }) => (
+              <Typography
+                key={date}
+                sx={{ fontWeight: 'bold', display: 'block', textAlign: 'center' }}
+                variant="overline"
+              >
+                {count} visits in {date}
+              </Typography>
+            ))}
         </Paper>
       </Grid>
 
@@ -83,19 +95,26 @@ export default () => {
       {/* BY DATE */}
       <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'Monthly downloads (annually)'}
+          title={'Monthly visits (annually)'}
           type="bar"
           categoryFieldName="month"
           seriesFieldName="year"
           stackFieldName="year"
-          data={downloadsByDate.map(({ date, ...other }) => {
-            const dt = new Date(date)
-            return {
-              ...other,
-              month: dt.toLocaleString('en-US', { month: 'long' }),
-              year: dt.getFullYear(),
-            }
-          })}
+          data={visitsByDate
+            .map(({ date, ...other }) => {
+              const dt = new Date(date)
+              return {
+                ...other,
+                m: dt.getMonth(),
+                month: dt.toLocaleString('en-US', { month: 'long' }),
+                year: dt.getFullYear(),
+              }
+            })
+            .sort(({ m: a }, { m: b }) => {
+              if (a > b) return 1
+              if (b > a) return -1
+              return 0
+            })}
         />
       </Frame>
 
@@ -114,7 +133,7 @@ export default () => {
       {/* BY LOCATION */}
       <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'Top 25 locations'}
+          title={'Top 25 user locations'}
           seriesFieldName="date"
           stackFieldName="date"
           categoryFieldName="clientIpLocation"
@@ -125,11 +144,15 @@ export default () => {
       {/* BY DOI */}
       <Frame gridProps={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
         <BarChart
-          title={'100 most downloaded datasets'}
+          title={'100 most visited pages'}
           seriesFieldName="date"
-          stackFieldName="doi"
-          categoryFieldName="doi"
-          data={doiCount}
+          stackFieldName="clientPathname"
+          categoryFieldName="clientPathname"
+          data={pathnameCount.map(({ clientPathname, ...point }) => ({
+            clientPathname:
+              clientPathname.match(/.+(\/.+)$/)?.[1].truncate(30) || clientPathname.truncate(30),
+            ...point,
+          }))}
         />
       </Frame>
     </Grid>

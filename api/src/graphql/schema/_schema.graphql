@@ -104,6 +104,9 @@ type Query {
   Retrieve many search contexts (i.e. many dynamic lists)
   """
   lists(filter: String): [List!]!
+  """
+  Search application logs
+  """
   logs(type: LogType, sort: SortConfig, limit: Int): [LogAggregation]!
   usageReport: JSON
   userFormSubmissions: JSON

@@ -5,6 +5,16 @@ import Loading from '../../../../components/loading'
 export const context = createContext()
 
 export default ({ children }) => {
+  /**
+   * There is an inconsistency in how
+   * the apollo client handles field
+   * arguments. The queries are split
+   * into two groups:
+   *
+   * (1) Aggregated date by month
+   * (2) Aggregated date by year
+   */
+
   const { error, loading, data } = useQuery(
     gql`
       query (
@@ -13,11 +23,7 @@ export default ({ children }) => {
         $sortByDate: SortConfig
         $sortByCount: SortConfig
       ) {
-        downloadsCount: logs(type: $type) {
-          count
-        }
-
-        downloadsByDate: logs(type: $type, sort: $sortByDate) {
+        visitsByDate: logs(type: $type, sort: $sortByDate) {
           date(bucket: $bucket)
           count
         }
@@ -58,16 +64,21 @@ export default ({ children }) => {
         $sortByCount: SortConfig
         $limit: Int
         $locationCountLimit: Int
-        $doiCountLimit: Int
+        $pathnameCountLimit: Int
       ) {
+        visitsCount: logs(type: $type) {
+          date(bucket: $bucket)
+          count
+        }
+
         ipLocationCount: logs(type: $type, sort: $sortByCount, limit: $locationCountLimit) {
           clientIpLocation
           date(bucket: $bucket)
           count
         }
 
-        doiCount: logs(type: $type, sort: $sortByCount, limit: $doiCountLimit) {
-          doi
+        pathnameCount: logs(type: $type, sort: $sortByCount, limit: $pathnameCountLimit) {
+          clientPathname
           date(bucket: $bucket)
           count
         }
@@ -84,7 +95,7 @@ export default ({ children }) => {
         type: 'appRender',
         bucket: 'year',
         locationCountLimit: 25,
-        doiCountLimit: 100,
+        pathnameCountLimit: 100,
         limit: 25,
         sortByCount: {
           dimension: 'count',
@@ -101,29 +112,25 @@ export default ({ children }) => {
 
   if (error || error2) {
     throw new Error(
-      `Error retrieving download report data: ${error?.message.truncate(
+      `Error retrieving visits report data: ${error?.message.truncate(
         1000
       )} or ${error?.message.truncate(1000)}`
     )
   }
 
-  const {
-    downloadsCount: [downloadsCount],
-    downloadsByDate,
-    ipLatLonCount,
-  } = data
+  const { visitsByDate, ipLatLonCount } = data
 
-  const { referrerCount, ipLocationCount, doiCount } = data2
+  const { visitsCount, referrerCount, ipLocationCount, pathnameCount } = data2
 
   return (
     <context.Provider
       value={{
-        downloadsCount,
-        downloadsByDate,
+        visitsCount,
+        visitsByDate,
         referrerCount,
         ipLocationCount,
         ipLatLonCount,
-        doiCount,
+        pathnameCount,
       }}
     >
       {children}
