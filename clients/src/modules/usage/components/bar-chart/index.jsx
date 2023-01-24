@@ -35,10 +35,7 @@ export default memo(
       },
     }
 
-    console.log(data)
-
     data.forEach(datum => {
-      console.log(datum)
       const _categoryFieldName =
         datum[categoryFieldName] || categoryNameCoalesce || categoryFieldName || 'UNKNOWN'
       const _seriesFieldName = datum[seriesFieldName] || seriesFieldName || 'UNKNOWN'
@@ -56,6 +53,7 @@ export default memo(
           name: _seriesFieldName,
           type,
           stack: datum[stackFieldName] || 'total',
+          sampling: 'lttb',
           emphasis: {
             focus: 'series',
           },
@@ -67,8 +65,6 @@ export default memo(
     })
 
     const _series = Object.entries(series).map(([, series]) => series)
-
-    console.log(title, _series)
 
     const option = {
       legend,
@@ -161,11 +157,9 @@ export default memo(
     return (
       <ReactECharts
         theme={makeEchartsTheme(
-          9,
-          { color: muiTheme.palette.primary.main, pos: 0 },
-          { color: muiTheme.palette.grey[200], pos: 0.3 },
-          { color: muiTheme.palette.grey[400], pos: 0.6 },
-          { color: muiTheme.palette.secondary.main, pos: 1 }
+          3,
+          { color: muiTheme.palette.primary.light, pos: 0 },
+          { color: muiTheme.palette.primary.dark, pos: 1 }
         )}
         style={{ height: '100%', width: '100%' }}
         option={option}

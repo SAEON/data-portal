@@ -127,7 +127,7 @@ export default () => {
         <BarChart
           title={'100 most downloaded datasets'}
           seriesFieldName="date"
-          stackFieldName="date"
+          stackFieldName="doi"
           categoryFieldName="doi"
           data={doiCount}
         />
