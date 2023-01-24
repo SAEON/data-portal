@@ -12,7 +12,7 @@ export default async (
   self,
   { sort = { dimension: 'count', direction: 'DESC' }, type, limit = 50000 },
   ctx,
-  c
+  graphqlDocument
 ) => {
   /**
    * Create a match clause for the type, based on user permissions
@@ -34,14 +34,22 @@ export default async (
   const $match = { $match: { type: { $in: types } } }
   const $limit = { $limit: limit }
 
-  const selectionSet = c.fieldNodes
+  /**
+   * The @apollo/client library seems to build a query
+   * document differently to other clients (such as
+   * GraphQL playground). Field variables are found
+   * on different places in the graphqlDocument
+   */
+  const { variableValues } = graphqlDocument
+
+  const selectionSet = graphqlDocument.fieldNodes
     .find(({ name }) => name.value === 'logs')
     .selectionSet.selections.map(({ name, arguments: args }) => {
       return { name, args }
     })
 
   const { Logs } = await ctx.mongo.collections
-  const result = await Logs.aggregate(query({ selectionSet, sort, $match, $limit }))
+  const result = await Logs.aggregate(query({ selectionSet, variableValues, sort, $match, $limit }))
 
   return await result.toArray()
 }

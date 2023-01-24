@@ -24,8 +24,8 @@ export default {
   userId: () => '$userId',
   type: () => '$type',
   createdAt: () => '$createdAt',
-  date: args => {
-    const { value: { value: bucket } = {} } = args[0] || {}
-    return { $dateToString: { format: DATE_FORMATS[bucket || 'month'], date: '$createdAt' } }
+  date: ({ args, variableValues }) => {
+    const bucket = variableValues?.bucket || args?.[0]?.value?.value || 'month'
+    return { $dateToString: { format: DATE_FORMATS[bucket], date: '$createdAt' } }
   },
 }

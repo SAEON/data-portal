@@ -5,19 +5,24 @@ const _sortDirection = {
   DESC: -1,
 }
 
-export default ({ selectionSet, sort: { dimension: sortBy, direction }, $match, $limit }) => {
+export default ({
+  selectionSet,
+  variableValues,
+  sort: { dimension: sortBy, direction },
+  $match,
+  $limit,
+}) => {
   const sortDirection = _sortDirection[direction]
 
   const { count, ...dimensions } = Object.fromEntries(
     selectionSet.map(({ name: { value: fieldName }, args }) => [
       fieldName,
-      convertFieldToSelector[fieldName]?.(args),
+      convertFieldToSelector[fieldName]?.({ args, variableValues }),
     ])
   )
 
   return [
     $match,
-    $limit,
     {
       $group: {
         _id: dimensions,
@@ -35,5 +40,6 @@ export default ({ selectionSet, sort: { dimension: sortBy, direction }, $match, 
       },
     },
     { $sort: { [sortBy]: sortDirection } },
+    $limit,
   ].filter(_ => _)
 }

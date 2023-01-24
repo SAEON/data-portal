@@ -14,9 +14,9 @@ export default () => {
   const {
     downloadsCount,
     referrerCount,
-    deviceCount,
     downloadsByDate,
     ipLocationCount,
+    doiCount,
     ipLatLonCount,
   } = useContext(dataContext)
 
@@ -41,7 +41,7 @@ export default () => {
       </Grid>
 
       {/* MAP */}
-      <Frame ref={el => setRef(el)} gridProps={{ lg: 7 }}>
+      <Frame ref={el => setRef(el)} gridProps={{ lg: 6 }}>
         <Div
           sx={{
             position: 'absolute',
@@ -81,32 +81,55 @@ export default () => {
       </Frame>
 
       {/* BY DATE */}
-      <Frame gridProps={{ lg: 5 }}>
-        <BarChart title={'By date'} type="bar" categoryFieldName="date" data={downloadsByDate} />
-      </Frame>
-
-      {/* BY DEVICE */}
-      <Frame>
-        <BarChart title={'By device'} yScale="log" categoryFieldName="device" data={deviceCount} />
+      <Frame gridProps={{ lg: 6 }}>
+        <BarChart
+          title={'Monthly downloads (annually)'}
+          type="bar"
+          categoryFieldName="month"
+          seriesFieldName="year"
+          stackFieldName="year"
+          data={downloadsByDate.map(({ date, ...other }) => {
+            const dt = new Date(date)
+            return {
+              ...other,
+              month: dt.toLocaleString('en-US', { month: 'long' }),
+              year: dt.getFullYear(),
+            }
+          })}
+        />
       </Frame>
 
       {/* BY REFERRER */}
-      <Frame gridProps={{ lg: 8 }}>
+      <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'By referrer'}
-          yScale="log"
+          title={'Top 25 referrers'}
+          seriesFieldName="date"
+          stackFieldName="date"
           categoryFieldName="referrer"
+          categoryNameCoalesce="UNKNOWN"
           data={referrerCount}
         />
       </Frame>
 
       {/* BY LOCATION */}
-      <Frame gridProps={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
+      <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'By location'}
-          yScale="log"
+          title={'Top 25 locations'}
+          seriesFieldName="date"
+          stackFieldName="date"
           categoryFieldName="clientIpLocation"
           data={ipLocationCount}
+        />
+      </Frame>
+
+      {/* BY DOI */}
+      <Frame gridProps={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
+        <BarChart
+          title={'100 most downloaded datasets'}
+          seriesFieldName="date"
+          stackFieldName="date"
+          categoryFieldName="doi"
+          data={doiCount}
         />
       </Frame>
     </Grid>

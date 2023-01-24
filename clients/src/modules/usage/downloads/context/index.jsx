@@ -1,7 +1,6 @@
 import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../../components/loading'
-import UAParser from 'ua-parser-js'
 
 export const context = createContext()
 
@@ -18,23 +17,8 @@ export default ({ children }) => {
           count
         }
 
-        referrerCount: logs(type: $type, sort: $sortByCount) {
-          referrer
-          count
-        }
-
         downloadsByDate: logs(type: $type, sort: $sortByDate) {
           date(bucket: $bucket)
-          count
-        }
-
-        deviceCount: logs(type: $type, sort: $sortByCount) {
-          clientUserAgent
-          count
-        }
-
-        ipLocationCount: logs(type: $type, sort: $sortByCount) {
-          clientIpLocation
           count
         }
 
@@ -48,13 +32,62 @@ export default ({ children }) => {
     {
       variables: {
         type: 'download',
-        bucket: 'day',
+        bucket: 'month',
         sortByCount: {
           dimension: 'count',
           direction: 'DESC',
         },
         sortByDate: {
           dimension: 'date',
+          direction: 'ASC',
+        },
+      },
+      fetchPolicy: 'no-cache',
+    }
+  )
+
+  const {
+    error: error2,
+    loading: loading2,
+    data: data2,
+  } = useQuery(
+    gql`
+      query (
+        $type: LogType
+        $bucket: DateBucket
+        $sortByCount: SortConfig
+        $limit: Int
+        $locationCountLimit: Int
+        $doiCountLimit: Int
+      ) {
+        ipLocationCount: logs(type: $type, sort: $sortByCount, limit: $locationCountLimit) {
+          clientIpLocation
+          date(bucket: $bucket)
+          count
+        }
+
+        doiCount: logs(type: $type, sort: $sortByCount, limit: $doiCountLimit) {
+          doi
+          date(bucket: $bucket)
+          count
+        }
+
+        referrerCount: logs(type: $type, sort: $sortByCount, limit: $limit) {
+          referrer
+          date(bucket: $bucket)
+          count
+        }
+      }
+    `,
+    {
+      variables: {
+        type: 'download',
+        bucket: 'year',
+        locationCountLimit: 25,
+        doiCountLimit: 100,
+        limit: 25,
+        sortByCount: {
+          dimension: 'count',
           direction: 'DESC',
         },
       },
@@ -62,22 +95,25 @@ export default ({ children }) => {
     }
   )
 
-  if (loading) {
+  if (loading || loading2) {
     return <Loading withHeight sx={{ position: 'relative' }} />
   }
 
-  if (error) {
-    throw new Error(`Error retrieving download report data: ${error.message.truncate(1000)}`)
+  if (error || error2) {
+    throw new Error(
+      `Error retrieving download report data: ${error?.message.truncate(
+        1000
+      )} or ${error?.message.truncate(1000)}`
+    )
   }
 
   const {
     downloadsCount: [downloadsCount],
     downloadsByDate,
-    referrerCount,
-    deviceCount,
-    ipLocationCount,
     ipLatLonCount,
   } = data
+
+  const { referrerCount, ipLocationCount, doiCount } = data2
 
   return (
     <context.Provider
@@ -87,30 +123,7 @@ export default ({ children }) => {
         referrerCount,
         ipLocationCount,
         ipLatLonCount,
-        deviceCount: Object.entries(
-          deviceCount
-            .map(({ clientUserAgent, ...other }) => {
-              const ua = new UAParser(clientUserAgent)
-              const { name: osName } = ua.getOS()
-              const { name } = ua.getBrowser()
-
-              return {
-                device: `${name} (${osName})`,
-                ...other,
-              }
-            })
-            .reduce(
-              (devices, { device, count, ...other }) =>
-                Object.assign(devices, {
-                  [device]: {
-                    count: count + (devices[device]?.count || 0),
-                    device,
-                    ...other,
-                  },
-                }),
-              {}
-            )
-        ).map(([, fields]) => fields),
+        doiCount,
       }}
     >
       {children}

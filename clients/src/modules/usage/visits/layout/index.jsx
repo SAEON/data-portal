@@ -76,12 +76,24 @@ export default () => {
 
       {/* BY DATE */}
       <Frame gridProps={{ lg: 5 }}>
-        <BarChart title={'By date'} type="bar" categoryFieldName="date" data={downloadsByDate} />
+        <BarChart
+          title={'By date'}
+          type="bar"
+          categoryFieldName="date"
+          seriesFieldName="Downloads"
+          data={downloadsByDate}
+        />
       </Frame>
 
       {/* BY DEVICE */}
       <Frame>
-        <BarChart title={'By device'} yScale="log" categoryFieldName="device" data={deviceCount} />
+        <BarChart
+          title={'By device'}
+          yScale="log"
+          categoryFieldName="device"
+          seriesFieldName="Downloads"
+          data={deviceCount}
+        />
       </Frame>
 
       {/* BY REFERRER */}
@@ -90,6 +102,7 @@ export default () => {
           title={'By referrer'}
           yScale="log"
           categoryFieldName="referrer"
+          seriesFieldName="Downloads"
           data={referrerCount}
         />
       </Frame>
@@ -100,6 +113,7 @@ export default () => {
           title={'By location'}
           yScale="log"
           categoryFieldName="clientIpLocation"
+          seriesFieldName="Downloads"
           data={ipLocationCount}
         />
       </Frame>
