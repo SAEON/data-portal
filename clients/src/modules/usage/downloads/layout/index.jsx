@@ -20,6 +20,8 @@ export default () => {
     ipLatLonCount,
   } = useContext(dataContext)
 
+  console.log(downloadsCount)
+
   return (
     <Grid container spacing={2}>
       {/* TITLE */}
@@ -27,16 +29,27 @@ export default () => {
         <Paper
           variant="elevation"
           sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
             padding: theme => theme.spacing(1),
             background: theme => alpha(theme.palette.common.white, 0.95),
           }}
         >
-          <Typography
-            sx={{ fontWeight: 'bold', display: 'block', textAlign: 'center' }}
-            variant="overline"
-          >
-            Total downloads {downloadsCount?.count}
-          </Typography>
+          {downloadsCount
+            .sort(({ date: a }, { date: b }) => {
+              if (a > b) return 1
+              if (b > a) return -1
+              return 0
+            })
+            .map(({ date, count }) => (
+              <Typography
+                key={date}
+                sx={{ fontWeight: 'bold', display: 'block', textAlign: 'center' }}
+                variant="overline"
+              >
+                {count} downloads in {date}
+              </Typography>
+            ))}
         </Paper>
       </Grid>
 

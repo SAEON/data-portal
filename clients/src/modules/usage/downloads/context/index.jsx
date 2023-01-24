@@ -5,6 +5,15 @@ import Loading from '../../../../components/loading'
 export const context = createContext()
 
 export default ({ children }) => {
+  /**
+   * There is an inconsistency in how
+   * the apollo client handles field
+   * arguments. The queries are split
+   * into two groups:
+   *
+   * (1) Aggregated date by month
+   * (2) Aggregated date by year
+   */
   const { error, loading, data } = useQuery(
     gql`
       query (
@@ -13,10 +22,6 @@ export default ({ children }) => {
         $sortByDate: SortConfig
         $sortByCount: SortConfig
       ) {
-        downloadsCount: logs(type: $type) {
-          count
-        }
-
         downloadsByDate: logs(type: $type, sort: $sortByDate) {
           date(bucket: $bucket)
           count
@@ -60,6 +65,11 @@ export default ({ children }) => {
         $locationCountLimit: Int
         $doiCountLimit: Int
       ) {
+        downloadsCount: logs(type: $type) {
+          date(bucket: $bucket)
+          count
+        }
+
         ipLocationCount: logs(type: $type, sort: $sortByCount, limit: $locationCountLimit) {
           clientIpLocation
           date(bucket: $bucket)
@@ -107,13 +117,9 @@ export default ({ children }) => {
     )
   }
 
-  const {
-    downloadsCount: [downloadsCount],
-    downloadsByDate,
-    ipLatLonCount,
-  } = data
+  const { downloadsByDate, ipLatLonCount } = data
 
-  const { referrerCount, ipLocationCount, doiCount } = data2
+  const { referrerCount, ipLocationCount, doiCount, downloadsCount } = data2
 
   return (
     <context.Provider

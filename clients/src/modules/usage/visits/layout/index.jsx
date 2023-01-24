@@ -11,8 +11,14 @@ import Frame from '../../components/frame'
 
 export default () => {
   const [mapContainer, setRef] = useState(null)
-  const { ipLatLonCount, downloadsByDate, deviceCount, referrerCount, ipLocationCount } =
-    useContext(dataContext)
+  const {
+    downloadsCount,
+    referrerCount,
+    downloadsByDate,
+    ipLocationCount,
+    doiCount,
+    ipLatLonCount,
+  } = useContext(dataContext)
 
   return (
     <Grid container spacing={2}>
@@ -29,13 +35,13 @@ export default () => {
             sx={{ fontWeight: 'bold', display: 'block', textAlign: 'center' }}
             variant="overline"
           >
-            Total visits {ipLatLonCount.length}
+            Total visits {downloadsCount?.count}
           </Typography>
         </Paper>
       </Grid>
 
       {/* MAP */}
-      <Frame ref={el => setRef(el)} gridProps={{ lg: 7 }}>
+      <Frame ref={el => setRef(el)} gridProps={{ lg: 6 }}>
         <Div
           sx={{
             position: 'absolute',
@@ -75,46 +81,55 @@ export default () => {
       </Frame>
 
       {/* BY DATE */}
-      <Frame gridProps={{ lg: 5 }}>
+      <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'By date'}
+          title={'Monthly downloads (annually)'}
           type="bar"
-          categoryFieldName="date"
-          seriesFieldName="Downloads"
-          data={downloadsByDate}
-        />
-      </Frame>
-
-      {/* BY DEVICE */}
-      <Frame>
-        <BarChart
-          title={'By device'}
-          yScale="log"
-          categoryFieldName="device"
-          seriesFieldName="Downloads"
-          data={deviceCount}
+          categoryFieldName="month"
+          seriesFieldName="year"
+          stackFieldName="year"
+          data={downloadsByDate.map(({ date, ...other }) => {
+            const dt = new Date(date)
+            return {
+              ...other,
+              month: dt.toLocaleString('en-US', { month: 'long' }),
+              year: dt.getFullYear(),
+            }
+          })}
         />
       </Frame>
 
       {/* BY REFERRER */}
-      <Frame gridProps={{ lg: 8 }}>
+      <Frame gridProps={{ lg: 6 }}>
         <BarChart
-          title={'By referrer'}
-          yScale="log"
+          title={'Top 25 referrers'}
+          seriesFieldName="date"
+          stackFieldName="date"
           categoryFieldName="referrer"
-          seriesFieldName="Downloads"
+          categoryNameCoalesce="UNKNOWN"
           data={referrerCount}
         />
       </Frame>
 
       {/* BY LOCATION */}
+      <Frame gridProps={{ lg: 6 }}>
+        <BarChart
+          title={'Top 25 locations'}
+          seriesFieldName="date"
+          stackFieldName="date"
+          categoryFieldName="clientIpLocation"
+          data={ipLocationCount}
+        />
+      </Frame>
+
+      {/* BY DOI */}
       <Frame gridProps={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
         <BarChart
-          title={'By location'}
-          yScale="log"
-          categoryFieldName="clientIpLocation"
-          seriesFieldName="Downloads"
-          data={ipLocationCount}
+          title={'100 most downloaded datasets'}
+          seriesFieldName="date"
+          stackFieldName="doi"
+          categoryFieldName="doi"
+          data={doiCount}
         />
       </Frame>
     </Grid>
