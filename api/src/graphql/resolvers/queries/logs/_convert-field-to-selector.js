@@ -39,10 +39,17 @@ export default {
   clientSession: () => '$clientSession',
   clientUserAgent: () => '$clientInfo.userAgent',
   createdAt: () => '$createdAt',
-  date: ({ args, variableValues }) => {
-    const bucket = variableValues?.bucket || args?.[0]?.value?.value || 'month'
-    return { $dateToString: { format: DATE_FORMATS[bucket], date: '$createdAt' } }
-  },
+  date: ({ args, variableValues }) => ({
+    $dateToString: {
+      format:
+        DATE_FORMATS[
+          args?.[0]?.value?.value ||
+            variableValues?.[args?.[0]?.value?.name?.value || 'missing key'] ||
+            'month'
+        ],
+      date: '$createdAt',
+    },
+  }),
   doi: () => ({ $ifNull: ['$info.doi', '$info.odpId'] }),
   referrer: () => '$referrer',
   type: () => '$type',

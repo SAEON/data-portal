@@ -19,12 +19,16 @@ export default ({ children }) => {
     gql`
       query (
         $type: LogType
-        $bucket: DateBucket
+        $monthBucket: DateBucket
+        $yearBucket: DateBucket
         $sortByDate: SortConfig
         $sortByCount: SortConfig
+        $locationCountLimit: Int
+        $pathnameCountLimit: Int
+        $limit: Int
       ) {
         visitsByDate: logs(type: $type, sort: $sortByDate) {
-          date(bucket: $bucket)
+          date(bucket: $monthBucket)
           count
         }
 
@@ -33,12 +37,39 @@ export default ({ children }) => {
           clientIpLat
           clientIpLon
         }
+
+        visitsCount: logs(type: $type) {
+          date(bucket: $yearBucket)
+          count
+        }
+
+        ipLocationCount: logs(type: $type, sort: $sortByCount, limit: $locationCountLimit) {
+          clientIpLocation
+          date(bucket: $yearBucket)
+          count
+        }
+
+        pathnameCount: logs(type: $type, sort: $sortByCount, limit: $pathnameCountLimit) {
+          clientPathname
+          date(bucket: $yearBucket)
+          count
+        }
+
+        referrerCount: logs(type: $type, sort: $sortByCount, limit: $limit) {
+          referrer
+          date(bucket: $yearBucket)
+          count
+        }
       }
     `,
     {
       variables: {
         type: 'appRender',
-        bucket: 'month',
+        monthBucket: 'month',
+        yearBucket: 'year',
+        locationCountLimit: 25,
+        pathnameCountLimit: 100,
+        limit: 25,
         sortByCount: {
           dimension: 'count',
           direction: 'DESC',
@@ -52,75 +83,22 @@ export default ({ children }) => {
     }
   )
 
-  const {
-    error: error2,
-    loading: loading2,
-    data: data2,
-  } = useQuery(
-    gql`
-      query (
-        $type: LogType
-        $bucket: DateBucket
-        $sortByCount: SortConfig
-        $limit: Int
-        $locationCountLimit: Int
-        $pathnameCountLimit: Int
-      ) {
-        visitsCount: logs(type: $type) {
-          date(bucket: $bucket)
-          count
-        }
-
-        ipLocationCount: logs(type: $type, sort: $sortByCount, limit: $locationCountLimit) {
-          clientIpLocation
-          date(bucket: $bucket)
-          count
-        }
-
-        pathnameCount: logs(type: $type, sort: $sortByCount, limit: $pathnameCountLimit) {
-          clientPathname
-          date(bucket: $bucket)
-          count
-        }
-
-        referrerCount: logs(type: $type, sort: $sortByCount, limit: $limit) {
-          referrer
-          date(bucket: $bucket)
-          count
-        }
-      }
-    `,
-    {
-      variables: {
-        type: 'appRender',
-        bucket: 'year',
-        locationCountLimit: 25,
-        pathnameCountLimit: 100,
-        limit: 25,
-        sortByCount: {
-          dimension: 'count',
-          direction: 'DESC',
-        },
-      },
-      fetchPolicy: 'no-cache',
-    }
-  )
-
-  if (loading || loading2) {
+  if (loading) {
     return <Loading withHeight sx={{ position: 'relative' }} />
   }
 
-  if (error || error2) {
-    throw new Error(
-      `Error retrieving visits report data: ${error?.message.truncate(
-        1000
-      )} or ${error?.message.truncate(1000)}`
-    )
+  if (error) {
+    throw new Error(`Error retrieving visits report data: ${error?.message.truncate(1000)}`)
   }
 
-  const { visitsByDate, ipLatLonCount } = data
-
-  const { visitsCount, referrerCount, ipLocationCount, pathnameCount } = data2
+  const {
+    visitsByDate,
+    ipLatLonCount,
+    visitsCount,
+    referrerCount,
+    ipLocationCount,
+    pathnameCount,
+  } = data
 
   return (
     <context.Provider
