@@ -1,6 +1,6 @@
 import { useDrag, useDrop } from 'react-dnd'
 import { headerRenderer } from 'react-data-grid'
-import { Div } from '../../../components/html-tags'
+import { Div } from '../html-tags'
 
 export default ({ onColumnsReorder, column, ...props }) => {
   const [{ isDragging }, drag] = useDrag({

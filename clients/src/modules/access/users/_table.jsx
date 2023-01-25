@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react'
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
 import { Div } from '../../../components/html-tags'
-import DraggableHeaderRenderer from './_draggable-header'
+import DraggableHeaderRenderer from '../../../components/table/dragagable-header'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
@@ -46,22 +46,16 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
     {
       key: 'emailAddress',
       name: 'Email address',
-      resizable: true,
       width: 200,
-      headerRenderer,
     },
     {
       key: 'name',
       name: 'Name',
-      resizable: true,
       width: 250,
-      headerRenderer,
     },
     {
       key: 'roles',
       name: 'Roles',
-      resizable: true,
-      headerRenderer,
       editorOptions: {
         renderFormatter: true,
       },
@@ -125,20 +119,21 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <DataGrid
-        style={{ height: '100%' }}
-        enableVirtualization
-        onSelectedRowsChange={setSelectedUsers}
         columns={draggableColumns}
-        sortColumns={sortColumns}
-        onSortColumnsChange={setSortColumns}
-        selectedRows={selectedUsers}
-        rowKeyGetter={row => row.id}
-        rows={sortedRows}
-        onRowsChange={setRows}
         defaultColumnOptions={{
           sortable: true,
           resizable: true,
+          headerRenderer,
         }}
+        enableVirtualization
+        onRowsChange={setRows}
+        onSelectedRowsChange={setSelectedUsers}
+        onSortColumnsChange={setSortColumns}
+        rowKeyGetter={row => row.id}
+        rows={sortedRows}
+        selectedRows={selectedUsers}
+        sortColumns={sortColumns}
+        style={{ height: '100%' }}
       />
     </DndProvider>
   )

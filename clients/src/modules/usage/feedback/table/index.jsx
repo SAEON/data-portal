@@ -6,7 +6,7 @@ import DataGrid from 'react-data-grid'
 import { format } from 'date-fns'
 import Link from '@mui/material/Link'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../config'
-import DraggableHeaderRenderer from './_draggable-header'
+import DraggableHeaderRenderer from '../../../../components/table/dragagable-header'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { I, Div } from '../../../../components/html-tags'
 

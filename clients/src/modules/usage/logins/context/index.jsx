@@ -7,8 +7,8 @@ export const context = createContext()
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query ($type: LogType, $limit: Int) {
-        logs(type: $type, limit: $limit) {
+      query ($type: LogType, $limit: Int, $sort: SortConfig) {
+        logs(type: $type, limit: $limit, sort: $sort) {
           createdAt
           clientIpLocation
           clientIpAddress
@@ -21,6 +21,10 @@ export default ({ children }) => {
     {
       fetchPolicy: 'network-only',
       variables: {
+        sort: {
+          dimension: 'createdAt',
+          direction: 'DESC',
+        },
         type: 'authentication',
         limit: 1000,
       },
