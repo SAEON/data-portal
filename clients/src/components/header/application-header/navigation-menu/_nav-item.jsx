@@ -22,14 +22,14 @@ export default forwardRef(({ onClick, label, to, Icon, href }, ref) => {
     >
       <ListItemIcon
         sx={{
-          color: theme => (match ? theme.palette.primary.dark : theme.palette.primary.main),
+          color: theme => theme.palette.primary.main,
         }}
       >
         <Icon />
       </ListItemIcon>
       <ListItemText
         sx={{
-          color: theme => (match ? theme.palette.primary.dark : theme.palette.primary.main),
+          color: theme => theme.palette.primary.main,
         }}
         primary={label}
       />
