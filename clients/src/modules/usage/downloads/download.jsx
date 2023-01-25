@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client'
 import Download from '../components/download'
 import { Download as DownloadIcon } from '../../../components/icons'
 import LoadingButton from '@mui/lab/LoadingButton'
+import { CLIENTS_PUBLIC_ADDRESS } from '../../../config'
 
 const DataComponent = ({ children }) => {
   const { error, loading, data } = useQuery(
@@ -139,7 +140,7 @@ export default () => {
             logId,
             'User ID': userId,
             'Created at': createdAt,
-            DOI,
+            DOI: `${CLIENTS_PUBLIC_ADDRESS}/records/${DOI}`,
             Referrer,
             'User agent': clientUserAgent,
             'Client session': clientSession,
