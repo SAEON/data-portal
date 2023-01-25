@@ -20,19 +20,15 @@ const Button = styled(ButtonBase)(({ theme }) => ({
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
     '& .MuiFancyButtonBackdrop-root': {
-      opacity: 0.15,
+      opacity: 0.6,
     },
     '& .MuiFancyButtonMarked-root': {
       opacity: 0,
     },
-    '& .MuiTypography-root': {
-      outline: '2px solid currentColor',
-    },
   },
   transition: theme.transitions.create(['border']),
-  border: `1px solid ${alpha(theme.palette.common.white, 0.5)}`,
   '&:hover': {
-    border: `2px solid ${alpha(theme.palette.common.white, 0.1)}`,
+    border: `3px solid ${alpha(theme.palette.primary.light, 0.1)}`,
   },
 }))
 
@@ -54,8 +50,8 @@ const Backdrop = styled('span')(({ theme }) => ({
   right: 0,
   top: 0,
   bottom: 0,
-  backgroundColor: theme.palette.common.black,
-  opacity: 0.4,
+  backgroundColor: theme.palette.common.white,
+  opacity: 0.8,
   transition: theme.transitions.create('opacity'),
 }))
 

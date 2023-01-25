@@ -1,42 +1,111 @@
-import useSummary from './_summary'
-import Search from '../../../components/search/index-old'
+import { useContext } from 'react'
+import { context as searchContext } from '../../../contexts/search'
+import { gql, useQuery } from '@apollo/client'
 import { alpha } from '@mui/material/styles'
 import Container from '@mui/material/Container'
-import Toolbar from '@mui/material/Toolbar'
 import { BoxButton } from '../../../components/fancy-buttons'
 import Grid from '@mui/material/Grid'
+import Fade from '@mui/material/Fade'
+import { Div } from '../../../components/html-tags'
+import Typography from '@mui/material/Typography'
+import Loading from '../../../components/loading-circular'
+import { PUBLIC_GQL_ADDRESS } from '../../../config'
 
 export default () => {
-  const { data } = useSummary()
+  const { global } = useContext(searchContext)
+
+  const { error, loading, data } = useQuery(
+    gql`
+      query catalogue($text: String!, $filter: JSON) {
+        catalogue {
+          id
+          search(text: $text, filter: $filter) {
+            totalCount
+          }
+        }
+      }
+    `,
+    {
+      variables: { text: global.text || '', filter: global.filter },
+      fetchPolicy: 'cache-first',
+    }
+  )
+
+  if (error) {
+    throw new Error(
+      `${PUBLIC_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
+    )
+  }
 
   const count = data?.catalogue.search.totalCount
 
   return (
-    <Toolbar
-      sx={{
-        backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
-        height: '85vh',
-      }}
-    >
-      <Container>
-        <Grid container spacing={2}>
-          <Grid xs={12} md={8} lg={9} item>
-            <Search />
-          </Grid>
-          <Grid sx={{ minHeight: 112 }} item xs={12} md={4} lg={3}>
-            <BoxButton
-              disabled={count === 0}
-              title={`${
-                isNaN(count)
-                  ? '...'
-                  : count === 0
-                  ? 'No search results'
-                  : `Explore ${count} datasets`
-              }`}
-            />
-          </Grid>
+    <Container>
+      <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+        <Grid
+          container
+          item
+          sx={{
+            minHeight: theme => theme.spacing(24),
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+          xs={12}
+          md={10}
+          lg={8}
+        >
+          {loading && (
+            <Fade unmountOnExit key="loading-button" in>
+              <Div
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Loading
+                  sx={{ color: theme => alpha(theme.palette.common.white, 0.65) }}
+                  size={90}
+                  thickness={3}
+                />
+              </Div>
+            </Fade>
+          )}
+          {count && (
+            <Fade unmountOnExit key="welcome-button" in>
+              <Div sx={{ width: '100%' }}>
+                <BoxButton
+                  sx={{ textAlign: 'center', backgroundColor: 'white' }}
+                  disabled={count === 0}
+                  title={
+                    <>
+                      <Typography
+                        gutterBottom
+                        sx={{
+                          color: theme => theme.palette.primary.main,
+                          fontSize: '1.5rem',
+                          outline: 'unset !important',
+                        }}
+                      >
+                        Welcome to the SAEON Data Portal
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: theme => theme.palette.primary.main,
+                          outline: 'unset !important',
+                        }}
+                      >
+                        Explore {count} datasets
+                      </Typography>
+                    </>
+                  }
+                />
+              </Div>
+            </Fade>
+          )}
         </Grid>
-      </Container>
-    </Toolbar>
+      </Grid>
+    </Container>
   )
 }
