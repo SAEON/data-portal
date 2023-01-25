@@ -10,11 +10,8 @@ export default ({ children }) => {
       query ($type: LogType, $limit: Int, $sort: SortConfig) {
         logs(type: $type, limit: $limit, sort: $sort) {
           createdAt
-          clientIpLocation
-          clientIpAddress
-          clientIpLat
-          clientIpLon
           userId
+          userName
         }
       }
     `,

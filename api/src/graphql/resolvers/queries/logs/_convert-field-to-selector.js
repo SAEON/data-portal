@@ -54,4 +54,5 @@ export default {
   referrer: () => '$referrer',
   type: () => '$type',
   userId: () => '$userId',
+  userName: () => '$info.userName',
 }

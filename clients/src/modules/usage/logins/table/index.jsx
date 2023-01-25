@@ -39,21 +39,14 @@ export default ({ contentRef }) => {
   const [sortColumns, setSortColumns] = useState([])
   const { data } = useContext(dataContext)
   const [rows, setRows] = useState(
-    data.map(
-      (
-        { createdAt, clientIpLocation: ipLocation, clientIpLat: ipLat, clientIpLon: ipLon, userId },
-        i
-      ) => {
-        return {
-          i: i + 1,
-          userId,
-          ipLocation,
-          ipLat,
-          ipLon,
-          createdAt: new Date(createdAt),
-        }
+    data.map(({ createdAt, userName: name, userId }, i) => {
+      return {
+        i: i + 1,
+        userId,
+        name,
+        createdAt: new Date(createdAt),
       }
-    )
+    })
   )
 
   const [columns, setColumns] = useState([
@@ -62,18 +55,14 @@ export default ({ contentRef }) => {
       name: ` `,
       resizable: false,
       width: 50,
-
       formatter: ({ row: { i } }) => <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>,
     },
     {
       key: 'createdAt',
       name: 'Time',
-
       formatter: ({ row: { createdAt } }) => format(createdAt, FORMAT),
     },
-    { key: 'ipLocation', name: 'IP Location' },
-    { key: 'ipLat', name: 'IP Lat' },
-    { key: 'ipLon', name: 'IP Lon' },
+    { key: 'name', name: 'User name' },
     { key: 'userId', name: 'User ID' },
   ])
 

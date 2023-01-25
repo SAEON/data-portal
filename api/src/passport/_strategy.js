@@ -6,7 +6,9 @@ import {
   ODP_SSO_CLIENT_ID,
   ODP_SSO_CLIENT_REDIRECT,
   ODP_AUTH_LOGOUT_REDIRECT,
+  PASSPORT_SSO_MAXAGE_HOURS,
 } from '../config/index.js'
+import { makeLog, logToMongo } from '../mongo/index.js'
 
 export default hydra =>
   new Strategy(
@@ -56,6 +58,18 @@ export default hydra =>
           }
         )
         const user = userQuery.value
+
+        // Log successful authentication
+        logToMongo.load(
+          makeLog(null, {
+            type: 'authentication',
+            userId: user._id,
+            info: {
+              userName: userInfo.name,
+            },
+          })
+        )
+
         cb(null, { id: user._id, emailAddress: user.emailAddress, name: user.name })
       } catch (error) {
         console.error('Error authenticating', error.message)

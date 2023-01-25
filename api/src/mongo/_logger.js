@@ -47,7 +47,7 @@ const locationFinder = new DataLoader(ipAddresses => resolveIpBatch(ipAddresses)
 })
 
 export const makeLog = async (ctx, otherFields) => {
-  const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip
+  const ipAddress = ctx?.request.headers['X-Real-IP'] || ctx?.request.ip || 'UNKNOWN'
 
   const ipInfo =
     (await locationFinder.load(ipAddress).catch(error => {
@@ -61,13 +61,13 @@ export const makeLog = async (ctx, otherFields) => {
     countryCode && city ? `${countryCode}/${city}${district ? `/${district}` : ''}` : 'UNKNOWN'
 
   return {
-    userId: ctx.user.info(ctx)?.id ? ObjectId(ctx.user.info(ctx).id) : undefined,
+    userId: ctx?.user.info(ctx)?.id ? ObjectId(ctx.user.info(ctx)?.id) : undefined,
     createdAt: new Date(), // This should be overridden by client logs, otherwise createdAt values won't be accurate
-    clientSession: ctx.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session', // This can happen if user blocks cookies in their browser
+    clientSession: ctx?.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session', // This can happen if user blocks cookies in their browser
     clientInfo: {
       ipAddress,
       ipLocation,
-      userAgent: ctx.request.headers['user-agent'],
+      userAgent: ctx?.request.headers['user-agent'] || 'UNKNOWN',
       ipInfo: { ...ipInfo, _source: IP_RESOLVER_API_ADDRESS },
     },
     ...otherFields,
