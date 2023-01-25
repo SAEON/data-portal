@@ -17,12 +17,11 @@ export default ({ title }) => {
             flexBasis: 0,
             flexGrow: 1,
             display: 'flex',
-            // height: theme => `${IMAGE_HEIGHT + parseInt(theme.spacing(1).replace('px', ''), 10)}px`,
           }}
         >
           <A target="_blank" sx={{ display: 'flex' }} href="http://www.saeon.ac.za/">
             <Img
-              style={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
+              sx={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
               src="/saeon-logo.png"
               alt="SAEON logo"
             />
@@ -59,7 +58,7 @@ export default ({ title }) => {
         >
           <A sx={{ display: 'flex' }} target="_blank" href="http://sarva.saeon.ac.za/">
             <Img
-              style={{
+              sx={{
                 maxHeight: IMAGE_HEIGHT,
                 width: 'auto',
                 display: 'block',

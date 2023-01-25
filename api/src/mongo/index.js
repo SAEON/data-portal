@@ -159,4 +159,5 @@ export const updateValidationRules = async () => {
  * Application-level batching for inserting UI logs
  * to MongoDB.
  */
-export const Logger = _Logger(collections)
+const Logger = _Logger(collections)
+export const logToMongo = new Logger()

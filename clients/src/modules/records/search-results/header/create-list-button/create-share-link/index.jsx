@@ -28,6 +28,7 @@ export default ({ icon, iconProps, tooltipProps, badgeProps, search, params }) =
       <Tabs value={tabIndex} onChange={(e, i) => setTabIndex(i)}>
         <Tab label="Share" />
         <Tab label="Embed" />
+        <Tab label="Filter DSL" />
       </Tabs>
       <DialogueContents tabIndex={tabIndex} search={search} params={params} />
     </MessageDialogue>

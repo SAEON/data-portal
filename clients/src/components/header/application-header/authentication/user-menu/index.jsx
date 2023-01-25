@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu'
 import Tooltip from '@mui/material/Tooltip'
 import { Account as UserIcon } from '../../../../icons'
 import Logout from './_logout'
+import { Div } from '../../../../html-tags'
 
 export default props => {
   const [anchor, setAnchor] = useState(null)
@@ -12,7 +13,7 @@ export default props => {
   const onOpen = e => setAnchor(e.currentTarget)
 
   return (
-    <div>
+    <Div>
       {/* MENU TRIGGER */}
       <Tooltip title={`Hi ${props.user.name || props.user.emailAddress}`}>
         <IconButton onClick={onOpen} size="large">
@@ -31,6 +32,6 @@ export default props => {
       >
         <Logout />
       </Menu>
-    </div>
+    </Div>
   )
 }

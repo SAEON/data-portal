@@ -1,6 +1,6 @@
 import 'react-data-grid/lib/styles.css'
-import { useContext, Suspense, lazy } from 'react'
-import DownloadsContextProvider from './downloads/context'
+import 'maplibre-gl/dist/maplibre-gl.css'
+import { useContext, Suspense, lazy, useRef, useState } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
@@ -13,12 +13,11 @@ import {
 } from '../../components/icons'
 import AccessDenied from '../../components/access-denied'
 import Fade from '@mui/material/Fade'
-import Container from '@mui/material/Container'
 import Header from './header'
 import { Div, Span } from '../../components/html-tags'
 
 const Downloads = lazy(() => import('./downloads'))
-const Usage = lazy(() => import('./usage'))
+const Usage = lazy(() => import('./visits'))
 const Feedback = lazy(() => import('./feedback'))
 const Logins = lazy(() => import('./logins'))
 
@@ -29,21 +28,29 @@ const sections = [
     Icon: ({ active }) => (
       <DownloadsIcon color={active ? 'primary' : 'default'} fontSize="medium" />
     ),
-    requiredPermission: 'logs:download:view',
+    requiredPermission: 'logs:view:download',
     Section: Downloads,
+    sx: {
+      overflowY: 'scroll',
+      pr: 2,
+    },
   },
   {
-    primaryText: 'Usage',
+    primaryText: 'Visits',
     secondaryText: 'Application renders',
     Icon: ({ active }) => <ChartBarIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
-    requiredPermission: 'logs:appRender:view',
+    requiredPermission: 'logs:view:appRender',
     Section: Usage,
+    sx: {
+      overflowY: 'scroll',
+      pr: 2,
+    },
   },
   {
     primaryText: 'Login history',
     secondaryText: 'Most recent 1000 logins',
     Icon: ({ active }) => <UsersIcon color={active ? 'primary' : 'default'} fontSize="medium" />,
-    requiredPermission: 'logs:authentication:view',
+    requiredPermission: 'logs:view:authentication',
     Section: Logins,
   },
   {
@@ -56,6 +63,8 @@ const sections = [
 ]
 
 export default () => {
+  const headerRef = useRef(null)
+  const [contentRef, setContentRef] = useState(null)
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -65,58 +74,75 @@ export default () => {
 
   if (!hasPermission('/usage')) {
     return (
-      <Div sx={{ minHeight: 1000, mt: theme => theme.spacing(2) }}>
+      <Div sx={{ mt: theme => theme.spacing(2) }}>
         <AccessDenied requiredPermission="/usage" />
       </Div>
     )
   }
 
   return (
-    <DownloadsContextProvider>
-      <Header />
-      <ContentNav
-        navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
-      >
-        {({ activeIndex }) => {
-          return (
-            <Div
-              sx={theme => ({
-                position: 'relative',
-                mx: 1,
-                my: theme => theme.spacing(2),
-                [theme.breakpoints.up('lg')]: {
-                  mx: 0,
-                },
-              })}
-            >
-              {sections
-                .filter(({ requiredPermission }) => hasPermission(requiredPermission))
-                .map(({ Section, primaryText }, i) => {
-                  return (
-                    activeIndex === i && (
-                      <Suspense
-                        key={primaryText}
-                        fallback={
-                          <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
-                            <Span>
-                              <Loading sx={{ position: 'relative' }} />
-                            </Span>
-                          </Fade>
-                        }
-                      >
-                        <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
-                          <Span>
-                            <Section />
-                          </Span>
-                        </Fade>
-                      </Suspense>
-                    )
-                  )
-                })}
-            </Div>
-          )
-        }}
-      </ContentNav>
-    </DownloadsContextProvider>
+    <>
+      <Header ref={headerRef} />
+      <Div ref={el => setContentRef(el)} sx={{ flex: 1, display: 'flex' }}>
+        {contentRef && (
+          <ContentNav
+            navItems={sections.filter(({ requiredPermission }) =>
+              hasPermission(requiredPermission)
+            )}
+          >
+            {({ activeIndex }) => {
+              return (
+                <Div
+                  sx={theme => ({
+                    position: 'relative',
+                    mx: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
+                    my: theme => theme.spacing(2),
+                    [theme.breakpoints.up('lg')]: {
+                      mx: 0,
+                    },
+                  })}
+                >
+                  {sections
+                    .filter(({ requiredPermission }) => hasPermission(requiredPermission))
+                    .map(({ Section, sx, primaryText }, i) => {
+                      return (
+                        activeIndex === i && (
+                          <Suspense
+                            key={primaryText}
+                            fallback={
+                              <Fade in={activeIndex === i} key={`loading-${primaryText}`}>
+                                <Span>
+                                  <Loading sx={{ position: 'relative' }} />
+                                </Span>
+                              </Fade>
+                            }
+                          >
+                            <Fade in={activeIndex === i} key={`loaded-${primaryText}`}>
+                              <Div>
+                                <Div
+                                  sx={{
+                                    height: theme =>
+                                      `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})`,
+                                    ...sx,
+                                  }}
+                                >
+                                  <Section contentRef={contentRef} headerRef={headerRef} />
+                                </Div>
+                              </Div>
+                            </Fade>
+                          </Suspense>
+                        )
+                      )
+                    })}
+                </Div>
+              )
+            }}
+          </ContentNav>
+        )}
+      </Div>
+    </>
   )
 }

@@ -1,10 +1,13 @@
+import { createPortal } from 'react-dom'
 import Provider from './context'
 import Table from './table'
+import Download from './download'
 
-export default () => {
+export default ({ contentRef, headerRef }) => {
   return (
     <Provider>
-      <Table />
+      {createPortal(<Download />, headerRef.current)}
+      <Table contentRef={contentRef} />
     </Provider>
   )
 }

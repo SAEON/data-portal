@@ -5,8 +5,10 @@ const importFrom = require(import.meta)
 
 export default describe(
   {
+    deleteFieldFromCollection: importFrom('./delete-field-from-collection/index.js'),
+    idToTimestamp: importFrom('./id-to-timestamp/index.js'),
+    updateLogLocations: importFrom('./update-log-locations/index.js'),
     updateValidation: importFrom('./update-validation-rules/index.js'),
-    idToTimestamp: importFrom('./id-to-timestamp/index.js')
   },
   {
     title: 'sdp :: mongo',

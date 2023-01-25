@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useMemo, useContext } from 'react'
+import { context as backgroundContext } from '../../contexts/background-image'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -8,13 +9,18 @@ import Legal from './_legal'
 import Grid from '@mui/material/Grid'
 import Contact from './_contact'
 import SourceCode from './_source-code'
-import { Div } from '../html-tags'
+import { Div, Footer } from '../html-tags'
+import Link from '@mui/material/Link'
 
 export default ({ routes }) => {
+  const {
+    image: { name },
+  } = useContext(backgroundContext)
   const _routes = useMemo(() => routes.filter(({ includeInFooter }) => includeInFooter))
+  const [photographer, unsplashId] = name.replace(/-unsplash.*/, '').split('~')
 
   return (
-    <Div sx={{ position: 'relative' }}>
+    <Footer sx={{ position: 'relative' }}>
       <AppBar
         variant="outlined"
         elevation={0}
@@ -23,6 +29,7 @@ export default ({ routes }) => {
       >
         {/* MAIN */}
         <Toolbar
+          disableGutters
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -47,20 +54,42 @@ export default ({ routes }) => {
               </Grid>
             </Grid>
           </Container>
+
+          {/* BG IMAGE ATTRIBUTION */}
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://unsplash.com/photos/${unsplashId}`}
+            sx={{
+              placeSelf: 'end',
+              fontSize: '0.75rem',
+              mr: 1,
+              mb: 1,
+              color: theme => theme.palette.common.white,
+            }}
+            variantMapping={{ overline: 'p' }}
+          >
+            Photo by{' '}
+            {photographer
+              .split('-')
+              .map(s => s.capitalize())
+              .join(' ')}{' '}
+            - unsplash.com
+          </Link>
         </Toolbar>
 
         {/* COPYRIGHT */}
         <Toolbar
           variant="dense"
-          sx={theme => ({ backgroundColor: theme.palette.grey[900], minHeight: theme.spacing(1) })}
+          sx={{ backgroundColor: theme => theme.palette.grey[900], minHeight: 1, diplay: 'flex' }}
         >
-          <Container style={{ display: 'flex', justifyContent: 'center' }}>
+          <Container sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="overline" variantMapping={{ overline: 'p' }}>
               © SAEON 2020 - {new Date().getFullYear()}
             </Typography>
           </Container>
         </Toolbar>
       </AppBar>
-    </Div>
+    </Footer>
   )
 }

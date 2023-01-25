@@ -1,8 +1,8 @@
 const path = require('path')
-const configurePlugins = require('./plugins.js')
-const loadAliases = require('./load-aliases.js')
-const configureDevServer = require('./dev-server')
-const configureRules = require('./rules.js')
+const configurePlugins = require('./_plugins.js')
+const loadAliases = require('./_load-aliases.js')
+const configureDevServer = require('./_dev-server')
+const configureRules = require('./_rules.js')
 const fs = require('fs')
 require('dotenv').config()
 

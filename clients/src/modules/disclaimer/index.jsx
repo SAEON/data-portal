@@ -11,12 +11,11 @@ export default () => {
         <Card
           sx={theme => ({
             backgroundColor: alpha(theme.palette.common.white, 0.9),
-            marginTop: theme.spacing(4),
-            marginBottom: theme.spacing(4),
+            my: 2,
           })}
           variant="outlined"
         >
-          <CardHeader style={{ textAlign: 'center' }} title="Disclaimer" />
+          <CardHeader sx={{ textAlign: 'center' }} title="Disclaimer" />
           <CardContent>
             <P>
               While every reasonable effort is made to maintain current and accurate information on

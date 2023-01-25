@@ -27,15 +27,37 @@ enum SortDirection {
 }
 
 enum DownloadsReportDimensions {
-  doi
-  clientSession
+  _id
   clientIpAddress
+  clientIpAs
+  clientIpAsname
+  clientIpCity
+  clientIpContinent
+  clientIpContinentCode
+  clientIpCountry
+  clientIpCountryCode
+  clientIpCurrency
+  clientIpDistrict
+  clientIpHosting
+  clientIpIsp
   clientIpLocation
-  clientUserAgent
+  clientIpMobile
+  clientIpOrg
+  clientIpProxy
+  clientIpRegion
+  clientIpRegionName
+  clientIpTimezone
+  clientIpZip
   clientPathname
-  referrer
-  date
+  clientSession
+  clientUserAgent
   count
+  createdAt
+  date
+  doi
+  referrer
+  userId
+  userName
 }
 
 input SortConfig {
@@ -43,25 +65,41 @@ input SortConfig {
   direction: SortDirection
 }
 
-type DownloadSummary {
-  """
-  DOI of metadata record (or SAEON id if no DOI)
-  """
-  doi: ID!
-  clientSession: String
+type LogAggregation {
+  _id: ID
   clientIpAddress: String
-  """
-  Resolve an IP Address to location using https://ip-api.com/
-  """
+  clientIpAs: String
+  clientIpAsname: String
+  clientIpCity: String
+  clientIpContinent: String
+  clientIpContinentCode: String
+  clientIpCountry: String
+  clientIpCountryCode: String
+  clientIpCurrency: String
+  clientIpDistrict: String
+  clientIpHosting: Boolean
+  clientIpIsp: String
+  clientIpLat: Float
   clientIpLocation: String
-  clientUserAgent: String
+  clientIpLon: Float
+  clientIpMobile: Boolean
+  clientIpOrg: String
+  clientIpProxy: Boolean
+  clientIpRegion: String
+  clientIpRegionName: String
+  clientIpTimezone: String
+  clientIpZip: String
   clientPathname: String
-  referrer: String
-  """
-  Download date, rounded down to the hour
-  """
-  date(bucket: DateBucket): DateTime!
+  clientSession: String
+  clientUserAgent: String
   count: Int!
+  createdAt: DateTime
+  date(bucket: DateBucket): DateTime!
+  doi: ID
+  referrer: String
+  type: LogType
+  userId: String
+  userName: String
 }
 
 enum ListType {
@@ -95,9 +133,11 @@ type Query {
   Retrieve many search contexts (i.e. many dynamic lists)
   """
   lists(filter: String): [List!]!
-  downloadsReport(sort: SortConfig): [DownloadSummary]!
+  """
+  Search application logs
+  """
+  logs(type: LogType, sort: SortConfig, limit: Int): [LogAggregation]!
   usageReport: JSON
-  loginsReport: JSON
   userFormSubmissions: JSON
   roles: [Role]!
   permissions: [Permission]!

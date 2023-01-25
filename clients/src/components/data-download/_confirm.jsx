@@ -1,6 +1,5 @@
 import { useState, memo } from 'react'
 import { RegisterEventLog, makeLog } from '../application-logger'
-import { useTheme } from '@mui/material/styles'
 import { gql, useMutation } from '@apollo/client'
 import Button from '@mui/material/Button'
 import { Span } from '../../components/html-tags'
@@ -8,7 +7,6 @@ import { Span } from '../../components/html-tags'
 export default memo(
   ({ formFields, id, doi, setOpen, downloadURL, resourceDescription, form, disabled }) => {
     const [ref, setRef] = useState(null)
-    const theme = useTheme()
 
     const [submitDataDownloadForm] = useMutation(
       gql`
@@ -93,7 +91,7 @@ export default memo(
               variant="text"
               disabled={disabled}
               download={resourceDescription || downloadURL || 'Unknown resource'}
-              style={{ display: 'block', float: 'right', margin: theme.spacing(2) }}
+              sx={{ display: 'block', float: 'right', margin: 2 }}
               href={downloadURL}
               aria-label="Agree to terms and download resource"
               target="_blank"

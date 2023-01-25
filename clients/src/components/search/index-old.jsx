@@ -6,7 +6,6 @@ import { Magnify as SearchIcon } from '../icons'
 import QuickForm from '../../components/quick-form'
 import { context as searchContext } from '../../contexts/search'
 import debounce from '../../lib/fns/debounce'
-import { useTheme } from '@mui/material/styles'
 import { alpha, styled } from '@mui/material/styles'
 
 const Root = styled('div')(({ theme }) => ({
@@ -30,7 +29,6 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
   const navigate = useNavigate()
   const { search } = useLocation()
   const { global, setGlobal } = useContext(searchContext)
-  const theme = useTheme()
 
   return (
     <Root>
@@ -53,7 +51,7 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon
-                      style={{ color: theme.palette.common.white, margin: theme.spacing(4) }}
+                      sx={{ color: theme => theme.palette.common.white, m: 4 }}
                       fontSize="large"
                     />
                   </InputAdornment>
@@ -61,11 +59,11 @@ export default ({ children, autofocus = true, onFocus, onBlur }) => {
                 inputProps: {
                   'aria-label': 'Enter search text and press enter',
                 },
-                sx: {
+                sx: theme => ({
                   color: theme.palette.common.white,
                   padding: `${theme.spacing(4)} 0`,
                   caretColor: theme.palette.common.white,
-                },
+                }),
               }}
               value={text}
               placeholder="Search SAEON data"

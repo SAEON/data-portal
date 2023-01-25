@@ -1,5 +1,4 @@
-import { useState, useContext } from 'react'
-import { context as authContext } from '../../../../../contexts/authorization'
+import { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Paper_ from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
@@ -13,10 +12,8 @@ export const Paper = styled(props => <Paper_ variant="outlined" {...props} />)((
   p: 0,
 }))
 
-export default ({ children, downloadCount, ..._source }) => {
+export default ({ children, downloadCount, canViewDownloadCount, ..._source }) => {
   const [active, setActive] = useState(false)
-  const { hasPermission } = useContext(authContext)
-  const canViewDownloadCount = hasPermission('record:view-downloadCount')
 
   return (
     <Grid

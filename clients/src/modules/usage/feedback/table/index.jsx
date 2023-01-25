@@ -6,9 +6,9 @@ import DataGrid from 'react-data-grid'
 import { format } from 'date-fns'
 import Link from '@mui/material/Link'
 import { CLIENTS_PUBLIC_ADDRESS } from '../../../../config'
-import DraggableHeaderRenderer from './_draggable-header'
+import DraggableHeaderRenderer from '../../../../components/table/dragagable-header'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { I } from '../../../../components/html-tags'
+import { I, Div } from '../../../../components/html-tags'
 
 const FORMAT = 'do MMM yyyy'
 
@@ -35,8 +35,8 @@ const getComparator = sortColumn => {
   }
 }
 
-export default () => {
-  const { userFormSubmissions: forms } = useContext(dataContext)
+export default ({ contentRef }) => {
+  const { data: forms } = useContext(dataContext)
   const [sortColumns, setSortColumns] = useState([])
   const [rows, setRows] = useState(
     forms.map(({ _id: id, ...rest }, i) => ({ i: i + 1, id, ...rest }))
@@ -72,14 +72,14 @@ export default () => {
     {
       key: 'student',
       name: 'Student',
-
-      formatter: ({ row: { student } }) => (student ? '✔️' : ''),
+      formatter: ({ row: { student } }) => (
+        <Div sx={{ textAlign: 'center', display: 'block' }}>{student ? '✔️' : ''}</Div>
+      ),
     },
     { key: 'location', name: 'Live/work location' },
     {
       key: 'ageGroup',
       name: 'Age group',
-
       formatter: ({ row: { ageGroup } }) => ageGroup?.replace('> 41', '41+').replace('< 18', '18-'),
     },
     { key: 'race', name: 'Race' },
@@ -87,8 +87,9 @@ export default () => {
     {
       key: 'allowContact',
       name: 'Contact',
-
-      formatter: ({ row: { allowContact } }) => (allowContact ? '✔️' : ''),
+      formatter: ({ row: { allowContact } }) => (
+        <Div sx={{ textAlign: 'center', display: 'block' }}>{allowContact ? '✔️' : ''}</Div>
+      ),
     },
     { key: 'comments', name: 'Comments' },
   ])
@@ -134,20 +135,20 @@ export default () => {
   }, [rows, sortColumns])
 
   return (
-    <Paper>
+    <Paper sx={{ height: theme => `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})` }}>
       <DndProvider backend={HTML5Backend}>
         <DataGrid
-          onRowsChange={setRows}
+          style={{ height: '100%' }}
+          enableVirtualization
+          columns={draggableColumns}
           sortColumns={sortColumns}
           onSortColumnsChange={setSortColumns}
-          style={{ height: 1000 }}
-          enableVirtualization
+          rows={sortedRows}
+          onRowsChange={setRows}
           defaultColumnOptions={{
             sortable: true,
             resizable: true,
           }}
-          columns={draggableColumns}
-          rows={sortedRows}
         />
       </DndProvider>
     </Paper>

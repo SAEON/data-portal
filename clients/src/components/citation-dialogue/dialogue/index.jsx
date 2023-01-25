@@ -31,7 +31,7 @@ export default ({ doi, open, setOpen, onClose = undefined }) => {
       <DialogTitle>{doi}</DialogTitle>
 
       {/* CITATION */}
-      <DialogContent>
+      <DialogContent dividers>
         {open && (
           <Suspense fallback={null}>
             <CitationControls

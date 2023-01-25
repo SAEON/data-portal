@@ -107,7 +107,9 @@ export default ({
             children
           )
         ) : (
-          <DialogContent {...dialogueContentProps}>{text}</DialogContent>
+          <DialogContent dividers {...dialogueContentProps}>
+            {text}
+          </DialogContent>
         )}
 
         {actions ? (

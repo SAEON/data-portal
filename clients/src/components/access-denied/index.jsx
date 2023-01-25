@@ -3,24 +3,24 @@ import Avatar from '@mui/material/Avatar'
 import { Cancel as Icon } from '../icons'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { alpha } from '@mui/material/styles'
 
 export default ({ requiredPermission = 'NA' }) => {
-  const theme = useTheme()
-
   return (
     <Container>
-      <Card variant="outlined" style={{ backgroundColor: alpha(theme.palette.common.white, 0.9) }}>
+      <Card
+        variant="outlined"
+        sx={{ backgroundColor: theme => alpha(theme.palette.common.white, 0.9) }}
+      >
         <CardHeader
           avatar={
             <Avatar
-              style={{
-                width: theme.spacing(4),
-                height: theme.spacing(4),
-                backgroundColor: theme.palette.primary.main,
+              sx={{
+                width: theme => theme.spacing(4),
+                height: theme => theme.spacing(4),
+                backgroundColor: theme => theme.palette.primary.main,
               }}
             >
               <Icon fontSize="large" />

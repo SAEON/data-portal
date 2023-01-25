@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import { Header } from '../../../../../components/html-tags'
 import { alpha } from '@mui/material/styles'
 
-export default ({ titles, id }) => {
+export default ({ titles, id, doi }) => {
   const { contentBase } = useContext(configContext)
   const { search } = useLocation()
   const navigate = useNavigate()
@@ -14,7 +14,7 @@ export default ({ titles, id }) => {
     <Header>
       <Typography
         tabIndex="0"
-        onClick={() => navigate(`${contentBase}/records/${id}${search}`.replace('//', '/'))}
+        onClick={() => navigate(`${contentBase}/records/${doi || id}${search}`.replace('//', '/'))}
         sx={{
           color: theme => theme.palette.text.primary,
           cursor: 'pointer',
@@ -39,7 +39,7 @@ export default ({ titles, id }) => {
             textDecoration: theme => `underline 0.15em ${alpha(theme.palette.primary.main, 1)}`,
           },
         }}
-        variant="h2"
+        variant="h3"
       >
         {titles?.[0]?.title || 'Title missing'}
       </Typography>

@@ -2,25 +2,23 @@ import { forwardRef } from 'react'
 import CookieConsent from 'react-cookie-consent'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { useTheme } from '@mui/material/styles'
 
 export default ({ children }) => {
-  const theme = useTheme()
-
   return (
     <>
       <CookieConsent
         overlay={false}
-        style={{ background: theme.palette.primary.dark, zIndex: 2500 }}
+        style={{ zIndex: 2500 }}
         ariaAcceptLabel="Allow cookies"
-        ButtonComponent={forwardRef((props, ref) => {
+        ButtonComponent={forwardRef(({ style, ...props }, ref) => {
           return (
             <Button
-              {...Object.fromEntries(Object.entries(props).filter(([k]) => k !== 'style'))}
-              color="secondary"
+              color="primary"
               variant="contained"
-              style={{ marginRight: theme.spacing(1) }}
+              disableElevation
+              sx={{ mr: 1, ...style }}
               ref={ref}
+              {...props}
             >
               Okay
             </Button>

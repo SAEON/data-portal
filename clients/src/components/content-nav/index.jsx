@@ -3,14 +3,16 @@ import List from '@mui/material/List'
 import NavItem from './_nav-item'
 import { Div } from '../html-tags'
 import RenderNavContent from './_render-content'
+import useWindowResize from '../../hooks/use-window-size'
 
 export default ({ navItems, children, activeIndex: _a = 0 }) => {
+  const size = useWindowResize()
   const [activeIndex, setActiveIndex] = useState(_a)
   const [ref, setRef] = useState(null)
 
   useEffect(() => {
     setActiveIndex(_a)
-  }, [_a])
+  }, [_a, size])
 
   return (
     <Div
@@ -61,8 +63,9 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
       <Div
         sx={theme => ({
           position: 'relative',
-          height: '100%',
           flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
           mt: 0,
           [theme.breakpoints.up('lg')]: {
             mx: theme.spacing(2),
@@ -70,7 +73,7 @@ export default ({ navItems, children, activeIndex: _a = 0 }) => {
           },
         })}
       >
-        <RenderNavContent setActiveIndex={setActiveIndex} activeIndex={activeIndex}>
+        <RenderNavContent size={size} setActiveIndex={setActiveIndex} activeIndex={activeIndex}>
           {children}
         </RenderNavContent>
       </Div>

@@ -28,7 +28,7 @@ export default ({
     >
       <CardHeader
         subheader={subheader || ''}
-        style={{ cursor: 'pointer' }}
+        sx={{ cursor: 'pointer' }}
         onClick={() => setCollapsed(!collapsed)}
         avatar={Icon && <Icon />}
         title={title}

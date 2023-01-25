@@ -1,11 +1,9 @@
-import { db as mongoDb, collections, getDataFinders, Logger, makeLog } from '../mongo/index.js'
+import { db as mongoDb, collections, getDataFinders, logToMongo, makeLog } from '../mongo/index.js'
 import { query as elasticQuery } from '../elasticsearch/index.js'
 import { APP_KEY } from '../config/index.js'
 import gqlServer, { schema as gqlSchema } from '../graphql/index.js'
 import userModel from '../user-model/index.js'
 import { encrypt, decrypt } from '../lib/crypto.js'
-
-const logToMongo = new Logger() // Application-level batching
 
 export default app => async (ctx, next) => {
   app.context.userInfo = ctx.state.user

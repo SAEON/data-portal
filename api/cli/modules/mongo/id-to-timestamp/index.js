@@ -11,7 +11,7 @@ const run = async (args = {}) => {
 
   if (help) {
     console.info(
-      'Help -- NOT IMPLEMENTED (but you probably want to specify the "run" flag (-r or --run)'
+      'Help -- NOT IMPLEMENTED (but you probably want to specify the "run" flag (-r or --run) and specify a collection (-c or --collection)'
     )
     return
   }
@@ -26,7 +26,7 @@ export default describe(
     collection: String,
     h: 'help',
     r: 'run',
-    c: 'collection'
+    c: 'collection',
   }),
   {
     title: 'sdp :: mongo :: ID to timestamp',

@@ -16,7 +16,6 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
-import { useTheme } from '@mui/material/styles'
 import MenuItem from '@mui/material/MenuItem'
 import { Span } from '../html-tags'
 
@@ -51,7 +50,6 @@ export default ({
   tooltipPlacement,
   buttonProps,
 }) => {
-  const theme = useTheme()
   const [open, setOpen] = useState(false)
   const form = useRef({})
   const { resourceDescription, resourceDownload } = immutableResource || {}
@@ -125,7 +123,7 @@ export default ({
 
             return (
               <>
-                <DialogTitle style={{ textAlign: 'center' }}>Terms of use</DialogTitle>
+                <DialogTitle sx={{ textAlign: 'center' }}>Terms of use</DialogTitle>
                 <DialogContent dividers>
                   <Typography gutterBottom variant="body2">
                     These data are made available with the express understanding that any such use
@@ -139,7 +137,7 @@ export default ({
                     care in referencing these datasets, the content of both metadata and data is
                     under control of the third-party provider.
                   </Typography>
-                  <Typography style={{ marginTop: theme.spacing(2) }} gutterBottom variant="body2">
+                  <Typography sx={{ mt: 2 }} gutterBottom variant="body2">
                     If you are open to filling in the form below, we appreciate it and would use the
                     information to improve our service.
                   </Typography>

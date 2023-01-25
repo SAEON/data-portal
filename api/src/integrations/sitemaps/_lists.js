@@ -5,6 +5,7 @@ export default async () => {
 
   const cursor = await Lists.find({
     $and: [
+      { type: 'curated' },
       { disableSEO: { $nin: [true] } },
       { title: { $nin: [null, ''] } },
       { description: { $nin: [null, ''] } },

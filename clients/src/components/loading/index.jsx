@@ -1,21 +1,20 @@
 import LinearProgress from '@mui/material/LinearProgress'
+import { Div } from '../html-tags'
 
-export default ({ sx = {}, style = {}, withHeight = false }) => {
+export default ({ sx, style = {}, withHeight = false }) => {
   if (withHeight) {
     return (
-      <div style={{ height: 1000 }}>
+      <Div sx={{ height: 1000 }}>
         <LinearProgress
-          sx={{ position: 'absolute', left: 0, right: 0, zIndex: 1099, ...sx }}
-          style={style}
+          sx={{ position: 'absolute', left: 0, right: 0, zIndex: 1099, ...(sx || style) }}
         />
-      </div>
+      </Div>
     )
   }
 
   return (
     <LinearProgress
-      sx={{ position: 'absolute', left: 0, right: 0, zIndex: 1099, ...sx }}
-      style={style}
+      sx={{ position: 'absolute', left: 0, right: 0, zIndex: 1099, ...(sx || style) }}
     />
   )
 }

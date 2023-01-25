@@ -13,17 +13,16 @@ export default () => {
         <Card
           sx={theme => ({
             backgroundColor: alpha(theme.palette.common.white, 0.9),
-            marginTop: theme.spacing(4),
-            marginBottom: theme.spacing(4),
+            my: 2,
           })}
           variant="outlined"
         >
-          <CardHeader style={{ textAlign: 'center' }} title="About" />
+          <CardHeader sx={{ textAlign: 'center' }} title="About" />
 
           <CardContent>
             <Typography
               sx={{
-                marginBottom: theme => theme.spacing(2),
+                mb: 2,
               }}
               variant="body2"
             >

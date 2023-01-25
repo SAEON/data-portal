@@ -4,7 +4,7 @@ import Loading from '../../components/loading'
 import RouteSwitcher from '../../entry-point/route-switcher'
 import { SizeContent } from '../../contexts/layout'
 import Footer from '../../components/footer'
-import { Banner } from '../../components/header'
+import { ListHeader } from '../../components/header'
 import configureRoutes from './routes'
 import { SUBDOMAIN_APP_ENTRIES } from '../../config'
 
@@ -19,11 +19,19 @@ const config = {
 const routes = configureRoutes(config)
 
 const Page = () => {
-  const ref = useRef(document.getElementById('document-title'))
+  const titleRef = useRef(document.getElementById('document-title'))
+  const contentRef = useRef(document.getElementById('document-description'))
+
+  const title = (titleRef.current?.innerHTML || '$TITLE').replace('$TITLE', 'SAEON Data')
+  const description = (contentRef.current?.content || '$DESCRIPTION').replace(
+    '$DESCRIPTION',
+    'Curated data collection'
+  )
+
   return (
     <Suspense fallback={<Loading />}>
       <App {...config}>
-        <Banner title={ref.current?.innerHTML || 'SAEON Data'} />
+        <ListHeader title={title} description={description} />
         <SizeContent>
           <RouteSwitcher routes={routes} />
         </SizeContent>

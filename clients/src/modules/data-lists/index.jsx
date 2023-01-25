@@ -18,7 +18,7 @@ export default () => {
 
   if (!hasPermission('/data-lists')) {
     return (
-      <Div style={{ mt: theme => theme.spacing(2), height: 1000 }}>
+      <Div sx={{ mt: 2, height: 1000 }}>
         <AccessDenied requiredPermission="/data-lists" />
       </Div>
     )

@@ -47,16 +47,30 @@ export default Object.freeze({
     name: 'permissions:view',
     description: 'View all permission details',
   },
-  'logs:authentication:view': {
-    name: 'logs:authentication:view',
+  'logs:view': {
+    name: 'logs:view',
+    description: 'View logs',
+    documentTypePermissions: {
+      appRender: 'logs:view:appRender',
+      authentication: 'logs:view:authentication',
+      authorization: 'logs:view:authorization',
+      download: 'logs:view:download',
+    },
+  },
+  'logs:view:appRender': {
+    name: 'logs:view:appRender',
+    description: 'View application render logs',
+  },
+  'logs:view:authentication': {
+    name: 'logs:view:authentication',
     description: 'View authentication logs',
   },
-  'logs:download:view': {
-    name: 'logs:download:view',
-    description: 'View download logs',
+  'logs:view:authorization': {
+    name: 'logs:view:authorization',
+    description: 'View authorization logs',
   },
-  'logs:appRender:view': {
-    name: 'logs:appRender:view',
-    description: 'View application render logs',
+  'logs:view:download': {
+    name: 'logs:view:download',
+    description: 'View download logs',
   },
 })

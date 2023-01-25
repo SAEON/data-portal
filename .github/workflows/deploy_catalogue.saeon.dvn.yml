@@ -11,6 +11,7 @@ env:
   SWARM_USERNAME: ${{ secrets.SWARM_USERNAME }} # Organization secret
   SWARM_PASSWORD: ${{ secrets.SWARM_PASSWORD }} # Organization secret
   SWARM_SSH_PORT: ${{ secrets.SWARM_SSH_PORT }} # Organization secret
+  ESRI_API_KEY: ${{secrets.ESRI_API_KEY}} # Organization secret
   MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_DEV_PASSWORD }} # Repository secret
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_DEV_USERNAME }} # Repository secret
   MONGO_HOST_NEXT: ${{ secrets.MONGO_HOST_NEXT }} # Organization secret
@@ -22,7 +23,7 @@ env:
   BRANCH_REF: next
   CURATOR_CONTACT: curation@saeon.nrf.ac.za
   TECHNICAL_CONTACT: development@saeon.nrf.ac.za
-  DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za,cl.davisreddy@saeon.nrf.ac.za
+  DEFAULT_ADMIN_EMAIL_ADDRESSES: pl.chiloane@saeon.nrf.ac.za
   DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
 
 jobs:
@@ -69,6 +70,7 @@ jobs:
             TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
+            ESRI_API_KEY=${{ env.ESRI_API_KEY }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

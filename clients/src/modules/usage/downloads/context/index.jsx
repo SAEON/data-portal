@@ -1,50 +1,75 @@
 import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../../components/loading'
-import UAParser from 'ua-parser-js'
 
 export const context = createContext()
 
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query ($bucket: DateBucket, $sortByDate: SortConfig, $sortByCount: SortConfig) {
-        downloadsCount: downloadsReport {
+      query (
+        $type: LogType
+        $monthBucket: DateBucket
+        $yearBucket: DateBucket
+        $sortByDate: SortConfig
+        $sortByCount: SortConfig
+        $referrerLimit: Int
+        $locationCountLimit: Int
+        $doiCountLimit: Int
+        $limit: Int
+      ) {
+        downloadsCount: logs(type: $type, limit: $limit) {
+          date(bucket: $yearBucket)
           count
         }
 
-        referrerCount: downloadsReport(sort: $sortByCount) {
-          referrer
+        downloadsByDate: logs(type: $type, sort: $sortByDate, limit: $limit) {
+          date(bucket: $monthBucket)
           count
         }
 
-        downloadsByDate: downloadsReport(sort: $sortByDate) {
-          date(bucket: $bucket)
-          count
+        ipLatLonCount: logs(type: $type, sort: $sortByCount, limit: $limit) {
+          createdAt
+          clientIpLat
+          clientIpLon
         }
 
-        deviceCount: downloadsReport(sort: $sortByCount) {
-          clientUserAgent
-          count
-        }
-
-        ipLocationCount: downloadsReport(sort: $sortByCount) {
+        ipLocationCount: logs(type: $type, sort: $sortByCount, limit: $locationCountLimit) {
           clientIpLocation
+          date(bucket: $yearBucket)
+          count
+        }
+
+        doiCount: logs(type: $type, sort: $sortByCount, limit: $doiCountLimit) {
+          doi
+          date(bucket: $yearBucket)
+          count
+        }
+
+        referrerCount: logs(type: $type, sort: $sortByCount, limit: $referrerLimit) {
+          referrer
+          date(bucket: $yearBucket)
           count
         }
       }
     `,
     {
       variables: {
-        bucket: 'day',
+        doiCountLimit: 100,
+        limit: 1000,
+        locationCountLimit: 25,
+        monthBucket: 'month',
+        referrerLimit: 25,
         sortByCount: {
           dimension: 'count',
           direction: 'DESC',
         },
         sortByDate: {
           dimension: 'date',
-          direction: 'DESC',
+          direction: 'ASC',
         },
+        type: 'download',
+        yearBucket: 'year',
       },
       fetchPolicy: 'no-cache',
     }
@@ -55,15 +80,16 @@ export default ({ children }) => {
   }
 
   if (error) {
-    throw new Error(`Error retrieving download report data: ${error.message.truncate(1000)}`)
+    throw new Error(`Error retrieving download report data: ${error?.message.truncate(1000)}`)
   }
 
   const {
-    downloadsCount: [downloadsCount],
     downloadsByDate,
+    ipLatLonCount,
     referrerCount,
-    deviceCount,
     ipLocationCount,
+    doiCount,
+    downloadsCount,
   } = data
 
   return (
@@ -73,30 +99,8 @@ export default ({ children }) => {
         downloadsByDate,
         referrerCount,
         ipLocationCount,
-        deviceCount: Object.entries(
-          deviceCount
-            .map(({ clientUserAgent, ...other }) => {
-              const ua = new UAParser(clientUserAgent)
-              const { name: osName } = ua.getOS()
-              const { name } = ua.getBrowser()
-
-              return {
-                device: `${name} (${osName})`,
-                ...other,
-              }
-            })
-            .reduce(
-              (devices, { device, count, ...other }) =>
-                Object.assign(devices, {
-                  [device]: {
-                    count: count + (devices[device]?.count || 0),
-                    device,
-                    ...other,
-                  },
-                }),
-              {}
-            )
-        ).map(([, fields]) => fields),
+        ipLatLonCount,
+        doiCount,
       }}
     >
       {children}

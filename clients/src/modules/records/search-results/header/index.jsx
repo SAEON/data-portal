@@ -1,15 +1,14 @@
-import { Suspense, lazy, useContext } from 'react'
+import { Suspense, lazy } from 'react'
 import ToggleSelectionButton from './_toggle-select-button'
 import CreateListButton from './create-list-button'
 import PageBackButton from './_page-back-button'
 import PageForwardButton from './_page-forward-button'
 import LoadingCircular from '../../../../components/loading-circular'
-import { context as authorizationContext } from '../../../../contexts/authorization'
 import Hidden from '@mui/material/Hidden'
 import ToolbarHeader from '../../../../components/toolbar-header'
 import Divider from '@mui/material/Divider'
 import Search from '../../../../components/search'
-import { Span } from '../../../../components/html-tags'
+import { Div, Span } from '../../../../components/html-tags'
 
 const ConfigurePaginationButton = lazy(() => import('./_configure-pagination-button'))
 const CurrentPageInfo = lazy(() => import('./_current-page-info'))
@@ -25,14 +24,18 @@ export default ({
   children,
   showSearch,
 }) => {
-  const { isAuthenticated } = useContext(authorizationContext)
-
   return (
     <>
       <ToolbarHeader>
         {/* SEARCH RESULT COUNT */}
         <Hidden smDown>
-          <Suspense fallback={<LoadingCircular />}>
+          <Suspense
+            fallback={
+              <Div sx={{ display: 'flex', ml: 2.25 }}>
+                <LoadingCircular />
+              </Div>
+            }
+          >
             <Title sx={{ ml: theme => theme.spacing(2) }} catalogue={catalogue} />
           </Suspense>
         </Hidden>
