@@ -12,6 +12,7 @@ export default memo(
       show: true,
       orient: 'horizontal',
       align: 'auto',
+      top: 50,
       left: 'center',
     },
     categoryFieldName,
@@ -29,6 +30,7 @@ export default memo(
       data: [],
       axisLabel: {
         rotate: 80,
+        formatter: value => value.truncate(20),
       },
       axisPointer: {
         snap: true,

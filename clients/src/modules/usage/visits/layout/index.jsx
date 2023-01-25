@@ -164,11 +164,7 @@ export default () => {
           seriesFieldName="date"
           stackFieldName="clientPathname"
           categoryFieldName="clientPathname"
-          data={pathnameCount.map(({ clientPathname, ...point }) => ({
-            clientPathname:
-              clientPathname.match(/.+(\/.+)$/)?.[1].truncate(30) || clientPathname.truncate(30),
-            ...point,
-          }))}
+          data={pathnameCount}
         />
       </Frame>
     </Grid>
