@@ -72,7 +72,7 @@ export default `
   <body>
     <div>
       <h1>SAEON RESOURCE DOWNLOAD</h1>
-      <p><b>$hostname</b> is served on an insecure connection. Many browsers suppress downloads served from non-HTTPS addresses when navigated to from sites served on secure connections (such as the SAEON Data Portal).</p>
+      <p><b>$hostname</b> is served on an insecure connection. Many browsers disallow linking to content served from non-HTTPS addresses from sites served on secure connections (such as the SAEON Data Portal).</p>
 
       <p>Please manually copy and paste the link below to a new tab to view/download this resource.</p>
 
