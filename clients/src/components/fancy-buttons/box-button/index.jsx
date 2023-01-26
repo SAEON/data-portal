@@ -25,10 +25,13 @@ const Button = styled(ButtonBase)(({ theme }) => ({
     '& .MuiFancyButtonMarked-root': {
       opacity: 0,
     },
+    '& .MuiTypography-root': {
+      outline: '2px solid currentcolor',
+    },
   },
   transition: theme.transitions.create(['border']),
   '&:hover': {
-    border: `3px solid ${alpha(theme.palette.primary.light, 0.1)}`,
+    border: `3px solid ${alpha(theme.palette.common.white, 0.1)}`,
   },
 }))
 
