@@ -14,7 +14,7 @@ import { URL } from 'url'
 import { CURATOR_CONTACT, TECHNICAL_CONTACT } from '../../config/index.js'
 import htmlTemplate from './html.js'
 
-const HOSTNAME_WHITELIST = ['media.dirisa.org', 'dap.saeon.ac.za']
+const HOSTNAME_WHITELIST = ['media.dirisa.org']
 
 export default async ctx => {
   const { uri } = ctx.request.query
