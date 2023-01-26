@@ -47,7 +47,14 @@ import {
   mdiMenuDown,
   mdiChat,
   mdiChartBar,
+  mdiDatabase,
 } from '@mdi/js'
+
+export const Database = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiDatabase} />
+  </SvgIcon>
+))({})
 
 export const ChartBar = styled(props => (
   <SvgIcon {...props}>

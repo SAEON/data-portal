@@ -29,6 +29,7 @@ const Button = styled(ButtonBase)(({ theme }) => ({
       outline: '2px solid currentcolor',
     },
   },
+  border: `3px solid ${alpha(theme.palette.common.white, 0)}`,
   transition: theme.transitions.create(['border']),
   '&:hover': {
     border: `3px solid ${alpha(theme.palette.common.white, 0.1)}`,

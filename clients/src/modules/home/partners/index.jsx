@@ -1,6 +1,7 @@
 import { Div, A, Img } from '../../../components/html-tags'
 import { alpha } from '@mui/material/styles'
 import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
 
 export default () => {
   return (
@@ -11,24 +12,59 @@ export default () => {
     >
       <Container
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          p: theme => theme.spacing(8),
+          py: theme => theme.spacing(12),
         }}
       >
-        <A sx={{ display: 'flex' }} target="_blank" href="http://sarva.saeon.ac.za/">
-          <Img
+        <Grid container spacing={2} justifyContent="space-evenly">
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={theme => ({
+              display: 'flex',
+              justifyContent: 'center',
+              mb: 8,
+              [theme.breakpoints.up('md')]: {
+                mb: 'unset',
+              },
+            })}
+          >
+            <A sx={{ display: 'flex' }} target="_blank" href="https://www.dst.gov.za/">
+              <Img
+                sx={{
+                  maxHeight: theme => theme.spacing(18),
+                  width: 'auto',
+                  display: 'block',
+                  marginLeft: 'auto',
+                }}
+                src="/dsi.png"
+                alt="Department of Science and Technology logo"
+              />
+            </A>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={6}
             sx={{
-              maxHeight: theme => theme.spacing(24),
-              width: 'auto',
-              display: 'block',
-              marginLeft: 'auto',
+              display: 'flex',
+              justifyContent: 'center',
             }}
-            src="/dsi.png"
-            alt="SARVA logo"
-          />
-        </A>
+          >
+            <A target="_blank" href="http://sarva.saeon.ac.za/">
+              <Img
+                sx={{
+                  maxHeight: theme => theme.spacing(18),
+                  width: 'auto',
+                  display: 'block',
+                  marginLeft: 'auto',
+                }}
+                src="/saeon-logo.png"
+                alt="SAEON logo"
+              />
+            </A>
+          </Grid>
+        </Grid>
       </Container>
     </Div>
   )
