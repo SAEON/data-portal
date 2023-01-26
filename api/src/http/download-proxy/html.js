@@ -78,7 +78,7 @@ export default `
 
       <pre>$uri</pre>
 
-      <p>Please contact the SAEON curation team at <b>$CURATOR_CONTACT</b> to request that this resource be made available at a secure address in the future, or that the host <b>$hostname</b> be whitelisted to circumvent this notice. If you think this message is in error, please let us know at <b>$TECHNICAL_CONTACT</b>.</p>
+      <p>Contact the SAEON curation team at <b>$CURATOR_CONTACT</b> to request that this resource be made available at a secure address in the future. If you think this message is in error, or have any other technical requests / feedback, please let us know at <b>$TECHNICAL_CONTACT</b>.</p>
     </div>
   </body>
   </html>`
