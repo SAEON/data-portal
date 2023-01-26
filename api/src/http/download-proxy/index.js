@@ -14,7 +14,7 @@ export default async ctx => {
   const { uri } = ctx.request.query
   const { hostname } = new URL(uri)
 
-  ctx.set('Content-type', 'text/html;charset=UTF-8')
+  ctx.set('Content-type', 'text/html')
   ctx.body = htmlTemplate
     .replace(/\$hostname/g, hostname)
     .replace(/\$uri/g, uri)
