@@ -8,7 +8,7 @@ export default () => {
         bottom: 0,
         left: 0,
         zIndex: 1,
-        opacity: 0.8,
+        opacity: 0.6,
         backgroundColor: theme => theme.palette.common.white,
         p: 1,
       }}
@@ -17,7 +17,7 @@ export default () => {
     >
       <Img
         sx={{
-          maxHeight: theme => theme.spacing(8),
+          maxHeight: theme => theme.spacing(6),
           width: 'auto',
           display: 'block',
           marginLeft: 'auto',

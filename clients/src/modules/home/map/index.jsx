@@ -28,7 +28,7 @@ export default ({ mapContainer: container }) => {
   return (
     <>
       <Domains map={map} />
-      <MapAttribution />
+      <MapAttribution sx={{ opacity: 0.6 }} />
     </>
   )
 }

@@ -21,7 +21,7 @@ const Button = styled(ButtonBase)(({ theme }) => ({
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
     '& .MuiFancyButtonBackdrop-root': {
-      opacity: 0.6,
+      opacity: 0.9,
     },
     '& .MuiFancyButtonMarked-root': {
       opacity: 0,

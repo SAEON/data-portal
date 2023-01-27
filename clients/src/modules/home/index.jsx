@@ -9,6 +9,7 @@ import Map from './map'
 import Stats from './stats'
 import Partners from './partners'
 import Provider from './context'
+import Fade from '@mui/material/Fade'
 
 export default () => {
   const [ref, setRef] = useState(null)
@@ -49,16 +50,18 @@ export default () => {
           </Div>
 
           {/* OVERLAY */}
-          <Div
-            sx={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
-            }}
-          />
+          <Fade in>
+            <Div
+              sx={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                backgroundColor: theme => alpha(theme.palette.common.black, 0.7),
+              }}
+            />
+          </Fade>
           <Search />
           <Stats />
           <Partners />
