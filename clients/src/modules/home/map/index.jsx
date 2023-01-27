@@ -3,6 +3,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { ESRI_API_KEY } from '../../../config'
 import MapAttribution from '../../../components/map-attribution'
 import { useTheme } from '@mui/material/styles'
+import Domains from './_domains'
 
 const BASEMAP_ENUM = 'ArcGIS:Oceans:Base'
 
@@ -24,26 +25,10 @@ export default ({ mapContainer: container }) => {
     bearing: 0,
   })
 
-  map.on('load', () => {
-    map.addSource('metadata', {
-      type: 'vector',
-      tiles: [`https://maps.somisana.ac.za/public.metadata/{z}/{x}/{y}.pbf`],
-      url: `https://maps.somisana.ac.za/public.metadata.json`,
-      promoteId: 'id',
-    })
-
-    map.addLayer({
-      id: 'metadata',
-      type: 'line',
-      source: 'metadata',
-      'source-layer': 'public.metadata',
-      paint: {
-        'line-color': theme.palette.primary.light,
-        'line-width': 1,
-        'line-dasharray': [1, 1],
-      },
-    })
-  })
-
-  return <MapAttribution />
+  return (
+    <>
+      <Domains map={map} />
+      <MapAttribution />
+    </>
+  )
 }

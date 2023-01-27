@@ -43,7 +43,8 @@ type IndexStats {
   collections: Int!
   institutions: Int!
   providers: Int!
-  themes: Int
+  themes: Int!
+  domains: JSON
 }
 
 type Catalogue {

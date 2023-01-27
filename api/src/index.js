@@ -15,6 +15,7 @@ import {
   SERVER_TASKS,
   SAEON_ODP_INTEGRATION_SCHEDULE,
   SITEMAP_INTEGRATION_SCHEDULE,
+  ELASTICSEARCH_CATALOGUE_INDEX,
   APP_KEY,
   PASSPORT_SSO_MAXAGE_HOURS,
 } from './config/index.js'
@@ -27,7 +28,7 @@ import whitelistRoutes from './middleware/whitelist-routes.js'
 import reactClient, { templateServer, robotsTxt } from './middleware/file-server/index.js'
 import clientSession from './middleware/client-session.js'
 import fourOFour from './middleware/404.js'
-import createRequestContext from './middleware/create-request-context.js'
+import createRequestContext from './middleware/create-request-context/index.js'
 import saeonOdpIntegration from './integrations/saeon-odp/index.js'
 import sitemapGenerator from './integrations/sitemaps/index.js'
 import gqlServer from './graphql/index.js'
@@ -43,6 +44,10 @@ import {
 } from './http/index.js'
 import './passport/index.js'
 import redirectRenderRoute from './http/redirects/render.js'
+import { client } from './elasticsearch/index.js'
+import { setCache } from './cache/index.js'
+import hash from 'object-hash'
+import { parse } from 'wkt'
 
 // Schedule integration with SAEON ODP
 if (SAEON_ODP_INTEGRATION_SCHEDULE) {
@@ -63,6 +68,77 @@ if (SITEMAP_INTEGRATION_SCHEDULE) {
     )
   )
 }
+
+// Cache metadata domains
+;(async () => {
+  function round5(x) {
+    return Math.ceil(x / 8) * 8
+  }
+
+  const res = await client.search({
+    index: ELASTICSEARCH_CATALOGUE_INDEX,
+    size: 10000,
+    query: {
+      bool: {
+        must: {
+          match_all: {},
+        },
+        filter: {
+          geo_shape: {
+            'geoLocations.geoLocationBox': {
+              shape: {
+                type: 'envelope',
+                coordinates: [
+                  [-120, 60],
+                  [120, -60],
+                ],
+              },
+              relation: 'within',
+            },
+          },
+        },
+      },
+    },
+    _source: ['geoLocations.geoLocationBox'],
+  })
+
+  const uniqueDomains = res.hits.hits.reduce((acc, { _source: { geoLocations } }) => {
+    if (geoLocations) {
+      const geometry = {
+        ...geoLocations.map(({ geoLocationBox }) => {
+          const { coordinates, ...props } = parse(geoLocationBox)
+          return {
+            ...props,
+            coordinates: coordinates.map(c =>
+              c.map(c => {
+                return c.map(c => round5(Math.round(c)))
+              })
+            ),
+          }
+        })[0],
+      }
+      const h = hash(geometry)
+      acc[h] = acc[h] || {
+        type: 'Feature',
+        properties: {},
+        geometry,
+      }
+    }
+
+    return acc
+  }, {})
+
+  setCache('domains', {
+    type: 'FeatureCollection',
+    crs: {
+      type: 'name',
+      properties: {
+        name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+      },
+    },
+    features: Object.values(uniqueDomains),
+  })
+})()
 
 // Configure public API
 const api = new Koa()

@@ -15,7 +15,8 @@ export default () => {
   const { headerRef } = useContext(layoutContext)
 
   return (
-    <>
+    <Provider>
+      <SkipLink href="#home-search" text="Skip to main content" />
       <Header />
 
       {/* MAP */}
@@ -30,6 +31,7 @@ export default () => {
             position: 'relative',
           }}
         >
+          {/* MAP */}
           <Div
             ref={el => setRef(el)}
             sx={{
@@ -45,6 +47,8 @@ export default () => {
           >
             {ref && <Map mapContainer={ref} />}
           </Div>
+
+          {/* OVERLAY */}
           <Div
             sx={{
               position: 'absolute',
@@ -54,17 +58,12 @@ export default () => {
               right: 0,
               backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
             }}
-          ></Div>
-          <SkipLink href="#home-search" text="Skip to main content" />
-          <Provider>
-            <>
-              <Search />
-              <Stats />
-            </>
-          </Provider>
+          />
+          <Search />
+          <Stats />
           <Partners />
         </Div>
       </Div>
-    </>
+    </Provider>
   )
 }

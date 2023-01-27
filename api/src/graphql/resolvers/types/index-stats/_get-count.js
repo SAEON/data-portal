@@ -19,5 +19,5 @@ export default async ({ ctx, id, field }) => {
       ],
     },
   })
-  return result?.[0]?.[id]?.length || Nan
+  return result?.[0]?.[id]?.length || NaN
 }

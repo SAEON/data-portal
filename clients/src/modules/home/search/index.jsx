@@ -16,71 +16,61 @@ export default () => {
 
   return (
     <Container>
-      <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-        <Grid
-          container
-          item
-          sx={{
-            minHeight: theme => theme.spacing(24),
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          xs={12}
-          md={10}
-          lg={8}
-        >
-          {loading && (
-            <Fade unmountOnExit key="loading-button" in>
-              <Div
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+      {loading && (
+        <Fade unmountOnExit key="loading-button" in>
+          <Div
+            sx={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Loading
+              sx={{ color: theme => alpha(theme.palette.common.white, 0.65) }}
+              size={50}
+              thickness={3}
+            />
+          </Div>
+        </Fade>
+      )}
+      {count && (
+        <Fade unmountOnExit key="welcome-button" in>
+          <Grid container spacing={0} sx={{ justifyContent: 'center' }}>
+            <Grid item xs={12} sx={{ zIndex: 1 }}>
+              <Typography
+                variant="h4"
+                gutterBottom
+                sx={theme => ({
+                  textAlign: 'center',
+                  mb: 6,
+                  color: theme.palette.common.white,
+                  [theme.breakpoints.down('xs')]: { fontSize: 'unset' },
+                })}
               >
-                <Loading
-                  sx={{ color: theme => alpha(theme.palette.common.white, 0.65) }}
-                  size={50}
-                  thickness={3}
-                />
-              </Div>
-            </Fade>
-          )}
-          {count && (
-            <Fade unmountOnExit key="welcome-button" in>
-              <Div sx={{ width: '100%' }}>
-                <BoxButton
-                  sx={{ textAlign: 'center', backgroundColor: 'white' }}
-                  disabled={count === 0}
-                  title={
-                    <>
-                      <Typography
-                        gutterBottom
-                        sx={{
-                          color: theme => theme.palette.primary.main,
-                          fontSize: '1.5rem',
-                          outline: 'unset !important',
-                        }}
-                      >
-                        Welcome to the SAEON Data Portal
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: theme => theme.palette.primary.main,
-                          outline: 'unset !important',
-                        }}
-                      >
-                        Explore {count} datasets
-                      </Typography>
-                    </>
-                  }
-                />
-              </Div>
-            </Fade>
-          )}
-        </Grid>
-      </Grid>
+                Welcome to the SAEON Data Portal
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              sx={{
+                minHeight: 100,
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+              xs={7}
+              md={5}
+              lg={3}
+            >
+              <BoxButton
+                sx={{ textAlign: 'center', backgroundColor: 'transparent' }}
+                disabled={count === 0}
+                title={`Explore ${count} datasets`}
+              />
+            </Grid>
+          </Grid>
+        </Fade>
+      )}
     </Container>
   )
 }

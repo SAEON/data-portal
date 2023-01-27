@@ -15,7 +15,8 @@ const Button = styled(ButtonBase)(({ theme }) => ({
     height: 100,
   },
   '& .MuiTypography-root': {
-    outline: '2px solid transparent',
+    transition: theme.transitions.create(['color, outline']),
+    outline: `2px solid ${alpha(theme.palette.common.white, 0)}`,
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
@@ -26,11 +27,13 @@ const Button = styled(ButtonBase)(({ theme }) => ({
       opacity: 0,
     },
     '& .MuiTypography-root': {
-      outline: '2px solid currentcolor',
+      color: theme.palette.primary.main,
+      outline: `2px solid ${theme.palette.common.white}`,
     },
   },
   border: `3px solid ${alpha(theme.palette.common.white, 0)}`,
   transition: theme.transitions.create(['border']),
+  border: `1px solid ${alpha(theme.palette.common.white, 1)}`,
   '&:hover': {
     border: `3px solid ${alpha(theme.palette.common.white, 0.1)}`,
   },
@@ -55,7 +58,7 @@ const Backdrop = styled('span')(({ theme }) => ({
   top: 0,
   bottom: 0,
   backgroundColor: theme.palette.common.white,
-  opacity: 0.8,
+  opacity: 0,
   transition: theme.transitions.create('opacity'),
 }))
 
