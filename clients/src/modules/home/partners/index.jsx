@@ -1,71 +1,30 @@
-import { Div, A, Img } from '../../../components/html-tags'
-import { alpha } from '@mui/material/styles'
-import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
+import { A, Img } from '../../../components/html-tags'
 
 export default () => {
   return (
-    <Div
+    <A
       sx={{
-        backgroundColor: theme => alpha(theme.palette.common.white, 1),
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        zIndex: 1,
+        opacity: 0.8,
+        backgroundColor: theme => theme.palette.common.white,
+        p: 1,
       }}
+      target="_blank"
+      href="https://www.dst.gov.za/"
     >
-      <Container
+      <Img
         sx={{
-          py: theme => theme.spacing(12),
+          maxHeight: theme => theme.spacing(8),
+          width: 'auto',
+          display: 'block',
+          marginLeft: 'auto',
         }}
-      >
-        <Grid container spacing={2} justifyContent="space-evenly">
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={theme => ({
-              display: 'flex',
-              justifyContent: 'center',
-              mb: 8,
-              [theme.breakpoints.up('md')]: {
-                mb: 'unset',
-              },
-            })}
-          >
-            <A sx={{ display: 'flex' }} target="_blank" href="https://www.dst.gov.za/">
-              <Img
-                sx={{
-                  maxHeight: theme => theme.spacing(18),
-                  width: 'auto',
-                  display: 'block',
-                  marginLeft: 'auto',
-                }}
-                src="/dsi.png"
-                alt="Department of Science and Technology logo"
-              />
-            </A>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <A target="_blank" href="http://sarva.saeon.ac.za/">
-              <Img
-                sx={{
-                  maxHeight: theme => theme.spacing(18),
-                  width: 'auto',
-                  display: 'block',
-                  marginLeft: 'auto',
-                }}
-                src="/saeon-logo.png"
-                alt="SAEON logo"
-              />
-            </A>
-          </Grid>
-        </Grid>
-      </Container>
-    </Div>
+        src="/dsi.png"
+        alt="Department of Science and Technology logo"
+      />
+    </A>
   )
 }

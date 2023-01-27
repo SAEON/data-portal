@@ -1,4 +1,5 @@
 import Header from '../../../components/toolbar-header'
+import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import { Div } from '../../../components/html-tags'
@@ -12,9 +13,8 @@ export default () => {
       <Div sx={{ mx: theme => theme.spacing(1) }} />
       <Tooltip placement="top-start" title="Submit data for curation">
         <Button
-          href="https://saeon.ac.za/data-curation/"
-          target="_blank"
-          rel="noopener noreferrer"
+          LinkComponent={Link}
+          to="/records"
           startIcon={<SearchIcon fontSize="small" />}
           size="small"
           variant="text"

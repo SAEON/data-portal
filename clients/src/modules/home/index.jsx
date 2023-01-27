@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { context as layoutContext } from '../../contexts/layout'
 import SkipLink from '../../components/skip-link'
 import Search from './search'
@@ -6,13 +6,12 @@ import { alpha } from '@mui/material/styles'
 import { Div } from '../../components/html-tags'
 import Header from './header'
 import Map from './map'
-import ScrollButton from './_scroll-button'
 import Stats from './stats'
 import Partners from './partners'
+import Provider from './context'
 
 export default () => {
   const [ref, setRef] = useState(null)
-  const section2Ref = useRef(null)
   const { headerRef } = useContext(layoutContext)
 
   return (
@@ -55,17 +54,17 @@ export default () => {
               right: 0,
               backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
             }}
-          >
-            <ScrollButton contentRef={section2Ref} />
-          </Div>
+          ></Div>
           <SkipLink href="#home-search" text="Skip to main content" />
-          <Search />
+          <Provider>
+            <>
+              <Search />
+              <Stats />
+            </>
+          </Provider>
+          <Partners />
         </Div>
       </Div>
-
-      {/* CONTENT */}
-      <Stats ref={section2Ref} />
-      <Partners />
     </>
   )
 }

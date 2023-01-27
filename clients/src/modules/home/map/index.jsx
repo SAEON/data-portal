@@ -4,7 +4,7 @@ import { ESRI_API_KEY } from '../../../config'
 import MapAttribution from '../../../components/map-attribution'
 import { useTheme } from '@mui/material/styles'
 
-const BASEMAP_ENUM = 'ArcGIS:Oceans'
+const BASEMAP_ENUM = 'ArcGIS:Oceans:Base'
 
 export default ({ mapContainer: container }) => {
   if (!ESRI_API_KEY) {

@@ -1,6 +1,5 @@
 import { useContext } from 'react'
-import { context as searchContext } from '../../../contexts/search'
-import { gql, useQuery } from '@apollo/client'
+import { context as dataContext } from '../context'
 import { alpha } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import { BoxButton } from '../../../components/fancy-buttons'
@@ -9,35 +8,11 @@ import Fade from '@mui/material/Fade'
 import { Div } from '../../../components/html-tags'
 import Typography from '@mui/material/Typography'
 import Loading from '../../../components/loading-circular'
-import { PUBLIC_GQL_ADDRESS } from '../../../config'
 
 export default () => {
-  const { global } = useContext(searchContext)
+  const { loading, data } = useContext(dataContext)
 
-  const { error, loading, data } = useQuery(
-    gql`
-      query catalogue($text: String!, $filter: JSON) {
-        catalogue {
-          id
-          search(text: $text, filter: $filter) {
-            totalCount
-          }
-        }
-      }
-    `,
-    {
-      variables: { text: global.text || '', filter: global.filter },
-      fetchPolicy: 'cache-first',
-    }
-  )
-
-  if (error) {
-    throw new Error(
-      `${PUBLIC_GQL_ADDRESS}: ${error}\n\nIt is likely that Elasticsearch has not been configured`
-    )
-  }
-
-  const count = data?.catalogue.search.totalCount
+  const count = data?.catalogue.indexStats.records
 
   return (
     <Container>
@@ -66,7 +41,7 @@ export default () => {
               >
                 <Loading
                   sx={{ color: theme => alpha(theme.palette.common.white, 0.65) }}
-                  size={90}
+                  size={50}
                   thickness={3}
                 />
               </Div>
