@@ -8,7 +8,7 @@ export default () => {
         bottom: 0,
         left: 0,
         zIndex: 1,
-        opacity: 0.6,
+        opacity: 0.9,
         backgroundColor: theme => theme.palette.common.white,
         p: 1,
       }}

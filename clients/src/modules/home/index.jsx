@@ -58,7 +58,7 @@ export default () => {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                backgroundColor: theme => alpha(theme.palette.common.black, 0.7),
+                backgroundColor: theme => alpha(theme.palette.common.black, 0.5),
               }}
             />
           </Fade>
