@@ -19,7 +19,7 @@ export default () => {
   const go = useCallback(() => navigate(`${contentBase}/records${search}`.replace('//', '/')), [])
 
   return (
-    <Grid item xs={7} md={5} lg={4}>
+    <Grid item xs={12} sm={7} md={5} lg={4}>
       <QuickForm text="" effects={[debounce(({ text }) => setGlobal({ text }, true))]}>
         {(update, { text }) => {
           return (
