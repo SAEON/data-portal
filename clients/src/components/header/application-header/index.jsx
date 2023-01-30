@@ -41,6 +41,14 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
           endIcon={<SubmitIcon fontSize="small" />}
           size="small"
           variant="text"
+          sx={theme => ({
+            [theme.breakpoints.down('sm')]: {
+              minWidth: 'unset',
+              '& .MuiButton-endIcon': {
+                ml: '1px !important',
+              },
+            },
+          })}
         >
           <Typography sx={{ lineHeight: '100%' }} variant="overline">
             {smUp && 'Submit data'}
