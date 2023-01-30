@@ -1,15 +1,17 @@
+import 'maplibre-gl/dist/maplibre-gl.css'
 import { useState, useContext } from 'react'
 import { context as layoutContext } from '../../contexts/layout'
 import SkipLink from '../../components/skip-link'
+import Container from '@mui/material/Container'
 import Search from './search'
-import { alpha } from '@mui/material/styles'
+import Overlay from '../../components/animated-overlay'
 import { Div } from '../../components/html-tags'
 import Header from './header'
 import Map from './map'
 import Stats from './stats'
-import Partners from './partners'
+import Grid from '@mui/material/Grid'
 import Provider from './context'
-import Fade from '@mui/material/Fade'
+import Typography from '@mui/material/Typography'
 
 export default () => {
   const [ref, setRef] = useState(null)
@@ -34,8 +36,9 @@ export default () => {
         >
           {/* MAP */}
           <Div
+            id="home-map"
             ref={el => setRef(el)}
-            sx={{
+            sx={theme => ({
               position: 'absolute',
               top: 0,
               bottom: 0,
@@ -44,27 +47,53 @@ export default () => {
               '&.maplibregl-map': {
                 position: 'absolute',
               },
-            }}
+              [theme.breakpoints.up('sm')]: {
+                '& #mobile-dot': {
+                  display: 'none',
+                },
+                '& .maplibregl-ctrl-bottom-right': {
+                  display: 'flex',
+                  width: '100%',
+                  '& details': {
+                    flex: 1,
+                    '& .maplibregl-ctrl-attrib-inner': {
+                      display: 'flex',
+                      '& span': {
+                        marginLeft: 'auto',
+                      },
+                    },
+                  },
+                },
+              },
+            })}
           >
             {ref && <Map mapContainer={ref} />}
           </Div>
 
           {/* OVERLAY */}
-          <Fade in>
-            <Div
-              sx={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                backgroundColor: theme => alpha(theme.palette.common.black, 0.5),
-              }}
-            />
-          </Fade>
-          <Search />
+          <Overlay />
+
+          {/* CONTENTS */}
+          <Container>
+            <Grid container spacing={0} sx={{ justifyContent: 'center' }}>
+              <Grid item xs={12} sx={{ zIndex: 1 }}>
+                <Typography
+                  variant="h4"
+                  gutterBottom
+                  sx={theme => ({
+                    textAlign: 'center',
+                    mb: 6,
+                    color: theme.palette.common.white,
+                    [theme.breakpoints.down('xs')]: { fontSize: 'unset' },
+                  })}
+                >
+                  Welcome to the SAEON Data Portal
+                </Typography>
+              </Grid>
+              <Search />
+            </Grid>
+          </Container>
           <Stats />
-          <Partners />
         </Div>
       </Div>
     </Provider>

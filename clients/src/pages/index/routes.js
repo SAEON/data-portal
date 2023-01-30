@@ -97,8 +97,10 @@ export default [
   },
   {
     label: 'About the data portal',
+    breadcrumbsLabel: 'About',
     Icon: AboutIcon,
     to: '/about',
+    breadcrumbsIcon: false,
     excludeFromNav: true,
     includeInFooter: true,
     element: () => (

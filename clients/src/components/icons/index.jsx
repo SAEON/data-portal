@@ -21,6 +21,7 @@ import {
   mdiContentCopy,
   mdiContentSave,
   mdiDatabasePlus,
+  mdiDatabaseSearch,
   mdiDelete,
   mdiDownload,
   mdiDownloadCircleOutline,
@@ -52,6 +53,12 @@ import {
   mdiCodeTags,
   mdiHandshake,
 } from '@mdi/js'
+
+export const DatabaseSearch = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiDatabaseSearch} />
+  </SvgIcon>
+))({})
 
 export const Bank = styled(props => (
   <SvgIcon {...props}>

@@ -9,8 +9,9 @@ import Legal from './_legal'
 import Grid from '@mui/material/Grid'
 import Contact from './_contact'
 import SourceCode from './_source-code'
-import { Div, Footer } from '../html-tags'
+import { Footer } from '../html-tags'
 import Link from '@mui/material/Link'
+import FundingPartners from './_funding-partners'
 
 export default ({ routes }) => {
   const {
@@ -45,12 +46,13 @@ export default ({ routes }) => {
               </Grid>
               <Grid container item xs={12} sm={3}>
                 <Legal routes={_routes} />
+                <SourceCode routes={_routes} />
               </Grid>
               <Grid item xs={12} sm={3}>
                 <Contact routes={_routes} />
               </Grid>
               <Grid container item xs={12} sm={3}>
-                <SourceCode routes={_routes} />
+                <FundingPartners />
               </Grid>
             </Grid>
           </Container>

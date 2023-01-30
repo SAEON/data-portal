@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import { Div } from '../../../components/html-tags'
-import { DatabasePlus as SubmitIcon, Magnify as SearchIcon } from '../../../components/icons'
+import { DatabasePlus as SubmitIcon, DatabaseSearch as SearchIcon } from '../../../components/icons'
 import Tooltip from '@mui/material/Tooltip'
 
 export default () => {
   return (
     <Header>
       <Divider flexItem orientation="vertical" />
-      <Div sx={{ mx: theme => theme.spacing(1) }} />
-      <Tooltip placement="top-start" title="Submit data for curation">
+      <Div sx={{ mr: theme => theme.spacing(1) }} />
+      <Tooltip placement="top-start" title="Search out metadata">
         <Button
           LinkComponent={Link}
           to="/records"
@@ -19,7 +19,7 @@ export default () => {
           size="small"
           variant="text"
         >
-          Search data
+          Search
         </Button>
       </Tooltip>
       <Divider sx={{ mx: theme => theme.spacing(1) }} flexItem orientation="vertical" />
@@ -32,7 +32,7 @@ export default () => {
           size="small"
           variant="text"
         >
-          Submit data
+          Submit
         </Button>
       </Tooltip>
       <Div sx={{ mr: theme => theme.spacing(1) }} />
