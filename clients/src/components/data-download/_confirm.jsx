@@ -90,7 +90,6 @@ export default memo(
               size="small"
               variant="text"
               disabled={disabled}
-              download={resourceDescription || downloadURL || 'Unknown resource'}
               sx={{ display: 'block', float: 'right', margin: 2 }}
               href={downloadURL}
               aria-label="Agree to terms and download resource"

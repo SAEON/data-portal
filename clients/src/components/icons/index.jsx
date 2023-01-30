@@ -9,6 +9,7 @@ import {
   mdiAlert,
   mdiApi,
   mdiAxisLock,
+  mdiBank,
   mdiCancel,
   mdiChartBox,
   mdiChevronDown,
@@ -20,6 +21,7 @@ import {
   mdiContentCopy,
   mdiContentSave,
   mdiDatabasePlus,
+  mdiDatabaseSearch,
   mdiDelete,
   mdiDownload,
   mdiDownloadCircleOutline,
@@ -47,7 +49,40 @@ import {
   mdiMenuDown,
   mdiChat,
   mdiChartBar,
+  mdiDatabase,
+  mdiCodeTags,
+  mdiHandshake,
 } from '@mdi/js'
+
+export const DatabaseSearch = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiDatabaseSearch} />
+  </SvgIcon>
+))({})
+
+export const Bank = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiBank} />
+  </SvgIcon>
+))({})
+
+export const Handshake = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiHandshake} />
+  </SvgIcon>
+))({})
+
+export const CodeTags = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiCodeTags} />
+  </SvgIcon>
+))({})
+
+export const Database = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiDatabase} />
+  </SvgIcon>
+))({})
 
 export const ChartBar = styled(props => (
   <SvgIcon {...props}>

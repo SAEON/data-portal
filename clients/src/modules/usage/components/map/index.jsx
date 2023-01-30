@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Map } from 'maplibre-gl'
 import { Div } from '../../../../components/html-tags'
 import { ESRI_API_KEY } from '../../../../config'
@@ -7,7 +8,7 @@ import tinygradient from 'tinygradient'
 
 const BASEMAP_ENUM = 'ArcGIS:Topographic'
 
-export default ({ geojson, containerRef: container }) => {
+export default memo(({ geojson, containerRef: container }) => {
   const theme = useTheme()
 
   const palette = tinygradient(
@@ -20,7 +21,7 @@ export default ({ geojson, containerRef: container }) => {
   if (!ESRI_API_KEY) {
     return <Div>Missing Configuration value for ESRI_API_KEY</Div>
   }
-  var map = new Map({
+  const map = new Map({
     container,
     style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${BASEMAP_ENUM}?type=style&token=${ESRI_API_KEY}`,
     zoom: 1,
@@ -155,4 +156,4 @@ export default ({ geojson, containerRef: container }) => {
   })
 
   return <MapAttribution />
-}
+})

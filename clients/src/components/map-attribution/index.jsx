@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography'
 import { alpha } from '@mui/material/styles'
 
-export default () => (
+export default ({ sx }) => (
   <Typography
     variant="caption"
     sx={{
@@ -14,6 +14,7 @@ export default () => (
       m: 0,
       py: 0,
       px: theme => theme.spacing(0.5),
+      ...sx,
     }}
   >
     Powered by Esri

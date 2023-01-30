@@ -16,7 +16,7 @@ export default ({ autofocus = true, onFocus, onBlur }) => {
 
   return (
     <QuickForm
-      effects={[debounce(({ text = '' }) => setGlobal({ text }), 500)]}
+      effects={[debounce(({ text = '' }) => setGlobal({ text }), 700)]}
       text={global.text || ''}
     >
       {(update, { text }) => {

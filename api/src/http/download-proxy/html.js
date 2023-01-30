@@ -5,7 +5,7 @@ export default `
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resource download notice</title>
+    <title>SAEON resource download notice</title>
     <style>
       html, body {
         margin: 0;
@@ -27,6 +27,7 @@ export default `
       pre {
         padding: 32px 0;
         background-color: lightgrey;
+        overflow: auto;
       }
 
       p {
@@ -70,12 +71,14 @@ export default `
   </head>
   <body>
     <div>
-      <h1>RESOURCE DOWNLOAD</h1>
-      <p><b>$hostname</b> is served on an insecure connection. Many browsers suppress downloads served from non-HTTPS addresses when navigated to from sites served on secure connections (such as the SAEON Data Portal). Please copy and paste the link below to a new tab to view/download this resource.</p>
+      <h1>SAEON RESOURCE DOWNLOAD</h1>
+      <p><b>$hostname</b> is served on an insecure connection. Many browsers disallow linking to content served from non-HTTPS addresses from sites served on secure connections (such as the SAEON Data Portal).</p>
+
+      <p>Please manually copy and paste the link below to a new tab to view/download this resource.</p>
 
       <pre>$uri</pre>
 
-      <p>Please contact the SAEON curation team at <b>$CURATOR_CONTACT</b> to request that this resource be made available at a secure address in the future, or that the host <b>$hostname</b> be whitelisted to circumvent this notice. If you think this message is in error, please let us know at <b>$TECHNICAL_CONTACT</b></p>
+      <p>Contact the SAEON curation team at <b>$CURATOR_CONTACT</b> to request that this resource be made available at a secure address in the future. If you think this message is in error, or have any other technical requests / feedback, please let us know at <b>$TECHNICAL_CONTACT</b>.</p>
     </div>
   </body>
   </html>`
