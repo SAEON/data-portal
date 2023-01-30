@@ -47,7 +47,7 @@ export default () => {
                 ),
               }}
               size="small"
-              placeholder={`Search metadata catalogue`}
+              placeholder={`Search for datasets`}
               autoComplete="off"
               fullWidth
             />

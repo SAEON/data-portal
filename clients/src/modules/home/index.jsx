@@ -11,7 +11,6 @@ import Map from './map'
 import Stats from './stats'
 import Grid from '@mui/material/Grid'
 import Provider from './context'
-import Typography from '@mui/material/Typography'
 
 export default () => {
   const [ref, setRef] = useState(null)
@@ -76,20 +75,6 @@ export default () => {
           {/* CONTENTS */}
           <Container>
             <Grid container spacing={0} sx={{ justifyContent: 'center' }}>
-              <Grid item xs={12} sx={{ zIndex: 1 }}>
-                <Typography
-                  variant="h4"
-                  gutterBottom
-                  sx={theme => ({
-                    textAlign: 'center',
-                    mb: 6,
-                    color: theme.palette.common.white,
-                    [theme.breakpoints.down('xs')]: { fontSize: 'unset' },
-                  })}
-                >
-                  Welcome to the SAEON Data Portal
-                </Typography>
-              </Grid>
               <Search />
             </Grid>
           </Container>
