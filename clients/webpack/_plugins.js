@@ -12,7 +12,7 @@ let {
   DEPLOYMENT_ENV = 'local',
   CLIENTS_SEARCH_FILTER_CONFIG_PATH = '',
   SUBDOMAIN_APP_ENTRIES = '',
-  ESRI_API_KEY = ''
+  ESRI_API_KEY = '',
 } = process.env
 
 module.exports = (ROOT, output) => {
