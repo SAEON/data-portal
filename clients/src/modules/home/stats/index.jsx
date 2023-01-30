@@ -26,6 +26,7 @@ export default () => {
   return (
     <Div
       sx={theme => ({
+        overflow: 'auto',
         zIndex: 1,
         width: '100%',
         [theme.breakpoints.down('sm')]: {

@@ -106,6 +106,8 @@ export default () => {
               <Search />
             </Grid>
           </Container>
+
+          {/* STATS */}
           <Stats />
         </Div>
       </Div>
