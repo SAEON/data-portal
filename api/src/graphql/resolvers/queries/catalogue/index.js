@@ -31,5 +31,6 @@ export default async (_, args, ctx, info) => {
 
   return {
     id: hash(JSON.stringify(log)),
+    indexStats: {},
   }
 }

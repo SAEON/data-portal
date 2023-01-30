@@ -4,16 +4,6 @@ import setupTemplates from './setup-templates/index.js'
 
 export const client = new ElasticClient({ node: ELASTICSEARCH_ADDRESS })
 
-export const get = async ({ id, index = ELASTICSEARCH_CATALOGUE_INDEX }) =>
-  await client.get({ index, id }).then(res => res.body)
-
-export const update = async ({ id, index = ELASTICSEARCH_CATALOGUE_INDEX, body }) =>
-  client.update({
-    id,
-    index,
-    body,
-  })
-
 export const query = async ({ index = ELASTICSEARCH_CATALOGUE_INDEX, body }) => {
   if (!body) {
     throw new Error(`DSL object is required to query the Elasticsearch instance`)
@@ -24,7 +14,7 @@ export const query = async ({ index = ELASTICSEARCH_CATALOGUE_INDEX, body }) => 
   try {
     return await client.search({
       index,
-      body,
+      ...body,
     })
   } catch (error) {
     console.error(`Elasticsearch query failed with DSL body ${JSON.stringify(body)}. ${error}`)

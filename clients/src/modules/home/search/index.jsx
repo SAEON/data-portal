@@ -1,42 +1,59 @@
-import useSummary from './_summary'
-import Search from '../../../components/search/index-old'
-import { alpha } from '@mui/material/styles'
-import Container from '@mui/material/Container'
-import Toolbar from '@mui/material/Toolbar'
-import { BoxButton } from '../../../components/fancy-buttons'
+import { useContext, useCallback } from 'react'
+import { context as configContext } from '../../../config'
+import { context as searchContext } from '../../../contexts/search'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
+import InputAdornment from '@mui/material/InputAdornment'
+import { Magnify as SearchIcon } from '../../../components/icons'
+import IconButton from '@mui/material/IconButton'
+import TextField from './_text-field'
+import QuickForm from '../../../components/quick-form'
+import debounce from '../../../lib/fns/debounce'
 
 export default () => {
-  const { data } = useSummary()
+  const { setGlobal } = useContext(searchContext)
+  const { contentBase } = useContext(configContext)
+  const navigate = useNavigate()
+  const { search } = useLocation()
 
-  const count = data?.catalogue.search.totalCount
+  const go = useCallback(() => navigate(`${contentBase}/records${search}`.replace('//', '/')), [])
 
   return (
-    <Toolbar
-      sx={{
-        backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
-        height: '85vh',
-      }}
-    >
-      <Container>
-        <Grid container spacing={2}>
-          <Grid xs={12} md={8} lg={9} item>
-            <Search />
-          </Grid>
-          <Grid sx={{ minHeight: 112 }} item xs={12} md={4} lg={3}>
-            <BoxButton
-              disabled={count === 0}
-              title={`${
-                isNaN(count)
-                  ? '...'
-                  : count === 0
-                  ? 'No search results'
-                  : `Explore ${count} datasets`
-              }`}
+    <Grid item xs={7} md={5} lg={4}>
+      <QuickForm text="" effects={[debounce(({ text }) => setGlobal({ text }, true))]}>
+        {(update, { text }) => {
+          return (
+            <TextField
+              margin="normal"
+              autoFocus
+              value={text}
+              onChange={({ target: { value: text } }) => update({ text })}
+              onKeyDown={({ key }) => key === 'Enter' && go()}
+              InputProps={{
+                sx: {
+                  color: theme => theme.palette.common.white,
+                },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Search catalogue for matches with text input"
+                      onClick={() => go()}
+                      onKeyDown={({ key }) => key === 'Enter' && go()}
+                      edge="end"
+                    >
+                      <SearchIcon sx={{ color: 'white' }} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              size="small"
+              placeholder={`Search for datasets`}
+              autoComplete="off"
+              fullWidth
             />
-          </Grid>
-        </Grid>
-      </Container>
-    </Toolbar>
+          )
+        }}
+      </QuickForm>
+    </Grid>
   )
 }

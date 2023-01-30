@@ -38,9 +38,22 @@ input FieldInput {
   sortOrder: String
 }
 
+type IndexStats {
+  records: Int!
+  collections: Int!
+  institutions: Int!
+  providers: Int!
+  themes: Int!
+  domains: JSON
+}
+
 type Catalogue {
   id: ID!
-
+  """
+  High level overview of Elasticsearch index contents
+  Used on the home page
+  """
+  indexStats: IndexStats!
   """
   Fetch metadata records from SAEON's data catalogue
   """
