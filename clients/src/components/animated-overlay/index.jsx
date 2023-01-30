@@ -1,6 +1,6 @@
 import Fade from '@mui/material/Fade'
 import { Div } from '../html-tags'
-import { styled, keyframes } from '@mui/material/styles'
+import { keyframes } from '@mui/material/styles'
 
 const animation = keyframes`
   0% {
