@@ -1,7 +1,12 @@
 import { useContext } from 'react'
 import { context as dataContext } from '../context'
 import { Div } from '../../../components/html-tags'
-import { Database as DatabaseIcon } from '../../../components/icons'
+import {
+  Database as DatabaseIcon,
+  CodeTags as CodeTagsIcon,
+  Handshake as HandshakeIcon,
+  Bank as BankIcon,
+} from '../../../components/icons'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Item from './_item'
@@ -33,13 +38,13 @@ export default () => {
             <Item Icon={DatabaseIcon} title={collectionsCount} content="Collections" />
           )}
           {providersCount !== NaN && providersCount > 0 && (
-            <Item Icon={DatabaseIcon} title={providersCount} content="Providers" />
+            <Item Icon={HandshakeIcon} title={providersCount} content="Providers" />
           )}
           {institutionsCount !== NaN && institutionsCount > 0 && (
-            <Item Icon={DatabaseIcon} title={institutionsCount} content="Institutions" />
+            <Item Icon={BankIcon} title={institutionsCount} content="Institutions" />
           )}
           {themesCount !== NaN && themesCount > 0 && (
-            <Item Icon={DatabaseIcon} title={themesCount} content="themes" />
+            <Item Icon={CodeTagsIcon} title={themesCount} content="themes" />
           )}
         </Grid>
       </Container>

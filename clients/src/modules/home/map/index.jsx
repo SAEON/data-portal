@@ -19,7 +19,7 @@ export default ({ mapContainer: container }) => {
     style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${BASEMAP_ENUM}?type=style&token=${ESRI_API_KEY}`,
     zoom: 2,
     center: [0, 0],
-    attributionControl: false,
+    attributionControl: true,
     interactive: false,
     pitch: 0,
     bearing: 0,
@@ -28,7 +28,7 @@ export default ({ mapContainer: container }) => {
   return (
     <>
       {/* <Domains map={map} /> */}
-      <MapAttribution sx={{ opacity: 0.9 }} />
+      {/* <MapAttribution sx={{ opacity: 0.9 }} /> */}
     </>
   )
 }

@@ -41,6 +41,7 @@ export default ({ map }) => {
       paint: {
         'fill-color': theme.palette.primary.main,
         'fill-opacity': 0.075,
+        'fill-outline-color': theme.palette.common.white,
       },
     })
   })

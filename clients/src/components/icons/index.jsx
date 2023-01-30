@@ -9,6 +9,7 @@ import {
   mdiAlert,
   mdiApi,
   mdiAxisLock,
+  mdiBank,
   mdiCancel,
   mdiChartBox,
   mdiChevronDown,
@@ -48,7 +49,27 @@ import {
   mdiChat,
   mdiChartBar,
   mdiDatabase,
+  mdiCodeTags,
+  mdiHandshake,
 } from '@mdi/js'
+
+export const Bank = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiBank} />
+  </SvgIcon>
+))({})
+
+export const Handshake = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiHandshake} />
+  </SvgIcon>
+))({})
+
+export const CodeTags = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiCodeTags} />
+  </SvgIcon>
+))({})
 
 export const Database = styled(props => (
   <SvgIcon {...props}>
