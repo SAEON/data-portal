@@ -11,7 +11,7 @@ export default () => {
     <Header>
       <Divider flexItem orientation="vertical" />
       <Div sx={{ mr: theme => theme.spacing(1) }} />
-      <Tooltip placement="top-start" title="Search out metadata">
+      <Tooltip placement="top-start" title="Search metadata collection">
         <Button
           LinkComponent={Link}
           to="/records"
