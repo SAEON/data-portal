@@ -6,7 +6,6 @@ import Container from '@mui/material/Container'
 import Search from './search'
 import Overlay from '../../components/animated-overlay'
 import { Div } from '../../components/html-tags'
-import Header from './header'
 import Map from './map'
 import Stats from './stats'
 import Grid from '@mui/material/Grid'
@@ -19,10 +18,9 @@ export default () => {
   return (
     <Provider>
       <SkipLink href="#home-search" text="Skip to main content" />
-      <Header />
 
       {/* MAP */}
-      <Div sx={{ display: 'flex', height: `calc(100vh - ${headerRef?.offsetHeight}px - 48px)` }}>
+      <Div sx={{ display: 'flex', height: `calc(100vh - ${headerRef?.offsetHeight}px)` }}>
         <Div
           sx={{
             display: 'flex',
