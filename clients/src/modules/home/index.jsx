@@ -6,7 +6,6 @@ import Container from '@mui/material/Container'
 import Search from './search'
 import Overlay from '../../components/animated-overlay'
 import { Div } from '../../components/html-tags'
-import Header from './header'
 import Map from './map'
 import Stats from './stats'
 import Grid from '@mui/material/Grid'
@@ -19,19 +18,21 @@ export default () => {
   return (
     <Provider>
       <SkipLink href="#home-search" text="Skip to main content" />
-      <Header />
 
       {/* MAP */}
-      <Div sx={{ display: 'flex', height: `calc(100vh - ${headerRef?.offsetHeight}px - 48px)` }}>
+      <Div sx={{ display: 'flex', height: `calc(100vh - ${headerRef?.offsetHeight}px)` }}>
         <Div
-          sx={{
+          sx={theme => ({
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
             position: 'relative',
-          }}
+            [theme.breakpoints.up('sm')]: {
+              justifyContent: 'center',
+            },
+          })}
         >
           {/* MAP */}
           <Div
@@ -43,10 +44,37 @@ export default () => {
               bottom: 0,
               left: 0,
               right: 0,
+              '& .maplibregl-ctrl-bottom-left': {
+                bottom: 12,
+                left: 6,
+                opacity: 0.5,
+                '& .maplibregl-ctrl': {
+                  m: 0,
+                },
+              },
               '&.maplibregl-map': {
                 position: 'absolute',
               },
+              [theme.breakpoints.down('sm')]: {
+                '& .maplibregl-ctrl-bottom-right': {
+                  opacity: 0.5,
+                  '& .maplibregl-ctrl': {
+                    mr: 0.5,
+                  },
+                },
+                '& #esri-map-attribution': {
+                  display: 'none',
+                },
+              },
               [theme.breakpoints.up('sm')]: {
+                '& .maplibregl-ctrl-bottom-left': {
+                  bottom: `24px !important`,
+                  left: '0 !important',
+                  '& .maplibregl-ctrl': {
+                    ml: `8px !important`,
+                    mb: '4px !important',
+                  },
+                },
                 '& #mobile-dot': {
                   display: 'none',
                 },
@@ -57,7 +85,7 @@ export default () => {
                     flex: 1,
                     '& .maplibregl-ctrl-attrib-inner': {
                       display: 'flex',
-                      '& span': {
+                      '& #esri-attr-spacing': {
                         marginLeft: 'auto',
                       },
                     },
@@ -78,6 +106,8 @@ export default () => {
               <Search />
             </Grid>
           </Container>
+
+          {/* STATS */}
           <Stats />
         </Div>
       </Div>

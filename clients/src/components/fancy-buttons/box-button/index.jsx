@@ -81,6 +81,7 @@ const FancyButton = ({
   ...props
 }) => {
   const { search } = useLocation()
+
   return (
     <Div sx={{ width: '100%', height: '100%' }} {...props}>
       <Button

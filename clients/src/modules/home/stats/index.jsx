@@ -25,10 +25,16 @@ export default () => {
 
   return (
     <Div
-      sx={{
+      sx={theme => ({
+        overflow: 'auto',
         zIndex: 1,
         width: '100%',
-      }}
+        [theme.breakpoints.down('sm')]: {
+          display: 'flex',
+          flex: 1,
+          alignItems: 'center',
+        },
+      })}
     >
       <Container sx={{ py: 4 }}>
         <Grid container spacing={0} justifyContent="center">

@@ -10,15 +10,16 @@ const Title = props => <Text_ textAlign="center" variant={'overline'} {...props}
 
 const Item = ({ sx = {}, ...props }) => (
   <Grid
-    sx={theme => ({
+    sx={{
       my: 2,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       ...sx,
-    })}
+    }}
     item
-    xs={6}
+    xs={12}
+    sm={6}
     md={2}
     {...props}
   />

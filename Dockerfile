@@ -2,7 +2,7 @@
 FROM node:19.3.0 as client
 
 ARG API_ADDRESS=http://localhost:3000
-ARG CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Catalogue!,info"
+ARG CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Data Portal!,info"
 ARG CLIENTS_PUBLIC_ADDRESS=http://localhost:3000
 ARG CLIENTS_SEARCH_FILTER_CONFIG_PATH=client-filters.json
 ARG CURATOR_CONTACT=Missing contact information
