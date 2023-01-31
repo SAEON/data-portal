@@ -67,6 +67,7 @@ export default ({ children }) => {
       {(setGlobal, global) => (
         <context.Provider
           value={{
+            list: data.list,
             global,
             setGlobal: (obj, clearHistory = false, cb) => {
               setGlobal(

@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import facets from '../../../../elasticsearch/query-builder/facets.js'
 import { CLIENT_FILTER_CONFIG } from '../../../../config/index.js'
+import parseHtml from './_parse-html.js'
 
 const EXCLUDE_KEYWORDS = ['unknown']
 
@@ -78,6 +79,6 @@ export default async ctx => {
       if (a.length > b.length) return -1
       return 0
     }),
-    $DESCRIPTION: encodeURIComponent($DESCRIPTION),
+    $DESCRIPTION: parseHtml($DESCRIPTION),
   }
 }

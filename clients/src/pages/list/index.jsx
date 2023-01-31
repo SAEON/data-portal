@@ -1,5 +1,6 @@
 import mount from '../../entry-point/main'
-import { lazy, Suspense, useRef } from 'react'
+import { lazy, Suspense, useRef, useContext } from 'react'
+import { context as searchContext } from '../../contexts/search'
 import Loading from '../../components/loading'
 import RouteSwitcher from '../../entry-point/route-switcher'
 import { SizeContent } from '../../contexts/layout'
@@ -18,23 +19,25 @@ const config = {
 
 const routes = configureRoutes(config)
 
+const Header = ({ title: _title, description: _description }) => {
+  const { list: { title, description } = {} } = useContext(searchContext)
+  return <ListHeader title={title || _title} description={description || _description} />
+}
+
 const Page = () => {
   const titleRef = useRef(document.getElementById('document-title'))
   const contentRef = useRef(document.getElementById('document-description'))
 
   const title = (titleRef.current?.innerHTML || '$TITLE').replace('$TITLE', 'SAEON Data')
-
-  const description = decodeURIComponent(
-    (contentRef.current?.content || '$DESCRIPTION').replace(
-      '$DESCRIPTION',
-      'Curated data collection'
-    )
+  const description = (contentRef.current?.content || '$DESCRIPTION').replace(
+    '$DESCRIPTION',
+    'Curated data collection'
   )
 
   return (
     <Suspense fallback={<Loading />}>
       <App {...config}>
-        <ListHeader title={title} description={description} />
+        <Header title={title} description={description} />
         <SizeContent>
           <RouteSwitcher routes={routes} />
         </SizeContent>
