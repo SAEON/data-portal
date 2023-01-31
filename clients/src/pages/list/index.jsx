@@ -23,9 +23,12 @@ const Page = () => {
   const contentRef = useRef(document.getElementById('document-description'))
 
   const title = (titleRef.current?.innerHTML || '$TITLE').replace('$TITLE', 'SAEON Data')
-  const description = (contentRef.current?.content || '$DESCRIPTION').replace(
-    '$DESCRIPTION',
-    'Curated data collection'
+
+  const description = decodeURIComponent(
+    (contentRef.current?.content || '$DESCRIPTION').replace(
+      '$DESCRIPTION',
+      'Curated data collection'
+    )
   )
 
   return (

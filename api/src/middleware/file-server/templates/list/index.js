@@ -78,6 +78,6 @@ export default async ctx => {
       if (a.length > b.length) return -1
       return 0
     }),
-    $DESCRIPTION,
+    $DESCRIPTION: encodeURIComponent($DESCRIPTION),
   }
 }
