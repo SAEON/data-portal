@@ -18,7 +18,7 @@ const AGG_FIELDS = [
 export default async ctx => {
   const { search: listId } = ctx.query
   const { findLists } = ctx.mongo.dataFinders
-  const list = listId ? (await findLists({ _id: ObjectId(listId) }))[0] : undefined
+  const list = listId ? (await findLists({ _id: new ObjectId(listId) }))[0] : undefined
 
   const {
     title: $TITLE = 'SAEON Collection',

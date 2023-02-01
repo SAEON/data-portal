@@ -34,7 +34,7 @@ export default async (ctx, ...permissions) => {
   /**
    * Then see if there is a user with these roles, and the userId
    */
-  const user = (await findUsers({ _id: ObjectId(userId), roles: { $in: roleIds } }))[0]
+  const user = (await findUsers({ _id: new ObjectId(userId), roles: { $in: roleIds } }))[0]
 
   /**
    * If there is no user,

@@ -61,7 +61,7 @@ export const makeLog = async (ctx, otherFields) => {
     countryCode && city ? `${countryCode}/${city}${district ? `/${district}` : ''}` : 'UNKNOWN'
 
   return {
-    userId: ctx?.user.info(ctx)?.id ? ObjectId(ctx.user.info(ctx)?.id) : undefined,
+    userId: ctx?.user.info(ctx)?.id ? new ObjectId(ctx.user.info(ctx)?.id) : undefined,
     createdAt: new Date(), // This should be overridden by client logs, otherwise createdAt values won't be accurate
     clientSession: ctx?.cookies.get(PASSPORT_SSO_SESSION_ID) || 'no-session', // This can happen if user blocks cookies in their browser
     clientInfo: {
