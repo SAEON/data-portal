@@ -30,23 +30,25 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Overview
-Search SAEON's data catalogue, preview datasets on a map, and download data.
+The SAEON Data Portal is a tool for searching SAEON's curated metadata.
 
 ## The stack
 
+- [Elasticsearch](https://www.elastic.co/)
+- [MongoDB](https://www.mongodb.com/)
 - GraphQL API (Node.js + [Koa.js](https://koajs.com/) + [Apollo Server](https://www.apollographql.com/docs/apollo-server/))
-- Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://material-ui.com/) + [Apollo client](https://www.apollographql.com/apollo-client))
+- Browser clients ([React.js](https://reactjs.org/) + [Material UI](https://mui.com//) + [Apollo client](https://www.apollographql.com/apollo-client))
 
 # Quick start
 
 Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (Mongo, Elasticsearch) are run via Docker containers.
 
-Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration). This is because the integration with SAEON's ODP (Open Data Platform) requires authentication, without which there will be no data available to the catalogue software (the server crashes on startup with a helpful error message in this case).
+Mostly configuration params have sensible defaults, only the API needs to be explicitly [configured](/src/api#environment-configuration) with authentication credentials, without which there will be no data available to the catalogue software (the server crashes on startup with a helpful error message in this case).
 
 ## System requirements
 
 1. Docker Engine
-2. Node.js **v19**
+2. Node.js **v19.3.0** (use the exact version)
 
 ## [Start a local MongoDB server](https://github.com/SAEON/mongo#local-development)
 
@@ -56,17 +58,18 @@ Mostly configuration params have sensible defaults, only the API needs to be exp
 
 ```sh
 # Download the source code
-git clone git@github.com:SAEON/catalogue.git catalogue
-cd catalogue
+git clone git@github.com:SAEON/data-portal.git sdp
+cd sdp
 
 # Install the chomp CLI
 npm install -g chomp
 
 # Update repository git configuration
-chomp configure-git
+chomp git:configure
 
 # Install package dependencies. From the root of this repository:
-cd api \
+npm install \
+  && cd api \
   && npm install \
   && cd ../clients \
   && npm install \
@@ -92,6 +95,8 @@ sdp integrations saeon --run
 
 # Deployment
 Although the client and API are treated as separate during development, when deploying the software the client ***must*** be served via the API server. SEO and other features are configured this way.
+
+NOTE: Since the client is configured at image build time, deployments to separate hostnames require building separate Docker images.
 
 ## Build and Deploy a Docker image
 Please refer to source code for build time & runtime configuration options (or request additional documentation). But in short, the domain of the image currently has to be specified at build time (when the React.js client is built via Webpack. Here is a minimum working example for deploying a Docker image on localhost.
@@ -145,12 +150,14 @@ Deploy the latest docker image configured for `catalogue.saeon.ac.za` using the 
 IMAGE=ghcr.io/saeon/saeon-data-portal:latest
 # or IMAGE=ghcr.io/saeon/sdp_next:dev
 
-NETWORK=...
+NETWORK=... # Refer to above
 ```
 
 SAEON production and development deployments are configured as [Docker stacks](/deploy/).
 
 ## Deploy from source code
+To deploy from source code directly (i.e. without Dockerizing the application), follow these steps.
+
 From the root of the repository:
 
 ```sh
@@ -167,7 +174,7 @@ node \
   src/index.js
 
 # or start via the shell script
-srouce env.sh
+source env.sh
 start
 ```
 
