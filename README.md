@@ -18,6 +18,9 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
   - [Start the ELK stack locally](#start-the-elk-stack-locally)
   - [Install dependencies and run the services](#install-dependencies-and-run-the-services)
     - [Load catalogue data on first use](#load-catalogue-data-on-first-use)
+- [Command Line Interface (CLI)](#command-line-interface-cli)
+  - [Running the CLI in a dockerized environment](#running-the-cli-in-a-dockerized-environment)
+  - [Running the CLI in a local/non-dockerized environment](#running-the-cli-in-a-localnon-dockerized-environment)
 - [Deployment](#deployment)
   - [Build and Deploy a Docker image](#build-and-deploy-a-docker-image)
     - [Build Docker image locally](#build-docker-image-locally)
@@ -85,12 +88,44 @@ chomp --watch
 ```
 
 ### Load catalogue data on first use
-The first time you use the Data Portal on a local you need to load metadata from the catalogue into Elasticsearch. There is a CLI to do this - from the root of this repository:
+The first time you use the Data Portal on a local you need to load metadata from the catalogue into Elasticsearch. There is a CLI to do this (refer to the section below on the CLI).
+
+Here's the TLDR: from the root of this repository:
 
 ```sh
 cd api
 source env.sh
 sdp integrations saeon --run
+```
+
+# Command Line Interface (CLI)
+The application includes a CLI to run tasks - for example, triggering the ODP integration manually, building sitemaps manually, running database migration scripts, etc.
+
+## Running the CLI in a dockerized environment
+The CLI is packaged into the Docker image at build time. Use the `sdp` command in the context of the docker container. Even if the container is part of a docker stack, it's necessary to use a specific container on a specific host, so these instructions are for docker swarm or otherwise. For example:
+
+```sh
+# List active containers
+docker container ls
+
+# Get the container ID. For example: 0419726a1bec, and login to the container
+docker container exec -it 0419726a1bec sh
+
+# Run the CLI - the commands are documented in the CLI output
+sdp
+```
+
+## Running the CLI in a local/non-dockerized environment
+From the root of the source code repository:
+
+```sh
+cd api
+
+# This updates the $PATH environment variable so that the `sdp` command works
+source env.sh
+
+# Run the CLI
+sdp
 ```
 
 # Deployment
