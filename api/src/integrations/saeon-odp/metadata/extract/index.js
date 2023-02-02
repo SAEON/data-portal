@@ -7,7 +7,7 @@ const iterate = async ({ offset = 0 } = {}) => {
   const Authorization = [token_type, access_token].join(' ')
 
   const res = await fetch(
-    `${ODP_API_CATALOGUE_ENDPOINT}?limit=${ODP_INTEGRATION_BATCH_SIZE}&offset=${offset}`,
+    `${ODP_API_CATALOGUE_ENDPOINT}/?limit=${ODP_INTEGRATION_BATCH_SIZE}&offset=${offset}`,
     {
       method: 'GET',
       headers: {
