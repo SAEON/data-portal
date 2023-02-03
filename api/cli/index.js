@@ -14,7 +14,7 @@ const cli = args =>
       },
       {
         title: 'sdp',
-        description: 'SAEON Data Portal repository management',
+        description: 'SAEON Data Portal service management',
       }
     ),
     args
