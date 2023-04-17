@@ -105,8 +105,18 @@ export default ({ geoLocations, linkedResource, id, title }) => {
     <Div ref={ref} sx={{ position: 'relative', width: '100%', height: '100%' }}>
       {uriInspection.loading && <Loading />}
       {uriInspection.error && (
-        <DialogContent>
-          <Pre>
+        <DialogContent
+          sx={{
+            position: 'absolute',
+            top: 0,
+          }}
+        >
+          <Pre
+            sx={{
+              outline: theme => `1px solid ${theme.palette.divider}`,
+              boxShadow: theme => theme.shadows[2],
+            }}
+          >
             {`Cannot load map - WMS resource is not responding. If the URL is to a valid WMS server, then it is currently down. Otherwise the URL is missing, incorrect, or intended for manual inspection (see below)\n\n${JSON.stringify(
               linkedResource,
               null,
