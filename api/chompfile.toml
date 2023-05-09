@@ -16,17 +16,17 @@ run = 'eslint -c .eslintrc.cjs "src/**/*.{js,mjs,cjs}"'
 
 [[task]]
 name = 'ncu'
-run = 'ncu -x es8.x,koa-passport'
+run = 'ncu -x es8.x,koa-passport,openid-client'
 
 [[task]]
 name = 'ncu:u'
-run = 'ncu -u -x es8.x,koa-passport'
+run = 'ncu -u -x es8.x,koa-passport,openid-client'
 
 [[task]]
 name = 'start'
 env = { NODE_ENV = 'development', TZ = 'utc', NODE_TLS_REJECT_UNAUTHORIZED='0' }
 deps = [
-  'prettier'
+    'src/**/*'
 ]
 serial = true
 run = """
@@ -39,10 +39,7 @@ node \
 [[task]]
 name = 'prettier'
 targets = []
-deps = [
-    '/home/zach/code/saeon/repositories/data-portal/api/src/**/*',
-    'npm:install',
-]
+deps = []
 invalidation = 'always'
 run = 'prettier --cache --cache-strategy metadata --loglevel warn --ignore-path .prettierignore --write "src/**/*.@(js|jsx|json|mjs|cjs|graphql|yml)"'
 

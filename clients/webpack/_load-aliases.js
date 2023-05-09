@@ -28,10 +28,4 @@ module.exports = (ROOT, mode) => ({
   // React
   react: path.resolve(ROOT, './node_modules/react'),
   'react-dom': path.resolve(ROOT, './node_modules/react-dom'),
-
-  // @saeon/logger
-  '@saeon/logger': path.resolve(
-    ROOT,
-    mode === 'production' ? './node_modules/@saeon/logger' : '../packages/logger'
-  ),
 })
