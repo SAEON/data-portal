@@ -5,8 +5,23 @@ import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 import { context as searchContext } from '../../../../../../contexts/search'
 import { Div, Span } from '../../../../../../components/html-tags'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
-export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filterId }) => {
+const makeFilter = ({ terms, field, boost, value, filterId, context }) => ({
+  terms: [...new Set([...terms, { field, boost, value, filterId, context }])],
+})
+
+export default ({
+  showAll,
+  results,
+  LIST_SIZE,
+  activeFilters,
+  contexts = [undefined],
+  field,
+  boost,
+  filterId,
+}) => {
   const { global, setGlobal } = useContext(searchContext)
   const { terms } = global
 
@@ -23,27 +38,99 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
 
     const checked = activeFilters?.map(({ value }) => value)?.includes(key) ? true : false
 
+    const renderContexts = Boolean(contexts.filter(Boolean).length)
+
     return (
       <Grid key={key} item xs={12}>
-        <Div sx={{ pl: theme => theme.spacing(1), display: 'flex', alignItems: 'center' }}>
-          <Checkbox
-            size="small"
-            sx={{ alignSelf: 'baseline', '& .MuiSvgIcon-root': { fontSize: 16 } }}
-            color="primary"
-            checked={checked}
-            onChange={() => {
-              if (activeFilters?.map(({ value }) => value)?.includes(key)) {
-                setGlobal({
-                  terms: terms?.filter(({ value }) => value !== key),
-                })
-              } else {
-                setGlobal({
-                  terms: [...new Set([...terms, { field, boost, value: key, filterId }])],
-                })
-              }
+        <Div
+          sx={{
+            pl: theme => theme.spacing(1),
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: renderContexts ? 'row-reverse' : 'inherit',
+            justifyContent: renderContexts ? 'space-between' : 'inherit',
+          }}
+        >
+          <Div
+            sx={{
+              mr: theme => (renderContexts ? theme.spacing(2) : 'inherit'),
+              display: 'flex',
             }}
-            inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
-          />
+          >
+            {contexts.map((context, i) => {
+              return context ? (
+                <FormGroup key={context || i}>
+                  <FormControlLabel
+                    labelPlacement="start"
+                    control={
+                      <Checkbox
+                        size="small"
+                        sx={{
+                          alignSelf: 'baseline',
+                          '& .MuiSvgIcon-root': { fontSize: 16 },
+                        }}
+                        color="primary"
+                        checked={checked}
+                        onChange={() => {
+                          if (activeFilters?.map(({ value }) => value)?.includes(key)) {
+                            setGlobal({
+                              terms: terms?.filter(({ value }) => value !== key),
+                            })
+                          } else {
+                            setGlobal(
+                              makeFilter({
+                                terms,
+                                field,
+                                boost,
+                                value: key,
+                                filterId,
+                                context,
+                              })
+                            )
+                          }
+                        }}
+                        inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
+                      />
+                    }
+                    label={
+                      <Typography xs={{ fontStyle: 'italic' }} variant="caption">
+                        {context.capitalize()}
+                      </Typography>
+                    }
+                  />
+                </FormGroup>
+              ) : (
+                <Checkbox
+                  size="small"
+                  sx={{
+                    alignSelf: 'baseline',
+                    '& .MuiSvgIcon-root': { fontSize: 16 },
+                  }}
+                  color="primary"
+                  checked={checked}
+                  onChange={() => {
+                    if (activeFilters?.map(({ value }) => value)?.includes(key)) {
+                      setGlobal({
+                        terms: terms?.filter(({ value }) => value !== key),
+                      })
+                    } else {
+                      setGlobal(
+                        makeFilter({
+                          terms,
+                          field,
+                          boost,
+                          value: key,
+                          filterId,
+                          context,
+                        })
+                      )
+                    }
+                  }}
+                  inputProps={{ 'aria-label': 'Toggle filter', 'aria-checked': checked }}
+                />
+              )
+            })}
+          </Div>
           <Tooltip
             title={`${typeof key === 'string' ? key.toUpperCase() : key} (${doc_count})`}
             placement="top"
@@ -56,9 +143,16 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
                     terms: terms?.filter(({ value }) => value !== key),
                   })
                 } else {
-                  setGlobal({
-                    terms: [...new Set([...terms, { field, boost, value: key, filterId }])],
-                  })
+                  setGlobal(
+                    makeFilter({
+                      terms,
+                      field,
+                      boost,
+                      value: key,
+                      filterId,
+                      context,
+                    })
+                  )
                 }
               }}
               sx={{
@@ -67,7 +161,8 @@ export default ({ showAll, results, LIST_SIZE, activeFilters, field, boost, filt
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                marginRight: theme => theme.spacing(2),
+                mr: theme => (renderContexts ? 'inherit' : theme.spacing(2)),
+                ml: theme => (renderContexts ? theme.spacing(1.5) : 'inherit'),
               }}
               variant="caption"
             >{`${typeof key === 'string' ? key.toUpperCase() : key} (${doc_count})`}</Typography>

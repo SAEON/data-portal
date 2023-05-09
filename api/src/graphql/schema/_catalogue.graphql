@@ -1,3 +1,8 @@
+enum TermInputContext {
+  exact
+  from
+  to
+}
 input TermInput {
   """
   This should correlate with a filter ID as defined in client-filters.json at build time
@@ -6,6 +11,7 @@ input TermInput {
   field: String!
   value: String!
   boost: Int
+  context: TermInputContext
 }
 
 input TermsFilterInput {

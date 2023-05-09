@@ -5,7 +5,7 @@ import FilterHeader from './_header'
 import { Div } from '../../../../../components/html-tags'
 import FilterContent from './content'
 
-export default ({ results, id, title, field, boost, defaultExpanded = false }) => {
+export default ({ results, id, title, field, boost, contexts, defaultExpanded = false }) => {
   const { global } = useContext(searchContext)
   const { terms } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
@@ -27,6 +27,7 @@ export default ({ results, id, title, field, boost, defaultExpanded = false }) =
           filterId={id}
           field={field}
           boost={boost}
+          contexts={contexts}
           results={results}
           activeFilters={activeFilters}
         />

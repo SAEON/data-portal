@@ -25,7 +25,7 @@ export default ({ catalogue }) => {
       </Grid>
 
       {/* CONFIGURABLE FILTERS */}
-      {CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }) => {
+      {CLIENT_FILTER_CONFIG.map(({ id, title, field, boost, contexts }) => {
         const items = catalogue?.summary.find(obj => {
           const agg = Object.entries(obj).find(([key]) => key === id)
           return agg
@@ -36,6 +36,7 @@ export default ({ catalogue }) => {
             <TagFilter
               id={id}
               defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}
+              contexts={contexts}
               field={field}
               title={title}
               boost={boost}

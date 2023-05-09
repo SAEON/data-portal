@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography'
 
 const LIST_SIZE = 3
 
-export default ({ results, activeFilters, filterId, field, boost }) => {
+export default ({ results, activeFilters, filterId, field, boost, contexts }) => {
   const [showAll, toggleShowAll] = useState(false)
 
   return (
@@ -43,6 +43,7 @@ export default ({ results, activeFilters, filterId, field, boost }) => {
         boost={boost}
         filterId={filterId}
         activeFilters={activeFilters}
+        contexts={contexts}
         showAll={showAll}
         results={results}
         LIST_SIZE={LIST_SIZE}
