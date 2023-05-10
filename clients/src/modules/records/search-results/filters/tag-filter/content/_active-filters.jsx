@@ -16,14 +16,29 @@ export default ({ activeFilters, filterId }) => {
   const { global, setGlobal } = useContext(searchContext)
   const { terms } = global
 
-  const sortedValues = activeFilters.sort(({ value: a }, { value: b }) =>
-    a > b ? 1 : b > a ? -1 : 0
-  )
+  const sortedActiveContexts = activeFilters
+    .sort(({ value: a }, { value: b }) => (a > b ? 1 : b > a ? -1 : 0))
+    /**
+     * Filter out overlapping contexts
+     * to => only the lowest value
+     * from => only the highest value
+     */
+    .reduce((a, c) => {
+      if (c.context === 'to') {
+        if (a.find(({ context }) => context === 'to')) {
+          return a
+        }
+      }
+      if (c.context === 'from') {
+        a = a.filter(({ context }) => context !== 'from')
+      }
+      return [...a, c]
+    }, [])
 
-  return sortedValues.map(({ value }) => {
+  return sortedActiveContexts.map(({ value, context }) => {
     value = typeof value === 'number' ? `${value}` : value
-
     const checked = activeFilters?.map(({ value }) => value)?.includes(value) ? true : false
+    const c = context === 'exact' ? '' : `${context.capitalize()}:`
 
     return (
       <Grid key={value} item xs={12}>
@@ -69,7 +84,7 @@ export default ({ activeFilters, filterId }) => {
                 marginRight: theme => theme.spacing(2),
               }}
               variant="caption"
-            >{`${typeof value === 'string' ? value.toUpperCase() : value}`}</Typography>
+            >{`${c} ${typeof value === 'string' ? value.toUpperCase() : value}`}</Typography>
           </Tooltip>
         </Div>
       </Grid>
