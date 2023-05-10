@@ -21,7 +21,6 @@
     "@babel/eslint-plugin": "^7.19.1",
     "eslint": "^8.40.0",
     "nodemon": "^2.0.22",
-    "npm-check-updates": "^16.10.10",
     "prettier": "^2.8.8"
   },
   "dependencies": {
@@ -47,13 +46,13 @@
     "koa-bodyparser": "^4.4.0",
     "koa-compress": "^5.1.1",
     "koa-mount": "^4.0.0",
-    "koa-passport": "^4.1.4",
+    "koa-passport": "^6.0.0",
     "koa-session": "^6.4.0",
     "koa-static": "^5.0.0",
     "mongodb": "^5.4.0",
     "nanoid": "^4.0.2",
     "object-hash": "^3.0.0",
-    "openid-client": "^5.3.4",
+    "openid-client": "^5.4.2",
     "replacestream": "^4.0.3",
     "sift": "^17.0.1",
     "sitemap": "^7.1.1",

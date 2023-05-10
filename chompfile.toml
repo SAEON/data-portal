@@ -13,14 +13,6 @@ run = """
 # REPOSITORY TOOLING
 
 [[task]]
-name = 'ncu'
-run = 'ncu'
-
-[[task]]
-name = 'ncu:u'
-run = 'ncu -u'
-
-[[task]]
 name = 'doc'
 run = '''
   doctoc README.md

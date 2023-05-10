@@ -15,14 +15,6 @@ name = 'lint'
 run = 'eslint -c .eslintrc.cjs "src/**/*.{js,mjs,cjs}"'
 
 [[task]]
-name = 'ncu'
-run = 'ncu -x es8.x,koa-passport,openid-client'
-
-[[task]]
-name = 'ncu:u'
-run = 'ncu -u -x es8.x,koa-passport,openid-client'
-
-[[task]]
 name = 'start'
 env = { NODE_ENV = 'development', TZ = 'utc', NODE_TLS_REJECT_UNAUTHORIZED='0' }
 deps = [

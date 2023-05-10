@@ -11,14 +11,6 @@ name = 'lint'
 run = 'eslint -c .eslintrc.cjs "src/**/*.{js,jsx}"'
 
 [[task]]
-name = 'ncu'
-run = 'ncu'
-
-[[task]]
-name = 'ncu:u'
-run = 'ncu -u'
-
-[[task]]
 name = 'start'
 env = { NODE_ENV="development" }
 run = """
