@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, forwardRef } from 'react'
 import { esriBasemap } from '../../../../../../lib/ol'
 import Controls from './_controls'
 import MapAttribution from '../../../../../../components/map-attribution'
@@ -8,8 +8,8 @@ import { defaults as defaultControls } from 'ol/control'
 import LayerGroup from 'ol/layer/Group'
 import { Div } from '../../../../../../components/html-tags'
 
-export default () => {
-  const ref = useRef()
+export default forwardRef((props, ref) => {
+  const mapRef = useRef()
 
   const map = useMemo(
     () =>
@@ -33,13 +33,13 @@ export default () => {
   )
 
   useEffect(() => {
-    map.setTarget(ref.current)
+    map.setTarget(mapRef.current)
   }, [map])
 
   return (
-    <Div ref={ref} sx={{ height: 300, position: 'relative' }}>
-      <Controls map={map} />
+    <Div ref={mapRef} sx={{ height: 300, position: 'relative' }}>
+      <Controls ref={ref} map={map} />
       <MapAttribution />
     </Div>
   )
-}
+})

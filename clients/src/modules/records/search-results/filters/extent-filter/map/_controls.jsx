@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, forwardRef } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
@@ -7,6 +7,7 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
+import GeoJSON from 'ol/format/GeoJSON'
 import { nanoid } from 'nanoid'
 import { context as searchContext } from '../../../../../../contexts/search'
 import { alpha } from '@mui/material/styles'
@@ -14,12 +15,13 @@ import { Span } from '../../../../../../components/html-tags'
 import Feature from 'ol/Feature'
 
 const wkt = new WKT()
+const geojson = new GeoJSON()
 
 var draw
 var defaultZoom
 var defaultCenter
 
-export default ({ map }) => {
+export default forwardRef(({ map }, ref) => {
   const [selectActive, setSelectActive] = useState(false)
   const { global, setGlobal } = useContext(searchContext)
   const [extent, setExtent] = useState(global.extent)
@@ -86,6 +88,7 @@ export default ({ map }) => {
 
   return (
     <Paper
+      ref={ref}
       variant="outlined"
       sx={{
         position: 'absolute',
@@ -128,6 +131,11 @@ export default ({ map }) => {
                 draw.on('drawend', e => {
                   const feat = e.feature
                   const geometry = feat.getGeometry()
+                  ref.current.dispatchEvent(
+                    new CustomEvent('searchFilter', {
+                      detail: { geometry: geojson.writeGeometry(geometry) },
+                    })
+                  )
                   setExtent(wkt.writeGeometry(geometry))
                 })
               } else {
@@ -169,4 +177,4 @@ export default ({ map }) => {
       )}
     </Paper>
   )
-}
+})

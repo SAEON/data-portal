@@ -1,6 +1,6 @@
 {
   "name": "@catalogue/api",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Node.js/Express.js server supporting the @saeon/clients applications",
   "main": "index.js",
   "type": "module",
