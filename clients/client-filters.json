@@ -23,6 +23,14 @@
     "sortOrder": "desc"
   },
   {
+    "id": "temporal-coverage-filter",
+    "type": "temporal-range",
+    "title": "Temporal Coverage",
+    "field": "publicationYear",
+    "sortBy": "_key",
+    "sortOrder": "desc"
+  },
+  {
     "id": "publisher-filter",
     "title": "Publisher",
     "field": "publisher.raw",

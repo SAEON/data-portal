@@ -35,6 +35,7 @@
     "@mdi/js": "^7.2.96",
     "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.12.3",
+    "@mui/x-date-pickers": "^6.3.1",
     "@saeon/logger": "^6.2.24",
     "@svgr/webpack": "^8.0.1",
     "ace-builds": "^1.19.0",
