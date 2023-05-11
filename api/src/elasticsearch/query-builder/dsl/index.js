@@ -88,23 +88,9 @@ export default ({
                 bool: {
                   must: [
                     from
-                      ? {
-                          range: {
-                            'dates.gte': {
-                              gte: from,
-                            },
-                          },
-                        }
+                      ? rangeQuery({ field: 'dates.gte', value: from, context: 'from' })
                       : undefined,
-                    to
-                      ? {
-                          range: {
-                            'dates.lte': {
-                              lte: to,
-                            },
-                          },
-                        }
-                      : undefined,
+                    to ? rangeQuery({ field: 'dates.lte', value: to, context: 'to' }) : undefined,
                     {
                       match: {
                         'dates.dateType': 'valid',

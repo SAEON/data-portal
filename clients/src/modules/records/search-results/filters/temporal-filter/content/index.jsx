@@ -14,13 +14,7 @@ const Div = styled(Div_)(({ theme }) => ({
 }))
 
 const DatePicker = styled(props => (
-  <StaticDatePicker
-    disableHighlightToday
-    yearsPerRow={4}
-    monthsPerRow={4}
-    disableFuture
-    {...props}
-  />
+  <StaticDatePicker disableHighlightToday yearsPerRow={4} monthsPerRow={4} {...props} />
 ))(({ theme }) => ({
   '& .MuiPickersToolbar-root': {
     display: 'none',
@@ -50,27 +44,32 @@ const Typography = styled(props => <Typography_ variant="body2" {...props} />)((
   margin: theme.spacing(2),
 }))
 
-export default forwardRef(({ results, filterId, field, boost, contexts }, ref) => {
+export default forwardRef(({ filterId }, ref) => {
   const { global, setGlobal } = useContext(searchContext)
   const {
     temporalRange: { from, to },
   } = global
 
   return (
-    <Grid container item xs={12} spacing={0}>
+    <Grid ref={ref} container item xs={12} spacing={0}>
       <Div sx={{ marginTop: t => t.spacing(1) }}>
         <Typography>From</Typography>
         <DatePicker
           value={from}
           shouldDisableDate={from => to && from >= to}
-          onChange={from =>
+          onChange={from => {
+            ref.current.dispatchEvent(
+              new CustomEvent('searchFilter', {
+                detail: { id: filterId, context: 'from', value: from },
+              })
+            )
             setGlobal({
               temporalRange: {
                 from,
                 to,
               },
             })
-          }
+          }}
           label="From"
         />
       </Div>
@@ -79,14 +78,19 @@ export default forwardRef(({ results, filterId, field, boost, contexts }, ref) =
         <DatePicker
           shouldDisableDate={to => from && to <= from}
           value={to}
-          onChange={to =>
+          onChange={to => {
+            ref.current.dispatchEvent(
+              new CustomEvent('searchFilter', {
+                detail: { id: filterId, context: 'to', value: to },
+              })
+            )
             setGlobal({
               temporalRange: {
                 from,
                 to,
               },
             })
-          }
+          }}
           label="To"
         />
       </Div>
