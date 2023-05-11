@@ -5,6 +5,7 @@ import doisQuery from './_dois.js'
 import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
 export { default as facetAggregations } from './_facet-aggregations.js'
+import rangeQuery from './_range.js'
 
 const cleanText = (...text) =>
   [...text]
@@ -20,6 +21,7 @@ export default ({
   dois = [], // A list of DOIs
   text, // Text to search
   terms, // Terms to search
+  temporalRange: { from = undefined, to = undefined } = {},
   extent, // A GIS extent to limit by
   identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
   filter: listFilter = {}, // This defines a 'maximum' result set, and is the search used to create a list
@@ -70,6 +72,58 @@ export default ({
     dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
   }
 
+  /**
+   * If a temporal range is specified,
+   * only return results with a "valid"
+   * date
+   **/
+  if (from || to) {
+    const gte = {
+      range: {
+        'dates.gte': {
+          gte: from,
+        },
+      },
+    }
+
+    const lte = {
+      range: {
+        'dates.lte': {
+          lte: to,
+        },
+      },
+    }
+
+    const q = {
+      bool: {
+        must: [
+          {
+            nested: {
+              path: 'dates',
+              query: {
+                bool: {
+                  must: [
+                    from ? gte : undefined,
+                    to ? lte : undefined,
+                    {
+                      match: {
+                        'dates.dateType': 'valid',
+                      },
+                    },
+                  ].filter(Boolean),
+                },
+              },
+            },
+          },
+        ],
+      },
+    }
+
+    console.log(JSON.stringify(q, null, 2))
+
+    dsl.query.bool.must = [...dsl.query.bool.must, q]
+    dsl.query.bool.filter = [...dsl.query.bool.filter, q]
+  }
   /**
    * Extent
    */

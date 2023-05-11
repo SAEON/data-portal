@@ -16,6 +16,22 @@ export default {
         },
       },
     },
+    dates: {
+      type: 'nested',
+      include_in_parent: true,
+      properties: {
+        gte: {
+          type: 'date',
+        },
+        lte: {
+          type: 'date',
+        },
+        dateType: {
+          type: 'keyword',
+          normalizer: 'keyword_trimmed_lower',
+        },
+      },
+    },
     linkedResources: {
       type: 'nested',
       include_in_parent: true,
@@ -98,22 +114,6 @@ export default {
           type: 'double',
         },
         match_mapping_type: 'double',
-      },
-    },
-    {
-      dates: {
-        mapping: {
-          type: 'date',
-          fields: {
-            raw: {
-              ignore_above: 256,
-              type: 'keyword',
-              normalizer: 'keyword_trimmed_lower',
-            },
-          },
-        },
-        match_mapping_type: 'string',
-        match: 'gte|lte',
       },
     },
     {

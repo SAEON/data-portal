@@ -23,6 +23,7 @@ export default async ({ ctx, args }) => {
       extent = undefined,
       terms = undefined,
       identifiers = undefined,
+      temporalRange = undefined,
       filter: listFilter = {},
     } = args
 
@@ -71,6 +72,7 @@ export default async ({ ctx, args }) => {
       dois,
       text,
       terms,
+      temporalRange,
       extent,
       identifiers,
       filter: listFilter,
