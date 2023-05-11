@@ -78,22 +78,6 @@ export default ({
    * date
    **/
   if (from || to) {
-    const gte = {
-      range: {
-        'dates.gte': {
-          gte: from,
-        },
-      },
-    }
-
-    const lte = {
-      range: {
-        'dates.lte': {
-          lte: to,
-        },
-      },
-    }
-
     const q = {
       bool: {
         must: [
@@ -103,8 +87,24 @@ export default ({
               query: {
                 bool: {
                   must: [
-                    from ? gte : undefined,
-                    to ? lte : undefined,
+                    from
+                      ? {
+                          range: {
+                            'dates.gte': {
+                              gte: from,
+                            },
+                          },
+                        }
+                      : undefined,
+                    to
+                      ? {
+                          range: {
+                            'dates.lte': {
+                              lte: to,
+                            },
+                          },
+                        }
+                      : undefined,
                     {
                       match: {
                         'dates.dateType': 'valid',
@@ -118,8 +118,6 @@ export default ({
         ],
       },
     }
-
-    console.log(JSON.stringify(q, null, 2))
 
     dsl.query.bool.must = [...dsl.query.bool.must, q]
     dsl.query.bool.filter = [...dsl.query.bool.filter, q]
