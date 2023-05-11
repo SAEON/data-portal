@@ -46,7 +46,7 @@ export default forwardRef(
               flexDirection: renderContexts ? 'row-reverse' : 'inherit',
               justifyContent: renderContexts ? 'space-between' : 'inherit',
               '& .context-hover-target': {
-                opacity: 0.3,
+                opacity: 0.2,
               },
               '&:hover': {
                 '& .context-hover-target': {

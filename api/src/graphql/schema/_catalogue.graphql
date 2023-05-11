@@ -3,6 +3,12 @@ enum TermInputContext {
   from
   to
 }
+
+input TemporalRangeInput {
+  from: DateTime
+  to: DateTime
+}
+
 input TermInput {
   """
   This should correlate with a filter ID as defined in client-filters.json at build time
@@ -87,6 +93,10 @@ type Catalogue {
     """
     terms: [TermInput!]
     """
+    Temporal range to search on
+    """
+    temporalRange: TemporalRangeInput
+    """
     Polygon specified as WKT and conforming to EPSG:4326. Coordinates are expected as (x, y)
     """
     extent: WKT_4326
@@ -126,6 +136,10 @@ type Catalogue {
     List of terms to filter on
     """
     filterByTerms: [TermInput!]
+    """
+    Temporal range to filter on
+    """
+    filterByTemporalRange: TemporalRangeInput
     """
     A filter object that has the same fields as the search constraints, and is used for the list functionality. TODO refactor to type
     """

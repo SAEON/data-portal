@@ -9,11 +9,11 @@ import { RegisterEventLog, makeLog } from '../../../../../components/application
 export default ({ results, id, title, field, boost, contexts, defaultExpanded = false }) => {
   const ref = useRef(null)
   const { global } = useContext(searchContext)
-  const { terms } = global
-  const activeFilters = terms.filter(({ filterId }) => filterId === id)
-  const [collapsed, setCollapsed] = useState(
-    defaultExpanded === true ? false : !activeFilters.length
-  )
+  const {
+    temporalRange: { from, to },
+  } = global
+
+  const [collapsed, setCollapsed] = useState(defaultExpanded === true ? false : !(from || to))
 
   return (
     <RegisterEventLog
@@ -40,7 +40,6 @@ export default ({ results, id, title, field, boost, contexts, defaultExpanded = 
             boost={boost}
             contexts={contexts}
             results={results}
-            activeFilters={activeFilters}
           />
         </Collapse>
       </Div>

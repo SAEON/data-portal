@@ -60,6 +60,7 @@ export default ({ children }) => {
       text={text || ''}
       extent={undefined}
       terms={[]}
+      temporalRange={{ from: null, to: null }}
       ids={[]}
       dois={[]}
       selectedIds={[]}
