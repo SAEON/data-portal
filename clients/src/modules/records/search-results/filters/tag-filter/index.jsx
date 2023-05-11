@@ -9,10 +9,17 @@ import { RegisterEventLog, makeLog } from '../../../../../components/application
 export default ({ results, id, title, field, boost, contexts, defaultExpanded = false }) => {
   const ref = useRef(null)
   const { global } = useContext(searchContext)
-  const { terms } = global
+  const { terms, temporalRange } = global
   const activeFilters = terms.filter(({ filterId }) => filterId === id)
   const [collapsed, setCollapsed] = useState(
-    defaultExpanded === true ? false : !activeFilters.length
+    defaultExpanded === true
+      ? activeFilters.length
+        ? false
+        : [
+            ...terms.filter(({ filterId }) => filterId !== id),
+            ...Object.values(temporalRange),
+          ].filter(Boolean).length || false
+      : !activeFilters.length
   )
 
   return (
