@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, forwardRef } from 'react'
+import { useState, useEffect, useContext, forwardRef, useCallback } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
@@ -13,6 +13,8 @@ import { context as searchContext } from '../../../../../../contexts/search'
 import { alpha } from '@mui/material/styles'
 import { Span } from '../../../../../../components/html-tags'
 import Feature from 'ol/Feature'
+import { Fill, Stroke, Style, Circle } from 'ol/style'
+import { useTheme } from '@mui/material/styles'
 
 const wkt = new WKT()
 const geojson = new GeoJSON()
@@ -22,9 +24,41 @@ var defaultZoom
 var defaultCenter
 
 export default forwardRef(({ map }, ref) => {
+  const theme = useTheme()
   const [selectActive, setSelectActive] = useState(false)
   const { global, setGlobal } = useContext(searchContext)
   const [extent, setExtent] = useState(global.extent)
+
+  const style = useCallback(
+    function (feature, resolution) {
+      const geometryType = feature.getGeometry().getType()
+      if (geometryType === 'Point') {
+        return new Style({
+          image: new Circle({
+            radius: 3,
+            fill: new Fill({
+              color: alpha(theme.palette.primary.main, 0.5),
+            }),
+            stroke: new Stroke({
+              color: alpha(theme.palette.primary.main, 1),
+              width: 1,
+            }),
+          }),
+        })
+      } else if (geometryType === 'Polygon') {
+        return new Style({
+          fill: new Fill({
+            color: alpha(theme.palette.primary.main, 0.5),
+          }),
+          stroke: new Stroke({
+            color: alpha(theme.palette.primary.main, 1),
+            width: 1,
+          }),
+        })
+      }
+    },
+    [theme]
+  )
 
   defaultZoom = defaultZoom || map.getView().getZoom()
   defaultCenter = defaultCenter || map.getView().getCenter()
@@ -35,6 +69,7 @@ export default forwardRef(({ map }, ref) => {
     id: `${nanoid()}-drawLayer`,
     title: 'Draw layer',
     source,
+    style,
   })
 
   /**
@@ -116,6 +151,7 @@ export default forwardRef(({ map }, ref) => {
                 draw = new Draw({
                   freehand: true,
                   source,
+                  style,
                   type: 'Circle',
                   geometryFunction: createBox(),
                 })

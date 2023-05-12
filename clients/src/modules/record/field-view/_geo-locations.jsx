@@ -10,9 +10,12 @@ import Row from '../_row'
 import MapAttribution from '../../../components/map-attribution'
 import { Div } from '../../../components/html-tags'
 import Map from 'ol/Map'
+import { Fill, Stroke, Circle, Style } from 'ol/style'
 import View from 'ol/View'
 import { defaults as defaultControls } from 'ol/control'
 import LayerGroup from 'ol/layer/Group'
+import { useTheme, alpha } from '@mui/material/styles'
+import { getArea } from 'ol/sphere'
 
 const wkt = new WKT()
 
@@ -20,6 +23,7 @@ const EXTENT_PADDING = 4
 
 export default ({ geoLocations }) => {
   const ref = useRef()
+  const theme = useTheme()
 
   const map = useMemo(
     () =>
@@ -30,19 +34,56 @@ export default ({ geoLocations }) => {
             new VectorLayer({
               id: 'extent-layer',
               title: 'Extent',
+              style: function (feature, resolution) {
+                const geometryType = feature.getGeometry().getType()
+                if (geometryType === 'Point') {
+                  return new Style({
+                    image: new Circle({
+                      radius: 10,
+                      fill: new Fill({
+                        color: alpha(theme.palette.primary.main, 0.5),
+                      }),
+                      stroke: new Stroke({
+                        color: alpha(theme.palette.primary.main, 1),
+                        width: 1,
+                      }),
+                    }),
+                  })
+                } else if (geometryType === 'Polygon') {
+                  return new Style({
+                    fill: new Fill({
+                      color: alpha(theme.palette.primary.main, 0.5),
+                    }),
+                    stroke: new Stroke({
+                      color: alpha(theme.palette.primary.main, 1),
+                      width: 1,
+                    }),
+                  })
+                }
+              },
               source: new VectorSource({
                 wrapX: false,
-                features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) =>
-                  geoLocationBox
-                    ? new Feature({
-                        geometry: new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates()),
+                features: geoLocations.map(({ geoLocationBox, geoLocationPoint }) => {
+                  if (geoLocationBox) {
+                    const polygon = new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates())
+                    const area = getArea(polygon, { projection: 'EPSG:4326' }) // returns meters
+                    if (area < 10000) {
+                      return new Feature({
+                        geometry: new Point(polygon.getInteriorPoint().getCoordinates()),
                       })
-                    : geoLocationPoint
-                    ? new Feature({
-                        geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
+                    } else {
+                      return new Feature({
+                        geometry: polygon,
                       })
-                    : []
-                ),
+                    }
+                  } else if (geoLocationPoint) {
+                    return new Feature({
+                      geometry: new Point(wkt.readGeometry(geoLocationPoint).getCoordinates()),
+                    })
+                  } else {
+                    return []
+                  }
+                }),
               }),
             }),
           ],
