@@ -1,6 +1,6 @@
 import { useContext, forwardRef } from 'react'
 import Grid from '@mui/material/Grid'
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker'
+import { DatePicker as Picker } from '@mui/x-date-pickers/DatePicker'
 import { PickersDay } from '@mui/x-date-pickers/PickersDay'
 import { Div } from '../../../../../../components/html-tags'
 import { styled } from '@mui/material/styles'
@@ -13,10 +13,16 @@ const PickerContainer = styled(Div)(({ theme }) => ({
   justifyContent: 'center',
   width: '100%',
   flexDirection: 'column',
+  margin: theme.spacing(2),
 }))
 
 const DatePicker = styled(({ isWithinSelection, ...props }) => (
-  <StaticDatePicker
+  <Picker
+    slotProps={{
+      field: {
+        readOnly: true,
+      },
+    }}
     slots={{
       day: props => (
         <PickersDay
@@ -98,9 +104,6 @@ export default forwardRef(({ filterId }, ref) => {
   return (
     <Grid ref={ref} container item xs={12} spacing={0}>
       <PickerContainer sx={{ marginTop: t => t.spacing(1) }}>
-        <Header>
-          <Typography>From</Typography>
-        </Header>
         <DatePicker
           isWithinSelection={day => isWithinRange(day, from, to)}
           value={from}
@@ -127,13 +130,10 @@ export default forwardRef(({ filterId }, ref) => {
               },
             })
           }}
-          label="From"
+          label="Start Date"
         />
       </PickerContainer>
-      <PickerContainer>
-        <Header>
-          <Typography>To</Typography>
-        </Header>
+      <PickerContainer sx={{ mt: theme => theme.spacing(1) }}>
         <DatePicker
           isWithinSelection={day => isWithinRange(day, from, to)}
           shouldDisableDate={date => {
@@ -161,7 +161,7 @@ export default forwardRef(({ filterId }, ref) => {
               },
             })
           }}
-          label="To"
+          label="End Date"
         />
       </PickerContainer>
       <Button
