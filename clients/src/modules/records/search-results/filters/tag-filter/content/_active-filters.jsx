@@ -38,7 +38,8 @@ export default ({ activeFilters, filterId }) => {
   return sortedActiveContexts.map(({ value, context }) => {
     value = typeof value === 'number' ? `${value}` : value
     const checked = activeFilters?.map(({ value }) => value)?.includes(value) ? true : false
-    const c = context === 'exact' ? '' : `${context.capitalize()}:`
+    console.log(typeof context, context)
+    const c = context === 'exact' ? '' : context ? `${context?.capitalize()}:` : ''
 
     return (
       <Grid key={value} item xs={12}>
