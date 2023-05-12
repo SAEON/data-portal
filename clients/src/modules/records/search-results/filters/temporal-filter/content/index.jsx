@@ -22,6 +22,17 @@ const DatePicker = styled(({ isWithinSelection, ...props }) => (
       field: {
         readOnly: true,
       },
+      textField: {
+        size: 'small',
+        fullWidth: true,
+        margin: 'none',
+      },
+      openPickerButton: {
+        size: 'small',
+      },
+      openPickerIcon: {
+        fontSize: 'small',
+      },
     }}
     slots={{
       day: props => (
@@ -41,6 +52,9 @@ const DatePicker = styled(({ isWithinSelection, ...props }) => (
     {...props}
   />
 ))(({ theme }) => ({
+  '& .MuiInputBase-root': {
+    paddingRight: theme.spacing(1),
+  },
   '& .MuiPickersToolbar-root': {
     display: 'none',
   },
