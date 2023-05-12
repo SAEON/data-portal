@@ -77,7 +77,9 @@ export default ({
    * only return results with a "valid"
    * date
    **/
-  if (from || to) {
+  if (from || to || listFilter.temporalRange?.from || listFilter.temporalRange?.to) {
+    from = listFilter.temporalRange?.from || from
+    to = listFilter.temporalRange?.to || to
     const q = {
       bool: {
         must: [

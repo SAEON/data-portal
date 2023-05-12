@@ -1,20 +1,39 @@
 import { useContext, forwardRef } from 'react'
 import Grid from '@mui/material/Grid'
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker'
-import { Div as Div_ } from '../../../../../../components/html-tags'
+import { PickersDay } from '@mui/x-date-pickers/PickersDay'
+import { Div } from '../../../../../../components/html-tags'
 import { styled } from '@mui/material/styles'
 import Typography_ from '@mui/material/Typography'
 import { context as searchContext } from '../../../../../../contexts/search'
+import Button from '@mui/material/Button'
 
-const Div = styled(Div_)(({ theme }) => ({
+const PickerContainer = styled(Div)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   width: '100%',
   flexDirection: 'column',
 }))
 
-const DatePicker = styled(props => (
-  <StaticDatePicker disableHighlightToday yearsPerRow={4} monthsPerRow={4} {...props} />
+const DatePicker = styled(({ isWithinSelection, ...props }) => (
+  <StaticDatePicker
+    slots={{
+      day: props => (
+        <PickersDay
+          disableMargin={false}
+          sx={theme => ({
+            borderRadius: 0,
+            backgroundColor: isWithinSelection(props.day) ? `${theme.palette.grey[50]}` : 'inherit',
+          })}
+          {...props}
+        />
+      ),
+    }}
+    disableHighlightToday
+    yearsPerRow={4}
+    monthsPerRow={4}
+    {...props}
+  />
 ))(({ theme }) => ({
   '& .MuiPickersToolbar-root': {
     display: 'none',
@@ -38,62 +57,140 @@ const DatePicker = styled(props => (
 }))
 
 const Typography = styled(props => <Typography_ variant="body2" {...props} />)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[200],
   textAlign: 'center',
+}))
+
+const Header = styled(props => <Div {...props}></Div>)(({ theme }) => ({
   padding: theme.spacing(1),
   margin: theme.spacing(2),
+  backgroundColor: theme.palette.grey[200],
 }))
+
+const isWithinRange = (day, from, to) => {
+  if (from && to) {
+    return day >= from && to >= day
+  } else if (from) {
+    return day >= from
+  } else if (to) {
+    return to >= day
+  }
+
+  return false
+}
 
 export default forwardRef(({ filterId }, ref) => {
   const { global, setGlobal } = useContext(searchContext)
-  const {
+  let {
+    filter: { temporalRange: { from: _from = null, to: _to = null } = {} } = {},
     temporalRange: { from, to },
   } = global
 
+  if (_from) {
+    _from = new Date(_from)
+    from = from ? (from > _from ? from : _from) : _from
+  }
+
+  if (_to) {
+    _to = new Date(_to)
+    to = to ? (to < _to ? to : _to) : _to
+  }
+
   return (
     <Grid ref={ref} container item xs={12} spacing={0}>
-      <Div sx={{ marginTop: t => t.spacing(1) }}>
-        <Typography>From</Typography>
+      <PickerContainer sx={{ marginTop: t => t.spacing(1) }}>
+        <Header>
+          <Typography>From</Typography>
+        </Header>
         <DatePicker
+          isWithinSelection={day => isWithinRange(day, from, to)}
           value={from}
-          shouldDisableDate={from => to && from >= to}
-          onChange={from => {
+          shouldDisableDate={date => {
+            if (_from) {
+              if (date < _from) return true
+            }
+            if (to) {
+              if (date > to) return true
+            }
+
+            return false
+          }}
+          onChange={value => {
             ref.current.dispatchEvent(
               new CustomEvent('searchFilter', {
-                detail: { id: filterId, context: 'from', value: from },
+                detail: { id: filterId, context: 'from', value },
               })
             )
             setGlobal({
               temporalRange: {
-                from,
+                from: value,
                 to,
               },
             })
           }}
           label="From"
         />
-      </Div>
-      <Div>
-        <Typography>To</Typography>
+      </PickerContainer>
+      <PickerContainer>
+        <Header>
+          <Typography>To</Typography>
+        </Header>
         <DatePicker
-          shouldDisableDate={to => from && to <= from}
+          isWithinSelection={day => isWithinRange(day, from, to)}
+          shouldDisableDate={date => {
+            if (_to) {
+              if (date > _to) return true
+            }
+
+            if (from) {
+              if (date < from) return true
+            }
+
+            return false
+          }}
           value={to}
-          onChange={to => {
+          onChange={value => {
             ref.current.dispatchEvent(
               new CustomEvent('searchFilter', {
-                detail: { id: filterId, context: 'to', value: to },
+                detail: { id: filterId, context: 'to', value },
               })
             )
             setGlobal({
               temporalRange: {
                 from,
-                to,
+                to: value,
               },
             })
           }}
           label="To"
         />
-      </Div>
+      </PickerContainer>
+      <Button
+        disableElevation
+        onClick={() => {
+          ref.current.dispatchEvent(
+            new CustomEvent('searchFilter', {
+              detail: { id: filterId, context: 'reset' },
+            })
+          )
+          setGlobal({
+            temporalRange: {
+              from: null,
+              to: null,
+            },
+          })
+        }}
+        sx={theme => ({
+          mb: theme.spacing(2),
+          mr: theme.spacing(2),
+          ml: 'auto',
+        })}
+        size="small"
+        color="primary"
+        disabled={!from && !to}
+        variant="text"
+      >
+        Clear selection
+      </Button>
     </Grid>
   )
 })
