@@ -7,7 +7,7 @@ import LoadingCircular from '../../../../components/loading-circular'
 import Hidden from '@mui/material/Hidden'
 import ToolbarHeader from '../../../../components/toolbar-header'
 import Divider from '@mui/material/Divider'
-import Search from '../../../../components/search'
+import Search from './_search'
 import { Div, Span } from '../../../../components/html-tags'
 
 const ConfigurePaginationButton = lazy(() => import('./_configure-pagination-button'))
