@@ -19,6 +19,15 @@ const PickerContainer = styled(Div)(({ theme }) => ({
 const DatePicker = styled(({ isWithinSelection, ...props }) => (
   <Picker
     slotProps={{
+      day: ownerState => {
+        return {
+          onClick: () => {
+            if (ownerState.selected) {
+              ownerState.onSelectedDaysChange(null)
+            }
+          },
+        }
+      },
       field: {
         readOnly: true,
       },
