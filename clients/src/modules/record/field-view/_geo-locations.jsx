@@ -67,7 +67,8 @@ export default ({ geoLocations }) => {
                   if (geoLocationBox) {
                     const polygon = new Polygon(wkt.readGeometry(geoLocationBox).getCoordinates())
                     const area = getArea(polygon, { projection: 'EPSG:4326' }) // returns meters
-                    if (area < 10000) {
+                    const threshold = 100000000 // 100 square km
+                    if (area < threshold) {
                       return new Feature({
                         geometry: new Point(polygon.getInteriorPoint().getCoordinates()),
                       })
