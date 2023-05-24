@@ -119,6 +119,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <DataGrid
+        className="rdg-light"
         columns={draggableColumns}
         defaultColumnOptions={{
           sortable: true,

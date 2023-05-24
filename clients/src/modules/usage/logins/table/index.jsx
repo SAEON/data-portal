@@ -110,6 +110,7 @@ export default ({ contentRef }) => {
     <Paper sx={{ height: theme => `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})` }}>
       <DndProvider backend={HTML5Backend}>
         <DataGrid
+          className="rdg-light"
           columns={draggableColumns}
           defaultColumnOptions={{
             sortable: true,
