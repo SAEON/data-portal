@@ -124,7 +124,17 @@ export default {
           ignore_malformed: true,
         },
         match_mapping_type: 'string',
-        match: 'geoLocationBox*',
+        match: 'geoLocationBox',
+      },
+    },
+    {
+      spatial: {
+        mapping: {
+          type: 'geo_point',
+          ignore_malformed: true,
+        },
+        match_mapping_type: 'string',
+        match: 'geoLocationPoint',
       },
     },
     {
