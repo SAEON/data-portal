@@ -60,7 +60,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
         renderFormatter: true,
       },
       editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
-      formatter: ({ row: { roles } }) =>
+      renderCell: ({ row: { roles } }) =>
         [...roles]
           .sort(({ name: a }, { name: b }) => {
             if (a > b) return 1

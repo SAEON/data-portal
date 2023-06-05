@@ -46,6 +46,10 @@ const locationFinder = new DataLoader(ipAddresses => resolveIpBatch(ipAddresses)
   maxBatchSize: 100,
 })
 
+/**
+ * This provides an easy mechanism
+ * for unifying log representation
+ */
 export const makeLog = async (ctx, otherFields) => {
   const ipAddress = ctx?.request.headers['X-Real-IP'] || ctx?.request.ip || 'UNKNOWN'
 
@@ -76,7 +80,27 @@ export const makeLog = async (ctx, otherFields) => {
 
 const BATCH_SIZE = 1000
 
+/**
+ * The class needs to be configured with
+ * the Mongo collections at server start
+ * time currently, even though only the Logs
+ * collection is used.
+ */
 export default collections => {
+  /**
+   * The LogBatcher should only
+   * be instantiated once at
+   * application start time.
+   *
+   * The load method is bound to
+   * request contexts, and queries
+   * is actually just Mongo docs.
+   *
+   * Anywhere where load() is called,
+   * the logic is:
+   *  -> the doc(s) are queued
+   *  -> and then the queue is processed in batches until complete
+   */
   return class LogBatcher {
     constructor() {
       this._queries = []
@@ -85,7 +109,11 @@ export default collections => {
     async load(...queries) {
       this._queries.push(...(await Promise.all(queries)))
 
-      process.nextTick(async () => {
+      /**
+       * Every time the load function is called,
+       * process the queue in batches until complete
+       */
+      setImmediate(async () => {
         if (!this._queries.length) {
           return
         }

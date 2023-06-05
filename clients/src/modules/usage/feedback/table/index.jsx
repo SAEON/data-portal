@@ -47,17 +47,18 @@ export default ({ contentRef }) => {
       name: ` `,
       sortable: true,
       resizable: false,
-      formatter: ({ row: { i } }) => <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>,
+      renderCell: ({ row: { i } }) => <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>,
     },
     {
       key: 'createdAt',
       name: 'Date',
-      formatter: ({ row: { createdAt } }) => (createdAt ? format(new Date(createdAt), FORMAT) : ''),
+      renderCell: ({ row: { createdAt } }) =>
+        createdAt ? format(new Date(createdAt), FORMAT) : '',
     },
     {
       key: 'recordId',
       name: 'Download',
-      formatter: ({ row: { recordId } }) => (
+      renderCell: ({ row: { recordId } }) => (
         <Link
           target="_blank"
           rel="noopener noreferrer"
@@ -72,7 +73,7 @@ export default ({ contentRef }) => {
     {
       key: 'student',
       name: 'Student',
-      formatter: ({ row: { student } }) => (
+      renderCell: ({ row: { student } }) => (
         <Div sx={{ textAlign: 'center', display: 'block' }}>{student ? '✔️' : ''}</Div>
       ),
     },
@@ -80,14 +81,15 @@ export default ({ contentRef }) => {
     {
       key: 'ageGroup',
       name: 'Age group',
-      formatter: ({ row: { ageGroup } }) => ageGroup?.replace('> 41', '41+').replace('< 18', '18-'),
+      renderCell: ({ row: { ageGroup } }) =>
+        ageGroup?.replace('> 41', '41+').replace('< 18', '18-'),
     },
     { key: 'race', name: 'Race' },
     { key: 'gender', name: 'Gender' },
     {
       key: 'allowContact',
       name: 'Contact',
-      formatter: ({ row: { allowContact } }) => (
+      renderCell: ({ row: { allowContact } }) => (
         <Div sx={{ textAlign: 'center', display: 'block' }}>{allowContact ? '✔️' : ''}</Div>
       ),
     },

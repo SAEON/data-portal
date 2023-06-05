@@ -30,7 +30,7 @@ export default memo(
       data: [],
       axisLabel: {
         rotate: 80,
-        formatter: value => value.truncate(20),
+        renderCell: value => value.truncate(20),
       },
       axisPointer: {
         snap: true,
@@ -103,7 +103,7 @@ export default memo(
         axisPointer: {
           type: 'cross',
           label: {
-            formatter: ({ value }) => value,
+            renderCell: ({ value }) => value,
           },
         },
         show: true,
@@ -132,7 +132,7 @@ export default memo(
         },
         type: yScale,
         axisLabel: {
-          formatter: value => value,
+          renderCell: value => value,
         },
         axisLine: {
           show: true,
