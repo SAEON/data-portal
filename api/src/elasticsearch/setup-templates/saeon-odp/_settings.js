@@ -9,6 +9,14 @@ export default {
         },
       },
       filter: {
+        english_stop: {
+          type: 'stop',
+          stopwords: '_english_',
+        },
+        english_minimal_stemmer: {
+          type: 'stemmer',
+          language: 'minimal_english',
+        },
         vocabulary_mapping: {
           type: 'synonym',
           synonyms: [
@@ -25,15 +33,22 @@ export default {
             'december, dec',
           ],
         },
-        plural_stemmer: {
+        light_english_stemmer: {
           type: 'stemmer',
-          language: 'english',
+          language: 'light_english',
         },
       },
       analyzer: {
         saeon_text_fields: {
-          filter: ['vocabulary_mapping', 'plural_stemmer'],
-          tokenizer: 'lowercase',
+          type: 'custom',
+          tokenizer: 'standard',
+          filter: [
+            'lowercase',
+            'english_stop',
+            'vocabulary_mapping',
+            'english_minimal_stemmer',
+            'light_english_stemmer',
+          ],
         },
       },
     },
