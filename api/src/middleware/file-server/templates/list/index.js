@@ -23,7 +23,7 @@ export default async ctx => {
   const {
     title: $TITLE = 'SAEON Collection',
     keywords: $KEYWORDS = '',
-    description: $DESCRIPTION = 'SAEON metedata collection',
+    description: $DESCRIPTION = 'SAEON metadata collection',
     generateKeywords = true,
     filter: {
       text: filterByText = undefined,

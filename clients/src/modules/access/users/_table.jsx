@@ -59,7 +59,9 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
       editorOptions: {
         renderFormatter: true,
       },
-      editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
+      renderEditCell: props => (
+        <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />
+      ),
       renderCell: ({ row: { roles } }) =>
         [...roles]
           .sort(({ name: a }, { name: b }) => {
