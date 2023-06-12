@@ -35,40 +35,18 @@ export default async ({ ctx, args }) => {
   } = args
 
   const facets = facetAggregations({ fields, size })
-  const dsl = {
-    size: 0,
-    aggs: facets,
-  }
-
-  /**
-   * It's fine to run an aggregation with no query
-   * defined - that would just not limit the index
-   * by a query
-   *
-   * It's also necessary to be able to run an aggregation
-   * over a subset of docs. To do this, a query must be
-   * defined in addition to the aggregation
-   */
-  if (
-    extent ||
-    terms?.length ||
-    Object.values(temporalRange || {}).filter(Boolean).length ||
-    text ||
-    ids?.length ||
-    dois?.length ||
-    identifiers?.length ||
-    Object.keys(listFilter).length
-  ) {
-    dsl.query = {
-      bool: {
-        must: [],
-        filter: [],
-      },
-    }
-  }
 
   const body = buildDsl({
-    dsl,
+    dsl: {
+      size: 0,
+      aggs: facets,
+      query: {
+        bool: {
+          must: [],
+          filter: [],
+        },
+      },
+    },
     ids,
     dois,
     text,

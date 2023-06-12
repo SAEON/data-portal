@@ -8,13 +8,17 @@ export default {
     const result = await client.count({
       index: ELASTICSEARCH_CATALOGUE_INDEX,
       query: {
-        match_all: {},
+        term: {
+          searchable: {
+            value: 'true',
+          },
+        },
       },
     })
 
     return result.count
   },
-  collections: async (_, args, ctx) => getCount({ ctx, id: 'count', field: 'collection_name.raw', }),
+  collections: async (_, args, ctx) => getCount({ ctx, id: 'count', field: 'collection_name.raw' }),
   institutions: async (_, args, ctx) => getCount({ ctx, id: 'count', field: 'provider_name.raw' }),
   providers: async (_, args, ctx) => getCount({ ctx, id: 'count', field: 'publisher.raw' }),
   themes: async (_, args, ctx) => getCount({ ctx, id: 'count', field: 'subjects.subject.raw' }),

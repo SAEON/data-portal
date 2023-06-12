@@ -23,6 +23,7 @@ export default (log, data) => {
         temporal_end,
         timestamp,
         published,
+        searchable,
       } = item
 
       if (!published) {
@@ -36,6 +37,7 @@ export default (log, data) => {
               metadata: { immutableResource, dates, geoLocations, ...allOtherFields },
             }) => {
               return {
+                searchable,
                 schemaId,
                 schemaUri,
                 id,

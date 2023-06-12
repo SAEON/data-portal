@@ -7,7 +7,7 @@ const iterate = async (log, { page = 1 } = {}) => {
   const Authorization = [token_type, access_token].join(' ')
 
   const res = await fetch(
-    `${ODP_API_CATALOGUE_ENDPOINT}?include_retracted=true&size=${ODP_INTEGRATION_BATCH_SIZE}&page=${page}`,
+    `${ODP_API_CATALOGUE_ENDPOINT}?include_nonsearchable=true&include_retracted=true&size=${ODP_INTEGRATION_BATCH_SIZE}&page=${page}`,
     {
       method: 'GET',
       headers: {

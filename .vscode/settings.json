@@ -85,6 +85,7 @@
     "netcdf",
     "noconflict",
     "nofile",
+    "nonsearchable",
     "NOPASSWD",
     "notistack",
     "oidc",

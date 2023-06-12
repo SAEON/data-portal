@@ -61,6 +61,10 @@ export default ({
         },
       },
     ]
+  } else {
+    const boolTerm = { field: 'searchable', value: 'true' }
+    dsl.query.bool.must = [...dsl.query?.bool.must, ...termsQuery([boolTerm])].filter(Boolean)
+    dsl.query.bool.filter = [...dsl.query?.bool.filter, ...termsQuery([boolTerm])].filter(Boolean)
   }
 
   /**
