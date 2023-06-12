@@ -1,11 +1,11 @@
-import { useState, useContext, lazy, Suspense, useCallback, useMemo } from 'react'
+import { useState, useContext, lazy, Suspense, useCallback, useMemo, useRef } from 'react'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Collapse from '@mui/material/Collapse'
-import Paper from '@mui/material/Paper'
+import { RegisterEventLog, makeLog } from '../../../../../components/application-logger'
 import { ChevronDown as ChevronDownIcon } from '../../../../../components/icons'
 import { ChevronUp as ChevronUpIcon } from '../../../../../components/icons'
 import { context as searchContext } from '../../../../../contexts/search'
@@ -15,6 +15,7 @@ import { Div } from '../../../../../components/html-tags'
 const Map = lazy(() => import('./map'))
 
 export default ({ title }) => {
+  const ref = useRef(null)
   const {
     global: { extent },
   } = useContext(searchContext)
@@ -38,7 +39,14 @@ export default ({ title }) => {
   )
 
   return (
-    <>
+    <RegisterEventLog
+      event="searchFilter"
+      target={ref.current}
+      handle={e => {
+        e.stopPropagation()
+        console.gql(makeLog('searchFilter', { id: 'domain-filter', ...e.detail }))
+      }}
+    >
       <AppBar
         position="relative"
         variant="outlined"
@@ -94,12 +102,12 @@ export default ({ title }) => {
           <Grid container spacing={0}>
             <Grid item xs={12}>
               <Div sx={{ position: 'relative' }}>
-                <Map />
+                <Map ref={ref} />
               </Div>
             </Grid>
           </Grid>
         </Suspense>
       </Collapse>
-    </>
+    </RegisterEventLog>
   )
 }

@@ -16,6 +16,22 @@ export default {
         },
       },
     },
+    dates: {
+      type: 'nested',
+      include_in_parent: true,
+      properties: {
+        gte: {
+          type: 'date',
+        },
+        lte: {
+          type: 'date',
+        },
+        dateType: {
+          type: 'keyword',
+          normalizer: 'keyword_trimmed_lower',
+        },
+      },
+    },
     linkedResources: {
       type: 'nested',
       include_in_parent: true,
@@ -101,22 +117,6 @@ export default {
       },
     },
     {
-      dates: {
-        mapping: {
-          type: 'date',
-          fields: {
-            raw: {
-              ignore_above: 256,
-              type: 'keyword',
-              normalizer: 'keyword_trimmed_lower',
-            },
-          },
-        },
-        match_mapping_type: 'string',
-        match: 'gte|lte',
-      },
-    },
-    {
       spatial: {
         mapping: {
           type: 'geo_shape',
@@ -124,7 +124,17 @@ export default {
           ignore_malformed: true,
         },
         match_mapping_type: 'string',
-        match: 'geoLocationBox*',
+        match: 'geoLocationBox',
+      },
+    },
+    {
+      spatial: {
+        mapping: {
+          type: 'geo_point',
+          ignore_malformed: true,
+        },
+        match_mapping_type: 'string',
+        match: 'geoLocationPoint',
       },
     },
     {

@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import facets from '../../../../elasticsearch/query-builder/facets.js'
 import { CLIENT_FILTER_CONFIG } from '../../../../config/index.js'
+import parseHtml from './_parse-html.js'
 
 const EXCLUDE_KEYWORDS = ['unknown']
 
@@ -17,12 +18,12 @@ const AGG_FIELDS = [
 export default async ctx => {
   const { search: listId } = ctx.query
   const { findLists } = ctx.mongo.dataFinders
-  const list = listId ? (await findLists({ _id: ObjectId(listId) }))[0] : undefined
+  const list = listId ? (await findLists({ _id: new ObjectId(listId) }))[0] : undefined
 
   const {
     title: $TITLE = 'SAEON Collection',
     keywords: $KEYWORDS = '',
-    description: $DESCRIPTION = 'SAEON metedata collection',
+    description: $DESCRIPTION = 'SAEON metadata collection',
     generateKeywords = true,
     filter: {
       text: filterByText = undefined,
@@ -78,6 +79,6 @@ export default async ctx => {
       if (a.length > b.length) return -1
       return 0
     }),
-    $DESCRIPTION,
+    $DESCRIPTION: parseHtml($DESCRIPTION),
   }
 }

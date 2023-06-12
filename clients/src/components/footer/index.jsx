@@ -74,7 +74,7 @@ export default ({ routes }) => {
             Photo by{' '}
             {photographer
               .split('-')
-              .map(s => s.capitalize())
+              .map(s => s?.capitalize())
               .join(' ')}{' '}
             - unsplash.com
           </Link>

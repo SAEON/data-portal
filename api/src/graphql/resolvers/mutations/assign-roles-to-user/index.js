@@ -10,10 +10,10 @@ export default async (self, { userId, roleIds }, ctx) => {
   roleIds = roleIds.filter(id => id !== sysadminId.toString)
 
   const user = await Users.findOneAndUpdate(
-    { _id: ObjectId(userId) },
+    { _id: new ObjectId(userId) },
     {
       $set: {
-        roles: roleIds.map(id => ObjectId(id)),
+        roles: roleIds.map(id => new ObjectId(id)),
       },
     },
     {

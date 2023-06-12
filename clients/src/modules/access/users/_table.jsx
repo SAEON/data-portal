@@ -59,8 +59,10 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
       editorOptions: {
         renderFormatter: true,
       },
-      editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
-      formatter: ({ row: { roles } }) =>
+      renderEditCell: props => (
+        <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />
+      ),
+      renderCell: ({ row: { roles } }) =>
         [...roles]
           .sort(({ name: a }, { name: b }) => {
             if (a > b) return 1
@@ -119,6 +121,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <DataGrid
+        className="rdg-light"
         columns={draggableColumns}
         defaultColumnOptions={{
           sortable: true,

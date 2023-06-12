@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, forwardRef, useCallback } from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
@@ -7,22 +7,58 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Draw, { createBox } from 'ol/interaction/Draw'
 import WKT from 'ol/format/WKT'
+import GeoJSON from 'ol/format/GeoJSON'
 import { nanoid } from 'nanoid'
 import { context as searchContext } from '../../../../../../contexts/search'
 import { alpha } from '@mui/material/styles'
 import { Span } from '../../../../../../components/html-tags'
 import Feature from 'ol/Feature'
+import { Fill, Stroke, Style, Circle } from 'ol/style'
+import { useTheme } from '@mui/material/styles'
 
 const wkt = new WKT()
+const geojson = new GeoJSON()
 
 var draw
 var defaultZoom
 var defaultCenter
 
-export default ({ map }) => {
+export default forwardRef(({ map }, ref) => {
+  const theme = useTheme()
   const [selectActive, setSelectActive] = useState(false)
   const { global, setGlobal } = useContext(searchContext)
   const [extent, setExtent] = useState(global.extent)
+
+  const style = useCallback(
+    function (feature, resolution) {
+      const geometryType = feature.getGeometry().getType()
+      if (geometryType === 'Point') {
+        return new Style({
+          image: new Circle({
+            radius: 3,
+            fill: new Fill({
+              color: alpha(theme.palette.primary.main, 0.5),
+            }),
+            stroke: new Stroke({
+              color: alpha(theme.palette.primary.main, 1),
+              width: 1,
+            }),
+          }),
+        })
+      } else if (geometryType === 'Polygon') {
+        return new Style({
+          fill: new Fill({
+            color: alpha(theme.palette.primary.main, 0.5),
+          }),
+          stroke: new Stroke({
+            color: alpha(theme.palette.primary.main, 1),
+            width: 1,
+          }),
+        })
+      }
+    },
+    [theme]
+  )
 
   defaultZoom = defaultZoom || map.getView().getZoom()
   defaultCenter = defaultCenter || map.getView().getCenter()
@@ -33,6 +69,7 @@ export default ({ map }) => {
     id: `${nanoid()}-drawLayer`,
     title: 'Draw layer',
     source,
+    style,
   })
 
   /**
@@ -86,6 +123,7 @@ export default ({ map }) => {
 
   return (
     <Paper
+      ref={ref}
       variant="outlined"
       sx={{
         position: 'absolute',
@@ -113,6 +151,7 @@ export default ({ map }) => {
                 draw = new Draw({
                   freehand: true,
                   source,
+                  style,
                   type: 'Circle',
                   geometryFunction: createBox(),
                 })
@@ -128,6 +167,11 @@ export default ({ map }) => {
                 draw.on('drawend', e => {
                   const feat = e.feature
                   const geometry = feat.getGeometry()
+                  ref.current.dispatchEvent(
+                    new CustomEvent('searchFilter', {
+                      detail: { geometry: geojson.writeGeometry(geometry) },
+                    })
+                  )
                   setExtent(wkt.writeGeometry(geometry))
                 })
               } else {
@@ -169,4 +213,4 @@ export default ({ map }) => {
       )}
     </Paper>
   )
-}
+})

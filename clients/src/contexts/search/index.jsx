@@ -60,6 +60,7 @@ export default ({ children }) => {
       text={text || ''}
       extent={undefined}
       terms={[]}
+      temporalRange={{ from: null, to: null }}
       ids={[]}
       dois={[]}
       selectedIds={[]}
@@ -67,6 +68,7 @@ export default ({ children }) => {
       {(setGlobal, global) => (
         <context.Provider
           value={{
+            list: data.list,
             global,
             setGlobal: (obj, clearHistory = false, cb) => {
               setGlobal(

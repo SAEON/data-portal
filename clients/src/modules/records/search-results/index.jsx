@@ -35,7 +35,15 @@ export default ({ showSearch, showSidebar }) => {
   const { referrer } = useContext(referrerContext)
   const { global } = useContext(searchContext)
   const { renderedPage } = useContext(clientContext)
-  const { terms, extent = undefined, text = undefined, ids = [], dois = [], filter = {} } = global
+  const {
+    terms,
+    extent = undefined,
+    text = undefined,
+    ids = [],
+    dois = [],
+    filter = {},
+    temporalRange = {},
+  } = global
   const sidebarVisible = !showSidebar && !xsDown
 
   useEffect(() => {
@@ -57,6 +65,7 @@ export default ({ showSearch, showSidebar }) => {
         $extent: WKT_4326
         $text: String
         $terms: [TermInput!]
+        $temporalRange: TemporalRangeInput
         $filter: JSON
         $size: Int
         $before: String
@@ -74,6 +83,7 @@ export default ({ showSearch, showSidebar }) => {
             filterByText: $text
             filterByExtent: $extent
             filterByTerms: $terms
+            filterByTemporalRange: $temporalRange
             listFilter: $filter
             limit: $summaryLimit
             filterByIds: $ids
@@ -83,6 +93,7 @@ export default ({ showSearch, showSidebar }) => {
             extent: $extent
             text: $text
             terms: $terms
+            temporalRange: $temporalRange
             size: $size
             filter: $filter
             before: $before
@@ -112,7 +123,14 @@ export default ({ showSearch, showSidebar }) => {
         dois,
         extent,
         filter,
-        terms: terms.map(({ field, boost, value, filterId: id }) => ({ id, field, boost, value })),
+        terms: terms.map(({ filterId: id, field, boost, value, context }) => ({
+          id,
+          field,
+          boost,
+          value,
+          context,
+        })),
+        temporalRange,
         text,
         size: pageSize,
         after: cursors.end,

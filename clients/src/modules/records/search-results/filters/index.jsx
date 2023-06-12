@@ -1,8 +1,9 @@
 import Grid from '@mui/material/Grid'
 import TagFilter from './tag-filter'
-import ExtentFilter from './extent-filter'
+import DomainFilter from './domain-filter'
 import Paper from '@mui/material/Paper'
 import { CLIENT_FILTER_CONFIG } from '../../../../config'
+import TemporalFilter from './temporal-filter'
 
 const defaultExpandedFields = ['keywords'].map(w => w.toLowerCase())
 
@@ -21,21 +22,38 @@ export default ({ catalogue }) => {
     >
       {/* EXTENT FILTER */}
       <Grid item xs={12} sx={{ position: 'relative' }}>
-        <ExtentFilter title="Domain" />
+        <DomainFilter title="Domain" />
       </Grid>
 
       {/* CONFIGURABLE FILTERS */}
-      {CLIENT_FILTER_CONFIG.map(({ id, title, field, boost }) => {
+      {CLIENT_FILTER_CONFIG.map(({ id, title, field, boost, contexts, type }) => {
         const items = catalogue?.summary.find(obj => {
           const agg = Object.entries(obj).find(([key]) => key === id)
           return agg
         })[id]
+
+        if (type === 'temporal-range') {
+          return (
+            <Grid key={id} item xs={12}>
+              <TemporalFilter
+                id={id}
+                defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}
+                contexts={contexts}
+                field={field}
+                title={title}
+                boost={boost}
+                results={items}
+              />
+            </Grid>
+          )
+        }
 
         return (
           <Grid key={id} item xs={12}>
             <TagFilter
               id={id}
               defaultExpanded={defaultExpandedFields.includes(title.toLowerCase())}
+              contexts={contexts}
               field={field}
               title={title}
               boost={boost}

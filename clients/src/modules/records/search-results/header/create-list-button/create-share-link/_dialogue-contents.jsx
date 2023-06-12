@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography'
  * otherwise in the future this may become outdated, causing bugs
  * that are difficult to track down
  */
-const FILTER_KEYS = ['identifiers', 'ids', 'dois', 'text', 'terms', 'extent']
+const FILTER_KEYS = ['identifiers', 'ids', 'dois', 'text', 'terms', 'extent', 'temporalRange']
 
 /**
  * Dialogue contents of the share dialogue

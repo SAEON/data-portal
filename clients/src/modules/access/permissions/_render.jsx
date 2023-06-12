@@ -10,6 +10,7 @@ export default memo(({ permissions }) => (
   <Div sx={{ height: 1000 }}>
     <DataGrid
       style={{ height: '100%' }}
+      className="rdg-light"
       enableVirtualization={true}
       columns={[
         { key: 'name', name: 'Name', width: 200, headerRenderer, resizable: true },

@@ -29,6 +29,7 @@ export default async ({ ctx, args }) => {
     identifiers = undefined,
     filterByDois: dois = undefined,
     filterByTerms: terms = undefined,
+    filterByTemporalRange: temporalRange = undefined,
     listFilter = {},
     limit: size,
   } = args
@@ -51,6 +52,7 @@ export default async ({ ctx, args }) => {
   if (
     extent ||
     terms?.length ||
+    Object.values(temporalRange || {}).filter(Boolean).length ||
     text ||
     ids?.length ||
     dois?.length ||
@@ -71,6 +73,7 @@ export default async ({ ctx, args }) => {
     dois,
     text,
     terms,
+    temporalRange,
     identifiers,
     extent,
     filter: listFilter,

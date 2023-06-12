@@ -5,6 +5,7 @@ import doisQuery from './_dois.js'
 import idsQuery from './_ids.js'
 import min_score from './_min-score.js'
 export { default as facetAggregations } from './_facet-aggregations.js'
+import rangeQuery from './_range.js'
 
 const cleanText = (...text) =>
   [...text]
@@ -20,6 +21,7 @@ export default ({
   dois = [], // A list of DOIs
   text, // Text to search
   terms, // Terms to search
+  temporalRange: { from = undefined, to = undefined } = {},
   extent, // A GIS extent to limit by
   identifiers = [], // Allows for searching by DOIs or IDs without knowing before hand if a DOI or ID will be provided. DOIs and IDs are collapsed to this
   filter: listFilter = {}, // This defines a 'maximum' result set, and is the search used to create a list
@@ -70,6 +72,44 @@ export default ({
     dsl.query.bool.filter = [...dsl.query.bool.filter, ...termsQuery(terms)]
   }
 
+  /**
+   * If a temporal range is specified,
+   * only return results with a "valid"
+   * date
+   **/
+  if (from || to || listFilter.temporalRange?.from || listFilter.temporalRange?.to) {
+    from = listFilter.temporalRange?.from || from
+    to = listFilter.temporalRange?.to || to
+    const q = {
+      bool: {
+        must: [
+          {
+            nested: {
+              path: 'dates',
+              query: {
+                bool: {
+                  must: [
+                    from
+                      ? rangeQuery({ field: 'dates.gte', value: from, context: 'from' })
+                      : undefined,
+                    to ? rangeQuery({ field: 'dates.lte', value: to, context: 'to' }) : undefined,
+                    {
+                      match: {
+                        'dates.dateType': 'valid',
+                      },
+                    },
+                  ].filter(Boolean),
+                },
+              },
+            },
+          },
+        ],
+      },
+    }
+
+    dsl.query.bool.must = [...dsl.query.bool.must, q]
+    dsl.query.bool.filter = [...dsl.query.bool.filter, q]
+  }
   /**
    * Extent
    */

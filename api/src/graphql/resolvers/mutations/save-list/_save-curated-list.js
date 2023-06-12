@@ -8,11 +8,11 @@ export default async (self, args, ctx) => {
   const { id, filter = {}, createdBy, type, ...otherFields } = args
   const { Lists } = await ctx.mongo.collections
 
-  const _id = ObjectId()
+  const _id = new ObjectId()
 
   const result = await Lists.findOneAndUpdate(
     {
-      _id: id ? ObjectId(id) : _id,
+      _id: id ? new ObjectId(id) : _id,
     },
     {
       $setOnInsert: {

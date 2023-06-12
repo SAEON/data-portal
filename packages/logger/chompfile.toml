@@ -17,7 +17,7 @@ name = 'publish:major'
 env = { TC = 'utc'}
 run = '''
   chomp build
-  node ../../../scripts/publish.js -p  @saeon/logger -s major
+  node ../../scripts/publish.js -p  @saeon/logger -s major
 '''
 
 [[task]]
@@ -25,12 +25,12 @@ name = 'publish:minor'
 env = { TC = 'utc'}
 run = '''
   chomp build
-  node ../../../scripts/publish.js -p  @saeon/logger -s minor
+  node ../../scripts/publish.js -p  @saeon/logger -s minor
 '''
 
 [[task]]
 name = 'publish:patch'
 env = { TC = 'utc'}
 run = '''
-  chomp build && TC=utc node ../../../scripts/publish.js -p  @saeon/logger -s patch
+  chomp build && TC=utc node ../../scripts/publish.js -p  @saeon/logger -s patch
 '''

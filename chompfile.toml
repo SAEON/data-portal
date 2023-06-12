@@ -13,14 +13,6 @@ run = """
 # REPOSITORY TOOLING
 
 [[task]]
-name = 'ncu'
-run = 'ncu'
-
-[[task]]
-name = 'ncu:u'
-run = 'ncu -u'
-
-[[task]]
 name = 'doc'
 run = '''
   doctoc README.md
@@ -51,3 +43,17 @@ config = '.prettierrc'
 [[task]]
 name = 'prettier:changed'
 run = 'pretty-quick'
+
+[[task]]
+name = 'reset'
+run = """
+rm -rf node_modules
+find . \
+  -name node_modules \
+  -type d \
+  -exec rm -rv {} + \
+    && find . \
+      -name package-lock.json \
+      -type f \
+      -delete
+"""

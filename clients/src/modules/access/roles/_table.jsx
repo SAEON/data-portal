@@ -8,6 +8,7 @@ const headerRenderer = ({ column }) => (
 export default ({ permissions }) => {
   return (
     <DataGrid
+      className="rdg-light"
       enableVirtualization={true}
       columns={[
         { key: 'name', name: 'Name', width: 200, resizable: true, headerRenderer },

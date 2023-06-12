@@ -55,12 +55,12 @@ export default ({ contentRef }) => {
       name: ` `,
       resizable: false,
       width: 50,
-      formatter: ({ row: { i } }) => <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>,
+      renderCell: ({ row: { i } }) => <I sx={{ textAlign: 'center', display: 'block' }}>{i}</I>,
     },
     {
       key: 'createdAt',
       name: 'Time',
-      formatter: ({ row: { createdAt } }) => format(createdAt, FORMAT),
+      renderCell: ({ row: { createdAt } }) => format(createdAt, FORMAT),
     },
     { key: 'name', name: 'User name' },
     { key: 'userId', name: 'User ID' },
@@ -110,6 +110,7 @@ export default ({ contentRef }) => {
     <Paper sx={{ height: theme => `calc(${contentRef.offsetHeight}px - ${theme.spacing(4)})` }}>
       <DndProvider backend={HTML5Backend}>
         <DataGrid
+          className="rdg-light"
           columns={draggableColumns}
           defaultColumnOptions={{
             sortable: true,

@@ -15,9 +15,16 @@
     ]
   },
   {
+    "id": "temporal-coverage-filter",
+    "type": "temporal-range",
+    "title": "Temporal Coverage",
+    "field": "noop"
+  },
+  {
     "id": "publication-year-filter",
     "title": "Publication Year",
     "field": "publicationYear",
+    "contexts": ["exact", "from", "to"],
     "sortBy": "_key",
     "sortOrder": "desc"
   },

@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from 'react-dnd'
-import { headerRenderer } from 'react-data-grid'
+import { renderHeaderCell } from 'react-data-grid'
 import { Div } from '../html-tags'
 
 export default ({ onColumnsReorder, column, ...props }) => {
@@ -35,7 +35,7 @@ export default ({ onColumnsReorder, column, ...props }) => {
         cursor: 'move',
       }}
     >
-      {headerRenderer({ column, ...props })}
+      {renderHeaderCell({ column, ...props })}
     </Div>
   )
 }
