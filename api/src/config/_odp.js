@@ -26,7 +26,7 @@ export const ODP_AUTH_LOGOUT_REDIRECT = `${ODP_AUTH}/oauth2/sessions/logout`
 /**
  * ODP catalogue integration
  */
-export const ODP_CLIENT_ID = process.env.ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
+export const ODP_CLIENT_ID = process.env.ODP_CLIENT_ID || 'SAEON.DataPortal.Indexer'
 export const ODP_CLIENT_SECRET = process.env.ODP_CLIENT_SECRET || ''
 export const ODP_CLIENT_AUTH_SCOPES = process.env.ODP_CLIENT_AUTH_SCOPES || 'odp.catalog:read'
 export const ODP_FILTER_PATH =

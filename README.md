@@ -98,6 +98,12 @@ source env.sh
 sdp integrations saeon --run
 ```
 
+**_NOTE_**: if you are integrating against the development version of the ODP, then you need to allow for self-signed certificates (`NODE_TLS_REJECT_UNAUTHORIZED=0`). In this case the command is:
+
+```sh
+NODE_TLS_REJECT_UNAUTHORIZED=0 sdp integrations saeon --run
+```
+
 # Command Line Interface (CLI)
 The application includes a CLI to run tasks - for example, triggering the ODP integration manually, building sitemaps manually, running database migration scripts, etc.
 
