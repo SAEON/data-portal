@@ -163,7 +163,7 @@ docker \
     -e DEFAULT_SYSADMIN_EMAIL_ADDRESSES="..." \
     -e MONGO_DB_ADDRESS="mongodb://mongo:27017" \
     -e ELASTICSEARCH_ADDRESS="http://elasticsearch:9200" \
-    -e ODP_ADDRESS=https://odp.saeon.ac.za \
+    -e ODP_HOSTNAME=odp.saeon.ac.za \
     -e ODP_CLIENT_SECRET=... \
     -e ODP_SSO_CLIENT_SECRET=... \
     -e ODP_CLIENT_AUTH_SCOPES=ODP.Catalogue \

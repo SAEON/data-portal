@@ -2,7 +2,7 @@ import { ELASTICSEARCH_CATALOGUE_INDEX } from '../../config/index.js'
 import testConnection from './_test-connection.js'
 import { performance } from 'perf_hooks'
 import configureElasticsearch, { client } from '../../elasticsearch/index.js'
-import { ODP_ADDRESS } from '../../config/index.js'
+import { ODP_HOSTNAME } from '../../config/index.js'
 import metadata from './metadata/index.js'
 
 let lock = false
@@ -28,7 +28,7 @@ export default async function ({ rebuild = false, skipInsert = false, deleteSele
     if (rebuild) {
       await testConnection()
       console.info(
-        `Connection to ${ODP_ADDRESS} tested and working! Deleting existing index for complete rebuild`
+        `Connection to ${ODP_HOSTNAME} tested and working! Deleting existing index for complete rebuild`
       )
 
       // Delete the index

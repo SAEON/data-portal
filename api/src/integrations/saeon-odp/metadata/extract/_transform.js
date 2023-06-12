@@ -33,7 +33,7 @@ export default (log, data) => {
             ({
               schema_id: schemaId,
               schema_uri: schemaUri,
-              metadata: { immutableResource, dates, geoLocations, ...other },
+              metadata: { immutableResource, dates, geoLocations, ...allOtherFields },
             }) => {
               return {
                 schemaId,
@@ -64,7 +64,7 @@ export default (log, data) => {
                   spatial_south,
                   spatial_west
                 ),
-                ...other,
+                ...allOtherFields,
               }
             }
           )
