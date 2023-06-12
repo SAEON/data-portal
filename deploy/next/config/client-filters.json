@@ -61,7 +61,7 @@
   {
     "id": "data-provider-filter",
     "title": "Data provider",
-    "field": "institution.raw",
+    "field": "provider_name.raw",
     "sortBy": "_key",
     "sortOrder": "asc"
   },
@@ -113,7 +113,7 @@
   {
     "id": "collection-filter",
     "title": "Collection",
-    "field": "collection.raw",
+    "field": "collection_name.raw",
     "sortBy": "_key",
     "sortOrder": "asc"
   }

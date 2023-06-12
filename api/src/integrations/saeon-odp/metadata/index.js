@@ -4,11 +4,12 @@ import deleteRecords from './delete-records/index.js'
 
 export default async ({ skipInsert, deleteSelected }) => {
   const result = {
+    brokenRecords: [],
     deletedCount: 0,
   }
 
   if (!skipInsert) {
-    let iterator = await makeIterator()
+    let iterator = await makeIterator(result)
     while (!iterator.done) {
       const { data } = iterator
 

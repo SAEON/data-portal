@@ -8,18 +8,18 @@ const __apiRootDirectory = join(__dirname, '../../')
 /**
  * ODP
  */
-export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
+export const ODP_HOSTNAME = process.env.ODP_HOSTNAME || 'odp.saeon.ac.za'
 
 /**
  * ODP API
  */
-export const ODP_API = `${ODP_ADDRESS}/api`
-export const ODP_API_CATALOGUE_ENDPOINT = `${ODP_API}/catalogue`
+export const ODP_API = `https://api.${ODP_HOSTNAME}`
+export const ODP_API_CATALOGUE_ENDPOINT = `${ODP_API}/catalog/SAEON/records`
 
 /**
  * ODP authentication
  */
-export const ODP_AUTH = `${ODP_ADDRESS}/auth`
+export const ODP_AUTH = `https://auth.${ODP_HOSTNAME}`
 export const ODP_AUTH_WELL_KNOWN = `${ODP_AUTH}/.well-known/openid-configuration`
 export const ODP_AUTH_LOGOUT_REDIRECT = `${ODP_AUTH}/oauth2/sessions/logout`
 
@@ -28,7 +28,7 @@ export const ODP_AUTH_LOGOUT_REDIRECT = `${ODP_AUTH}/oauth2/sessions/logout`
  */
 export const ODP_CLIENT_ID = process.env.ODP_CLIENT_ID || 'catalogue-api-odp-client-id'
 export const ODP_CLIENT_SECRET = process.env.ODP_CLIENT_SECRET || ''
-export const ODP_CLIENT_AUTH_SCOPES = process.env.ODP_CLIENT_AUTH_SCOPES || 'ODP.Catalogue'
+export const ODP_CLIENT_AUTH_SCOPES = process.env.ODP_CLIENT_AUTH_SCOPES || 'odp.catalog:read'
 export const ODP_FILTER_PATH =
   process.env.ODP_FILTER_PATH || join(__apiRootDirectory, 'odp-filter.js')
 export const ODP_FILTER = import(ODP_FILTER_PATH).then(({ default: fn }) => fn)

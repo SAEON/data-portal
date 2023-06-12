@@ -72,7 +72,7 @@ export default (id, values) => {
     fileFormat = undefined,
     archive = false,
     archivedFormats = undefined,
-  } = values.resourceDownload || {}
+  } = values?.resourceDownload || {}
 
   return {
     _archive: archive || false,

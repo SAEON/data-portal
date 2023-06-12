@@ -2,12 +2,12 @@ import { ODP_API_CATALOGUE_ENDPOINT, ODP_INTEGRATION_BATCH_SIZE } from '../../..
 import transform from './_transform.js'
 import authenticate from '../../../../lib/authenticate-with-odp.js'
 
-const iterate = async ({ offset = 0 } = {}) => {
+const iterate = async (log, { page = 1 } = {}) => {
   const { token_type, access_token } = await authenticate({ useCachedToken: true })
   const Authorization = [token_type, access_token].join(' ')
 
   const res = await fetch(
-    `${ODP_API_CATALOGUE_ENDPOINT}/?limit=${ODP_INTEGRATION_BATCH_SIZE}&offset=${offset}`,
+    `${ODP_API_CATALOGUE_ENDPOINT}?include_retracted=true&size=${ODP_INTEGRATION_BATCH_SIZE}&page=${page}`,
     {
       method: 'GET',
       headers: {
@@ -24,9 +24,9 @@ const iterate = async ({ offset = 0 } = {}) => {
   }
 
   return {
-    next: () => iterate({ offset: offset + data.length }),
-    data: transform(data),
-    done: !data?.length,
+    next: () => iterate(log, { page: page + 1 }),
+    data: transform(log, data),
+    done: !data?.items.length,
   }
 }
 

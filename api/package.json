@@ -20,8 +20,7 @@
     "@babel/eslint-parser": "^7.22.5",
     "@babel/eslint-plugin": "^7.22.5",
     "eslint": "^8.42.0",
-    "nodemon": "^2.0.22",
-    "prettier": "^2.8.8"
+    "nodemon": "^2.0.22"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.0",
