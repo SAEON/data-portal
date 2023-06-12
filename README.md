@@ -33,6 +33,7 @@ A suite of services that provide a platform for searching and exploring SAEON-cu
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Overview
+
 The SAEON Data Portal is a tool for searching SAEON's curated metadata.
 
 ## The stack
@@ -88,6 +89,7 @@ chomp --watch
 ```
 
 ### Load catalogue data on first use
+
 The first time you use the Data Portal on a local you need to load metadata from the catalogue into Elasticsearch. There is a CLI to do this (refer to the section below on the CLI).
 
 Here's the TLDR: from the root of this repository:
@@ -105,9 +107,11 @@ NODE_TLS_REJECT_UNAUTHORIZED=0 sdp integrations saeon --run
 ```
 
 # Command Line Interface (CLI)
+
 The application includes a CLI to run tasks - for example, triggering the ODP integration manually, building sitemaps manually, running database migration scripts, etc.
 
 ## Running the CLI in a dockerized environment
+
 The CLI is packaged into the Docker image at build time. Use the `sdp` command in the context of the docker container. Even if the container is part of a docker stack, it's necessary to use a specific container on a specific host, so these instructions are for docker swarm or otherwise. For example:
 
 ```sh
@@ -122,6 +126,7 @@ sdp
 ```
 
 ## Running the CLI in a local/non-dockerized environment
+
 From the root of the source code repository:
 
 ```sh
@@ -135,14 +140,17 @@ sdp
 ```
 
 # Deployment
-Although the client and API are treated as separate during development, when deploying the software the client ***must*** be served via the API server. SEO and other features are configured this way.
+
+Although the client and API are treated as separate during development, when deploying the software the client **_must_** be served via the API server. SEO and other features are configured this way.
 
 NOTE: Since the client is configured at image build time, deployments to separate hostnames require building separate Docker images.
 
 ## Build and Deploy a Docker image
+
 Please refer to source code for build time & runtime configuration options (or request additional documentation). But in short, the domain of the image currently has to be specified at build time (when the React.js client is built via Webpack. Here is a minimum working example for deploying a Docker image on localhost.
 
 ### Build Docker image locally
+
 From the root of the repository:
 
 ```sh
@@ -183,8 +191,8 @@ docker \
     $IMAGE
 ```
 
-
 ### SAEON production/dev deployments
+
 Deploy the latest docker image configured for `catalogue.saeon.ac.za` using the same `docker run` command as above, but specify the correct Docker image:
 
 ```sh
@@ -197,6 +205,7 @@ NETWORK=... # Refer to above
 SAEON production and development deployments are configured as [Docker stacks](/deploy/).
 
 ## Deploy from source code
+
 To deploy from source code directly (i.e. without Dockerizing the application), follow these steps.
 
 From the root of the repository:
@@ -220,4 +229,5 @@ start
 ```
 
 # [API documentation](api/)
+
 # [CLient documentation](clients/)

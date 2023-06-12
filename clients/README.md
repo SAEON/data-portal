@@ -2,6 +2,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Browser support](#browser-support)
@@ -14,6 +15,7 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Browser support
+
 Babel is configured to support the following browser targets:
 
 ```txt
@@ -23,6 +25,7 @@ not IE 11
 ```
 
 # Start the service
+
 The client needs an API - start an instance of the @saeon/api software to begin with. Then, from the root of the repository:
 
 ```sh
@@ -34,6 +37,7 @@ npm start
 ```
 
 # Build the service
+
 Create static files for deploying to a webserver. Nginx configuration is [included](nginx) in this project
 
 ```sh
@@ -67,6 +71,7 @@ Configuration can be passed to the build context via a `.env`:
 cd src/client
 touch .env
 ```
+
 The full list of possible configuration options and default values is logged to the console in non-production environments. Adjust these values by updating the `.env` file (and restarting the Webpack dev server)
 
 ```sh
@@ -77,4 +82,5 @@ etc
 ```
 
 # Filter configuration
+
 The catalogue filters are defined via configuration, which is a JSON file. A [default configuration](../../../deploy/README.md) is included in the source. Update deployment configurations by editing the relevant files

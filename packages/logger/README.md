@@ -55,6 +55,7 @@ configure(({ console, timestampFormat }) => {
 Another potential use of this library is to extend the console object to log to a URL endpoint - there is built-in support for logging to HTTP endpoints as well as GraphQL endpoints (using the @apollo/client library)
 
 #### Configure HTTP logging
+
 ```sh
 npm install node-fetch # // If NOT a browser environment
 ```
@@ -73,12 +74,15 @@ configure(() => ({
 ```
 
 #### Configure GraphQL logging
+
 First install `@apollo/client`
+
 ```sh
 npm install @apollo/client
 ```
 
 Then configure a `link` object (Refer to the ApolloClient documentation on how to configure a GraphQL `link`)
+
 ```js
 import { logToGql } from '@saeon/logger/log-to-graphql'
 import gql from 'graphql-tag'
@@ -88,14 +92,17 @@ const batchingInterval = 1800 // 1800 ms = 1.8 secs batching interval
 
 configure(() => ({
   overwrites: {
-    gql: logToGql({
-      link,
-      query: gql`
-        mutation logBrowserEvents($input: [BrowserEventInput]!) {
-          logBrowserEvents(input: $input)
-        }
-      `,
-    }, batchingInterval),
+    gql: logToGql(
+      {
+        link,
+        query: gql`
+          mutation logBrowserEvents($input: [BrowserEventInput]!) {
+            logBrowserEvents(input: $input)
+          }
+        `,
+      },
+      batchingInterval
+    ),
   },
 }))
 ```
