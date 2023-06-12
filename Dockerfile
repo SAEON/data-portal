@@ -1,5 +1,5 @@
 # Build client
-FROM node:20.2.0 as client
+FROM node:20.3.0 as client
 
 ARG API_ADDRESS=http://localhost:3000
 ARG CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Data Portal!,info"
