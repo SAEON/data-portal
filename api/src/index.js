@@ -204,6 +204,7 @@ const httpServer = createServer(api.callback())
 
 // Configure Apollo server
 await configureApolloGQLServer({httpServer, api})
+console.info('Apollo server configured')
 
 // Start HTTP server
 httpServer.listen(API_BIND_PORT, () => {
