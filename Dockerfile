@@ -24,7 +24,7 @@ RUN echo "PROXY_ADDRESS=$PROXY_ADDRESS" >> .env
 RUN echo "TECHNICAL_CONTACT=$TECHNICAL_CONTACT" >> .env
 
 COPY clients .
-RUN npm install -g chomp@0.2.11 & npm ci --omit=dev
+RUN npm install -g chomp@0.2.17 & npm ci --omit=dev
 RUN chomp build
 
 # Build API

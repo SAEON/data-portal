@@ -1,6 +1,6 @@
 import { PASSPORT_SSO_SESSION_ID } from '../config/index.js'
 import DataLoader from 'dataloader'
-import { ObjectId } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 
 export const IP_RESOLVER_API_ADDRESS = 'http://ip-api.com/batch'
 
@@ -80,61 +80,63 @@ export const makeLog = async (ctx, otherFields) => {
 
 const BATCH_SIZE = 1000
 
-/**
- * The class needs to be configured with
- * the Mongo collections at server start
- * time currently, even though only the Logs
- * collection is used.
- */
 export default collections => {
-  /**
-   * The LogBatcher should only
-   * be instantiated once at
-   * application start time.
-   *
-   * The load method is bound to
-   * request contexts, and queries
-   * is actually just Mongo docs.
-   *
-   * Anywhere where load() is called,
-   * the logic is:
-   *  -> the doc(s) are queued
-   *  -> and then the queue is processed in batches until complete
-   */
   return class LogBatcher {
     constructor() {
-      this._queries = []
+      this._queue = []
     }
 
-    async load(...queries) {
-      this._queries.push(...(await Promise.all(queries)))
+    async load(...logs) {
+      const resolvedQueries = await Promise.all(logs)
+      this._queue.push(...resolvedQueries)
+      this.processQueue()
+    }
+
+    async processQueue() {
+      if (!this._queue.length) {
+        return
+      }
 
       /**
-       * Every time the load function is called,
-       * process the queue in batches until complete
+       * Pushing this to the end of the event loop
+       * is probably unnecessary considering that
+       * insert batch is async, but can potentially
+       * reduce the number of database trips
        */
       setImmediate(async () => {
-        if (!this._queries.length) {
-          return
-        }
-
-        const batch = this._queries.slice(0, BATCH_SIZE)
-        this._queries = this._queries.slice(BATCH_SIZE)
-
-        try {
-          const { Logs } = await collections
-          const { insertedCount } = await Logs.insertMany(batch)
-          console.info('Client events logged', insertedCount)
-        } catch (error) {
-          console.error(
-            'Error logging client events to Mongo (ignore this unless very frequent).',
-            error,
-            JSON.stringify(batch, null, 2)
-          )
-        } finally {
-          this.load()
-        }
+        const batch = this._queue.slice(0, BATCH_SIZE)
+        this._queue = this._queue.slice(BATCH_SIZE)
+        await this.insertBatch(batch)
       })
+    }
+
+    async insertBatch(batch) {
+      try {
+        const { Logs } = await collections
+        const { insertedCount } = await Logs.insertMany(batch)
+        console.info('Client events logged', insertedCount)
+      } catch (error) {
+        this.handleError(error, batch)
+      } finally {
+        this.processQueue()
+      }
+    }
+
+    handleError(error, batch) {
+      if (error instanceof MongoClient.MongoError && error.name === 'BulkWriteError') {
+        const validationError = error.result.writeErrors[0].err
+        console.error(
+          'Error logging client events to Mongo. (validation error)',
+          validationError,
+          JSON.stringify(batch, null, 2)
+        )
+      } else {
+        console.error(
+          'Error logging client events to Mongo (ignore this unless very frequent).',
+          error,
+          JSON.stringify(batch, null, 2)
+        )
+      }
     }
   }
 }
