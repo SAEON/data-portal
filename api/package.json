@@ -23,12 +23,13 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
+    "@apollo/server": "^4.7.4",
+    "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.1",
+    "@as-integrations/koa": "^1.1.1",
     "@graphql-tools/schema": "^10.0.0",
     "@koa/router": "^12.0.0",
     "@saeon/cli-tools": "^0.2.0",
     "@saeon/logger": "^6.2.24",
-    "apollo-server-core": "^3.11.1",
-    "apollo-server-koa": "3.11",
     "base64url": "^3.0.1",
     "btoa": "^1.2.1",
     "cron": "^2.3.1",

@@ -31,7 +31,7 @@ import fourOFour from './middleware/404.js'
 import createRequestContext from './middleware/create-request-context/index.js'
 import saeonOdpIntegration from './integrations/saeon-odp/index.js'
 import sitemapGenerator from './integrations/sitemaps/index.js'
-import gqlServer from './graphql/index.js'
+import configureApolloGQLServer from './graphql/index.js'
 import {
   authenticate as authenticateRoute,
   loginSuccess as loginSuccessRoute,
@@ -199,13 +199,13 @@ api
   .use(blacklistRoutes(templateServer, '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
   .use(fourOFour)
 
-// Configure HTTP servers
+// Configure HTTP server
 const httpServer = createServer(api.callback())
 
-// Configure Apollo servers
-gqlServer.start().then(() => gqlServer.applyMiddleware({ app: api, cors: false }))
+// Configure Apollo server
+await configureApolloGQLServer({httpServer, api})
 
-// Start public HTTP server
+// Start HTTP server
 httpServer.listen(API_BIND_PORT, () => {
   console.info(`@saeon/catalogue API server ready`)
   console.info(`@saeon/catalogue GraphQL server ready`)
