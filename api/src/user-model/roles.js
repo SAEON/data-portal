@@ -17,18 +17,13 @@ export const saeon = {
     permissions['/usage'],
     permissions['logs:view:download'],
     permissions['logs:view:appRender'],
-  ]),
-}
-
-export const curator = {
-  name: 'curator',
-  description: 'Data curators',
-  permissions: deduplicate([
-    ...saeon.permissions,
     permissions['list:update'],
     permissions['list:delete'],
     permissions['lists:view'],
     permissions['/data-lists'],
+    permissions['user-form-submissions:view'],
+    permissions['logs:view:authentication'],
+    permissions['logs:view:authorization'],
   ]),
 }
 
@@ -37,15 +32,11 @@ export const admin = {
   description: 'Site administrators',
   permissions: deduplicate([
     ...saeon.permissions,
-    ...curator.permissions,
     permissions['/access'],
     permissions['users:assign-roles'],
     permissions['users:view'],
     permissions['roles:view'],
     permissions['permissions:view'],
-    permissions['user-form-submissions:view'],
-    permissions['logs:view:authentication'],
-    permissions['logs:view:authorization'],
   ]),
 }
 
