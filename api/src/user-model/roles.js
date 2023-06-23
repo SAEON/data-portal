@@ -11,7 +11,7 @@ export const user = {
 
 export const saeon = {
   name: 'saeon',
-  description: 'Default login roles for @saeon.ac.za email addresses',
+  description: 'Default login roles for @saeon.nrf.ac.za email addresses',
   permissions: deduplicate([
     ...user.permissions,
     permissions['/data-lists'],

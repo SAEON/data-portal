@@ -17,7 +17,7 @@
     "url": "https://github.com/SAEON/catalogue/issues"
   },
   "homepage": "https://github.com/SAEON/catalogue/tree/master/src/@saeon/client#readme",
-  "author": "zd.smith@saeon.nrf.ac.za,steven@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.7.16",
