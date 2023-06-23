@@ -14,16 +14,17 @@ export const saeon = {
   description: 'Default login roles for @saeon.ac.za email addresses',
   permissions: deduplicate([
     ...user.permissions,
-    permissions['/usage'],
-    permissions['logs:view:download'],
-    permissions['logs:view:appRender'],
-    permissions['list:update'],
-    permissions['list:delete'],
-    permissions['lists:view'],
     permissions['/data-lists'],
-    permissions['user-form-submissions:view'],
+    permissions['/usage'],
+    permissions['list:delete'],
+    permissions['list:update'],
+    permissions['lists:view'],
+    permissions['logs:view:appRender'],
     permissions['logs:view:authentication'],
     permissions['logs:view:authorization'],
+    permissions['logs:view:download'],
+    permissions['user-form-submissions:view'],
+    
   ]),
 }
 
@@ -33,10 +34,10 @@ export const admin = {
   permissions: deduplicate([
     ...saeon.permissions,
     permissions['/access'],
+    permissions['permissions:view'],
+    permissions['roles:view'],
     permissions['users:assign-roles'],
     permissions['users:view'],
-    permissions['roles:view'],
-    permissions['permissions:view'],
   ]),
 }
 
@@ -46,4 +47,4 @@ export const sysadmin = {
   permissions: deduplicate([...admin.permissions]),
 }
 
-export default [user, saeon, curator, admin, sysadmin]
+export default [user, saeon, admin, sysadmin]

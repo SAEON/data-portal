@@ -1,5 +1,5 @@
 # Build client
-FROM node:20.3.0 as client
+FROM node:20.3.1 as client
 
 ARG API_ADDRESS=http://localhost:3000
 ARG CLIENTS_DEFAULT_NOTICES="Welcome to the SAEON Data Portal!,info"
@@ -28,7 +28,7 @@ RUN npm install -g chomp@0.2.17 & npm ci --omit=dev
 RUN chomp build
 
 # Build API
-FROM node:20.2.0-alpine
+FROM node:20.3.1-alpine
 
 ARG ALLOWED_ORIGINS
 ARG API_ADDRESS
