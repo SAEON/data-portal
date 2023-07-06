@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 networks:
   sdp_next:
@@ -29,6 +29,10 @@ services:
       restart_policy:
         condition: any
         delay: 10s
+      resources:
+        limits:
+          cpus: "1"
+          memory: 150M
     environment:
       ALLOWED_ORIGINS: https://catalogue.saeon.dvn
       API_ADDRESS: https://catalogue.saeon.dvn

@@ -29,6 +29,10 @@ services:
       restart_policy:
         condition: any
         delay: 10s
+      resources:
+        limits:
+          cpus: "2"
+          memory: 200M
     environment:
       ALLOWED_ORIGINS: https://catalogue.saeon.ac.za
       API_ADDRESS: https://catalogue.saeon.ac.za
