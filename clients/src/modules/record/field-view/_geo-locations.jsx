@@ -112,7 +112,7 @@ export default ({ geoLocations }) => {
             : undefined,
         }),
       }),
-    [geoLocations]
+    [geoLocations],
   )
 
   useEffect(() => {

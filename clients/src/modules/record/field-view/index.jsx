@@ -41,7 +41,7 @@ export default ({ ..._source }) => {
       {_source.immutableResource && <ImmutableResource {..._source} />}
 
       {/* SPATIAL COVERAGE */}
-      {Boolean(_source.geoLocations?.length) && <GeoLocations {..._source} />}
+      {Boolean(_source.geoLocations?.filter(Boolean)?.length) && <GeoLocations {..._source} />}
 
       {/* TEMPORAL COVERAGE */}
       {Boolean(_source.dates?.length) && <Dates {..._source} />}
