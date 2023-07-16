@@ -31,6 +31,22 @@ export default (id, spatial, spatial_north, spatial_east, spatial_south, spatial
         const { westBoundLongitude, northBoundLatitude, eastBoundLongitude, southBoundLatitude } =
           geoLocationBox
 
+        
+      if (
+        westBoundLongitude === null || westBoundLongitude === undefined || 
+        northBoundLatitude === null || northBoundLatitude === undefined || 
+        eastBoundLongitude === null || eastBoundLongitude === undefined || 
+        southBoundLatitude === null || southBoundLatitude === undefined
+      ) {
+        console.warn(
+          id,
+          'WARNING. geoLocationBox defined incorrectly - skipping',
+          JSON.stringify(geoLocationBox)
+        )
+        return null
+      }
+          
+
         /**
          * Sometimes points are defined in the box field
          * These need to be converted to points. To check
