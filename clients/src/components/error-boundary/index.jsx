@@ -40,7 +40,7 @@ export default class ErrorBoundary extends Component {
         permanent
         hideIcon
         defaultOpen
-        title="Application Error"
+        title="Application Error!"
         text={
           <>
             <DialogContentText variant="body2" gutterBottom>
