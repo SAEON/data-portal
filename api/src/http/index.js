@@ -10,6 +10,7 @@ export { default as downloadProxy } from './download-proxy/index.js'
 export { default as login } from './login/index.js'
 export { default as logout } from './logout/index.js'
 export { default as oauthAuthenticationCallback } from './oauth-authentication-callback/index.js'
+export * as submission from './submission/index.js'
 
 /**
  * Protected routes

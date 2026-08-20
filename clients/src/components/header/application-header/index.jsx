@@ -4,6 +4,7 @@ import NavigationMenu from './navigation-menu'
 import Hidden from '@mui/material/Hidden'
 import Divider from '@mui/material/Divider'
 import Breadcrumbs from './breadcrumbs'
+import { Link } from 'react-router-dom'
 import { Div } from '../../html-tags'
 export { default as TitleHeader } from './title-header'
 import Button from '@mui/material/Button'
@@ -35,9 +36,8 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
       <Divider sx={{ mx: theme => theme.spacing(1) }} flexItem orientation="vertical" />
       <Tooltip placement="top-start" title="Submit data for curation">
         <Button
-          href="https://saeon.ac.za/data-curation/"
-          target="_blank"
-          rel="noopener noreferrer"
+          component={Link}
+          to="/submit"
           endIcon={<SubmitIcon fontSize="small" />}
           size="small"
           variant="text"
@@ -51,7 +51,7 @@ export default ({ contentBase, routes, disableBreadcrumbs, ...props }) => {
           })}
         >
           <Typography sx={{ lineHeight: '100%' }} variant="overline">
-            {smUp && 'Submit data'}
+            {smUp && 'Data Submissions'}
           </Typography>
         </Button>
       </Tooltip>
