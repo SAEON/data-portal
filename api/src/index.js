@@ -41,6 +41,7 @@ import {
   logout as logoutRoute,
   home as homeRoute,
   oauthAuthenticationCallback as oauthAuthenticationCallbackRoute,
+  submission as submissionRoutes,
 } from './http/index.js'
 import './passport/index.js'
 import redirectRenderRoute from './http/redirects/render.js'
@@ -138,7 +139,9 @@ if (SITEMAP_INTEGRATION_SCHEDULE) {
     },
     features: Object.values(uniqueDomains),
   })
-})()
+})().catch(error => {
+  console.warn('Could not cache metadata domains:', error.message)
+})
 
 // Configure public API
 const api = new Koa()
@@ -193,6 +196,16 @@ api
       .get('/http/login', loginRoute) // passport
       .get('/http/authenticate', authenticateRoute)
       .get('/http/logout', logoutRoute)
+      .get('/http/submissions/keywords', submissionRoutes.getKeywords)
+      .get('/http/submissions/orcid/:id', submissionRoutes.getOrcidInfo)
+      .get('/http/submissions', submissionRoutes.listSubmissions)
+      .post('/http/submissions', submissionRoutes.createSubmission)
+      .get('/http/submissions/:id', submissionRoutes.getSubmission)
+      .put('/http/submissions/:id', submissionRoutes.updateSubmission)
+      .post('/http/submissions/:id/dataset_url', submissionRoutes.setDatasetUrl)
+      .put('/http/submissions/:id/upload', submissionRoutes.uploadDataset)
+      .post('/http/submissions/:id/submit', submissionRoutes.submitForCuration)
+      .delete('/http/submissions/:id', submissionRoutes.deleteSubmission)
       .routes()
   )
   .use(mount('/', reactClient))

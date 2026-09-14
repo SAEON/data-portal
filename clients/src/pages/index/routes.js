@@ -16,9 +16,11 @@ import {
   Api as ApiIcon,
   Github as GithubIcon,
   License as LicenseIcon,
+  DatabasePlus as SubmitIcon,
 } from '../../components/icons'
 
 const HomePage = lazy(() => import('../../modules/home'))
+const SubmissionsPage = lazy(() => import('../../modules/submissions'))
 const RecordPage = lazy(() => import('../../modules/record'))
 const RecordsPage = lazy(() => import('../../modules/records'))
 const UsersPage = lazy(() => import('../../modules/users'))
@@ -56,6 +58,18 @@ export default [
         </Transition>
       )
     },
+  },
+  {
+    label: 'Data Submissions',
+    Icon: SubmitIcon,
+    to: '/submit/*',
+    excludeFromNav: true,
+    includeInFooter: false,
+    element: () => (
+      <Transition tKey="submit">
+        <SubmissionsPage />
+      </Transition>
+    ),
   },
   {
     label: 'Records',
