@@ -68,7 +68,7 @@ services:
       TECHNICAL_CONTACT: $TECHNICAL_CONTACT
       TZ: utc
     ports:
-      - 6003:3000
+      - 7013:3000
     extra_hosts:
       - "protologue.saeon.ac.za:192.168.117.202"
     volumes:
