@@ -13,13 +13,13 @@ export const ODP_HOSTNAME = process.env.ODP_HOSTNAME || 'odp.saeon.ac.za'
 /**
  * ODP API
  */
-export const ODP_API = process.env.ODP_API_URL || `https://api.${ODP_HOSTNAME}`
+export const ODP_API = (process.env.ODP_API_URL || `https://api.${ODP_HOSTNAME}`).replace(/\/+$/, '')
 export const ODP_API_CATALOGUE_ENDPOINT = `${ODP_API}/catalog/SAEON/records`
 
 /**
  * ODP authentication
  */
-export const ODP_AUTH = process.env.ODP_AUTH_URL || `https://auth.${ODP_HOSTNAME}`
+export const ODP_AUTH = (process.env.ODP_AUTH_URL || `https://auth.${ODP_HOSTNAME}`).replace(/\/+$/, '')
 export const ODP_AUTH_WELL_KNOWN = `${ODP_AUTH}/.well-known/openid-configuration`
 export const ODP_AUTH_LOGOUT_REDIRECT = `${ODP_AUTH}/oauth2/sessions/logout`
 
