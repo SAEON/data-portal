@@ -23,11 +23,16 @@ export default hydra =>
       }),
     },
     async (tokenSet, userInfo, cb) => {
-      const { email, sub: saeonId, name, picture } = userInfo
+      const { sub: saeonId, name, picture } = userInfo
+      const rawEmail = userInfo?.email || userInfo?.upn || userInfo?.preferred_username || ''
+      if (!rawEmail) {
+        console.error('No email address provided in OIDC userInfo:', userInfo)
+        return cb(new Error('OIDC provider did not return an email address in user profile'), null)
+      }
       const { Users, Roles } = await collections
       const saeonRoleId = (await Roles.find({ name: 'saeon' }).toArray())[0]._id
       const userRoleId = (await Roles.find({ name: 'user' }).toArray())[0]._id
-      const emailAddress = email.toLowerCase()
+      const emailAddress = rawEmail.toLowerCase()
       const isSaeon = emailAddress.match(/@saeon\.nrf\.ac\.za$/)
 
       try {
