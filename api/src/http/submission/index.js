@@ -413,7 +413,7 @@ export async function deleteSubmission(ctx) {
 }
 
 /**
- * Fetch ORCID Profile Info using server-side ORCID configuration
+ * Fetch ORCID Profile Info using ORCID Public API v3.0
  */
 export async function getOrcidInfo(ctx) {
   const { id } = ctx.params
@@ -425,44 +425,63 @@ export async function getOrcidInfo(ctx) {
   }
   const cleanOrcid = orcidMatch[0]
 
+  /* ==========================================================================
+     Internal ORCID API endpoint temporarily commented out.
+     Uncomment when production server API key/tokens are available.
+     ==========================================================================
   const baseOrcidUrl = (ORCID_BASE_URL || 'https://nrf.orcid.org').replace(/\/$/, '')
   const apiKey = ORCID_API_KEY || ''
-
-  try {
-    if (apiKey) {
-      const res = await fetch(`${baseOrcidUrl}/v1.0/Integration/Orcid/GetBasicProfile/${cleanOrcid}`, {
-        headers: {
-          'X-Api-Key': apiKey,
-          Accept: 'application/json',
-        },
-      })
-      if (res.ok) {
-        const data = await res.json()
-        if (data.success && data.responseResult) {
-          ctx.body = data.responseResult
-          return
-        }
+  if (apiKey) {
+    const res = await fetch(`${baseOrcidUrl}/v1.0/Integration/Orcid/GetBasicProfile/${cleanOrcid}`, {
+      headers: {
+        'X-Api-Key': apiKey,
+        Accept: 'application/json',
+      },
+    })
+    if (res.ok) {
+      const data = await res.json()
+      if (data.success && data.responseResult) {
+        ctx.body = data.responseResult
+        return
       }
     }
+  }
+  ========================================================================== */
 
-    // Fallback: public ORCID v3 API if server API Key isn't configured or primary call fails
-    const fallbackRes = await fetch(`https://pub.orcid.org/v3.0/${cleanOrcid}/person`, {
+  try {
+    // Fetch directly from public ORCID v3 API (returns person info and employments summary)
+    const pubRes = await fetch(`https://pub.orcid.org/v3.0/${cleanOrcid}`, {
       headers: { Accept: 'application/json' },
     })
-    if (!fallbackRes.ok) {
-      ctx.status = fallbackRes.status
+    if (!pubRes.ok) {
+      ctx.status = pubRes.status
       ctx.body = { error: 'ORCID record not found. Please check the identifier.' }
       return
     }
 
-    const fallbackData = await fallbackRes.json()
-    const givenNames = fallbackData.name?.['given-names']?.value || ''
-    const familyName = fallbackData.name?.['family-name']?.value || ''
+    const pubData = await pubRes.json()
+    const givenNames = pubData.person?.name?.['given-names']?.value || ''
+    const familyName = pubData.person?.name?.['family-name']?.value || ''
+
+    // Extract latest employment organization name
+    const affiliationGroups = pubData['activities-summary']?.employments?.['affiliation-group'] || []
+    let organizationName = ''
+
+    for (const group of affiliationGroups) {
+      for (const summaryObj of group.summaries || []) {
+        const emp = summaryObj['employment-summary']
+        if (emp?.organization?.name) {
+          organizationName = emp.organization.name
+          break
+        }
+      }
+      if (organizationName) break
+    }
 
     ctx.body = {
       givenNames,
       familyName,
-      employments: [],
+      employments: organizationName ? [{ organizationName }] : [],
     }
   } catch (error) {
     console.error(`Error fetching ORCID info for ${cleanOrcid}:`, error)
