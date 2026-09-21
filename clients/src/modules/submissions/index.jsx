@@ -19,7 +19,7 @@ function CreateSubmissionView() {
     fetch(`${PUBLIC_HTTP_ADDRESS}/submissions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: formData }),
+      body: JSON.stringify(formData),
       credentials: 'include',
     })
       .then(res => res.json())
@@ -69,9 +69,20 @@ function EditSubmissionView() {
   useEffect(() => {
     fetch(`${PUBLIC_HTTP_ADDRESS}/submissions/${id}`, { credentials: 'include' })
       .then(res => res.json())
-      .then(data => {
-        if (data.error) throw new Error(data.error)
-        setInitialData(data.data || {})
+      .then(resData => {
+        if (resData.error) throw new Error(resData.error)
+        let metadata = resData.data || resData
+        while (
+          metadata &&
+          typeof metadata === 'object' &&
+          'data' in metadata &&
+          typeof metadata.data === 'object' &&
+          metadata.data !== null &&
+          !Array.isArray(metadata.data)
+        ) {
+          metadata = metadata.data
+        }
+        setInitialData(metadata || {})
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false))
@@ -83,7 +94,7 @@ function EditSubmissionView() {
     fetch(`${PUBLIC_HTTP_ADDRESS}/submissions/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: formData }),
+      body: JSON.stringify(formData),
       credentials: 'include',
     })
       .then(res => res.json())

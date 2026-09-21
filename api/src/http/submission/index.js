@@ -189,7 +189,21 @@ export async function getSubmission(ctx) {
  */
 export async function createSubmission(ctx) {
   const { accessToken, saeonId } = await getAuthToken(ctx)
-  const submissionData = ctx.request.body.data || ctx.request.body
+
+  // Extract metadata dictionary, unwrapping any redundant 'data' wrappers
+  let submissionData = ctx.request.body
+  while (
+    submissionData &&
+    typeof submissionData === 'object' &&
+    'data' in submissionData &&
+    typeof submissionData.data === 'object' &&
+    submissionData.data !== null &&
+    !Array.isArray(submissionData.data)
+  ) {
+    submissionData = submissionData.data
+  }
+
+  // Expected POST body: { user_id: "<USER_ID>", data: { title: "...", abstract: "..." } }
   const payload = {
     data: submissionData,
     ...(saeonId ? { user_id: saeonId } : {}),
@@ -219,11 +233,22 @@ export async function createSubmission(ctx) {
 export async function updateSubmission(ctx) {
   const { id } = ctx.params
   const { accessToken, saeonId } = await getAuthToken(ctx)
-  const submissionData = ctx.request.body.data || ctx.request.body
-  const payload = {
-    data: submissionData,
-    ...(saeonId ? { user_id: saeonId } : {}),
+
+  // Extract metadata dictionary, unwrapping any redundant 'data' wrappers
+  let submissionData = ctx.request.body
+  while (
+    submissionData &&
+    typeof submissionData === 'object' &&
+    'data' in submissionData &&
+    typeof submissionData.data === 'object' &&
+    submissionData.data !== null &&
+    !Array.isArray(submissionData.data)
+  ) {
+    submissionData = submissionData.data
   }
+
+  // Expected PUT body: metadata dictionary directly at root (NOT wrapped in { data: ... })
+  const payload = submissionData
 
   const userIdParam = saeonId ? `?user_id=${encodeURIComponent(saeonId)}` : ''
 
