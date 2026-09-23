@@ -28,6 +28,8 @@ import {
   mdiDownloadMultiple,
   mdiEye,
   mdiEyeOff,
+  mdiUpload,
+  mdiLink,
   mdiFileSign,
   mdiFolder,
   mdiFolderOpen,
@@ -345,5 +347,17 @@ export const ChevronLeft = styled(props => (
 export const ContentCopy = styled(props => (
   <SvgIcon {...props}>
     <Path d={mdiContentCopy} />
+  </SvgIcon>
+))({})
+
+export const Upload = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiUpload} />
+  </SvgIcon>
+))({})
+
+export const Link = styled(props => (
+  <SvgIcon {...props}>
+    <Path d={mdiLink} />
   </SvgIcon>
 ))({})

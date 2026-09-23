@@ -18,6 +18,8 @@ env:
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_USERNAME }} # Repository secret
   ODP_CLIENT_SECRET: ${{ secrets.ODP_CLIENT_SECRET }} # Repository secret
   ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET }} # Repository secret
+  ORCID_BASE_URL: ${{ secrets.ORCID_BASE_URL }}
+  ORCID_API_KEY: ${{ secrets.ORCID_API_KEY }}
   REGISTRY: ghcr.io
   DOCKER_IMAGE_NAME: saeon/saeon-data-portal
   BRANCH_REF: stable
@@ -109,6 +111,8 @@ jobs:
             echo "MONGO_HOST_STABLE=${{ secrets.MONGO_HOST_STABLE }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "ODP_CLIENT_SECRET=${{ secrets.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "ODP_SSO_CLIENT_SECRET=${{ secrets.ODP_SSO_CLIENT_SECRET}}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "ORCID_BASE_URL=${{ secrets.ORCID_BASE_URL }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
+            echo "ORCID_API_KEY=${{ secrets.ORCID_API_KEY }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-stable/deploy/stable/stack.env
             echo "DEFAULT_ADMIN_EMAIL_ADDRESSES=${{ env.DEFAULT_ADMIN_EMAIL_ADDRESSES }}" >> /home/runner/sdp-stable/deploy/stable/stack.env

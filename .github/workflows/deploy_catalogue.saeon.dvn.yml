@@ -15,8 +15,12 @@ env:
   MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_DEV_PASSWORD }} # Repository secret
   MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_DEV_USERNAME }} # Repository secret
   MONGO_HOST_NEXT: ${{ secrets.MONGO_HOST_NEXT }} # Organization secret
+  ODP_API_URL: ${{ secrets.ODP_API_URL_NEXT }} # Repository secret
+  ODP_AUTH_URL: ${{ secrets.ODP_AUTH_URL_NEXT }} # Repository secret
   ODP_CLIENT_SECRET: ${{ secrets.ODP_CLIENT_SECRET_NEXT }} # Repository secret
   ODP_SSO_CLIENT_SECRET: ${{ secrets.ODP_SSO_CLIENT_SECRET_NEXT }} # Repository secret
+  ORCID_BASE_URL: ${{ secrets.ORCID_BASE_URL }}
+  ORCID_API_KEY: ${{ secrets.ORCID_API_KEY }}
   APP_KEY: ${{ secrets.APP_KEY }} # Repository secret
   REGISTRY: ghcr.io
   DOCKER_IMAGE_NAME: saeon/sdp-next
@@ -70,6 +74,8 @@ jobs:
             TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}
             DEPLOYMENT_ENV=development
             PROXY_ADDRESS=https://proxy.saeon.dvn
+            ODP_API_URL=${{ env.ODP_API_URL }}
+            ODP_AUTH_URL=${{ env.ODP_AUTH_URL }}
             ESRI_API_KEY=${{ env.ESRI_API_KEY }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -108,6 +114,8 @@ jobs:
             echo "MONGO_DB_USERNAME=${{ env.MONGO_DB_USERNAME }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "MONGO_HOST_NEXT=${{ env.MONGO_HOST_NEXT }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "ODP_CLIENT_SECRET=${{ env.ODP_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/stack.env
+            echo "ODP_API_URL=${{ env.ODP_API_URL }}" >> /home/runner/sdp-next/deploy/next/stack.env
+            echo "ODP_AUTH_URL=${{ env.ODP_AUTH_URL }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "ODP_SSO_CLIENT_SECRET=${{ env.ODP_SSO_CLIENT_SECRET }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "CURATOR_CONTACT=${{ env.CURATOR_CONTACT }}" >> /home/runner/sdp-next/deploy/next/stack.env
             echo "TECHNICAL_CONTACT=${{ env.TECHNICAL_CONTACT }}" >> /home/runner/sdp-next/deploy/next/stack.env
